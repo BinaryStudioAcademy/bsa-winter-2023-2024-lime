@@ -1,0 +1,17 @@
+{
+    "extends": "../tsconfig.json",
+    "include": ["src", "knexfile.ts"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "esModuleInterop": true,
+        "moduleResolution": "Node",
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["./src/*"]
+        },
+        "outDir": "build",
+        "skipLibCheck": true
+    }
+}

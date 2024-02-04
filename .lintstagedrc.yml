@@ -1,0 +1,2 @@
+'*.{ts,tsx,json,md,scss,html,yml}': prettier --write
+'*': npm run lint:editor && npm run lint:fs
