@@ -1,1 +1,1 @@
-export { type Schema as ValidationSchema } from 'joi';
+export { type Schema as ValidationSchema } from 'zod';

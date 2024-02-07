@@ -1,6 +1,10 @@
 {
     "name": "shared",
     "type": "module",
+    "engines": {
+        "node": "18.x.x",
+        "npm": "9.x.x"
+    },
     "private": true,
     "scripts": {
         "lint:type": "npx tsc --noEmit",
@@ -9,6 +13,6 @@
         "build": "tsc && tsc-alias"
     },
     "dependencies": {
-        "joi": "17.8.3"
+        "zod": "3.22.4"
     }
 }

@@ -1,23 +1,25 @@
-import joi from 'joi';
+import { z } from 'zod';
 
-import { UserValidationMessage } from '../enums/enums.js';
-import { type UserSignUpRequestDto } from '../types/types.js';
+import { UserValidationMessage, UserValidationRule } from '../enums/enums.js';
 
-const userSignUp = joi.object<UserSignUpRequestDto, true>({
-    email: joi
-        .string()
-        .trim()
-        .email({
-            tlds: {
-                allow: false,
-            },
-        })
-        .required()
-        .messages({
-            'string.email': UserValidationMessage.EMAIL_WRONG,
-            'string.empty': UserValidationMessage.EMAIL_REQUIRE,
-        }),
-    password: joi.string().trim().required(),
-});
+type UserSignUpRequestValidationDto = {
+    email: z.ZodString;
+    password: z.ZodString;
+};
+
+const userSignUp = z
+    .object<UserSignUpRequestValidationDto>({
+        email: z
+            .string()
+            .trim()
+            .min(UserValidationRule.EMAIL_MINIMUM_LENGTH, {
+                message: UserValidationMessage.EMAIL_REQUIRE,
+            })
+            .email({
+                message: UserValidationMessage.EMAIL_WRONG,
+            }),
+        password: z.string().trim(),
+    })
+    .required();
 
 export { userSignUp };

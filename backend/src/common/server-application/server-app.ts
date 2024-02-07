@@ -98,10 +98,8 @@ class ServerApp implements IServerApp {
 
     private initValidationCompiler(): void {
         this.app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
-            return <T>(data: T): ReturnType<ValidationSchema['validate']> => {
-                return schema.validate(data, {
-                    abortEarly: false,
-                });
+            return <T, R = ReturnType<ValidationSchema['parse']>>(data: T): R => {
+                return schema.parse(data) as R;
             };
         });
     }
@@ -109,22 +107,20 @@ class ServerApp implements IServerApp {
     private initErrorHandler(): void {
         this.app.setErrorHandler(
             (error: FastifyError | ValidationError, _request, replay) => {
-                if ('isJoi' in error) {
+                if ('issues' in error) {
                     this.logger.error(`[Validation Error]: ${error.message}`);
 
-                    for (const it of error.details) {
-                        this.logger.error(
-                            `[${it.path.toString()}] — ${it.message}`,
-                        );
+                    for (const issue of error.issues) {
+                        this.logger.error(`[${issue.path.toString()}] — ${issue.message}`);
                     }
 
                     const response: ServerValidationErrorResponse = {
+                        details: error.issues.map((issue) => ({
+                            message: issue.message,
+                            path: issue.path,
+                        })),
                         errorType: ServerErrorType.VALIDATION,
                         message: error.message,
-                        details: error.details.map((it) => ({
-                            path: it.path,
-                            message: it.message,
-                        })),
                     };
 
                     return replay
