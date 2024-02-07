@@ -39,7 +39,7 @@ class AuthController extends Controller {
      * @swagger
      * /auth/sign-up:
      *    post:
-     *      description: Sign up user into the system
+     *      description: Sign up user into the application
      *      requestBody:
      *        description: User auth data
      *        required: true
