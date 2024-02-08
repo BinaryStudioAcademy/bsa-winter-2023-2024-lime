@@ -1,4 +1,4 @@
-import bcrypt  from 'bcrypt';
+import * as Bcrypt  from 'bcrypt';
 
 import { USER_PASSWORD_SALT_ROUNDS } from '../../constants/constants.js';
 
@@ -8,18 +8,21 @@ type EncryptSyncReturnType = {
 };
 
 class CryptService {
+
+    private bcrypt = Bcrypt;
+
     public createSaltSync(): string {
-        return bcrypt.genSaltSync(USER_PASSWORD_SALT_ROUNDS);
+        return this.bcrypt.genSaltSync(USER_PASSWORD_SALT_ROUNDS);
     }
 
     public encryptSync(data: string): EncryptSyncReturnType {
         const salt = this.createSaltSync();
-        const hash = bcrypt.hashSync(data, salt);
+        const hash = this.bcrypt.hashSync(data, salt);
         return { salt, hash };
     }
 
     public compareSyncPassword(password: string, hash: string): boolean {
-        return bcrypt.compareSync(password, hash);
+        return this.bcrypt.compareSync(password, hash);
     }
 }
 
