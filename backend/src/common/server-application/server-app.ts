@@ -118,7 +118,9 @@ class ServerApp implements IServerApp {
 
     private initValidationCompiler(): void {
         this.app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
-            return <T, R = ReturnType<ValidationSchema['parse']>>(data: T): R => {
+            return <T, R = ReturnType<ValidationSchema['parse']>>(
+                data: T,
+            ): R => {
                 return schema.parse(data) as R;
             };
         });
@@ -131,7 +133,9 @@ class ServerApp implements IServerApp {
                     this.logger.error(`[Validation Error]: ${error.message}`);
 
                     for (const issue of error.issues) {
-                        this.logger.error(`[${issue.path.toString()}] — ${issue.message}`);
+                        this.logger.error(
+                            `[${issue.path.toString()}] — ${issue.message}`,
+                        );
                     }
 
                     const response: ServerValidationErrorResponse = {
