@@ -1,3 +1,7 @@
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import fastifyStatic from '@fastify/static';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
@@ -60,6 +64,22 @@ class ServerApp implements IServerApp {
         });
 
         this.logger.info(`Route: ${method as string} ${path} is registered`);
+    }
+
+    private async initServe(): Promise<void> {
+        const staticPath = join(
+            dirname(fileURLToPath(import.meta.url)),
+            '../../../public',
+        );
+
+        await this.app.register(fastifyStatic, {
+            root: staticPath,
+            prefix: '/',
+        });
+
+        this.app.setNotFoundHandler(async (_request, response) => {
+            await response.sendFile('index.html', staticPath);
+        });
     }
 
     public addRoutes(parameters: ServerAppRouteParameters[]): void {
@@ -159,6 +179,8 @@ class ServerApp implements IServerApp {
 
     public async init(): Promise<void> {
         this.logger.info('Application initialization…');
+
+        await this.initServe();
 
         await this.initMiddlewares();
 
