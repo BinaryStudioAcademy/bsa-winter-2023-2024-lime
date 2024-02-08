@@ -1,7 +1,7 @@
 import { type StorageKey } from './enums/enums.js';
-import { type IStorage } from './interfaces/interfaces.js';
+import { type Storage } from './types/types.js';
 
-class Storage implements IStorage {
+class BaseStorage implements Storage {
     private store: globalThis.Storage;
 
     public constructor(store: globalThis.Storage) {
@@ -31,4 +31,4 @@ class Storage implements IStorage {
     }
 }
 
-export { Storage };
+export { BaseStorage };

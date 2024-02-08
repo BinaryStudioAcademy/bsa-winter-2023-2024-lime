@@ -1,6 +1,6 @@
-import { Logger } from './logger.package.js';
+import { BaseLogger } from './base-logger.package.js';
 
-const logger = new Logger();
+const logger = new BaseLogger();
 
 export { logger };
-export { type ILogger } from './interfaces/interfaces.js';
+export { type Logger } from './types/types.js';

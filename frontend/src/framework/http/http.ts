@@ -1,9 +1,8 @@
-import { Http } from './http.package.js';
+import { BaseHttp } from './base-http.package.js';
 
-const http = new Http();
+const http = new BaseHttp();
 
 export { http };
 export { HttpCode, HttpHeader } from './enums/enums.js';
 export { HttpError } from './exceptions/exceptions.js';
-export { type IHttp } from './interfaces/interfaces.js';
-export { type HttpOptions } from './types/types.js';
+export { type Http, type HttpOptions } from './types/types.js';

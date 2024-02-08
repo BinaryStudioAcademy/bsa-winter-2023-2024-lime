@@ -10,7 +10,7 @@ import { reducer as authReducer } from '~/bundles/auth/store/';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as usersReducer } from '~/bundles/users/store/';
 import { userApi } from '~/bundles/users/users.js';
-import { type IConfig } from '~/framework/config/config.js';
+import { type Config } from '~/framework/config/config.js';
 
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
@@ -31,7 +31,7 @@ class Store {
         >
     >;
 
-    public constructor(config: IConfig) {
+    public constructor(config: Config) {
         this.instance = configureStore({
             devTools: config.ENV.APP.ENVIRONMENT !== AppEnvironment.PRODUCTION,
             reducer: {

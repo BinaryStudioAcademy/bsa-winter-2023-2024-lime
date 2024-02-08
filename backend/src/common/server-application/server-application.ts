@@ -4,16 +4,16 @@ import { config } from '~/common/config/config.js';
 import { database } from '~/common/database/database.js';
 import { logger } from '~/common/logger/logger.js';
 
-import { ServerApp } from './server-app.js';
-import { ServerAppApi } from './server-app-api.js';
+import { BaseServerApp } from './base-server-app.js';
+import { BaseServerAppApi } from './base-server-app-api.js';
 
-const apiV1 = new ServerAppApi(
+const apiV1 = new BaseServerAppApi(
     'v1',
     config,
     ...authController.routes,
     ...userController.routes,
 );
-const serverApp = new ServerApp({
+const serverApp = new BaseServerApp({
     config,
     logger,
     database,
