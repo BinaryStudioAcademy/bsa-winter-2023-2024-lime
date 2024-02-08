@@ -28,9 +28,7 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
             alias: [
                 {
                     find: '~',
-                    replacement: fileURLToPath(
-                        new URL('src', import.meta.url),
-                    ),
+                    replacement: fileURLToPath(new URL('src', import.meta.url)),
                 },
             ],
         },

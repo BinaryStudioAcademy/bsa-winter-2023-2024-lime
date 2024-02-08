@@ -86,7 +86,7 @@ class HttpApi implements IHttpApi {
         return headers;
     }
 
-    private async checkResponse(response: Response): Promise<Response | never> {
+    private async checkResponse(response: Response): Promise<Response> {
         if (!response.ok) {
             await this.handleError(response);
         }

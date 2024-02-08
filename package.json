@@ -20,9 +20,9 @@
         "lint:type": "npm run lint:type --workspaces --if-present",
         "lint:js": "npm run lint:js --workspaces --if-present -- --max-warnings=0",
         "lint:css": "npm run lint:css --workspaces --if-present",
-        "lint:prettify": "prettier --check \"**/*.{ts,tsx,json,md,scss,html,yml}\"",
+        "lint:prettify": "prettier --check \"**/*.{ts,tsx,json,md,css,html,yml}\"",
         "lint": "npm run lint:editor && npm run lint:fs && npm run lint:prettify && npm run lint:type && npm run lint:js && npm run lint:css",
-        "prettify": "prettier --write \"**/*.{ts,tsx,json,md,scss,html,yml}\""
+        "prettify": "prettier --write \"**/*.{ts,tsx,json,md,css,html,yml}\""
     },
     "devDependencies": {
         "@commitlint/cli": "18.6.0",
@@ -39,9 +39,9 @@
         "lint-staged": "15.2.0",
         "prettier": "3.2.4",
         "simple-git-hooks": "2.9.0",
-        "stylelint": "15.2.0",
-        "stylelint-config-standard": "30.0.1",
-        "stylelint-order": "6.0.3",
+        "stylelint": "16.2.1",
+        "stylelint-config-standard": "36.0.0",
+        "stylelint-order": "6.0.4",
         "tsc-alias": "1.8.2",
         "typescript": "5.3.3"
     },

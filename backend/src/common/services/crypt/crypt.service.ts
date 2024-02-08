@@ -1,4 +1,4 @@
-import * as Bcrypt  from 'bcrypt';
+import * as Bcrypt from 'bcrypt';
 
 import { USER_PASSWORD_SALT_ROUNDS } from '../../constants/constants.js';
 
@@ -8,7 +8,6 @@ type EncryptSyncReturnType = {
 };
 
 class CryptService {
-
     private bcrypt = Bcrypt;
 
     public createSaltSync(): string {

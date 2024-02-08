@@ -8,6 +8,7 @@
         "npm": "10.x.x"
     },
     "scripts": {
+        "lint:css": "npx stylelint \"src/**/*.css\"",
         "lint:js": "npx eslint \"src/**/*.{ts,tsx}\"",
         "lint:type": "npx tsc --noEmit",
         "lint": "npm run lint:type && npm run lint:js",
@@ -21,15 +22,16 @@
         "@vitejs/plugin-react": "4.2.1",
         "autoprefixer": "10.4.17",
         "eslint-plugin-jsx-a11y": "6.8.0",
+        "eslint-plugin-react": "7.33.2",
         "eslint-plugin-react-hooks": "4.6.0",
         "postcss": "8.4.35",
+        "prettier-plugin-tailwindcss": "0.5.11",
         "tailwindcss": "3.4.1",
         "vite": "5.0.12"
     },
     "dependencies": {
         "@hookform/resolvers": "3.3.4",
         "@reduxjs/toolkit": "2.1.0",
-        "eslint-plugin-react": "7.33.2",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-hook-form": "7.50.1",
