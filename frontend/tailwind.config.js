@@ -23,7 +23,116 @@ export default {
                 200: '#1C2227',
             },
         },
-        extend: {},
+        extend: {
+            typography: {
+                DEFAULT: {
+                    css: {
+                        fontFamily: 'Manrope',
+                        color: '#222222',
+                    },
+                },
+                'h1-bold': {
+                    css: {
+                        fontSize: '42px',
+                        fontWeight: 600,
+                        lineHeight: '57px',
+                        letterSpacing: '0em',
+                        textAlign: 'left',
+                    },
+                },
+                'h1-semibold': {
+                    css: {
+                        fontSize: '40px',
+                        fontWeight: 600,
+                        lineHeight: '55px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                'h1-regular': {
+                    css: {
+                        fontFamily: 'Manrope',
+                        fontSize: '40px',
+                        fontWeight: 400,
+                        lineHeight: '55px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                h2: {
+                    css: {
+                        fontSize: '28px',
+                        fontWeight: 600,
+                        lineHeight: '36px',
+                        letterSpacing: '0em',
+                        textAlign: 'left',
+                    },
+                },
+                h3: {
+                    css: {
+                        fontSize: '22px',
+                        fontWeight: 600,
+                        lineHeight: '34px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                h4: {
+                    css: {
+                        fontSize: '20px',
+                        fontWeight: 600,
+                        lineHeight: '28px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                h5: {
+                    css: {
+                        fontSize: '16px',
+                        fontWeight: 500,
+                        lineHeight: '22px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                body: {
+                    css: {
+                        fontSize: '16px',
+                        fontWeight: 600,
+                        lineHeight: '20px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                'body-small': {
+                    css: {
+                        fontSize: '14px',
+                        fontWeight: 400,
+                        lineHeight: '20px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                'body-small-bold': {
+                    css: {
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        lineHeight: '20px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+                caption: {
+                    css: {
+                        fontSize: '12px',
+                        fontWeight: 400,
+                        lineHeight: '16px',
+                        letterSpacing: '0px',
+                        textAlign: 'left',
+                    },
+                },
+            },
+        },
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/typography')],
 };
