@@ -1,11 +1,13 @@
 {
     "name": "shared",
-    "type": "module",
+    "version": "1.0.0",
+	"type": "module",
+	"main": "build/index.js",
+	"types": "src/index.ts",
     "engines": {
         "node": "18.x.x",
         "npm": "10.x.x"
     },
-    "private": true,
     "scripts": {
         "lint:type": "npx tsc --noEmit",
         "lint:js": "npx eslint \"src/**/*.ts\"",
