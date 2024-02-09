@@ -5,4 +5,4 @@ export {
     AppEnvironment,
     ContentType,
     ServerErrorType,
-} from 'shared/build/index.js';
+} from 'shared';

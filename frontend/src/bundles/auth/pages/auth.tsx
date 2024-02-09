@@ -8,7 +8,7 @@ import {
 import { type UserSignUpRequestDto } from '~/bundles/users/users.js';
 
 import { SignInForm, SignUpForm } from '../components/components.js';
-import { actions as authActions } from '../store/';
+import { actions as authActions } from '../store/auth.js';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
