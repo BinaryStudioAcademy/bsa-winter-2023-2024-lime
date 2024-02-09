@@ -48,8 +48,5 @@
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged",
         "commit-msg": "npx commitlint --edit $1"
-    },
-    "dependencies": {
-        "@tailwindcss/typography": "0.5.10"
     }
 }
