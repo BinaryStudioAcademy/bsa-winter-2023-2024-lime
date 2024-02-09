@@ -1,0 +1,18 @@
+{
+    "name": "shared",
+    "type": "module",
+    "engines": {
+        "node": "18.x.x",
+        "npm": "10.x.x"
+    },
+    "private": true,
+    "scripts": {
+        "lint:type": "npx tsc --noEmit",
+        "lint:js": "npx eslint \"src/**/*.ts\"",
+        "lint": "npm run lint:type && npm run lint:js",
+        "build": "tsc && tsc-alias"
+    },
+    "dependencies": {
+        "zod": "3.22.4"
+    }
+}
