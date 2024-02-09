@@ -29,14 +29,12 @@ Will be added soon
 
 ## 🏃‍♂️ Simple Start
 
-1. **`npm install`** at the root
-2. **`npm install`** at the frontend folder
-3. **`npm install`** at the backend folder
-4. Fill ENVs
-5. **`npx simple-git-hooks`** at the root
-6. **`cd backend && npm run migrate:dev`** then **`npm run start:dev`**
-7. **`cd frontend && npm run start:dev`**
-8. Enjoy ❤️
+1. Install packages: **`npm install`**
+2. Fill ENVs
+3. Install pre-commit hooks: **`npx simple-git-hooks`**
+4. Run migrations: **`npm run migrate:dev -w backend`**
+5. Run backend: **`npm run start:dev -w backend`**
+6. Run fronend: **`npm run start:dev -w frontend`**
 
 ### 🌑 Backend
 
@@ -46,8 +44,9 @@ Will be added soon
 
 ### 🌕 Frontend
 
--   [React](https://reactjs.org/) — a frontend library.
--   [Redux](https://redux.js.org/) + [Redux Toolkit](https://redux-toolkit.js.org/) — a state manager.
+-   [Redux](https://redux.js.org/)
+-   [Redux Toolkit](https://redux-toolkit.js.org/) — a state manager.
+-   [Tailwind CSS](https://tailwindcss.com/) - a CSS framework
 
 ### 🥊 Code quality
 
