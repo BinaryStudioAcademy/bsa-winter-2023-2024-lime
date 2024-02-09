@@ -1,6 +1,7 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import fastifyJwt from '@fastify/jwt';
 import fastifyStatic from '@fastify/static';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
@@ -75,6 +76,10 @@ class BaseServerApp implements ServerApp {
         await this.app.register(fastifyStatic, {
             root: staticPath,
             prefix: '/',
+        });
+
+        await this.app.register(fastifyJwt, {
+            secret: this.config.ENV.APP.JWT_SECRET
         });
 
         this.app.setNotFoundHandler(async (_request, response) => {
