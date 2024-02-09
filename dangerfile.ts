@@ -6,7 +6,7 @@ import {
     fail,
 } from 'danger';
 
-import { ProjectPrefix } from './project.config.js';
+import { ProjectPrefix } from './project.config';
 
 type GitHubPRDSL = LibraryGitHubDSL & {
     head: GitHubMergeRef & {

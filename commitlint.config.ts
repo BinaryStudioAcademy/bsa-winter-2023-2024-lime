@@ -1,6 +1,6 @@
 import { type UserConfig } from '@commitlint/types';
 
-import { ProjectPrefix } from './project.config.js';
+import { ProjectPrefix } from './project.config';
 
 const COMMIT_MODIFIERS = ['+', '*', '-'];
 const COMMIT_MESSAGE_REGEXP = new RegExp(

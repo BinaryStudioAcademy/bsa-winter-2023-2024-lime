@@ -1,5 +1,1 @@
-export {
-    ApiPath,
-    AppEnvironment,
-    ServerErrorType,
-} from 'shared';
+export { ApiPath, AppEnvironment, ServerErrorType } from 'shared';

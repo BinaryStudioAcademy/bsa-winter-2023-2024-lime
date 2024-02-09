@@ -1,4 +1,3 @@
-
 import { type ValueOf } from '../../../types/types.js';
 import { type HttpCode } from '../../http/http.js';
 import { ApplicationError } from '../application-error/application-error.exception.js';

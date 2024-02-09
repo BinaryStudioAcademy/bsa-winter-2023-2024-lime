@@ -12,11 +12,14 @@ class BaseConfig implements Config {
     private get envSchema(): EnvironmentSchema {
         return {
             APP: {
-                ENVIRONMENT: import.meta.env
-                    .VITE_APP_NODE_ENV as AppEnvironment,
+                ENVIRONMENT: import.meta.env[
+                    'VITE_APP_NODE_ENV'
+                ] as AppEnvironment,
             },
             API: {
-                ORIGIN_URL: import.meta.env.VITE_APP_API_ORIGIN_URL as string,
+                ORIGIN_URL: import.meta.env[
+                    'VITE_APP_API_ORIGIN_URL'
+                ] as string,
             },
         };
     }
