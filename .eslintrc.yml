@@ -66,10 +66,15 @@ rules:
         - error
     import/no-unresolved:
         - off
+    import/extensions:
+        - error
+        - always
+        - ignorePackages: true
     import/newline-after-import:
         - error
-        - count: 1
     import/no-default-export:
+        - error
+    import/no-duplicates:
         - error
     '@typescript-eslint/consistent-type-definitions':
         - off
