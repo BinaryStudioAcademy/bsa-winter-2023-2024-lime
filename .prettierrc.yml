@@ -8,9 +8,11 @@ trailingComma: all
 bracketSpacing: true
 arrowParens: always
 overrides:
-    - files: '*.scss'
+    - files: '*.css'
       options:
           singleQuote: false
     - files: '*.html'
       options:
           printWidth: 9999
+plugins:
+    - 'prettier-plugin-tailwindcss'

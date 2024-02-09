@@ -1,15 +1,15 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
-import { type IRepository } from '~/common/interfaces/interfaces.js';
+import { type Repository } from '~/common/types/types.js';
 
-class UserRepository implements IRepository {
+class UserRepository implements Repository {
     private userModel: typeof UserModel;
 
     public constructor(userModel: typeof UserModel) {
         this.userModel = userModel;
     }
 
-    public find(): ReturnType<IRepository['find']> {
+    public find(): ReturnType<Repository['find']> {
         return Promise.resolve(null);
     }
 
@@ -35,11 +35,11 @@ class UserRepository implements IRepository {
         return UserEntity.initialize(item);
     }
 
-    public update(): ReturnType<IRepository['update']> {
+    public update(): ReturnType<Repository['update']> {
         return Promise.resolve(null);
     }
 
-    public delete(): ReturnType<IRepository['delete']> {
+    public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
     }
 }

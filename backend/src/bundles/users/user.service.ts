@@ -1,7 +1,7 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
-import { type IService } from '~/common/interfaces/interfaces.js';
 import { cryptService } from '~/common/services/services.js';
+import { type Service } from '~/common/types/types.js';
 
 import {
     type UserGetAllResponseDto,
@@ -9,14 +9,14 @@ import {
     type UserSignUpResponseDto,
 } from './types/types.js';
 
-class UserService implements IService {
+class UserService implements Service {
     private userRepository: UserRepository;
 
     public constructor(userRepository: UserRepository) {
         this.userRepository = userRepository;
     }
 
-    public find(): ReturnType<IService['find']> {
+    public find(): ReturnType<Service['find']> {
         return Promise.resolve(null);
     }
 
@@ -43,11 +43,11 @@ class UserService implements IService {
         return user.toObject();
     }
 
-    public update(): ReturnType<IService['update']> {
+    public update(): ReturnType<Service['update']> {
         return Promise.resolve(null);
     }
 
-    public delete(): ReturnType<IService['delete']> {
+    public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
     }
 }

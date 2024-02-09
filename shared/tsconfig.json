@@ -9,9 +9,9 @@
         "esModuleInterop": true,
         "baseUrl": ".",
         "paths": {
-            "~/*": ["./src/*"]
+            "~/*": ["./src/*"],
         },
         "outDir": "build",
-        "declaration": true
-    }
+        "declaration": true,
+    },
 }

@@ -1,11 +1,11 @@
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type ApiHandlerResponse,
-    Controller,
+    BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
-import { type ILogger } from '~/common/logger/logger.js';
+import { type Logger } from '~/common/logger/logger.js';
 
 import { UsersApiPath } from './enums/enums.js';
 
@@ -24,10 +24,10 @@ import { UsersApiPath } from './enums/enums.js';
  *            type: string
  *            format: email
  */
-class UserController extends Controller {
+class UserController extends BaseController {
     private userService: UserService;
 
-    public constructor(logger: ILogger, userService: UserService) {
+    public constructor(logger: Logger, userService: UserService) {
         super(logger, ApiPath.USERS);
 
         this.userService = userService;

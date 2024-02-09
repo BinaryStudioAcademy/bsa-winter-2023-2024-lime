@@ -3,19 +3,19 @@ import { userSignUpValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
-    Controller,
+    BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
-import { type ILogger } from '~/common/logger/logger.js';
+import { type Logger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
 import { AuthApiPath } from './enums/enums.js';
 
-class AuthController extends Controller {
+class AuthController extends BaseController {
     private authService: AuthService;
 
-    public constructor(logger: ILogger, authService: AuthService) {
+    public constructor(logger: Logger, authService: AuthService) {
         super(logger, ApiPath.AUTH);
 
         this.authService = authService;
