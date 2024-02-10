@@ -1,14 +1,17 @@
-import { clsx } from 'clsx';
 import { type ReactNode } from 'react';
+
+import { getValidClassNames } from '~/helpers/get-valid-class-names.js';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 type ButtonSize = 'small' | 'medium';
 type ButtonType = 'button' | 'submit';
 
 type ButtonProperties = {
-    children: ReactNode;
     size: ButtonSize;
     variant: ButtonVariant;
+    label: string;
+    leftIcon?: ReactNode;
+    rightIcon?: ReactNode;
     type?: ButtonType;
     isDisabled?: boolean;
     className?: string;
@@ -18,8 +21,8 @@ type ButtonProperties = {
 const classes = {
     base: 'flex justify-center items-center transition ease-in-out duration-300',
     size: {
-        small: 'px-4 py-2 h-[32px] text-[14px] font-bold leading-[1.3rem]',
-        medium: 'px-6 py-4 h-[54px] text-[16px] font-bold leading-[1.3rem]',
+        small: 'px-4 py-2 h-[32px] text-[14px] font-bold leading-[1.3rem] gap-[4px]',
+        medium: 'px-6 py-4 h-[54px] text-[16px] font-bold leading-[1.3rem] gap-[8px]',
     },
 
     variant: {
@@ -33,9 +36,11 @@ const classes = {
 };
 
 const Button = ({
-    children,
+    label,
     variant,
     size,
+    leftIcon,
+    rightIcon,
     className,
     type = 'button',
     isDisabled = false,
@@ -45,15 +50,17 @@ const Button = ({
         <button
             disabled={isDisabled}
             type={type}
-            className={clsx(
+            className={getValidClassNames(
                 classes.base,
                 classes.size[size],
                 classes.variant[variant],
-                className,
+                className as string,
             )}
             {...properties}
         >
-            {children}
+            {leftIcon}
+            {label}
+            {rightIcon}
         </button>
     );
 };
