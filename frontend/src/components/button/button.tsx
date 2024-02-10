@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { type ReactNode } from 'react';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
@@ -9,18 +10,10 @@ type ButtonProperties = {
     size: ButtonSize;
     variant: ButtonVariant;
     type?: ButtonType;
-    disabled?: boolean;
+    isDisabled?: boolean;
     className?: string;
     onClick?: () => void;
 };
-
-const classCreator = (input: string): string =>
-    input
-        .replaceAll(/\s+/gm, ' ')
-        .split(' ')
-        .filter((item) => typeof item === 'string')
-        .join(' ')
-        .trim();
 
 const classes = {
     base: 'flex justify-center items-center transition ease-in-out duration-300',
@@ -45,19 +38,19 @@ const Button = ({
     size,
     className,
     type = 'button',
-    disabled = false,
+    isDisabled = false,
     ...properties
 }: ButtonProperties): JSX.Element => {
     return (
         <button
-            disabled={disabled}
+            disabled={isDisabled}
             type={type}
-            className={classCreator(`
-                ${classes.base}
-                ${classes.size[size]}
-                ${classes.variant[variant]}
-                ${className}
-            `)}
+            className={clsx(
+                classes.base,
+                classes.size[size],
+                classes.variant[variant],
+                className,
+            )}
             {...properties}
         >
             {children}
