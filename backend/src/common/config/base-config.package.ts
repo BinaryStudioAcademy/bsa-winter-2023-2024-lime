@@ -41,12 +41,6 @@ class BaseConfig implements Config {
                     env: 'PORT',
                     default: null,
                 },
-                JWT_SECRET: {
-                    doc: 'jwt secret for registration of fastifyJwt',
-                    format: String,
-                    env: 'JWT_SECRET',
-                    default: null,
-                }
             },
             DB: {
                 CONNECTION_STRING: {

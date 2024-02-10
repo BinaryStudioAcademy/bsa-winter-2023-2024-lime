@@ -3,8 +3,7 @@ import { type AppEnvironment } from '~/common/enums/enums.js';
 type EnvironmentSchema = {
     APP: {
         PORT: number;
-        ENVIRONMENT: AppEnvironment;
-        JWT_SECRET: string
+        ENVIRONMENT: AppEnvironment
     };
     DB: {
         CONNECTION_STRING: string;
