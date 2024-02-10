@@ -1,5 +1,8 @@
+import { type UserSignUpResponseDto } from 'shared/build';
+
 type Service<T = unknown> = {
     find(): Promise<T>;
+    findByEmail(email: string): Promise<UserSignUpResponseDto | null>;
     findAll(): Promise<{
         items: T[];
     }>;

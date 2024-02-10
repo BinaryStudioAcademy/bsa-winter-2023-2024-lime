@@ -20,6 +20,10 @@ class UserService implements Service {
         return Promise.resolve(null);
     }
 
+    public async findByEmail(email: string): ReturnType<Service['findByEmail']> {
+        return await this.userRepository.findByEmail(email);
+    }
+
     public async findAll(): Promise<UserGetAllResponseDto> {
         const items = await this.userRepository.findAll();
 
@@ -30,7 +34,7 @@ class UserService implements Service {
 
     public async create(
         payload: UserSignUpRequestDto,
-    ): Promise<UserSignUpResponseDto> {
+    ): Promise<Omit<UserSignUpResponseDto, 'token'>> {
         const { hash, salt } = cryptService.encryptSync(payload.password);
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
