@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 
-import { getValidClassNames } from '../../helpers/get-valid-class-names.js';
+import { getValidClassNames } from '../../helpers/helpers.js';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 type ButtonSize = 'small' | 'medium';
@@ -27,11 +27,11 @@ const classes = {
 
     variant: {
         primary:
-            'bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
+            'rounded-lg bg-lm-yellow-100 text-lm-black-300 hover:bg-lm-yellow-200 disabled:text-lm-grey-200 disabled:bg-lm-grey-300',
         secondary:
             'border border-lm-yellow-100 rounded-lg bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 hover:border-lm-yellow-200 disabled:text-lm-grey-300 disabled:border-lm-grey-300',
         tertiary:
-            'rounded-lg bg-lm-yellow-100 text-lm-black-300 hover:bg-lm-yellow-200 disabled:text-lm-grey-200 disabled:bg-lm-grey-300',
+            'bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
     },
 };
 
