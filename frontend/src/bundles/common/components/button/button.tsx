@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 
-import { getValidClassNames } from '~/bundles/common/helpers/get-valid-class-names.js';
+import { getValidClassNames } from '../../helpers/get-valid-class-names.js';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 type ButtonSize = 'small' | 'medium';
