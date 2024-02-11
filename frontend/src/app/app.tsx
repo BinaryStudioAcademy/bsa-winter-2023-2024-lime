@@ -7,7 +7,7 @@ import {
     useEffect,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
-import { actions as userActions } from '~/bundles/users/store';
+import { actions as userActions } from '~/bundles/users/store/users.js';
 
 const App: React.FC = () => {
     const { pathname } = useLocation();

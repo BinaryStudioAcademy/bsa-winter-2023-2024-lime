@@ -38,9 +38,6 @@ const DangerConfig = {
     ASSIGNEES: {
         IS_REQUIRED: true,
     },
-    PROJECTS: {
-        IS_REQUIRED: false,
-    },
     MILESTONE: {
         IS_REQUIRED: true,
     },
@@ -81,14 +78,6 @@ const checkTitle = (titlePattern: RegExp): void => {
     }
 };
 
-const checkProjects = (): void => {
-    const { has_projects: hasProjects } = pr.head.repo;
-
-    if (!hasProjects) {
-        fail('This pull request should be linked to a project.');
-    }
-};
-
 const checkMilestone = (): void => {
     const hasMilestone = Boolean(pr.milestone);
 
@@ -124,10 +113,6 @@ const applyDanger = (): void => {
 
     if (DangerConfig.ASSIGNEES.IS_REQUIRED) {
         checkAssignees();
-    }
-
-    if (DangerConfig.PROJECTS.IS_REQUIRED) {
-        checkProjects();
     }
 
     if (DangerConfig.MILESTONE.IS_REQUIRED) {

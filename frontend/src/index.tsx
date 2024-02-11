@@ -4,13 +4,13 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from '~/app/app.js';
-import { Auth } from '~/bundles/auth/pages/auth';
+import { Auth } from '~/bundles/auth/pages/auth.js';
 import {
     RouterProvider,
     StoreProvider,
-} from '~/bundles/common/components/components';
-import { AppRoute } from '~/bundles/common/enums/enums';
-import { store } from '~/framework/store/store';
+} from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { store } from '~/framework/store/store.js';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
