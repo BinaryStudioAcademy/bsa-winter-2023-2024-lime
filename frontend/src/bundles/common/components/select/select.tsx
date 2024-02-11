@@ -8,12 +8,7 @@ import ReactSelect from 'react-select';
 
 import { useCallback, useFormController } from '~/bundles/common/hooks/hooks.js';
 
-import styles from './styles.module.css';
-
-type SelectOption = {
-    label: string;
-    value: string;
-};
+import { type SelectOption, type ValueSelectTypes } from './types/types.js';
 
 type Properties<T extends FieldValues> = {
     name: FieldPath<T>;
@@ -41,27 +36,42 @@ const Select = <T extends FieldValues>({
     const { field } = useFormController({ name, control });
     const error = errors[name]?.message as string;
 
+    const handleSelectValue = (
+        value: ValueSelectTypes | ValueSelectTypes[]
+    ): SelectOption | SelectOption[] | undefined => {
+        return (isMulti && value) ?
+            options.filter(selectedOption =>
+                (value as ValueSelectTypes[]).includes(selectedOption.value))
+            : options.find(option => option.value === value);
+    };
+
     const handleChange = useCallback(
-        (option: unknown) => {
-            const fieldValue = (option as SelectOption)?.value ?? null;
-            field.onChange(fieldValue);
+        (selectedOptions: unknown): void => {
+            const optionsToUpdate = isMulti ?
+                (selectedOptions as SelectOption[]).filter(selectedOption =>
+                    options.some(option => option.value === selectedOption.value))
+                    .map(selectedOption => selectedOption.value)
+                : (selectedOptions as SelectOption).value;
+
+            field.onChange(optionsToUpdate);
+
         },
-        [field],
+        [isMulti, field, options]
     );
 
     return (
-        <div>
-            {label && <span className={styles['label']}>{label}</span>}
+        <div className={'select-wrapper'}>
+            {label && <span className={'label'}>{label}</span>}
             <ReactSelect
-                className='select'
                 placeholder={placeholder}
                 options={options}
                 isMulti={isMulti}
                 isDisabled={isDisabled}
                 isClearable={isClearable}
+                value={handleSelectValue(field.value)}
                 onChange={handleChange}
             />
-            <span className={styles['error']}>{error}</span>
+            <span className={'error'}>{error}</span>
         </div>
 
     );
