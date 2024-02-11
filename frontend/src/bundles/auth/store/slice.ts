@@ -7,10 +7,12 @@ import { signUp } from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
+    isLoggedIn: boolean;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
+    isLoggedIn: false,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -23,9 +25,11 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(signUp.fulfilled, (state) => {
             state.dataStatus = DataStatus.FULFILLED;
+            state.isLoggedIn = true;
         });
         builder.addCase(signUp.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
+            state.isLoggedIn = false;
         });
     },
 });

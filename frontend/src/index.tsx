@@ -12,6 +12,8 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { store } from '~/framework/store/store.js';
 
+import { ProtectedRoute } from './bundles/common/components/protected-route/protected-route.js';
+
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
@@ -32,6 +34,13 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                             {
                                 path: AppRoute.SIGN_UP,
                                 element: <Auth />,
+                            },
+                            {
+                                path: '',
+                                element: <ProtectedRoute />,
+                                children: [
+                                    //write all protected components here
+                                ],
                             },
                         ],
                     },
