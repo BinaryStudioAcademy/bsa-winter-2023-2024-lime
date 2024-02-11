@@ -5,4 +5,4 @@ type SelectOption = {
     value: ValueSelectTypes;
 };
 
-export { type SelectOption,type ValueSelectTypes };
+export { type SelectOption, type ValueSelectTypes };
