@@ -6,6 +6,7 @@ import {
 } from 'react-hook-form';
 import { type GroupBase, type Props } from 'react-select';
 import ReactSelect from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 import { useCallback, useFormController } from '~/bundles/common/hooks/hooks.js';
 
@@ -22,6 +23,8 @@ type Properties<
     errors: FieldErrors<T>;
     label?: string;
 };
+
+const animatedComponents = makeAnimated();
 
 const Select = <
     T extends FieldValues,
@@ -66,8 +69,13 @@ const Select = <
     );
 
     return (
-        <div className='mx-10'>
-            {label && <span className={'label'}>{label}</span>}
+        <div className='mx-20 p-5 bg-lm-black-200 '>
+            {label &&
+                <span
+                    className='text-base font-medium text-lm-white'>
+                    {label}
+                </span>
+            }
             <ReactSelect
                 {...rest}
                 name={name}
@@ -76,6 +84,7 @@ const Select = <
                 isMulti={isMulti}
                 isDisabled={isDisabled}
                 isClearable={isClearable}
+                components={animatedComponents}
                 value={handleSelectValue(field.value) ?? null}
                 onChange={handleChange}
                 styles={{ ...getStyles<IsMulti, Group>(), ...styles }}
