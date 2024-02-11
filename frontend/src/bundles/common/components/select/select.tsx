@@ -10,6 +10,7 @@ import makeAnimated from 'react-select/animated';
 
 import { useCallback, useFormController } from '~/bundles/common/hooks/hooks.js';
 
+import { DropdownIndicator } from './libs/components/dropdown-indicator.js';
 import { getStyles } from './libs/styles/styles.js';
 import { type SelectOption, type ValueSelectTypes } from './libs/types/types.js';
 
@@ -84,7 +85,7 @@ const Select = <
                 isMulti={isMulti}
                 isDisabled={isDisabled}
                 isClearable={isClearable}
-                components={animatedComponents}
+                components={{ ...animatedComponents, DropdownIndicator }}
                 value={handleSelectValue(field.value) ?? null}
                 onChange={handleChange}
                 styles={{ ...getStyles<IsMulti, Group>(), ...styles }}
