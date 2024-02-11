@@ -2,17 +2,23 @@ import {
     type Control,
     type FieldErrors,
     type FieldPath,
-    type FieldValues
+    type FieldValues,
 } from 'react-hook-form';
 import { type GroupBase, type Props } from 'react-select';
 import ReactSelect from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-import { useCallback, useFormController } from '~/bundles/common/hooks/hooks.js';
+import {
+    useCallback,
+    useFormController,
+} from '~/bundles/common/hooks/hooks.js';
 
 import { DropdownIndicator } from './libs/components/dropdown-indicator.js';
 import { getStyles } from './libs/styles/styles.js';
-import { type SelectOption, type ValueSelectTypes } from './libs/types/types.js';
+import {
+    type SelectOption,
+    type ValueSelectTypes,
+} from './libs/types/types.js';
 
 type Properties<
     T extends FieldValues,
@@ -48,35 +54,41 @@ const Select = <
     const error = errors[name]?.message as string;
 
     const handleSelectValue = (
-        value: ValueSelectTypes | ValueSelectTypes[]
+        value: ValueSelectTypes | ValueSelectTypes[],
     ): SelectOption | SelectOption[] | undefined => {
-        return (isMulti && value) ?
-            (options as SelectOption[]).filter(selectedOption =>
-                (value as ValueSelectTypes[]).includes(selectedOption.value))
-            : (options as SelectOption[]).find(option => option.value === value);
+        return isMulti && value
+            ? (options as SelectOption[]).filter((option) =>
+                (value as ValueSelectTypes[]).includes(option.value),
+            )
+            : (options as SelectOption[]).find(
+                (option) => option.value === value,
+            );
     };
 
     const handleChange = useCallback(
         (selectedOptions: unknown): void => {
-            const optionsToUpdate = isMulti ?
-                (selectedOptions as SelectOption[]).filter(selectedOption =>
-                    (options as SelectOption[]).some(option => option.value === selectedOption.value))
-                    .map(selectedOption => selectedOption.value)
+            const optionsToUpdate = isMulti
+                ? (selectedOptions as SelectOption[])
+                    .filter((selectedOption) =>
+                        (options as SelectOption[]).some(
+                            (option) => option.value === selectedOption.value,
+                        ),
+                    )
+                    .map((selectedOption) => selectedOption.value)
                 : (selectedOptions as SelectOption).value;
 
             field.onChange(optionsToUpdate);
         },
-        [isMulti, field, options]
+        [isMulti, field, options],
     );
 
     return (
-        <div className='mx-20 p-5 bg-lm-black-200 '>
-            {label &&
-                <span
-                    className='text-base font-medium text-lm-white'>
+        <div className="bg-lm-black-200 mx-20 p-5 ">
+            {label && (
+                <span className="text-lm-white text-base font-medium">
                     {label}
                 </span>
-            }
+            )}
             <ReactSelect
                 {...rest}
                 name={name}
