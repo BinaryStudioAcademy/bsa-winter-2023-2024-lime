@@ -1,22 +1,5 @@
-import { type ReactNode } from 'react';
-
 import { getValidClassNames } from '../../helpers/helpers.js';
-
-type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
-type ButtonSize = 'small' | 'medium';
-type ButtonType = 'button' | 'submit';
-
-type ButtonProperties = {
-    size: ButtonSize;
-    variant: ButtonVariant;
-    label: string;
-    leftIcon?: ReactNode;
-    rightIcon?: ReactNode;
-    type?: ButtonType;
-    isDisabled?: boolean;
-    className?: string;
-    onClick?: () => void;
-};
+import { type ButtonProperties } from '../../types/button.type.js';
 
 const classes = {
     base: 'flex justify-center items-center transition ease-in-out duration-300',

@@ -1,6 +1,10 @@
 import { Button, Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
+    ButtonSize,
+    ButtonVariant,
+} from '~/bundles/common/types/button.type.js';
+import {
     type UserSignUpRequestDto,
     userSignUpValidationSchema,
 } from '~/bundles/users/users.js';
@@ -51,8 +55,8 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 <Button
                     type="submit"
                     label="Sign up"
-                    variant="tertiary"
-                    size="medium"
+                    variant={ButtonVariant.Primary}
+                    size={ButtonSize.Medium}
                 />
             </form>
         </>
