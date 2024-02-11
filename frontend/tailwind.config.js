@@ -23,7 +23,17 @@ export default {
                 200: '#1C2227',
             },
         },
-        extend: {},
+        extend: {
+            animation: {
+                'load': 'load 700ms infinite ease-in-out',
+            },
+            keyframes: {
+                'load': {
+                    '0%': { transform: 'rotate(0)' },
+                    '100%': { transform: 'rotate(360deg)' },
+                },
+            },
+        },
     },
     plugins: [],
 };
