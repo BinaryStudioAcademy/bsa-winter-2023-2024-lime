@@ -4,35 +4,42 @@ import {
     type FieldPath,
     type FieldValues
 } from 'react-hook-form';
+import { type GroupBase, type Props } from 'react-select';
 import ReactSelect from 'react-select';
 
 import { useCallback, useFormController } from '~/bundles/common/hooks/hooks.js';
 
-import { type SelectOption, type ValueSelectTypes } from './types/types.js';
+import { getStyles } from './libs/styles/styles.js';
+import { type SelectOption, type ValueSelectTypes } from './libs/types/types.js';
 
-type Properties<T extends FieldValues> = {
+type Properties<
+    T extends FieldValues,
+    IsMulti extends boolean = false,
+    Group extends GroupBase<SelectOption> = GroupBase<SelectOption>,
+> = Props<SelectOption, IsMulti, Group> & {
     name: FieldPath<T>;
     control: Control<T, null>;
     errors: FieldErrors<T>;
-    options: SelectOption[];
-    placeholder?: string;
     label?: string;
-    isMulti?: boolean;
-    isDisabled?: boolean;
-    isClearable?: boolean
 };
 
-const Select = <T extends FieldValues>({
+const Select = <
+    T extends FieldValues,
+    IsMulti extends boolean = false,
+    Group extends GroupBase<SelectOption> = GroupBase<SelectOption>,
+>({
     name,
+    styles,
     control,
     errors,
     options,
     placeholder = '',
     label = '',
-    isMulti = false,
+    isMulti,
     isDisabled = false,
-    isClearable = false
-}: Properties<T>): JSX.Element => {
+    isClearable = false,
+    ...rest
+}: Properties<T, IsMulti, Group>): JSX.Element => {
     const { field } = useFormController({ name, control });
     const error = errors[name]?.message as string;
 
@@ -40,36 +47,38 @@ const Select = <T extends FieldValues>({
         value: ValueSelectTypes | ValueSelectTypes[]
     ): SelectOption | SelectOption[] | undefined => {
         return (isMulti && value) ?
-            options.filter(selectedOption =>
+            (options as SelectOption[]).filter(selectedOption =>
                 (value as ValueSelectTypes[]).includes(selectedOption.value))
-            : options.find(option => option.value === value);
+            : (options as SelectOption[]).find(option => option.value === value);
     };
 
     const handleChange = useCallback(
         (selectedOptions: unknown): void => {
             const optionsToUpdate = isMulti ?
                 (selectedOptions as SelectOption[]).filter(selectedOption =>
-                    options.some(option => option.value === selectedOption.value))
+                    (options as SelectOption[]).some(option => option.value === selectedOption.value))
                     .map(selectedOption => selectedOption.value)
                 : (selectedOptions as SelectOption).value;
 
             field.onChange(optionsToUpdate);
-
         },
         [isMulti, field, options]
     );
 
     return (
-        <div className={'select-wrapper'}>
+        <div className='mx-10'>
             {label && <span className={'label'}>{label}</span>}
             <ReactSelect
+                {...rest}
+                name={name}
                 placeholder={placeholder}
                 options={options}
                 isMulti={isMulti}
                 isDisabled={isDisabled}
                 isClearable={isClearable}
-                value={handleSelectValue(field.value)}
+                value={handleSelectValue(field.value) ?? null}
                 onChange={handleChange}
+                styles={{ ...getStyles<IsMulti, Group>(), ...styles }}
             />
             <span className={'error'}>{error}</span>
         </div>
