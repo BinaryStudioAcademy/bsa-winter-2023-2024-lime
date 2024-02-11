@@ -1,8 +1,9 @@
-import { type UserSignUpResponseDto } from 'shared/build';
+
+import { type UserModel } from '~/bundles/users/user.model';
 
 type Service<T = unknown> = {
     find(): Promise<T>;
-    findByEmail(email: string): Promise<UserSignUpResponseDto | null>;
+    findByEmail(email: string): Promise<UserModel | null>;
     findAll(): Promise<{
         items: T[];
     }>;
