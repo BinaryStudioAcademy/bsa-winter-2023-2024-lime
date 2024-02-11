@@ -1,6 +1,5 @@
 import { components } from 'react-select';
 
-//Expected to change svg by component
 const DropdownIndicator: typeof components.DropdownIndicator = (properties) => {
     return (
         <components.DropdownIndicator {...properties}>

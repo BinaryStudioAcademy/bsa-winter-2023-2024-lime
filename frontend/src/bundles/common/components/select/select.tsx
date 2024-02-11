@@ -92,7 +92,6 @@ const Select = <
             />
             <span className={'error'}>{error}</span>
         </div>
-
     );
 };
 
