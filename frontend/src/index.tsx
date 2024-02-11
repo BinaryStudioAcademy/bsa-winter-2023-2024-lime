@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import '~/assets/css/styles.css';
 
 import { StrictMode } from 'react';
@@ -10,6 +11,7 @@ import {
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { NotificationContainer } from '~/framework/services/notification-service/notification.service.js';
 import { store } from '~/framework/store/store.js';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -37,6 +39,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                     },
                 ]}
             />
+            <NotificationContainer />
         </StoreProvider>
     </StrictMode>,
 );
