@@ -20,15 +20,15 @@ const Checkbox = <T extends FieldValues>({
     const { field } = useController<T>({ name, control });
 
     return (
-        <div className="">
+        <div className="flex items-center">
             <input
                 {...field}
                 name={name}
                 type="checkbox"
                 id="toggle-checkbox"
-                className=""
+                className="appearance-none w-7 h-4 lm-yellow-100 border-none rounded-full cursor-pointer relative transition duration-300 outline-none"
             />
-            <label className="" htmlFor="toggle-checkbox">
+            <label className="cursor-pointer" htmlFor="toggle-checkbox">
                 {label}
             </label>
         </div>
