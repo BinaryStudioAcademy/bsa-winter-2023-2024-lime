@@ -1,5 +1,6 @@
 import { type GroupBase, type StylesConfig } from 'react-select';
 
+import { Color } from '../enum/color.enum.js';
 import { type SelectOption } from '../types/types.js';
 
 const getStyles = <
@@ -9,22 +10,22 @@ const getStyles = <
     const defaultStyles: StylesConfig<SelectOption, isMulti, Group> = {
         dropdownIndicator: (styles, state) => ({
             ...styles,
-            padding: '0 10px',
             transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : '',
-            color: '#383F4A',
+            color: Color.GRAY[500],
             cursor: 'pointer',
             ':hover': {
-                color: '#383F4A',
+                color: Color.GRAY[500],
             },
         }),
         control: (base) => ({
             ...base,
             width: '100%',
+            marginTop: '9px',
             height: '45px',
             paddingLeft: '15px',
             display: 'flex',
             alignItems: 'center',
-            background: '#2A2F37',
+            background: Color.BLACK[100],
             border: 'none',
             outline: 'none',
             borderRadius: '8px',
@@ -36,7 +37,7 @@ const getStyles = <
         placeholder: (base) => ({
             ...base,
             fontSize: 'inherit',
-            color: '#798392',
+            color: Color.GRAY[200],
         }),
         valueContainer: (base) => ({
             ...base,
@@ -50,33 +51,33 @@ const getStyles = <
         }),
         option: (base) => ({
             ...base,
-            backgroundColor: '#2A2F37',
-            color: '#798392',
+            backgroundColor: Color.BLACK[100],
+            color: Color.GRAY[200],
             ':active': {
                 backgroundColor: 'none',
             },
             ':hover': {
-                color: '#E0FE10',
+                color: Color.YELLOW[100],
                 cursor: 'pointer',
             },
         }),
         singleValue: (base) => ({
             ...base,
-            color: '#798392',
+            color: Color.GRAY[200],
         }),
         multiValue: (styles) => ({
             ...styles,
-            border: '1px solid #B2CA0D',
+            border: `1px solid ${Color.YELLOW[200]}`,
             borderRadius: '8px',
-            backgroundColor: '#2A2F37',
+            backgroundColor: Color.BLACK[100],
         }),
         multiValueLabel: (base) => ({
             ...base,
-            color: '#B2CA0D',
+            color: Color.YELLOW[200],
         }),
         multiValueRemove: (base) => ({
             ...base,
-            color: '#B2CA0D',
+            color: Color.YELLOW[200],
             ':hover': {
                 opacity: '0.95',
             },
@@ -84,24 +85,24 @@ const getStyles = <
         clearIndicator: (base) => ({
             ...base,
             padding: '0',
-            color: '#383F4A',
+            color: Color.GRAY[500],
             ':hover': {
-                color: '#383F4A',
+                color: Color.GRAY[500],
                 opacity: '1.2',
             },
         }),
         menuList: (base) => ({
             ...base,
-            background: '#2A2F37',
+            background: Color.BLACK[100],
             maxHeight: '200px',
             '::-webkit-scrollbar': {
                 width: '4px',
             },
             '::-webkit-scrollbar-track': {
-                background: '#2A2F37',
+                background: Color.BLACK[100],
             },
             '::-webkit-scrollbar-thumb': {
-                background: '#B2CA0D',
+                background: Color.YELLOW[200],
                 borderRadius: '8px',
             },
         }),
