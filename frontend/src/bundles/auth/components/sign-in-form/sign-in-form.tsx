@@ -1,8 +1,5 @@
 import { Button } from '~/bundles/common/components/components.js';
-import {
-    ButtonSize,
-    ButtonVariant,
-} from '~/bundles/common/types/button.type.js';
+import { ButtonSize, ButtonVariant } from '~/bundles/common/types/types.js';
 
 type Properties = {
     onSubmit: () => void;

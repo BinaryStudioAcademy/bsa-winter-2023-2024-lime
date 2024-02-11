@@ -1,5 +1,5 @@
-import { getValidClassNames } from '../../helpers/helpers.js';
-import { type ButtonProperties } from '../../types/button.type.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import { type ButtonProperties } from '~/bundles/common/types/button.type.js';
 
 const classes = {
     base: 'flex justify-center items-center transition ease-in-out duration-300',
