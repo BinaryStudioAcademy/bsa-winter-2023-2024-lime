@@ -66,10 +66,15 @@ rules:
         - error
     import/no-unresolved:
         - off
+    import/extensions:
+        - error
+        - always
+        - ignorePackages: true
     import/newline-after-import:
         - error
-        - count: 1
     import/no-default-export:
+        - error
+    import/no-duplicates:
         - error
     '@typescript-eslint/consistent-type-definitions':
         - off
@@ -114,9 +119,7 @@ rules:
 overrides:
     - files:
           - commitlint.config.ts
+          - dangerfile.ts
       rules:
           'import/no-default-export':
               - off
-    - files:
-          - commitlint.config.ts
-          - dangerfile.ts

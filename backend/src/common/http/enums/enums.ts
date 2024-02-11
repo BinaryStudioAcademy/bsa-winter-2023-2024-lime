@@ -1,1 +1,1 @@
-export { HttpCode } from 'shared/build/index.js';
+export { HttpCode } from 'shared';
