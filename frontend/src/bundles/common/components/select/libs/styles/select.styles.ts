@@ -21,14 +21,12 @@ const getStyles = <
             ...base,
             width: '100%',
             marginTop: '9px',
-            height: '45px',
             paddingLeft: '15px',
-            display: 'flex',
-            alignItems: 'center',
             background: Color.BLACK[100],
             border: 'none',
             outline: 'none',
             borderRadius: '8px',
+            fontSize: 'inherit',
             boxShadow: 'none',
             ':hover': {
                 cursor: 'pointer',
@@ -48,6 +46,7 @@ const getStyles = <
             ...styles,
             padding: '0',
             margin: '0',
+            color: Color.WHITE,
         }),
         option: (base) => ({
             ...base,
