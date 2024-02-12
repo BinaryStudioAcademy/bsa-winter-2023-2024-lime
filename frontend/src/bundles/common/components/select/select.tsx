@@ -90,9 +90,9 @@ const Select = <
     );
 
     return (
-        <div className='bg-lm-black-200 mx-20 p-5'>
+        <div className="bg-lm-black-200 mx-20 p-5">
             {label && (
-                <span className='text-lm-white text-base font-medium'>
+                <span className="text-lm-white text-base font-medium">
                     {label}
                 </span>
             )}
@@ -110,7 +110,7 @@ const Select = <
                 styles={{ ...getStyles<IsMulti, Group>(error), ...styles }}
                 {...rest}
             />
-            <span className='text-lm-red'>{error}</span>
+            <span className="text-lm-red">{error}</span>
         </div>
     );
 };
