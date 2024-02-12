@@ -41,10 +41,8 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
 };
 
 const buttonSizesToClasses: Record<ValueOf<typeof ButtonSize>, string> = {
-    [ButtonSize.SMALL]:
-        'px-4 py-2 h-[32px] text-[14px] font-bold leading-[1.3rem] gap-[4px]',
-    [ButtonSize.MEDIUM]:
-        'px-6 py-4 h-[54px] text-[16px] font-bold leading-[1.3rem] gap-[8px]',
+    [ButtonSize.SMALL]: 'px-4 py-2 h-8 text-sm font-bold gap-1',
+    [ButtonSize.MEDIUM]: 'px-6 py-4 h-14 text-sm font-bold gap-2',
 };
 
 const Button: React.FC<ButtonProperties> = ({
