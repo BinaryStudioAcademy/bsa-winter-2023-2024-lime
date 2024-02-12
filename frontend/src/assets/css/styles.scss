@@ -2,38 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    html {
-        font-family: Manrope, sans-serif;
-    }
-}
-
 @layer components {
-    h1 {
+    .h1 {
         @apply text-4xl leading-9;
     }
 
-    h2 {
+    .h2 {
         @apply text-3xl leading-8;
     }
 
-    h3 {
+    .h3 {
         @apply text-2xl leading-7;
     }
 
-    h4 {
+    .h4 {
         @apply text-xl leading-6;
     }
 
-    h5 {
+    .h5 {
         @apply text-base leading-5;
     }
 
-    body {
+    .body {
         @apply text-sm leading-4;
     }
 
-    caption {
+    .body-sm {
         @apply text-xs leading-3;
     }
 }
