@@ -15,10 +15,7 @@ import {
 
 import { DropdownIndicator } from './libs/components/dropdown-indicator.js';
 import { getStyles } from './libs/styles/styles.js';
-import {
-    type SelectOption,
-    type SelectValue,
-} from './libs/types/types.js';
+import { type SelectOption, type SelectValue } from './libs/types/types.js';
 
 type Properties<
     T extends FieldValues,
@@ -56,28 +53,32 @@ const Select = <
     const handleSelectValue = (
         value: SelectValue | SelectValue[],
     ): SelectOption | SelectOption[] | undefined => {
-        return isMulti && value
-            ? (options as SelectOption[]).filter((option) =>
+        if (isMulti && value) {
+            return (options as SelectOption[]).filter((option) =>
                 (value as SelectValue[]).includes(option.value),
-            )
-            : (options as SelectOption[]).find(
+            );
+        } else if (!isMulti && value) {
+            return (options as SelectOption[]).find(
                 (option) => option.value === value,
             );
+        }
     };
 
     const handleChange = useCallback(
         (selectedOptions: unknown): void => {
-            const optionsToUpdate = isMulti
-                ? (selectedOptions as SelectOption[])
+            if (isMulti) {
+                const optionsToUpdate = (selectedOptions as SelectOption[])
                     .filter((selectedOption) =>
                         (options as SelectOption[]).some(
                             (option) => option.value === selectedOption.value,
                         ),
                     )
-                    .map((selectedOption) => selectedOption.value)
-                : (selectedOptions as SelectOption).value;
-
-            field.onChange(optionsToUpdate);
+                    .map((selectedOption) => selectedOption.value);
+                field.onChange(optionsToUpdate);
+            } else {
+                const optionsToUpdate = (selectedOptions as SelectOption).value;
+                field.onChange(optionsToUpdate);
+            }
         },
         [isMulti, field, options],
     );
