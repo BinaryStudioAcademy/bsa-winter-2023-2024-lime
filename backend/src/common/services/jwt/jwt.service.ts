@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { type JwtPayload } from '~/common/types/jwt.type.js';
+import { type JwtPayload } from '~/common/types/types.js';
 
 class JwtService {
     private readonly secretKey: string;

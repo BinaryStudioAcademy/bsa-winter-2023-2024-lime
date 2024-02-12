@@ -1,8 +1,6 @@
 import {
     type UserSignInRequestDto,
     type UserSignUpRequestDto,
-} from '~/bundles/users/users.js';
-import {
     userSignInValidationSchema,
     userSignUpValidationSchema,
 } from '~/bundles/users/users.js';
