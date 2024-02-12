@@ -3,8 +3,9 @@ import {
     type Control,
     type FieldPath,
     type FieldValues,
-    useController,
 } from 'react-hook-form';
+
+import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
 type CheckboxProperties<T extends FieldValues> = {
     name: FieldPath<T>;
@@ -17,7 +18,7 @@ const Checkbox = <T extends FieldValues>({
     label,
     control,
 }: CheckboxProperties<T>): ReactElement => {
-    const { field } = useController<T>({ name, control });
+    const { field } = useFormController<T>({ name, control });
 
     return (
         <div className="flex items-center">
