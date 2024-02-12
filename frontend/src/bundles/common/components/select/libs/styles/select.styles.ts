@@ -6,8 +6,30 @@ import { type SelectOption } from '../types/types.js';
 const getStyles = <
     isMulti extends boolean = false,
     Group extends GroupBase<SelectOption> = GroupBase<SelectOption>,
->(): StylesConfig<SelectOption, isMulti, Group> => {
+>(
+    errorMessage: string,
+): StylesConfig<SelectOption, isMulti, Group> => {
     const defaultStyles: StylesConfig<SelectOption, isMulti, Group> = {
+        control: (base, state) => {
+            const borderColor = errorMessage ? Color.RED : Color.YELLOW[100];
+            return {
+                ...base,
+                width: '100%',
+                marginTop: '9px',
+                minHeight: '45px',
+                paddingLeft: '10px',
+                background: Color.BLACK[100],
+                border: state.isFocused ? `1px solid ${borderColor}` : 'none',
+                outline: 'none',
+                borderRadius: '8px',
+                fontSize: 'inherit',
+                boxShadow: 'none',
+                ':hover': {
+                    cursor: 'pointer',
+                    border: `1px solid ${borderColor}`,
+                },
+            };
+        },
         dropdownIndicator: (styles, state) => ({
             ...styles,
             transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : '',
@@ -17,21 +39,7 @@ const getStyles = <
                 color: Color.GRAY[500],
             },
         }),
-        control: (base) => ({
-            ...base,
-            width: '100%',
-            marginTop: '9px',
-            paddingLeft: '15px',
-            background: Color.BLACK[100],
-            border: 'none',
-            outline: 'none',
-            borderRadius: '8px',
-            fontSize: 'inherit',
-            boxShadow: 'none',
-            ':hover': {
-                cursor: 'pointer',
-            },
-        }),
+
         placeholder: (base) => ({
             ...base,
             fontSize: 'inherit',
@@ -66,9 +74,8 @@ const getStyles = <
         }),
         multiValue: (styles) => ({
             ...styles,
-            border: `1px solid ${Color.YELLOW[200]}`,
             borderRadius: '8px',
-            backgroundColor: Color.BLACK[100],
+            backgroundColor: Color.GRAY[500],
         }),
         multiValueLabel: (base) => ({
             ...base,
