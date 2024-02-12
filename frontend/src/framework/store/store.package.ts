@@ -40,17 +40,12 @@ class Store {
                 auth: authReducer,
                 users: usersReducer,
             },
-            middleware: (getDefaultMiddleware) => {
-                const middlewares = getDefaultMiddleware({
+            middleware: (getDefaultMiddleware) =>
+                getDefaultMiddleware({
                     thunk: {
                         extraArgument: this.extraArguments,
                     },
-                });
-
-                middlewares.push(errorMiddleware);
-
-                return middlewares;
-            },
+                }).prepend(errorMiddleware),
         });
     }
 

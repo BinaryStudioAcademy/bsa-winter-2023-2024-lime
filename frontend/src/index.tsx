@@ -1,4 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
 import '~/assets/css/styles.css';
 
 import { StrictMode } from 'react';
