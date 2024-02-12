@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
-import { type ValueOf } from 'shared';
 
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 
 const ButtonVariant = {
     PRIMARY: 'primary',
