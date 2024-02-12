@@ -25,8 +25,8 @@ class BaseDatabase implements Database {
 
     public get environmentsConfig(): Database['environmentsConfig'] {
         return {
-           development: this.initialConfig,
-           production: this.initialConfig,
+            development: this.initialConfig,
+            production: this.initialConfig,
         };
     }
 
