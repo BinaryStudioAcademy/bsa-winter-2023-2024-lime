@@ -4,7 +4,7 @@ import {
     Loader,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -22,7 +22,8 @@ const App: React.FC = () => {
     }));
 
     const isRoot = pathname === AppRoute.ROOT;
-    const isLoading = dataStatus === 'idle' || dataStatus === 'pending';
+    const isLoading =
+        dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
     useEffect(() => {
         if (isRoot) {
