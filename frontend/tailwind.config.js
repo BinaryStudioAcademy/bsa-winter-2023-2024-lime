@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
@@ -23,116 +24,34 @@ export default {
                 200: '#1C2227',
             },
         },
+        fontSize: {
+            xs: '0.75rem',
+            sm: '0.8rem',
+            base: '1rem',
+            xl: '1.25rem',
+            '2xl': '1.375rem',
+            '3xl': '1.8rem',
+            '4xl': '2.4375rem',
+        },
+        fontWeight: {
+            normal: '400',
+            semibold: '500',
+            bold: '600',
+        },
+        lineHeight: {
+            '3': '1rem',
+            '4': '1.25rem',
+            '5': '1.375rem',
+            '6': '1.75rem',
+            '7': '2.125rem',
+            '8': '2.25rem',
+            '9': '3.5625rem',
+        },
         extend: {
-            typography: {
-                DEFAULT: {
-                    css: {
-                        fontFamily: 'Manrope',
-                        color: '#222222',
-                    },
-                },
-                'h1-bold': {
-                    css: {
-                        fontSize: '42px',
-                        fontWeight: 600,
-                        lineHeight: '57px',
-                        letterSpacing: '0em',
-                        textAlign: 'left',
-                    },
-                },
-                'h1-semibold': {
-                    css: {
-                        fontSize: '40px',
-                        fontWeight: 600,
-                        lineHeight: '55px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                'h1-regular': {
-                    css: {
-                        fontFamily: 'Manrope',
-                        fontSize: '40px',
-                        fontWeight: 400,
-                        lineHeight: '55px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                h2: {
-                    css: {
-                        fontSize: '28px',
-                        fontWeight: 600,
-                        lineHeight: '36px',
-                        letterSpacing: '0em',
-                        textAlign: 'left',
-                    },
-                },
-                h3: {
-                    css: {
-                        fontSize: '22px',
-                        fontWeight: 600,
-                        lineHeight: '34px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                h4: {
-                    css: {
-                        fontSize: '20px',
-                        fontWeight: 600,
-                        lineHeight: '28px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                h5: {
-                    css: {
-                        fontSize: '16px',
-                        fontWeight: 500,
-                        lineHeight: '22px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                body: {
-                    css: {
-                        fontSize: '16px',
-                        fontWeight: 600,
-                        lineHeight: '20px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                'body-small': {
-                    css: {
-                        fontSize: '14px',
-                        fontWeight: 400,
-                        lineHeight: '20px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                'body-small-bold': {
-                    css: {
-                        fontSize: '14px',
-                        fontWeight: 600,
-                        lineHeight: '20px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
-                caption: {
-                    css: {
-                        fontSize: '12px',
-                        fontWeight: 400,
-                        lineHeight: '16px',
-                        letterSpacing: '0px',
-                        textAlign: 'left',
-                    },
-                },
+            fontFamily: {
+                'sans': ['"Manrope"', ...defaultTheme.fontFamily.sans],
             },
         },
     },
-    plugins: [require('@tailwindcss/typography')],
+    plugins: [],
 };
