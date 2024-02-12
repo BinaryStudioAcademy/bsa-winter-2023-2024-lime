@@ -1,5 +1,31 @@
+import { type ReactNode } from 'react';
+
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { type ButtonProperties } from '~/bundles/common/types/button.type.js';
+
+const ButtonVariant = {
+    PRIMARY: 'primary',
+    SECONDARY: 'secondary',
+    TERTIARY: 'tertiary',
+} as const;
+
+const ButtonSize = {
+    SMALL: 'small',
+    MEDIUM: 'medium',
+} as const;
+
+type ButtonType = 'button' | 'submit';
+
+type ButtonProperties = {
+    size: (typeof ButtonSize)[keyof typeof ButtonSize];
+    variant: (typeof ButtonVariant)[keyof typeof ButtonVariant];
+    label: string;
+    leftIcon?: ReactNode;
+    rightIcon?: ReactNode;
+    type?: ButtonType;
+    isDisabled?: boolean;
+    className?: string;
+    onClick?: () => void;
+};
 
 const classes = {
     base: 'flex justify-center items-center transition ease-in-out duration-300',
@@ -48,4 +74,4 @@ const Button: React.FC<ButtonProperties> = ({
     );
 };
 
-export { Button };
+export { Button, ButtonSize, ButtonVariant };
