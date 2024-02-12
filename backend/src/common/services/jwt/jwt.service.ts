@@ -4,7 +4,7 @@ import { type JwtPayload } from 'jsonwebtoken';
 class JwtService {
     private readonly secretKey: string;
 
-   public constructor(secretKey: string) {
+    public constructor(secretKey: string) {
         this.secretKey = secretKey;
     }
 

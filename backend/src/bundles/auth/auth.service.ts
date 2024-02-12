@@ -45,9 +45,9 @@ class AuthService {
     public async signIn(
         userRequestDto: UserSignInRequestDto,
     ): Promise<UserSignInResponseDto> {
-       const { email, id } = await this.verifyLoginCredentials(userRequestDto);
-       const token = jwtService.createToken({ userId: id });
-       return { id ,email, token };
+        const { email, id } = await this.verifyLoginCredentials(userRequestDto);
+        const token = jwtService.createToken({ userId: id });
+        return { id ,email, token };
     }
 
     public async signUp(
