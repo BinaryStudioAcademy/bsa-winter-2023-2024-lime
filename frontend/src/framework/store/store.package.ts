@@ -33,7 +33,9 @@ class Store {
 
     public constructor(config: Config) {
         this.instance = configureStore({
-            devTools: config.ENV.APP.ENVIRONMENT.PRODUCTION !== AppEnvironment.PRODUCTION,
+            devTools:
+                config.ENV.APP.ENVIRONMENT.PRODUCTION !==
+                AppEnvironment.PRODUCTION,
             reducer: {
                 auth: authReducer,
                 users: usersReducer,
