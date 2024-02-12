@@ -4,7 +4,7 @@ import {
     type FieldPath,
     type FieldValues,
 } from 'react-hook-form';
-import { type GroupBase, type Props } from 'react-select';
+import { type GroupBase, type OnChangeValue, type Props } from 'react-select';
 import ReactSelect from 'react-select';
 import makeAnimated from 'react-select/animated';
 
@@ -66,7 +66,12 @@ const Select = <
     };
 
     const handleChange = useCallback(
-        (selectedOptions: unknown): void => {
+        (
+            selectedOptions: OnChangeValue<
+                SelectOption | SelectOption[],
+                boolean
+            >,
+        ): void => {
             if (isMulti) {
                 const optionsToUpdate = (selectedOptions as SelectOption[])
                     .filter((selectedOption) =>
