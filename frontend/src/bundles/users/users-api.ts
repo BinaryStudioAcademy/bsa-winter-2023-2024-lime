@@ -22,7 +22,7 @@ class UserApi extends BaseHttpApi {
             this.getFullEndpoint(UsersApiPath.ROOT, {}),
             {
                 method: 'GET',
-                contentType: ContentType.JSON,
+                contentType: ContentType,
                 hasAuth: false,
             },
         );

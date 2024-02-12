@@ -27,7 +27,7 @@ class AuthApi extends BaseHttpApi {
             this.getFullEndpoint(AuthApiPath.SIGN_UP, {}),
             {
                 method: 'POST',
-                contentType: ContentType.JSON,
+                contentType: ContentType,
                 payload: JSON.stringify(payload),
                 hasAuth: false,
             },
