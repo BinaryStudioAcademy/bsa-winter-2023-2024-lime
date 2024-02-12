@@ -1,21 +1,50 @@
+import { type ReactNode } from 'react';
+
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { type ButtonProperties } from '~/bundles/common/types/button.type.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 
-const classes = {
-    base: 'flex justify-center items-center transition ease-in-out duration-300',
-    size: {
-        small: 'px-4 py-2 h-[32px] text-[14px] font-bold leading-[1.3rem] gap-[4px]',
-        medium: 'px-6 py-4 h-[54px] text-[16px] font-bold leading-[1.3rem] gap-[8px]',
-    },
+const ButtonVariant = {
+    PRIMARY: 'primary',
+    SECONDARY: 'secondary',
+    TERTIARY: 'tertiary',
+} as const;
 
-    variant: {
-        primary:
-            'rounded-lg bg-lm-yellow-100 text-lm-black-300 hover:bg-lm-yellow-200 disabled:text-lm-grey-200 disabled:bg-lm-grey-300',
-        secondary:
-            'border border-lm-yellow-100 rounded-lg bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 hover:border-lm-yellow-200 disabled:text-lm-grey-300 disabled:border-lm-grey-300',
-        tertiary:
-            'bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
-    },
+const ButtonSize = {
+    SMALL: 'small',
+    MEDIUM: 'medium',
+} as const;
+
+type ButtonType = 'button' | 'submit';
+
+type ButtonProperties = {
+    size: ValueOf<typeof ButtonSize>;
+    variant: ValueOf<typeof ButtonVariant>;
+    label: string;
+    leftIcon?: ReactNode;
+    rightIcon?: ReactNode;
+    type?: ButtonType;
+    isDisabled?: boolean;
+    className?: string;
+    onClick?: () => void;
+};
+
+const baseClasses =
+    'w-full flex justify-center items-center transition ease-in-out duration-300';
+
+const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
+    [ButtonVariant.PRIMARY]:
+        'rounded-lg bg-lm-yellow-100 text-lm-black-300 hover:bg-lm-yellow-200 disabled:text-lm-grey-200 disabled:bg-lm-grey-300',
+    [ButtonVariant.SECONDARY]:
+        'border border-lm-yellow-100 rounded-lg bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 hover:border-lm-yellow-200 disabled:text-lm-grey-300 disabled:border-lm-grey-300',
+    [ButtonVariant.TERTIARY]:
+        'bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
+};
+
+const buttonSizesToClasses: Record<ValueOf<typeof ButtonSize>, string> = {
+    [ButtonSize.SMALL]:
+        'px-4 py-2 h-[32px] text-[14px] font-bold leading-[1.3rem] gap-[4px]',
+    [ButtonSize.MEDIUM]:
+        'px-6 py-4 h-[54px] text-[16px] font-bold leading-[1.3rem] gap-[8px]',
 };
 
 const Button: React.FC<ButtonProperties> = ({
@@ -34,10 +63,10 @@ const Button: React.FC<ButtonProperties> = ({
             disabled={isDisabled}
             type={type}
             className={getValidClassNames(
-                classes.base,
-                classes.size[size],
-                classes.variant[variant],
-                className as string,
+                baseClasses,
+                buttonSizesToClasses[size],
+                buttonVariantToClasses[variant],
+                className,
             )}
             {...properties}
         >
@@ -48,4 +77,4 @@ const Button: React.FC<ButtonProperties> = ({
     );
 };
 
-export { Button };
+export { Button, ButtonSize, ButtonVariant };
