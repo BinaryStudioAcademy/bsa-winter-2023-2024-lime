@@ -26,12 +26,12 @@ export default {
         },
         fontSize: {
             xs: '0.75rem',
-            sm: '0.8rem',
+            sm: '0.875rem',
             base: '1rem',
             xl: '1.25rem',
             '2xl': '1.375rem',
-            '3xl': '1.8rem',
-            '4xl': '2.4375rem',
+            '3xl': '1.75rem',
+            '4xl': '2.625rem',
         },
         fontWeight: {
             normal: '400',
@@ -45,7 +45,7 @@ export default {
             '6': '1.75rem',
             '7': '2.125rem',
             '8': '2.25rem',
-            '9': '3.5625rem',
+            '9': '3.5856rem',
         },
         extend: {
             fontFamily: {
