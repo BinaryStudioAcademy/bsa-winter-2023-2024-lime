@@ -5,14 +5,19 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { signUp } from './actions.js';
 
+type User = {
+    email: string;
+    password: string;
+};
+
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
-    isLoggedIn: boolean;
+    user: User;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
-    isLoggedIn: false,
+    user: { email: '', password: '' },
 };
 
 const { reducer, actions, name } = createSlice({
@@ -25,11 +30,10 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(signUp.fulfilled, (state) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.isLoggedIn = true;
         });
         builder.addCase(signUp.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
-            state.isLoggedIn = false;
+            state.user = { email: 'lera', password: 'lera' };
         });
     },
 });
