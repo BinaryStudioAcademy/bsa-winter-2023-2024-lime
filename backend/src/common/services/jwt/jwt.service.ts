@@ -9,7 +9,9 @@ class JwtService {
     }
 
     public createToken(payload: unknown): string {
-        return jwt.sign(payload as JwtPayload, this.secretKey, { expiresIn: '7d' });
+        return jwt.sign(payload as JwtPayload, this.secretKey, {
+            expiresIn: '7d',
+        });
     }
 
     public verifyToken(token: string): string | object {

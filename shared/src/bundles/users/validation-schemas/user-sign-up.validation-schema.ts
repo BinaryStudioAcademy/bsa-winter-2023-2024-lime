@@ -39,4 +39,4 @@ const userSignUp = z
     })
     .required();
 
-export { userSignIn,userSignUp };
+export { userSignIn, userSignUp };

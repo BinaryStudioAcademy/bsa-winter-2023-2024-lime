@@ -1,6 +1,11 @@
-
-import { type UserSignInRequestDto, type UserSignUpRequestDto } from '~/bundles/users/users.js';
-import { userSignInValidationSchema,userSignUpValidationSchema } from '~/bundles/users/users.js';
+import {
+    type UserSignInRequestDto,
+    type UserSignUpRequestDto,
+} from '~/bundles/users/users.js';
+import {
+    userSignInValidationSchema,
+    userSignUpValidationSchema,
+} from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -48,7 +53,6 @@ class AuthController extends BaseController {
                     }>,
                 ),
         });
-
     }
 
     private async signIn(

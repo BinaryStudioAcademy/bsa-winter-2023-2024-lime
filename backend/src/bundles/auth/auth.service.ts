@@ -1,5 +1,7 @@
-
-import { type UserSignInRequestDto, type UserSignInResponseDto } from 'shared/build/bundles/users/users.js';
+import {
+    type UserSignInRequestDto,
+    type UserSignInResponseDto,
+} from 'shared/build/bundles/users/users.js';
 import { UserValidationMessage } from 'shared/build/bundles/users/users.js';
 import { HttpError } from 'shared/build/framework/exceptions/http-error/http-error.exception.js';
 import { HttpCode } from 'shared/build/framework/http/enums/http-code.enum.js';
@@ -26,16 +28,19 @@ class AuthService {
         if (user === null) {
             throw new HttpError({
                 message: UserValidationMessage.LOGIN_CREDENTIALS_DO_NOT_MATCH,
-                status: HttpCode.BAD_REQUEST
+                status: HttpCode.BAD_REQUEST,
             });
         }
 
-        const isEqualPassword = cryptService.compareSyncPassword(userRequestDto.password, user.passwordHash);
+        const isEqualPassword = cryptService.compareSyncPassword(
+            userRequestDto.password,
+            user.passwordHash,
+        );
 
         if (!isEqualPassword) {
             throw new HttpError({
                 message: UserValidationMessage.LOGIN_CREDENTIALS_DO_NOT_MATCH,
-                status: HttpCode.BAD_REQUEST
+                status: HttpCode.BAD_REQUEST,
             });
         }
 
@@ -47,18 +52,20 @@ class AuthService {
     ): Promise<UserSignInResponseDto> {
         const { email, id } = await this.verifyLoginCredentials(userRequestDto);
         const token = jwtService.createToken({ userId: id });
-        return { id ,email, token };
+        return { id, email, token };
     }
 
     public async signUp(
         userRequestDto: UserSignUpRequestDto,
     ): Promise<UserSignUpResponseDto> {
-        const userByEmail = await this.userService.findByEmail(userRequestDto.email);
+        const userByEmail = await this.userService.findByEmail(
+            userRequestDto.email,
+        );
 
         if (userByEmail) {
             throw new HttpError({
                 message: UserValidationMessage.EMAIL_ALREADY_TAKEN,
-                status: HttpCode.BAD_REQUEST
+                status: HttpCode.BAD_REQUEST,
             });
         }
 

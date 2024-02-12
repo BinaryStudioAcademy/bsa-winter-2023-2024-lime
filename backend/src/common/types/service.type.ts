@@ -1,4 +1,3 @@
-
 import { type UserModel } from '~/bundles/users/user.model.js';
 
 type Service<T = unknown> = {

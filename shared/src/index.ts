@@ -8,7 +8,8 @@ export {
     type UserSignUpResponseDto,
     UsersApiPath,
     userSignInValidationSchema,
-    userSignUpValidationSchema } from './bundles/users/users.js';
+    userSignUpValidationSchema,
+} from './bundles/users/users.js';
 export {
     ApiPath,
     AppEnvironment,

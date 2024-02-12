@@ -20,7 +20,9 @@ class UserService implements Service {
         return Promise.resolve(null);
     }
 
-    public async findByEmail(email: string): ReturnType<Service['findByEmail']> {
+    public async findByEmail(
+        email: string,
+    ): ReturnType<Service['findByEmail']> {
         return await this.userRepository.findByEmail(email);
     }
 
