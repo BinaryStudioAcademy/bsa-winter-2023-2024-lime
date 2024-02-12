@@ -3,7 +3,7 @@ import { type AppEnvironment } from '~/common/enums/enums.js';
 type EnvironmentSchema = {
     APP: {
         PORT: number;
-        ENVIRONMENT: AppEnvironment;
+        ENVIRONMENT: keyof AppEnvironment;
     };
     DB: {
         CONNECTION_STRING: string;

@@ -1,7 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
 import { type Config } from '~/common/config/config.js';
-import { AppEnvironment } from '~/common/enums/enums.js';
 
 import {
     type ServerAppApi,
@@ -30,7 +29,7 @@ class BaseServerAppApi implements ServerAppApi {
 
     public generateDoc(): ReturnType<typeof swaggerJsdoc> {
         const isProduction =
-            this.config.ENV.APP.ENVIRONMENT === AppEnvironment.PRODUCTION;
+            this.config.ENV.APP.ENVIRONMENT === 'PRODUCTION';
 
         const controllerExtension = isProduction ? 'js' : 'ts';
 
