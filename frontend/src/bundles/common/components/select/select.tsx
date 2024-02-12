@@ -36,16 +36,16 @@ const Select = <
     Group extends GroupBase<SelectOption> = GroupBase<SelectOption>,
 >({
     name,
-    styles,
     control,
     errors,
     options,
-    placeholder = 'Select something...',
     label = '',
+    placeholder = 'Select something...',
     isMulti,
     isDisabled = false,
     isClearable = false,
     isSearchable = false,
+    styles,
     ...rest
 }: Properties<T, IsMulti, Group>): JSX.Element => {
     const { field } = useFormController({ name, control });
@@ -97,10 +97,9 @@ const Select = <
                 </span>
             )}
             <ReactSelect
-                {...rest}
                 name={name}
-                placeholder={placeholder}
                 options={options}
+                placeholder={placeholder}
                 isMulti={isMulti}
                 isDisabled={isDisabled}
                 isClearable={isClearable}
@@ -109,6 +108,7 @@ const Select = <
                 value={handleSelectValue(field.value) ?? null}
                 onChange={handleChange}
                 styles={{ ...getStyles<IsMulti, Group>(error), ...styles }}
+                {...rest}
             />
             <span className="text-lm-red">{error}</span>
         </div>
