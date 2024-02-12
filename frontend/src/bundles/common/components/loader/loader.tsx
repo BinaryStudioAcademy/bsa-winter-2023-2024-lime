@@ -1,5 +1,6 @@
 import { type Color, type Size } from '~/bundles/common/types/types.js';
 
+import { getValidClassNames } from '../../helpers/helpers.js';
 import { LogoIcon } from '../icons/icons.js';
 
 type Properties = {
@@ -21,14 +22,11 @@ const Loader: React.FC<Properties> = ({
             <span className="sr-only">Loading...</span>
         </>
     );
+    const classNames = isOverflow
+        ? 'absolute flex h-full w-full items-center justify-center'
+        : '';
 
-    return isOverflow ? (
-        <div className="absolute flex h-full w-full items-center justify-center">
-            {spinner}
-        </div>
-    ) : (
-        spinner
-    );
+    return <div className={getValidClassNames(classNames)}>{spinner}</div>;
 };
 
 export { Loader };
