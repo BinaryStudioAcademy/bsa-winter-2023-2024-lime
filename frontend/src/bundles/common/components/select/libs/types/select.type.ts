@@ -1,8 +1,8 @@
-type ValueSelectTypes = string | number;
+type SelectValue = string | number;
 
 type SelectOption = {
     label: string;
-    value: ValueSelectTypes;
+    value: SelectValue;
 };
 
-export { type SelectOption, type ValueSelectTypes };
+export { type SelectOption, type SelectValue };
