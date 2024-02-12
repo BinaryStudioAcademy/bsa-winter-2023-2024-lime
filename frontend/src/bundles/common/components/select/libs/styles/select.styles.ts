@@ -9,27 +9,26 @@ const getStyles = <
 >(
     errorMessage: string,
 ): StylesConfig<SelectOption, isMulti, Group> => {
+    const baseColor = errorMessage ? Color.RED : Color.YELLOW[100];
+
     const defaultStyles: StylesConfig<SelectOption, isMulti, Group> = {
-        control: (base, state) => {
-            const borderColor = errorMessage ? Color.RED : Color.YELLOW[100];
-            return {
-                ...base,
-                width: '100%',
-                marginTop: '9px',
-                minHeight: '45px',
-                paddingLeft: '10px',
-                background: Color.BLACK[100],
-                border: state.isFocused ? `1px solid ${borderColor}` : 'none',
-                outline: 'none',
-                borderRadius: '8px',
-                fontSize: 'inherit',
-                boxShadow: 'none',
-                ':hover': {
-                    cursor: 'pointer',
-                    border: `1px solid ${borderColor}`,
-                },
-            };
-        },
+        control: (base, state) => ({
+            ...base,
+            width: '100%',
+            margin: '8px 0',
+            minHeight: '45px',
+            paddingLeft: '10px',
+            background: Color.BLACK[100],
+            border: state.isFocused ? `1px solid ${baseColor}` : 'none',
+            outline: 'none',
+            borderRadius: '8px',
+            fontSize: 'inherit',
+            boxShadow: 'none',
+            ':hover': {
+                cursor: 'pointer',
+                border: `1px solid ${baseColor}`,
+            },
+        }),
         dropdownIndicator: (styles, state) => ({
             ...styles,
             transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : '',
@@ -64,7 +63,7 @@ const getStyles = <
                 backgroundColor: 'none',
             },
             ':hover': {
-                color: Color.YELLOW[100],
+                color: baseColor,
                 cursor: 'pointer',
             },
         }),
@@ -79,11 +78,11 @@ const getStyles = <
         }),
         multiValueLabel: (base) => ({
             ...base,
-            color: Color.YELLOW[200],
+            color: baseColor,
         }),
         multiValueRemove: (base) => ({
             ...base,
-            color: Color.YELLOW[200],
+            color: baseColor,
             ':hover': {
                 opacity: '0.95',
             },
