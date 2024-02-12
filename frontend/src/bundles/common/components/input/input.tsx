@@ -22,9 +22,9 @@ const Input = <T extends FieldValues>({
     errors,
     label,
     name,
-    placeholder = '',
     type = 'text',
     isDisabled = false,
+    placeholder = '',
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
