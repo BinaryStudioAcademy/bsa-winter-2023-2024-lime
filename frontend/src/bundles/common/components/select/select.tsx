@@ -13,9 +13,9 @@ import {
     useFormController,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { DropdownIndicator } from './libs/components/dropdown-indicator.js';
-import { getStyles } from './libs/styles/styles.js';
-import { type SelectOption, type SelectValue } from './libs/types/types.js';
+import { DropdownIndicator } from './components/dropdown-indicator.js';
+import { getStyles } from './styles/styles.js';
+import { type SelectOption, type SelectValue } from './types/types.js';
 
 type Properties<
     T extends FieldValues,
