@@ -1,6 +1,6 @@
 import { type GroupBase, type StylesConfig } from 'react-select';
 
-import { Color } from '../enum/color.enum.js';
+import { Color } from '../enums/color.enum.js';
 import { type SelectOption } from '../types/types.js';
 
 const getStyles = <
