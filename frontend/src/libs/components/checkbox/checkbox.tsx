@@ -26,7 +26,7 @@ const Checkbox = <T extends FieldValues>({
                 name={name}
                 type="checkbox"
                 id="toggle-checkbox"
-                className="appearance-none w-7 h-4 lm-yellow-100 border-none rounded-full cursor-pointer relative transition duration-300 outline-none"
+                className="lm-yellow-100 relative h-4 w-7 cursor-pointer appearance-none rounded-full border-none outline-none transition duration-300"
             />
             <label className="cursor-pointer" htmlFor="toggle-checkbox">
                 {label}
