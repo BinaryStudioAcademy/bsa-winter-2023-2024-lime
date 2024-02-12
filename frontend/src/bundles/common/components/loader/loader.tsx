@@ -24,7 +24,7 @@ const Loader: React.FC<Properties> = ({
     );
     const classNames = isOverflow
         ? 'absolute flex h-full w-full items-center justify-center'
-        : '';
+        : 'inline';
 
     return <div className={getValidClassNames(classNames)}>{spinner}</div>;
 };
