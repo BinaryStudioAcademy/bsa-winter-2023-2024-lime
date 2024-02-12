@@ -1,1 +1,1 @@
-export { notify } from './notify.js';
+export { NotificationManager } from './notification-manager.js';

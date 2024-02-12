@@ -1,11 +1,8 @@
-import { type NotificationStatus } from './notification-status.type.js';
+import { type NotificationStatus } from '../enums/notification-status.enums.js';
 
 interface NotificationArguments {
     message: string;
     status?: NotificationStatus;
 }
 
-type INotify = (ar: NotificationArguments) => void;
-
-export { type INotify };
 export { type NotificationArguments };

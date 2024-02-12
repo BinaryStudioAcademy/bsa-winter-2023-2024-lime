@@ -7,11 +7,11 @@ import { createRoot } from 'react-dom/client';
 import { App } from '~/app/app.js';
 import { Auth } from '~/bundles/auth/pages/auth.js';
 import {
+    NotificationContainer,
     RouterProvider,
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { NotificationContainer } from '~/framework/services/notification-service/notification.service.js';
 import { store } from '~/framework/store/store.js';
 
 createRoot(document.querySelector('#root') as HTMLElement).render(

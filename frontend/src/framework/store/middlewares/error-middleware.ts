@@ -1,9 +1,6 @@
 import { type Middleware, isRejectedWithValue } from '@reduxjs/toolkit';
 
-import {
-    NotificationStatus,
-    notify,
-} from '~/framework/services/notification-service/notification.service.js';
+import { notificationManager } from '~/framework/services/notification-service/notification.service.js';
 
 const errorMiddleware: Middleware = () => {
     return (next) => {
@@ -11,10 +8,7 @@ const errorMiddleware: Middleware = () => {
             if (isRejectedWithValue(action)) {
                 const { message = 'Something went wrong' } = action.error;
 
-                notify({
-                    message: message,
-                    status: NotificationStatus.Error,
-                });
+                notificationManager.errorNotify(message);
             }
 
             next(action);

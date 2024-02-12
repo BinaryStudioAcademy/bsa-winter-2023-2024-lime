@@ -1,4 +1,6 @@
-export { NotificationContainer } from './components/components.js';
+import { NotificationManager } from './utils/utils.js';
+
+const notificationManager = new NotificationManager();
+
 export { type NotificationArguments } from './types/types.js';
-export { NotificationStatus } from './types/types.js';
-export { notify } from './utils/utils.js';
+export { notificationManager };
