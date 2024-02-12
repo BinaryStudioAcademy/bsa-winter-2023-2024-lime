@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { type JwtPayload } from 'jsonwebtoken';
+
+import { type JwtPayload } from '~/common/types/jwt.type.js';
 
 class JwtService {
     private readonly secretKey: string;
@@ -8,8 +9,8 @@ class JwtService {
         this.secretKey = secretKey;
     }
 
-    public createToken(payload: unknown): string {
-        return jwt.sign(payload as JwtPayload, this.secretKey, {
+    public createToken(payload: JwtPayload): string {
+        return jwt.sign(payload, this.secretKey, {
             expiresIn: '7d',
         });
     }

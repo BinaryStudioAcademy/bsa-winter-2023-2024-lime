@@ -1,8 +1,8 @@
 import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
-} from 'shared/build/bundles/users/users.js';
-import { UserValidationMessage } from 'shared/build/bundles/users/users.js';
+    UserValidationMessage,
+} from 'shared';
 import { HttpError } from 'shared/build/framework/exceptions/http-error/http-error.exception.js';
 import { HttpCode } from 'shared/build/framework/http/enums/http-code.enum.js';
 
@@ -25,7 +25,7 @@ class AuthService {
         userRequestDto: UserSignInRequestDto,
     ): Promise<UserModel> {
         const user = await this.userService.findByEmail(userRequestDto.email);
-        if (user === null) {
+        if (!user) {
             throw new HttpError({
                 message: UserValidationMessage.LOGIN_CREDENTIALS_DO_NOT_MATCH,
                 status: HttpCode.BAD_REQUEST,

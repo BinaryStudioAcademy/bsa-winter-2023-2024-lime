@@ -1,8 +1,5 @@
-import { type UserModel } from '~/bundles/users/user.model.js';
-
 type Service<T = unknown> = {
     find(): Promise<T>;
-    findByEmail(email: string): Promise<UserModel | null>;
     findAll(): Promise<{
         items: T[];
     }>;

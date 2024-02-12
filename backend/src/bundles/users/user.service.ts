@@ -2,6 +2,7 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
+import { type UserServiceType } from '~/common/types/user-service.type.js';
 
 import {
     type UserGetAllResponseDto,
@@ -9,7 +10,7 @@ import {
     type UserSignUpResponseDto,
 } from './types/types.js';
 
-class UserService implements Service {
+class UserService implements Service, UserServiceType {
     private userRepository: UserRepository;
 
     public constructor(userRepository: UserRepository) {
@@ -22,7 +23,7 @@ class UserService implements Service {
 
     public async findByEmail(
         email: string,
-    ): ReturnType<Service['findByEmail']> {
+    ): ReturnType<UserServiceType['findByEmail']> {
         return await this.userRepository.findByEmail(email);
     }
 
