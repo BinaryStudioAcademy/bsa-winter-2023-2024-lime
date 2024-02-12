@@ -1,9 +1,11 @@
+import { type ValueOf } from 'shared';
+
 import { type AppEnvironment } from '~/common/enums/enums.js';
 
 type EnvironmentSchema = {
     APP: {
         PORT: number;
-        ENVIRONMENT: keyof AppEnvironment;
+        ENVIRONMENT: ValueOf<AppEnvironment>;
     };
     DB: {
         CONNECTION_STRING: string;

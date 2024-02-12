@@ -10,11 +10,11 @@ import {
 } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { type ValidationSchema } from '~/bundles/common/types/types.js';
+import { type ValidationSchema,type ValueOf } from '~/bundles/common/types/types.js';
 
 type Parameters<T extends FieldValues = FieldValues> = {
     defaultValues: DefaultValues<T>;
-    mode?: keyof ValidationMode;
+    mode?: ValueOf<ValidationMode>;
     validationSchema?: ValidationSchema;
 };
 

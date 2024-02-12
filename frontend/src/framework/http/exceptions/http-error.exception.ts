@@ -12,12 +12,12 @@ type Constructor = {
     status: ValueOf<typeof HttpCode>;
     details: ServerErrorDetail[];
     message: string;
-    errorType: keyof ServerErrorType;
+    errorType: ValueOf<ServerErrorType>;
     cause?: unknown;
 };
 
 class HttpError extends LibraryHttpError {
-    public errorType: keyof ServerErrorType;
+    public errorType: ValueOf<ServerErrorType>;
 
     public details: ServerErrorDetail[];
 
