@@ -1,10 +1,10 @@
-import { toast } from 'react-toastify';
+import { type TypeOptions, toast } from 'react-toastify';
 
 import { NotificationType } from './enums/notification-type.enums.js';
 
 type NotificationArguments = {
     message: string;
-    type?: NotificationType;
+    type?: TypeOptions;
 };
 
 class NotificationManager {
