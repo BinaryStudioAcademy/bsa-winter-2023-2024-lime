@@ -3,7 +3,7 @@ import { type HttpOptions } from '~/framework/http/http.js';
 
 type HttpApiOptions = Omit<HttpOptions, 'headers' | 'payload'> & {
     hasAuth: boolean;
-    contentType: ContentType;
+    contentType: typeof ContentType;
     payload?: HttpOptions['payload'];
 };
 

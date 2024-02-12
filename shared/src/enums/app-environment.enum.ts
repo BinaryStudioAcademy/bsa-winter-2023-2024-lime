@@ -3,6 +3,4 @@ const AppEnvironment = {
     PRODUCTION: 'production',
 } as const;
 
-type AppEnvironment = typeof AppEnvironment;
-
 export { AppEnvironment };

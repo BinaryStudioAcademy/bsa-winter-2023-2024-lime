@@ -14,7 +14,7 @@ class BaseConfig implements Config {
             APP: {
                 ENVIRONMENT: import.meta.env[
                     'VITE_APP_NODE_ENV'
-                ] as AppEnvironment,
+                ] as typeof AppEnvironment,
             },
             API: {
                 ORIGIN_URL: import.meta.env[
