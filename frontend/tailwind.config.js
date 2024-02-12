@@ -3,6 +3,7 @@ export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         colors: {
+            transparent: 'transparent',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
@@ -21,6 +22,7 @@ export default {
             'lm-black': {
                 100: '#2A2F37',
                 200: '#1C2227',
+                300: '#313134',
             },
         },
         extend: {
