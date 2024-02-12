@@ -7,6 +7,23 @@ type UserSignUpRequestValidationDto = {
     password: z.ZodString;
 };
 
+type UserSignInRequestValidationDto = UserSignUpRequestValidationDto;
+
+const userSignIn = z
+    .object<UserSignInRequestValidationDto>({
+        email: z
+            .string()
+            .trim()
+            .min(UserValidationRule.EMAIL_MINIMUM_LENGTH, {
+                message: UserValidationMessage.EMAIL_REQUIRE,
+            })
+            .email({
+                message: UserValidationMessage.EMAIL_WRONG,
+            }),
+        password: z.string().trim(),
+    })
+    .required();
+
 const userSignUp = z
     .object<UserSignUpRequestValidationDto>({
         email: z
@@ -22,4 +39,4 @@ const userSignUp = z
     })
     .required();
 
-export { userSignUp };
+export { userSignIn,userSignUp };
