@@ -40,7 +40,7 @@ const Select = <
     control,
     errors,
     options,
-    placeholder = '',
+    placeholder = 'Select something...',
     label = '',
     isMulti,
     isDisabled = false,
@@ -101,7 +101,7 @@ const Select = <
                 components={{ ...animatedComponents, DropdownIndicator }}
                 value={handleSelectValue(field.value) ?? null}
                 onChange={handleChange}
-                styles={{ ...getStyles<IsMulti, Group>(), ...styles }}
+                styles={{ ...getStyles<IsMulti, Group>(error), ...styles }}
             />
             <span className={'error'}>{error}</span>
         </div>
