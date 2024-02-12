@@ -1,1 +1,1 @@
-export { type SelectOption, type ValueSelectTypes } from './select.type.js';
+export { type SelectOption, type SelectValue } from './select.type.js';

@@ -17,7 +17,7 @@ import { DropdownIndicator } from './libs/components/dropdown-indicator.js';
 import { getStyles } from './libs/styles/styles.js';
 import {
     type SelectOption,
-    type ValueSelectTypes,
+    type SelectValue,
 } from './libs/types/types.js';
 
 type Properties<
@@ -54,11 +54,11 @@ const Select = <
     const error = errors[name]?.message as string;
 
     const handleSelectValue = (
-        value: ValueSelectTypes | ValueSelectTypes[],
+        value: SelectValue | SelectValue[],
     ): SelectOption | SelectOption[] | undefined => {
         return isMulti && value
             ? (options as SelectOption[]).filter((option) =>
-                (value as ValueSelectTypes[]).includes(option.value),
+                (value as SelectValue[]).includes(option.value),
             )
             : (options as SelectOption[]).find(
                 (option) => option.value === value,
