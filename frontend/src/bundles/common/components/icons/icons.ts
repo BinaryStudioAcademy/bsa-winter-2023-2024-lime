@@ -1,1 +1,5 @@
-export { LogoIcon } from './logo-icon/logo-icon.js';
+export {
+    LogoIcon,
+    LogoIconColor,
+    LogoIconSize,
+} from './logo-icon/logo-icon.js';

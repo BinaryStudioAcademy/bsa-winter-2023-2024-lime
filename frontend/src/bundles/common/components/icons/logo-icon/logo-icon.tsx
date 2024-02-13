@@ -1,29 +1,37 @@
-import { type Color, type Size } from '~/bundles/common/types/types.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
+
+const LogoIconColor = {
+    PRIMARY: 'primary',
+    SECONDARY: 'secondary',
+} as const;
+
+const LogoIconSize = {
+    SMALL: 'sm',
+    MEDIUM: 'md',
+    LARGE: 'lg',
+} as const;
 
 type Properties = {
-    color: Color;
-    size: Size;
+    color: ValueOf<typeof LogoIconColor>;
+    size: ValueOf<typeof LogoIconSize>;
     className?: string;
 };
 
-const iconConfig = {
-    colors: {
-        primary: 'text-lm-yellow-100',
-        secondary: 'text-lm-grey-200',
-    },
-    sizes: {
-        sm: 'h-5 w-5',
-        md: 'h-6 w-6',
-        lg: 'h-8 w-8',
-    },
+const colorToClass: Record<ValueOf<typeof LogoIconColor>, string> = {
+    [LogoIconColor.PRIMARY]: 'text-lm-yellow-100',
+    [LogoIconColor.SECONDARY]: 'text-lm-grey-200',
+};
+
+const sizeToClass: Record<ValueOf<typeof LogoIconSize>, string> = {
+    [LogoIconSize.SMALL]: 'h-5 w-5',
+    [LogoIconSize.MEDIUM]: 'h-6 w-6',
+    [LogoIconSize.LARGE]: 'h-8 w-8',
 };
 
 const LogoIcon = ({ color, size, className = '' }: Properties): JSX.Element => {
-    const { colors, sizes } = iconConfig;
-
     return (
         <svg
-            className={`inline ${colors[color]} ${sizes[size]} ${className}`}
+            className={`inline ${colorToClass[color]} ${sizeToClass[size]} ${className}`}
             viewBox="0 0 30 18"
             xmlns="http://www.w3.org/2000/svg"
         >
@@ -35,4 +43,4 @@ const LogoIcon = ({ color, size, className = '' }: Properties): JSX.Element => {
     );
 };
 
-export { LogoIcon };
+export { LogoIcon, LogoIconColor, LogoIconSize };

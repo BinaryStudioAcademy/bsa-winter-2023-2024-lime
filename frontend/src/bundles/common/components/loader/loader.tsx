@@ -1,18 +1,21 @@
-import { type Color, type Size } from '~/bundles/common/types/types.js';
-
-import { getValidClassNames } from '../../helpers/helpers.js';
-import { LogoIcon } from '../icons/icons.js';
+import {
+    LogoIcon,
+    LogoIconColor,
+    LogoIconSize,
+} from '~/bundles/common/components/icons/icons.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 
 type Properties = {
     isOverflow?: boolean;
-    color?: Color;
-    size?: Size;
+    color?: ValueOf<typeof LogoIconColor>;
+    size?: ValueOf<typeof LogoIconSize>;
 };
 
 const Loader: React.FC<Properties> = ({
     isOverflow,
-    color = 'primary',
-    size = 'lg',
+    color = LogoIconColor.PRIMARY,
+    size = LogoIconSize.LARGE,
 }: Properties): JSX.Element => {
     const spinner = (
         <>
