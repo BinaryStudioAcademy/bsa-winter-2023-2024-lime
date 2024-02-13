@@ -1,6 +1,7 @@
-type UserSignUpRequestDto = {
+type UserAuthRequestDto = {
     email: string;
     password: string;
+    passwordConfirm?: string;
 };
 
-export { type UserSignUpRequestDto };
+export { type UserAuthRequestDto };
