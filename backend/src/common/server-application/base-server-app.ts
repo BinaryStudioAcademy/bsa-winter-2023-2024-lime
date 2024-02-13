@@ -5,7 +5,6 @@ import fastifyStatic from '@fastify/static';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
-import { AppRoute } from 'frontend/src/bundles/common/enums/app-route.enum.js';
 
 import { type Config } from '~/common/config/config.js';
 import { type Database } from '~/common/database/database.js';
@@ -120,16 +119,9 @@ class BaseServerApp implements ServerApp {
     }
 
     private async initPlugins(): Promise<void> {
-        const routes = [...this.apis].flatMap((api) =>
-            api.routes.map((element) => element.path),
-        );
-        const excludedRoutes = [AppRoute.SIGN_IN, AppRoute.SIGN_UP];
-        const filteredRoutes = routes.filter((route) =>
-            excludedRoutes.some((excRoute) => route.includes(excRoute)),
-        );
         await this.app.register(authPlugin, {
             jwtService,
-            excludedRoutes: filteredRoutes,
+            apis: this.apis,
         });
     }
 

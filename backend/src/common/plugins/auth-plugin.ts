@@ -1,6 +1,6 @@
 import { type FastifyRequest } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
-import { UserValidationMessage } from 'shared';
+import { AuthApiPath, UserValidationMessage } from 'shared';
 
 import { PluginNames } from '~/common/enums/enums.js';
 import { extractTokenFromHeaders } from '~/common/helpers/helpers.js';
@@ -9,12 +9,21 @@ import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type AuthPluginOptions } from './types/types.js';
 
 const authPlugin = fastifyPlugin(
-    (fastify, { jwtService, excludedRoutes }: AuthPluginOptions, done) => {
+    (fastify, { jwtService, apis }: AuthPluginOptions, done) => {
         fastify.decorateRequest('user', null);
+
+        const routes = apis.flatMap((api) =>
+            api.routes.map((element) => element.path),
+        );
+        const excludedRoutes = [AuthApiPath.SIGN_IN, AuthApiPath.SIGN_UP];
+        const filteredRoutes = routes.filter((route) =>
+            excludedRoutes.some((excRoute) => route.includes(excRoute)),
+        );
+
         fastify.addHook(
             'preHandler',
             (request: FastifyRequest, reply, next) => {
-                if (excludedRoutes?.includes(request.routeOptions.url)) {
+                if (filteredRoutes?.includes(request.routeOptions.url)) {
                     return next();
                 }
                 const token = extractTokenFromHeaders(request);
