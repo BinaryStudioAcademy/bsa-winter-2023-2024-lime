@@ -21,7 +21,7 @@ const NotFound: React.FC = () => {
     }, [navigate]);
 
     return (
-        <div className="bg-lm-black-200 flex flex-1 items-center justify-center">
+        <div className="bg-lm-black-200 flex flex-1 items-center justify-center pl-3 pr-3">
             <div className="text-center">
                 <NotFoundIcon
                     color={NotFoundIconColor.PRIMARY}
