@@ -5,10 +5,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { signUp } from './actions.js';
 
-type User = {
-    email: string;
-    password: string;
-};
+type User = object;
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
@@ -17,7 +14,7 @@ type State = {
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
-    user: { email: '', password: '' },
+    user: {},
 };
 
 const { reducer, actions, name } = createSlice({
@@ -33,7 +30,6 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(signUp.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
-            state.user = { email: 'lera', password: 'lera' };
         });
     },
 });
