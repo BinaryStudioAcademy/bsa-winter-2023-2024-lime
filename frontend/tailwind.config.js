@@ -4,6 +4,7 @@ export default {
     theme: {
         colors: {
             transparent: 'transparent',
+            white: '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
@@ -34,6 +35,9 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+            },
+            backgroundImage: {
+                'auth': "linear-gradient(to right, #E0FE10, transparent), linear-gradient(to right, #2A2F37, transparent), url('./src/assets/img/auth-bg.png')",
             },
         },
     },
