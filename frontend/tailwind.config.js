@@ -4,6 +4,7 @@ export default {
     theme: {
         colors: {
             'lm-white': '#FFFFFF',
+            transparent: 'transparent',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
@@ -22,9 +23,20 @@ export default {
             'lm-black': {
                 100: '#2A2F37',
                 200: '#1C2227',
+                300: '#313134',
             },
         },
-        extend: {},
+        screens: {
+            'sm': '370px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+        },
+        extend: {
+            animation: {
+                'load': 'spin 700ms infinite ease-in-out',
+            },
+        },
     },
     plugins: [],
 };
