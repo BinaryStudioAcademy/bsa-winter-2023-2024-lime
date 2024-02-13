@@ -13,7 +13,7 @@ const DropdownIndicator = (
     return (
         <components.DropdownIndicator {...properties}>
             <svg
-                className={'w-3 h-1.5'}
+                className={'h-1.5 w-3'}
                 viewBox="0 0 12 6"
                 xmlns="http://www.w3.org/2000/svg"
             >
