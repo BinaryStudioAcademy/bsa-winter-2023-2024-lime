@@ -45,7 +45,6 @@ const Select = <
     isDisabled = false,
     isClearable = false,
     isSearchable = false,
-    styles,
     ...rest
 }: Properties<T, IsMulti, Group>): JSX.Element => {
     const { field } = useFormController({ name, control });
@@ -107,7 +106,8 @@ const Select = <
                 components={{ ...animatedComponents, DropdownIndicator }}
                 value={handleSelectValue(field.value) ?? null}
                 onChange={handleChange}
-                styles={{ ...getStyles<IsMulti, Group>(error), ...styles }}
+                unstyled
+                classNames={{ ...getStyles<IsMulti, Group>(error) }}
                 {...rest}
             />
             <span className="text-lm-red">{error}</span>

@@ -1,6 +1,6 @@
-import { type GroupBase, type StylesConfig } from 'react-select';
+import clsx from 'clsx';
+import { type ClassNamesConfig, type GroupBase } from 'react-select';
 
-import { Color } from '../enums/color.enum.js';
 import { type SelectOption } from '../types/types.js';
 
 const getStyles = <
@@ -8,113 +8,40 @@ const getStyles = <
     Group extends GroupBase<SelectOption> = GroupBase<SelectOption>,
 >(
     errorMessage: string,
-): StylesConfig<SelectOption, isMulti, Group> => {
-    const baseColor = errorMessage ? Color.RED : Color.YELLOW[100];
+): ClassNamesConfig<SelectOption, isMulti, Group> => {
+    const textColor = errorMessage ? 'text-lm-red' : 'text-lm-yellow-100';
+    const borderColor = errorMessage ? 'border-lm-red' : 'border-lm-yellow-100';
 
-    const defaultStyles: StylesConfig<SelectOption, isMulti, Group> = {
-        control: (base, state) => ({
-            ...base,
-            width: '100%',
-            margin: '8px 0',
-            minHeight: '45px',
-            paddingLeft: '10px',
-            background: Color.BLACK[100],
-            border: state.isFocused ? `1px solid ${baseColor}` : 'none',
-            outline: 'none',
-            borderRadius: '8px',
-            fontSize: 'inherit',
-            boxShadow: 'none',
-            ':hover': {
-                cursor: 'pointer',
-                border: `1px solid ${baseColor}`,
-            },
-        }),
-        dropdownIndicator: (styles, state) => ({
-            ...styles,
-            transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : '',
-            color: Color.GRAY[500],
-            cursor: 'pointer',
-            ':hover': {
-                color: Color.GRAY[500],
-            },
-        }),
+    const defaultStyles: ClassNamesConfig<SelectOption, isMulti, Group> = {
+        control: (state) =>
+            clsx(
+                state.isFocused ? `${borderColor}` : 'border-0',
+                `w-full p-2.5 min-h-11 bg-lm-black-100 border
+                outline-none rounded-md text-inherit shadow-none hover:cursor-pointer`,
+            ),
+        dropdownIndicator: (state) => {
+            const transform = state.selectProps.menuIsOpen ? 'rotate-180' : '';
+            return `${transform} text-gray-500 cursor-pointer hover:text-grey-500 mr-2`;
+        },
 
-        placeholder: (base) => ({
-            ...base,
-            fontSize: 'inherit',
-            color: Color.GRAY[200],
-        }),
-        valueContainer: (base) => ({
-            ...base,
-            padding: '0',
-            margin: '0',
-        }),
-        input: (styles) => ({
-            ...styles,
-            padding: '0',
-            margin: '0',
-            color: Color.WHITE,
-        }),
-        option: (base) => ({
-            ...base,
-            backgroundColor: Color.BLACK[100],
-            color: Color.GRAY[200],
-            ':active': {
-                backgroundColor: 'none',
-            },
-            ':hover': {
-                color: baseColor,
-                cursor: 'pointer',
-            },
-        }),
-        singleValue: (base) => ({
-            ...base,
-            color: Color.GRAY[200],
-        }),
-        multiValue: (styles) => ({
-            ...styles,
-            borderRadius: '8px',
-            backgroundColor: Color.GRAY[500],
-        }),
-        multiValueLabel: (base) => ({
-            ...base,
-            color: baseColor,
-        }),
-        multiValueRemove: (base) => ({
-            ...base,
-            color: baseColor,
-            ':hover': {
-                opacity: '0.95',
-            },
-        }),
-        clearIndicator: (base) => ({
-            ...base,
-            padding: '0',
-            color: Color.GRAY[500],
-            ':hover': {
-                color: Color.GRAY[500],
-                opacity: '1.2',
-            },
-        }),
-        menuList: (base) => ({
-            ...base,
-            background: Color.BLACK[100],
-            maxHeight: '200px',
-            '::-webkit-scrollbar': {
-                width: '4px',
-            },
-            '::-webkit-scrollbar-track': {
-                background: Color.BLACK[100],
-            },
-            '::-webkit-scrollbar-thumb': {
-                background: Color.YELLOW[200],
-                borderRadius: '8px',
-            },
-        }),
-        indicatorSeparator: (base) => ({
-            ...base,
-            display: 'none',
-        }),
+        placeholder: () => 'font-inherit text-lm-grey-200',
+        valueContainer: () => 'm-0 p-0',
+        input: () => 'm-0 p-0 text-lm-white',
+        option: () =>
+            clsx(
+                errorMessage ? 'hover:text-lm-red' : 'hover:text-lm-yellow-100',
+                'bg-lm-black-100 text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
+            ),
+        singleValue: () => 'text-lm-grey-200',
+        multiValue: () =>
+            'bg-lm-grey-500 rounded-lg items-center py-1 pl-2 pr-1 gap-2 ml-1',
+        multiValueLabel: () => `${textColor} py-0.5`,
+        multiValueRemove: () => `${textColor} hover:opacity-9`,
+        clearIndicator: () => 'p-0 text-lm-grey-500 mr-4 hover:opacity-9',
+        menuList: () =>
+            'max-h-200 overflow-auto custom-scrollbar bg-lm-black-200',
+        noOptionsMessage: () => 'text-lm-grey-200 p-4',
+        menu: () => 'mt-1',
     };
 
     return defaultStyles;
