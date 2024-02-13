@@ -7,8 +7,7 @@
         "npm": "10.x.x"
     },
     "scripts": {
-        "lint:css": "npx stylelint \"src/**/*.scss\" --allow-empty-input",
-        "lint:scss": "npx stylelint \"src/**/*.scss\" --allow-empty-input",
+        "lint:css": "npx stylelint \"src/**/*.scss\"",
         "lint:js": "npx eslint \"src/**/*.{ts,tsx}\"",
         "lint:type": "npx tsc --noEmit",
         "lint": "npm run lint:type && npm run lint:js",
@@ -26,6 +25,7 @@
         "eslint-plugin-react-hooks": "4.6.0",
         "postcss": "8.4.35",
         "prettier-plugin-tailwindcss": "0.5.11",
+        "sass": "1.70.0",
         "tailwindcss": "3.4.1",
         "vite": "5.0.12"
     },
@@ -37,7 +37,6 @@
         "react-hook-form": "7.50.1",
         "react-redux": "9.1.0",
         "react-router-dom": "6.22.0",
-        "sass": "1.70.0",
         "shared": "*"
     }
 }
