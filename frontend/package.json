@@ -32,7 +32,6 @@
     "dependencies": {
         "@hookform/resolvers": "3.3.4",
         "@reduxjs/toolkit": "2.1.0",
-        "@tailwindcss/typography": "0.5.10",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-hook-form": "7.50.1",
