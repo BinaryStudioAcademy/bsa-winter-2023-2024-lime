@@ -40,7 +40,7 @@ const Radio = <T extends FieldValues>({
                 className="text-lm-grey-500 peer-checked/radio:text-lm-grey-200 ml-2 text-base"
             >
                 {label}
-            </label>            
+            </label>
         </div>
     );
 };
