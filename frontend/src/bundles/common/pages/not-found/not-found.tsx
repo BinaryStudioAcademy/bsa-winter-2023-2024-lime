@@ -5,13 +5,13 @@ import {
     Button,
     ButtonSize,
     ButtonVariant,
-} from '../../components/components.js';
+} from '~/bundles/common/components/components.js';
 import {
     NotFoundIcon,
     NotFoundIconColor,
     NotFoundIconSize,
-} from '../../components/icons/icons.js';
-import { AppRoute } from '../../enums/app-route.enum.js';
+} from '~/bundles/common/components/icons/icons.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
 
 const NotFound: React.FC = () => {
     const navigate = useNavigate();
@@ -27,8 +27,8 @@ const NotFound: React.FC = () => {
                     color={NotFoundIconColor.PRIMARY}
                     size={NotFoundIconSize.EXTRA_LARGE}
                 />
-                <h1 className=" mt-5 text-4xl text-white">
-                    Oops, this page not found
+                <h1 className="text-lm-white mt-5 text-4xl">
+                    Oops, this page was not found
                 </h1>
                 <Button
                     label="Go to homepage"
