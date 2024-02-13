@@ -1,0 +1,15 @@
+.header {
+    @apply bg-lm-black-100 flex w-full items-center;
+}
+
+.header-container {
+    @apply flex w-full items-center justify-between;
+}
+
+.header__logo-wrapper {
+    @apply flex w-full max-w-[240px];
+}
+
+.header__navigation {
+    @apply flex w-full justify-between;
+}

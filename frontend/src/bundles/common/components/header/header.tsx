@@ -1,22 +1,27 @@
+import logo from '~/assets/img/logo.svg';
+
+import { getValidClassNames } from '../../helpers/helpers.js';
 import { Layout, Link } from '../components.js';
-import { LogoIcon, LogoIconColor, LogoIconSize } from '../icons/icons.js';
+import { Message, Navigation } from './components/components.js';
+import styles from './styles.module.css';
 
 const Header = (): JSX.Element => {
     return (
-        <header className="bg-lm-black-100">
-            <Layout>
-                <Link to={'/'}>
-                    <div className="flex items-center justify-center gap-4">
-                        <span className="text-lm-yellow-100 items-center">
-                            LIME
-                        </span>
-                        <LogoIcon
-                            size={LogoIconSize.LARGE}
-                            color={LogoIconColor.PRIMARY}
+        <header className={styles['header']}>
+            <Layout className={getValidClassNames(styles['header-container'])}>
+                <div className={styles['header__logo-wrapper']}>
+                    <Link to={'/'}>
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            className={styles['header__logo']}
                         />
-                    </div>
-                </Link>
-                <div></div>
+                    </Link>
+                </div>
+                <div className={styles['header__navigation']}>
+                    <Message />
+                    <Navigation avatarUrl={null} />
+                </div>
             </Layout>
         </header>
     );
