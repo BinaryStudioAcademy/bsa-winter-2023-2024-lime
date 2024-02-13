@@ -1,6 +1,5 @@
 import logo from '~/assets/img/logo.svg';
 
-import { getValidClassNames } from '../../helpers/helpers.js';
 import { Layout, Link } from '../components.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';
@@ -8,7 +7,7 @@ import styles from './styles.module.css';
 const Header = (): JSX.Element => {
     return (
         <header className={styles['header']}>
-            <Layout className={getValidClassNames(styles['header-container'])}>
+            <Layout className={`${styles['header-container']}`}>
                 <div className={styles['header__logo-wrapper']}>
                     <Link to={'/'}>
                         <img
