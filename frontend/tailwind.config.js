@@ -25,7 +25,11 @@ export default {
                 300: '#313134',
             },
         },
-        extend: {},
+        extend: {
+            animation: {
+                'load': 'spin 700ms infinite ease-in-out',
+            },
+        },
     },
     plugins: [],
 };
