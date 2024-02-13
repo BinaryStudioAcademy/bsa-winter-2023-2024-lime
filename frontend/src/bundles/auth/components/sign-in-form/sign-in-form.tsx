@@ -2,23 +2,74 @@ import {
     Button,
     ButtonSize,
     ButtonVariant,
+    Input,
+    Link,
 } from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
+import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import {
+    type UserSignUpRequestDto,
+    userSignUpValidationSchema,
+} from '~/bundles/users/users.js';
+
+import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
-    onSubmit: () => void;
+    onSubmit: (payload: UserSignUpRequestDto) => void;
 };
 
-const SignInForm: React.FC<Properties> = () => (
-    <>
-        <h1>Sign In</h1>
-        <form>
-            <Button
-                label="Sign in"
-                variant={ButtonVariant.PRIMARY}
-                size={ButtonSize.MEDIUM}
-            />
-        </form>
-    </>
-);
+const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
+    // type need to change to UserSignInRequestDto
+    const { control, errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
+        defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+        validationSchema: userSignUpValidationSchema,
+    });
+
+    const handleFormSubmit = useCallback(
+        (event_: React.BaseSyntheticEvent): void => {
+            void handleSubmit(onSubmit)(event_);
+        },
+        [handleSubmit, onSubmit],
+    );
+
+    return (
+        <>
+            <h1 className="text-center text-3xl">Hi! Login to your Account</h1>
+            <form onSubmit={handleFormSubmit}>
+                <Input
+                    control={control}
+                    errors={errors}
+                    placeholder="Enter your email"
+                    label="Email"
+                    name="email"
+                    type="text"
+                />
+
+                <Input
+                    control={control}
+                    errors={errors}
+                    placeholder="Enter your password"
+                    label="Password"
+                    name="password"
+                    type="text"
+                />
+                <Button
+                    label="Log In"
+                    type="submit"
+                    size={ButtonSize.MEDIUM}
+                    variant={ButtonVariant.PRIMARY}
+                />
+            </form>
+            <p className="text-center text-sm">
+                No account?{' '}
+                <Link to={AppRoute.SIGN_UP}>
+                    <span className="text-lm-yellow-100">
+                        Go to Create an account
+                    </span>
+                </Link>
+            </p>
+        </>
+    );
+};
 
 export { SignInForm };
