@@ -27,13 +27,7 @@ export default {
         },
         extend: {
             animation: {
-                'load': 'load 700ms infinite ease-in-out',
-            },
-            keyframes: {
-                'load': {
-                    '0%': { transform: 'rotate(0)' },
-                    '100%': { transform: 'rotate(360deg)' },
-                },
+                'load': 'spin 700ms infinite ease-in-out',
             },
         },
     },
