@@ -13,6 +13,7 @@ type Properties<T extends FieldValues> = {
     label: string;
     name: FieldPath<T>;
     type?: 'text' | 'email';
+    isDisabled?: boolean;
     placeholder?: string;
 };
 
@@ -21,8 +22,9 @@ const Input = <T extends FieldValues>({
     errors,
     label,
     name,
-    placeholder = '',
     type = 'text',
+    isDisabled = false,
+    placeholder = '',
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
@@ -30,10 +32,17 @@ const Input = <T extends FieldValues>({
     const hasError = Boolean(error);
 
     return (
-        <label>
-            <span>{label}</span>
-            <input {...field} type={type} placeholder={placeholder} />
-            {hasError && <span>{error as string}</span>}
+        <label className="flex h-20 flex-col text-sm">
+            <span className="font-medium">{label}</span>
+            <input
+                {...field}
+                type={type}
+                placeholder={placeholder}
+                autoComplete="off"
+                disabled={isDisabled}
+                className={`bg-lm-black-100 text-lm-grey-100 placeholder:text-lm-grey-200 focus:border-lm-yellow-100 disabled:text-lm-grey-300 h-9 max-w-[358px] rounded-lg border p-4 focus:outline-none ${hasError && 'border-lm-red'}`}
+            />
+            {hasError && <span className="text-lm-red">{error as string}</span>}
         </label>
     );
 };

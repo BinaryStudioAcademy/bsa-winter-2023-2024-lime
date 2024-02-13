@@ -1,6 +1,10 @@
 import reactLogo from '~/assets/img/react.svg';
-import { Link, RouterOutlet } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import {
+    Link,
+    Loader,
+    RouterOutlet,
+} from '~/bundles/common/components/components.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -18,6 +22,8 @@ const App: React.FC = () => {
     }));
 
     const isRoot = pathname === AppRoute.ROOT;
+    const isLoading =
+        dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
     useEffect(() => {
         if (isRoot) {
@@ -48,7 +54,7 @@ const App: React.FC = () => {
             {isRoot && (
                 <>
                     <h2>Users:</h2>
-                    <h3>Status: {dataStatus}</h3>
+                    <h3>Status: {isLoading ? <Loader /> : dataStatus}</h3>
                     <ul>
                         {users.map((it) => (
                             <li key={it.id}>{it.email}</li>
