@@ -23,6 +23,12 @@ export default {
                 200: '#1C2227',
             },
         },
+        screens: {
+            'sm': '370px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+        },
         extend: {},
     },
     plugins: [],
