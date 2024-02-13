@@ -25,6 +25,12 @@ export default {
                 300: '#313134',
             },
         },
+              screens: {
+            'sm': '370px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+        },
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
