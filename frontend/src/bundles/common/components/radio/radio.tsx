@@ -24,7 +24,7 @@ const Radio = <T extends FieldValues>({
     const { field } = useFormController({ name, control });
 
     return (
-        <div className="flex items-center py-[3px]">
+        <div className="flex items-center py-1">
             <input
                 {...field}
                 id={id}
@@ -40,7 +40,7 @@ const Radio = <T extends FieldValues>({
                 className="text-lm-grey-500 peer-checked/radio:text-lm-grey-200 ml-2 text-base"
             >
                 {label}
-            </label>
+            </label>            
         </div>
     );
 };
