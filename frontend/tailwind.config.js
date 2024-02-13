@@ -25,7 +25,7 @@ export default {
                 300: '#313134',
             },
         },
-              screens: {
+        screens: {
             'sm': '370px',
             'md': '768px',
             'lg': '1024px',
