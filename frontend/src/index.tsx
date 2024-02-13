@@ -1,4 +1,4 @@
-import '~/assets/css/styles.css';
+import '~/assets/css/styles.scss';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

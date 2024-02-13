@@ -1,8 +1,11 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from 'tailwindcss/defaultTheme';
+
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         colors: {
+            transparent: 'transparent',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
@@ -21,9 +24,46 @@ export default {
             'lm-black': {
                 100: '#2A2F37',
                 200: '#1C2227',
+                300: '#313134',
             },
         },
-        extend: {},
+        fontSize: {
+            xs: '0.75rem',
+            sm: '0.875rem',
+            base: '1rem',
+            xl: '1.25rem',
+            '2xl': '1.375rem',
+            '3xl': '1.75rem',
+            '4xl': '2.625rem',
+        },
+        fontWeight: {
+            normal: '400',
+            semibold: '500',
+            bold: '600',
+        },
+        lineHeight: {
+            '3': '1rem',
+            '4': '1.25rem',
+            '5': '1.375rem',
+            '6': '1.75rem',
+            '7': '2.125rem',
+            '8': '2.25rem',
+            '9': '3.5856rem',
+        },
+        screens: {
+            'sm': '370px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+        },
+        extend: {
+            animation: {
+                'load': 'spin 700ms infinite ease-in-out',
+            },
+            fontFamily: {
+                sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+            },
+        },
     },
     plugins: [],
 };
