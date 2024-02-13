@@ -5,6 +5,7 @@ import fastifyStatic from '@fastify/static';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
+import { AppRoute } from 'frontend/src/bundles/common/enums/app-route.enum.js';
 
 import { type Config } from '~/common/config/config.js';
 import { type Database } from '~/common/database/database.js';
@@ -12,6 +13,8 @@ import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
+import { authPlugin } from '~/common/plugins/plugins.js';
+import { jwtService } from '~/common/services/services.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -116,6 +119,20 @@ class BaseServerApp implements ServerApp {
         );
     }
 
+    private async initPlugins(): Promise<void> {
+        const routes = [...this.apis].flatMap((api) =>
+            api.routes.map((element) => element.path),
+        );
+        const excludedRoutes = [AppRoute.SIGN_IN, AppRoute.SIGN_UP];
+        const filteredRoutes = routes.filter((route) =>
+            excludedRoutes.some((excRoute) => route.includes(excRoute)),
+        );
+        await this.app.register(authPlugin, {
+            jwtService,
+            excludedRoutes: filteredRoutes,
+        });
+    }
+
     private initValidationCompiler(): void {
         this.app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
             return <T, R = ReturnType<ValidationSchema['parse']>>(
@@ -187,6 +204,8 @@ class BaseServerApp implements ServerApp {
         await this.initServe();
 
         await this.initMiddlewares();
+
+        await this.initPlugins();
 
         this.initValidationCompiler();
 
