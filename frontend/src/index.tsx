@@ -12,6 +12,8 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { store } from '~/framework/store/store.js';
 
+import { NotFound } from './bundles/common/pages/pages.js';
+
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
@@ -34,6 +36,10 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
                                 element: <Auth />,
                             },
                         ],
+                    },
+                    {
+                        path: AppRoute.NOT_FOUND,
+                        element: <NotFound />,
                     },
                 ]}
             />
