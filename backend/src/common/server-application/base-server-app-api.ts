@@ -29,7 +29,8 @@ class BaseServerAppApi implements ServerAppApi {
     }
 
     public generateDoc(): ReturnType<typeof swaggerJsdoc> {
-        const isProduction = this.config.ENV.APP.ENVIRONMENT === AppEnvironment.PRODUCTION;
+        const isProduction =
+            this.config.ENV.APP.ENVIRONMENT === AppEnvironment.PRODUCTION;
 
         const controllerExtension = isProduction ? 'js' : 'ts';
 
