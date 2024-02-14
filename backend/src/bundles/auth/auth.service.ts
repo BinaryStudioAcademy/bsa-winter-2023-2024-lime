@@ -20,7 +20,9 @@ class AuthService {
     private async verifyLoginCredentials(
         userRequestDto: UserSignInRequestDto,
     ): Promise<UserModel> {
-        const user = await this.userService.findByEmail(userRequestDto.email);
+        const user = (await this.userService.find({
+            email: userRequestDto.email,
+        })) as UserModel;
         if (!user) {
             throw new HttpError({
                 message: UserValidationMessage.LOGIN_CREDENTIALS_DO_NOT_MATCH,
@@ -54,9 +56,9 @@ class AuthService {
     public async signUp(
         userRequestDto: UserSignUpRequestDto,
     ): Promise<UserSignUpResponseDto> {
-        const userByEmail = await this.userService.findByEmail(
-            userRequestDto.email,
-        );
+        const userByEmail = (await this.userService.find({
+            email: userRequestDto.email,
+        })) as UserModel;
 
         if (userByEmail) {
             throw new HttpError({
