@@ -4,9 +4,14 @@ type EnvironmentSchema = {
     APP: {
         PORT: number;
         ENVIRONMENT: AppEnvironment;
+        HOST: string;
     };
     DB: {
-        CONNECTION_STRING: string;
+        USERNAME: string;
+        PASSWORD: string;
+        HOST: string;
+        PORT: number;
+        NAME: string;
         DIALECT: string;
         POOL_MIN: number;
         POOL_MAX: number;

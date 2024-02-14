@@ -3,7 +3,7 @@
     "type": "module",
     "engines": {
         "node": "18.x.x",
-        "npm": "10.x.x"
+        "npm": "9.x.x"
     },
     "scripts": {
         "lint:type": "npx tsc --noEmit",
@@ -14,7 +14,8 @@
         "migrate:dev:make": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:make -x ts",
         "migrate:dev:down": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:down",
         "migrate:dev:rollback": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:rollback --all",
-        "build": "tsc && tsc-alias",
+        "build": "tsc && tsc-alias -p tsconfig.json && npm run build:copy",
+        "build:copy": "cp -r package.json build",
         "start": "node ./src/index.js"
     },
     "devDependencies": {
