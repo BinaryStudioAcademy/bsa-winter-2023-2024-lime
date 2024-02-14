@@ -1,1 +1,1 @@
-export { userSignUp } from './user-sign-up.validation-schema.js';
+export { userAuth } from './user-auth.validation-schema.js';

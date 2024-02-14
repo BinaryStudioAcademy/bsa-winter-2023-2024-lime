@@ -2,24 +2,24 @@ import { z } from 'zod';
 
 import { UserValidationMessage, UserValidationRule } from '../enums/enums.js';
 
-type UserSignUpRequestValidationDto = {
+type UserAuthRequestValidationDto = {
     email: z.ZodString;
     password: z.ZodString;
-    passwordConfirm: z.ZodString;
+    passwordConfirm?: z.ZodString;
 };
 
-const userSignUp = z
-    .object<UserSignUpRequestValidationDto>({
+const userAuth = z
+    .object<UserAuthRequestValidationDto>({
         email: z
             .string()
             .trim()
-            .min(UserValidationRule.EMAIL_REQUIRED, {
-                message: UserValidationMessage.EMAIL_REQUIRE,
+            .min(1, {
+                message: UserValidationMessage.REQUIRED,
             })
-            .min(UserValidationRule.EMAIL_MIN_LENGTH, {
+            .min(UserValidationRule.EMAIL.MIN_LENGTH, {
                 message: UserValidationMessage.INVALID_EMAIL,
             })
-            .max(UserValidationRule.EMAIL_MAX_LENGTH, {
+            .max(UserValidationRule.EMAIL.MAX_LENGTH, {
                 message: UserValidationMessage.INVALID_EMAIL,
             })
             .email({
@@ -29,33 +29,41 @@ const userSignUp = z
         password: z
             .string()
             .trim()
-            .min(UserValidationRule.PASSWORD_MIN_LENGTH, {
+            .min(1, {
+                message: UserValidationMessage.REQUIRED,
+            })
+            .min(UserValidationRule.PASSWORD.MIN_LENGTH, {
                 message: UserValidationMessage.INVALID_PASSWORD,
             })
-            .max(UserValidationRule.PASSWORD_MAX_LENGTH, {
+            .max(UserValidationRule.PASSWORD.MAX_LENGTH, {
                 message: UserValidationMessage.INVALID_PASSWORD,
             }),
 
         passwordConfirm: z
             .string()
             .trim()
-            .min(UserValidationRule.PASSWORD_MIN_LENGTH, {
+            .min(1, {
+                message: UserValidationMessage.REQUIRED,
+            })
+            .min(UserValidationRule.PASSWORD.MIN_LENGTH, {
                 message: UserValidationMessage.INVALID_PASSWORD,
             })
-            .max(UserValidationRule.PASSWORD_MAX_LENGTH, {
+            .max(UserValidationRule.PASSWORD.MAX_LENGTH, {
                 message: UserValidationMessage.INVALID_PASSWORD,
             }),
     })
     .refine(
         (value) => {
             const [local, domain] = value.email.split('@');
+            const { EMAIL } = UserValidationRule;
+
             return (
                 local &&
-                local.length > 0 &&
-                local.length < 65 &&
+                local.length >= EMAIL.LOCAL_MIN_LENGTH &&
+                local.length <= EMAIL.LOCAL_MAX_LENGTH &&
                 domain &&
-                domain.length > 3 &&
-                domain.length < 255
+                domain.length >= EMAIL.DOMAIN_MIN_LENGTH &&
+                domain.length <= EMAIL.DOMAIN_MAX_LENGTH
             );
         },
         {
@@ -68,4 +76,4 @@ const userSignUp = z
         path: ['passwordConfirm'],
     });
 
-export { userSignUp };
+export { userAuth };
