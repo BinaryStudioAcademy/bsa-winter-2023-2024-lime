@@ -1,1 +1,1 @@
-export { getStyles } from './get-styles.js';
+export { getStyles } from './get-styles.helper.js';
