@@ -1,4 +1,3 @@
-
 export { CheckIconComponent } from './check-icon/check-icon.js';
 export {
     LogoIcon,

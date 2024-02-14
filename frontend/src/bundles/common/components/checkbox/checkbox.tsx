@@ -1,4 +1,3 @@
-
 import {
     type Control,
     type FieldErrors,
@@ -19,18 +18,20 @@ type CheckboxProperties<T extends FieldValues> = {
 };
 
 const classes = {
-    containerCheckbox: 'border-lm-grey-100 relative flex h-5 w-5 items-center justify-center rounded-sm border-2 has-[:checked]:border-none',
+    containerCheckbox:
+        'border-lm-grey-100 relative flex h-5 w-5 items-center justify-center rounded-sm border-2 has-[:checked]:border-none',
     baseCheckbox:
         'checked:bg-lm-yellow-100 relative h-5 w-5 cursor-pointer appearance-none rounded-sm bg-transparent transition duration-300 checked:rounded-sm peer',
-    checkIcon: 'absolute z-[1] hidden pointer-events-none left-0 top-0 flex h-full w-full items-center justify-center hidden peer-[:checked]:flex'
+    checkIcon:
+        'absolute z-[1] hidden pointer-events-none left-0 top-0 flex h-full w-full items-center justify-center hidden peer-[:checked]:flex',
 };
 
 const Checkbox = <T extends FieldValues>({
     name,
-label,
+    label,
     control,
     errors,
-}: CheckboxProperties<T>): JSX.Element => { 
+}: CheckboxProperties<T>): JSX.Element => {
     const { field } = useFormController<T>({ name, control });
     const error = errors[name]?.message;
     const hasError = Boolean(error);
@@ -38,13 +39,15 @@ label,
         <div className="flex items-center gap-2">
             <div className={getValidClassNames(classes.containerCheckbox)}>
                 <input
-{...field}
+                    {...field}
                     name={name}
                     type="checkbox"
                     id="toggle-checkbox"
                     className={getValidClassNames(classes.baseCheckbox)}
                 />
-                <CheckIconComponent className={getValidClassNames(classes.checkIcon)} />
+                <CheckIconComponent
+                    className={getValidClassNames(classes.checkIcon)}
+                />
             </div>
             <label
                 className={getValidClassNames(
