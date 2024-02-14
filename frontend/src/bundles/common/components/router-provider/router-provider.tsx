@@ -4,31 +4,41 @@ import {
 } from 'react-router-dom';
 
 import { ProtectedRoute } from '~/bundles/common/components/components.js';
-import { type RouteObject } from '~/bundles/common/types/types.js';
+import {
+    type LibraryRouteObject,
+    type RouteObject,
+} from '~/bundles/common/types/types.js';
 
 type Properties = {
     routes: RouteObject[];
 };
 const RouterProvider: React.FC<Properties> = ({ routes }) => {
-    const mapRoutes = (routes: RouteObject[]): RouteObject[] => {
-        return routes.map((route) => {
-            const isPrivate = route.isPrivate ?? false;
+    const mapRoutes = (
+        routes: RouteObject[],
+        isAlreadyProtected = false,
+    ): LibraryRouteObject[] =>
+        routes.map(
+            ({ isPrivate, element, children, path }): LibraryRouteObject => {
+                const shouldProtect = !isAlreadyProtected && Boolean(isPrivate);
+                return {
+                    ...(element && {
+                        element: shouldProtect ? (
+                            <ProtectedRoute>{element}</ProtectedRoute>
+                        ) : (
+                            element
+                        ),
+                    }),
+                    ...(children?.length && {
+                        children: mapRoutes(
+                            children,
+                            isAlreadyProtected || shouldProtect,
+                        ),
+                    }),
+                    path,
+                };
+            },
+        );
 
-            if (route.children && route.children.length > 0) {
-                route.children = mapRoutes(route.children);
-            }
-
-            route.element = isPrivate ? (
-                <ProtectedRoute key={route.path}>
-                    {route.element}
-                </ProtectedRoute>
-            ) : (
-                route.element
-            );
-
-            return route;
-        });
-    };
     const mappedRoutes = mapRoutes(routes);
     return <LibraryRouterProvider router={createBrowserRouter(mappedRoutes)} />;
 };
