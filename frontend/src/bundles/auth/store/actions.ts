@@ -18,4 +18,14 @@ const signUp = createAsyncThunk<
     return authApi.signUp(registerPayload);
 });
 
-export { signUp };
+const signIn = createAsyncThunk<
+    UserAuthResponseDto,
+    UserAuthRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/sign-in`, (loginPayload, { extra }) => {
+    const { authApi } = extra;
+
+    return authApi.signIn(loginPayload);
+});
+
+export { signIn, signUp };
