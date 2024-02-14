@@ -22,6 +22,7 @@ const classes = {
     checked:
         'checked:after:border-lm-yellow-100 checked:before:bg-lm-yellow-100  checked:before:translate-x-5',
     focused: 'focus:outline-lm-yellow-200',
+    label: 'checked:text-lm-grey-200 relative flex items-center gap-2 text-[1rem] font-medium leading-[1.3rem] hover:cursor-pointer',
 };
 
 const Toggle = <T extends FieldValues>({
@@ -37,9 +38,10 @@ const Toggle = <T extends FieldValues>({
     return (
         <div>
             <label
-                className={`${
-                    field.value ? 'text-lm-grey-200' : 'text-lm-grey-500'
-                }  checked:text-lm-grey-200 relative flex items-center gap-2 text-[1rem] font-medium leading-[1.3rem] hover:cursor-pointer`}
+                className={getValidClassNames(
+                    field.value ? 'text-lm-grey-200' : 'text-lm-grey-500',
+                    classes.label,
+                )}
             >
                 <input
                     {...field}
