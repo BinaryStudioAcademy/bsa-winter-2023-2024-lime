@@ -19,7 +19,7 @@ const RouterProvider: React.FC<Properties> = ({ routes }) => {
             }
 
             route.element = isPrivate ? (
-                <ProtectedRoute key={route.path} isPrivate={isPrivate}>
+                <ProtectedRoute key={route.path}>
                     {route.element}
                 </ProtectedRoute>
             ) : (
@@ -29,9 +29,7 @@ const RouterProvider: React.FC<Properties> = ({ routes }) => {
             return route;
         });
     };
-
     const mappedRoutes = mapRoutes(routes);
-
     return <LibraryRouterProvider router={createBrowserRouter(mappedRoutes)} />;
 };
 
