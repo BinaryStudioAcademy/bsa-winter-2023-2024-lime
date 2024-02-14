@@ -1,5 +1,5 @@
-import { type AppRoute  } from '~/bundles/common/enums/enums.js';
-import { useCallback , useNavigate } from '~/bundles/common/hooks/hooks.js';
+import { type AppRoute } from '~/bundles/common/enums/enums.js';
+import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { Button, ButtonSize, ButtonVariant, Link } from '../components.js';
@@ -17,7 +17,7 @@ const SidebarNav: React.FC<SidebarNavProperties> = ({
     to,
     isActive = false,
 }) => {
-    const navigate = useNavigate();   
+    const navigate = useNavigate();
     const handleNavigation = useCallback((): void => {
         navigate(to);
     }, [navigate, to]);
