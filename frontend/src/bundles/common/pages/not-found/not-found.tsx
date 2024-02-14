@@ -1,6 +1,3 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import {
     Button,
     ButtonSize,
@@ -12,6 +9,7 @@ import {
     NotFoundIconSize,
 } from '~/bundles/common/components/icons/icons.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 
 const NotFound: React.FC = () => {
     const navigate = useNavigate();
