@@ -16,9 +16,15 @@ class UserRepository implements Repository {
     }
 
     public async findAll(): Promise<UserEntity[]> {
-        const users = await this.userModel.query().execute();
+        const users = await this.userModel
+            .query()
+            .withGraphFetched('userDetails')
+            .execute();
 
-        return users.map((it) => UserEntity.initialize(it));
+        return users.map((it) => {
+            const { userDetails, ...userInfo } = it;
+            return UserEntity.initialize({ ...userInfo, ...userDetails });
+        });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
@@ -33,7 +39,7 @@ class UserRepository implements Repository {
             .returning('*')
             .execute();
 
-        return UserEntity.initialize(item);
+        return UserEntity.initialize({ ...item, fullName: null });
     }
 
     public update(): ReturnType<Repository['update']> {

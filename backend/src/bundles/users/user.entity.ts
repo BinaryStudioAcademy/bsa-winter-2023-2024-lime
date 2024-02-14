@@ -9,7 +9,7 @@ class UserEntity implements Entity {
 
     private 'passwordSalt': string;
 
-    private 'fullName'?: string | undefined;
+    private 'fullName': string | null;
 
     private constructor({
         id,
@@ -22,7 +22,7 @@ class UserEntity implements Entity {
         email: string;
         passwordHash: string;
         passwordSalt: string;
-        fullName?: string | undefined;
+        fullName: string | null;
     }) {
         this.id = id;
         this.email = email;
@@ -42,7 +42,7 @@ class UserEntity implements Entity {
         email: string;
         passwordHash: string;
         passwordSalt: string;
-        fullName?: string | undefined;
+        fullName: string | null;
     }): UserEntity {
         return new UserEntity({
             id,
@@ -62,7 +62,7 @@ class UserEntity implements Entity {
         email: string;
         passwordHash: string;
         passwordSalt: string;
-        fullName?: string | undefined;
+        fullName: string | null;
     }): UserEntity {
         return new UserEntity({
             id: null,
@@ -76,7 +76,7 @@ class UserEntity implements Entity {
     public toObject(): {
         id: number;
         email: string;
-        fullName?: string | undefined;
+        fullName: string | null;
     } {
         return {
             id: this.id as number,
@@ -89,7 +89,7 @@ class UserEntity implements Entity {
         email: string;
         passwordHash: string;
         passwordSalt: string;
-        fullName?: string | undefined;
+        fullName: string | null;
     } {
         return {
             email: this.email,

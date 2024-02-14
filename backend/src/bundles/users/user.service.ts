@@ -41,6 +41,7 @@ class UserService implements Service {
                 email,
                 passwordSalt: salt,
                 passwordHash: hash,
+                fullName: null,
             }),
         );
 
