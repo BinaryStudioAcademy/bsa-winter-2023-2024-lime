@@ -25,7 +25,7 @@ const NotFound: React.FC = () => {
                     color={NotFoundIconColor.PRIMARY}
                     size={NotFoundIconSize.EXTRA_LARGE}
                 />
-                <h1 className="text-lm-white mt-5 text-4xl">
+                <h1 className="mt-5 text-4xl text-white">
                     Oops, this page was not found
                 </h1>
                 <Button
