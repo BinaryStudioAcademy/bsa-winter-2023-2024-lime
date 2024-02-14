@@ -16,14 +16,20 @@ const routes = [
     {
         path: AppRoute.ROOT,
         element: <App />,
-    },
-    {
-        path: AppRoute.SIGN_IN,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.SIGN_UP,
-        element: <Auth />,
+        children: [
+            {
+                path: AppRoute.ROOT,
+                element: 'Root',
+            },
+            {
+                path: AppRoute.SIGN_IN,
+                element: <Auth />,
+            },
+            {
+                path: AppRoute.SIGN_UP,
+                element: <Auth />,
+            },
+        ],
     },
 ];
 
