@@ -1,4 +1,8 @@
 import { CalendarDaysIcon } from '@heroicons/react/16/solid';
+import {
+    ArrowLeftStartOnRectangleIcon,
+    QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
 
 const ICON_CLASSNAME = 'inline h-8 w-8 flex justify-center items-center';
 
@@ -67,4 +71,12 @@ const ScheduleIcon = (): JSX.Element => {
     return <CalendarDaysIcon className={ICON_CLASSNAME} />;
 };
 
-export { GoalsIcon, OverviewIcon, ScheduleIcon, WorkoutIcon };
+const HelpIcon = (): JSX.Element => {
+    return <QuestionMarkCircleIcon className={ICON_CLASSNAME} />;
+};
+
+const LogoutIcon = (): JSX.Element => {
+    return <ArrowLeftStartOnRectangleIcon className={ICON_CLASSNAME} />;
+};
+
+export { GoalsIcon, HelpIcon, LogoutIcon,OverviewIcon, ScheduleIcon, WorkoutIcon };
