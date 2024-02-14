@@ -37,8 +37,8 @@ const routes = [
 createRoot(document.querySelector('#root') as HTMLElement).render(
     <StrictMode>
         <StoreProvider store={store.instance}>
-            <RouterProvider routes={routes} />
             <NotificationContainer />
+            <RouterProvider routes={routes} />
         </StoreProvider>
     </StrictMode>,
 );
