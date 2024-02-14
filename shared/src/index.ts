@@ -1,11 +1,11 @@
 export { AuthApiPath } from './bundles/auth/auth.js';
 export {
+    type UserAuthRequestDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
-    type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    userAuthValidationSchema,
     UsersApiPath,
-    userSignUpValidationSchema,
 } from './bundles/users/users.js';
 export {
     ApiPath,
