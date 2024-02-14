@@ -5,7 +5,7 @@ import { notificationManager } from '~/framework/notification/notification.js';
 const errorMiddleware: Middleware = () => {
     return (next) => {
         return (action) => {
-            if (isRejectedWithValue(action)) {
+            if (isRejected(action)) {
                 const { message = 'Something went wrong' } = action.error;
 
                 notificationManager.error(message);
