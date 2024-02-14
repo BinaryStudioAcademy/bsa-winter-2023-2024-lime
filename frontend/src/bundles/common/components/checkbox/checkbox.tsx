@@ -36,32 +36,32 @@ const Checkbox = <T extends FieldValues>({
     const error = errors[name]?.message;
     const hasError = Boolean(error);
     return (
-        <div className="flex items-center gap-2">
-            <div className={getValidClassNames(classes.containerCheckbox)}>
-                <input
-                    {...field}
-                    name={name}
-                    type="checkbox"
-                    id="toggle-checkbox"
-                    className={getValidClassNames(classes.baseCheckbox)}
-                />
-                <CheckIconComponent
-                    className={getValidClassNames(classes.checkIcon)}
-                />
+        <>
+            <div className="flex items-center gap-2">
+                <div className={getValidClassNames(classes.containerCheckbox)}>
+                    <input
+                        {...field}
+                        name={name}
+                        type="checkbox"
+                        id="toggle-checkbox"
+                        className={getValidClassNames(classes.baseCheckbox)}
+                    />
+                    <CheckIconComponent
+                        className={getValidClassNames(classes.checkIcon)}
+                    />
+                </div>
+                <label
+                    className={getValidClassNames(
+                        field.value ? 'text-lm-grey-200' : 'text-lm-grey-500',
+                        'cursor-pointer',
+                    )}
+                    htmlFor="toggle-checkbox"
+                >
+                    {label}
+                </label>
             </div>
-            <label
-                className={getValidClassNames(
-                    field.value ? 'text-lm-grey-200' : 'text-lm-grey-500',
-                    'cursor-pointer',
-                )}
-                htmlFor="toggle-checkbox"
-            >
-                {label}
-                {hasError && (
-                    <span className="text-lm-red">{error as string}</span>
-                )}
-            </label>
-        </div>
+            {hasError && <span className="text-lm-red">{error as string}</span>}
+        </>
     );
 };
 
