@@ -1,6 +1,5 @@
-type UserSignUpRequestDto = {
-    email: string;
-    password: string;
-};
+import { type UserSignInRequestDto } from './user-sign-in-request-dto.type.js';
+
+type UserSignUpRequestDto = UserSignInRequestDto;
 
 export { type UserSignUpRequestDto };

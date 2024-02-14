@@ -2,7 +2,7 @@ import { Button, Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserSignUpRequestDto,
-    userSignUpValidationSchema,
+    userAuthValidationSchema,
 } from '~/bundles/users/users.js';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants.js';
@@ -14,7 +14,7 @@ type Properties = {
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     const { control, errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-        validationSchema: userSignUpValidationSchema,
+        validationSchema: userAuthValidationSchema,
     });
 
     const handleFormSubmit = useCallback(

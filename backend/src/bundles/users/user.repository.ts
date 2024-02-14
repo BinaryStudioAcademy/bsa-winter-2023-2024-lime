@@ -1,9 +1,8 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type Repository } from '~/common/types/types.js';
-import { type UserRepositoryType } from '~/common/types/user-repository.type.js';
 
-class UserRepository implements UserRepositoryType, Repository {
+class UserRepository implements Repository {
     private userModel: typeof UserModel;
 
     public constructor(userModel: typeof UserModel) {
@@ -14,10 +13,11 @@ class UserRepository implements UserRepositoryType, Repository {
         return Promise.resolve(null);
     }
 
-    public async findByEmail(
-        email: string,
-    ): ReturnType<UserRepositoryType['findByEmail']> {
-        return this.userModel.query().findOne({ email });
+    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+    public async findByEmail(email: string): Promise<UserModel | null> {
+        const user = await this.userModel.query().findOne({ email });
+
+        return user ?? null;
     }
 
     public async findAll(): Promise<UserEntity[]> {
@@ -28,7 +28,6 @@ class UserRepository implements UserRepositoryType, Repository {
 
     public async create(entity: UserEntity): Promise<UserEntity> {
         const { email, passwordSalt, passwordHash } = entity.toNewObject();
-
         const item = await this.userModel
             .query()
             .insert({

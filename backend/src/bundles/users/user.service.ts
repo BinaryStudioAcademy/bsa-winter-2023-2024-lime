@@ -2,15 +2,15 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
-import { type UserServiceType } from '~/common/types/user-service.type.js';
 
 import {
     type UserGetAllResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
 } from './types/types.js';
+import { type UserModel } from './user.model.js';
 
-class UserService implements Service, UserServiceType {
+class UserService implements Service {
     private userRepository: UserRepository;
 
     public constructor(userRepository: UserRepository) {
@@ -21,9 +21,7 @@ class UserService implements Service, UserServiceType {
         return Promise.resolve(null);
     }
 
-    public async findByEmail(
-        email: string,
-    ): ReturnType<UserServiceType['findByEmail']> {
+    public async findByEmail(email: string): Promise<UserModel | null> {
         return await this.userRepository.findByEmail(email);
     }
 
@@ -38,16 +36,18 @@ class UserService implements Service, UserServiceType {
     public async create(
         payload: UserSignUpRequestDto,
     ): Promise<Omit<UserSignUpResponseDto, 'token'>> {
-        const { hash, salt } = cryptService.encryptSync(payload.password);
+        const { email, password } = payload;
+        const { hash, salt } = cryptService.encryptSync(password);
+
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
-                email: payload.email,
-                passwordSalt: salt, // TODO
-                passwordHash: hash, // TODO
+                email,
+                passwordSalt: salt,
+                passwordHash: hash,
             }),
         );
 
-        return user.toObject();
+        return user.toObject() as Omit<UserSignUpResponseDto, 'token'>;
     }
 
     public update(): ReturnType<Service['update']> {
