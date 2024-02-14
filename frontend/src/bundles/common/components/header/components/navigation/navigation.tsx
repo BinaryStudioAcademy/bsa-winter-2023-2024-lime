@@ -2,7 +2,7 @@ import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
 import defaultAvatar from '~/assets/img/default-avatar.svg';
 import { Link } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
 
 import styles from './styles.module.css';
 

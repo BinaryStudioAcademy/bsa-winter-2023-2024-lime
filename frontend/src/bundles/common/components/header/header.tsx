@@ -1,6 +1,6 @@
 import logo from '~/assets/img/logo.svg';
 
-import { AppRoute } from '../../enums/app-route.enum.js';
+import { AppRoute } from '../../enums/enums.js';
 import { Layout, Link } from '../components.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';
