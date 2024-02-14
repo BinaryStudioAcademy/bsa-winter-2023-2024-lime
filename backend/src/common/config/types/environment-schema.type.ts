@@ -11,6 +11,10 @@ type EnvironmentSchema = {
         POOL_MIN: number;
         POOL_MAX: number;
     };
+    EMAIL: {
+        API_KEY: string;
+        FROM: string;
+    };
 };
 
 export { type EnvironmentSchema };

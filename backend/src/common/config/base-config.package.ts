@@ -68,6 +68,20 @@ class BaseConfig implements Config {
                     default: null,
                 },
             },
+            EMAIL: {
+                API_KEY: {
+                    doc: 'SendGrid api key',
+                    format: String,
+                    env: 'EMAIL_API_KEY',
+                    default: null,
+                },
+                FROM: {
+                    doc: 'Email address to send mails to customers',
+                    format: String,
+                    env: 'EMAIL_FROM',
+                    default: null,
+                },
+            },
         });
     }
 }
