@@ -1,5 +1,5 @@
 export { type AsyncThunkConfig } from './async-thunk-config.type.js';
-export { type RouteObjectExtended } from './route-object-extended.js';
+export { type RouteObject } from './route-object.js';
 export {
     type ServerErrorDetail,
     type ServerErrorResponse,

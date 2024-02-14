@@ -4,10 +4,10 @@ import {
 } from 'react-router-dom';
 
 import { ProtectedRoute } from '~/bundles/common/components/components.js';
-import { type RouteObjectExtended } from '~/bundles/common/types/types.js';
+import { type RouteObject } from '~/bundles/common/types/types.js';
 
 type Properties = {
-    routes: RouteObjectExtended[];
+    routes: RouteObject[];
 };
 
 const RouterProvider: React.FC<Properties> = ({ routes }) => {
