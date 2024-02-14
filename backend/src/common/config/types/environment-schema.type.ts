@@ -5,6 +5,7 @@ type EnvironmentSchema = {
         PORT: number;
         ENVIRONMENT: AppEnvironment;
         HOST: string;
+        JWT_SECRET: string;
     };
     DB: {
         USERNAME: string;
