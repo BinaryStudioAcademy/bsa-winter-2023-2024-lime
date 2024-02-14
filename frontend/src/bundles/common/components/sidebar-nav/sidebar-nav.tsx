@@ -14,7 +14,7 @@ const SidebarNav: React.FC<SidebarNavProperties> = ({
     icon,
     text,
     to,
-    isActive=false,
+    isActive = false,
 }) => {
     const navigate = useNavigate();
     const handleNavigation = useCallback((): void => {

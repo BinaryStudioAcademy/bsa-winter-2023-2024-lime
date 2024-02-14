@@ -79,4 +79,11 @@ const LogoutIcon = (): JSX.Element => {
     return <ArrowLeftStartOnRectangleIcon className={ICON_CLASSNAME} />;
 };
 
-export { GoalsIcon, HelpIcon, LogoutIcon,OverviewIcon, ScheduleIcon, WorkoutIcon };
+export {
+    GoalsIcon,
+    HelpIcon,
+    LogoutIcon,
+    OverviewIcon,
+    ScheduleIcon,
+    WorkoutIcon,
+};

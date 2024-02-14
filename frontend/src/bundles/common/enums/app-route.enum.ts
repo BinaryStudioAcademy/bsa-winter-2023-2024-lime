@@ -3,9 +3,9 @@ const AppRoute = {
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
     OVERVIEW: '/overview',
-    GOALS:'/goals',
+    GOALS: '/goals',
     WORKOUT: '/workout',
-    SCHEDULE:'/schedule'
+    SCHEDULE: '/schedule',
 } as const;
 
 export { AppRoute };

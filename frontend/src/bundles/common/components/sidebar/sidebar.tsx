@@ -61,8 +61,8 @@ const Sidebar: React.FC = () => {
                 </div>
             </div>
 
-            <div className="h-1/4 w-full flex">
-                <div className="flex flex-col justify-center w-full gap-3">
+            <div className="flex h-1/4 w-full">
+                <div className="flex w-full flex-col justify-center gap-3">
                     <SidebarNav
                         icon={<HelpIcon />}
                         text="Help"
