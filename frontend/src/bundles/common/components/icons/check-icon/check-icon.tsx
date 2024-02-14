@@ -1,9 +1,11 @@
 import { CheckIcon } from '@heroicons/react/16/solid';
 
-const CheckIconComponent = (): JSX.Element => {
-    return (
-        <CheckIcon className="check-icon flex h-full w-full items-center justify-center" />
-    );
+type CheckProperties = {
+    className?: string;
+};
+
+const CheckIconComponent = ({ className }: CheckProperties): JSX.Element => {
+    return <CheckIcon className={className} />;
 };
 
 export { CheckIconComponent };
