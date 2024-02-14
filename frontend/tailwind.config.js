@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
+
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
@@ -24,6 +25,7 @@ export default {
                 100: '#2A2F37',
                 200: '#1C2227',
                 300: '#313134',
+                400: '#000000',
             },
         },
         fontSize: {
@@ -39,6 +41,7 @@ export default {
             normal: '400',
             semibold: '500',
             bold: '600',
+            extrabold: '700',
         },
         lineHeight: {
             '3': '1rem',
@@ -62,6 +65,9 @@ export default {
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
             },
+        },
+        borderRadius: {
+            '34': '2.1rem',
         },
     },
     plugins: [],
