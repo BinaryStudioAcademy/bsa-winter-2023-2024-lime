@@ -1,4 +1,4 @@
-import { type Middleware, isRejectedWithValue } from '@reduxjs/toolkit';
+import { type Middleware, isRejected } from '@reduxjs/toolkit';
 
 import { notificationManager } from '~/framework/notification/notification.js';
 
