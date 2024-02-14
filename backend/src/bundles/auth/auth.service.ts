@@ -1,17 +1,12 @@
 import {
-    type UserSignInRequestDto,
-    type UserSignInResponseDto,
+    type UserAuthRequestDto,
+    type UserAuthResponseDto,
     HttpCode,
     HttpError,
     UserValidationMessage,
 } from 'shared';
 
-import {
-    type UserModel,
-    type UserService,
-    type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
-} from '~/bundles/users/users.js';
+import { type UserModel, type UserService } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
 class AuthService {
@@ -22,7 +17,7 @@ class AuthService {
     }
 
     private async verifyLoginCredentials(
-        userRequestDto: UserSignInRequestDto,
+        userRequestDto: UserAuthRequestDto,
     ): Promise<UserModel> {
         const user = await this.userService.findByEmail(userRequestDto.email);
         if (!user) {
@@ -48,8 +43,8 @@ class AuthService {
     }
 
     public async signIn(
-        userRequestDto: UserSignInRequestDto,
-    ): Promise<UserSignInResponseDto> {
+        userRequestDto: UserAuthRequestDto,
+    ): Promise<UserAuthResponseDto> {
         const { email, id } = await this.verifyLoginCredentials(userRequestDto);
         const token = jwtService.createToken({ userId: id });
 
@@ -57,8 +52,8 @@ class AuthService {
     }
 
     public async signUp(
-        userRequestDto: UserSignUpRequestDto,
-    ): Promise<UserSignUpResponseDto> {
+        userRequestDto: UserAuthRequestDto,
+    ): Promise<UserAuthResponseDto> {
         const userByEmail = await this.userService.findByEmail(
             userRequestDto.email,
         );

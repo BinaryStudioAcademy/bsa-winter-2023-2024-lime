@@ -4,9 +4,9 @@ import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import {
+    type UserAuthRequestDto,
+    type UserAuthResponseDto,
     type UserGetAllResponseDto,
-    type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
 } from './types/types.js';
 import { type UserModel } from './user.model.js';
 
@@ -34,8 +34,8 @@ class UserService implements Service {
     }
 
     public async create(
-        payload: UserSignUpRequestDto,
-    ): Promise<Omit<UserSignUpResponseDto, 'token'>> {
+        payload: UserAuthRequestDto,
+    ): Promise<Omit<UserAuthResponseDto, 'token'>> {
         const { email, password } = payload;
         const { hash, salt } = cryptService.encryptSync(password);
 
@@ -47,7 +47,7 @@ class UserService implements Service {
             }),
         );
 
-        return user.toObject() as Omit<UserSignUpResponseDto, 'token'>;
+        return user.toObject() as Omit<UserAuthResponseDto, 'token'>;
     }
 
     public update(): ReturnType<Service['update']> {

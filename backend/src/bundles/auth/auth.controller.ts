@@ -1,6 +1,5 @@
 import {
-    type UserSignInRequestDto,
-    type UserSignUpRequestDto,
+    type UserAuthRequestDto,
     userAuthValidationSchema,
 } from '~/bundles/users/users.js';
 import {
@@ -32,7 +31,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signUp(
                     options as ApiHandlerOptions<{
-                        body: UserSignUpRequestDto;
+                        body: UserAuthRequestDto;
                     }>,
                 ),
         });
@@ -46,7 +45,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signIn(
                     options as ApiHandlerOptions<{
-                        body: UserSignInRequestDto;
+                        body: UserAuthRequestDto;
                     }>,
                 ),
         });
@@ -54,7 +53,7 @@ class AuthController extends BaseController {
 
     private async signIn(
         options: ApiHandlerOptions<{
-            body: UserSignInRequestDto;
+            body: UserAuthRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
@@ -95,7 +94,7 @@ class AuthController extends BaseController {
      */
     private async signUp(
         options: ApiHandlerOptions<{
-            body: UserSignUpRequestDto;
+            body: UserAuthRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
