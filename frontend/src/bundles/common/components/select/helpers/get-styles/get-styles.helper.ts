@@ -2,7 +2,7 @@ import { type ClassNamesConfig, type GroupBase } from 'react-select';
 
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
-import { type SelectOption } from '../types/types.js';
+import { type SelectOption } from '../../types/types.js';
 
 const getStyles = <
     isMulti extends boolean = false,
