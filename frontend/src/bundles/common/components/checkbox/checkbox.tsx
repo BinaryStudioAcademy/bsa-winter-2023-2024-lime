@@ -7,11 +7,17 @@ import {
 
 import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
+import { getValidClassNames } from '../../helpers/helpers.js';
+
 type CheckboxProperties<T extends FieldValues> = {
     name: FieldPath<T>;
     label: string;
     control: Control<T>;
     errors: FieldErrors<T>;
+};
+
+const classes = {
+    base: 'accent-lm-yellow-100 relative h-5 w-5 checked:rounded-sm cursor-pointer rounded-2 border-none outline-1 rounded-sm transition duration-300',
 };
 
 const Checkbox = <T extends FieldValues>({
@@ -30,7 +36,10 @@ const Checkbox = <T extends FieldValues>({
                 name={name}
                 type="checkbox"
                 id="toggle-checkbox"
-                className="bg-lm-yellow-100 relative h-4 w-7 cursor-pointer appearance-none rounded-full border-none outline-none transition duration-300"
+                className={getValidClassNames(
+                    field.value ? 'text-lm-grey-200' : 'text-lm-grey-500',
+                    classes.base,
+                )}
             />
             <label className="cursor-pointer" htmlFor="toggle-checkbox">
                 {label}
