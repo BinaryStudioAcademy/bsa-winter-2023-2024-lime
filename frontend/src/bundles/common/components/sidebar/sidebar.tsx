@@ -1,5 +1,5 @@
 import logo from '~/assets/img/logo.svg';
-import { useLocation,useState  } from '~/bundles/common/hooks/hooks.js';
+import { useLocation, useState } from '~/bundles/common/hooks/hooks.js';
 
 import { AppRoute } from '../../enums/app-route.enum.js';
 import { Link } from '../components.js';
@@ -14,15 +14,14 @@ import {
 import { SidebarNav } from '../sidebar-nav/sidebar-nav.js';
 
 const Sidebar: React.FC = () => {
-    const { pathname } = useLocation(); // Get the current pathname
+    const { pathname } = useLocation();
 
-    // Example usage of useState to track active state for each route
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [activeRoute, setActiveRoute] = useState(pathname);
+    setActiveRoute(pathname);
     return (
         <div className="bg-lm-black-100 flex h-screen w-72 flex-col content-center items-center p-7 text-white">
             <div className="mb-5 flex w-full">
-                <Link to={'/'}>
+                <Link to={AppRoute.ROOT}>
                     <img
                         src={logo}
                         alt="Logo"
