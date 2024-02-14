@@ -7,7 +7,7 @@ const ButtonVariant = {
     PRIMARY: 'primary',
     SECONDARY: 'secondary',
     TERTIARY: 'tertiary',
-    SIDEBAR: 'sidebar'
+    SIDEBAR: 'sidebar',
 } as const;
 
 const ButtonSize = {
@@ -25,12 +25,16 @@ type ButtonProperties = {
     rightIcon?: ReactNode;
     type?: ButtonType;
     isDisabled?: boolean;
+    isActive?: boolean;
     className?: string;
     onClick?: () => void;
 };
 
 const baseClasses =
     'w-full flex items-center transition ease-in-out duration-300';
+
+const activeClasses =
+    'bg-lm-yellow-100 text-lm-black-200 hover:text-lm-black-200 hover:bg-lm-yellow-200';
 
 const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.PRIMARY]:
@@ -40,7 +44,7 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.TERTIARY]:
         'bg-transparent justify-center text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
     [ButtonVariant.SIDEBAR]:
-       'bg-transparent text-lm-grey-200 align hover:text-lm-black-200 hover:bg-lm-yellow-100  disabled:text-lm-grey-300 justify-start rounded-md',
+        'text-lm-grey-200 align hover:text-lm-black-200 hover:bg-lm-yellow-100  disabled:text-lm-grey-300 justify-start rounded-md',
 };
 
 const buttonSizesToClasses: Record<ValueOf<typeof ButtonSize>, string> = {
@@ -57,6 +61,7 @@ const Button: React.FC<ButtonProperties> = ({
     className,
     type = 'button',
     isDisabled = false,
+    isActive = false,
     ...properties
 }: ButtonProperties): JSX.Element => {
     return (
@@ -68,6 +73,7 @@ const Button: React.FC<ButtonProperties> = ({
                 buttonSizesToClasses[size],
                 buttonVariantToClasses[variant],
                 className,
+                isActive ? activeClasses : '',
             )}
             {...properties}
         >
