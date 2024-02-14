@@ -29,6 +29,7 @@
         "vite": "5.0.12"
     },
     "dependencies": {
+        "@heroicons/react": "2.1.1",
         "@hookform/resolvers": "3.3.4",
         "@reduxjs/toolkit": "2.1.0",
         "clsx": "2.1.0",
