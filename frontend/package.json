@@ -7,7 +7,7 @@
         "npm": "10.x.x"
     },
     "scripts": {
-        "lint:css": "npx stylelint \"src/**/*.css\" --allow-empty-input",
+        "lint:css": "npx stylelint \"src/**/*.css\"",
         "lint:js": "npx eslint \"src/**/*.{ts,tsx}\"",
         "lint:type": "npx tsc --noEmit",
         "lint": "npm run lint:type && npm run lint:js",
