@@ -14,7 +14,7 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 
 import { DropdownIndicator } from './components/dropdown-indicator.js';
-import { getStyles } from './styles/styles.js';
+import { getStyles } from './helpers/helpers.js';
 import { type SelectOption, type SelectValue } from './types/types.js';
 
 type Properties<
