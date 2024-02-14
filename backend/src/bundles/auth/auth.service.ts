@@ -1,17 +1,14 @@
+import { UserValidationMessage } from 'shared';
+
+import { type UserModel } from '~/bundles/users/user.model.js';
+import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
-    UserValidationMessage,
-} from 'shared';
-import { HttpError } from 'shared/build/framework/exceptions/http-error/http-error.exception.js';
-import { HttpCode } from 'shared/build/framework/http/enums/http-code.enum.js';
-
-import {
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-} from '~/bundles/users/types/types.js';
-import { type UserModel } from '~/bundles/users/user.model.js';
-import { type UserService } from '~/bundles/users/user.service.js';
+} from '~/bundles/users/users.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
 class AuthService {
@@ -24,7 +21,9 @@ class AuthService {
     private async verifyLoginCredentials(
         userRequestDto: UserSignInRequestDto,
     ): Promise<UserModel> {
-        const user = await this.userService.findByEmail(userRequestDto.email);
+        const user = (await this.userService.find({
+            email: userRequestDto.email,
+        })) as UserModel;
         if (!user) {
             throw new HttpError({
                 message: UserValidationMessage.LOGIN_CREDENTIALS_DO_NOT_MATCH,
@@ -51,16 +50,16 @@ class AuthService {
         userRequestDto: UserSignInRequestDto,
     ): Promise<UserSignInResponseDto> {
         const { email, id } = await this.verifyLoginCredentials(userRequestDto);
-        const token = jwtService.createToken({ userId: id });
+        const token = await jwtService.createToken({ userId: id });
         return { id, email, token };
     }
 
     public async signUp(
         userRequestDto: UserSignUpRequestDto,
     ): Promise<UserSignUpResponseDto> {
-        const userByEmail = await this.userService.findByEmail(
-            userRequestDto.email,
-        );
+        const userByEmail = (await this.userService.find({
+            email: userRequestDto.email,
+        })) as UserModel;
 
         if (userByEmail) {
             throw new HttpError({
@@ -70,7 +69,7 @@ class AuthService {
         }
 
         const user = await this.userService.create(userRequestDto);
-        const token = jwtService.createToken({ userId: user.id });
+        const token = await jwtService.createToken({ userId: user.id });
 
         return { ...user, token };
     }

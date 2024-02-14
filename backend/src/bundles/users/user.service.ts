@@ -5,26 +5,21 @@ import { type Service } from '~/common/types/types.js';
 
 import {
     type UserGetAllResponseDto,
-    type UserServiceType,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
 } from './types/types.js';
 
-class UserService implements Service, UserServiceType {
+class UserService implements Service {
     private userRepository: UserRepository;
 
     public constructor(userRepository: UserRepository) {
         this.userRepository = userRepository;
     }
 
-    public find(): ReturnType<Service['find']> {
-        return Promise.resolve(null);
-    }
-
-    public async findByEmail(
-        email: string,
-    ): ReturnType<UserServiceType['findByEmail']> {
-        return await this.userRepository.findByEmail(email);
+    public async find(
+        query: Record<string, unknown>,
+    ): ReturnType<Service['find']> {
+        return await this.userRepository.find(query);
     }
 
     public async findAll(): Promise<UserGetAllResponseDto> {
