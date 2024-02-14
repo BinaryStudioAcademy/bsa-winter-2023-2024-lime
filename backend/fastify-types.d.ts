@@ -1,8 +1,7 @@
 import { type FastifyRequest as OriginalFastifyRequest } from 'fastify';
-import { type JWTPayload } from 'jose';
 
 declare module 'fastify' {
     interface FastifyRequest extends OriginalFastifyRequest {
-        user?: JWTPayload | null;
+        user: HERE_SUPPOSED_TO_BE_USER_DTO;
     }
 }
