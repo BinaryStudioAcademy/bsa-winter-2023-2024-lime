@@ -1,4 +1,3 @@
-import { type FastifyRequest } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import { AuthApiPath, UserValidationMessage } from 'shared';
 
@@ -20,33 +19,30 @@ const authPlugin = fastifyPlugin(
             excludedRoutes.some((excRoute) => route.includes(excRoute)),
         );
 
-        fastify.addHook(
-            'preHandler',
-            (request: FastifyRequest, reply, next) => {
-                if (filteredRoutes?.includes(request.routeOptions.url)) {
-                    return next();
-                }
-                const token = extractTokenFromHeaders(request);
+        fastify.addHook('preHandler', async (request) => {
+            if (filteredRoutes?.includes(request.routeOptions.url)) {
+                return;
+            }
+            const token = extractTokenFromHeaders(request);
 
-                if (!token) {
-                    throw new HttpError({
-                        status: HttpCode.UNAUTHORIZED,
-                        message: UserValidationMessage.TOKEN_REQUIRE,
-                    });
-                }
+            if (!token) {
+                throw new HttpError({
+                    status: HttpCode.UNAUTHORIZED,
+                    message: UserValidationMessage.TOKEN_REQUIRE,
+                });
+            }
 
-                const decodedToken = jwtService.verifyToken(token);
+            const decodedToken = await jwtService.verifyToken(token);
 
-                if (!decodedToken) {
-                    throw new HttpError({
-                        status: HttpCode.UNAUTHORIZED,
-                        message: UserValidationMessage.TOKEN_INVALID,
-                    });
-                }
+            if (!decodedToken) {
+                throw new HttpError({
+                    status: HttpCode.UNAUTHORIZED,
+                    message: UserValidationMessage.TOKEN_INVALID,
+                });
+            }
 
-                request.user = decodedToken;
-            },
-        );
+            request.user = decodedToken;
+        });
         done();
     },
     { name: PluginNames.AUTH_PLUGIN },
