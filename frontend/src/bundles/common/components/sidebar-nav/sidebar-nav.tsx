@@ -7,9 +7,15 @@ interface SidebarNavProperties {
     icon: JSX.Element;
     text: string;
     to: string;
+    isActive?: boolean;
 }
 
-const SidebarNav: React.FC<SidebarNavProperties> = ({ icon, text, to }) => {
+const SidebarNav: React.FC<SidebarNavProperties> = ({
+    icon,
+    text,
+    to,
+    isActive=false,
+}) => {
     const navigate = useNavigate();
     const handleNavigation = useCallback((): void => {
         navigate(to);
@@ -25,7 +31,8 @@ const SidebarNav: React.FC<SidebarNavProperties> = ({ icon, text, to }) => {
                 leftIcon={icon}
                 variant={ButtonVariant.SIDEBAR}
                 onClick={handleNavigation}
-                size={ButtonSize.MEDIUM}                
+                isActive={isActive}
+                size={ButtonSize.MEDIUM}
             />
         </Link>
     );
