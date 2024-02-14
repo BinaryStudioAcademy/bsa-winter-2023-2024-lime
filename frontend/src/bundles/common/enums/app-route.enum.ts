@@ -1,5 +1,7 @@
 const AppRoute = {
     ROOT: '/',
+    LOGOUT: '/logout',
+    HELP: '/help',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
     OVERVIEW: '/overview',

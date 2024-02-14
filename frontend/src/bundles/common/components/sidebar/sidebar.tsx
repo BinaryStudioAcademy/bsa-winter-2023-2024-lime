@@ -64,12 +64,13 @@ const Sidebar: React.FC = () => {
                     <SidebarNav
                         icon={<HelpIcon />}
                         text="Help"
-                        to={AppRoute.GOALS}
+                        to={AppRoute.HELP}
+                        isActive={activeRoute === AppRoute.HELP}
                     />
                     <SidebarNav
                         icon={<LogoutIcon />}
                         text="Logout"
-                        to={AppRoute.SCHEDULE}
+                        to={AppRoute.LOGOUT}
                     />
                 </div>
             </div>
