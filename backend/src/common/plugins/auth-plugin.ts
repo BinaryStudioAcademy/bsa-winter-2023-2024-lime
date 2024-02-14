@@ -5,10 +5,10 @@ import { PluginNames } from '~/common/enums/enums.js';
 import { extractTokenFromHeaders } from '~/common/helpers/helpers.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 
-import { type AuthPluginOptions } from './types/types.js';
+import { type AuthOptions } from './types/types.js';
 
 const authPlugin = fastifyPlugin(
-    (fastify, { jwtService, apis }: AuthPluginOptions, done) => {
+    (fastify, { jwtService, apis }: AuthOptions, done) => {
         fastify.decorateRequest('user', null);
 
         const routes = apis.flatMap((api) =>
