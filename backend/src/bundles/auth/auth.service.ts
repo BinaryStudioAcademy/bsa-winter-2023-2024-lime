@@ -1,4 +1,4 @@
-import { HttpCode, HttpError, UserValidationMessage } from 'shared';
+import { UserValidationMessage } from 'shared';
 
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type UserService } from '~/bundles/users/user.service.js';
@@ -8,6 +8,7 @@ import {
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
 } from '~/bundles/users/users.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
 class AuthService {
