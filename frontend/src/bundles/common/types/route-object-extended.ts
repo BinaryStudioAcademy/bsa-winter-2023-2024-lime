@@ -1,7 +1,7 @@
 import { type RouteObject } from 'react-router-dom';
 
 type RouteObjectExtended = RouteObject & {
-    private?: boolean;
+    isPrivate?: boolean;
 };
 
 export { type RouteObjectExtended };

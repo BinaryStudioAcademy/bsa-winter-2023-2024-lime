@@ -1,17 +1,18 @@
 import { type ReactNode } from 'react';
 
-import { AppRoute } from '../../enums/app-route.enum.js';
-import { Navigate, useAppSelector } from '../../hooks/hooks.js';
-import { type AsyncThunkConfig } from '../../types/async-thunk-config.type.js';
+import { Navigate } from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
+import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
-interface IProtectedRouteProperties {
+type ProtectedRouteProperties = {
     children: ReactNode;
-    private: boolean;
-}
+    isPrivate: boolean;
+};
 
-const ProtectedRoute: React.FC<IProtectedRouteProperties> = ({
+const ProtectedRoute: React.FC<ProtectedRouteProperties> = ({
     children,
-    private: isPrivate,
+    isPrivate,
 }) => {
     const userAuthenticated = useAppSelector(
         (state: AsyncThunkConfig['state']) => state.auth.user,
