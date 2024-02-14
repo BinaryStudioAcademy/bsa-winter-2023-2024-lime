@@ -1,3 +1,4 @@
+import authLogo from '~/assets/img/auth-logo.svg';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -44,18 +45,12 @@ const Auth: React.FC = () => {
     return (
         <>
             state: {dataStatus}
-            <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
-                <div className="bg-lm-black-200 my-5 ml-4 flex w-2/5 flex-col justify-between rounded-[2rem] px-32 pb-6 pt-44 text-white">
+            <main className="bg-auth flex h-screen flex-col-reverse items-center justify-center bg-cover bg-no-repeat lg:flex-row lg:items-stretch">
+                <div className="bg-lm-black-200 text-lm-white  my-5 flex w-5/6 flex-col items-center justify-between rounded-[2rem] pb-6 pt-44 lg:ml-4 lg:w-2/5">
                     {getScreen(pathname)}
                 </div>
-                <div className="flex w-3/5 flex-col items-center justify-center italic text-white">
-                    <h1 className="stroke-white text-9xl font-black">
-                        LIME
-                        <span className="bg-lm-yellow-100 absolute h-16 w-16 rounded-full [transform:translate(20%,-50%)]" />
-                    </h1>
-                    <p className="text-3xl font-semibold">
-                        Live In Motion Everyday
-                    </p>
+                <div className="text-lm-white flex flex-col items-center justify-center text-xl lg:w-3/5">
+                    <img src={authLogo} alt="LIME Logo" />
                 </div>
             </main>
         </>
