@@ -21,15 +21,15 @@ class UserRepository implements Repository {
             .withGraphFetched('userDetails')
             .execute();
 
-        return users.map((it) => {
-            const { userDetails, ...userInfo } = it;
+        return users.map((user) => {
+            const { userDetails, ...userInfo } = user;
             return UserEntity.initialize({ ...userInfo, ...userDetails });
         });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
         const { email, passwordSalt, passwordHash } = entity.toNewObject();
-        const item = await this.userModel
+        const user = await this.userModel
             .query()
             .insert({
                 email,
@@ -39,7 +39,7 @@ class UserRepository implements Repository {
             .returning('*')
             .execute();
 
-        return UserEntity.initialize({ ...item, fullName: null });
+        return UserEntity.initialize({ ...user, fullName: null });
     }
 
     public update(): ReturnType<Repository['update']> {
