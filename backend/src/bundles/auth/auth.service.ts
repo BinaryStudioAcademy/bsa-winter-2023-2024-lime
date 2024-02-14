@@ -1,11 +1,10 @@
-import { UserValidationMessage } from 'shared';
-
-import { type UserModel } from '~/bundles/users/user.model.js';
-import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
-} from '~/bundles/users/users.js';
+    UserValidationMessage,
+} from 'shared';
+
+import { type UserModel, type UserService } from '~/bundles/users/users.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
