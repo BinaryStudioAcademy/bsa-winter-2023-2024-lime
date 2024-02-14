@@ -19,7 +19,9 @@ class AuthService {
     private async verifyLoginCredentials(
         userRequestDto: UserAuthRequestDto,
     ): Promise<UserModel> {
-        const user = await this.userService.findByEmail(userRequestDto.email);
+        const user = (await this.userService.find({
+            email: userRequestDto.email,
+        })) as UserModel;
         if (!user) {
             throw new HttpError({
                 message: UserValidationMessage.LOGIN_CREDENTIALS_DO_NOT_MATCH,
@@ -46,17 +48,16 @@ class AuthService {
         userRequestDto: UserAuthRequestDto,
     ): Promise<UserAuthResponseDto> {
         const { email, id } = await this.verifyLoginCredentials(userRequestDto);
-        const token = jwtService.createToken({ userId: id });
-
+        const token = await jwtService.createToken({ userId: id });
         return { id, email, token };
     }
 
     public async signUp(
         userRequestDto: UserAuthRequestDto,
     ): Promise<UserAuthResponseDto> {
-        const userByEmail = await this.userService.findByEmail(
-            userRequestDto.email,
-        );
+        const userByEmail = (await this.userService.find({
+            email: userRequestDto.email,
+        })) as UserModel;
 
         if (userByEmail) {
             throw new HttpError({
@@ -66,7 +67,7 @@ class AuthService {
         }
 
         const user = await this.userService.create(userRequestDto);
-        const token = jwtService.createToken({ userId: user.id });
+        const token = await jwtService.createToken({ userId: user.id });
 
         return { ...user, token };
     }

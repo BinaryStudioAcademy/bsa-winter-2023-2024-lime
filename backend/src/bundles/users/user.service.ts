@@ -8,7 +8,6 @@ import {
     type UserAuthResponseDto,
     type UserGetAllResponseDto,
 } from './types/types.js';
-import { type UserModel } from './user.model.js';
 
 class UserService implements Service {
     private userRepository: UserRepository;
@@ -17,12 +16,10 @@ class UserService implements Service {
         this.userRepository = userRepository;
     }
 
-    public find(): ReturnType<Service['find']> {
-        return Promise.resolve(null);
-    }
-
-    public async findByEmail(email: string): Promise<UserModel | null> {
-        return await this.userRepository.findByEmail(email);
+    public async find(
+        query: Record<string, unknown>,
+    ): ReturnType<Service['find']> {
+        return await this.userRepository.find(query);
     }
 
     public async findAll(): Promise<UserGetAllResponseDto> {

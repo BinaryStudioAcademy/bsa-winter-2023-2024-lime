@@ -1,5 +1,5 @@
-type JwtPayload = {
+type JwtPayloadOptions = {
     userId: number;
 };
 
-export { type JwtPayload };
+export { type JwtPayloadOptions };

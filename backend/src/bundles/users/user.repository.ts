@@ -9,15 +9,10 @@ class UserRepository implements Repository {
         this.userModel = userModel;
     }
 
-    public find(): ReturnType<Repository['find']> {
-        return Promise.resolve(null);
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-    public async findByEmail(email: string): Promise<UserModel | null> {
-        const user = await this.userModel.query().findOne({ email });
-
-        return user ?? null;
+    public async find(
+        query: Record<string, unknown>,
+    ): ReturnType<Repository['find']> {
+        return await this.userModel.query().findOne(query);
     }
 
     public async findAll(): Promise<UserEntity[]> {
