@@ -3,4 +3,4 @@ export { type ApiHandlerOptions } from './api-handler-options.type.js';
 export { type ApiHandlerResponse } from './api-handler-response.type.js';
 export { type Controller } from './contoller.type.js';
 export { type ControllerRouteParameters } from './controller-route-parameters.type.js';
-export { type ValueOf } from 'shared';
+export { type ValueOf } from '~/common/types/types.js';

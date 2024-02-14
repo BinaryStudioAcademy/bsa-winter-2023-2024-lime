@@ -1,3 +1,4 @@
+import { AppEnvironment } from 'shared';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 import { type Config } from '~/common/config/config.js';
@@ -28,7 +29,7 @@ class BaseServerAppApi implements ServerAppApi {
     }
 
     public generateDoc(): ReturnType<typeof swaggerJsdoc> {
-        const isProduction = this.config.ENV.APP.ENVIRONMENT === 'production';
+        const isProduction = this.config.ENV.APP.ENVIRONMENT === AppEnvironment.PRODUCTION;
 
         const controllerExtension = isProduction ? 'js' : 'ts';
 

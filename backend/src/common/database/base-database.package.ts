@@ -1,5 +1,6 @@
 import Knex, { type Knex as TKnex } from 'knex';
 import { knexSnakeCaseMappers, Model } from 'objection';
+import { AppEnvironment } from 'shared';
 
 import { type Config } from '~/common/config/config.js';
 import { type Logger } from '~/common/logger/logger.js';
@@ -25,8 +26,8 @@ class BaseDatabase implements Database {
 
     public get environmentsConfig(): Database['environmentsConfig'] {
         return {
-            development: this.initialConfig,
-            production: this.initialConfig,
+            [AppEnvironment.DEVELOPMENT]: this.initialConfig,
+            [AppEnvironment.PRODUCTION]: this.initialConfig,
         };
     }
 
