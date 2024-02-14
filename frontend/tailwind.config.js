@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
@@ -26,6 +27,29 @@ export default {
                 300: '#313134',
             },
         },
+        fontSize: {
+            xs: '0.75rem',
+            sm: '0.875rem',
+            base: '1rem',
+            xl: '1.25rem',
+            '2xl': '1.375rem',
+            '3xl': '1.75rem',
+            '4xl': '2.625rem',
+        },
+        fontWeight: {
+            normal: '400',
+            semibold: '500',
+            bold: '600',
+        },
+        lineHeight: {
+            '3': '1rem',
+            '4': '1.25rem',
+            '5': '1.375rem',
+            '6': '1.75rem',
+            '7': '2.125rem',
+            '8': '2.25rem',
+            '9': '3.5856rem',
+        },
         screens: {
             'sm': '370px',
             'md': '768px',
@@ -35,6 +59,9 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+            },
+            fontFamily: {
+                sans: ['Manrope', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': "linear-gradient(to right, #E0FE10, transparent), linear-gradient(to right, #2A2F37, transparent), url('./src/assets/img/auth-bg.png')",
