@@ -41,6 +41,12 @@ class BaseConfig implements Config {
                     env: 'PORT',
                     default: null,
                 },
+                JWT_SECRET: {
+                    doc: 'Jwt secret for token manipulation',
+                    format: String,
+                    env: 'JWT_SECRET',
+                    default: null,
+                },
             },
             DB: {
                 CONNECTION_STRING: {
