@@ -1,7 +1,7 @@
-import { AppEnvironment } from 'shared';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 import { type Config } from '~/common/config/config.js';
+import { AppEnvironment } from '~/common/enums/enums.js';
 
 import {
     type ServerAppApi,
