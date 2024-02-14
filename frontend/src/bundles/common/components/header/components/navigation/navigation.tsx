@@ -2,11 +2,12 @@ import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
 import defaultAvatar from '~/assets/img/default-avatar.svg';
 import { Link } from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 
 import styles from './styles.module.css';
 
 type Properties = {
-    avatarUrl: string | null;
+    avatarUrl?: string;
 };
 
 const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
@@ -14,19 +15,19 @@ const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
         <nav className={styles['navigation']}>
             <ul className={styles['menu-list']}>
                 <li>
-                    <Link to={'/'}>
+                    <Link to={AppRoute.ROOT}>
                         <BellIcon className={styles['icon']} />
                     </Link>
                 </li>
                 <li>
-                    <Link to={'/'}>
+                    <Link to={AppRoute.ROOT}>
                         <Cog6ToothIcon className={styles['icon']} />
                     </Link>
                 </li>
                 <li>
-                    <Link to={'/'}>
+                    <Link to={AppRoute.ROOT}>
                         <img
-                            src={avatarUrl ?? defaultAvatar}
+                            src={avatarUrl || defaultAvatar}
                             alt="avatar"
                             className={styles['avatar']}
                         />

@@ -1,5 +1,6 @@
 import logo from '~/assets/img/logo.svg';
 
+import { AppRoute } from '../../enums/app-route.enum.js';
 import { Layout, Link } from '../components.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';
@@ -9,7 +10,7 @@ const Header = (): JSX.Element => {
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
                 <div className={styles['header__logo-wrapper']}>
-                    <Link to={'/'}>
+                    <Link to={AppRoute.ROOT}>
                         <img
                             src={logo}
                             alt="Logo"
@@ -19,7 +20,7 @@ const Header = (): JSX.Element => {
                 </div>
                 <div className={styles['header__navigation']}>
                     <Message />
-                    <Navigation avatarUrl={null} />
+                    <Navigation />
                 </div>
             </Layout>
         </header>
