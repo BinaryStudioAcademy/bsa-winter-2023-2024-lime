@@ -6,7 +6,7 @@ import {
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
-import { type UserSignUpRequestDto } from '~/bundles/users/users.js';
+import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 
 import { SignInForm, SignUpForm } from '../components/components.js';
 import { actions as authActions } from '../store/auth.js';
@@ -23,7 +23,7 @@ const Auth: React.FC = () => {
     }, []);
 
     const handleSignUpSubmit = useCallback(
-        (payload: UserSignUpRequestDto): void => {
+        (payload: UserAuthRequestDto): void => {
             void dispatch(authActions.signUp(payload));
         },
         [dispatch],

@@ -1,6 +1,6 @@
-import { type UserSignUpRequestDto } from '~/bundles/users/users.js';
+import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 
-const DEFAULT_SIGN_IN_PAYLOAD: UserSignUpRequestDto = {
+const DEFAULT_SIGN_IN_PAYLOAD: UserAuthRequestDto = {
     email: '',
     password: '',
 };

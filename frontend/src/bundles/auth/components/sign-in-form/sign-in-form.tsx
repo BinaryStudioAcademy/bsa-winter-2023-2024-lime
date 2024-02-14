@@ -8,21 +8,21 @@ import {
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
-    type UserSignUpRequestDto,
-    userSignUpValidationSchema,
+    type UserAuthRequestDto,
+    userAuthValidationSchema,
 } from '~/bundles/users/users.js';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
-    onSubmit: (payload: UserSignUpRequestDto) => void;
+    onSubmit: (payload: UserAuthRequestDto) => void;
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
     // type need to change to UserSignInRequestDto
-    const { control, errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
+    const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-        validationSchema: userSignUpValidationSchema,
+        validationSchema: userAuthValidationSchema,
     });
 
     const handleFormSubmit = useCallback(

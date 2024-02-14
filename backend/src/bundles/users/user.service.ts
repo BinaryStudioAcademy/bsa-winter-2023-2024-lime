@@ -4,9 +4,9 @@ import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import {
+    type UserAuthRequestDto,
+    type UserAuthResponseDto,
     type UserGetAllResponseDto,
-    type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
 } from './types/types.js';
 
 class UserService implements Service {
@@ -31,8 +31,8 @@ class UserService implements Service {
     }
 
     public async create(
-        payload: UserSignUpRequestDto,
-    ): Promise<Omit<UserSignUpResponseDto, 'token'>> {
+        payload: UserAuthRequestDto,
+    ): Promise<Omit<UserAuthResponseDto, 'token'>> {
         const { hash, salt } = cryptService.encryptSync(payload.password);
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
