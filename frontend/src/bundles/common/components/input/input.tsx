@@ -31,7 +31,7 @@ const Input = <T extends FieldValues>({
     isDisabled = false,
     placeholder = '',
 }: Properties<T>): JSX.Element => {
-    const [masker, setMasker] = useState(false);
+    const [isMasked, setIsMasked] = useState(false);
     const { field } = useFormController({ name, control });
 
     const error = errors[name]?.message;
@@ -39,7 +39,7 @@ const Input = <T extends FieldValues>({
     const isPassword = type === 'password';
 
     const onMaskPassword = useCallback((): void => {
-        setMasker((masker) => !masker);
+        setIsMasked((isMasked) => !isMasked);
     }, []);
 
     const placeholderGenerator = (): string => {
@@ -52,7 +52,7 @@ const Input = <T extends FieldValues>({
             <div className="relative">
                 <input
                     {...field}
-                    type={masker ? 'text' : type}
+                    type={isMasked ? 'text' : type}
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
@@ -65,7 +65,7 @@ const Input = <T extends FieldValues>({
                         role="button"
                         tabIndex={0}
                     >
-                        {masker ? (
+                        {isMasked ? (
                             <EyeIcon className="text-lm-grey-200 absolute bottom-2 right-2 w-5" />
                         ) : (
                             <EyeSlashIcon className="text-lm-grey-200 absolute bottom-2 right-2 w-5" />
