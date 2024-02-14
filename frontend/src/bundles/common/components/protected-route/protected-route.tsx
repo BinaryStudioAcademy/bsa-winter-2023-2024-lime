@@ -7,17 +7,13 @@ import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 type ProtectedRouteProperties = {
     children: ReactNode;
-    isPrivate: boolean;
 };
 
-const ProtectedRoute: React.FC<ProtectedRouteProperties> = ({
-    children,
-    isPrivate,
-}) => {
+const ProtectedRoute: React.FC<ProtectedRouteProperties> = ({ children }) => {
     const userAuthenticated = useAppSelector(
         (state: AsyncThunkConfig['state']) => state.auth.user,
     );
-    if (isPrivate && Object.keys(userAuthenticated).length === 0) {
+    if (Object.keys(userAuthenticated).length === 0) {
         return <Navigate to={AppRoute.SIGN_IN} />;
     }
 
