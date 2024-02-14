@@ -21,12 +21,13 @@ type Parameters<T extends FieldValues = FieldValues> = {
 type ReturnValue<T extends FieldValues = FieldValues> = {
     control: Control<T, null>;
     errors: FieldErrors<T>;
+    isValid: boolean;
     handleSubmit: UseFormHandleSubmit<T>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
     defaultValues,
-    mode = 'onSubmit',
+    mode = 'onTouched',
     validationSchema,
 }: Parameters<T>): ReturnValue<T> => {
     let parameters: UseFormProps<T> = {
@@ -43,13 +44,14 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 
     const {
         control,
-        formState: { errors },
+        formState: { errors, isValid },
         handleSubmit,
     } = useForm<T>(parameters);
 
     return {
         control,
         errors,
+        isValid,
         handleSubmit,
     };
 };
