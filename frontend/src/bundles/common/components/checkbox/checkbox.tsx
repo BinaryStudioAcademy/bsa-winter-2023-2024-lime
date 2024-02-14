@@ -21,9 +21,12 @@ const classes = {
     containerCheckbox:
         'border-lm-grey-100 relative flex h-5 w-5 items-center justify-center rounded-sm border-2 has-[:checked]:border-none',
     baseCheckbox:
-        'checked:bg-lm-yellow-100 relative h-5 w-5 cursor-pointer appearance-none rounded-sm bg-transparent transition duration-300 checked:rounded-sm peer',
+        'relative h-5 w-5 cursor-pointer appearance-none rounded-sm bg-transparent transition duration-300 peer',
+    Checkboxchecked: 'checked:bg-lm-yellow-100 checked:rounded-sm',
+    Checkboxfocused: 'focus:outline-lm-yellow-200',
     checkIcon:
         'absolute z-[1] hidden pointer-events-none left-0 top-0 flex h-full w-full items-center justify-center hidden peer-[:checked]:flex',
+    label: 'cursor-pointer ',
 };
 
 const Checkbox = <T extends FieldValues>({
@@ -44,7 +47,11 @@ const Checkbox = <T extends FieldValues>({
                         name={name}
                         type="checkbox"
                         id="toggle-checkbox"
-                        className={getValidClassNames(classes.baseCheckbox)}
+                        className={getValidClassNames(
+                            classes.baseCheckbox,
+                            classes.Checkboxchecked,
+                            classes.Checkboxfocused,
+                        )}
                     />
                     <CheckIconComponent
                         className={getValidClassNames(classes.checkIcon)}
@@ -53,7 +60,7 @@ const Checkbox = <T extends FieldValues>({
                 <label
                     className={getValidClassNames(
                         field.value ? 'text-lm-grey-200' : 'text-lm-grey-500',
-                        'cursor-pointer',
+                        classes.label,
                     )}
                     htmlFor="toggle-checkbox"
                 >
