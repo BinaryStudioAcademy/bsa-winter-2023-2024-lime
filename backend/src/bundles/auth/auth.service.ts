@@ -1,17 +1,13 @@
+import { HttpCode, HttpError, UserValidationMessage } from 'shared';
+
+import { type UserModel } from '~/bundles/users/user.model.js';
+import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserSignInRequestDto,
     type UserSignInResponseDto,
-    UserValidationMessage,
-} from 'shared';
-import { HttpError } from 'shared/build/framework/exceptions/http-error/http-error.exception.js';
-import { HttpCode } from 'shared/build/framework/http/enums/http-code.enum.js';
-
-import {
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
-} from '~/bundles/users/types/types.js';
-import { type UserModel } from '~/bundles/users/user.model.js';
-import { type UserService } from '~/bundles/users/user.service.js';
+} from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
 class AuthService {
