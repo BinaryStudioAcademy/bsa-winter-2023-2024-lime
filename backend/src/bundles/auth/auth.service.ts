@@ -49,7 +49,7 @@ class AuthService {
         userRequestDto: UserSignInRequestDto,
     ): Promise<UserSignInResponseDto> {
         const { email, id } = await this.verifyLoginCredentials(userRequestDto);
-        const token = jwtService.createToken({ userId: id });
+        const token = await jwtService.createToken({ userId: id });
         return { id, email, token };
     }
 
@@ -68,7 +68,7 @@ class AuthService {
         }
 
         const user = await this.userService.create(userRequestDto);
-        const token = jwtService.createToken({ userId: user.id });
+        const token = await jwtService.createToken({ userId: user.id });
 
         return { ...user, token };
     }
