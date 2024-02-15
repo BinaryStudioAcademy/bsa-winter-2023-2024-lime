@@ -1,13 +1,12 @@
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
-    HttpCode,
-    HttpError,
-    UserValidationMessage,
-} from 'shared';
-
-import { type UserModel, type UserService } from '~/bundles/users/users.js';
+    type UserModel,
+    type UserService,
+} from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
+
+import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 
 class AuthService {
     private userService: UserService;
