@@ -12,6 +12,8 @@ import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { type Config } from '~/framework/config/config.js';
 
+import { errorMiddleware } from './middlewares/error-middleware.js';
+
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
@@ -38,13 +40,12 @@ class Store {
                 auth: authReducer,
                 users: usersReducer,
             },
-            middleware: (getDefaultMiddleware) => {
-                return getDefaultMiddleware({
+            middleware: (getDefaultMiddleware) =>
+                getDefaultMiddleware({
                     thunk: {
                         extraArgument: this.extraArguments,
                     },
-                });
-            },
+                }).prepend(errorMiddleware),
         });
     }
 
