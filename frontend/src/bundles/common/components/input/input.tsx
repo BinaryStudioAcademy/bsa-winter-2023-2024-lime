@@ -47,7 +47,7 @@ const Input = <T extends FieldValues>({
     };
 
     return (
-        <label className="flex h-20 max-w-[358px] flex-col text-sm">
+        <label className="flex h-20 w-full flex-col text-sm">
             <span className="font-medium">{label}</span>
             <div className="relative">
                 <input
