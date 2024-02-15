@@ -1,8 +1,6 @@
-import logo from '~/assets/img/logo.svg';
 import { useLocation, useState } from '~/bundles/common/hooks/hooks.js';
 
 import { AppRoute } from '../../enums/app-route.enum.js';
-import { Link } from '../components.js';
 import {
     GoalsIcon,
     HelpIcon,
@@ -19,17 +17,7 @@ const Sidebar: React.FC = () => {
     const [activeRoute] = useState(pathname);
 
     return (
-        <div className="bg-lm-black-100 flex h-screen w-72 flex-col content-center items-center p-7 text-white">
-            <div className="mb-5 flex w-full">
-                <Link to={AppRoute.ROOT}>
-                    <img
-                        src={logo}
-                        alt="Logo"
-                        className="w-40
-                        "
-                    />
-                </Link>
-            </div>
+        <div className="bg-lm-black-100 flex h-[95vh] w-72 flex-col content-center items-center p-7 text-white">
             <div className="inner h-3/4 w-full border-gray-700 ">
                 <div className="flex flex-col gap-4">
                     <SidebarNav
