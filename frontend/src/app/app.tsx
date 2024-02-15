@@ -1,6 +1,5 @@
 import reactLogo from '~/assets/img/react.svg';
 import {
-    Avatar,
     Link,
     Loader,
     RouterOutlet,
@@ -35,7 +34,7 @@ const App: React.FC = () => {
     return (
         <>
             <img src={reactLogo} width="30" alt="logo" />
-            <Avatar size="lg" />
+
             <ul>
                 <li>
                     <Link to={AppRoute.ROOT}>Root</Link>

@@ -12,9 +12,26 @@ const AvatarSize = {
 } as const;
 
 const sizeToClass: Record<ValueOf<typeof AvatarSize>, string> = {
-    [AvatarSize.SMALL]: 'h-10 w-10',
+    [AvatarSize.SMALL]: 'h-12 w-12',
     [AvatarSize.MEDIUM]: 'h-20 w-20',
     [AvatarSize.LARGE]: 'h-30 w-30',
+};
+
+const getTextSize = (size: ValueOf<typeof AvatarSize>): string => {
+    switch (size) {
+        case AvatarSize.SMALL: {
+            return 'text-xl';
+        }
+        case AvatarSize.MEDIUM: {
+            return 'text-3xl';
+        }
+        case AvatarSize.LARGE: {
+            return 'text-4xl';
+        }
+        default: {
+            return 'text-base';
+        }
+    }
 };
 
 const Avatar = ({ size }: Properties): JSX.Element => {
@@ -23,7 +40,7 @@ const Avatar = ({ size }: Properties): JSX.Element => {
 
     return (
         <div
-            className={`bg-lm-yellow-100/70 relative flex items-center justify-center rounded-full ${sizeToClass[size]}`}
+            className={`bg-lm-yellow-100/90 relative flex items-center justify-center rounded-full ${sizeToClass[size]}`}
         >
             {avatarUrl ? (
                 <img
@@ -34,7 +51,9 @@ const Avatar = ({ size }: Properties): JSX.Element => {
                     }
                 />
             ) : (
-                <span className="object-cover text-4xl font-bold text-white">
+                <span
+                    className={`object-cover font-bold text-white ${getTextSize(size)}`}
+                >
                     {firstLetter}
                 </span>
             )}
