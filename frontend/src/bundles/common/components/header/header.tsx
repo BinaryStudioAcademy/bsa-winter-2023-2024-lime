@@ -1,7 +1,8 @@
 import logo from '~/assets/img/logo.svg';
 
 import { AppRoute } from '../../enums/enums.js';
-import { Layout, Link } from '../components.js';
+import { Icon, Layout, Link } from '../components.js';
+import { IconColor, IconSize } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';
 
@@ -17,6 +18,13 @@ const Header = (): JSX.Element => {
                             className={styles['header__logo']}
                         />
                     </Link>
+                </div>
+                <div className={styles['burger-menu__button']}>
+                    <Icon
+                        name={'logoIcon'}
+                        color={IconColor.PRIMARY}
+                        size={IconSize.LARGE}
+                    />
                 </div>
                 <div className={styles['header__navigation']}>
                     <Message />
