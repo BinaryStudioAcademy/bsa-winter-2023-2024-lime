@@ -1,6 +1,6 @@
 const ApiPath = {
-    USERS : '/users',
-    AUTH : '/auth',
+    USERS: '/users',
+    AUTH: '/auth',
 };
 
 export { ApiPath };
