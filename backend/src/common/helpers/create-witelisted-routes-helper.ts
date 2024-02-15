@@ -4,7 +4,7 @@ const createWhitelistedRoutes = (apis: ServerAppApi[]): string[] => {
     return apis.flatMap((api) => {
         const whitelistedRoutes: string[] = [];
         for (const route of api.routes) {
-            if (!route.isPublic) {
+            if (route.isPublic) {
                 whitelistedRoutes.push(route.path);
             }
         }

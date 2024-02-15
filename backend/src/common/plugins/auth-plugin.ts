@@ -3,7 +3,6 @@ import { UserValidationMessage } from 'shared';
 
 import { PluginName } from '~/common/enums/enums.js';
 import {
-    extractApiPath,
     extractTokenFromHeaders,
 } from '~/common/helpers/helpers.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
@@ -13,13 +12,9 @@ import { type AuthPluginOptions } from './types/types.js';
 const authPlugin = fastifyPlugin(
     (fastify, { jwtService, whitelistedRoutes }: AuthPluginOptions, done) => {
         fastify.decorateRequest('user', null);
-        const whiteList = whitelistedRoutes.map((route) =>
-            extractApiPath(route),
-        ) as string[];
 
         fastify.addHook('preHandler', async (request) => {
-            const extractedApiPath = extractApiPath(request.routeOptions.url);
-            if (extractedApiPath && whiteList?.includes(extractedApiPath)) {
+            if (whitelistedRoutes.includes(request.routeOptions.url)) {
                 return;
             }
             const token = extractTokenFromHeaders(request);
@@ -32,10 +27,10 @@ const authPlugin = fastifyPlugin(
             }
             try {
                 request.user = await jwtService.verifyToken(token);
-            } catch (error) {
+            } catch {
                 throw new HttpError({
                     status: HttpCode.UNAUTHORIZED,
-                    message: (error as Error).message,
+                    message: UserValidationMessage.TOKEN_INVALID,
                 });
             }
         });

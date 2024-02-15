@@ -1,2 +1,2 @@
-export { PluginName } from './plugin-names.enum.js';
+export { PluginName } from './plugin-name.enum.js';
 export { ApiPath, AppEnvironment, ServerErrorType } from 'shared';
