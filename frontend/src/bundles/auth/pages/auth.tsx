@@ -66,7 +66,7 @@ const Auth: React.FC = () => {
     const classes = {
         base: 'flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem] lg:px-[11.25rem]',
         loader: 'justify-center items-center',
-        form: 'justify-between text-lm-white px-[2rem] pb-[3.75rem] pt-[10rem]',
+        form: 'justify-between text-white px-[2rem] pb-[3.75rem] pt-[10rem]',
     };
 
     return (
@@ -79,7 +79,7 @@ const Auth: React.FC = () => {
             >
                 {isLoading ? <Loader /> : getScreen(pathname)}
             </div>
-            <div className="text-lm-white flex flex-1 items-center justify-center text-xl">
+            <div className="flex flex-1 items-center justify-center text-xl text-white">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
         </main>
