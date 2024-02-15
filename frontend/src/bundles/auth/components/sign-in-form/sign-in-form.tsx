@@ -37,7 +37,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, errorMessage }) => {
     return (
         <>
             <h1 className="text-center text-3xl">Hi! Login to your Account</h1>
-            <form onSubmit={handleFormSubmit} className="w-4/5 md:w-96">
+            <form onSubmit={handleFormSubmit}>
                 <Input
                     control={control}
                     errors={errors}

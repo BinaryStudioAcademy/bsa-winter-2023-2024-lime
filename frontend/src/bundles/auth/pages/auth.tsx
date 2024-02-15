@@ -1,6 +1,7 @@
 import authLogo from '~/assets/img/auth-logo.svg';
 import { Loader } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -62,19 +63,23 @@ const Auth: React.FC = () => {
         return null;
     };
 
+    const classes = {
+        base: 'flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem] lg:px-[11.25rem]',
+        loader: 'justify-center items-center',
+        form: 'justify-between text-lm-white px-[2rem] pb-[3.75rem] pt-[10rem]',
+    };
+
     return (
-        <main className="bg-auth flex h-screen flex-col-reverse items-center justify-center bg-cover bg-no-repeat lg:flex-row lg:items-stretch">
-            {/* <div className="bg-lm-black-200 text-lm-white  my-5 flex w-5/6 flex-col items-center justify-between rounded-[2rem] pb-6 pt-44 lg:ml-4 lg:w-2/5"> */}
-            <div className="bg-lm-black-200 text-lm-white my-5 flex w-5/6 flex-col items-center justify-center rounded-[2rem] lg:ml-4 lg:w-2/5">
-                {isLoading ? (
-                    <Loader />
-                ) : (
-                    <div className="flex h-full flex-col items-center justify-between pb-6 pt-44">
-                        {getScreen(pathname)}
-                    </div>
+        <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
+            <div
+                className={getValidClassNames(
+                    classes.base,
+                    isLoading ? classes.loader : classes.form,
                 )}
+            >
+                {isLoading ? <Loader /> : getScreen(pathname)}
             </div>
-            <div className="text-lm-white flex flex-col items-center justify-center text-xl lg:w-3/5">
+            <div className="text-lm-white flex flex-1 items-center justify-center text-xl">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
         </main>
