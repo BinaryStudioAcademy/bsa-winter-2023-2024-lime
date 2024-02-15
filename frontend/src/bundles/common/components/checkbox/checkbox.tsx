@@ -1,3 +1,4 @@
+import { CheckIcon } from '@heroicons/react/16/solid';
 import {
     type Control,
     type FieldErrors,
@@ -8,7 +9,6 @@ import {
 import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
 import { getValidClassNames } from '../../helpers/helpers.js';
-import { CheckIcon } from '../icons/icons.js';
 
 type CheckboxProperties<T extends FieldValues> = {
     name: FieldPath<T>;
