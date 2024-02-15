@@ -6,6 +6,7 @@ export default {
         colors: {
             'lm-white': '#FFFFFF',
             transparent: 'transparent',
+            'white': '#FFFFFF',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
