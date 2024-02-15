@@ -4,7 +4,9 @@ import {
     ButtonVariant,
     Input,
     Link,
+    Loader,
 } from '~/bundles/common/components/components.js';
+import { LogoIconColor } from '~/bundles/common/components/icons/icons.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
@@ -16,9 +18,10 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserAuthRequestDto) => void;
+    isLoading: boolean;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
+const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, isDirty, isValid, handleSubmit } =
         useAppForm<UserAuthRequestDto>({
             defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
@@ -47,6 +50,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     label="Email"
                     name="email"
                     type="text"
+                    isDisabled={isLoading}
                 />
                 <Input
                     control={control}
@@ -55,11 +59,15 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
                     label="Password"
                     name="password"
                     type="password"
+                    isDisabled={isLoading}
                 />
                 <Button
-                    label="Log In"
+                    label={isLoading ? '' : 'Log In'}
+                    leftIcon={
+                        isLoading && <Loader color={LogoIconColor.SECONDARY} />
+                    }
                     type="submit"
-                    isDisabled={!isDirty || !isValid}
+                    isDisabled={!isDirty || !isValid || isLoading}
                     size={ButtonSize.MEDIUM}
                     variant={ButtonVariant.PRIMARY}
                 />

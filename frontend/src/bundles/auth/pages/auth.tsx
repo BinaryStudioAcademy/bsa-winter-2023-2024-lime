@@ -1,5 +1,4 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import { Loader } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -47,7 +46,12 @@ const Auth: React.FC = () => {
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
             case AppRoute.SIGN_IN: {
-                return <SignInForm onSubmit={handleSignInSubmit} />;
+                return (
+                    <SignInForm
+                        onSubmit={handleSignInSubmit}
+                        isLoading={isLoading}
+                    />
+                );
             }
             case AppRoute.SIGN_UP: {
                 return <SignUpForm onSubmit={handleSignUpSubmit} />;
@@ -64,13 +68,8 @@ const Auth: React.FC = () => {
 
     return (
         <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
-            <div
-                className={getValidClassNames(
-                    classes.base,
-                    !isLoading && classes.form,
-                )}
-            >
-                {isLoading ? <Loader isOverflow /> : getScreen(pathname)}
+            <div className={getValidClassNames(classes.base, classes.form)}>
+                {getScreen(pathname)}
             </div>
             <div className="flex flex-1 items-center justify-center text-xl text-white">
                 <img src={authLogo} alt="LIME Logo" />
