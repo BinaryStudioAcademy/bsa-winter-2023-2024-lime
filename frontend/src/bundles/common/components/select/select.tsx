@@ -91,7 +91,7 @@ const Select = <
     return (
         <div className="bg-lm-black-200 mx-20 p-5">
             {label && (
-                <span className="text-lm-white text-base font-medium">
+                <span className="text-base font-medium text-white">
                     {label}
                 </span>
             )}
