@@ -1,5 +1,6 @@
 export { Button, ButtonSize, ButtonVariant } from './button/button.js';
 export { Header } from './header/header.js';
+export { Icon } from './icon/icon.js';
 export { Input } from './input/input.js';
 export { Layout } from './layout/layout.js';
 export { Link } from './link/link.js';
