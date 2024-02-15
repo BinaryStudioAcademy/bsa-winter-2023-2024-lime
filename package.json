@@ -3,7 +3,7 @@
     "private": "true",
     "engines": {
         "node": "18.x.x",
-        "npm": "10.x.x"
+        "npm": "9.x.x"
     },
     "workspaces": [
         "shared",
@@ -11,7 +11,7 @@
         "frontend"
     ],
     "scripts": {
-        "postinstall": "npm run build:shared",
+        "install:all": "npm i && npm run build:shared",
         "build:shared": "npm run build -w shared",
         "build:frontend": "npm run build -w frontend",
         "build:backend": "npm run build -w backend",
@@ -22,7 +22,10 @@
         "lint:css": "npm run lint:css --workspaces --if-present",
         "lint:format": "prettier --check \"**/*.{ts,tsx,json,md,css,html,yml}\"",
         "lint": "npm run lint:editor && npm run lint:fs && npm run lint:format && npm run lint:type && npm run lint:js && npm run lint:css",
-        "format": "prettier --write \"**/*.{ts,tsx,json,md,css,html,yml}\""
+        "format": "prettier --write \"**/*.{ts,tsx,json,md,css,html,yml}\"",
+        "build": "npm run build:shared && npm run build:backend && npm run build:frontend && sh ./prepare-build.sh",
+        "prestart": "npm i && npm run build",
+        "start": "cd ./build/backend && npm run start"
     },
     "devDependencies": {
         "@commitlint/cli": "18.6.0",
