@@ -13,13 +13,13 @@ import { type AuthPluginOptions } from './types/types.js';
 const authPlugin = fastifyPlugin(
     (fastify, { jwtService, whitelistedRoutes }: AuthPluginOptions, done) => {
         fastify.decorateRequest('user', null);
+        const whiteList = whitelistedRoutes.map((route) =>
+            extractApiPath(route),
+        ) as string[];
 
         fastify.addHook('preHandler', async (request) => {
             const extractedApiPath = extractApiPath(request.routeOptions.url);
-            if (
-                extractedApiPath &&
-                whitelistedRoutes?.includes(extractedApiPath)
-            ) {
+            if (extractedApiPath && whiteList?.includes(extractedApiPath)) {
                 return;
             }
             const token = extractTokenFromHeaders(request);
