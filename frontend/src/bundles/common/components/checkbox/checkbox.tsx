@@ -8,7 +8,7 @@ import {
 import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
 import { getValidClassNames } from '../../helpers/helpers.js';
-import { CheckIconComponent } from '../icons/icons.js';
+import { CheckIcon } from '../icons/icons.js';
 
 type CheckboxProperties<T extends FieldValues> = {
     name: FieldPath<T>;
@@ -53,7 +53,7 @@ const Checkbox = <T extends FieldValues>({
                             classes.Checkboxfocused,
                         )}
                     />
-                    <CheckIconComponent
+                    <CheckIcon
                         className={getValidClassNames(classes.checkIcon)}
                     />
                 </div>

@@ -1,11 +1,11 @@
-import { CheckIcon } from '@heroicons/react/16/solid';
+import { CheckIcon as Icon } from '@heroicons/react/16/solid';
 
 type CheckProperties = {
     className?: string;
 };
 
-const CheckIconComponent = ({ className }: CheckProperties): JSX.Element => {
-    return <CheckIcon className={className} />;
+const CheckIcon = ({ className }: CheckProperties): JSX.Element => {
+    return <Icon className={className} />;
 };
 
-export { CheckIconComponent };
+export { CheckIcon };
