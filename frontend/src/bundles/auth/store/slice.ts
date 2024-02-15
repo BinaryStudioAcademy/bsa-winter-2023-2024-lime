@@ -10,13 +10,11 @@ type User = object;
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     user: User;
-    message: string | undefined;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     user: {},
-    message: undefined,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -38,12 +36,10 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(signIn.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.message = undefined;
             state.user = action.payload;
         });
-        builder.addCase(signIn.rejected, (state, action) => {
+        builder.addCase(signIn.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
-            state.message = action.error.message;
         });
     },
 });

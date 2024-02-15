@@ -16,10 +16,9 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserAuthRequestDto) => void;
-    errorMessage: string | undefined;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit, errorMessage }) => {
+const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
     const { control, errors, isDirty, isValid, handleSubmit } =
         useAppForm<UserAuthRequestDto>({
             defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
@@ -56,9 +55,6 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, errorMessage }) => {
                     name="password"
                     type="password"
                 />
-                {errorMessage && (
-                    <p className="text-lm-red mb-2">{errorMessage}</p>
-                )}
                 <Button
                     label="Log In"
                     type="submit"

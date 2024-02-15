@@ -17,9 +17,8 @@ import { actions as authActions } from '../store/auth.js';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { dataStatus, message } = useAppSelector(({ auth }) => ({
+    const { dataStatus } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
-        message: auth.message,
     }));
     const isLoading = dataStatus === DataStatus.PENDING;
     const { pathname } = useLocation();
@@ -48,12 +47,7 @@ const Auth: React.FC = () => {
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
             case AppRoute.SIGN_IN: {
-                return (
-                    <SignInForm
-                        onSubmit={handleSignInSubmit}
-                        errorMessage={message}
-                    />
-                );
+                return <SignInForm onSubmit={handleSignInSubmit} />;
             }
             case AppRoute.SIGN_UP: {
                 return <SignUpForm onSubmit={handleSignUpSubmit} />;
