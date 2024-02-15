@@ -39,10 +39,13 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <h1 className="text-center text-[1.875rem]">
+            <h1 className="text-center text-3xl font-bold leading-8">
                 Hi! Login to your Account
             </h1>
-            <form onSubmit={handleFormSubmit}>
+            <form
+                onSubmit={handleFormSubmit}
+                className="text-sm font-semibold leading-3"
+            >
                 <Input
                     control={control}
                     errors={errors}
@@ -72,7 +75,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     variant={ButtonVariant.PRIMARY}
                 />
             </form>
-            <p className="text-center text-[0.875rem]">
+            <p className="text-center text-sm font-normal leading-4">
                 No account?{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">
