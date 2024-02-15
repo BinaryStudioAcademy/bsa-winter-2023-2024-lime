@@ -36,7 +36,9 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, errorMessage }) => {
 
     return (
         <>
-            <h1 className="text-center text-3xl">Hi! Login to your Account</h1>
+            <h1 className="text-center text-[1.875rem]">
+                Hi! Login to your Account
+            </h1>
             <form onSubmit={handleFormSubmit}>
                 <Input
                     control={control}
@@ -65,7 +67,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, errorMessage }) => {
                     variant={ButtonVariant.PRIMARY}
                 />
             </form>
-            <p className="text-center text-sm">
+            <p className="text-center text-[0.875rem]">
                 No account?{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">
