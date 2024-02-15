@@ -17,4 +17,4 @@ export {
     type UserGetAllResponseDto,
     type UserSignUpResponseDto,
 } from './types/types.js';
-export { userAuthValidationSchema } from './validation-schemas/validation-schemas.js';
+export { userSignUpValidationSchema } from './validation-schemas/validation-schemas.js';
