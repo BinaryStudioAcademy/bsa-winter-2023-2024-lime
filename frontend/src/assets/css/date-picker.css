@@ -1,5 +1,9 @@
 @import url("react-multi-date-picker/styles/layouts/mobile.css");
 
+.custom-date-picker {
+    @apply -top-10 h-full w-full;
+}
+
 .custom-date-picker .ep-arrow {
     @apply hidden;
 }
