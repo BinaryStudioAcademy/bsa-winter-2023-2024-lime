@@ -4,7 +4,7 @@ const UserValidationMessage = {
     EMAIL_ALREADY_TAKEN: 'This email is already taken',
     LOGIN_CREDENTIALS_DO_NOT_MATCH: 'Incorrect email or password',
     TOKEN_REQUIRE: 'Token is required',
-    TOKEN_INVALID: 'Invalid token'
+    TOKEN_INVALID: 'Invalid token',
 } as const;
 
 export { UserValidationMessage };

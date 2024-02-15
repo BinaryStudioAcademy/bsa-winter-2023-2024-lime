@@ -2,9 +2,7 @@ import fastifyPlugin from 'fastify-plugin';
 import { UserValidationMessage } from 'shared';
 
 import { PluginName } from '~/common/enums/enums.js';
-import {
-    extractTokenFromHeaders,
-} from '~/common/helpers/helpers.js';
+import { extractTokenFromHeaders } from '~/common/helpers/helpers.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 
 import { type AuthPluginOptions } from './types/types.js';
