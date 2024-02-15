@@ -17,7 +17,7 @@ type Properties<T extends FieldValues> = {
     errors: FieldErrors<T>;
     className?: string;
     label?: string;
-    placeholder?: string
+    placeholder?: string;
 };
 
 const DatePicker = <T extends FieldValues>({
@@ -26,7 +26,7 @@ const DatePicker = <T extends FieldValues>({
     errors,
     className,
     label = '',
-    placeholder = ''
+    placeholder = '',
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
