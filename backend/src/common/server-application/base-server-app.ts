@@ -211,6 +211,7 @@ class BaseServerApp implements ServerApp {
         await this.app
             .listen({
                 port: this.config.ENV.APP.PORT,
+                host: this.config.ENV.APP.HOST,
             })
             .catch((error: Error) => {
                 this.logger.error(error.message, {
