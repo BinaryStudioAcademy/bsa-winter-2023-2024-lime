@@ -18,7 +18,7 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { control, errors, isValid, handleSubmit, reset } =
+    const { control, errors, isValid, handleSubmit } =
         useAppForm<UserSignUpForm>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
             validationSchema: userSignUpValidationSchema,
@@ -27,9 +27,8 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit(onSubmit)(event_);
-            reset();
         },
-        [handleSubmit, onSubmit, reset],
+        [handleSubmit, onSubmit],
     );
 
     return (
