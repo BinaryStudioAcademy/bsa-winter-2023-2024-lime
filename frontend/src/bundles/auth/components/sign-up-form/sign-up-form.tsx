@@ -33,7 +33,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     );
 
     return (
-        <div className="bg-lm-black-200 text-lm-white m-auto flex min-h-[988px] max-w-[705px] flex-col items-center justify-center gap-5 rounded-[44px] pb-12 font-sans">
+        <div className="bg-lm-black-200 m-auto flex min-h-[988px] max-w-[705px] flex-col items-center justify-center gap-5 rounded-[44px] pb-12 font-sans text-white">
             <h3 className="text-[30px] font-bold text-slate-50">
                 Hi! Create an account
             </h3>

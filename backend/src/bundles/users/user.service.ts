@@ -16,8 +16,10 @@ class UserService implements Service {
         this.userRepository = userRepository;
     }
 
-    public find(): ReturnType<Service['find']> {
-        return Promise.resolve(null);
+    public async find(
+        query: Record<string, unknown>,
+    ): ReturnType<Service['find']> {
+        return await this.userRepository.find(query);
     }
 
     public async findAll(): Promise<UserGetAllResponseDto> {
@@ -30,7 +32,7 @@ class UserService implements Service {
 
     public async create(
         payload: UserAuthRequestDto,
-    ): Promise<UserSignUpResponseDto> {
+    ): Promise<Omit<UserSignUpResponseDto, 'token'>> {
         const { hash, salt } = cryptService.encryptSync(payload.password);
         const user = await this.userRepository.create(
             UserEntity.initializeNew({

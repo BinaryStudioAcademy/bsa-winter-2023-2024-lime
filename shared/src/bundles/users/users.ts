@@ -3,6 +3,7 @@ export {
     type UserAuthRequestDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserSignInResponseDto,
     type UserSignUpResponseDto,
 } from './types/types.js';
 export {

@@ -33,6 +33,31 @@ class AuthController extends BaseController {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: AuthApiPath.SIGN_IN,
+            method: 'POST',
+            validation: {
+                body: userAuthValidationSchema,
+            },
+            handler: (options) =>
+                this.signIn(
+                    options as ApiHandlerOptions<{
+                        body: UserAuthRequestDto;
+                    }>,
+                ),
+        });
+    }
+
+    private async signIn(
+        options: ApiHandlerOptions<{
+            body: UserAuthRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        return {
+            status: HttpCode.OK,
+            payload: await this.authService.signIn(options.body),
+        };
     }
 
     /**

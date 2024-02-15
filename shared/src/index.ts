@@ -3,10 +3,12 @@ export {
     type UserAuthRequestDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserSignInResponseDto,
     type UserSignUpResponseDto,
     userAuthValidationSchema,
     UsersApiPath,
     userSignUpValidationSchema,
+    UserValidationMessage,
 } from './bundles/users/users.js';
 export {
     ApiPath,

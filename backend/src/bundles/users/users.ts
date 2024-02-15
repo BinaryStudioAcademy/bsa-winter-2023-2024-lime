@@ -12,6 +12,7 @@ const userController = new UserController(logger, userService);
 export { userController, userService };
 export {
     type UserAuthRequestDto,
+    type UserSignInResponseDto,
     type UserSignUpResponseDto,
 } from './types/types.js';
 export { UserModel } from './user.model.js';

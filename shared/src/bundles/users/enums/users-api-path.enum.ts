@@ -1,5 +1,5 @@
-enum UsersApiPath {
-    ROOT = '/',
-}
+const UsersApiPath = {
+    ROOT: '/',
+} as const;
 
 export { UsersApiPath };

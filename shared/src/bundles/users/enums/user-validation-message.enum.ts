@@ -9,6 +9,7 @@ const UserValidationMessage = {
     PASSWORD_MISMATCH: 'Passwords must be identical. Please try again',
     EMAIL_ALREADY_TAKEN:
         'User with this email already exists. Log in if it is you',
+    LOGIN_CREDENTIALS_DO_NOT_MATCH: 'Incorrect email or password',
 } as const;
 
 export { UserValidationMessage };
