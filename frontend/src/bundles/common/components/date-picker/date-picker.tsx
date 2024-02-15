@@ -15,12 +15,18 @@ type Properties<T extends FieldValues> = {
     name: FieldPath<T>;
     control: Control<T, null>;
     errors: FieldErrors<T>;
+    className?: string;
+    label?: string;
+    placeholder?: string
 };
 
 const DatePicker = <T extends FieldValues>({
     name,
     control,
     errors,
+    className,
+    label = '',
+    placeholder = ''
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
@@ -36,15 +42,16 @@ const DatePicker = <T extends FieldValues>({
         [field],
     );
     return (
-        <div>
+        <div className={className}>
             <ReactDatePicker
                 containerClassName={'custom-date-picker'}
                 onChange={handleDaySelect}
+                offsetY={-10}
                 render={
                     <Input
                         type="text"
-                        placeholder={'Choose the date'}
-                        label="Choose date"
+                        placeholder={placeholder}
+                        label={label}
                         name={name}
                         control={control}
                         errors={errors}
