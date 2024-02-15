@@ -1,6 +1,6 @@
-enum AppEnvironment {
-    DEVELOPMENT = 'development',
-    PRODUCTION = 'production',
-}
+const AppEnvironment = {
+    DEVELOPMENT : 'development',
+    PRODUCTION : 'production',
+} as const;
 
 export { AppEnvironment };
