@@ -32,7 +32,7 @@ class UserService implements Service {
 
     public async create(
         payload: UserAuthRequestDto,
-    ): Promise<Omit<UserAuthResponseDto, 'token'>> {
+    ): Promise<UserAuthResponseDto> {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);
 
@@ -43,7 +43,7 @@ class UserService implements Service {
             }),
         );
 
-        return user.toObject() as Omit<UserAuthResponseDto, 'token'>;
+        return user.toObject() as UserAuthResponseDto;
     }
 
     public update(): ReturnType<Service['update']> {

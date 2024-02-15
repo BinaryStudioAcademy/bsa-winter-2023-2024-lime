@@ -1,12 +1,12 @@
 import {
     type UserAuthRequestDto,
-    type UserAuthResponseDto,
     type UserModel,
     type UserService,
 } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
 import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
+import { type AuthResponseDto } from './types/types.js';
 
 class AuthService {
     private userService: UserService;
@@ -45,15 +45,16 @@ class AuthService {
 
     public async signIn(
         userRequestDto: UserAuthRequestDto,
-    ): Promise<UserAuthResponseDto> {
-        const { email, id } = await this.verifyLoginCredentials(userRequestDto);
-        const token = await jwtService.createToken({ userId: id });
-        return { id, email, token };
+    ): Promise<AuthResponseDto> {
+        const user = await this.verifyLoginCredentials(userRequestDto);
+        const token = await jwtService.createToken({ userId: user.id });
+
+        return { user, token };
     }
 
     public async signUp(
         userRequestDto: UserAuthRequestDto,
-    ): Promise<UserAuthResponseDto> {
+    ): Promise<AuthResponseDto> {
         const userByEmail = (await this.userService.find({
             email: userRequestDto.email,
         })) as UserModel;
@@ -68,7 +69,7 @@ class AuthService {
         const user = await this.userService.create(userRequestDto);
         const token = await jwtService.createToken({ userId: user.id });
 
-        return { ...user, token };
+        return { user, token };
     }
 }
 
