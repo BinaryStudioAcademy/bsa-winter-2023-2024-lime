@@ -1,6 +1,6 @@
-enum ServerErrorType {
-    COMMON = 'COMMON',
-    VALIDATION = 'VALIDATION',
-}
+const ServerErrorType = {
+    COMMON: 'COMMON',
+    VALIDATION: 'VALIDATION',
+} as const;
 
 export { ServerErrorType };
