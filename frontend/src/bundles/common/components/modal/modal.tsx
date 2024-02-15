@@ -11,16 +11,28 @@ type Properties = {
 
 const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
     return (
-        <div className={`modal flex justify-center items-center ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-            <div className='overlay fixed inset-0 bg-lm-black-400 opacity-15 z-50 cursor-pointer' onClick={onClose} role="presentation" />
-            <div className='pt-16 px-32 pb-24 fixed flex justify-center items-start bg-lm-black-100 flex-col z-50 transition-all shadow-md rounded-34 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
+        <div
+            className={`modal flex items-center justify-center ${isOpen ? 'visible opacity-100' : 'invisible opacity-0'}`}
+        >
+            <div
+                className="overlay bg-lm-black-400 fixed inset-0 z-50 cursor-pointer opacity-15"
+                onClick={onClose}
+                role="presentation"
+            />
+            <div className="bg-lm-black-100 rounded-34 fixed fixed left-1/2 top-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-start justify-center px-32 pb-24 pt-16 shadow-md transition-all ">
+                <img
+                    src={iconClose}
+                    alt="Close modal"
+                    onClick={onClose}
+                    className="absolute right-8 top-8 cursor-pointer"
+                    role="presentation"
+                />
 
-                <img src={iconClose} alt='Close modal' onClick={onClose} className='cursor-pointer absolute top-8 right-8' role="presentation" />
-
-                <h3 className='text-lm-grey-200 font-extrabold text-xl leading-6 mb-10'>{title}</h3>
+                <h3 className="text-lm-grey-200 mb-10 text-xl font-extrabold leading-6">
+                    {title}
+                </h3>
 
                 {children}
-
             </div>
         </div>
     );
