@@ -46,7 +46,7 @@ const DatePicker = <T extends FieldValues>({
             <ReactDatePicker
                 containerClassName={'custom-date-picker'}
                 onChange={handleDaySelect}
-                offsetY={-10}
+                offsetY={label ? -10 : -30}
                 render={
                     <Input
                         type="text"
