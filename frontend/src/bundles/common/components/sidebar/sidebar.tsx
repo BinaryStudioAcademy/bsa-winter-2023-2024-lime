@@ -16,8 +16,8 @@ import { SidebarNav } from '../sidebar-nav/sidebar-nav.js';
 const Sidebar: React.FC = () => {
     const { pathname } = useLocation();
 
-    const [activeRoute, setActiveRoute] = useState(pathname);
-    setActiveRoute(pathname);
+    const [activeRoute, ] = useState(pathname);
+       
     return (
         <div className="bg-lm-black-100 flex h-screen w-72 flex-col content-center items-center p-7 text-white">
             <div className="mb-5 flex w-full">
