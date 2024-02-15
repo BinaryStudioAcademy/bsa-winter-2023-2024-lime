@@ -5,7 +5,10 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { signUp } from './actions.js';
 
-type User = object;
+type User = {
+    email: string;
+    avatarUrl: string;
+};
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
@@ -14,7 +17,10 @@ type State = {
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
-    user: {},
+    user: {
+        email: 'email',
+        avatarUrl: '',
+    },
 };
 
 const { reducer, actions, name } = createSlice({
