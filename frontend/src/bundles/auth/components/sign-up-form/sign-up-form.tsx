@@ -8,16 +8,13 @@ import {
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
-import {
-    type UserAuthRequestDto,
-    userAuthValidationSchema,
-} from '~/bundles/users/users.js';
+import { userAuthValidationSchema } from '~/bundles/users/users.js';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants.js';
 import { type UserSignUpForm } from './interface.js';
 
 type Properties = {
-    onSubmit: (payload: UserAuthRequestDto) => void;
+    onSubmit: (payload: UserSignUpForm) => void;
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {

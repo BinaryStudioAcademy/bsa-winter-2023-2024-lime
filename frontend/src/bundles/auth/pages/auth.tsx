@@ -1,3 +1,5 @@
+import { type UserAuthRequestDto } from 'shared';
+
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -5,9 +7,9 @@ import {
     useCallback,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 
 import { SignInForm, SignUpForm } from '../components/components.js';
+import { type UserSignUpForm } from '../components/sign-up-form/interface.js';
 import { actions as authActions } from '../store/auth.js';
 
 const Auth: React.FC = () => {
@@ -22,8 +24,11 @@ const Auth: React.FC = () => {
     }, []);
 
     const handleSignUpSubmit = useCallback(
-        (payload: UserAuthRequestDto): void => {
-            void dispatch(authActions.signUp(payload));
+        (payload: UserSignUpForm): void => {
+            const { email, password } = payload;
+            const signUpDTO: UserAuthRequestDto = { email, password };
+
+            void dispatch(authActions.signUp(signUpDTO));
         },
         [dispatch],
     );
