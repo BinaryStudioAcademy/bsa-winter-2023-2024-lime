@@ -1,9 +1,16 @@
 const UserValidationRule = {
-    EMAIL_REQUIRED: 1,
-    EMAIL_MIN_LENGTH: 6,
-    EMAIL_MAX_LENGTH: 320,
-    PASSWORD_MIN_LENGTH: 6,
-    PASSWORD_MAX_LENGTH: 12,
+    EMAIL: {
+        MIN_LENGTH: 6,
+        MAX_LENGTH: 320,
+        LOCAL_MIN_LENGTH: 1,
+        LOCAL_MAX_LENGTH: 64,
+        DOMAIN_MIN_LENGTH: 4,
+        DOMAIN_MAX_LENGTH: 254,
+    },
+    PASSWORD: {
+        MIN_LENGTH: 6,
+        MAX_LENGTH: 12,
+    },
 } as const;
 
 export { UserValidationRule };
