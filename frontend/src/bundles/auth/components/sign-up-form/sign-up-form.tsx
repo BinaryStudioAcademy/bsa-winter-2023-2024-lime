@@ -8,7 +8,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
-import { userAuthValidationSchema } from '~/bundles/users/users.js';
+import { userSignUpValidationSchema } from '~/bundles/users/users.js';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants.js';
 import { type UserSignUpForm } from './interface.js';
@@ -18,17 +18,18 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
-    const { control, errors, isValid, handleSubmit } =
+    const { control, errors, isValid, handleSubmit, reset } =
         useAppForm<UserSignUpForm>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-            validationSchema: userAuthValidationSchema,
+            validationSchema: userSignUpValidationSchema,
         });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit(onSubmit)(event_);
+            reset();
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, reset],
     );
 
     return (
