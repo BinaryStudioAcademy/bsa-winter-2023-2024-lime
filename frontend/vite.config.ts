@@ -2,7 +2,45 @@ import { fileURLToPath } from 'node:url';
 
 import reactPlugin from '@vitejs/plugin-react';
 import { type ConfigEnv, defineConfig, loadEnv } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
+import { type VitePWAOptions, VitePWA } from 'vite-plugin-pwa';
+
+const manifestForPlugin: Partial<VitePWAOptions> = {
+    registerType: 'prompt',
+    includeAssets: ['apple-touch-icon.png', 'masked-icon.svg'],
+    manifest: {
+        name: 'LIME',
+        short_name: 'LIME',
+        description: 'LIME',
+        icons: [
+            {
+                src: '/android-chrome-192x192.png', // when we will have images we can replace it
+                sizes: '192x192',
+                type: 'image/png',
+            },
+            {
+                src: '/android-chrome-512x512.png', // when we will have images we can replace it
+                sizes: '512x512',
+                type: 'image/png',
+            },
+            {
+                src: '/apple-touch-icon.png',
+                sizes: '180x180',
+                type: 'image/png',
+                purpose: 'apple touch icon',
+            },
+            {
+                src: '/maskable_icon.png',
+                sizes: '225x225',
+                type: 'image/png',
+                purpose: 'any maskable',
+            },
+        ],
+        display: 'standalone',
+        scope: '/',
+        start_url: '/',
+        orientation: 'portrait',
+    },
+};
 
 const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
     const {
@@ -15,30 +53,7 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
         build: {
             outDir: 'build',
         },
-        plugins: [
-            reactPlugin(),
-            VitePWA({
-                registerType: 'autoUpdate',
-                manifest: {
-                    name: 'My Awesome App',
-                    short_name: 'MyApp',
-                    description: 'My Awesome App description',
-                    theme_color: '#ffffff',
-                    icons: [
-                        {
-                            'src': 'public/512.png',
-                            'type': 'image/png',
-                            'sizes': '512x512'
-                        }
-                    ],
-                    start_url: '.',
-                    background_color: '#FFFFFF',
-                    display: 'standalone',
-                    scope: '/',
-                    lang: 'en'
-                }
-            })
-        ],
+        plugins: [reactPlugin(), VitePWA(manifestForPlugin)],
         server: {
             port: Number(VITE_APP_DEVELOPMENT_PORT),
             proxy: {
