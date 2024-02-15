@@ -1,5 +1,5 @@
-enum StorageKey {
-    TOKEN = 'token',
-}
+const StorageKey = {
+    TOKEN: 'token',
+} as const;
 
 export { StorageKey };
