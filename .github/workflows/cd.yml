@@ -35,5 +35,4 @@ jobs:
                   application_name: ${{ env.EBS_APP_NAME }}
                   environment_name: ${{ env.ENVIRONMENT }}
                   version_label: ${{ github.sha }}
-                  deployment_package: ./build.zip
-                  
+                  deployment_package: ./build.zip                  
