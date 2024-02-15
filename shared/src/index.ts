@@ -6,6 +6,7 @@ export {
     type UserSignUpResponseDto,
     userAuthValidationSchema,
     UsersApiPath,
+    userSignUpValidationSchema,
 } from './bundles/users/users.js';
 export {
     ApiPath,

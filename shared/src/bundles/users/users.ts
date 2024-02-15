@@ -5,4 +5,7 @@ export {
     type UserGetAllResponseDto,
     type UserSignUpResponseDto,
 } from './types/types.js';
-export { userAuth as userAuthValidationSchema } from './validation-schemas/validation-schemas.js';
+export {
+    userAuth as userAuthValidationSchema,
+    userAuthPWConfirm as userSignUpValidationSchema,
+} from './validation-schemas/validation-schemas.js';
