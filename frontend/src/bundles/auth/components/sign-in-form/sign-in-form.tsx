@@ -51,10 +51,10 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, errorMessage }) => {
                 <Input
                     control={control}
                     errors={errors}
-                    placeholder="&bull;&bull;&bull;&bull;&bull;&bull;"
+                    placeholder="&bull;"
                     label="Password"
                     name="password"
-                    type="text"
+                    type="password"
                 />
                 {errorMessage && (
                     <p className="text-lm-red mb-2">{errorMessage}</p>
