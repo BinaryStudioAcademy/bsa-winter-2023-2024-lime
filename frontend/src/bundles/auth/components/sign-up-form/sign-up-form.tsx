@@ -6,6 +6,10 @@ import {
     ButtonVariant,
     Input,
 } from '~/bundles/common/components/components.js';
+import {
+    placeholder,
+    type,
+} from '~/bundles/common/components/input/input.enum.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { userSignUpValidationSchema } from '~/bundles/users/users.js';
@@ -39,7 +43,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
             <p className="text-lm-grey-100 text-xs">or Sign up with Email</p>
             <form onSubmit={handleFormSubmit} className="mb-10 w-[358px]">
                 <Input
-                    type="text"
+                    type={type.TEXT}
                     label="Email"
                     placeholder="email@gmail.com"
                     name="email"
@@ -48,9 +52,9 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                 />
 
                 <Input
-                    type="password"
+                    type={type.PASSWORD}
                     label="Password"
-                    placeholder="&bull;"
+                    placeholder={placeholder.BULLET}
                     name="password"
                     control={control}
                     errors={errors}
