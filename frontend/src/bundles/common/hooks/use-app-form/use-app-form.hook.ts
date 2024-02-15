@@ -16,6 +16,7 @@ type Parameters<T extends FieldValues = FieldValues> = {
     defaultValues: DefaultValues<T>;
     mode?: keyof ValidationMode;
     validationSchema?: ValidationSchema;
+    shouldUnregister?: boolean;
 };
 
 type ReturnValue<T extends FieldValues = FieldValues> = {
@@ -30,10 +31,12 @@ const useAppForm = <T extends FieldValues = FieldValues>({
     defaultValues,
     mode = 'onSubmit',
     validationSchema,
+    shouldUnregister = true,
 }: Parameters<T>): ReturnValue<T> => {
     let parameters: UseFormProps<T> = {
         defaultValues,
         mode,
+        shouldUnregister,
     };
 
     if (validationSchema) {

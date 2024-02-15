@@ -24,6 +24,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
             defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
             validationSchema: userAuthValidationSchema,
             mode: 'onBlur',
+            shouldUnregister: false,
         });
 
     const handleFormSubmit = useCallback(
