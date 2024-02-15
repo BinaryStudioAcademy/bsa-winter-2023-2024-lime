@@ -10,6 +10,7 @@ import {
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { NotFound } from '~/bundles/common/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
 const routes = [
@@ -30,6 +31,10 @@ const routes = [
                 element: <Auth />,
             },
         ],
+    },
+    {
+        path: AppRoute.NOT_FOUND,
+        element: <NotFound />,
     },
 ];
 
