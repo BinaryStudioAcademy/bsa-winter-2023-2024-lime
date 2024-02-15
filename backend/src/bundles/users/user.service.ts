@@ -34,14 +34,12 @@ class UserService implements Service {
         payload: UserAuthRequestDto,
     ): Promise<Omit<UserAuthResponseDto, 'token'>> {
         const { email, password } = payload;
-        const { hash, salt } = cryptService.encryptSync(password);
+        const { hash } = cryptService.encryptSync(password);
 
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
-                passwordSalt: salt,
                 passwordHash: hash,
-                fullName: null,
             }),
         );
 

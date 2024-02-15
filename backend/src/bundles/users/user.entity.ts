@@ -7,27 +7,22 @@ class UserEntity implements Entity {
 
     private 'passwordHash': string;
 
-    private 'passwordSalt': string;
-
     private 'fullName': string | null;
 
     private constructor({
         id,
         email,
         passwordHash,
-        passwordSalt,
         fullName,
     }: {
         id: number | null;
         email: string;
         passwordHash: string;
-        passwordSalt: string;
         fullName: string | null;
     }) {
         this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
         this.fullName = fullName;
     }
 
@@ -35,20 +30,17 @@ class UserEntity implements Entity {
         id,
         email,
         passwordHash,
-        passwordSalt,
         fullName,
     }: {
         id: number;
         email: string;
         passwordHash: string;
-        passwordSalt: string;
         fullName: string | null;
     }): UserEntity {
         return new UserEntity({
             id,
             email,
             passwordHash,
-            passwordSalt,
             fullName,
         });
     }
@@ -56,20 +48,15 @@ class UserEntity implements Entity {
     public static initializeNew({
         email,
         passwordHash,
-        passwordSalt,
-        fullName,
     }: {
         email: string;
         passwordHash: string;
-        passwordSalt: string;
-        fullName: string | null;
     }): UserEntity {
         return new UserEntity({
             id: null,
             email,
             passwordHash,
-            passwordSalt,
-            fullName,
+            fullName: null,
         });
     }
 
@@ -88,14 +75,10 @@ class UserEntity implements Entity {
     public toNewObject(): {
         email: string;
         passwordHash: string;
-        passwordSalt: string;
-        fullName: string | null;
     } {
         return {
             email: this.email,
             passwordHash: this.passwordHash,
-            passwordSalt: this.passwordSalt,
-            fullName: this.fullName,
         };
     }
 }

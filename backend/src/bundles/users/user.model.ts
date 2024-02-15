@@ -13,8 +13,6 @@ class UserModel extends AbstractModel {
 
     public 'passwordHash': string;
 
-    public 'passwordSalt': string;
-
     public 'userDetails': UserDetailsModel;
 
     public static override get tableName(): string {
