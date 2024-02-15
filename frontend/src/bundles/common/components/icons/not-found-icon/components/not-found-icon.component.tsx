@@ -1,16 +1,6 @@
-import { type ValueOf } from '~/bundles/common/types/types.js';
+import { type ValueOf } from 'shared';
 
-const NotFoundIconColor = {
-    PRIMARY: 'primary',
-    SECONDARY: 'secondary',
-} as const;
-
-const NotFoundIconSize = {
-    SMALL: 'sm',
-    MEDIUM: 'md',
-    LARGE: 'lg',
-    EXTRA_LARGE: 'xlg',
-} as const;
+import { NotFoundIconColor, NotFoundIconSize } from '../enums/enums.js';
 
 type Properties = {
     color: ValueOf<typeof NotFoundIconColor>;
@@ -59,4 +49,4 @@ const NotFoundIcon = ({
     );
 };
 
-export { NotFoundIcon, NotFoundIconColor, NotFoundIconSize };
+export { NotFoundIcon };
