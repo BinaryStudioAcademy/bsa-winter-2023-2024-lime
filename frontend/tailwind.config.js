@@ -5,7 +5,7 @@ export default {
     theme: {
         colors: {
             transparent: 'transparent',
-            white: '#ffffff',
+            'white': '#FFFFFF',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
