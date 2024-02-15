@@ -1,9 +1,10 @@
 import { type AppEnvironment } from '~/common/enums/enums.js';
+import { type ValueOf } from '~/common/types/types.js';
 
 type EnvironmentSchema = {
     APP: {
         PORT: number;
-        ENVIRONMENT: AppEnvironment;
+        ENVIRONMENT: ValueOf<typeof AppEnvironment>;
         JWT_SECRET: string;
     };
     DB: {
