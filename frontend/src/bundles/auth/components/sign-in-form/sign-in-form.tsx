@@ -6,7 +6,7 @@ import {
     Link,
     Loader,
 } from '~/bundles/common/components/components.js';
-import { LogoIconColor } from '~/bundles/common/components/icons/icons.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
@@ -64,7 +64,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 <Button
                     label={isLoading ? '' : 'Log In'}
                     leftIcon={
-                        isLoading && <Loader color={LogoIconColor.SECONDARY} />
+                        isLoading && <Loader color={IconColor.SECONDARY} />
                     }
                     type="submit"
                     isDisabled={!isDirty || !isValid || isLoading}
