@@ -6,7 +6,6 @@ import {
 } from 'react-hook-form';
 import ReactDatePicker, { type DateObject } from 'react-multi-date-picker';
 
-import { getFormatDate } from '../../helpers/helpers.js';
 import { useCallback, useFormController } from '../../hooks/hooks.js';
 import { Input } from '../components.js';
 
@@ -27,31 +26,32 @@ const DatePicker = <T extends FieldValues>({
 
     const handleDaySelect = useCallback(
         (date: DateObjectProperties): false | undefined => {
-            if (date) {
-                field.onChange(getFormatDate(date.toString()));
-            } else {
-                field.onChange('');
-                return false;
+            if ((date as DateObject).isValid) {
+                field.onChange((date as DateObject).format());
+                return;
             }
+
+            return false;
         },
         [field],
     );
-
     return (
-        <ReactDatePicker
-            containerClassName={'custom-date-picker'}
-            onChange={handleDaySelect}
-            render={
-                <Input
-                    type="text"
-                    placeholder={'Choose the date'}
-                    label="Choose date"
-                    name={name}
-                    control={control}
-                    errors={errors}
-                />
-            }
-        />
+        <div>
+            <ReactDatePicker
+                containerClassName={'custom-date-picker'}
+                onChange={handleDaySelect}
+                render={
+                    <Input
+                        type="text"
+                        placeholder={'Choose the date'}
+                        label="Choose date"
+                        name={name}
+                        control={control}
+                        errors={errors}
+                    />
+                }
+            />
+        </div>
     );
 };
 
