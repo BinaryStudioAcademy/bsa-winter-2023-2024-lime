@@ -35,6 +35,7 @@ class UserController extends BaseController {
         this.addRoute({
             path: UsersApiPath.ROOT,
             method: 'GET',
+            isPublic: true,
             handler: () => this.findAll(),
         });
     }

@@ -10,6 +10,7 @@ type ServerAppRouteParameters = {
         request: FastifyRequest,
         reply: FastifyReply,
     ) => Promise<void> | void;
+    isPublic: boolean;
     validation?: {
         body?: ValidationSchema;
     };

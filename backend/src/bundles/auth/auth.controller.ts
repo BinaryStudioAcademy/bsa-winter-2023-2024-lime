@@ -32,6 +32,7 @@ class AuthController extends BaseController {
             validation: {
                 body: userSignUpValidationSchema,
             },
+            isPublic: false,
             handler: (options) =>
                 this.signUp(
                     options as ApiHandlerOptions<{
@@ -46,6 +47,7 @@ class AuthController extends BaseController {
             validation: {
                 body: userSignInValidationSchema,
             },
+            isPublic: false,
             handler: (options) =>
                 this.signIn(
                     options as ApiHandlerOptions<{

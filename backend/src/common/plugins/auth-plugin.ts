@@ -1,26 +1,25 @@
 import fastifyPlugin from 'fastify-plugin';
-import { AuthApiPath, UserValidationMessage } from 'shared';
+import { UserValidationMessage } from 'shared';
 
-import { PluginNames } from '~/common/enums/enums.js';
-import { extractTokenFromHeaders } from '~/common/helpers/helpers.js';
+import { PluginName } from '~/common/enums/enums.js';
+import {
+    extractApiPath,
+    extractTokenFromHeaders,
+} from '~/common/helpers/helpers.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 
-import { type AuthOptions } from './types/types.js';
+import { type AuthPluginOptions } from './types/types.js';
 
 const authPlugin = fastifyPlugin(
-    (fastify, { jwtService, apis }: AuthOptions, done) => {
+    (fastify, { jwtService, whitelistedRoutes }: AuthPluginOptions, done) => {
         fastify.decorateRequest('user', null);
 
-        const routes = apis.flatMap((api) =>
-            api.routes.map((element) => element.path),
-        );
-        const excludedRoutes = [AuthApiPath.SIGN_IN, AuthApiPath.SIGN_UP];
-        const filteredRoutes = routes.filter((route) =>
-            excludedRoutes.some((excRoute) => route.includes(excRoute)),
-        );
-
         fastify.addHook('preHandler', async (request) => {
-            if (filteredRoutes?.includes(request.routeOptions.url)) {
+            const extractedApiPath = extractApiPath(request.routeOptions.url);
+            if (
+                extractedApiPath &&
+                whitelistedRoutes?.includes(extractedApiPath)
+            ) {
                 return;
             }
             const token = extractTokenFromHeaders(request);
@@ -31,21 +30,18 @@ const authPlugin = fastifyPlugin(
                     message: UserValidationMessage.TOKEN_REQUIRE,
                 });
             }
-
-            const decodedToken = await jwtService.verifyToken(token);
-
-            if (!decodedToken) {
+            try {
+                request.user = await jwtService.verifyToken(token);
+            } catch (error) {
                 throw new HttpError({
                     status: HttpCode.UNAUTHORIZED,
-                    message: UserValidationMessage.TOKEN_INVALID,
+                    message: (error as Error).message,
                 });
             }
-
-            request.user = decodedToken;
         });
         done();
     },
-    { name: PluginNames.AUTH_PLUGIN },
+    { name: PluginName.AUTH },
 );
 
 export { authPlugin };

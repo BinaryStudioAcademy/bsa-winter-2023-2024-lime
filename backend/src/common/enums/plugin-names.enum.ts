@@ -1,5 +1,5 @@
-enum PluginNames {
-    AUTH_PLUGIN = 'authPlugin',
-}
+const PluginName = {
+    AUTH: 'auth',
+} as const;
 
-export { PluginNames };
+export { PluginName };

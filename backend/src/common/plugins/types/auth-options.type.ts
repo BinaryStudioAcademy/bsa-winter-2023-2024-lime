@@ -1,9 +1,8 @@
-import { type ServerAppApi } from '~/common/server-application/types/types.js';
 import { type JwtService } from '~/common/services/jwt/jwt.service.js';
 
-type AuthOptions = {
+type AuthPluginOptions = {
     jwtService: JwtService;
-    apis: ServerAppApi[];
+    whitelistedRoutes: string[];
 };
 
-export { type AuthOptions };
+export { type AuthPluginOptions };
