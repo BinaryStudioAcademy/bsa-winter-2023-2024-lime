@@ -1,3 +1,3 @@
-type IconName = 'arrowDown';
+type IconName = 'arrowDown' | 'logoIcon';
 
 export { type IconName };

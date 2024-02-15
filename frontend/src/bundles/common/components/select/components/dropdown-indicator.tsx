@@ -1,7 +1,8 @@
 import { type DropdownIndicatorProps, type GroupBase } from 'react-select';
 import { components } from 'react-select';
 
-import { Icon } from '../../icon/icon.js';
+import { Icon } from '~/bundles/common/components/components.js';
+
 import { type SelectOption } from '../types/types.js';
 
 const DropdownIndicator = (
