@@ -63,6 +63,9 @@ export default {
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
             },
+            width: {
+                '120': '120px',
+            },
         },
     },
     plugins: [],

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { UserValidationMessage, UserValidationRule } from '../enums/enums.js';
+import { UnicodePattern } from './constants/constants.js';
 
 type UserUpdateProfileRequestValidationDto = {
     fullname: z.ZodString;
@@ -22,21 +23,29 @@ const userUpdateProfile = z
         fullname: z
             .string()
             .trim()
+            .regex(UnicodePattern.FULLNAME_PATTERN, {
+                message: UserValidationMessage.FULLNAME_WRONG,
+            })
             .min(UserValidationRule.FULLNAME_MINIMUM_LENGTH, {
                 message: UserValidationMessage.FULLNAME_LENGTH,
             })
             .max(UserValidationRule.FULLNAME_MAXIMUM_LENGTH, {
                 message: UserValidationMessage.FULLNAME_LENGTH,
             }),
-        nickname: z.string().trim(),
+        nickname: z.string().trim().regex(UnicodePattern.NICKNAME_PATTERN, {
+            message: UserValidationMessage.NICKNAME_WRONG,
+        }),
         birthdate: z
             .string()
             .regex(
-                /^(?:\d{2}\/){2}\d{4}$/,
+                UnicodePattern.BIRTHDATE_PATTERN,
                 UserValidationMessage.BIRTHDATE_FORMAT,
             ),
         weight: z
             .string()
+            .regex(UnicodePattern.WEIGHT_PATTERN, {
+                message: UserValidationMessage.WEIGHT_WRONG,
+            })
             .min(UserValidationRule.WEIGHT_MINIMUM_LENGTH, {
                 message: UserValidationMessage.WEIGHT_LENGTH,
             })

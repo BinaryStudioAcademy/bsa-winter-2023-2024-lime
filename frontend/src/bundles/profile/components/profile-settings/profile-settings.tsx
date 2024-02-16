@@ -1,12 +1,13 @@
-import { userUpdateProfile } from 'shared/src/bundles/users/validation-schemas/user-update-profile.validation-schema.js';
-
 import {
     Button,
     ButtonSize,
     ButtonVariant,
     Input,
+    Radio,
 } from '~/bundles/common/components/components.js';
+import { Gender } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import { userUpdateProfileValidationSchema } from '~/bundles/users/users.js';
 import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
@@ -19,7 +20,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
     const { control, errors, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
-            validationSchema: userUpdateProfile,
+            validationSchema: userUpdateProfileValidationSchema,
         });
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -39,7 +40,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                 </div>
 
                 <Button
-                    className="ml-[13px] h-[38px] w-[120px] rounded-[23px]"
+                    className="w-120 ml-[13px] h-[38px] rounded-[20px]"
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
@@ -54,7 +55,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     classname="col-start-1 col-end-3"
                     type="text"
                     label="Full Name"
-                    placeholder="Full name"
+                    placeholder="John Doe"
                     name="fullname"
                     control={control}
                     errors={errors}
@@ -95,6 +96,27 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     name="height"
                     control={control}
                     errors={errors}
+                />
+                <Radio
+                    id="1"
+                    name="gender"
+                    label="Male"
+                    value={Gender.MALE}
+                    control={control}
+                />
+                <Radio
+                    id="1"
+                    name="gender"
+                    label="Female"
+                    value={Gender.FEMALE}
+                    control={control}
+                />
+                <Radio
+                    id="1"
+                    name="gender"
+                    label="Prefer not to say"
+                    value={Gender.OTHER}
+                    control={control}
                 />
                 <Button
                     type="submit"

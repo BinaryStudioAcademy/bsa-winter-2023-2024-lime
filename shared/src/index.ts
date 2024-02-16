@@ -7,6 +7,7 @@ export {
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
     type UserUpdateProfileRequestDto,
+    Gender,
     UsersApiPath,
     userSignInValidationSchema,
     userSignUpValidationSchema,
