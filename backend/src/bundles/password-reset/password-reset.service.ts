@@ -2,6 +2,7 @@ import {
     type PasswordForgotRequestDto,
     type PasswordForgotResponseDto,
     type PasswordResetRequestDto,
+    type PasswordResetResponseDto,
 } from '~/bundles/password-reset/password-reset.js';
 import { type UserModel, type UserService } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
@@ -47,7 +48,7 @@ class PasswordResetService {
 
     public async resetPassword(
         passwordResetRequestDto: PasswordResetRequestDto,
-    ): Promise<PasswordForgotResponseDto> {
+    ): Promise<PasswordResetResponseDto> {
         const user = (await this.userService.find({
             id: passwordResetRequestDto.id,
         })) as UserModel;
@@ -86,7 +87,9 @@ class PasswordResetService {
             });
         }
 
-        return { message: 'Password updated' };
+        return {
+            message: 'Password updated',
+        };
     }
 }
 

@@ -50,10 +50,9 @@ class UserRepository implements Repository {
     ): ReturnType<Repository['update']> {
         return await this.userModel
             .query()
-            .findOne({ id })
-            .update({ ...changes })
-            .returning('*')
-            .execute();
+            .findById(id)
+            .update(changes)
+            .returning('*');
     }
 
     public delete(): ReturnType<Repository['delete']> {
