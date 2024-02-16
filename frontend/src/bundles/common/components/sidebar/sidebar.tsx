@@ -6,18 +6,10 @@ import {
 
 import { AppRoute } from '../../enums/app-route.enum.js';
 import { getValidClassNames } from '../../helpers/helpers.js';
-import {
-    GoalsIcon,
-    HelpIcon,
-    LogoutIcon,
-    OverviewIcon,
-    ScheduleIcon,
-    WorkoutIcon,
-} from '../icons/sidebar-icons/sidebar-icons.js';
-import { SidebarNav } from '../sidebar-nav/sidebar-nav.js';
+import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
 
 type Properties = {
-    isOpen: boolean;
+    isOpen?: boolean;
 };
 
 const styles = {
@@ -26,7 +18,16 @@ const styles = {
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({ isOpen }: Properties): JSX.Element => {
+const icons = {
+    OVERVIEW: 'overviewIcon',
+    GOALS: 'goalsIcon',
+    WORKOUT: 'workoutIcon',
+    HELP: 'helpIcon',
+    SCHEDULE: 'scheduleIcon',
+    LOGOUT: 'logoutIcon',
+} as const;
+
+const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute] = useState(pathname);
@@ -50,26 +51,26 @@ const Sidebar = ({ isOpen }: Properties): JSX.Element => {
             <div className="inner h-3/4 w-full border-gray-700 ">
                 <div className="flex flex-col gap-4">
                     <SidebarNav
-                        icon={<OverviewIcon />}
+                        icon={icons.OVERVIEW}
                         text="Overview"
                         to={AppRoute.OVERVIEW}
                         isActive={activeRoute === AppRoute.OVERVIEW}
                     />
                     <SidebarNav
-                        icon={<WorkoutIcon />}
+                        icon={icons.WORKOUT}
                         text="Workout"
                         to={AppRoute.WORKOUT}
                         isActive={activeRoute === AppRoute.WORKOUT}
                     />
                     <SidebarNav
-                        icon={<GoalsIcon />}
+                        icon={icons.GOALS}
                         text="Goals"
                         to={AppRoute.GOALS}
                         isActive={activeRoute === AppRoute.GOALS}
                     />
                     <SidebarNav
-                        icon={<ScheduleIcon />}
-                        text="Schedule"
+                        icon={icons.SCHEDULE}
+                        text="My schedule"
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
                     />
@@ -79,13 +80,13 @@ const Sidebar = ({ isOpen }: Properties): JSX.Element => {
             <div className="flex h-1/4 w-full">
                 <div className="flex w-full flex-col justify-center gap-3">
                     <SidebarNav
-                        icon={<HelpIcon />}
+                        icon={icons.HELP}
                         text="Help"
                         to={AppRoute.HELP}
                         isActive={activeRoute === AppRoute.HELP}
                     />
                     <SidebarNav
-                        icon={<LogoutIcon />}
+                        icon={icons.LOGOUT}
                         text="Logout"
                         to={AppRoute.LOGOUT}
                     />
