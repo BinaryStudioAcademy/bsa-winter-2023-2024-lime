@@ -1,3 +1,4 @@
+import { type FocusEventHandler } from 'react';
 import {
     type Control,
     type FieldErrors,
@@ -15,6 +16,7 @@ type Properties<T extends FieldValues> = {
     type?: 'text' | 'email';
     isDisabled?: boolean;
     placeholder?: string;
+    onFocus?: FocusEventHandler<HTMLInputElement>;
 };
 
 const Input = <T extends FieldValues>({
@@ -25,6 +27,7 @@ const Input = <T extends FieldValues>({
     type = 'text',
     isDisabled = false,
     placeholder = '',
+    onFocus,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
@@ -41,6 +44,7 @@ const Input = <T extends FieldValues>({
                 autoComplete="off"
                 disabled={isDisabled}
                 className={`bg-lm-black-100 text-lm-grey-100 placeholder:text-lm-grey-200 focus:border-lm-yellow-100 disabled:text-lm-grey-300 h-9 max-w-[358px] rounded-lg border p-4 focus:outline-none ${hasError && 'border-lm-red'}`}
+                onFocus={onFocus}
             />
             {hasError && <span className="text-lm-red">{error as string}</span>}
         </label>
