@@ -38,10 +38,25 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     );
 
     return (
-        <div className="flex flex-col justify-center gap-10 rounded-[2.75rem] p-12 font-sans text-white">
+        <div className="flex flex-col justify-center gap-6 rounded-[2.75rem] p-12 font-sans text-white">
             <h3 className="text-center text-[1.88rem] font-bold text-slate-50">
                 Hi! Create an account
             </h3>
+            <div className="flex flex-col gap-4">
+                <Button
+                    size={ButtonSize.MEDIUM}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="G"
+                />
+                <Button
+                    size={ButtonSize.MEDIUM}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="f"
+                />
+            </div>
+
             <p className="text-lm-grey-100 text-center text-xs">
                 or Sign up with Email
             </p>
@@ -87,7 +102,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     />
                 </div>
             </form>
-            <p className="text-center text-sm">
+            <p className="mt-10 text-center text-sm">
                 Already have an account? Go to
                 <Link to={AppRoute.SIGN_IN} className="text-lm-yellow-100">
                     {' '}
