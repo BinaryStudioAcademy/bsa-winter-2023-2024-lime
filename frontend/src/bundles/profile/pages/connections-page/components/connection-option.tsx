@@ -63,13 +63,29 @@ const ConnectionOption = ({
                                 'text-lm-grey-200 text-[0.75rem] sm:text-sm md:text-base'
                             }
                         >
-                            Link your{' '}
-                            <span
-                                className={`border-b border-b-${isConnected ? 'lm-yellow-100' : 'lm-red'}`}
-                            >
-                                {title}
-                            </span>{' '}
-                            account.
+                            {isConnected ? (
+                                <span>
+                                    Your{' '}
+                                    <span
+                                        className={
+                                            'border-b-lm-yellow-100 border-b'
+                                        }
+                                    >
+                                        {title}
+                                    </span>{' '}
+                                    account has been successfully linked.
+                                </span>
+                            ) : (
+                                <span>
+                                    Link your{' '}
+                                    <span
+                                        className={'border-b-lm-red border-b'}
+                                    >
+                                        {title}
+                                    </span>{' '}
+                                    account.
+                                </span>
+                            )}
                         </p>
                     </div>
                     <Button
