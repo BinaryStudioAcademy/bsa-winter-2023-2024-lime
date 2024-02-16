@@ -16,11 +16,13 @@ type Parameters<T extends FieldValues = FieldValues> = {
     defaultValues: DefaultValues<T>;
     mode?: keyof ValidationMode;
     validationSchema?: ValidationSchema;
+    shouldUnregister?: boolean;
 };
 
 type ReturnValue<T extends FieldValues = FieldValues> = {
     control: Control<T, null>;
     errors: FieldErrors<T>;
+    isDirty: boolean;
     isValid: boolean;
     handleSubmit: UseFormHandleSubmit<T>;
 };
@@ -29,10 +31,12 @@ const useAppForm = <T extends FieldValues = FieldValues>({
     defaultValues,
     mode = 'onTouched',
     validationSchema,
+    shouldUnregister = true,
 }: Parameters<T>): ReturnValue<T> => {
     let parameters: UseFormProps<T> = {
         defaultValues,
         mode,
+        shouldUnregister,
     };
 
     if (validationSchema) {
@@ -44,13 +48,14 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 
     const {
         control,
-        formState: { errors, isValid },
+        formState: { errors, isDirty, isValid },
         handleSubmit,
     } = useForm<T>(parameters);
 
     return {
         control,
         errors,
+        isDirty,
         isValid,
         handleSubmit,
     };

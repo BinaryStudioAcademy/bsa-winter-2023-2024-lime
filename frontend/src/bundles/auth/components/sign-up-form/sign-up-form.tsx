@@ -38,7 +38,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     );
 
     return (
-        <div className="flex flex-col justify-center gap-6 rounded-[2.75rem] p-12 font-sans text-white">
+        <div className="flex flex-col justify-center gap-6 rounded-[2.75rem] font-sans text-white">
             <h3 className="text-center text-[1.88rem] font-bold text-slate-50">
                 Hi! Create an account
             </h3>
@@ -60,7 +60,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <p className="text-lm-grey-100 text-center text-xs">
                 or Sign up with Email
             </p>
-            <form onSubmit={handleFormSubmit} className="mb-10 gap-3">
+            <form onSubmit={handleFormSubmit} className="mb-8 gap-3">
                 <Input
                     type={type.TEXT}
                     label="Email"

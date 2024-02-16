@@ -5,8 +5,8 @@ import { type Service } from '~/common/types/types.js';
 
 import {
     type UserAuthRequestDto,
+    type UserAuthResponseDto,
     type UserGetAllResponseDto,
-    type UserSignUpResponseDto,
 } from './types/types.js';
 
 class UserService implements Service {
@@ -32,17 +32,18 @@ class UserService implements Service {
 
     public async create(
         payload: UserAuthRequestDto,
-    ): Promise<Omit<UserSignUpResponseDto, 'token'>> {
-        const { hash, salt } = cryptService.encryptSync(payload.password);
+    ): Promise<UserAuthResponseDto> {
+        const { email, password } = payload;
+        const { hash } = cryptService.encryptSync(password);
+
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
-                email: payload.email,
-                passwordSalt: salt, // TODO
-                passwordHash: hash, // TODO
+                email,
+                passwordHash: hash,
             }),
         );
 
-        return user.toObject();
+        return user.toObject() as UserAuthResponseDto;
     }
 
     public update(): ReturnType<Service['update']> {

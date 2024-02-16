@@ -6,7 +6,7 @@ export default {
     theme: {
         colors: {
             transparent: 'transparent',
-            'white': '#FFFFFF',
+            'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
@@ -26,6 +26,7 @@ export default {
                 100: '#2A2F37',
                 200: '#1C2227',
                 300: '#313134',
+                400: '#000000',
             },
         },
         fontSize: {
@@ -41,6 +42,7 @@ export default {
             normal: '400',
             semibold: '500',
             bold: '600',
+            extrabold: '700',
         },
         lineHeight: {
             '3': '1rem',

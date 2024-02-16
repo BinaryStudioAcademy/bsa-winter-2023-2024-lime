@@ -1,1 +1,1 @@
-export { userSignUpValidationSchema } from 'shared';
+export { userAuthValidationSchema, userSignUpValidationSchema } from 'shared';

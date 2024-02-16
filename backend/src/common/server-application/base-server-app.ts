@@ -10,8 +10,11 @@ import { type Config } from '~/common/config/config.js';
 import { type Database } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
+import { createWhitelistedRoutes } from '~/common/helpers/create-witelisted-routes-helper.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
+import { authPlugin } from '~/common/plugins/plugins.js';
+import { jwtService } from '~/common/services/services.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -116,6 +119,13 @@ class BaseServerApp implements ServerApp {
         );
     }
 
+    private async initPlugins(): Promise<void> {
+        await this.app.register(authPlugin, {
+            jwtService,
+            whitelistedRoutes: createWhitelistedRoutes(this.apis),
+        });
+    }
+
     private initValidationCompiler(): void {
         this.app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
             return <T, R = ReturnType<ValidationSchema['parse']>>(
@@ -187,6 +197,8 @@ class BaseServerApp implements ServerApp {
         await this.initServe();
 
         await this.initMiddlewares();
+
+        await this.initPlugins();
 
         this.initValidationCompiler();
 

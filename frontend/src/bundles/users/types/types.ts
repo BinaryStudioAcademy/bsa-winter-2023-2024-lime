@@ -1,6 +1,6 @@
 export {
     type UserAuthRequestDto,
+    type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
-    type UserSignUpResponseDto,
 } from 'shared';

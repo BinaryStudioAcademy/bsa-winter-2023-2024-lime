@@ -1,4 +1,5 @@
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { type FocusEventHandler } from 'react';
 import {
     type Control,
     type FieldErrors,
@@ -20,6 +21,7 @@ type Properties<T extends FieldValues> = {
     type?: 'text' | 'email' | 'password';
     isDisabled?: boolean;
     placeholder?: string;
+    onFocus?: FocusEventHandler<HTMLInputElement>;
 };
 
 const Input = <T extends FieldValues>({
@@ -30,8 +32,9 @@ const Input = <T extends FieldValues>({
     type = 'text',
     isDisabled = false,
     placeholder = '',
+    onFocus,
 }: Properties<T>): JSX.Element => {
-    const [isMasked, setIsMasked] = useState(true);
+    const [isMasked, setIsMasked] = useState(false);
     const { field } = useFormController({ name, control });
 
     const error = errors[name]?.message;
@@ -47,23 +50,24 @@ const Input = <T extends FieldValues>({
     };
 
     return (
-        <label className="flex h-20 flex-col text-sm">
+        <label className="flex h-20 w-full flex-col text-sm">
             <span className="font-medium">{label}</span>
             <div className="relative">
                 <input
                     {...field}
-                    type={isMasked ? type : 'text'}
+                    type={isMasked ? 'text' : type}
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
                     className={`bg-lm-black-100 text-lm-grey-100 placeholder:text-lm-grey-200 focus:border-lm-yellow-100 disabled:text-lm-grey-300 h-9 w-full rounded-lg border p-4 focus:outline-none ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
+                    onFocus={onFocus}
                 />
                 {isPassword && (
                     <div
                         onClick={onMaskPassword}
                         onKeyDown={onMaskPassword}
                         role="button"
-                        tabIndex={-1}
+                        tabIndex={0}
                     >
                         {isMasked ? (
                             <EyeIcon className="text-lm-grey-200 absolute bottom-2 right-2 w-5" />
