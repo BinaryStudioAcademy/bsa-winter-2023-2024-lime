@@ -4,7 +4,7 @@ type Theme = 'dark' | 'light';
 
 function useDarkTheme(): [Theme, React.Dispatch<React.SetStateAction<Theme>>] {
     const currentTheme = localStorage.getItem('theme');
-    const colorTheme = currentTheme === null ? 'dark' : currentTheme as Theme;
+    const colorTheme = currentTheme === null ? 'dark' : (currentTheme as Theme);
     const [theme, setTheme] = useState(colorTheme);
 
     useEffect(() => {
@@ -14,7 +14,6 @@ function useDarkTheme(): [Theme, React.Dispatch<React.SetStateAction<Theme>>] {
 
         // save theme to local storage
         localStorage.setItem('theme', theme);
-        
     }, [theme, colorTheme]);
 
     return [colorTheme, setTheme];
