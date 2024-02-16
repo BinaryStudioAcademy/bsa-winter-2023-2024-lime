@@ -1,6 +1,6 @@
-enum ApiPath {
-    USERS = '/users',
-    AUTH = '/auth',
-}
+const ApiPath = {
+    USERS: '/users',
+    AUTH: '/auth',
+} as const;
 
 export { ApiPath };

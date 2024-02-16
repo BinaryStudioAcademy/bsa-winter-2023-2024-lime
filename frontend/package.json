@@ -4,7 +4,7 @@
     "type": "module",
     "engines": {
         "node": "18.x.x",
-        "npm": "10.x.x"
+        "npm": "9.x.x"
     },
     "scripts": {
         "lint:css": "npx stylelint \"src/**/*.css\"",
@@ -26,7 +26,8 @@
         "postcss": "8.4.35",
         "prettier-plugin-tailwindcss": "0.5.11",
         "tailwindcss": "3.4.1",
-        "vite": "5.0.12"
+        "vite": "5.0.12",
+        "vite-plugin-svgr": "4.2.0"
     },
     "dependencies": {
         "@heroicons/react": "2.1.1",
@@ -36,9 +37,11 @@
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-hook-form": "7.50.1",
+        "react-multi-date-picker": "4.4.1",
         "react-redux": "9.1.0",
         "react-router-dom": "6.22.0",
         "react-select": "5.8.0",
+        "react-toastify": "10.0.4",
         "shared": "*"
     }
 }

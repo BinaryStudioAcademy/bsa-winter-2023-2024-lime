@@ -41,6 +41,12 @@ class BaseConfig implements Config {
                     env: 'PORT',
                     default: null,
                 },
+                HOST: {
+                    doc: 'Host for server app',
+                    format: String,
+                    env: 'HOST',
+                    default: null,
+                },
                 JWT_SECRET: {
                     doc: 'Jwt secret for token manipulation',
                     format: String,
@@ -49,10 +55,34 @@ class BaseConfig implements Config {
                 },
             },
             DB: {
-                CONNECTION_STRING: {
-                    doc: 'Database connection string',
+                USERNAME: {
+                    doc: 'Database connection username',
                     format: String,
-                    env: 'DB_CONNECTION_STRING',
+                    env: 'DB_USERNAME',
+                    default: null,
+                },
+                PASSWORD: {
+                    doc: 'Database connection password',
+                    format: String,
+                    env: 'DB_PASSWORD',
+                    default: null,
+                },
+                HOST: {
+                    doc: 'Database connection host',
+                    format: String,
+                    env: 'DB_HOST',
+                    default: null,
+                },
+                PORT: {
+                    doc: 'Database connection port',
+                    format: Number,
+                    env: 'DB_PORT',
+                    default: null,
+                },
+                NAME: {
+                    doc: 'Database name to connect',
+                    format: String,
+                    env: 'DB_NAME',
                     default: null,
                 },
                 DIALECT: {
@@ -71,6 +101,20 @@ class BaseConfig implements Config {
                     doc: 'Database pool max count',
                     format: Number,
                     env: 'DB_POOL_MAX',
+                    default: null,
+                },
+            },
+            EMAIL: {
+                API_KEY: {
+                    doc: 'SendGrid api key',
+                    format: String,
+                    env: 'EMAIL_API_KEY',
+                    default: null,
+                },
+                FROM: {
+                    doc: 'Email address to send mails to customers',
+                    format: String,
+                    env: 'EMAIL_FROM',
                     default: null,
                 },
             },
