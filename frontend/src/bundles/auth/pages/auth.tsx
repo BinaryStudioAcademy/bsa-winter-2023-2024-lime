@@ -68,7 +68,7 @@ const Auth: React.FC = () => {
             <div className="bg-lm-black-200 mr-2 w-[35rem] rounded-[2.75rem] p-[1rem] sm:p-[2rem] lg:p-[4rem]">
                 {getScreen(pathname)}
             </div>
-            <div className="md: m-auto hidden max-w-full p-3 sm:transform md:inline-block">
+            <div className="hidden max-w-96 p-3 sm:transform md:m-auto md:inline-block">
                 <img src={logo} alt="LIME Logo" />
             </div>
         </main>

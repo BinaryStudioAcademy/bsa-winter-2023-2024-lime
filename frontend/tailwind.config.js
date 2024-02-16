@@ -65,7 +65,7 @@ export default {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
-                'auth': 'linear-gradient(to right, #E0FE10, transparent 150%), linear-gradient(to right, #2A2F37, transparent 10%), url("./src/assets/img/auth-bg.png")',
+                'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("./src/assets/img/auth-bg.png")',
             },
         },
     },
