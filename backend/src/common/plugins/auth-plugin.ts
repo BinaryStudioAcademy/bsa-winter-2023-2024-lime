@@ -13,7 +13,6 @@ const authPlugin = fastifyPlugin(
         fastify.decorateRequest('user', null);
 
         fastify.addHook('preHandler', async (request) => {
-
             const isServedPagePath = request.routerPath === SERVED_PAGE_PATH;
 
             if (isServedPagePath) {
