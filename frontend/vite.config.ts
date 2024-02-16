@@ -14,23 +14,23 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         description: 'LIME',
         icons: [
             {
-                src: '/android-chrome-192x192.png', // when we will have images we can replace it
+                src: '/pwa/images/android-chrome-192x192.png', // when we will have images we can replace it
                 sizes: '192x192',
                 type: 'image/png',
             },
             {
-                src: '/android-chrome-512x512.png', // when we will have images we can replace it
+                src: '/pwa/images/android-chrome-512x512.png', // when we will have images we can replace it
                 sizes: '512x512',
                 type: 'image/png',
             },
             {
-                src: '/apple-touch-icon.png',
+                src: '/pwa/images/apple-touch-icon.png',
                 sizes: '180x180',
                 type: 'image/png',
                 purpose: 'apple touch icon',
             },
             {
-                src: '/maskable-icon.png',
+                src: '/pwa/images/maskable-icon.png',
                 sizes: '225x225',
                 type: 'image/png',
                 purpose: 'any maskable',

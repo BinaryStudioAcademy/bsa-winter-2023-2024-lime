@@ -4,25 +4,25 @@
     "description": "LIME",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png",
+            "src": "/pwa/images/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "monochrome"
         },
         {
-            "src": "/android-chrome-512x512.png",
+            "src": "/pwa/images/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/apple-touch-icon.png",
+            "src": "/pwa/images/apple-touch-icon.png",
             "sizes": "180x180",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/maskable-icon.png",
+            "src": "/pwa/images/maskable-icon.png",
             "sizes": "225x225",
             "type": "image/png",
             "purpose": "maskable"
