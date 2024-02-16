@@ -28,57 +28,82 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
         [handleSubmit, onSubmit],
     );
     return (
-        <form
-            className="bg-lm-black-100 w-100 h-100"
-            onSubmit={handleFormSubmit}
-        >
-            <Input
-                type="text"
-                label="Full Name"
-                placeholder="Full name"
-                name="fullname"
-                control={control}
-                errors={errors}
-            />
-            <Input
-                type="text"
-                label="Nickname"
-                placeholder="MyNickname2024"
-                name="nickname"
-                control={control}
-                errors={errors}
-            />
-            <Input
-                type="text"
-                label="Date of birth"
-                placeholder="dd/mm/yyyy"
-                name="birthdate"
-                control={control}
-                errors={errors}
-            />
-            <Input
-                type="text"
-                label="Weight"
-                placeholder="0 kg"
-                name="weight"
-                control={control}
-                errors={errors}
-            />
-            <Input
-                type="text"
-                label="Height"
-                placeholder="0 sm"
-                name="height"
-                control={control}
-                errors={errors}
-            />
-            <Button
-                type="submit"
-                label="Sign up"
-                variant={ButtonVariant.PRIMARY}
-                size={ButtonSize.MEDIUM}
-            />
-        </form>
+        <div className="bg-lm-black-100 w-[874px] px-12 pl-[52px] pr-[78px] pt-[48px]">
+            <div className="flex items-center pb-[47px]">
+                <div className="bg-lm-yellow-100/90 relative flex h-20 w-20 items-center justify-center rounded-full">
+                    <img
+                        src="https://www.w3schools.com/howto/img_avatar.png"
+                        alt="avatar"
+                        className="border-3 h-full w-full rounded-full border-gray-500 object-cover"
+                    />
+                </div>
+
+                <Button
+                    className="ml-[13px] h-[38px] w-[120px] rounded-[23px]"
+                    type="submit"
+                    label="Update file"
+                    variant={ButtonVariant.SECONDARY}
+                    size={ButtonSize.MEDIUM}
+                />
+            </div>
+            <form
+                className=" w-100 h-100 grid-cols-gap-28 grid grid-cols-4 grid-rows-2 gap-x-6"
+                onSubmit={handleFormSubmit}
+            >
+                <Input
+                    classname="col-start-1 col-end-3"
+                    type="text"
+                    label="Full Name"
+                    placeholder="Full name"
+                    name="fullname"
+                    control={control}
+                    errors={errors}
+                />
+
+                <Input
+                    classname="col-start-3 col-end-5"
+                    type="text"
+                    label="Nickname"
+                    placeholder="MyNickname2024"
+                    name="nickname"
+                    control={control}
+                    errors={errors}
+                />
+                <Input
+                    classname="col-start-1 col-end-3"
+                    type="text"
+                    label="Date of birth"
+                    placeholder="DD/MM/YYYY"
+                    name="birthdate"
+                    control={control}
+                    errors={errors}
+                />
+                <Input
+                    classname="col-start-3 col-end-4"
+                    type="text"
+                    label="Weight"
+                    placeholder="0 kg"
+                    name="weight"
+                    control={control}
+                    errors={errors}
+                />
+                <Input
+                    classname="col-start-4 col-end-5"
+                    type="text"
+                    label="Height"
+                    placeholder="0 sm"
+                    name="height"
+                    control={control}
+                    errors={errors}
+                />
+                <Button
+                    type="submit"
+                    label="Save"
+                    variant={ButtonVariant.PRIMARY}
+                    size={ButtonSize.MEDIUM}
+                />
+            </form>
+        </div>
     );
 };
 

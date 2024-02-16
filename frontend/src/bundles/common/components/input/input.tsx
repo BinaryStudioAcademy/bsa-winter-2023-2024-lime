@@ -8,6 +8,7 @@ import {
 import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
 type Properties<T extends FieldValues> = {
+    classname?: string;
     control: Control<T, null>;
     errors: FieldErrors<T>;
     label: string;
@@ -18,6 +19,7 @@ type Properties<T extends FieldValues> = {
 };
 
 const Input = <T extends FieldValues>({
+    classname = '',
     control,
     errors,
     label,
@@ -30,9 +32,8 @@ const Input = <T extends FieldValues>({
 
     const error = errors[name]?.message;
     const hasError = Boolean(error);
-
     return (
-        <label className="flex h-20 flex-col text-sm">
+        <label className={`${classname} flex h-20 flex-col text-sm text-white`}>
             <span className="font-medium">{label}</span>
             <input
                 {...field}
