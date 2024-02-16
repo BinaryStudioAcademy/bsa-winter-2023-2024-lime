@@ -7,10 +7,6 @@ import {
     Input,
     Loader,
 } from '~/bundles/common/components/components.js';
-import {
-    placeholder,
-    type,
-} from '~/bundles/common/components/input/input.enum.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { userSignUpValidationSchema } from '~/bundles/users/users.js';
@@ -62,7 +58,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             </p>
             <form onSubmit={handleFormSubmit} className="mb-8 gap-3">
                 <Input
-                    type={type.TEXT}
+                    type={'text'}
                     label="Email"
                     placeholder="email@gmail.com"
                     name="email"
@@ -72,9 +68,8 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
 
                 <Input
-                    type={type.PASSWORD}
+                    type={'password'}
                     label="Password"
-                    placeholder={placeholder.BULLET}
                     name="password"
                     control={control}
                     errors={errors}
@@ -84,7 +79,6 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 <Input
                     type="password"
                     label="Confirm Password"
-                    placeholder={placeholder.BULLET}
                     name="passwordConfirm"
                     control={control}
                     errors={errors}

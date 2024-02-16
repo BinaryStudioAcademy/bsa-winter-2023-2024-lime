@@ -46,7 +46,7 @@ const Input = <T extends FieldValues>({
     }, []);
 
     const placeholderGenerator = (): string => {
-        return isPassword ? placeholder.repeat(6) : placeholder;
+        return isPassword ? '\u2022'.repeat(6) : placeholder;
     };
 
     return (
