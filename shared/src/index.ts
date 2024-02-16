@@ -6,9 +6,11 @@ export {
     type UserSignInResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserUpdateProfileRequestDto,
     UsersApiPath,
     userSignInValidationSchema,
     userSignUpValidationSchema,
+    userUpdateProfileValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {

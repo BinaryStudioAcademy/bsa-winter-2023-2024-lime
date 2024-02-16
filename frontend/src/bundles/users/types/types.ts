@@ -3,4 +3,5 @@ export {
     type UserGetAllResponseDto,
     type UserSignUpRequestDto,
     type UserSignUpResponseDto,
+    type UserUpdateProfileRequestDto,
 } from 'shared';

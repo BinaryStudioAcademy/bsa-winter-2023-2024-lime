@@ -10,8 +10,10 @@ import {
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { ProfileSettings } from '~/bundles/profile/components/components.js';
 import { store } from '~/framework/store/store.js';
 
+const onProfileSubmit = (): void => {};
 const routes = [
     {
         path: AppRoute.ROOT,
@@ -30,6 +32,10 @@ const routes = [
                 element: <Auth />,
             },
         ],
+    },
+    {
+        path: AppRoute.PROFILE,
+        element: <ProfileSettings onSubmit={onProfileSubmit} />,
     },
 ];
 
