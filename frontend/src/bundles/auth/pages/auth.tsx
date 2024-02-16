@@ -64,8 +64,8 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <main className="bg-auth flex h-screen w-full bg-cover p-4">
-            <div className="bg-lm-black-200 mr-2 w-[35rem] rounded-[2.75rem] p-[1rem] sm:p-[2rem] lg:p-[4rem]">
+        <main className="bg-auth flex h-screen w-full bg-cover py-4 pl-4">
+            <div className="bg-lm-black-200 mr-5 max-w-[50rem] rounded-[2.75rem] p-[1rem] sm:p-[2rem] lg:p-[4rem]">
                 {getScreen(pathname)}
             </div>
             <div className="hidden max-w-96 p-3 sm:transform md:m-auto md:inline-block">
