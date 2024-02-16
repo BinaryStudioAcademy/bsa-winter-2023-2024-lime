@@ -7,7 +7,6 @@ type IconName =
     | 'workoutIcon'
     | 'helpIcon'
     | 'logoutIcon'
-    | 'scheduleIcon'
-    ;
+    | 'scheduleIcon';
 
 export { type IconName };
