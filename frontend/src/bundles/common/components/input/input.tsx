@@ -67,7 +67,7 @@ const Input = <T extends FieldValues>({
                         onClick={onMaskPassword}
                         onKeyDown={onMaskPassword}
                         role="button"
-                        tabIndex={0}
+                        tabIndex={-1}
                     >
                         {isMasked ? (
                             <EyeIcon className="text-lm-grey-200 absolute bottom-2 right-2 w-5" />
