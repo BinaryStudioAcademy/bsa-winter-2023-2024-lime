@@ -23,6 +23,7 @@ class UserRepository implements Repository {
 
         return users.map((user) => {
             const { userDetails, ...userInfo } = user;
+
             return UserEntity.initialize({
                 ...userInfo,
                 fullName: userDetails.fullName,
@@ -32,16 +33,32 @@ class UserRepository implements Repository {
 
     public async create(entity: UserEntity): Promise<UserEntity> {
         const { email, passwordHash } = entity.toNewObject();
-        const user = await this.userModel
-            .query()
-            .insert({
-                email,
-                passwordHash,
-            })
-            .returning('*')
-            .execute();
+        const trx = await this.userModel.startTransaction();
 
-        return UserEntity.initialize({ ...user, fullName: null });
+        try {
+            const user = await this.userModel
+                .query(trx)
+                .insert({
+                    email,
+                    passwordHash,
+                })
+                .returning('*')
+                .execute();
+
+            const userDetails = await user
+                .$relatedQuery('userDetails', trx)
+                .insert({ userId: user.id });
+
+            await trx.commit();
+
+            return UserEntity.initialize({
+                ...user,
+                fullName: userDetails.fullName,
+            });
+        } catch (error) {
+            await trx.rollback();
+            throw error;
+        }
     }
 
     public update(): ReturnType<Repository['update']> {
