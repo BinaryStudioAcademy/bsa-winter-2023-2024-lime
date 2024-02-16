@@ -34,7 +34,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     );
 
     return (
-        <div className="flex flex-col justify-center gap-6 rounded-[2.75rem] font-sans text-white">
+        <>
             <h3 className="text-center text-[1.88rem] font-bold text-slate-50">
                 Hi! Create an account
             </h3>
@@ -56,7 +56,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <p className="text-lm-grey-100 text-center text-xs">
                 or Sign up with Email
             </p>
-            <form onSubmit={handleFormSubmit} className="mb-8 gap-3">
+            <form onSubmit={handleFormSubmit}>
                 <Input
                     type={'text'}
                     label="Email"
@@ -85,7 +85,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
 
-                <div className="mt-4">
+                <div className="mt-3">
                     <Button
                         type="submit"
                         label={isLoading ? '' : 'Sign Up'}
@@ -96,14 +96,14 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     />
                 </div>
             </form>
-            <p className="mt-10 text-center text-sm">
+            <p className="text-center text-sm">
                 Already have an account? Go to
                 <Link to={AppRoute.SIGN_IN} className="text-lm-yellow-100">
                     {' '}
                     Log in
                 </Link>
             </p>
-        </div>
+        </>
     );
 };
 
