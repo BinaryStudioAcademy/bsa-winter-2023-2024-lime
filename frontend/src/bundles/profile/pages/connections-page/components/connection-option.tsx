@@ -28,7 +28,7 @@ const ConnectionOption = ({
     return (
         <div
             className={
-                'bg-lm-black-100 mt-4 flex flex-col gap-5 rounded-2xl p-6 md:p-10'
+                'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6 md:p-10'
             }
         >
             <div className={'flex items-center justify-between gap-3'}>
