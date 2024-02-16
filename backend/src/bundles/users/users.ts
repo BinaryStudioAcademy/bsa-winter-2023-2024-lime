@@ -16,4 +16,8 @@ export {
 } from './types/types.js';
 export { UserModel } from './user.model.js';
 export { UserService } from './user.service.js';
-export { userAuthValidationSchema } from './validation-schemas/validation-schemas.js';
+export {
+    passwordForgotValidationSchema,
+    passwordResetValidationSchema,
+    userAuthValidationSchema,
+} from './validation-schemas/validation-schemas.js';

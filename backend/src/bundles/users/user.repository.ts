@@ -44,8 +44,16 @@ class UserRepository implements Repository {
         return UserEntity.initialize({ ...user, fullName: null });
     }
 
-    public update(): ReturnType<Repository['update']> {
-        return Promise.resolve(null);
+    public async update(
+        id: number,
+        changes: object,
+    ): ReturnType<Repository['update']> {
+        return await this.userModel
+            .query()
+            .findOne({ id })
+            .update({ ...changes })
+            .returning('*')
+            .execute();
     }
 
     public delete(): ReturnType<Repository['delete']> {
