@@ -1,11 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import { type UserAuthRequestDto } from 'shared';
 
 import logo from '~/assets/img/icons/lime-logo.svg';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
     useCallback,
+    useEffect,
     useLocation,
 } from '~/bundles/common/hooks/hooks.js';
 
@@ -19,7 +21,16 @@ const Auth: React.FC = () => {
         dataStatus: auth.dataStatus,
     }));
     const { pathname } = useLocation();
-    dataStatus;
+    const navigate = useNavigate();
+
+    const isLoading = dataStatus === DataStatus.PENDING;
+
+    useEffect(() => {
+        if (dataStatus === DataStatus.FULFILLED) {
+            navigate(AppRoute.ROOT);
+        }
+    }, [dataStatus, navigate]);
+
     const handleSignInSubmit = useCallback((): void => {
         // handle sign in
     }, []);
@@ -40,7 +51,12 @@ const Auth: React.FC = () => {
                 return <SignInForm onSubmit={handleSignInSubmit} />;
             }
             case AppRoute.SIGN_UP: {
-                return <SignUpForm onSubmit={handleSignUpSubmit} />;
+                return (
+                    <SignUpForm
+                        onSubmit={handleSignUpSubmit}
+                        isLoading={isLoading}
+                    />
+                );
             }
         }
 

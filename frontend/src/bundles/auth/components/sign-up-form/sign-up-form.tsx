@@ -5,6 +5,7 @@ import {
     ButtonSize,
     ButtonVariant,
     Input,
+    Loader,
 } from '~/bundles/common/components/components.js';
 import {
     placeholder,
@@ -19,9 +20,10 @@ import { type UserSignUpForm } from './interface.js';
 
 type Properties = {
     onSubmit: (payload: UserSignUpForm) => void;
+    isLoading: boolean;
 };
 
-const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
+const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, isValid, handleSubmit } =
         useAppForm<UserSignUpForm>({
             defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -51,6 +53,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     name="email"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
 
                 <Input
@@ -60,24 +63,27 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     name="password"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
 
                 <Input
                     type="password"
                     label="Confirm Password"
-                    placeholder="&bull;"
+                    placeholder={placeholder.BULLET}
                     name="passwordConfirm"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
 
                 <div className="mt-4">
                     <Button
                         type="submit"
-                        label="Sign Up"
+                        label={isLoading ? '' : 'Sign Up'}
                         variant={ButtonVariant.PRIMARY}
                         size={ButtonSize.MEDIUM}
-                        isDisabled={!isValid}
+                        isDisabled={!isValid || isLoading}
+                        leftIcon={isLoading && <Loader />}
                     />
                 </div>
             </form>
