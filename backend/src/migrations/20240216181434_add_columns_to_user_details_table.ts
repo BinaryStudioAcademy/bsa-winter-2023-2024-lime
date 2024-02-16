@@ -20,9 +20,9 @@ const Gender = {
 };
 
 async function up(knex: Knex): Promise<void> {
-    await knex.schema.raw(`
-      CREATE TYPE ${GENDER_ENUM} AS ENUM ('${Gender.FEMALE}', '${Gender.MALE}', '${Gender.OTHER}');
-    `);
+    await knex.schema.raw(
+        `CREATE TYPE ${GENDER_ENUM} AS ENUM ('${Gender.FEMALE}', '${Gender.MALE}', '${Gender.OTHER}');`,
+    );
 
     await knex.schema.alterTable(TABLE_NAME, (table) => {
         table.text(ColumnName.AVATAR_URL).nullable();
@@ -32,9 +32,9 @@ async function up(knex: Knex): Promise<void> {
         table.integer(ColumnName.HEIGHT).unsigned().nullable();
     });
 
-    await knex.schema.raw(`
-      ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.GENDER} ${GENDER_ENUM};
-    `);
+    await knex.schema.raw(
+        `ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.GENDER} ${GENDER_ENUM};`,
+    );
 }
 
 async function down(knex: Knex): Promise<void> {
