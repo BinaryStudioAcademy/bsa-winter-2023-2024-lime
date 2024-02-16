@@ -12,7 +12,7 @@ const AvatarSize = {
 } as const;
 
 const sizeToClass: Record<ValueOf<typeof AvatarSize>, string> = {
-    [AvatarSize.SMALL]: 'h-12 w-12',
+    [AvatarSize.SMALL]: 'h-10 w-10',
     [AvatarSize.MEDIUM]: 'h-20 w-20',
     [AvatarSize.LARGE]: 'h-30 w-30',
 };
