@@ -11,8 +11,29 @@ class UserRepository implements Repository {
 
     public async find(
         query: Record<string, unknown>,
-    ): ReturnType<Repository['find']> {
-        return await this.userModel.query().findOne(query);
+    ): Promise<UserEntity | null> {
+        const user = await this.userModel
+            .query()
+            .findOne(query)
+            .withGraphFetched('userDetails')
+            .execute();
+
+        if (!user) {
+            return null;
+        }
+
+        const { userDetails, ...userInfo } = user;
+
+        return UserEntity.initialize({
+            ...userInfo,
+            fullName: userDetails.fullName,
+            avatarUrl: userDetails.avatarUrl,
+            username: userDetails.username,
+            dateOfBirth: userDetails.dateOfBirth,
+            weight: userDetails.weight,
+            height: userDetails.height,
+            gender: userDetails.gender,
+        });
     }
 
     public async findAll(): Promise<UserEntity[]> {
@@ -27,6 +48,12 @@ class UserRepository implements Repository {
             return UserEntity.initialize({
                 ...userInfo,
                 fullName: userDetails.fullName,
+                avatarUrl: userDetails.avatarUrl,
+                username: userDetails.username,
+                dateOfBirth: userDetails.dateOfBirth,
+                weight: userDetails.weight,
+                height: userDetails.height,
+                gender: userDetails.gender,
             });
         });
     }
@@ -54,6 +81,12 @@ class UserRepository implements Repository {
             return UserEntity.initialize({
                 ...user,
                 fullName: userDetails.fullName,
+                avatarUrl: userDetails.avatarUrl,
+                username: userDetails.username,
+                dateOfBirth: userDetails.dateOfBirth,
+                weight: userDetails.weight,
+                height: userDetails.height,
+                gender: userDetails.gender,
             });
         } catch (error) {
             await trx.rollback();
