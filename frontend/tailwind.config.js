@@ -66,9 +66,9 @@ export default {
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
             },
-        },
-        borderRadius: {
-            '34': '2.1rem',
+            borderRadius: {
+                '34': '2.1rem',
+            },
         },
     },
     plugins: [],
