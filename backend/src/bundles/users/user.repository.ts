@@ -16,25 +16,32 @@ class UserRepository implements Repository {
     }
 
     public async findAll(): Promise<UserEntity[]> {
-        const users = await this.userModel.query().execute();
+        const users = await this.userModel
+            .query()
+            .withGraphFetched('userDetails')
+            .execute();
 
-        return users.map((it) => UserEntity.initialize(it));
+        return users.map((user) => {
+            const { userDetails, ...userInfo } = user;
+            return UserEntity.initialize({
+                ...userInfo,
+                fullName: userDetails.fullName,
+            });
+        });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordSalt, passwordHash } = entity.toNewObject();
-
-        const item = await this.userModel
+        const { email, passwordHash } = entity.toNewObject();
+        const user = await this.userModel
             .query()
             .insert({
                 email,
-                passwordSalt,
                 passwordHash,
             })
             .returning('*')
             .execute();
 
-        return UserEntity.initialize(item);
+        return UserEntity.initialize({ ...user, fullName: null });
     }
 
     public update(): ReturnType<Repository['update']> {
