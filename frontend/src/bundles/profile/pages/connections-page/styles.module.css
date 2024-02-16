@@ -1,3 +1,24 @@
+.connections {
+    /* Temporary */
+    @apply mt-10 px-32;
+}
+
 .option {
-    @apply flex;
+    @apply bg-lm-black-100  mt-4 flex flex-col gap-5 rounded-2xl p-10;
+}
+
+.option-header {
+    @apply flex items-center justify-between;
+}
+
+.option-header-left {
+    @apply flex w-full max-w-80 items-center gap-5;
+}
+
+.option-header-right {
+    @apply flex flex-col gap-1;
+}
+
+.icon {
+    @apply w-10;
 }
