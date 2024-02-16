@@ -8,6 +8,7 @@ const AppRoute = {
     GOALS: '/goals',
     WORKOUT: '/workout',
     SCHEDULE: '/schedule',
+    NOT_FOUND: '*',
 } as const;
 
 export { AppRoute };

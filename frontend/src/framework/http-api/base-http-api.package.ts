@@ -73,7 +73,7 @@ class BaseHttpApi implements HttpApi {
     }
 
     private async getHeaders(
-        contentType: ContentType,
+        contentType: ValueOf<typeof ContentType>,
         hasAuth: boolean,
     ): Promise<Headers> {
         const headers = new Headers();
