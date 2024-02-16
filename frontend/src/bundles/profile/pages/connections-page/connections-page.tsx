@@ -1,9 +1,8 @@
 import { ConnectionOption } from './components/connection-option.js';
-import styles from './styles.module.css';
 
 const ConnectionsPage = (): JSX.Element => {
     return (
-        <div className={styles['connections']}>
+        <div className={'mt-10 px-5 sm:px-8 md:px-10'}>
             <ConnectionOption />
         </div>
     );
