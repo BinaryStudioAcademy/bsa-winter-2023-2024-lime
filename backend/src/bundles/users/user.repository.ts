@@ -12,7 +12,10 @@ class UserRepository implements Repository {
     public async find(
         query: Record<string, unknown>,
     ): ReturnType<Repository['find']> {
-        return await this.userModel.query().findOne(query);
+        return await this.userModel
+            .query()
+            .withGraphFetched('userDetails')
+            .findOne(query);
     }
 
     public async findAll(): Promise<UserEntity[]> {
@@ -25,7 +28,7 @@ class UserRepository implements Repository {
             const { userDetails, ...userInfo } = user;
             return UserEntity.initialize({
                 ...userInfo,
-                fullName: userDetails.fullName,
+                fullName: userDetails?.fullName ?? null,
             });
         });
     }
