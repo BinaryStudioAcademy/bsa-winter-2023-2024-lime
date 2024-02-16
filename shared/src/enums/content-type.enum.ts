@@ -1,5 +1,5 @@
-enum ContentType {
-    JSON = 'application/json',
-}
+const ContentType = {
+    JSON: 'application/json',
+} as const;
 
 export { ContentType };

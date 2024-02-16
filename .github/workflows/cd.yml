@@ -1,7 +1,7 @@
 name: Continuous Delivery
 
 env:
-    AWS_REGION: us-east-1
+    AWS_REGION: eu-north-1
     EBS_APP_NAME: lime-dev
     ENVIRONMENT: Lime-dev-env-1
 

@@ -29,6 +29,7 @@ class AuthController extends BaseController {
         this.addRoute({
             path: AuthApiPath.SIGN_UP,
             method: 'POST',
+            isPublic: true,
             validation: {
                 body: userSignUpValidationSchema,
             },
@@ -43,6 +44,7 @@ class AuthController extends BaseController {
         this.addRoute({
             path: AuthApiPath.SIGN_IN,
             method: 'POST',
+            isPublic: true,
             validation: {
                 body: userSignInValidationSchema,
             },
