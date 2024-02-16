@@ -1,4 +1,4 @@
-export { AuthApiPath } from './bundles/auth/auth.js';
+export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,

@@ -26,6 +26,7 @@ export default {
                 100: '#2A2F37',
                 200: '#1C2227',
                 300: '#313134',
+                400: '#000000',
             },
         },
         fontSize: {
@@ -41,6 +42,7 @@ export default {
             normal: '400',
             semibold: '500',
             bold: '600',
+            extrabold: '700',
         },
         lineHeight: {
             '3': '1rem',
@@ -67,6 +69,9 @@ export default {
             backgroundImage: {
                 'auth': "linear-gradient(to right, #E0FE10, transparent), linear-gradient(to right, #2A2F37, transparent), url('./src/assets/img/auth-bg.png')",
             },
+        },
+        borderRadius: {
+            '34': '2.1rem',
         },
     },
     plugins: [],
