@@ -1,12 +1,10 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
-import {
-    type UserAuthRequestDto,
-    type UserAuthResponseDto,
-} from '~/bundles/users/users.js';
+import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
+import { type AuthResponseDto } from './auth.js';
 import { AuthApiPath } from './enums/enums.js';
 
 type Constructor = {
@@ -20,9 +18,7 @@ class AuthApi extends BaseHttpApi {
         super({ path: ApiPath.AUTH, baseUrl, http, storage });
     }
 
-    public async signUp(
-        payload: UserAuthRequestDto,
-    ): Promise<UserAuthResponseDto> {
+    public async signUp(payload: UserAuthRequestDto): Promise<AuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.SIGN_UP, {}),
             {
@@ -33,11 +29,9 @@ class AuthApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<UserAuthResponseDto>();
+        return await response.json<AuthResponseDto>();
     }
-    public async signIn(
-        payload: UserAuthRequestDto,
-    ): Promise<UserAuthResponseDto> {
+    public async signIn(payload: UserAuthRequestDto): Promise<AuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.SIGN_IN, {}),
             {
@@ -48,7 +42,7 @@ class AuthApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<UserAuthResponseDto>();
+        return await response.json<AuthResponseDto>();
     }
 }
 
