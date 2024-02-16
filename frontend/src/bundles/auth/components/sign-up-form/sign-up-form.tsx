@@ -36,12 +36,14 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     );
 
     return (
-        <div className="bg-lm-black-200 m-auto flex min-h-[988px] max-w-[705px] flex-col items-center justify-center gap-5 rounded-[44px] pb-12 font-sans text-white">
-            <h3 className="text-[30px] font-bold text-slate-50">
+        <div className="flex flex-col justify-center gap-10 rounded-[2.75rem] p-12 font-sans text-white">
+            <h3 className="text-center text-[1.88rem] font-bold text-slate-50">
                 Hi! Create an account
             </h3>
-            <p className="text-lm-grey-100 text-xs">or Sign up with Email</p>
-            <form onSubmit={handleFormSubmit} className="mb-10 w-[358px]">
+            <p className="text-lm-grey-100 text-center text-xs">
+                or Sign up with Email
+            </p>
+            <form onSubmit={handleFormSubmit} className="mb-10 gap-3">
                 <Input
                     type={type.TEXT}
                     label="Email"
@@ -69,15 +71,17 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     errors={errors}
                 />
 
-                <Button
-                    type="submit"
-                    label="Sign Up"
-                    variant={ButtonVariant.PRIMARY}
-                    size={ButtonSize.MEDIUM}
-                    isDisabled={!isValid}
-                />
+                <div className="mt-4">
+                    <Button
+                        type="submit"
+                        label="Sign Up"
+                        variant={ButtonVariant.PRIMARY}
+                        size={ButtonSize.MEDIUM}
+                        isDisabled={!isValid}
+                    />
+                </div>
             </form>
-            <p className="text-sm">
+            <p className="text-center text-sm">
                 Already have an account? Go to
                 <Link to={AppRoute.SIGN_IN} className="text-lm-yellow-100">
                     {' '}

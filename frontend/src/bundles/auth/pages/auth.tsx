@@ -1,5 +1,6 @@
 import { type UserAuthRequestDto } from 'shared';
 
+import logo from '~/assets/img/icons/lime-logo.svg';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -18,7 +19,7 @@ const Auth: React.FC = () => {
         dataStatus: auth.dataStatus,
     }));
     const { pathname } = useLocation();
-
+    dataStatus;
     const handleSignInSubmit = useCallback((): void => {
         // handle sign in
     }, []);
@@ -47,10 +48,14 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <>
-            state: {dataStatus}
-            {getScreen(pathname)}
-        </>
+        <main className="bg-auth flex h-screen w-full bg-cover p-4">
+            <div className="bg-lm-black-200 mr-2 w-[35rem] rounded-[2.75rem] p-[1rem] sm:p-[2rem] lg:p-[4rem]">
+                {getScreen(pathname)}
+            </div>
+            <div className="md: m-auto hidden max-w-full p-3 sm:transform md:inline-block">
+                <img src={logo} alt="LIME Logo" />
+            </div>
+        </main>
     );
 };
 
