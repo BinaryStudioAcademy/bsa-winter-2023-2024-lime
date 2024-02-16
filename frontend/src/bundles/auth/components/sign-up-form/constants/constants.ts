@@ -1,4 +1,4 @@
-import { type UserSignUpForm } from '../interface.js';
+import { type UserSignUpForm } from '../type.js';
 
 const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpForm = {
     email: '',

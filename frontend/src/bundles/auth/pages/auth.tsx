@@ -12,7 +12,7 @@ import {
 import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 
 import { SignInForm, SignUpForm } from '../components/components.js';
-import { type UserSignUpForm } from '../components/sign-up-form/interface.js';
+import { type UserSignUpForm } from '../components/sign-up-form/type.js';
 import { actions as authActions } from '../store/auth.js';
 
 const Auth: React.FC = () => {

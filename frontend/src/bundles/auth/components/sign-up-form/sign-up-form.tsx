@@ -16,7 +16,7 @@ import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { userSignUpValidationSchema } from '~/bundles/users/users.js';
 
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants.js';
-import { type UserSignUpForm } from './interface.js';
+import { type UserSignUpForm } from './type.js';
 
 type Properties = {
     onSubmit: (payload: UserSignUpForm) => void;
