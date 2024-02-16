@@ -17,21 +17,10 @@ const sizeToClass: Record<ValueOf<typeof AvatarSize>, string> = {
     [AvatarSize.LARGE]: 'h-30 w-30',
 };
 
-const getTextSize = (size: ValueOf<typeof AvatarSize>): string => {
-    switch (size) {
-        case AvatarSize.SMALL: {
-            return 'text-xl';
-        }
-        case AvatarSize.MEDIUM: {
-            return 'text-3xl';
-        }
-        case AvatarSize.LARGE: {
-            return 'text-4xl';
-        }
-        default: {
-            return 'text-base';
-        }
-    }
+const sizeMap: Record<ValueOf<typeof AvatarSize>, string> = {
+    [AvatarSize.SMALL]: 'text-xl',
+    [AvatarSize.MEDIUM]: 'text-3xl',
+    [AvatarSize.LARGE]: 'text-4xl',
 };
 
 const Avatar = ({ size }: Properties): JSX.Element => {
@@ -52,7 +41,7 @@ const Avatar = ({ size }: Properties): JSX.Element => {
                 />
             ) : (
                 <span
-                    className={`object-cover font-bold text-white ${getTextSize(size)}`}
+                    className={`object-cover font-bold text-white ${sizeMap[size]}`}
                 >
                     {firstLetter}
                 </span>
