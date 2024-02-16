@@ -11,11 +11,20 @@ class UserRepository implements Repository {
 
     public async find(
         query: Record<string, unknown>,
-    ): ReturnType<Repository['find']> {
-        return await this.userModel
+    ): Promise<UserEntity | undefined> {
+        const user = await this.userModel
             .query()
             .withGraphFetched('userDetails')
             .findOne(query);
+
+        if (user) {
+            const { userDetails, ...userInfo } = user;
+            return UserEntity.initialize({
+                ...userInfo,
+                fullName: userDetails?.fullName ?? null,
+            });
+        }
+        return user;
     }
 
     public async findAll(): Promise<UserEntity[]> {

@@ -1,5 +1,6 @@
 import {
     type UserAuthRequestDto,
+    type UserAuthResponseDto,
     type UserModel,
     type UserService,
 } from '~/bundles/users/users.js';
@@ -17,7 +18,7 @@ class AuthService {
 
     private async verifyLoginCredentials(
         userRequestDto: UserAuthRequestDto,
-    ): Promise<UserModel> {
+    ): Promise<UserAuthResponseDto> {
         const user = (await this.userService.find({
             email: userRequestDto.email,
         })) as UserModel;
@@ -28,9 +29,11 @@ class AuthService {
             });
         }
 
+        const { passwordHash, ...userData } = user;
+
         const isEqualPassword = cryptService.compareSyncPassword(
             userRequestDto.password,
-            user.passwordHash,
+            passwordHash,
         );
 
         if (!isEqualPassword) {
@@ -39,8 +42,7 @@ class AuthService {
                 status: HttpCode.BAD_REQUEST,
             });
         }
-
-        return user;
+        return userData;
     }
 
     public async signIn(
