@@ -21,7 +21,7 @@ const ConnectionOption = ({
 }: Properties): JSX.Element => {
     const [isConnected, setIsConnected] = useState(false);
 
-    const handleClick = useCallback((): undefined => {
+    const handleClick = useCallback((): void => {
         setIsConnected(!isConnected);
     }, [isConnected]);
 
@@ -93,7 +93,7 @@ const ConnectionOption = ({
                         size={'small'}
                         label={isConnected ? 'Disconnect' : 'Connect'}
                         className={
-                            'h-6 max-w-[180px] sm:h-10 sm:max-w-40 md:max-w-60'
+                            'h-6 max-w-[11.25rem] sm:h-10 sm:max-w-40 md:max-w-60'
                         }
                         onClick={handleClick}
                     />
