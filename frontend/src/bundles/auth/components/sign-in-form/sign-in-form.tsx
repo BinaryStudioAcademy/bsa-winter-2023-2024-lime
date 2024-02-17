@@ -18,10 +18,15 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserAuthRequestDto) => void;
+    onModalOpen: () => void;
     isLoading: boolean;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+const SignInForm: React.FC<Properties> = ({
+    onSubmit,
+    onModalOpen,
+    isLoading,
+}) => {
     const { control, errors, isDirty, isValid, handleSubmit } =
         useAppForm<UserAuthRequestDto>({
             defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
@@ -55,15 +60,27 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     type="text"
                     isDisabled={isLoading}
                 />
-                <Input
-                    control={control}
-                    errors={errors}
-                    placeholder="&bull;"
-                    label="Password"
-                    name="password"
-                    type="password"
-                    isDisabled={isLoading}
-                />
+                <div className="relative">
+                    <Input
+                        control={control}
+                        errors={errors}
+                        placeholder="&bull;"
+                        label="Password"
+                        name="password"
+                        type="password"
+                        isDisabled={isLoading}
+                    />
+
+                    <Button
+                        className="text-lm-grey-200 absolute right-0 top-0 h-[1.5rem] w-32 px-0 py-0"
+                        label="Forgot password"
+                        type="button"
+                        size={ButtonSize.SMALL}
+                        variant={ButtonVariant.TERTIARY}
+                        onClick={onModalOpen}
+                    />
+                </div>
+
                 <Button
                     label={isLoading ? '' : 'Log In'}
                     leftIcon={

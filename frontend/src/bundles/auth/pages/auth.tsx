@@ -1,4 +1,8 @@
 import authLogo from '~/assets/img/auth-logo.svg';
+import {
+    ForgotPasswordForm,
+    Modal,
+} from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -8,7 +12,10 @@ import {
     useEffect,
     useLocation,
     useNavigate,
+    useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
+import { type PasswordForgotRequestDto } from '~/bundles/password-reset/types/types.js';
 import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 
 import { SignInForm, SignUpForm } from '../components/components.js';
@@ -19,7 +26,17 @@ const Auth: React.FC = () => {
     const { dataStatus } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
     }));
+
+    const { dataStatus: resetPasswordStatus } = useAppSelector(
+        ({ passwordReset }) => ({
+            dataStatus: passwordReset.dataStatus,
+        }),
+    );
+
     const isLoading = dataStatus === DataStatus.PENDING;
+    const [isOpen, setIsOpen] = useState(false);
+    const [isPasswordForgot, setIsPasswordForgot] = useState(false);
+
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
@@ -37,11 +54,36 @@ const Auth: React.FC = () => {
         [dispatch],
     );
 
+    const handleForgotPassword = useCallback(
+        (payload: PasswordForgotRequestDto): void => {
+            void dispatch(passwordResetActions.passwordForgot(payload));
+        },
+        [dispatch],
+    );
+
+    const handleOpenModal = useCallback((): void => {
+        void setIsOpen(true);
+    }, []);
+
+    const handleCloseModal = useCallback((): void => {
+        void setIsOpen(false);
+    }, []);
+
     useEffect(() => {
         if (dataStatus === DataStatus.FULFILLED) {
             navigate(AppRoute.ROOT);
         }
     }, [dataStatus, navigate]);
+
+    useEffect(() => {
+        if (resetPasswordStatus === DataStatus.FULFILLED) {
+            setIsPasswordForgot(true);
+            setTimeout(() => {
+                setIsPasswordForgot(false);
+                setIsOpen(false);
+            }, 5000);
+        }
+    }, [navigate, resetPasswordStatus]);
 
     const getScreen = (screen: string): React.ReactNode => {
         switch (screen) {
@@ -49,6 +91,7 @@ const Auth: React.FC = () => {
                 return (
                     <SignInForm
                         onSubmit={handleSignInSubmit}
+                        onModalOpen={handleOpenModal}
                         isLoading={isLoading}
                     />
                 );
@@ -74,6 +117,25 @@ const Auth: React.FC = () => {
             <div className="flex flex-1 items-center justify-center text-xl text-white">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
+            <Modal
+                isOpen={isOpen}
+                title="Enter Your Email for Password Reset"
+                onClose={handleCloseModal}
+            >
+                {isPasswordForgot ? (
+                    <p className="text-xl leading-7 text-white">
+                        Link for password reset was sent to your email. Check
+                        your inbox letters and follow the instructions. If you
+                        don’t see the email, please check your spam folder
+                    </p>
+                ) : (
+                    <ForgotPasswordForm
+                        isLoading={isLoading}
+                        onSubmit={handleForgotPassword}
+                        onModalClose={handleCloseModal}
+                    />
+                )}
+            </Modal>
         </main>
     );
 };

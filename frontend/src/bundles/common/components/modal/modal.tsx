@@ -24,11 +24,13 @@ const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
                     className="stroke-lm-grey-500 fill-lm-grey-500 hover:stroke-lm-yellow-100 hover:fill-lm-yellow-100 absolute right-8 top-8 h-3 w-3 cursor-pointer transition-all "
                 />
 
-                <h3 className="text-lm-grey-200 mb-10 text-xl font-extrabold leading-6">
-                    {title}
-                </h3>
+                <div className="max-w-xs">
+                    <h3 className="text-lm-grey-200 mb-10 text-xl font-extrabold leading-6">
+                        {title}
+                    </h3>
 
-                {children}
+                    {children}
+                </div>
             </div>
         </div>
     );
