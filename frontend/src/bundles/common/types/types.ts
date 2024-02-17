@@ -5,6 +5,7 @@ export {
     type AuthResponseDto,
     type ServerErrorDetail,
     type ServerErrorResponse,
+    type UserAuthResponseDto,
     type ValidationSchema,
     type ValueOf,
 } from 'shared';

@@ -10,12 +10,12 @@ import { signIn, signUp } from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
-    user: AuthResponseDto;
+    user: AuthResponseDto | null;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
-    user: { user: { id: -1, email: '', avatarUrl: '' }, token: '' },
+    user: null,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -45,4 +45,4 @@ const { reducer, actions, name } = createSlice({
     },
 });
 
-export { actions, name, reducer };
+export { type State, actions, name, reducer };

@@ -25,9 +25,10 @@ const sizeMap: Record<ValueOf<typeof AvatarSize>, string> = {
 
 const Avatar = ({ size }: Properties): JSX.Element => {
     const { email, avatarUrl } = useAppSelector(
-        (state) => state.auth.user.user,
+        (state) => state.auth.user?.user || { email: '', avatarUrl: '' },
     );
-    const firstLetter = email.charAt(0).toUpperCase();
+
+    const firstLetter = email ? email.charAt(0).toUpperCase() : '';
 
     return (
         <div
