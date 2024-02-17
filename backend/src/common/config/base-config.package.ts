@@ -118,6 +118,14 @@ class BaseConfig implements Config {
                     default: null,
                 },
             },
+            STRIPE: {
+                SECRET_KEY: {
+                    doc: 'Stripe secret key',
+                    format: String,
+                    env: 'STRIPE_SECRET_KEY',
+                    default: null,
+                },
+            },
         });
     }
 }

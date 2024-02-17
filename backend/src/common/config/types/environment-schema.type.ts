@@ -22,6 +22,9 @@ type EnvironmentSchema = {
         API_KEY: string;
         FROM: string;
     };
+    STRIPE: {
+        SECRET_KEY: string;
+    };
 };
 
 export { type EnvironmentSchema };
