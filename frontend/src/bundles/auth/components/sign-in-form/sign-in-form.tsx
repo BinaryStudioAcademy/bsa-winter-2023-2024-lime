@@ -72,7 +72,7 @@ const SignInForm: React.FC<Properties> = ({
                     />
 
                     <Button
-                        className="text-lm-grey-200 absolute right-0 top-0 h-[1.5rem] w-32 px-0 py-0"
+                        className="text-lm-grey-200 absolute -top-1 right-0 h-[1.5rem] w-32 px-0 py-0"
                         label="Forgot password"
                         type="button"
                         size={ButtonSize.SMALL}

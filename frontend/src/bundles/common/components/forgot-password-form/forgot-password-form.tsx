@@ -28,7 +28,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
         useAppForm<PasswordForgotRequestDto>({
             defaultValues: DEFAULT_PASSWORD_FORGOT_PAYLOAD,
             validationSchema: passwordForgotValidationSchema,
-            mode: 'onBlur',
+            mode: 'onSubmit',
         });
 
     const handleFormSubmit = useCallback(
@@ -47,7 +47,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
             className="text-sm font-semibold leading-3 text-white"
             onSubmit={handleFormSubmit}
         >
-            <div className="mb-6">
+            <div className="mb-8">
                 <Input
                     type="text"
                     label="Email"
@@ -59,21 +59,22 @@ const ForgotPasswordForm: React.FC<Properties> = ({
                 />
             </div>
 
-            <Button
-                className="mb-3"
-                type="submit"
-                label="Send"
-                variant={ButtonVariant.PRIMARY}
-                size={ButtonSize.MEDIUM}
-                isDisabled={!isDirty || !isValid || isLoading}
-            />
-            <Button
-                type="button"
-                label="Cancel"
-                variant={ButtonVariant.PRIMARY}
-                size={ButtonSize.MEDIUM}
-                onClick={handleFormCancel}
-            />
+            <div className="flex gap-5">
+                <Button
+                    type="submit"
+                    label="Send"
+                    variant={ButtonVariant.PRIMARY}
+                    size={ButtonSize.MEDIUM}
+                    isDisabled={!isDirty || !isValid || isLoading}
+                />
+                <Button
+                    type="button"
+                    label="Cancel"
+                    variant={ButtonVariant.PRIMARY}
+                    size={ButtonSize.MEDIUM}
+                    onClick={handleFormCancel}
+                />
+            </div>
         </form>
     );
 };

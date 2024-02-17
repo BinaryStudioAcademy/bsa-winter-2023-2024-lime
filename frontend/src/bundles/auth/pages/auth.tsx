@@ -67,6 +67,7 @@ const Auth: React.FC = () => {
 
     const handleCloseModal = useCallback((): void => {
         void setIsOpen(false);
+        void setIsPasswordForgot(false);
     }, []);
 
     useEffect(() => {

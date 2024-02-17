@@ -5,16 +5,12 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { passwordForgot } from './actions.js';
 
-type User = object;
-
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
-    user: User;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
-    user: {},
 };
 
 const { reducer, actions, name } = createSlice({
