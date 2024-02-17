@@ -3,7 +3,7 @@ import {
     ButtonSize,
     ButtonVariant,
     Input,
-    Radio,
+    RadioCard,
 } from '~/bundles/common/components/components.js';
 import { Gender } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
@@ -97,21 +97,21 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     control={control}
                     errors={errors}
                 />
-                <Radio
+                <RadioCard
                     id="1"
                     name="gender"
                     label="Male"
                     value={Gender.MALE}
                     control={control}
                 />
-                <Radio
+                <RadioCard
                     id="1"
                     name="gender"
                     label="Female"
                     value={Gender.FEMALE}
                     control={control}
                 />
-                <Radio
+                <RadioCard
                     id="1"
                     name="gender"
                     label="Prefer not to say"

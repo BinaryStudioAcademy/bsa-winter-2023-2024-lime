@@ -6,15 +6,18 @@ import {
 
 import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
+import styles from './styles.module.css';
+
 type Properties<T extends FieldValues> = {
     name: FieldPath<T>;
     id: string;
     label: string;
     value: string;
     control: Control<T>;
+    checked?: boolean;
 };
 
-const Radio = <T extends FieldValues>({
+const RadioCard = <T extends FieldValues>({
     name,
     id,
     label,
@@ -28,20 +31,15 @@ const Radio = <T extends FieldValues>({
                 {...field}
                 id={id}
                 value={value}
-                checked={field.value === value}
+                checked={field.value == value}
                 type="radio"
-                className="peer/radio border-lm-grey-500 checked:border-lm-yellow-100 checked:after:bg-lm-yellow-100 relative h-4 w-4
-                cursor-pointer appearance-none rounded-full border-2 bg-transparent checked:after:absolute checked:after:left-1/2 checked:after:top-1/2
-                checked:after:h-2 checked:after:w-2 checked:after:rounded-full checked:after:[transform:translate(-50%,-50%)]"
+                className={styles['radio-card']}
             />
-            <label
-                htmlFor={name}
-                className="text-lm-grey-500 peer-checked/radio:text-lm-grey-200 ml-2 text-base"
-            >
+            <label htmlFor={name} className={styles['label']}>
                 {label}
             </label>
         </div>
     );
 };
 
-export { Radio };
+export { RadioCard };
