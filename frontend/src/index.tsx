@@ -41,7 +41,9 @@ const routes = [
     },
     {
         path: AppRoute.PROFILE,
-        element: <ProfileSettings onSubmit={onProfileSubmit} />,
+        element: (
+            <ProfileSettings onSubmit={onProfileSubmit} isLoading={false} />
+        ),
     },
 ];
 

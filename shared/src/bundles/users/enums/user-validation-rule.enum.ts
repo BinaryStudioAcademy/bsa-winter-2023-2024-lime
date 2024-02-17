@@ -11,15 +11,22 @@ const UserValidationRule = {
         MIN_LENGTH: 6,
         MAX_LENGTH: 12,
     },
-    EMAIL_MINIMUM_LENGTH: 1,
-    FULLNAME_MINIMUM_LENGTH: 2,
-    FULLNAME_MAXIMUM_LENGTH: 60,
-    NICKNAME_MINIMUM_LENGTH: 2,
-    NICKNAME_MAXIMUM_LENGTH: 30,
-    WEIGHT_MINIMUM_LENGTH: 2,
-    WEIGHT_MAXIMUM_LENGTH: 20,
-    HEIGHT_MINIMUM_LENGTH: 2,
-    HEIGHT_MAXIMUM_LENGTH: 20,
+    FULLNAME: {
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 60,
+    },
+    NICKNAME: {
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 30,
+    },
+    WEIGHT: {
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 20,
+    },
+    HEIGHT: {
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 20,
+    },
 } as const;
 
 export { UserValidationRule };

@@ -11,9 +11,9 @@ type UserUpdateProfileRequestValidationDto = {
     height: z.ZodString;
     gender: z.ZodUnion<
         [
-            z.ZodLiteral<'Male'>,
-            z.ZodLiteral<'Female'>,
-            z.ZodLiteral<'Prefer not to say'>,
+            z.ZodLiteral<'male'>,
+            z.ZodLiteral<'female'>,
+            z.ZodLiteral<'prefer not to say'>,
         ]
     >;
 };
@@ -26,15 +26,24 @@ const userUpdateProfile = z
             .regex(UnicodePattern.FULLNAME_PATTERN, {
                 message: UserValidationMessage.FULLNAME_WRONG,
             })
-            .min(UserValidationRule.FULLNAME_MINIMUM_LENGTH, {
+            .min(UserValidationRule.FULLNAME.MIN_LENGTH, {
                 message: UserValidationMessage.FULLNAME_LENGTH,
             })
-            .max(UserValidationRule.FULLNAME_MAXIMUM_LENGTH, {
+            .max(UserValidationRule.FULLNAME.MAX_LENGTH, {
                 message: UserValidationMessage.FULLNAME_LENGTH,
             }),
-        nickname: z.string().trim().regex(UnicodePattern.NICKNAME_PATTERN, {
-            message: UserValidationMessage.NICKNAME_WRONG,
-        }),
+        nickname: z
+            .string()
+            .trim()
+            .regex(UnicodePattern.NICKNAME_PATTERN, {
+                message: UserValidationMessage.NICKNAME_WRONG,
+            })
+            .min(UserValidationRule.NICKNAME.MIN_LENGTH, {
+                message: UserValidationMessage.NICKNAME_LENGTH,
+            })
+            .max(UserValidationRule.FULLNAME.MAX_LENGTH, {
+                message: UserValidationMessage.FULLNAME_LENGTH,
+            }),
         birthdate: z
             .string()
             .regex(
@@ -46,24 +55,27 @@ const userUpdateProfile = z
             .regex(UnicodePattern.WEIGHT_PATTERN, {
                 message: UserValidationMessage.WEIGHT_WRONG,
             })
-            .min(UserValidationRule.WEIGHT_MINIMUM_LENGTH, {
+            .min(UserValidationRule.WEIGHT.MIN_LENGTH, {
                 message: UserValidationMessage.WEIGHT_LENGTH,
             })
-            .max(UserValidationRule.WEIGHT_MAXIMUM_LENGTH, {
+            .max(UserValidationRule.WEIGHT.MAX_LENGTH, {
                 message: UserValidationMessage.WEIGHT_LENGTH,
             }),
         height: z
             .string()
-            .min(UserValidationRule.HEIGHT_MINIMUM_LENGTH, {
+            .regex(UnicodePattern.HEIGHT_PATTERN, {
+                message: UserValidationMessage.HEIGHT_WRONG,
+            })
+            .min(UserValidationRule.HEIGHT.MIN_LENGTH, {
                 message: UserValidationMessage.HEIGHT_LENGTH,
             })
-            .max(UserValidationRule.HEIGHT_MAXIMUM_LENGTH, {
+            .max(UserValidationRule.HEIGHT.MAX_LENGTH, {
                 message: UserValidationMessage.HEIGHT_LENGTH,
             }),
         gender: z.union([
-            z.literal('Male'),
-            z.literal('Female'),
-            z.literal('Prefer not to say'),
+            z.literal('male'),
+            z.literal('female'),
+            z.literal('prefer not to say'),
         ]),
     })
     .required();

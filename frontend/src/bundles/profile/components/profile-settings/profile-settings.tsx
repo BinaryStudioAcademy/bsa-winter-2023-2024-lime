@@ -3,8 +3,10 @@ import {
     ButtonSize,
     ButtonVariant,
     Input,
+    Loader,
     RadioCard,
 } from '~/bundles/common/components/components.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { Gender } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { userUpdateProfileValidationSchema } from '~/bundles/users/users.js';
@@ -14,13 +16,16 @@ import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserUpdateProfileRequestDto) => void;
+    isLoading: boolean;
 };
 
-const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
-    const { control, errors, handleSubmit } =
+const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+    const { control, errors, isDirty, isValid, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
+            mode: 'onBlur',
+            shouldUnregister: false,
         });
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -59,6 +64,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     name="fullname"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
 
                 <Input
@@ -69,6 +75,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     name="nickname"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
                 <Input
                     classname="col-start-1 col-end-3"
@@ -78,6 +85,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     name="birthdate"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
                 <Input
                     classname="col-start-3 col-end-4"
@@ -87,6 +95,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     name="weight"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
                 <Input
                     classname="col-start-4 col-end-5"
@@ -96,6 +105,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     name="height"
                     control={control}
                     errors={errors}
+                    isDisabled={isLoading}
                 />
                 <RadioCard
                     id="1"
@@ -119,8 +129,12 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit }) => {
                     control={control}
                 />
                 <Button
+                    label={isLoading ? '' : 'Save'}
+                    leftIcon={
+                        isLoading && <Loader color={IconColor.SECONDARY} />
+                    }
                     type="submit"
-                    label="Save"
+                    isDisabled={!isDirty || !isValid}
                     variant={ButtonVariant.PRIMARY}
                     size={ButtonSize.MEDIUM}
                 />
