@@ -7,80 +7,78 @@ class UserEntity implements Entity {
 
     private 'passwordHash': string;
 
-    private 'passwordSalt': string;
+    private 'fullName': string | null;
 
     private constructor({
         id,
         email,
         passwordHash,
-        passwordSalt,
+        fullName,
     }: {
         id: number | null;
         email: string;
         passwordHash: string;
-        passwordSalt: string;
+        fullName: string | null;
     }) {
         this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
+        this.fullName = fullName;
     }
 
     public static initialize({
         id,
         email,
         passwordHash,
-        passwordSalt,
+        fullName,
     }: {
         id: number;
         email: string;
         passwordHash: string;
-        passwordSalt: string;
+        fullName: string | null;
     }): UserEntity {
         return new UserEntity({
             id,
             email,
             passwordHash,
-            passwordSalt,
+            fullName,
         });
     }
 
     public static initializeNew({
         email,
         passwordHash,
-        passwordSalt,
     }: {
         email: string;
         passwordHash: string;
-        passwordSalt: string;
     }): UserEntity {
         return new UserEntity({
             id: null,
             email,
             passwordHash,
-            passwordSalt,
+            fullName: null,
         });
     }
 
     public toObject(): {
         id: number;
         email: string;
+        fullName: string | null;
     } {
         return {
             id: this.id as number,
             email: this.email,
+            fullName: this.fullName,
         };
     }
 
     public toNewObject(): {
         email: string;
         passwordHash: string;
-        passwordSalt: string;
     } {
         return {
             email: this.email,
             passwordHash: this.passwordHash,
-            passwordSalt: this.passwordSalt,
         };
     }
 }

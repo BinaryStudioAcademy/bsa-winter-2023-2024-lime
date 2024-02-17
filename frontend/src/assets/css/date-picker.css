@@ -1,0 +1,65 @@
+@import url("react-multi-date-picker/styles/layouts/mobile.css");
+
+.custom-date-picker {
+    @apply -top-10 h-full w-full;
+}
+
+.custom-date-picker .ep-arrow {
+    @apply hidden;
+}
+
+.custom-date-picker .rmdp-arrow-container {
+    @apply hover:bg-lm-yellow-100 hover:bg-opacity-0 hover:shadow-none;
+}
+
+.custom-date-picker .rmdp-arrow-container .rmdp-arrow {
+    @apply border-lm-yellow-100 mt-1.5 text-white hover:border-white;
+}
+
+.custom-date-picker .rmdp-header {
+    @apply mb-2;
+}
+
+.custom-date-picker .rmdp-header-values {
+    @apply text-lm-yellow-100;
+}
+
+.custom-date-picker .rmdp-header-values span {
+    @apply text-lm-yellow-100 hover:opacity-90;
+}
+
+.custom-date-picker .rmdp-week .rmdp-week-day {
+    @apply text-lm-yellow-100;
+}
+
+.custom-date-picker .rmdp-calendar {
+    @apply bg-lm-black-100 rounded-md;
+}
+
+.custom-date-picker .rmdp-day.rmdp-today span {
+    @apply bg-lm-yellow-100 text-lm-black-100 bg-opacity-70 font-bold;
+}
+
+.custom-date-picker .rmdp-ym .rmdp-day > span {
+    @apply hover:bg-lm-yellow-100 hover:text-lm-black-100 text-[0.625rem] font-bold text-white;
+}
+
+.custom-date-picker .rmdp-day.rmdp-selected span:not(.highlight) {
+    @apply text-lm-black-300 bg-lm-yellow-100 font-bold shadow-none;
+}
+
+.custom-date-picker .rmdp-day .sd {
+    @apply hover:bg-lm-yellow-100 hover:text-lm-black-100 text-white;
+}
+
+.custom-date-picker .rmdp-day-picker {
+    @apply bg-lm-black-200 rounded-md;
+}
+
+.custom-date-picker .rmdp-month-picker {
+    @apply bg-lm-black-200;
+}
+
+.custom-date-picker .rmdp-year-picker {
+    @apply bg-lm-black-200;
+}

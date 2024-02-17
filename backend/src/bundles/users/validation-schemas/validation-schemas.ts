@@ -1,5 +1,4 @@
 export {
-    userSignInValidationSchema,
-    userSignUpValidationSchema,
+    userAuthValidationSchema,
     userUpdateProfileValidationSchema,
 } from 'shared';
