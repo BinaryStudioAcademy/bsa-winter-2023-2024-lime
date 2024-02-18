@@ -4,11 +4,13 @@ import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type PasswordForgotRequestDto,
     type PasswordForgotResponseDto,
+    type PasswordResetRequestDto,
+    type PasswordResetResponseDto,
 } from '~/bundles/password-reset/types/types.js';
 
 import { name as sliceName } from './slice.js';
 
-const passwordForgot = createAsyncThunk<
+const forgotPassword = createAsyncThunk<
     PasswordForgotResponseDto,
     PasswordForgotRequestDto,
     AsyncThunkConfig
@@ -17,4 +19,13 @@ const passwordForgot = createAsyncThunk<
     return await passwordResetApi.forgotPassword(passwordForgotPayload);
 });
 
-export { passwordForgot };
+const resetPassword = createAsyncThunk<
+    PasswordResetResponseDto,
+    PasswordResetRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/reset-password`, async (passwordResetPayload, { extra }) => {
+    const { passwordResetApi } = extra;
+    return await passwordResetApi.resetPassword(passwordResetPayload);
+});
+
+export { forgotPassword, resetPassword };

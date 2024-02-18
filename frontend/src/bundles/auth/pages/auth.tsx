@@ -12,17 +12,30 @@ import {
     useEffect,
     useLocation,
     useNavigate,
+    useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import { type PasswordForgotRequestDto } from '~/bundles/password-reset/types/types.js';
 import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 
-import { SignInForm, SignUpForm } from '../components/components.js';
+import {
+    PasswordForgotSuccessMessage,
+    SignInForm,
+    SignUpForm,
+} from '../components/components.js';
 import { actions as authActions } from '../store/auth.js';
 
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
+
+    const { pathname } = useLocation();
+
+    const navigate = useNavigate();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [isPasswordForgot, setIsPasswordForgot] = useState(false);
+
     const { dataStatus } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
     }));
@@ -33,12 +46,11 @@ const Auth: React.FC = () => {
         }),
     );
 
-    const isLoading = dataStatus === DataStatus.PENDING;
-    const [isOpen, setIsOpen] = useState(false);
-    const [isPasswordForgot, setIsPasswordForgot] = useState(false);
+    const isLoading =
+        dataStatus === DataStatus.PENDING ||
+        resetPasswordStatus === DataStatus.PENDING;
 
-    const { pathname } = useLocation();
-    const navigate = useNavigate();
+    const intervalReference = useRef(0);
 
     const handleSignInSubmit = useCallback(
         (payload: UserAuthRequestDto): void => {
@@ -56,7 +68,7 @@ const Auth: React.FC = () => {
 
     const handleForgotPassword = useCallback(
         (payload: PasswordForgotRequestDto): void => {
-            void dispatch(passwordResetActions.passwordForgot(payload));
+            void dispatch(passwordResetActions.forgotPassword(payload));
         },
         [dispatch],
     );
@@ -68,6 +80,7 @@ const Auth: React.FC = () => {
     const handleCloseModal = useCallback((): void => {
         void setIsOpen(false);
         void setIsPasswordForgot(false);
+        clearInterval(intervalReference.current);
     }, []);
 
     useEffect(() => {
@@ -79,11 +92,17 @@ const Auth: React.FC = () => {
     useEffect(() => {
         if (resetPasswordStatus === DataStatus.FULFILLED) {
             setIsPasswordForgot(true);
-            setTimeout(() => {
+            const intervalId = window.setTimeout(() => {
                 setIsPasswordForgot(false);
                 setIsOpen(false);
             }, 5000);
+
+            intervalReference.current = intervalId;
         }
+        return () => {
+            setIsPasswordForgot(false);
+            clearInterval(intervalReference.current);
+        };
     }, [navigate, resetPasswordStatus]);
 
     const getScreen = (screen: string): React.ReactNode => {
@@ -124,16 +143,12 @@ const Auth: React.FC = () => {
                 onClose={handleCloseModal}
             >
                 {isPasswordForgot ? (
-                    <p className="text-xl leading-7 text-white">
-                        Link for password reset was sent to your email. Check
-                        your inbox letters and follow the instructions. If you
-                        don’t see the email, please check your spam folder
-                    </p>
+                    <PasswordForgotSuccessMessage />
                 ) : (
                     <ForgotPasswordForm
                         isLoading={isLoading}
                         onSubmit={handleForgotPassword}
-                        onModalClose={handleCloseModal}
+                        onCancel={handleCloseModal}
                     />
                 )}
             </Modal>

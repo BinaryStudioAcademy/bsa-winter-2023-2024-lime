@@ -71,14 +71,16 @@ const SignInForm: React.FC<Properties> = ({
                         isDisabled={isLoading}
                     />
 
-                    <Button
-                        className="text-lm-grey-200 absolute -top-1 right-0 h-[1.5rem] w-32 px-0 py-0"
-                        label="Forgot password"
-                        type="button"
-                        size={ButtonSize.SMALL}
-                        variant={ButtonVariant.TERTIARY}
-                        onClick={onModalOpen}
-                    />
+                    <div className="absolute -top-1 right-0">
+                        <Button
+                            className="h-[1.5rem] px-[0] py-[0]"
+                            label="Forgot password?"
+                            type="button"
+                            size={ButtonSize.SMALL}
+                            variant={ButtonVariant.TERTIARY}
+                            onClick={onModalOpen}
+                        />
+                    </div>
                 </div>
 
                 <Button
@@ -93,7 +95,7 @@ const SignInForm: React.FC<Properties> = ({
                 />
             </form>
             <p className="text-center text-sm font-normal leading-4">
-                No account?{' '}
+                No account?
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">
                         Go to Create an account

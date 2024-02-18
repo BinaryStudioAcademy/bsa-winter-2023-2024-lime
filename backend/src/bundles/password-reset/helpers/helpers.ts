@@ -1,1 +1,1 @@
-export { createMessage } from './create-message.js';
+export { createPasswordResetLink } from './create-password-reset-ink.js';

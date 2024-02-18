@@ -2,6 +2,8 @@ import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import {
     type PasswordForgotRequestDto,
     type PasswordForgotResponseDto,
+    type PasswordResetRequestDto,
+    type PasswordResetResponseDto,
 } from '~/bundles/password-reset/types/types.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
@@ -34,6 +36,22 @@ class PasswordResetApi extends BaseHttpApi {
         );
 
         return await response.json<PasswordForgotResponseDto>();
+    }
+
+    public async resetPassword(
+        payload: PasswordResetRequestDto,
+    ): Promise<PasswordResetResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(PasswordResetApiPath.RESET_PASSWORD, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: false,
+            },
+        );
+
+        return await response.json<PasswordResetResponseDto>();
     }
 }
 

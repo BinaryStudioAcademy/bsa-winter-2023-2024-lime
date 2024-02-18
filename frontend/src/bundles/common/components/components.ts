@@ -10,6 +10,7 @@ export { Modal } from './modal/modal.js';
 export { NotificationContainer } from './notification-container/notification-container.js';
 export { ProtectedRoute } from './protected-route/protected-route.js';
 export { Radio } from './radio/radio.js';
+export { ResetPasswordForm } from './reset-password-form/reset-password-form.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Select } from './select/select.js';
 export { Toggle } from './toggle/toggle.js';

@@ -12,6 +12,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
+import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { store } from '~/framework/store/store.js';
 
 const routes = [
@@ -32,6 +33,10 @@ const routes = [
                 element: <Auth />,
             },
         ],
+    },
+    {
+        path: AppRoute.PASSWORD_RESET,
+        element: <PasswordReset />,
     },
     {
         path: AppRoute.NOT_FOUND,

@@ -1,7 +1,4 @@
-import {
-    type PasswordForgotRequestDto,
-    passwordForgotValidationSchema,
-} from 'shared';
+import { passwordResetValidationSchema } from 'shared';
 
 import {
     Button,
@@ -11,24 +8,34 @@ import {
 } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
-import { DEFAULT_PASSWORD_FORGOT_PAYLOAD } from './constants/constants.js';
+import { DEFAULT_PASSWORD_RESET_PAYLOAD } from './constants/constants.js';
+
+type PasswordResetPayload = {
+    password: string;
+};
+
+type PasswordReset = {
+    password: string;
+    passwordConfirm: string;
+};
 
 type Properties = {
-    onSubmit: (payload: PasswordForgotRequestDto) => void;
+    onSubmit: (payload: PasswordResetPayload) => void;
     onCancel: () => void;
     isLoading: boolean;
 };
 
-const ForgotPasswordForm: React.FC<Properties> = ({
+const ResetPasswordForm: React.FC<Properties> = ({
     onSubmit,
-    onCancel,
     isLoading,
+    onCancel,
 }) => {
     const { control, errors, isDirty, isValid, handleSubmit } =
-        useAppForm<PasswordForgotRequestDto>({
-            defaultValues: DEFAULT_PASSWORD_FORGOT_PAYLOAD,
-            validationSchema: passwordForgotValidationSchema,
-            mode: 'onSubmit',
+        useAppForm<PasswordReset>({
+            defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
+            validationSchema: passwordResetValidationSchema,
+            mode: 'onBlur',
+            shouldUnregister: false,
         });
 
     const handleFormSubmit = useCallback(
@@ -47,12 +54,24 @@ const ForgotPasswordForm: React.FC<Properties> = ({
             className="text-sm font-semibold leading-3 text-white"
             onSubmit={handleFormSubmit}
         >
-            <div className="mb-8">
+            <div className="mb-4">
                 <Input
-                    type="email"
-                    label="Email"
-                    placeholder="email@gmail.com"
-                    name="email"
+                    type="password"
+                    label="New Password"
+                    placeholder="&bull;"
+                    name="password"
+                    control={control}
+                    errors={errors}
+                    isDisabled={isLoading}
+                />
+            </div>
+
+            <div className="mb-12">
+                <Input
+                    type="password"
+                    label="Confirm New Password"
+                    placeholder="&bull;"
+                    name="passwordConfirm"
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
@@ -65,7 +84,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
                     label="Send"
                     variant={ButtonVariant.PRIMARY}
                     size={ButtonSize.MEDIUM}
-                    isDisabled={!isDirty || !isValid || isLoading}
+                    isDisabled={!isDirty || !isValid}
                 />
                 <Button
                     type="button"
@@ -79,4 +98,4 @@ const ForgotPasswordForm: React.FC<Properties> = ({
     );
 };
 
-export { ForgotPasswordForm };
+export { ResetPasswordForm };

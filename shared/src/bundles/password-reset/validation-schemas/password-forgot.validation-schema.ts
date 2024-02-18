@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-import { UserValidationMessage, UserValidationRule } from '../enums/enums.js';
+import {
+    UserValidationMessage,
+    UserValidationRule,
+} from '../../users/enums/enums.js';
 
 type PasswordForgotRequestValidationDto = {
     email: z.ZodString;

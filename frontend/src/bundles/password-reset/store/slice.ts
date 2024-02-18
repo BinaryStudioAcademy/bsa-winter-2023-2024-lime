@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { passwordForgot } from './actions.js';
+import { forgotPassword, resetPassword } from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
@@ -18,13 +18,22 @@ const { reducer, actions, name } = createSlice({
     name: 'password-reset',
     reducers: {},
     extraReducers(builder) {
-        builder.addCase(passwordForgot.pending, (state) => {
+        builder.addCase(forgotPassword.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;
         });
-        builder.addCase(passwordForgot.fulfilled, (state) => {
+        builder.addCase(forgotPassword.fulfilled, (state) => {
             state.dataStatus = DataStatus.FULFILLED;
         });
-        builder.addCase(passwordForgot.rejected, (state) => {
+        builder.addCase(forgotPassword.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(resetPassword.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(resetPassword.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(resetPassword.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

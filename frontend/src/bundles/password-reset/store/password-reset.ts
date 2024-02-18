@@ -1,9 +1,10 @@
-import { passwordForgot } from './actions.js';
+import { forgotPassword, resetPassword } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
-    passwordForgot,
+    forgotPassword,
+    resetPassword,
 };
 
 export { allActions as actions };

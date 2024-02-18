@@ -3,9 +3,14 @@ import {
     type PasswordForgotResponseDto,
     type PasswordResetRequestDto,
     type PasswordResetResponseDto,
+    createPasswordResetLink,
 } from '~/bundles/password-reset/password-reset.js';
 import { type UserModel, type UserService } from '~/bundles/users/users.js';
-import { cryptService, jwtService } from '~/common/services/services.js';
+import {
+    cryptService,
+    emailService,
+    jwtService,
+} from '~/common/services/services.js';
 
 import {
     HttpCode,
@@ -39,11 +44,18 @@ class PasswordResetService {
             user.passwordHash,
         );
 
-        const link = `http://localhost:3000/reset-password/${user.id}/${token}`;
+        const link = createPasswordResetLink({ userId: user.id, token });
 
-        // await emailService.sendRestorePassword(user.email);
+        try {
+            await emailService.sendRestorePassword(user.email, link);
+        } catch {
+            throw new HttpError({
+                message: PasswordResetValidationMessage.EMAIL_NOT_SENT,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
 
-        return { message: link };
+        return { message: 'Link for password reset was sent to your email.' };
     }
 
     public async resetPassword(
@@ -68,6 +80,18 @@ class PasswordResetService {
         } catch {
             throw new HttpError({
                 message: PasswordResetValidationMessage.TOKEN_EXPIRED,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        const existPassword = cryptService.compareSyncPassword(
+            passwordResetRequestDto.password,
+            user.passwordHash,
+        );
+
+        if (existPassword) {
+            throw new HttpError({
+                message: PasswordResetValidationMessage.SAME_PASSWORD,
                 status: HttpCode.BAD_REQUEST,
             });
         }

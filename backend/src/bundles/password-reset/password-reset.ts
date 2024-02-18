@@ -18,4 +18,4 @@ export {
     type PasswordResetResponseDto,
 } from './types/types.js';
 export { passwordResetController, passwordResetService };
-export { createMessage } from './helpers/helpers.js';
+export { createPasswordResetLink } from './helpers/helpers.js';
