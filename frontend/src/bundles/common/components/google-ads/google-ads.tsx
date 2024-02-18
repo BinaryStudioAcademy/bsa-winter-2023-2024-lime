@@ -4,12 +4,8 @@ type GoogleAdsProperties = {
 
 const GoogleAds: React.FC<GoogleAdsProperties> = ({ children }) => {
     return (
-        <div className="bg-lm-yellow-200 flex w-full flex-wrap items-center justify-center">
-            {children || (
-                <p className="text-lm-black-300 text-center">
-                    Your advertisement may be here
-                </p>
-            )}
+        <div className="bg-lm-black-100 bg-rectangle font-manrope text-24 leading-33 flex w-full flex-wrap items-center justify-center rounded-lg text-center font-extrabold text-gray-700">
+            {children || <p className="m-2">Your advertisement may be here</p>}
         </div>
     );
 };
