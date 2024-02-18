@@ -46,9 +46,9 @@ const Auth: React.FC = () => {
         }),
     );
 
-    const isLoading =
-        dataStatus === DataStatus.PENDING ||
-        resetPasswordStatus === DataStatus.PENDING;
+    const isLoading = dataStatus === DataStatus.PENDING;
+
+    const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
 
     const intervalReference = useRef(0);
 
@@ -146,7 +146,7 @@ const Auth: React.FC = () => {
                     <PasswordForgotSuccessMessage />
                 ) : (
                     <ForgotPasswordForm
-                        isLoading={isLoading}
+                        isLoading={isResetPasswordLoading}
                         onSubmit={handleForgotPassword}
                         onCancel={handleCloseModal}
                     />
