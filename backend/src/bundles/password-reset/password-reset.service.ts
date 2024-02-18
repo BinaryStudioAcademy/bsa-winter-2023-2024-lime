@@ -84,6 +84,17 @@ class PasswordResetService {
             });
         }
 
+        if (
+            passwordResetRequestDto.password.localeCompare(
+                passwordResetRequestDto.passwordConfirm,
+            ) != 0
+        ) {
+            throw new HttpError({
+                message: PasswordResetValidationMessage.PASSWORDS_NOT_EQUAL,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
         const existPassword = cryptService.compareSyncPassword(
             passwordResetRequestDto.password,
             user.passwordHash,

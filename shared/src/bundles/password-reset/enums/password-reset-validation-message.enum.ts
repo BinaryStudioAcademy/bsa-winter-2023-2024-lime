@@ -4,6 +4,7 @@ const PasswordResetValidationMessage = {
     SAME_PASSWORD: 'The password should differ from previous',
     SERVER_ERROR: 'Something went wrong',
     EMAIL_NOT_SENT: 'Something went wrong. Email has not sent',
+    PASSWORDS_NOT_EQUAL: 'Passwords are not equal',
 } as const;
 
 export { PasswordResetValidationMessage };

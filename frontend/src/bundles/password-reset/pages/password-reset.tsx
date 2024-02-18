@@ -12,13 +12,12 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
-import { type PasswordResetRequestDto } from '~/bundles/password-reset/types/types.js';
+import {
+    type PasswordResetPayload,
+    type PasswordResetRequestDto,
+} from '~/bundles/password-reset/types/types.js';
 
 import { PasswordResetSuccessMessage } from '../components/components.js';
-
-type PasswordResetPayload = {
-    password: string;
-};
 
 const PasswordReset: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -35,14 +34,14 @@ const PasswordReset: React.FC = () => {
 
     const handleResetPassword = useCallback(
         (payload: PasswordResetPayload): void => {
-            const resetPasswordPayload = {
+            const resetPayload = {
                 id: Number(userId),
                 token: resetToken,
-                password: payload.password,
+                ...payload,
             };
             void dispatch(
                 passwordResetActions.resetPassword(
-                    resetPasswordPayload as PasswordResetRequestDto,
+                    resetPayload as PasswordResetRequestDto,
                 ),
             );
         },

@@ -7,17 +7,9 @@ import {
     Input,
 } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import { type PasswordResetPayload } from '~/bundles/password-reset/types/types.js';
 
 import { DEFAULT_PASSWORD_RESET_PAYLOAD } from './constants/constants.js';
-
-type PasswordResetPayload = {
-    password: string;
-};
-
-type PasswordReset = {
-    password: string;
-    passwordConfirm: string;
-};
 
 type Properties = {
     onSubmit: (payload: PasswordResetPayload) => void;
@@ -31,7 +23,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
     onCancel,
 }) => {
     const { control, errors, isDirty, isValid, handleSubmit } =
-        useAppForm<PasswordReset>({
+        useAppForm<PasswordResetPayload>({
             defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
             validationSchema: passwordResetValidationSchema,
             mode: 'onBlur',
