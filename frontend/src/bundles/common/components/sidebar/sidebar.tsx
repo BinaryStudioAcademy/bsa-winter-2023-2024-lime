@@ -7,6 +7,7 @@ import {
 import { AppRoute } from '../../enums/app-route.enum.js';
 import { getValidClassNames } from '../../helpers/helpers.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
+import { icons } from './enums/enums.js';
 
 type Properties = {
     isOpen?: boolean;
@@ -18,21 +19,16 @@ const styles = {
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const icons = {
-    OVERVIEW: 'overviewIcon',
-    GOALS: 'goalsIcon',
-    WORKOUT: 'workoutIcon',
-    HELP: 'helpIcon',
-    SCHEDULE: 'scheduleIcon',
-    LOGOUT: 'logoutIcon',
-} as const;
-
 const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     const { pathname } = useLocation();
 
-    const [activeRoute] = useState(pathname);
+    const [activeRoute, setActiveRoute] = useState(pathname);
 
     const [sidebarStyle, setSidebarStyle] = useState({});
+
+    useEffect(() => {
+        setActiveRoute(pathname);
+    }, [pathname]);
 
     useEffect(() => {
         isOpen
