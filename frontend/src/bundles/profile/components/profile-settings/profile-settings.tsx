@@ -20,7 +20,7 @@ type Properties = {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const { control, errors, isDirty, isValid, handleSubmit } =
+    const { control, errors, isDirty, isValid, handleSubmit, reset } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
@@ -33,6 +33,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         },
         [handleSubmit, onSubmit],
     );
+
+    const handleCancel = useCallback((): void => {
+        void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
+    }, [reset]);
+
     return (
         <div className="bg-lm-black-100 w-[874px] px-12 pl-[52px] pr-[78px] pt-[48px]">
             <div className="flex items-center pb-[47px]">
@@ -57,7 +62,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 onSubmit={handleFormSubmit}
             >
                 <Input
-                    classname="col-start-1 col-end-3"
+                    className="col-start-1 col-end-3"
                     type="text"
                     label="Full Name"
                     placeholder="John Doe"
@@ -68,7 +73,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
 
                 <Input
-                    classname="col-start-3 col-end-5"
+                    className="col-start-3 col-end-5"
                     type="text"
                     label="Nickname"
                     placeholder="MyNickname2024"
@@ -78,7 +83,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
                 <Input
-                    classname="col-start-1 col-end-3"
+                    className="col-start-1 col-end-3"
                     type="text"
                     label="Date of birth"
                     placeholder="DD/MM/YYYY"
@@ -88,7 +93,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
                 <Input
-                    classname="col-start-3 col-end-4"
+                    className="col-start-3 col-end-4"
                     type="text"
                     label="Weight"
                     placeholder="0 kg"
@@ -98,7 +103,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
                 <Input
-                    classname="col-start-4 col-end-5"
+                    className="col-start-4 col-end-5"
                     type="text"
                     label="Height"
                     placeholder="0 sm"
@@ -128,16 +133,36 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     value={Gender.OTHER}
                     control={control}
                 />
-                <Button
-                    label={isLoading ? '' : 'Save'}
-                    leftIcon={
-                        isLoading && <Loader color={IconColor.SECONDARY} />
-                    }
-                    type="submit"
-                    isDisabled={!isDirty || !isValid}
-                    variant={ButtonVariant.PRIMARY}
-                    size={ButtonSize.MEDIUM}
-                />
+                <ul className="col-start-3 col-end-5 row-start-4 mt-6 flex">
+                    <li className="mr-6 w-full">
+                        <Button
+                            label={isLoading ? '' : 'Cancel'}
+                            leftIcon={
+                                isLoading && (
+                                    <Loader color={IconColor.SECONDARY} />
+                                )
+                            }
+                            onClick={handleCancel}
+                            isDisabled={!isDirty || isLoading}
+                            variant={ButtonVariant.SECONDARY}
+                            size={ButtonSize.MEDIUM}
+                        />
+                    </li>
+                    <li className="w-full">
+                        <Button
+                            label={isLoading ? '' : 'Save'}
+                            leftIcon={
+                                isLoading && (
+                                    <Loader color={IconColor.SECONDARY} />
+                                )
+                            }
+                            type="submit"
+                            isDisabled={!isDirty || !isValid}
+                            variant={ButtonVariant.PRIMARY}
+                            size={ButtonSize.MEDIUM}
+                        />
+                    </li>
+                </ul>
             </form>
         </div>
     );

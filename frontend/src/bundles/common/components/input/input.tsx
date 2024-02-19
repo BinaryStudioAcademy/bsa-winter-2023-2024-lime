@@ -14,7 +14,7 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 
 type Properties<T extends FieldValues> = {
-    classname?: string;
+    className?: string;
     control: Control<T, null>;
     errors: FieldErrors<T>;
     label: string;
@@ -26,7 +26,7 @@ type Properties<T extends FieldValues> = {
 };
 
 const Input = <T extends FieldValues>({
-    classname = '',
+    className = '',
     control,
     errors,
     label,
@@ -52,7 +52,7 @@ const Input = <T extends FieldValues>({
     };
 
     return (
-        <label className={`${classname} flex h-20 flex-col text-sm text-white`}>
+        <label className={`${className} flex h-20 flex-col text-sm text-white`}>
             <span className="font-medium">{label}</span>
             <div className="relative">
                 <input

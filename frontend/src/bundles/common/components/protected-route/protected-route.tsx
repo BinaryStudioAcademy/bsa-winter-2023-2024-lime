@@ -13,7 +13,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProperties> = ({ children }) => {
     const userAuthenticated = useAppSelector(
         (state: AsyncThunkConfig['state']) => state.auth.user,
     );
-    if (Object.keys(userAuthenticated).length === 0) {
+    if (!userAuthenticated) {
         return <Navigate to={AppRoute.SIGN_IN} />;
     }
 

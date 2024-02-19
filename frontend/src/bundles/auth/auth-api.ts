@@ -1,10 +1,13 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthRequestDto,
+    type UserUpdateProfileRequestDto,
+} from '~/bundles/users/users.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
-import { type AuthResponseDto } from './auth.js';
+import { type AuthResponseDto, type UserAuthResponseDto } from './auth.js';
 import { AuthApiPath } from './enums/enums.js';
 
 type Constructor = {
@@ -43,6 +46,21 @@ class AuthApi extends BaseHttpApi {
         );
 
         return await response.json<AuthResponseDto>();
+    }
+    public async updateUser(
+        payload: UserUpdateProfileRequestDto,
+    ): Promise<UserAuthResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(AuthApiPath.UPDATE_USER, {}),
+            {
+                method: 'PATCH',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<UserAuthResponseDto>();
     }
 }
 

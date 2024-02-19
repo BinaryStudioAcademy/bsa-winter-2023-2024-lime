@@ -4,6 +4,7 @@ export { type RouteObject as LibraryRouteObject } from 'react-router-dom';
 export {
     type ServerErrorDetail,
     type ServerErrorResponse,
+    type UserAuthResponseDto,
     type ValidationSchema,
     type ValueOf,
 } from 'shared';
