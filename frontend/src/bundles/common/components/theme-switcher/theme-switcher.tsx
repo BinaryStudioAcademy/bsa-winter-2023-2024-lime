@@ -1,24 +1,28 @@
 import { useCallback, useDarkTheme, useState } from '../../hooks/hooks.js';
+import { Loader } from '../components.js';
 import { Switch } from './components/switch.js';
 
-function Switcher(): JSX.Element {
-    const [colorTheme, setTheme] = useDarkTheme();
+function ThemeSwitcher(): JSX.Element {
+    const [colorTheme, setTheme, loading] = useDarkTheme();
     const [darkSide, setDarkSide] = useState<boolean>(
         colorTheme === 'dark' ? true : false,
-    );
-
+    );    
     const toggleDarkMode = useCallback(
         (checked: boolean) => {
-            const newTheme = checked ? 'dark' : 'light';
+            const newTheme = checked ?  'light' : 'dark';            
             setTheme(newTheme);
             setDarkSide(checked);
         },
         [setTheme],
     );
 
+    if (loading) {
+        return <Loader/>;
+    }
+
     return (
         <>
-            <div>
+            <div className='absolute bottom-0 right-0'>
                 <Switch
                     checked={darkSide}
                     onChange={toggleDarkMode}
@@ -29,4 +33,4 @@ function Switcher(): JSX.Element {
     );
 }
 
-export { Switcher };
+export { ThemeSwitcher };
