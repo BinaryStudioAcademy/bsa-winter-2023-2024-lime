@@ -1,0 +1,9 @@
+{
+    "group-pull-request-title-pattern": "release: ${version}",
+    "packages": {
+        ".": {
+            "release-type": "node",
+            "include-component-in-tag": false
+        }
+    }
+}
