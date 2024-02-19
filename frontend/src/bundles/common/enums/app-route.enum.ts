@@ -2,7 +2,7 @@ const AppRoute = {
     ROOT: '/',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
-    PASSWORD_RESET: '/reset-password/:userId/:resetToken',
+    PASSWORD_RESET: '/reset-password/:resetToken',
     NOT_FOUND: '*',
 } as const;
 

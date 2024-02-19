@@ -1,3 +1,4 @@
+import { HttpCode, HttpError } from '~/bundles/auth/enums/enums.js';
 import {
     type PasswordForgotRequestDto,
     type PasswordForgotResponseDto,
@@ -12,11 +13,7 @@ import {
     jwtService,
 } from '~/common/services/services.js';
 
-import {
-    HttpCode,
-    HttpError,
-    PasswordResetValidationMessage,
-} from './enums/enums.js';
+import { PasswordResetValidationMessage } from './enums/enums.js';
 
 class PasswordResetService {
     private userService: UserService;
@@ -26,10 +23,11 @@ class PasswordResetService {
 
     public async forgotPassword(
         passwordForgotRequestDto: PasswordForgotRequestDto,
+        origin: string,
     ): Promise<PasswordForgotResponseDto> {
         const user = (await this.userService.find({
             email: passwordForgotRequestDto.email,
-        })) as UserModel;
+        })) as unknown as UserModel;
 
         if (!user) {
             throw new HttpError({
@@ -44,7 +42,7 @@ class PasswordResetService {
             user.passwordHash,
         );
 
-        const link = createPasswordResetLink({ userId: user.id, token });
+        const link = createPasswordResetLink({ origin, token });
 
         try {
             await emailService.sendRestorePassword(user.email, link);
@@ -63,7 +61,7 @@ class PasswordResetService {
     ): Promise<PasswordResetResponseDto> {
         const user = (await this.userService.find({
             id: passwordResetRequestDto.id,
-        })) as UserModel;
+        })) as unknown as UserModel;
 
         if (!user) {
             throw new HttpError({
@@ -85,9 +83,8 @@ class PasswordResetService {
         }
 
         if (
-            passwordResetRequestDto.password.localeCompare(
-                passwordResetRequestDto.passwordConfirm,
-            ) != 0
+            passwordResetRequestDto.password !==
+            passwordResetRequestDto.passwordConfirm
         ) {
             throw new HttpError({
                 message: PasswordResetValidationMessage.PASSWORDS_NOT_EQUAL,

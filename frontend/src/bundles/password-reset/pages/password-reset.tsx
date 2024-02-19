@@ -1,7 +1,10 @@
 import authLogo from '~/assets/img/auth-logo.svg';
 import { ResetPasswordForm } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
-import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import {
+    getUserId,
+    getValidClassNames,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -22,7 +25,8 @@ import { PasswordResetSuccessMessage } from '../components/components.js';
 const PasswordReset: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { userId, resetToken } = useParams();
+    const { resetToken } = useParams();
+    const { userId } = getUserId(resetToken as string);
 
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
