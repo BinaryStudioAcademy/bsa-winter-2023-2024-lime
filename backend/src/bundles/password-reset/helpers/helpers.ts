@@ -1,1 +1,1 @@
-export { createPasswordResetLink } from './create-password-reset-ink.js';
+export { createPasswordResetLink } from './create-password-reset-link.js';

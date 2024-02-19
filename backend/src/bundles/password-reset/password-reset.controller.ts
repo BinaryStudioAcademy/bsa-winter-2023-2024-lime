@@ -30,7 +30,6 @@ class PasswordResetController extends BaseController {
         this.addRoute({
             path: PasswordResetApiPath.FORGOT_PASSWORD,
             method: 'POST',
-            isPublic: true,
             validation: {
                 body: passwordForgotValidationSchema,
             },
@@ -38,13 +37,13 @@ class PasswordResetController extends BaseController {
                 this.forgotPassword(
                     options as ApiHandlerOptions<{
                         body: PasswordForgotRequestDto;
+                        origin: string;
                     }>,
                 ),
         });
         this.addRoute({
             path: PasswordResetApiPath.RESET_PASSWORD,
             method: 'POST',
-            isPublic: true,
             validation: {
                 body: passwordResetValidationSchema,
             },
@@ -57,18 +56,81 @@ class PasswordResetController extends BaseController {
         });
     }
 
+    /**
+     * @swagger
+     * /auth/forgot-password:
+     *    post:
+     *      description: Request link for password reset
+     *      requestBody:
+     *        description: Password forgot data
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                email:
+     *                  type: string
+     *                  format: email
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  message:
+     *                    type: object
+     */
+
     private async forgotPassword(
         options: ApiHandlerOptions<{
             body: PasswordForgotRequestDto;
+            origin: string;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             status: HttpCode.OK,
             payload: await this.passwordResetService.forgotPassword(
                 options.body,
+                options.origin,
             ),
         };
     }
+
+    /**
+     * @swagger
+     * /auth/reset-password:
+     *    post:
+     *      description: Password reset
+     *      requestBody:
+     *        description: Password reset data
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                id:
+     *                  type: number
+     *                token:
+     *                  type: string
+     *                password:
+     *                  type: string
+     *                passwordConfirm:
+     *                  type: string
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  message:
+     *                    type: object
+     */
 
     private async resetPassword(
         options: ApiHandlerOptions<{
@@ -82,37 +144,6 @@ class PasswordResetController extends BaseController {
             ),
         };
     }
-
-    /**
-     * @swagger
-     * /auth/sign-up:
-     *    post:
-     *      description: Sign up user into the application
-     *      requestBody:
-     *        description: User auth data
-     *        required: true
-     *        content:
-     *          application/json:
-     *            schema:
-     *              type: object
-     *              properties:
-     *                email:
-     *                  type: string
-     *                  format: email
-     *                password:
-     *                  type: string
-     *      responses:
-     *        201:
-     *          description: Successful operation
-     *          content:
-     *            application/json:
-     *              schema:
-     *                type: object
-     *                properties:
-     *                  message:
-     *                    type: object
-     *                    $ref: '#/components/schemas/User'
-     */
 }
 
 export { PasswordResetController };
