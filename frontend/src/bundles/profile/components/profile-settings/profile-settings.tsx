@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Button,
     ButtonSize,
     ButtonVariant,
@@ -41,20 +42,14 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <div className="bg-lm-black-100 w-[874px] px-12 pl-[52px] pr-[78px] pt-[48px]">
             <div className="flex items-center pb-[47px]">
-                <div className="bg-lm-yellow-100/90 relative flex h-20 w-20 items-center justify-center rounded-full">
-                    <img
-                        src="https://www.w3schools.com/howto/img_avatar.png"
-                        alt="avatar"
-                        className="border-3 h-full w-full rounded-full border-gray-500 object-cover"
-                    />
-                </div>
+                <Avatar size="lg" />
 
                 <Button
-                    className="w-120 ml-[13px] h-[38px] rounded-[20px]"
+                    className="ml-[13px] h-[38px] w-[120px] rounded-[20px]"
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
-                    size={ButtonSize.MEDIUM}
+                    size={ButtonSize.SMALL}
                 />
             </div>
             <form
