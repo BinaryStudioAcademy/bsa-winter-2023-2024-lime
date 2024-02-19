@@ -79,7 +79,11 @@ const Input = <T extends FieldValues>({
                     </div>
                 )}
             </div>
-            {hasError && <span className={ThemeCompose.ERROR.TEXT}>{error as string}</span>}
+            {hasError && (
+                <span className={ThemeCompose.ERROR.TEXT}>
+                    {error as string}
+                </span>
+            )}
         </label>
     );
 };

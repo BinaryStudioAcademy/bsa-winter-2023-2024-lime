@@ -1,5 +1,9 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import { AppRoute, DataStatus, ThemeCompose } from '~/bundles/common/enums/enums.js';
+import {
+    AppRoute,
+    DataStatus,
+    ThemeCompose,
+} from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,

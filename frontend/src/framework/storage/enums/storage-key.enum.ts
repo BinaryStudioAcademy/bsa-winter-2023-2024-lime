@@ -1,6 +1,6 @@
 const StorageKey = {
     TOKEN: 'token',
-    THEME: 'theme'
+    THEME: 'theme',
 } as const;
 
 export { StorageKey };
