@@ -3,7 +3,7 @@
     "type": "module",
     "engines": {
         "node": "18.x.x",
-        "npm": "9.x.x"
+        "npm": ">=9.x.x"
     },
     "scripts": {
         "lint:type": "npx tsc --noEmit",

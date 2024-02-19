@@ -1,1 +1,1 @@
-export { userAuth } from './user-auth.validation-schema.js';
+export { userAuth, userAuthPWConfirm } from './user-auth.validation-schema.js';
