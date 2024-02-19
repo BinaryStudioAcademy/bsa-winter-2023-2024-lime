@@ -6,7 +6,6 @@ import {
     Link,
     Loader,
 } from '~/bundles/common/components/components.js';
-import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
@@ -22,12 +21,10 @@ type Properties = {
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const { control, errors, isDirty, isValid, handleSubmit } =
+    const { control, errors, isValid, handleSubmit } =
         useAppForm<UserAuthRequestDto>({
             defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
             validationSchema: userAuthValidationSchema,
-            mode: 'onBlur',
-            shouldUnregister: false,
         });
 
     const handleFormSubmit = useCallback(
@@ -39,43 +36,40 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <h1 className="text-center text-3xl font-bold leading-8">
+            <h1 className="text-center text-[1.88rem] font-bold text-slate-50">
                 Hi! Login to your Account
             </h1>
-            <form
-                onSubmit={handleFormSubmit}
-                className="text-sm font-semibold leading-3"
-            >
+            <form onSubmit={handleFormSubmit}>
                 <Input
+                    type="email"
+                    label="Email"
+                    placeholder="email@gmail.com"
+                    name="email"
                     control={control}
                     errors={errors}
-                    placeholder="email@gmail.com"
-                    label="Email"
-                    name="email"
-                    type="text"
                     isDisabled={isLoading}
                 />
                 <Input
-                    control={control}
-                    errors={errors}
-                    placeholder="&bull;"
+                    type="password"
                     label="Password"
                     name="password"
-                    type="password"
+                    control={control}
+                    errors={errors}
                     isDisabled={isLoading}
                 />
-                <Button
-                    label={isLoading ? '' : 'Log In'}
-                    leftIcon={
-                        isLoading && <Loader color={IconColor.SECONDARY} />
-                    }
-                    type="submit"
-                    isDisabled={!isDirty || !isValid || isLoading}
-                    size={ButtonSize.MEDIUM}
-                    variant={ButtonVariant.PRIMARY}
-                />
+
+                <div className="mt-3">
+                    <Button
+                        type="submit"
+                        label={isLoading ? '' : 'Log In'}
+                        variant={ButtonVariant.PRIMARY}
+                        size={ButtonSize.MEDIUM}
+                        isDisabled={!isValid || isLoading}
+                        leftIcon={isLoading && <Loader />}
+                    />
+                </div>
             </form>
-            <p className="text-center text-sm font-normal leading-4">
+            <p className="text-center text-sm">
                 No account?{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">
