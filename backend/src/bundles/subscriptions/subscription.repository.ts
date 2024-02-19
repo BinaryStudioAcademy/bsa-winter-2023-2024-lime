@@ -1,55 +1,44 @@
-import { type Repository } from '~/common/types/types.js';
+import { type Repository } from '~/common/types/repository.type.js';
 
-import { SubscriptionsEntity } from './subscription.entity.js';
-import { type SubscriptionsModel } from './subscription.model.js';
+import { SubscriptionEntity } from './subscription.entity.js';
+import { type SubscriptionModel } from './subscription.model.js';
 
-class PlanRepository implements Repository {
-    private planModel: typeof SubscriptionsModel;
+class SubscriptionRepository
+    implements Omit<Repository, 'find' | 'findAll' | 'update' | 'delete'>
+{
+    private subscriptionModel: typeof SubscriptionModel;
 
-    public constructor(planModel: typeof SubscriptionsModel) {
-        this.planModel = planModel;
-    }
-
-    public async find(
-        query: Record<string, unknown>,
-    ): ReturnType<Repository['find']> {
-        return await this.planModel.query().findOne(query);
-    }
-
-    public async findAll(): Promise<SubscriptionsEntity[]> {
-        const subscriptions = await this.planModel.query().execute();
-
-        return subscriptions.map((subscription) => {
-            return SubscriptionsEntity.initialize({ ...subscription });
-        });
+    public constructor(subscriptionModel: typeof SubscriptionModel) {
+        this.subscriptionModel = subscriptionModel;
     }
 
     public async create(
-        entity: SubscriptionsEntity,
-    ): Promise<SubscriptionsEntity> {
-        const { name, description, productToken, priceToken } =
-            entity.toNewObject();
-        const subscription = await this.planModel
+        entity: SubscriptionEntity,
+    ): Promise<SubscriptionEntity> {
+        const {
+            userId,
+            planId,
+            subscriptionToken,
+            customerToken,
+            status,
+            expirationDate,
+        } = entity.toNewObject();
+
+        const subscription = await this.subscriptionModel
             .query()
             .insert({
-                name,
-                description,
-                productToken,
-                priceToken,
+                userId,
+                planId,
+                subscriptionToken,
+                customerToken,
+                status,
+                expirationDate,
             })
             .returning('*')
             .execute();
 
-        return SubscriptionsEntity.initialize({ ...subscription });
-    }
-
-    public update(): ReturnType<Repository['update']> {
-        return Promise.resolve(null);
-    }
-
-    public delete(): ReturnType<Repository['delete']> {
-        return Promise.resolve(true);
+        return SubscriptionEntity.initialize({ ...subscription });
     }
 }
 
-export { PlanRepository };
+export { SubscriptionRepository };

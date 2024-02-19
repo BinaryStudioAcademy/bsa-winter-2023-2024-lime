@@ -1,105 +1,137 @@
 import { type Entity } from '~/common/types/types.js';
 
-class SubscriptionsEntity implements Entity {
+class SubscriptionEntity implements Entity {
     private 'id': number | null;
 
-    private 'name': string;
+    private 'userId': number;
 
-    private 'description': string | null;
+    private 'planId': number;
 
-    private 'productToken': string;
+    private 'subscriptionToken': string;
 
-    private 'priceToken': string;
+    private 'customerToken': string;
+
+    private 'status': string;
+
+    private 'expirationDate': Date;
 
     private constructor({
         id,
-        name,
-        description,
-        productToken,
-        priceToken,
+        userId,
+        planId,
+        subscriptionToken,
+        customerToken,
+        status,
+        expirationDate,
     }: {
         id: number | null;
-        name: string;
-        description: string | null;
-        productToken: string;
-        priceToken: string;
+        userId: number;
+        planId: number;
+        subscriptionToken: string;
+        customerToken: string;
+        status: string;
+        expirationDate: Date;
     }) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.productToken = productToken;
-        this.priceToken = priceToken;
+        this.userId = userId;
+        this.planId = planId;
+        this.subscriptionToken = subscriptionToken;
+        this.customerToken = customerToken;
+        this.status = status;
+        this.expirationDate = expirationDate;
     }
 
     public static initialize({
         id,
-        name,
-        description,
-        productToken,
-        priceToken,
+        userId,
+        planId,
+        subscriptionToken,
+        customerToken,
+        status,
+        expirationDate,
     }: {
         id: number | null;
-        name: string;
-        description: string | null;
-        productToken: string;
-        priceToken: string;
-    }): SubscriptionsEntity {
-        return new SubscriptionsEntity({
+        userId: number;
+        planId: number;
+        subscriptionToken: string;
+        customerToken: string;
+        status: string;
+        expirationDate: Date;
+    }): SubscriptionEntity {
+        return new SubscriptionEntity({
             id,
-            name,
-            description,
-            productToken,
-            priceToken,
+            userId,
+            planId,
+            subscriptionToken,
+            customerToken,
+            status,
+            expirationDate,
         });
     }
 
     public static initializeNew({
-        name,
-        productToken,
-        priceToken,
+        userId,
+        planId,
+        subscriptionToken,
+        customerToken,
+        status,
+        expirationDate,
     }: {
-        name: string;
-        productToken: string;
-        priceToken: string;
-    }): SubscriptionsEntity {
-        return new SubscriptionsEntity({
+        userId: number;
+        planId: number;
+        subscriptionToken: string;
+        customerToken: string;
+        status: string;
+        expirationDate: Date;
+    }): SubscriptionEntity {
+        return new SubscriptionEntity({
             id: null,
-            name,
-            description: null,
-            productToken,
-            priceToken,
+            userId,
+            planId,
+            subscriptionToken,
+            customerToken,
+            status,
+            expirationDate,
         });
     }
 
     public toObject(): {
         id: number;
-        name: string;
-        description: string;
-        productToken: string;
-        priceToken: string;
+        userId: number;
+        planId: number;
+        subscriptionToken: string;
+        customerToken: string;
+        status: string;
+        expirationDate: Date;
     } {
         return {
             id: this.id as number,
-            name: this.name,
-            description: this.description as string,
-            productToken: this.productToken,
-            priceToken: this.priceToken,
+            userId: this.userId,
+            planId: this.planId,
+            subscriptionToken: this.subscriptionToken,
+            customerToken: this.customerToken,
+            status: this.status,
+            expirationDate: this.expirationDate,
         };
     }
 
     public toNewObject(): {
-        name: string;
-        description: string;
-        productToken: string;
-        priceToken: string;
+        userId: number;
+        planId: number;
+        subscriptionToken: string;
+        customerToken: string;
+        status: string;
+        expirationDate: Date;
     } {
         return {
-            name: this.name,
-            description: this.description as string,
-            productToken: this.productToken,
-            priceToken: this.priceToken,
+            userId: this.userId,
+            planId: this.planId,
+            subscriptionToken: this.subscriptionToken,
+            customerToken: this.customerToken,
+            status: this.status,
+            expirationDate: this.expirationDate,
         };
     }
 }
 
-export { SubscriptionsEntity };
+export { SubscriptionEntity };

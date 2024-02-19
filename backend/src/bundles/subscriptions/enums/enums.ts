@@ -1,1 +1,1 @@
-export { SubscriptionAttributes } from './subscription-attributes.enum.js';
+export { SunscriptionAttributes } from './subscription-attributes.enum.js';
