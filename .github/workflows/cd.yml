@@ -3,7 +3,7 @@ name: Continuous Delivery
 env:
     AWS_REGION: eu-north-1
     EBS_APP_NAME: lime-dev
-    ENVIRONMENT: Lime-dev-env-1
+    ENVIRONMENT: development
 
 on:
     push:
@@ -11,24 +11,34 @@ on:
             - development
     workflow_dispatch:
 
+concurrency:
+    group: ${{ github.ref_name }}
+    cancel-in-progress: false
+
 jobs:
-    cd:
+    deploy:
+        name: Deploy
         runs-on: ubuntu-latest
+        environment:
+            name: development
+            url: http://lime.eu-north-1.elasticbeanstalk.com
 
         steps:
-            - name: Checkout Source Code
-              uses: actions/checkout@v2
-              with:
-                  node-version: 18.18.2
+            - name: Code Checkout
+              uses: actions/checkout@v4
 
-            - name: Zipping
+            - name: Install NodeJS
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+
+            - name: Prepare deployment package
               run: |
-                  zip -r build.zip backend frontend shared package.json package-lock.json .eslintrc.yml tsconfig.json prepare-build.sh
+                  zip -r build.zip . -x .github
 
-            - name: Deploy to EB
-              uses: einaregilsson/beanstalk-deploy@v16
+            - name: Deploy to Beanstalk
+              uses: einaregilsson/beanstalk-deploy@v21
               with:
-                  use_existing_version_if_available: true
                   aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
                   aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
                   region: ${{ env.AWS_REGION }}
