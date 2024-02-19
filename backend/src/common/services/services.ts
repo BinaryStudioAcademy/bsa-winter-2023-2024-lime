@@ -10,6 +10,6 @@ const { API_KEY, FROM } = config.ENV.EMAIL;
 const cryptService = new CryptService();
 const jwtService = new JwtService(config.ENV.APP.JWT_SECRET);
 const emailService = new EmailService(API_KEY, FROM);
-const openAIService = new OpenAIService('');
+const openAIService = new OpenAIService(config.ENV.APP.OPEN_AI_API_KEY);
 
 export { cryptService, emailService, jwtService, openAIService };

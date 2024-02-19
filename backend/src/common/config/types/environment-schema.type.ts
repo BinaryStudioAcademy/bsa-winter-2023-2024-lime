@@ -7,6 +7,7 @@ type EnvironmentSchema = {
         ENVIRONMENT: ValueOf<typeof AppEnvironment>;
         HOST: string;
         JWT_SECRET: string;
+        OPEN_AI_API_KEY: string;
     };
     DB: {
         USERNAME: string;
