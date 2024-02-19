@@ -40,7 +40,7 @@ async function up(knex: Knex): Promise<void> {
             .onDelete('CASCADE');
         table.string(ColumnName.SUBSCRIPTION_TOKEN).unique().notNullable();
         table.string(ColumnName.CUSTOMER_TOKEN).unique().notNullable();
-        table.string(ColumnName.STATUS);
+        table.string(ColumnName.STATUS).notNullable();
         table.dateTime(ColumnName.EXPIRATION_DATE).notNullable();
         table
             .dateTime(ColumnName.CREATED_AT)
