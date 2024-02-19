@@ -12,6 +12,35 @@ class StipeService {
         });
     }
 
+    public async createProduct({
+        name,
+        price,
+        description = '',
+    }: {
+        name: string;
+        price: number;
+        description?: string;
+    }): Promise<{
+        productId: string;
+        priceId: string;
+    }> {
+        const { id: productId } = await this.stripeApi.products.create({
+            name,
+            description,
+        });
+
+        const { id: priceId } = await this.stripeApi.prices.create({
+            product: productId,
+            unit_amount: price * 100,
+            currency: 'usd',
+            recurring: {
+                interval: 'month',
+            },
+        });
+
+        return { productId, priceId };
+    }
+
     public async createSubscription({
         customerId,
         priceId,

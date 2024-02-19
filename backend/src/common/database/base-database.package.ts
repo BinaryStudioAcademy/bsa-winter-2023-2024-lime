@@ -56,7 +56,7 @@ class BaseDatabase implements Database {
                 directory: 'src/migrations',
                 tableName: DatabaseTableName.MIGRATIONS,
             },
-            seeds:{
+            seeds: {
                 directory: 'src/seeds',
             },
             debug: false,

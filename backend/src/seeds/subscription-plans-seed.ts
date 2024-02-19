@@ -1,13 +1,15 @@
 import { type Knex } from 'knex';
 
-async function seed(knex: Knex): Promise<void> {
-    await knex('table_name').del();
+import { subscriptionPlans } from '~/seed-data/subscription-plans-data.js';
 
-    await knex('table_name').insert([
-        { id: 1, colName: 'rowValue1' },
-        { id: 2, colName: 'rowValue2' },
-        { id: 3, colName: 'rowValue3' },
-    ]);
+const SEED = {
+    TABLE_NAME: 'subscription_plans',
+};
+
+async function seed(knex: Knex): Promise<void> {
+    await knex(SEED.TABLE_NAME).del();
+
+    await knex(SEED.TABLE_NAME).insert(subscriptionPlans);
 }
 
 export { seed };
