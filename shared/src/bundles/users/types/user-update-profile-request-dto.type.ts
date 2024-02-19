@@ -2,9 +2,10 @@ import { type ValueOf } from '../../../types/types.js';
 import { type Gender } from '../users.js';
 
 type UserUpdateProfileRequestDto = {
+    id: number | null;
     fullname: string;
     nickname: string;
-    birthdate: string;
+    dateOfBirth: string;
     weight: string;
     height: string;
     gender: ValueOf<typeof Gender>;

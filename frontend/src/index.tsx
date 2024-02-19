@@ -12,10 +12,9 @@ import {
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
-import { ProfileSettings } from '~/bundles/profile/components/components.js';
+import { Profile } from '~/bundles/profile/pages/profile.js';
 import { store } from '~/framework/store/store.js';
 
-const onProfileSubmit = (): void => {};
 const routes = [
     {
         path: AppRoute.ROOT,
@@ -41,9 +40,7 @@ const routes = [
     },
     {
         path: AppRoute.PROFILE,
-        element: (
-            <ProfileSettings onSubmit={onProfileSubmit} isLoading={false} />
-        ),
+        element: <Profile />,
     },
 ];
 

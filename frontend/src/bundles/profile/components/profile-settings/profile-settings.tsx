@@ -9,7 +9,11 @@ import {
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { Gender } from '~/bundles/common/enums/enums.js';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import {
+    useAppForm,
+    useAppSelector,
+    useCallback,
+} from '~/bundles/common/hooks/hooks.js';
 import { userUpdateProfileValidationSchema } from '~/bundles/users/users.js';
 import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 
@@ -21,18 +25,34 @@ type Properties = {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const { control, errors, isDirty, isValid, handleSubmit, reset } =
+    const userId = useAppSelector((state) => state.auth.user?.id);
+
+    const { control, errors, isDirty, isValid, reset, getValues } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
             mode: 'onBlur',
             shouldUnregister: false,
         });
+
+    // const handleUpdateFileButtonClick = (): void => {
+    //     const inputElement = document.querySelector(
+    //         '#avatarInput',
+    //     ) as HTMLInputElement;
+    //     inputElement?.click();
+    // };
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            void handleSubmit(onSubmit)(event_);
+            event_.preventDefault();
+            const payload: UserUpdateProfileRequestDto = {
+                ...getValues(),
+                id: userId ?? null,
+            };
+            onSubmit(payload);
+            // void handleSubmit(onSubmit)(event_);
         },
-        [handleSubmit, onSubmit],
+        [onSubmit, getValues, userId],
     );
 
     const handleCancel = useCallback((): void => {
@@ -44,12 +64,20 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <div className="flex items-center pb-[47px]">
                 <Avatar size="lg" />
 
+                <input
+                    id="avatarInput"
+                    type="file"
+                    accept="image/jpeg, image/png"
+                    // onChange={handleAvatarChange}
+                    className="hidden"
+                />
                 <Button
-                    className="ml-[13px] h-[38px] w-[120px] rounded-[20px]"
+                    className="w-120 ml-[13px] h-[38px] rounded-[20px]"
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
                     size={ButtonSize.SMALL}
+                    // onClick={handleUpdateFileButtonClick}
                 />
             </div>
             <form
@@ -82,7 +110,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     type="text"
                     label="Date of birth"
                     placeholder="DD/MM/YYYY"
-                    name="birthdate"
+                    name="dateOfBirth"
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}

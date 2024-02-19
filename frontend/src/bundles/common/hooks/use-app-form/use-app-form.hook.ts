@@ -29,6 +29,7 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
         values?: DefaultValues<T>,
         options?: { keepValues?: boolean },
     ) => void;
+    getValues: () => T;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -55,6 +56,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         formState: { errors, isDirty, isValid },
         handleSubmit,
         reset,
+        getValues,
     } = useForm<T>(parameters);
 
     return {
@@ -64,6 +66,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         isValid,
         handleSubmit,
         reset,
+        getValues,
     };
 };
 

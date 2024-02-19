@@ -6,7 +6,7 @@ import { UnicodePattern } from './constants/constants.js';
 type UserUpdateProfileRequestValidationDto = {
     fullname: z.ZodString;
     nickname: z.ZodString;
-    birthdate: z.ZodString;
+    dateOfBirth: z.ZodString;
     weight: z.ZodString;
     height: z.ZodString;
     gender: z.ZodUnion<
@@ -44,7 +44,7 @@ const userUpdateProfile = z
             .max(UserValidationRule.FULLNAME.MAX_LENGTH, {
                 message: UserValidationMessage.FULLNAME_LENGTH,
             }),
-        birthdate: z
+        dateOfBirth: z
             .string()
             .regex(
                 UnicodePattern.BIRTHDATE_PATTERN,
