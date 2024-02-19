@@ -5,10 +5,10 @@ type Theme = 'dark' | 'light';
 
 function useDarkTheme(): [
     Theme | null,
-    React.Dispatch<React.SetStateAction<Theme | null>>,
+    React.Dispatch<React.SetStateAction<Theme | null>>, boolean,
 ] {
     const [theme, setTheme] = useState<Theme | null>(null);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchTheme = async (): Promise<void> => {
             try {
@@ -18,6 +18,8 @@ function useDarkTheme(): [
                 setTheme(colorTheme);
             } catch (error) {
                 throw new Error(String(error));
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -27,7 +29,7 @@ function useDarkTheme(): [
     }, []);
 
     useEffect(() => {
-        if (theme !== null) {
+        if (!loading && theme !== null) {
             const root = window.document.documentElement;
             root.classList.remove('dark', 'light');
             root.classList.add(theme);
@@ -36,9 +38,9 @@ function useDarkTheme(): [
                 throw new Error(String(error));
             });
         }
-    }, [theme]);
+    }, [theme, loading]);
 
-    return [theme, setTheme];
+    return [theme, setTheme, loading];
 }
 
 export { useDarkTheme };
