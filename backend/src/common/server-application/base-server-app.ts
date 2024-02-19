@@ -11,7 +11,7 @@ import { type Config } from '~/common/config/config.js';
 import { type Database } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
-import { createWhitelistedRoutes } from '~/common/helpers/create-witelisted-routes-helper.js';
+import { createProtectedRoutes } from '~/common/helpers/create-protected-routes-helper.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 import { authPlugin } from '~/common/plugins/plugins.js';
@@ -123,7 +123,7 @@ class BaseServerApp implements ServerApp {
     private async initPlugins(): Promise<void> {
         await this.app.register(authPlugin, {
             jwtService,
-            whitelistedRoutes: createWhitelistedRoutes(this.apis),
+            protectedRoutes: createProtectedRoutes(this.apis),
         });
         await this.app.register(multer.contentParser);
     }
