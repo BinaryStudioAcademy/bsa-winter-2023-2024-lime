@@ -11,8 +11,29 @@ class UserRepository implements Repository {
 
     public async find(
         query: Record<string, unknown>,
-    ): ReturnType<Repository['find']> {
-        return await this.userModel.query().findOne(query);
+    ): Promise<UserEntity | null> {
+        const user = await this.userModel
+            .query()
+            .findOne(query)
+            .withGraphFetched('userDetails')
+            .execute();
+
+        if (!user) {
+            return null;
+        }
+
+        const { userDetails, ...userInfo } = user;
+
+        return UserEntity.initialize({
+            ...userInfo,
+            fullName: userDetails.fullName,
+            avatarUrl: userDetails.avatarUrl,
+            username: userDetails.username,
+            dateOfBirth: userDetails.dateOfBirth,
+            weight: userDetails.weight,
+            height: userDetails.height,
+            gender: userDetails.gender,
+        });
     }
 
     public async findAll(): Promise<UserEntity[]> {
@@ -23,25 +44,54 @@ class UserRepository implements Repository {
 
         return users.map((user) => {
             const { userDetails, ...userInfo } = user;
+
             return UserEntity.initialize({
                 ...userInfo,
                 fullName: userDetails.fullName,
+                avatarUrl: userDetails.avatarUrl,
+                username: userDetails.username,
+                dateOfBirth: userDetails.dateOfBirth,
+                weight: userDetails.weight,
+                height: userDetails.height,
+                gender: userDetails.gender,
             });
         });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
         const { email, passwordHash } = entity.toNewObject();
-        const user = await this.userModel
-            .query()
-            .insert({
-                email,
-                passwordHash,
-            })
-            .returning('*')
-            .execute();
+        const trx = await this.userModel.startTransaction();
 
-        return UserEntity.initialize({ ...user, fullName: null });
+        try {
+            const user = await this.userModel
+                .query(trx)
+                .insert({
+                    email,
+                    passwordHash,
+                })
+                .returning('*')
+                .execute();
+
+            const userDetails = await user
+                .$relatedQuery('userDetails', trx)
+                .insert({});
+
+            await trx.commit();
+
+            return UserEntity.initialize({
+                ...user,
+                fullName: userDetails.fullName,
+                avatarUrl: userDetails.avatarUrl,
+                username: userDetails.username,
+                dateOfBirth: userDetails.dateOfBirth,
+                weight: userDetails.weight,
+                height: userDetails.height,
+                gender: userDetails.gender,
+            });
+        } catch (error) {
+            await trx.rollback();
+            throw error;
+        }
     }
 
     public async update(

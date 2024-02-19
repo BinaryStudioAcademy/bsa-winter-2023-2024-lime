@@ -1,3 +1,4 @@
+export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonSize, ButtonVariant } from './button/button.js';
 export { ForgotPasswordForm } from './forgot-password-form/forgot-password-form.js';
 export { Header } from './header/header.js';

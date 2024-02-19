@@ -14,6 +14,7 @@ export {
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    Gender,
     userAuthValidationSchema,
     UsersApiPath,
     UserValidationMessage,
