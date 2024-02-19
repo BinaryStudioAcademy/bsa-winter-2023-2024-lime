@@ -1,4 +1,5 @@
 import reactLogo from '~/assets/img/react.svg';
+import { BasicLayout } from '~/bundles/common/components/basic-layout/basic-layout.js';
 import {
     Link,
     Loader,
@@ -33,35 +34,37 @@ const App: React.FC = () => {
 
     return (
         <>
-            <img src={reactLogo} width="30" alt="logo" />
+            <BasicLayout>
+                <img src={reactLogo} width="30" alt="logo" />
 
-            <ul>
-                <li>
-                    <Link to={AppRoute.ROOT}>Root</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SIGN_IN}>Sign in</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SIGN_UP}>Sign up</Link>
-                </li>
-            </ul>
-            <p>Current path: {pathname}</p>
+                <ul>
+                    <li>
+                        <Link to={AppRoute.ROOT}>Root</Link>
+                    </li>
+                    <li>
+                        <Link to={AppRoute.SIGN_IN}>Sign in</Link>
+                    </li>
+                    <li>
+                        <Link to={AppRoute.SIGN_UP}>Sign up</Link>
+                    </li>
+                </ul>
+                <p>Current path: {pathname}</p>
 
-            <div>
-                <RouterOutlet />
-            </div>
-            {isRoot && (
-                <>
-                    <h2>Users:</h2>
-                    <h3>Status: {isLoading ? <Loader /> : dataStatus}</h3>
-                    <ul>
-                        {users.map((it) => (
-                            <li key={it.id}>{it.email}</li>
-                        ))}
-                    </ul>
-                </>
-            )}
+                <div>
+                    <RouterOutlet />
+                </div>
+                {isRoot && (
+                    <>
+                        <h2>Users:</h2>
+                        <h3>Status: {isLoading ? <Loader /> : dataStatus}</h3>
+                        <ul>
+                            {users.map((it) => (
+                                <li key={it.id}>{it.email}</li>
+                            ))}
+                        </ul>
+                    </>
+                )}
+            </BasicLayout>
         </>
     );
 };

@@ -36,7 +36,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
 
     useEffect(() => {
         isOpen
-            ? setSidebarStyle({ transform: 'translateX(0)' })
+            ? setSidebarStyle({ transform: 'translateX(0)', gridArea: 'aside' })
             : setSidebarStyle({ transform: 'translateX(-100%)' });
     }, [isOpen]);
 
