@@ -5,7 +5,6 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { SunscriptionAttributes } from '../subscriptions/enums/enums.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -28,14 +27,6 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
-                },
-            },
-            subscriptions: {
-                relation: Model.HasOneRelation,
-                modelClass: UserDetailsModel,
-                join: {
-                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.USER_ID}`,
                 },
             },
         };

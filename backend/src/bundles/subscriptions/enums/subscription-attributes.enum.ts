@@ -1,7 +1,9 @@
-const SunscriptionAttributes = {
+const SubscriptionAttributes = {
     ID: 'id',
-    PLAN_ID: 'planId',
-    USER_ID: 'userId',
+    NAME: 'name',
+    DESCRIPTION: 'description',
+    PRODUCT_TOKEN: 'productToken',
+    PRICE_TOKEN: 'priceToken',
 } as const;
 
-export { SunscriptionAttributes };
+export { SubscriptionAttributes };

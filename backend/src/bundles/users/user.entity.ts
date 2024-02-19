@@ -9,6 +9,8 @@ class UserEntity implements Entity {
 
     private 'fullName': string | null;
 
+    private 'subscriptionId': string | null;
+
     private constructor({
         id,
         email,
