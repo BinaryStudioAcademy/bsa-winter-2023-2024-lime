@@ -1,6 +1,6 @@
 import {
     type UserAuthRequestDto,
-    type UserModel,
+    type UserAuthResponseDto,
     type UserService,
 } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
@@ -17,10 +17,11 @@ class AuthService {
 
     private async verifyLoginCredentials(
         userRequestDto: UserAuthRequestDto,
-    ): Promise<UserModel> {
-        const user = (await this.userService.find({
+    ): Promise<UserAuthResponseDto> {
+        const user = await this.userService.find({
             email: userRequestDto.email,
-        })) as UserModel;
+        });
+
         if (!user) {
             throw new HttpError({
                 message: UserValidationMessage.LOGIN_CREDENTIALS_DO_NOT_MATCH,
@@ -30,7 +31,7 @@ class AuthService {
 
         const isEqualPassword = cryptService.compareSyncPassword(
             userRequestDto.password,
-            user.passwordHash,
+            user.getPasswordHash(),
         );
 
         if (!isEqualPassword) {
@@ -40,7 +41,7 @@ class AuthService {
             });
         }
 
-        return user;
+        return user.toObject();
     }
 
     public async signIn(
@@ -55,9 +56,9 @@ class AuthService {
     public async signUp(
         userRequestDto: UserAuthRequestDto,
     ): Promise<AuthResponseDto> {
-        const userByEmail = (await this.userService.find({
+        const userByEmail = await this.userService.find({
             email: userRequestDto.email,
-        })) as UserModel;
+        });
 
         if (userByEmail) {
             throw new HttpError({

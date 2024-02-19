@@ -27,7 +27,8 @@
         "prettier-plugin-tailwindcss": "0.5.11",
         "tailwindcss": "3.4.1",
         "vite": "5.0.12",
-        "vite-plugin-svgr": "4.2.0"
+        "vite-plugin-svgr": "4.2.0",
+        "vite-plugin-pwa": "0.18.1"
     },
     "dependencies": {
         "@heroicons/react": "2.1.1",
