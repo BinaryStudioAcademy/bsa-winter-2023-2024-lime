@@ -18,7 +18,7 @@ class UserService implements Service {
 
     public async find(
         query: Record<string, unknown>,
-    ): ReturnType<Service['find']> {
+    ): Promise<UserEntity | null> {
         return await this.userRepository.find(query);
     }
 
