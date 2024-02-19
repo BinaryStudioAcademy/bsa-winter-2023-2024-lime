@@ -2,7 +2,7 @@ const ThemeColors = {
     STANDART: {
         LIGHT: {
             TEXT: 'text-lm-black-100',
-            BACKGROUND: 'bg-lm-grey-200',
+            BACKGROUND: 'bg-lm-grey-200 bg-lm-background-light',
         },
         DARK: {
             TEXT: 'dark:text-white',
