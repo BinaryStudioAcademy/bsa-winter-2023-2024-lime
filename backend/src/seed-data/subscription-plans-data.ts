@@ -13,9 +13,9 @@ const subscriptionPro = {
 };
 
 const { productId: basicProductId, priceId: basicPriceId } =
-    await stripeService.createProduct({ ...subscriptionBasic });
+    await stripeService.createSubscriptionPlan({ ...subscriptionBasic });
 const { productId: proProductId, priceId: proPriceId } =
-    await stripeService.createProduct({ ...subscriptionPro });
+    await stripeService.createSubscriptionPlan({ ...subscriptionPro });
 
 const subscriptionPlans = [
     {

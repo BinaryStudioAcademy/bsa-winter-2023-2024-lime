@@ -12,7 +12,7 @@ class StipeService {
         });
     }
 
-    public async createProduct({
+    public async createSubscriptionPlan({
         name,
         price,
         description = '',
