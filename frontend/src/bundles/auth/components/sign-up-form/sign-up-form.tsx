@@ -65,6 +65,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
 
                 <Input
@@ -74,6 +75,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
 
                 <Input
@@ -83,6 +85,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
 
                 <div className="mt-3">
