@@ -1,7 +1,5 @@
-import {
-    type UserAuthRequestDto,
-    userAuthValidationSchema,
-} from '~/bundles/users/users.js';
+import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import { userAuthValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -25,7 +23,6 @@ class AuthController extends BaseController {
         this.addRoute({
             path: AuthApiPath.SIGN_UP,
             method: 'POST',
-            isPublic: true,
             validation: {
                 body: userAuthValidationSchema,
             },
@@ -40,7 +37,6 @@ class AuthController extends BaseController {
         this.addRoute({
             path: AuthApiPath.SIGN_IN,
             method: 'POST',
-            isPublic: true,
             validation: {
                 body: userAuthValidationSchema,
             },
