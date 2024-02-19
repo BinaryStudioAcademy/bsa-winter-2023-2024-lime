@@ -22,7 +22,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
     isLoading,
     onCancel,
 }) => {
-    const { control, errors, isDirty, isValid, handleSubmit } =
+    const { control, errors, isValid, handleSubmit } =
         useAppForm<PasswordResetPayload>({
             defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
             validationSchema: passwordResetValidationSchema,
@@ -76,7 +76,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
                     label="Send"
                     variant={ButtonVariant.PRIMARY}
                     size={ButtonSize.MEDIUM}
-                    isDisabled={!isDirty || !isValid}
+                    isDisabled={!isValid || isLoading}
                 />
                 <Button
                     type="button"

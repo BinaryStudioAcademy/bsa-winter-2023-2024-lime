@@ -24,7 +24,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
     onCancel,
     isLoading,
 }) => {
-    const { control, errors, isDirty, isValid, handleSubmit } =
+    const { control, errors, isValid, handleSubmit } =
         useAppForm<PasswordForgotRequestDto>({
             defaultValues: DEFAULT_PASSWORD_FORGOT_PAYLOAD,
             validationSchema: passwordForgotValidationSchema,
@@ -65,7 +65,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
                     label="Send"
                     variant={ButtonVariant.PRIMARY}
                     size={ButtonSize.MEDIUM}
-                    isDisabled={!isDirty || !isValid || isLoading}
+                    isDisabled={!isValid || isLoading}
                 />
                 <Button
                     type="button"
