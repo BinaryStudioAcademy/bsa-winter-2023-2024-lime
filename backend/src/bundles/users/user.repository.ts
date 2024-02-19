@@ -21,6 +21,16 @@ class UserRepository implements Repository {
         return users.map((it) => UserEntity.initialize(it));
     }
 
+    public async findById(id: string): Promise<UserEntity | null> {
+        const user = await this.userModel.query().findById(id).execute();
+
+        if (!user) {
+            return null;
+        }
+
+        return UserEntity.initialize(user);
+    }
+
     public async create(entity: UserEntity): Promise<UserEntity> {
         const { email, passwordSalt, passwordHash } = entity.toNewObject();
 

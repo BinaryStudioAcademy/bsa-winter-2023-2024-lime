@@ -6,7 +6,7 @@ import {
     type UserSignUpResponseDto,
 } from '~/bundles/users/users.js';
 
-import { name as sliceName } from './slice.js';
+import { type User, name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
     UserSignUpResponseDto,
@@ -18,4 +18,13 @@ const signUp = createAsyncThunk<
     return authApi.signUp(registerPayload);
 });
 
-export { signUp };
+const refreshUser = createAsyncThunk<User, undefined, AsyncThunkConfig>(
+    `${sliceName}/refresh-user`,
+    (_, { extra }) => {
+        const { userApi } = extra;
+
+        return userApi.refreshUser();
+    },
+);
+
+export { refreshUser, signUp };

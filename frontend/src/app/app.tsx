@@ -1,4 +1,5 @@
 import reactLogo from '~/assets/img/react.svg';
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import {
     Link,
     Loader,
@@ -30,6 +31,10 @@ const App: React.FC = () => {
             void dispatch(userActions.loadAll());
         }
     }, [isRoot, dispatch]);
+
+    useEffect(() => {
+        void dispatch(authActions.refreshUser());
+    }, [dispatch]);
 
     return (
         <>

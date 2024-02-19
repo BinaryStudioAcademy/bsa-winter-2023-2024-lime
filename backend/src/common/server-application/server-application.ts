@@ -13,6 +13,7 @@ const apiV1 = new BaseServerAppApi(
     ...authController.routes,
     ...userController.routes,
 );
+
 const serverApp = new BaseServerApp({
     config,
     logger,
