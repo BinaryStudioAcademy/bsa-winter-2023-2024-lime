@@ -4,6 +4,7 @@ export {
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserGetCurrentRequestDto,
 } from './types/types.js';
 export {
     userAuth as userAuthValidationSchema,
