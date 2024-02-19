@@ -73,6 +73,12 @@ export default {
             borderRadius: {
                 '34': '2.1rem',
             },
+            width: {
+                '30': '7.5625rem',
+            },
+            height: {
+                '30': '7.5625rem',
+            },
         },
     },
     plugins: [],
