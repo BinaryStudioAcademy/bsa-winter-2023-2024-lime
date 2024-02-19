@@ -1,4 +1,4 @@
-.basic-layout {
+.base-layout {
     @apply grid grid-cols-2 grid-rows-2;
 
     grid-template:

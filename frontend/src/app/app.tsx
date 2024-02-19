@@ -1,5 +1,5 @@
 import reactLogo from '~/assets/img/react.svg';
-import { BasicLayout } from '~/bundles/common/components/basic-layout/basic-layout.js';
+import { BaseLayout } from '~/bundles/common/components/base-layout/base-layout.js';
 import {
     Link,
     Loader,
@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <BasicLayout>
+            <BaseLayout>
                 <img src={reactLogo} width="30" alt="logo" />
 
                 <ul>
@@ -64,7 +64,7 @@ const App: React.FC = () => {
                         </ul>
                     </>
                 )}
-            </BasicLayout>
+            </BaseLayout>
         </>
     );
 };

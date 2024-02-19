@@ -9,9 +9,9 @@ type Properties = {
     children?: ReactNode;
 };
 
-const BasicLayout: React.FC<Properties> = ({ children }) => {
+const BaseLayout: React.FC<Properties> = ({ children }) => {
     return (
-        <div className={styles['basic-layout']}>
+        <div className={styles['base-layout']}>
             <Header />
 
             <Sidebar isOpen={true} />
@@ -21,4 +21,4 @@ const BasicLayout: React.FC<Properties> = ({ children }) => {
     );
 };
 
-export { BasicLayout };
+export { BaseLayout };
