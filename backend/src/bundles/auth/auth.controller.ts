@@ -1,7 +1,5 @@
-import {
-    type UserAuthRequestDto,
-    userAuthValidationSchema,
-} from '~/bundles/users/users.js';
+import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import { userAuthValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,

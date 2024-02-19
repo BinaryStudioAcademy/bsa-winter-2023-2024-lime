@@ -48,7 +48,7 @@ const Input = <T extends FieldValues>({
     }, []);
 
     const placeholderGenerator = (): string => {
-        return isPassword ? placeholder.repeat(6) : placeholder;
+        return isPassword ? '\u2022'.repeat(6) : placeholder;
     };
 
     return (
@@ -69,7 +69,7 @@ const Input = <T extends FieldValues>({
                         onClick={onMaskPassword}
                         onKeyDown={onMaskPassword}
                         role="button"
-                        tabIndex={0}
+                        tabIndex={-1}
                     >
                         {isMasked ? (
                             <EyeIcon className="text-lm-grey-200 absolute bottom-2 right-2 w-5" />
