@@ -34,14 +34,20 @@ const SidebarNav = ({
         navigate(to);
     }, [navigate, to]);
     const iconElement = getIcon(icon);
+    const classes = {
+        active: 'text-lm-black-100 hover:text-lm-black-200',
+        inactive: 'text-lm-grey-200 hover:text-lm-black-200',
+    };
+    
     return (
         <Link
             to={to}
-            className="text-lm-grey-200 hover:text-lm-black-200 flex items-center"
+            className={`${isActive ? classes.active : classes.inactive} flex items-center`}
         >
             <Button
                 type="button"
                 label={text}
+                className={isActive ? classes.active : classes.inactive}
                 leftIcon={iconElement}
                 variant={ButtonVariant.SIDEBAR}
                 onClick={handleNavigation}
