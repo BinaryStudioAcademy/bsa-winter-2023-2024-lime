@@ -50,7 +50,6 @@ const ResetPasswordForm: React.FC<Properties> = ({
                 <Input
                     type="password"
                     label="New Password"
-                    placeholder="&bull;"
                     name="password"
                     control={control}
                     errors={errors}
