@@ -1,5 +1,5 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus, ThemeCompose } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -62,16 +62,18 @@ const Auth: React.FC = () => {
     };
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem]',
-        form: 'justify-between text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        base: `relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem] ${ThemeCompose.STANDART.BACKGROUND} ${ThemeCompose.STANDART.TEXT}`,
+        form: 'justify-between px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
+        logoContainer: 'flex flex-1 items-center justify-center',
     };
 
     return (
-        <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
+        <main className={getValidClassNames(classes.main)}>
             <div className={getValidClassNames(classes.base, classes.form)}>
                 {getScreen(pathname)}
             </div>
-            <div className="flex flex-1 items-center justify-center text-xl text-white">
+            <div className={getValidClassNames(classes.logoContainer)}>
                 <img src={authLogo} alt="LIME Logo" />
             </div>
         </main>
