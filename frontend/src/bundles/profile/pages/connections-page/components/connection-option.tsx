@@ -31,14 +31,14 @@ const ConnectionOption = ({
                 'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6 md:p-10'
             }
         >
-            <div className={'flex items-center justify-between gap-3'}>
-                <Icon name={iconName} className={'w-10 sm:w-14 md:w-14'} />
-                <div
-                    className={getValidClassNames(
-                        'flex w-full flex-col justify-between gap-4',
-                        styles['option-header-right'],
-                    )}
-                >
+            <div
+                className={getValidClassNames(
+                    'flex flex-col items-start justify-between gap-5',
+                    styles['option-header-left'],
+                )}
+            >
+                <div className={'flex w-full gap-4'}>
+                    <Icon name={iconName} className={'w-10 sm:w-14 md:w-14'} />
                     <div className={'flex flex-col gap-1'}>
                         <div className={'flex items-center gap-2'}>
                             <h2
@@ -88,16 +88,17 @@ const ConnectionOption = ({
                             )}
                         </p>
                     </div>
-                    <Button
-                        variant={isConnected ? 'secondary' : 'primary'}
-                        size={'small'}
-                        label={isConnected ? 'Disconnect' : 'Connect'}
-                        className={
-                            'h-6 max-w-[11.25rem] sm:h-10 sm:max-w-40 md:max-w-60'
-                        }
-                        onClick={handleClick}
-                    />
                 </div>
+                <Button
+                    variant={isConnected ? 'secondary' : 'primary'}
+                    size={'small'}
+                    label={isConnected ? 'Disconnect' : 'Connect'}
+                    className={getValidClassNames(
+                        'h-6 max-w-full sm:h-10',
+                        styles['connection-button'],
+                    )}
+                    onClick={handleClick}
+                />
             </div>
             <p
                 className={getValidClassNames(
