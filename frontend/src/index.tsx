@@ -31,6 +31,30 @@ const routes = [
                 path: AppRoute.SIGN_UP,
                 element: <Auth />,
             },
+            {
+                path: AppRoute.GOALS,
+                element: <div>Goals</div>,
+            },
+            {
+                path: AppRoute.WORKOUT,
+                element: <div>Workout</div>,
+            },
+            {
+                path: AppRoute.OVERVIEW,
+                element: <div>Overview</div>,
+            },
+            {
+                path: AppRoute.SCHEDULE,
+                element: <div>Schedule</div>,
+            },
+            {
+                path: AppRoute.HELP,
+                element: <div>Help</div>,
+            },
+            {
+                path: AppRoute.LOGOUT,
+                element: <div>Logout</div>,
+            },
         ],
     },
     {
