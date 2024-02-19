@@ -16,30 +16,30 @@ concurrency:
     cancel-in-progress: false
 
 jobs:
-    # release:
-    #     name: Release
-    #     runs-on: ubuntu-latest
-    #     permissions:
-    #         contents: write
-    #         pull-requests: write
-    #     outputs:
-    #         release_created: ${{ steps.release.outputs.release_created }}
-    #     steps:
-    #         - name: Code Checkout
-    #           uses: actions/checkout@v4
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+        outputs:
+            release_created: ${{ steps.release.outputs.release_created }}
+        steps:
+            - name: Code Checkout
+              uses: actions/checkout@v4
 
-    #         - name: Release
-    #           id: release
-    #           uses: google-github-actions/release-please-action@v4
-    #           with:
-    #               manifest-file: .release-please-manifest.json
-    #               config-file: release-please-config.json
-    #               release-type: node
+            - name: Release
+              id: release
+              uses: google-github-actions/release-please-action@v4
+              with:
+                  manifest-file: .release-please-manifest.json
+                  config-file: release-please-config.json
+                  release-type: node
 
     deploy:
         name: Deploy
-        # needs: release
-        # if: ${{ needs.release.outputs.release_created }}
+        needs: release
+        if: ${{ needs.release.outputs.release_created }}
         runs-on: ubuntu-latest
         environment:
             name: development
