@@ -54,6 +54,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     name="email"
                     type="text"
                     isDisabled={isLoading}
+                    required
                 />
                 <Input
                     control={control}
@@ -63,6 +64,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     name="password"
                     type="password"
                     isDisabled={isLoading}
+                    required
                 />
                 <Button
                     label={isLoading ? '' : 'Log In'}

@@ -22,6 +22,7 @@ type Properties<T extends FieldValues> = {
     isDisabled?: boolean;
     placeholder?: string;
     onFocus?: FocusEventHandler<HTMLInputElement>;
+    required?: boolean;
 };
 
 const Input = <T extends FieldValues>({
@@ -33,6 +34,7 @@ const Input = <T extends FieldValues>({
     isDisabled = false,
     placeholder = '',
     onFocus,
+    required = false,
 }: Properties<T>): JSX.Element => {
     const [isMasked, setIsMasked] = useState(false);
     const { field } = useFormController({ name, control });
@@ -51,7 +53,9 @@ const Input = <T extends FieldValues>({
 
     return (
         <label className="flex h-20 w-full flex-col text-sm">
-            <span className="font-medium">{label}</span>
+            <span className="font-medium">
+                {label} {required && <span className="text-lm-red">*</span>}
+            </span>
             <div className="relative">
                 <input
                     {...field}
