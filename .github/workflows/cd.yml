@@ -2,7 +2,7 @@ name: Continuous Delivery
 
 env:
     AWS_REGION: eu-north-1
-    EBS_APP_NAME: lime
+    EBS_APP_NAME: lime-dev
     ENVIRONMENT: development
 
 on:
@@ -43,7 +43,7 @@ jobs:
         runs-on: ubuntu-latest
         environment:
             name: development
-            url: http://lime-dev.eu-north-1.elasticbeanstalk.com
+            url: http://lime.eu-north-1.elasticbeanstalk.com
 
         steps:
             - name: Code Checkout
