@@ -47,13 +47,13 @@ class UserRepository implements Repository {
 
             return UserEntity.initialize({
                 ...userInfo,
-                fullName: userDetails.fullName,
-                avatarUrl: userDetails.avatarUrl,
-                username: userDetails.username,
-                dateOfBirth: userDetails.dateOfBirth,
-                weight: userDetails.weight,
-                height: userDetails.height,
-                gender: userDetails.gender,
+                fullName: userDetails?.fullName ?? null,
+                avatarUrl: userDetails?.avatarUrl ?? null,
+                username: userDetails?.username ?? null,
+                dateOfBirth: userDetails?.dateOfBirth ?? null,
+                weight: userDetails?.weight ?? null,
+                height: userDetails?.height ?? null,
+                gender: userDetails?.gender ?? null,
             });
         });
     }
