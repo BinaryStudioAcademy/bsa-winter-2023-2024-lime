@@ -2,16 +2,17 @@ import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 import { useCallback, useState } from 'react';
 
 import { Button } from '~/bundles/common/components/components.js';
+import { type IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
-import { type IconName } from '~/bundles/common/components/icon/types/types.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import styles from './styles.module.css';
 
 type Properties = {
     title: string;
     description: string;
-    iconName: IconName;
+    iconName: ValueOf<typeof IconName>;
 };
 
 const ConnectionOption = ({
