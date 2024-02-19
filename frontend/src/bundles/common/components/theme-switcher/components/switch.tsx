@@ -1,5 +1,9 @@
 import { useCallback } from 'react';
 
+import { Icon } from '../../components.js';
+import { IconColor } from '../../icon/enums/icon-colors.enum.js';
+import { IconSize } from '../../icon/enums/icon-size.enum.js';
+
 type SwitchProperties = {
     checked: boolean;
     onChange: (checked: boolean) => void;
@@ -12,25 +16,24 @@ const Switch = ({
     size = 24,
 }: SwitchProperties): JSX.Element => {
     const handleChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>): void => {
-            onChange(event.target.checked);
+        (): void => {
+            onChange(!checked);
         },
-        [onChange],
-    );
-
+        [onChange, checked],
+    );        
     return (
-        <div className="switch" style={{ width: size, height: size }}>
-            <input
-                type="checkbox"
-                checked={checked}
-                onChange={handleChange}
-                id="switchTheme"
-            />
-            <span
+        <button className="switch" style={{ width: size, height: size }} onClick={handleChange}>           
+             <span
                 className="slider"
                 style={{ width: size, height: size }}
-            ></span>
-        </div>
+            >
+                <Icon
+                    name={checked ? 'sunIcon' : 'moonIcon'}                    
+                    size={IconSize.LARGE}
+                    color={IconColor.PRIMARY}
+                />
+            </span>
+        </button>
     );
 };
 
