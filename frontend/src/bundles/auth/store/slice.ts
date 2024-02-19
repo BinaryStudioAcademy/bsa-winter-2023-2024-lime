@@ -55,4 +55,4 @@ const { reducer, actions, name } = createSlice({
     },
 });
 
-export { actions, name, reducer };
+export { type State, actions, name, reducer };
