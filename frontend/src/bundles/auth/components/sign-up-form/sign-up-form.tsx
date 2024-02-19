@@ -1,9 +1,9 @@
 import {
     Button,
-    ButtonSize,
     ButtonVariant,
     Input,
 } from '~/bundles/common/components/components.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserAuthRequestDto,
@@ -57,7 +57,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
                     type="submit"
                     label="Sign up"
                     variant={ButtonVariant.PRIMARY}
-                    size={ButtonSize.MEDIUM}
+                    size={ComponentSize.MEDIUM}
                 />
             </form>
         </>
