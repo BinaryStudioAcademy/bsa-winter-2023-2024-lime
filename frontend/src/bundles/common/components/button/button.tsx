@@ -34,7 +34,7 @@ const baseClasses =
     'w-full flex items-center transition ease-in-out duration-300';
 
 const activeClasses =
-    'bg-lm-yellow-100 text-lm-black-200 hover:text-lm-black-200 hover:bg-lm-yellow-200';
+    'bg-lm-yellow-100 text-lm-black-200 hover:text-lm-black-400 hover:outline-2 hover:outline-lm-black-400 hover:outline';
 
 const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.PRIMARY]:
@@ -44,7 +44,7 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.TERTIARY]:
         'bg-transparent justify-center text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
     [ButtonVariant.SIDEBAR]:
-        'text-lm-grey-200 align hover:text-lm-black-200 hover:bg-lm-yellow-100  disabled:text-lm-grey-300 justify-start rounded-md',
+        'text-lm-grey-200 align hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
 };
 
 const buttonSizesToClasses: Record<ValueOf<typeof ButtonSize>, string> = {
