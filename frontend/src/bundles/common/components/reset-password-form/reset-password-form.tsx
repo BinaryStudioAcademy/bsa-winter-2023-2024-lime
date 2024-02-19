@@ -26,8 +26,6 @@ const ResetPasswordForm: React.FC<Properties> = ({
         useAppForm<PasswordResetPayload>({
             defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
             validationSchema: passwordResetValidationSchema,
-            mode: 'onBlur',
-            shouldUnregister: false,
         });
 
     const handleFormSubmit = useCallback(
@@ -42,10 +40,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
     }, [onCancel]);
 
     return (
-        <form
-            className="text-sm font-semibold leading-3 text-white"
-            onSubmit={handleFormSubmit}
-        >
+        <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
                 <Input
                     type="password"
@@ -61,7 +56,6 @@ const ResetPasswordForm: React.FC<Properties> = ({
                 <Input
                     type="password"
                     label="Confirm New Password"
-                    placeholder="&bull;"
                     name="passwordConfirm"
                     control={control}
                     errors={errors}
@@ -77,6 +71,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
                     size={ButtonSize.MEDIUM}
                     isDisabled={!isValid || isLoading}
                 />
+
                 <Button
                     type="button"
                     label="Cancel"
