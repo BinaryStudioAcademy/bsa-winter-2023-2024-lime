@@ -38,7 +38,7 @@ const SidebarNav = ({
         active: 'text-lm-black-100 hover:text-lm-black-200',
         inactive: 'text-lm-grey-200 hover:text-lm-black-200',
     };
-    
+
     return (
         <Link
             to={to}
