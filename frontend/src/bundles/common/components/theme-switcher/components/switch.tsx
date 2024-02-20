@@ -15,20 +15,18 @@ const Switch = ({
     onChange,
     size = 24,
 }: SwitchProperties): JSX.Element => {
-    const handleChange = useCallback(
-        (): void => {
-            onChange(!checked);
-        },
-        [onChange, checked],
-    );        
+    const handleChange = useCallback((): void => {
+        onChange(!checked);
+    }, [onChange, checked]);
     return (
-        <button className="switch" style={{ width: size, height: size }} onClick={handleChange}>           
-             <span
-                className="slider"
-                style={{ width: size, height: size }}
-            >
+        <button
+            className="switch"
+            style={{ width: size, height: size }}
+            onClick={handleChange}
+        >
+            <span className="slider" style={{ width: size, height: size }}>
                 <Icon
-                    name={checked ? 'sunIcon' : 'moonIcon'}                    
+                    name={checked ? 'moonIcon' : 'sunIcon'}
                     size={IconSize.LARGE}
                     color={IconColor.PRIMARY}
                 />

@@ -5,7 +5,8 @@ type Theme = 'dark' | 'light';
 
 function useDarkTheme(): [
     Theme | null,
-    React.Dispatch<React.SetStateAction<Theme | null>>, boolean,
+    React.Dispatch<React.SetStateAction<Theme | null>>,
+    boolean,
 ] {
     const [theme, setTheme] = useState<Theme | null>(null);
     const [loading, setLoading] = useState(true);
