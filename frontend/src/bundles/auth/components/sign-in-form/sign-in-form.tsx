@@ -1,6 +1,5 @@
 import {
     Button,
-    ButtonSize,
     ButtonVariant,
     Input,
     Link,
@@ -8,6 +7,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserAuthRequestDto,
@@ -40,6 +40,25 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <h1 className="text-center text-[1.88rem] font-bold text-slate-50">
                 Hi! Login to your Account
             </h1>
+            <div className="flex flex-col gap-4">
+                <Button
+                    size={ComponentSize.MEDIUM}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="G"
+                />
+                <Button
+                    size={ComponentSize.MEDIUM}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="f"
+                />
+            </div>
+
+            <p className="text-lm-grey-100 text-center text-xs">
+                or Sign in with Email
+            </p>
+
             <form onSubmit={handleFormSubmit}>
                 <Input
                     type="email"
@@ -64,7 +83,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         type="submit"
                         label={isLoading ? '' : 'Log In'}
                         variant={ButtonVariant.PRIMARY}
-                        size={ButtonSize.MEDIUM}
+                        size={ComponentSize.MEDIUM}
                         leftIcon={
                             isLoading && <Loader color={IconColor.SECONDARY} />
                         }

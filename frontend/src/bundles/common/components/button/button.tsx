@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
@@ -9,15 +10,15 @@ const ButtonVariant = {
     TERTIARY: 'tertiary',
 } as const;
 
-const ButtonSize = {
-    SMALL: 'small',
-    MEDIUM: 'medium',
-} as const;
+type ButtonSize = Exclude<
+    ValueOf<typeof ComponentSize>,
+    typeof ComponentSize.EXTRA_LARGE
+>;
 
 type ButtonType = 'button' | 'submit';
 
 type ButtonProperties = {
-    size: ValueOf<typeof ButtonSize>;
+    size: ButtonSize;
     variant: ValueOf<typeof ButtonVariant>;
     label: string;
     leftIcon?: ReactNode;
@@ -40,9 +41,10 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
         'bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
 };
 
-const buttonSizesToClasses: Record<ValueOf<typeof ButtonSize>, string> = {
-    [ButtonSize.SMALL]: 'px-4 py-2 h-8 text-sm font-bold gap-1',
-    [ButtonSize.MEDIUM]: 'px-6 py-4 h-14 text-sm font-bold gap-2',
+const buttonSizesToClasses: Record<ButtonSize, string> = {
+    [ComponentSize.SMALL]: 'px-4 py-2 h-8 text-sm font-bold gap-1',
+    [ComponentSize.MEDIUM]: 'px-6 py-4 h-14 text-sm font-bold gap-2',
+    [ComponentSize.LARGE]: 'px-8 py-6 h-20 text-xl font-bold gap-3',
 };
 
 const Button: React.FC<ButtonProperties> = ({
@@ -75,4 +77,4 @@ const Button: React.FC<ButtonProperties> = ({
     );
 };
 
-export { Button, ButtonSize, ButtonVariant };
+export { Button, ButtonVariant };

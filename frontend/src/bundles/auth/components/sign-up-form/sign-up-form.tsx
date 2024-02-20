@@ -1,6 +1,5 @@
 import {
     Button,
-    ButtonSize,
     ButtonVariant,
     Input,
     Link,
@@ -8,6 +7,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { userSignUpValidationSchema } from '~/bundles/users/users.js';
 
@@ -40,13 +40,13 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             </h3>
             <div className="flex flex-col gap-4">
                 <Button
-                    size={ButtonSize.MEDIUM}
+                    size={ComponentSize.MEDIUM}
                     variant={ButtonVariant.SECONDARY}
                     label="Continue with "
                     rightIcon="G"
                 />
                 <Button
-                    size={ButtonSize.MEDIUM}
+                    size={ComponentSize.MEDIUM}
                     variant={ButtonVariant.SECONDARY}
                     label="Continue with "
                     rightIcon="f"
@@ -90,7 +90,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         type="submit"
                         label={isLoading ? '' : 'Sign Up'}
                         variant={ButtonVariant.PRIMARY}
-                        size={ButtonSize.MEDIUM}
+                        size={ComponentSize.MEDIUM}
                         leftIcon={
                             isLoading && <Loader color={IconColor.SECONDARY} />
                         }
