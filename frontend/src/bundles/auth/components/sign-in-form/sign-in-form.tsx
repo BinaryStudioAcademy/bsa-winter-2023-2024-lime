@@ -37,7 +37,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <h1 className="text-center text-[1.88rem] font-bold text-slate-50">
+            <h1 className="text-left text-[1.875rem] font-bold text-white">
                 Hi! Login to your Account
             </h1>
             <div className="flex flex-col gap-4">
