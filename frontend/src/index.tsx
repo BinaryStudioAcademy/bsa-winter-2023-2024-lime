@@ -33,11 +33,11 @@ const routes = [
             },
             {
                 path: AppRoute.GOALS,
-                element: <div>Goals</div>,
+                element: <div>GOALS PAGE</div>,
             },
             {
                 path: AppRoute.WORKOUT,
-                element: <div>Workout</div>,
+                element: <div>WORKOUT PAGE</div>,
             },
             {
                 path: AppRoute.OVERVIEW,
@@ -45,15 +45,15 @@ const routes = [
             },
             {
                 path: AppRoute.SCHEDULE,
-                element: <div>Schedule</div>,
+                element: <div>SCHEDULE PAGE</div>,
             },
             {
                 path: AppRoute.HELP,
-                element: <div>Help</div>,
+                element: <div>HELP PAGE</div>,
             },
             {
                 path: AppRoute.LOGOUT,
-                element: <div>Logout</div>,
+                element: <div>LOGOUT PAGE</div>,
             },
         ],
     },
