@@ -5,11 +5,10 @@ import { storage } from '~/framework/storage/storage.js';
 import { applyThemeClassname } from '../helpers/helpers.js';
 import { type Theme } from '../types/types.js';
 
-// Async action to fetch theme from storage
 const fetchTheme = createAsyncThunk<Theme, undefined>(
     'theme/fetchTheme',
     async () => {
-        const currentTheme = await storage.get('theme');
+        const currentTheme = await storage.get('theme');        
         const theme = currentTheme === null ? 'dark' : (currentTheme as Theme);
         await storage.set('theme', theme);
         applyThemeClassname(theme);
@@ -17,7 +16,6 @@ const fetchTheme = createAsyncThunk<Theme, undefined>(
     },
 );
 
-// Async action to set theme in storage
 const setTheme = createAsyncThunk<Theme, Theme>(
     'theme/setTheme',
     async (theme: Theme) => {
