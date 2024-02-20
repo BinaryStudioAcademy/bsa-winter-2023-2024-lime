@@ -33,10 +33,7 @@ const SidebarNav = ({
     };
 
     return (
-        <Link
-            to={to}
-            className='flex items-center'
-        >
+        <Link to={to} className="flex items-center">
             <Button
                 type="button"
                 label={text}
