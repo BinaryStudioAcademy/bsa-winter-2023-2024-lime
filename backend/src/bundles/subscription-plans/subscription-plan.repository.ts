@@ -12,8 +12,19 @@ class SubscriptionPlanRepository implements Repository {
 
     public async find(
         query: Record<string, unknown>,
-    ): ReturnType<Repository['find']> {
-        return await this.subscriptionPlanModel.query().findOne(query);
+    ): Promise<SubscriptionPlanEntity | null> {
+        const plan = await this.subscriptionPlanModel
+            .query()
+            .findOne(query)
+            .execute();
+
+        if (!plan) {
+            return null;
+        }
+
+        return SubscriptionPlanEntity.initialize({
+            ...plan,
+        });
     }
 
     public async findAll(): Promise<SubscriptionPlanEntity[]> {
