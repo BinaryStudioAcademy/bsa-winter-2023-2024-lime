@@ -84,7 +84,7 @@ const Auth: React.FC = () => {
     const handleCloseModal = useCallback((): void => {
         void setIsOpen(false);
         void setIsPasswordForgot(false);
-        clearInterval(intervalReference.current);
+        clearTimeout(intervalReference.current);
     }, []);
 
     useEffect(() => {
@@ -105,7 +105,7 @@ const Auth: React.FC = () => {
         }
         return () => {
             setIsPasswordForgot(false);
-            clearInterval(intervalReference.current);
+            clearTimeout(intervalReference.current);
         };
     }, [navigate, resetPasswordStatus]);
 
