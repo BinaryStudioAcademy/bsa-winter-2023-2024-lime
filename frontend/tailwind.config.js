@@ -43,6 +43,7 @@ export default {
             semibold: '500',
             bold: '600',
             extrabold: '700',
+            bolder: '800',
         },
         lineHeight: {
             '3': '1rem',
