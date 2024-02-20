@@ -67,12 +67,12 @@ const PasswordReset: React.FC = () => {
     }, [dataStatus, navigate]);
 
     const classes = {
-        base: 'flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem]',
-        form: 'gap-8 text-white px-[2rem] pb-[3.75rem] pt-[3.75rem] lg:px-[11.25rem]',
+        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem]',
+        form: 'gap-6 text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
     };
 
     return (
-        <main className="bg-auth flex h-screen items-center bg-cover bg-no-repeat lg:flex-row">
+        <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
             <div className={getValidClassNames(classes.base, classes.form)}>
                 <h3 className="text-center text-3xl font-bold leading-8">
                     Set Up Your New Password
