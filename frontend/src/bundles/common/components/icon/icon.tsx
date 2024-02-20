@@ -1,11 +1,9 @@
 import { type ValueOf } from 'shared/src/types/types.js';
 
-import { getValidClassNames } from '../../helpers/helpers.js';
-import { type IconColor, type IconName, type IconSize } from './enums/enums.js';
-
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
+import { type IconColor, type IconName } from './enums/enums.js';
 import { IconComponent } from './enums/icon-components.enum.js';
 
 type Properties = {

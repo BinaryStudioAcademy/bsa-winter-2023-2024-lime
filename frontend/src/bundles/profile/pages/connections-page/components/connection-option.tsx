@@ -92,7 +92,7 @@ const ConnectionOption = ({
                 </div>
                 <Button
                     variant={isConnected ? 'secondary' : 'primary'}
-                    size={'small'}
+                    size={'sm'}
                     label={isConnected ? 'Disconnect' : 'Connect'}
                     className={getValidClassNames(
                         'h-6 max-w-full sm:h-10',
