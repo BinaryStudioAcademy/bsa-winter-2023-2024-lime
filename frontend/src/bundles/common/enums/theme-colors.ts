@@ -6,25 +6,25 @@ const ThemeColors = {
         },
         DARK: {
             TEXT: 'dark:text-white',
-            BACKGROUND: 'dark:bg-lm-black-200',
+            BACKGROUND: 'dark:bg-lm-black-200  ',
         },
     },
     INPUT: {
         LIGHT: {
-            TEXT: 'text-lm-grey-100 placeholder:text-lm-grey-200',
+            TEXT: 'text-lm-grey-100 placeholder:text-grey-200',
             BACKGROUND: 'bg-lm-black-100',
         },
         DARK: {
-            TEXT: 'dark:text-lm-grey-400 dark:placeholder:text-lm-grey-200',
+            TEXT: 'dark:text-white dark:placeholder:text-lm-grey-100',
             BACKGROUND: 'dark:bg-lm-black-400',
         },
     },
     ERROR: {
         LIGHT: {
-            TEXT: 'text-lm-red',
+            TEXT: 'text-lm-red bg-lm-black-100',
         },
         DARK: {
-            TEXT: 'dark:text-lm-red',
+            TEXT: 'dark:text-lm-red dark:bg-transparent p-1 dark:rounded-lg',
         },
     },
 } as const;
