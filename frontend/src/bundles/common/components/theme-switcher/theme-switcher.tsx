@@ -1,29 +1,29 @@
+import { actions as themeActions } from '~/bundles/common/store/theme.js';
+
 import {
+    useAppDispatch,
+    useAppSelector,
     useCallback,
-    useDarkTheme,
     useEffect,
-    useState,
 } from '../../hooks/hooks.js';
 import { Loader } from '../components.js';
 import { Switch } from './components/switch.js';
 
 function ThemeSwitcher(): JSX.Element {
-    const [colorTheme, setTheme, loading] = useDarkTheme();
+    const dispatch = useAppDispatch();
+    const { theme, loading } = useAppSelector((state) => state.theme);
 
-    const [darkSide, setDarkSide] = useState<boolean>(false);
-
-    const toggleDarkMode = useCallback(
-        (checked: boolean) => {
-            const newTheme = checked ? 'dark' : 'light';
-            setTheme(newTheme);
-            setDarkSide(checked);
-        },
-        [setTheme],
-    );
-
+    // Fetch theme when component mounts
     useEffect(() => {
-        setDarkSide(colorTheme === 'dark' ? true : false);
-    }, [colorTheme]);
+        void dispatch(themeActions.fetchTheme());
+    }, [dispatch]);
+
+    const toggleTheme = useCallback(() => {
+        if (!loading && theme) {
+            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            void dispatch(themeActions.setTheme(newTheme));
+        }
+    }, [dispatch, loading, theme]);
 
     if (loading) {
         return <Loader />;
@@ -33,8 +33,8 @@ function ThemeSwitcher(): JSX.Element {
         <>
             <div className="absolute bottom-0 right-0">
                 <Switch
-                    checked={darkSide}
-                    onChange={toggleDarkMode}
+                    checked={theme === 'dark' ? true : false}
+                    onChange={toggleTheme}
                     size={64}
                 />
             </div>
