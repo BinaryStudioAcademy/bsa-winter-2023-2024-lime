@@ -25,7 +25,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
     const { control, errors, handleSubmit } = useAppForm<PasswordResetPayload>({
         defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
         validationSchema: passwordResetValidationSchema,
-        mode: 'onChange',
+        mode: 'onSubmit',
     });
 
     const handleFormSubmit = useCallback(
