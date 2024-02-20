@@ -45,6 +45,9 @@ const App: React.FC = () => {
                 <li>
                     <Link to={AppRoute.SIGN_UP}>Sign up</Link>
                 </li>
+                <li>
+                    <Link to={AppRoute.PROFILE}>Profile</Link>
+                </li>
             </ul>
             <p>Current path: {pathname}</p>
 

@@ -32,15 +32,16 @@ const routes = [
                 path: AppRoute.SIGN_UP,
                 element: <Auth />,
             },
+            {
+                path: AppRoute.PROFILE,
+                element: <Profile />,
+                isPrivate: true,
+            },
         ],
     },
     {
         path: AppRoute.NOT_FOUND,
         element: <NotFound />,
-    },
-    {
-        path: AppRoute.PROFILE,
-        element: <Profile />,
     },
 ];
 

@@ -5,7 +5,7 @@ import { UnicodePattern } from './constants/constants.js';
 
 type UserUpdateProfileRequestValidationDto = {
     fullname: z.ZodString;
-    nickname: z.ZodString;
+    username: z.ZodString;
     dateOfBirth: z.ZodString;
     weight: z.ZodString;
     height: z.ZodString;
@@ -32,7 +32,7 @@ const userUpdateProfile = z
             .max(UserValidationRule.FULLNAME.MAX_LENGTH, {
                 message: UserValidationMessage.FULLNAME_LENGTH,
             }),
-        nickname: z
+        username: z
             .string()
             .trim()
             .regex(UnicodePattern.NICKNAME_PATTERN, {

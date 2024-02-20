@@ -45,6 +45,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             event_.preventDefault();
+
             const payload: UserUpdateProfileRequestDto = {
                 ...getValues(),
                 id: userId ?? null,
@@ -100,7 +101,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     type="text"
                     label="Nickname"
                     placeholder="MyNickname2024"
-                    name="nickname"
+                    name="username"
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}

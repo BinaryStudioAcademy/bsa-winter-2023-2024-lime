@@ -4,7 +4,7 @@ import { type Gender } from '../users.js';
 type UserUpdateProfileRequestDto = {
     id: number | null;
     fullname: string;
-    nickname: string;
+    username: string;
     dateOfBirth: string;
     weight: string;
     height: string;

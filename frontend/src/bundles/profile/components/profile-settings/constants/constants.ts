@@ -4,7 +4,7 @@ import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 const DEFAULT_UPDATE_PROFILE_PAYLOAD: UserUpdateProfileRequestDto = {
     id: 0,
     fullname: '',
-    nickname: '',
+    username: '',
     dateOfBirth: '',
     weight: '',
     height: '',
