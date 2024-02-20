@@ -12,8 +12,7 @@ import { Switch } from './components/switch.js';
 function ThemeSwitcher(): JSX.Element {
     const dispatch = useAppDispatch();
     const { theme, loading } = useAppSelector((state) => state.theme);
-
-    // Fetch theme when component mounts
+    
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());
     }, [dispatch]);
