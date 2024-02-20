@@ -1,13 +1,19 @@
 import OpenAI from 'openai';
-import { type ChatCompletionCreateParams, type ChatCompletionMessageParam } from 'openai/resources/index.js';
+import {
+    type ChatCompletion,
+    type ChatCompletionCreateParams,
+    type ChatCompletionMessageParam,
+} from 'openai/resources/index.js';
 
 class OpenAIService {
     private openai: OpenAI;
-   public constructor(apiKey: string) {
-       this.openai = new OpenAI({ apiKey });
+    public constructor(apiKey: string) {
+        this.openai = new OpenAI({ apiKey });
     }
 
-    public async sendRequest(messages: ChatCompletionMessageParam[]): Promise<OpenAI.Chat.ChatCompletion> {
+    public async sendRequest(
+        messages: ChatCompletionMessageParam[],
+    ): Promise<ChatCompletion> {
         const parameters: ChatCompletionCreateParams = {
             messages,
             model: 'gpt-3.5-turbo-0125',

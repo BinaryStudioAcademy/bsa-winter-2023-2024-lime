@@ -58,7 +58,7 @@ class BaseConfig implements Config {
                     format: String,
                     env: 'OPEN_AI_API_KEY',
                     default: null,
-                }
+                },
             },
             DB: {
                 USERNAME: {
