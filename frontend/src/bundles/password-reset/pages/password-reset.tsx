@@ -72,7 +72,7 @@ const PasswordReset: React.FC = () => {
     };
 
     return (
-        <main className="bg-auth flex h-screen flex-col-reverse items-center bg-cover bg-no-repeat lg:flex-row">
+        <main className="bg-auth flex h-screen items-center bg-cover bg-no-repeat lg:flex-row">
             <div className={getValidClassNames(classes.base, classes.form)}>
                 <h3 className="text-center text-3xl font-bold leading-8">
                     Set Up Your New Password
@@ -87,7 +87,7 @@ const PasswordReset: React.FC = () => {
                     />
                 )}
             </div>
-            <div className="flex flex-1 items-center justify-center text-xl text-white">
+            <div className="items-center justify-center text-xl text-white sm:hidden md:flex md:flex-1">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
         </main>
