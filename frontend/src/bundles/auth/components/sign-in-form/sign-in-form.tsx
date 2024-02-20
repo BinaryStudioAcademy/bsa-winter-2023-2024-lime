@@ -42,10 +42,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <h1 className="text-center text-3xl font-bold leading-8">
                 Hi! Login to your Account
             </h1>
-            <form
-                onSubmit={handleFormSubmit}
-                className="text-sm"
-            >
+            <form onSubmit={handleFormSubmit} className="text-sm">
                 <Input
                     control={control}
                     errors={errors}
