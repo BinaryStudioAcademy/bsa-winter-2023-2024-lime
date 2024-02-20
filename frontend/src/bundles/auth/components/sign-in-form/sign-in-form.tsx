@@ -6,6 +6,7 @@ import {
     Link,
     Loader,
 } from '~/bundles/common/components/components.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
@@ -26,11 +27,11 @@ const SignInForm: React.FC<Properties> = ({
     onModalOpen,
     isLoading,
 }) => {
-    const { control, errors, isValid, handleSubmit } =
-        useAppForm<UserAuthRequestDto>({
-            defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-            validationSchema: userAuthValidationSchema,
-        });
+    const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
+        defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+        validationSchema: userAuthValidationSchema,
+        mode: 'onSubmit',
+    });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -69,7 +70,7 @@ const SignInForm: React.FC<Properties> = ({
 
                     <div className="absolute -top-1 right-0">
                         <Button
-                            className="h-[1.5rem] px-[0] py-[0] text-[#798392]"
+                            className="[&]:text-lm-grey-100 h-[1.5rem] px-[0] py-[0]"
                             label="Forgot password?"
                             type="button"
                             size={ButtonSize.SMALL}
@@ -85,16 +86,18 @@ const SignInForm: React.FC<Properties> = ({
                         label={isLoading ? '' : 'Log In'}
                         variant={ButtonVariant.PRIMARY}
                         size={ButtonSize.MEDIUM}
-                        isDisabled={!isValid || isLoading}
-                        leftIcon={isLoading && <Loader />}
+                        isDisabled={isLoading}
+                        leftIcon={
+                            isLoading && <Loader color={IconColor.SECONDARY} />
+                        }
                     />
                 </div>
             </form>
             <p className="text-center text-sm">
-                No account?
+                No account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">
-                        Go to Create an account
+                        Create an account
                     </span>
                 </Link>
             </p>
