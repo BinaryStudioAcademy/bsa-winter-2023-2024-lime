@@ -78,7 +78,8 @@ const Auth: React.FC = () => {
         base: `relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem] ${ThemeCompose.STANDART.BACKGROUND} ${ThemeCompose.STANDART.TEXT}`,
         form: 'justify-between px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
         main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
-        logoContainer: 'hidden flex-1 items-center justify-center text-xl text-white lg:flex',
+        logoContainer:
+            'hidden flex-1 items-center justify-center text-xl text-white lg:flex',
     };
 
     return (

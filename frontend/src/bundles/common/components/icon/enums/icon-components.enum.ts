@@ -14,7 +14,7 @@ const IconComponent: Record<
     logoIcon: LogoIcon,
     notFoundIcon: NotFoundIcon,
     moonIcon: MoonIcon,
-    sunIcon: SunIcon
+    sunIcon: SunIcon,
 } as const;
 
 export { IconComponent };
