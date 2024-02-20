@@ -18,8 +18,6 @@ class SubscriptionModel extends AbstractModel {
 
     public 'subscriptionToken': string;
 
-    public 'customerToken': string;
-
     public 'status': string;
 
     public 'expirationDate': Date;

@@ -1,20 +1,15 @@
 import { stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
-import { type SubscriptionPlanRepository } from '../subscription-plans/subscription-plan.repository.js';
+import { userService } from '../users/users.js';
 import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionRepository } from './subscription.repository.js';
 
 class SubscriptionService implements Service {
     private subscriptionRepository: SubscriptionRepository;
-    private subscriptionPlanRepository: SubscriptionPlanRepository;
 
-    public constructor(
-        subscriptionRepository: SubscriptionRepository,
-        subscriptionPlanRepository: SubscriptionPlanRepository,
-    ) {
+    public constructor(subscriptionRepository: SubscriptionRepository) {
         this.subscriptionRepository = subscriptionRepository;
-        this.subscriptionPlanRepository = subscriptionPlanRepository;
     }
 
     public find(): ReturnType<Service['find']> {
@@ -40,14 +35,20 @@ class SubscriptionService implements Service {
     public async subscribe({
         planId,
         userId,
-        customerToken,
         priceToken,
     }: {
         userId: number;
         planId: number;
-        customerToken: string;
         priceToken: string;
     }): Promise<{ subscriptionId: string; clientSecret: string } | null> {
+        const customerToken = await userService.getOrCreateStripeCustomer({
+            userId,
+        });
+
+        if (!customerToken) {
+            return null;
+        }
+
         const { subscriptionId, clientSecret, status, expirationDate } =
             await stripeService.createSubscription({
                 customerId: customerToken,

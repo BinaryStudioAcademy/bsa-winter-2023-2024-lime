@@ -12,6 +12,20 @@ class StipeService {
         });
     }
 
+    public async createCustomer({ email }: { email: string }): Promise<string> {
+        const { id } = await this.stripeApi.customers.create({ email });
+        return id;
+    }
+
+    public async deleteCustomer({ id }: { id: string }): Promise<boolean> {
+        try {
+            await this.stripeApi.customers.del(id);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
     public async createSubscriptionPlan({
         name,
         price,

@@ -33,6 +33,7 @@ class UserRepository implements Repository {
             weight: userDetails.weight,
             height: userDetails.height,
             gender: userDetails.gender,
+            customerToken: userDetails.customerToken,
         });
     }
 
@@ -54,6 +55,7 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                customerToken: userDetails.customerToken,
             });
         });
     }
@@ -87,6 +89,7 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                customerToken: userDetails.customerToken,
             });
         } catch (error) {
             await trx.rollback();
@@ -96,6 +99,16 @@ class UserRepository implements Repository {
 
     public update(): ReturnType<Repository['update']> {
         return Promise.resolve(null);
+    }
+
+    public async updateStripeCustomerToken(
+        id: number,
+        customerToken: string,
+    ): Promise<void> {
+        await this.userModel.relatedQuery('userDetails').for(id).patch({
+            customerToken,
+            updatedAt: new Date().toISOString(),
+        });
     }
 
     public delete(): ReturnType<Repository['delete']> {

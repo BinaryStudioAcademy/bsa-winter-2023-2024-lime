@@ -9,8 +9,6 @@ class SubscriptionEntity implements Entity {
 
     private 'subscriptionToken': string;
 
-    private 'customerToken': string;
-
     private 'status': string;
 
     private 'expirationDate': Date;
@@ -20,7 +18,6 @@ class SubscriptionEntity implements Entity {
         userId,
         planId,
         subscriptionToken,
-        customerToken,
         status,
         expirationDate,
     }: {
@@ -28,7 +25,6 @@ class SubscriptionEntity implements Entity {
         userId: number;
         planId: number;
         subscriptionToken: string;
-        customerToken: string;
         status: string;
         expirationDate: Date;
     }) {
@@ -36,7 +32,6 @@ class SubscriptionEntity implements Entity {
         this.userId = userId;
         this.planId = planId;
         this.subscriptionToken = subscriptionToken;
-        this.customerToken = customerToken;
         this.status = status;
         this.expirationDate = expirationDate;
     }
@@ -46,7 +41,6 @@ class SubscriptionEntity implements Entity {
         userId,
         planId,
         subscriptionToken,
-        customerToken,
         status,
         expirationDate,
     }: {
@@ -54,7 +48,6 @@ class SubscriptionEntity implements Entity {
         userId: number;
         planId: number;
         subscriptionToken: string;
-        customerToken: string;
         status: string;
         expirationDate: Date;
     }): SubscriptionEntity {
@@ -63,7 +56,6 @@ class SubscriptionEntity implements Entity {
             userId,
             planId,
             subscriptionToken,
-            customerToken,
             status,
             expirationDate,
         });
@@ -73,7 +65,6 @@ class SubscriptionEntity implements Entity {
         userId,
         planId,
         subscriptionToken,
-        customerToken,
         status,
         expirationDate,
     }: {
@@ -89,7 +80,6 @@ class SubscriptionEntity implements Entity {
             userId,
             planId,
             subscriptionToken,
-            customerToken,
             status,
             expirationDate,
         });
@@ -100,7 +90,6 @@ class SubscriptionEntity implements Entity {
         userId: number;
         planId: number;
         subscriptionToken: string;
-        customerToken: string;
         status: string;
         expirationDate: Date;
     } {
@@ -109,7 +98,6 @@ class SubscriptionEntity implements Entity {
             userId: this.userId,
             planId: this.planId,
             subscriptionToken: this.subscriptionToken,
-            customerToken: this.customerToken,
             status: this.status,
             expirationDate: this.expirationDate,
         };
@@ -119,7 +107,6 @@ class SubscriptionEntity implements Entity {
         userId: number;
         planId: number;
         subscriptionToken: string;
-        customerToken: string;
         status: string;
         expirationDate: Date;
     } {
@@ -127,7 +114,6 @@ class SubscriptionEntity implements Entity {
             userId: this.userId,
             planId: this.planId,
             subscriptionToken: this.subscriptionToken,
-            customerToken: this.customerToken,
             status: this.status,
             expirationDate: this.expirationDate,
         };

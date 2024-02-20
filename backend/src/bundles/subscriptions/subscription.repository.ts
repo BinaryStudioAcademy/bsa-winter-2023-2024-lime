@@ -33,14 +33,8 @@ class SubscriptionRepository
     public async create(
         entity: SubscriptionEntity,
     ): Promise<SubscriptionEntity> {
-        const {
-            userId,
-            planId,
-            subscriptionToken,
-            customerToken,
-            status,
-            expirationDate,
-        } = entity.toNewObject();
+        const { userId, planId, subscriptionToken, status, expirationDate } =
+            entity.toNewObject();
 
         const subscription = await this.subscriptionModel
             .query()
@@ -48,7 +42,6 @@ class SubscriptionRepository
                 userId,
                 planId,
                 subscriptionToken,
-                customerToken,
                 status,
                 expirationDate,
             })

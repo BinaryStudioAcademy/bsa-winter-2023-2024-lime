@@ -1,16 +1,20 @@
 import { type Knex } from 'knex';
 
-const TABLE_NAME = 'subscriptions';
+const SUBSCRIPTIONS_TABLE_NAME = 'subscriptions';
 const USERS_TABLE_NAME = 'users';
+const USERS_DETAILS_TABLE_NAME = 'user_details';
 const SUBSCRIPTION_PLANS_TABLE_NAME = 'subscription_plans';
 
-const ColumnName = {
+const UserDetailsColumn = {
+    CUSTOMER_TOKEN: 'customer_token',
+};
+
+const SubscriptionsColumn = {
     ID: 'id',
     USER_ID: 'user_id',
     PLAN_ID: 'plan_id',
     PRICE: 'price',
     SUBSCRIPTION_TOKEN: 'subscription_token',
-    CUSTOMER_TOKEN: 'customer_token',
     STATUS: 'status',
     EXPIRATION_DATE: 'expiration_date',
     CREATED_AT: 'created_at',
@@ -18,42 +22,49 @@ const ColumnName = {
 };
 
 async function up(knex: Knex): Promise<void> {
-    return knex.schema.createTable(TABLE_NAME, (table) => {
-        table.increments(ColumnName.ID).primary();
+    await knex.schema.alterTable(USERS_DETAILS_TABLE_NAME, (table) => {
+        table.string(UserDetailsColumn.CUSTOMER_TOKEN).unique().nullable();
+    });
+
+    await knex.schema.createTable(SUBSCRIPTIONS_TABLE_NAME, (table) => {
+        table.increments(SubscriptionsColumn.ID).primary();
         table
-            .integer(ColumnName.USER_ID)
+            .integer(SubscriptionsColumn.USER_ID)
             .unsigned()
             .unique()
             .notNullable()
-            .references(ColumnName.ID)
+            .references(SubscriptionsColumn.ID)
             .inTable(USERS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
         table
-            .integer(ColumnName.PLAN_ID)
+            .integer(SubscriptionsColumn.PLAN_ID)
             .unsigned()
             .unique()
             .notNullable()
-            .references(ColumnName.ID)
+            .references(SubscriptionsColumn.ID)
             .inTable(SUBSCRIPTION_PLANS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
-        table.string(ColumnName.SUBSCRIPTION_TOKEN).unique().notNullable();
-        table.string(ColumnName.CUSTOMER_TOKEN).unique().notNullable();
-        table.string(ColumnName.STATUS).notNullable();
-        table.dateTime(ColumnName.EXPIRATION_DATE).notNullable();
         table
-            .dateTime(ColumnName.CREATED_AT)
+            .string(SubscriptionsColumn.SUBSCRIPTION_TOKEN)
+            .unique()
+            .notNullable();
+        table.string(SubscriptionsColumn.STATUS).notNullable();
+        table.dateTime(SubscriptionsColumn.EXPIRATION_DATE).notNullable();
+        table
+            .dateTime(SubscriptionsColumn.CREATED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
         table
-            .dateTime(ColumnName.UPDATED_AT)
+            .dateTime(SubscriptionsColumn.UPDATED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
     });
 }
 async function down(knex: Knex): Promise<void> {
-    return knex.schema.dropTableIfExists(TABLE_NAME);
+    await knex.schema.dropTableIfExists(USERS_DETAILS_TABLE_NAME);
+    await knex.schema.dropTableIfExists(SUBSCRIPTIONS_TABLE_NAME);
 }
 
 export { down, up };
