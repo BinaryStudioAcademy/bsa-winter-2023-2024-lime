@@ -1,8 +1,8 @@
 import logo from '~/assets/img/logo.svg';
 
-import { AppRoute } from '../../enums/enums.js';
+import { AppRoute, ComponentSize } from '../../enums/enums.js';
 import { Icon, Layout, Link } from '../components.js';
-import { IconColor, IconSize } from '../icon/enums/enums.js';
+import { IconColor } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';
 
@@ -23,7 +23,7 @@ const Header = (): JSX.Element => {
                     <Icon
                         name={'logoIcon'}
                         color={IconColor.PRIMARY}
-                        size={IconSize.LARGE}
+                        size={ComponentSize.LARGE}
                     />
                 </div>
                 <div className={styles['header__navigation']}>
