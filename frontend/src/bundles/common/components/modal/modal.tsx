@@ -25,7 +25,7 @@ const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
                 />
 
                 <div className="max-w-xs">
-                    <h3 className="text-lm-grey-200 mb-10 text-xl font-extrabold leading-6">
+                    <h3 className="mb-10 text-left text-[1.875rem] font-bold text-white">
                         {title}
                     </h3>
 
