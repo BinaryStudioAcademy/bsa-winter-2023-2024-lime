@@ -3,6 +3,7 @@ import {
     Link,
     Loader,
     RouterOutlet,
+    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
@@ -62,6 +63,7 @@ const App: React.FC = () => {
                     </ul>
                 </>
             )}
+            <ThemeSwitcher />
         </>
     );
 };
