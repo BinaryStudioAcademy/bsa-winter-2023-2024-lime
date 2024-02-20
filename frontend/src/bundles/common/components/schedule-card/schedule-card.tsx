@@ -1,0 +1,55 @@
+type Properties = {
+    title?: string;
+    imageSrc?: string;
+    name: string;
+    data: string;
+    chip: string;
+};
+
+const ScheduleCard: React.FC<Properties> = ({
+    title,
+    imageSrc,
+    name,
+    data,
+    chip,
+}) => {
+    return (
+        <div className="schedule-card bg-lm-black-100 w-full rounded-lg border p-4 ">
+            {title && (
+                <div className="text-md mb-4 font-semibold leading-3 text-white">
+                    {title}
+                </div>
+            )}
+
+            <div className="flex flex-wrap items-center justify-between">
+                <div className="flex items-center justify-start">
+                    {imageSrc && (
+                        <div className="mr-2">
+                            <img
+                                src={imageSrc}
+                                width="34"
+                                height="34"
+                                alt={name}
+                            />
+                        </div>
+                    )}
+
+                    <div>
+                        <div className="text-lm-grey-200 leading-1 mb-2 text-sm font-bold">
+                            {name}
+                        </div>
+                        <div className="text-lm-grey-300 leading-1 text-xs font-normal">
+                            {data}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="rounded-30 bg-lm-grey-500 text-lm-yellow-100 px-2 py-1 text-xs font-semibold leading-3">
+                    {chip}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export { ScheduleCard };
