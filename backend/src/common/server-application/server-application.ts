@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { subscriptionPlanController } from '~/bundles/subscription-plans/subscription-plan.js';
 import { subscriptionController } from '~/bundles/subscriptions/subscriptions.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
@@ -14,6 +15,7 @@ const apiV1 = new BaseServerAppApi(
     ...authController.routes,
     ...userController.routes,
     ...subscriptionController.routes,
+    ...subscriptionPlanController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

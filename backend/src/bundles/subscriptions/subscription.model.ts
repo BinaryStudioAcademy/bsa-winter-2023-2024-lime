@@ -33,7 +33,7 @@ class SubscriptionModel extends AbstractModel {
                 modelClass: SubscriptionPlanModel,
                 join: {
                     from: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.PLAN_ID}`,
-                    to: `${DatabaseTableName.PLANS}.${SubscriptionPlanAttributes.ID}`,
+                    to: `${DatabaseTableName.SUBSCRIPTION_PLANS}.${SubscriptionPlanAttributes.ID}`,
                 },
             },
             users: {
@@ -41,7 +41,7 @@ class SubscriptionModel extends AbstractModel {
                 modelClass: UserModel,
                 join: {
                     from: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.USER_ID}`,
-                    to: `${DatabaseTableName.PLANS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.SUBSCRIPTION_PLANS}.${UserAttributes.ID}`,
                 },
             },
         };

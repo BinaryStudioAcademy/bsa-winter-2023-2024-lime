@@ -20,16 +20,16 @@ class SubscriptionPlanModel extends AbstractModel {
     public 'priceToken': string;
 
     public static override get tableName(): string {
-        return DatabaseTableName.SUBSCRIPTIONS;
+        return DatabaseTableName.SUBSCRIPTION_PLANS;
     }
 
     public static override get relationMappings(): RelationMappings {
         return {
-            subscriptionPlans: {
+            subscriptions: {
                 relation: Model.HasManyRelation,
                 modelClass: SubscriptionPlanModel,
                 join: {
-                    from: `${DatabaseTableName.PLANS}.${SubscriptionPlanAttributes.ID}`,
+                    from: `${DatabaseTableName.SUBSCRIPTION_PLANS}.${SubscriptionPlanAttributes.ID}`,
                     to: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.PLAN_ID}`,
                 },
             },
