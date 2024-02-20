@@ -4,8 +4,10 @@ export {
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    Gender,
     userAuthValidationSchema,
     UsersApiPath,
+    userSignUpValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {

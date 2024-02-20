@@ -1,3 +1,4 @@
+export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonSize, ButtonVariant } from './button/button.js';
 export { Header } from './header/header.js';
 export { Icon } from './icon/icon.js';
