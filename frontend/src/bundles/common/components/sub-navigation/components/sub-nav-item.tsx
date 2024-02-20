@@ -1,15 +1,17 @@
+import { NavLink } from 'react-router-dom';
+
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {
     label: string;
-    onClick: () => void;
+    to: string;
     isActive: boolean;
     bgColor: string;
 };
 
 const SubNavItem = ({
     label,
-    onClick,
+    to,
     isActive,
     bgColor,
 }: Properties): JSX.Element => {
@@ -26,7 +28,7 @@ const SubNavItem = ({
     };
 
     return (
-        <button onClick={onClick} className="relative">
+        <NavLink to={to} className="relative">
             <span
                 className={getValidClassNames(
                     circleStyles.base,
@@ -42,7 +44,7 @@ const SubNavItem = ({
             >
                 {label}
             </p>
-        </button>
+        </NavLink>
     );
 };
 
