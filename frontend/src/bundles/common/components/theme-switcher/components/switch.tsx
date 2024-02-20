@@ -1,8 +1,7 @@
-import { useCallback } from 'react';
+import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
 import { Icon } from '../../components.js';
 import { IconColor } from '../../icon/enums/icon-colors.enum.js';
-import { IconSize } from '../../icon/enums/icon-size.enum.js';
 
 type SwitchProperties = {
     checked: boolean;
@@ -27,7 +26,7 @@ const Switch = ({
             <span className="slider" style={{ width: size, height: size }}>
                 <Icon
                     name={checked ? 'moonIcon' : 'sunIcon'}
-                    size={IconSize.LARGE}
+                    size={'lg'}
                     color={IconColor.PRIMARY}
                 />
             </span>
