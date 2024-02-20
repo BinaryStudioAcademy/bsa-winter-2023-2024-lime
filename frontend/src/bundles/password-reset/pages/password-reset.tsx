@@ -38,6 +38,10 @@ const PasswordReset: React.FC = () => {
 
     const handleResetPassword = useCallback(
         (payload: PasswordResetPayload): void => {
+            if (!userId) {
+                return;
+            }
+
             const resetPayload = {
                 id: Number(userId),
                 token: resetToken,

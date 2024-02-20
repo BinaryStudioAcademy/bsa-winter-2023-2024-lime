@@ -22,11 +22,11 @@ const ResetPasswordForm: React.FC<Properties> = ({
     isLoading,
     onCancel,
 }) => {
-    const { control, errors, isValid, handleSubmit } =
-        useAppForm<PasswordResetPayload>({
-            defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
-            validationSchema: passwordResetValidationSchema,
-        });
+    const { control, errors, handleSubmit } = useAppForm<PasswordResetPayload>({
+        defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
+        validationSchema: passwordResetValidationSchema,
+        mode: 'onChange',
+    });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -69,7 +69,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
                     label="Send"
                     variant={ButtonVariant.PRIMARY}
                     size={ButtonSize.MEDIUM}
-                    isDisabled={!isValid || isLoading}
+                    isDisabled={isLoading}
                 />
 
                 <Button
