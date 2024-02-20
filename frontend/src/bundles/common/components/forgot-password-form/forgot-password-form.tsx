@@ -5,10 +5,10 @@ import {
 
 import {
     Button,
-    ButtonSize,
     ButtonVariant,
     Input,
 } from '~/bundles/common/components/components.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
 import { DEFAULT_PASSWORD_FORGOT_PAYLOAD } from './constants/constants.js';
@@ -61,7 +61,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
                     type="submit"
                     label="Send"
                     variant={ButtonVariant.PRIMARY}
-                    size={ButtonSize.MEDIUM}
+                    size={ComponentSize.MEDIUM}
                     isDisabled={isLoading}
                 />
 
@@ -69,7 +69,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
                     type="button"
                     label="Cancel"
                     variant={ButtonVariant.PRIMARY}
-                    size={ButtonSize.MEDIUM}
+                    size={ComponentSize.MEDIUM}
                     isDisabled={isLoading}
                     onClick={handleFormCancel}
                 />
