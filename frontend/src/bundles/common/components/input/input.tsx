@@ -82,7 +82,7 @@ const Input = <T extends FieldValues>({
                 )}
             </div>
             {hasError && (
-                <span className="text-lm-red bg-lm-black-100 dark:text-lm-red p-1 dark:rounded-lg dark:bg-transparent">
+                <span className="text-lm-red px-3 text-sm rounded-lg bg-lm-black-100 dark:text-lm-red dark:rounded-lg dark:bg-transparent dark:font-normal">
                     {error as string}
                 </span>
             )}
