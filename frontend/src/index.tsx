@@ -56,6 +56,7 @@ const routes = [
                 element: <div>LOGOUT PAGE</div>,
             },
         ],
+        isPrivate: true,
     },
     {
         path: AppRoute.NOT_FOUND,
