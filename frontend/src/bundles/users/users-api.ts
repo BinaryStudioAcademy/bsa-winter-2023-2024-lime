@@ -39,7 +39,7 @@ class UserApi extends BaseHttpApi {
         payload: UserUpdateProfileRequestDto,
     ): Promise<UserAuthResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.UPDATE_USER, userId, {}),
+            this.getFullEndpoint(UsersApiPath.UPDATE_USER, `/${userId}`, {}),
             {
                 method: 'PATCH',
                 contentType: ContentType.JSON,
@@ -47,7 +47,6 @@ class UserApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-
         return await response.json<UserAuthResponseDto>();
     }
 }
