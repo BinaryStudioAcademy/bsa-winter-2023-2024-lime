@@ -76,9 +76,9 @@ export default {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
-                'wave-yellow': 'url("~/assets/img/wave-1.svg")',
-                'wave-magenta': 'url("~/assets/img/wave-2.svg")',
-                'wave-purple': 'url("~/assets/img/wave-3.svg")',
+                'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
+                'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
+                'wave-purple': 'url("~/assets/img/wave-purple.svg")',
             },
             borderRadius: {
                 '34': '2.1rem',
