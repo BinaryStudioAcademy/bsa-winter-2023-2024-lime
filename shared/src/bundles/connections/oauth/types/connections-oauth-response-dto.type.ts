@@ -1,9 +1,6 @@
-/*
-  Google Fit does not provide expires_at field, 
-  but it can be calculated like this:
-
-  expires_at = expires_in + issued_at
-*/
+// Google Fit does not provide expires_at field,
+// but it can be calculated like this:
+// expires_at = expires_in + issued_at
 
 type ConnectionsOAuthResponseDto = {
     id: number;

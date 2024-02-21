@@ -13,10 +13,8 @@ import { type Logger } from '~/common/logger/logger.js';
 import { StravaPaths } from './enums/enums.js';
 import { type StravaService } from './strava.service.js';
 
-/*
-  Strava OAuth Url to open a prompt window for auth (replace client_id):
-  https://www.strava.com/oauth/authorize?client_id=REPLACE_WITH_CLIENT_ID&response_type=code&redirect_uri=http://localhost:3001/api/v1/connections/exchange-token&approval_prompt=force&scope=read,activity:read_all
-*/
+//  Strava OAuth Url to open a prompt window for auth (replace client_id):
+//  https://www.strava.com/oauth/authorize?client_id=REPLACE_WITH_CLIENT_ID&response_type=code&redirect_uri=http://localhost:3001/api/v1/connections/exchange-token&approval_prompt=force&scope=read,activity:read_all
 
 class StravaController extends BaseController {
     private stravaService: StravaService;
