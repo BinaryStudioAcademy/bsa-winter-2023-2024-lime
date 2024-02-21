@@ -9,8 +9,14 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
-            'lm-purple': '#7306FF',
-            'lm-magenta': '#DC40CD',
+            'lm-purple': {
+                100: '#7E51FF',
+                200: '#7306FF',
+            },
+            'lm-magenta': {
+                100: '#FF5EB1',
+                200: '#DC40CD',
+            },
             'lm-yellow': {
                 100: '#E0FE10',
                 200: '#B2CA0D',
@@ -67,9 +73,12 @@ export default {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
-                'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("./src/assets/img/auth-bg.png")',
+                'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
+                'wave-yellow': 'url("~/assets/img/wave-1.svg")',
+                'wave-magenta': 'url("~/assets/img/wave-2.svg")',
+                'wave-purple': 'url("~/assets/img/wave-3.svg")',
             },
             borderRadius: {
                 '34': '2.1rem',
