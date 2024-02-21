@@ -34,7 +34,7 @@ class BaseDatabase implements Database {
 
     private get initialConfig(): TKnex.Config {
         const sslConfig =
-            this.appConfig.ENV.APP.ENVIRONMENT === AppEnvironment.DEVELOPMENT
+            this.appConfig.ENV.APP.ENVIRONMENT === AppEnvironment.LOCAL
                 ? {}
                 : { ssl: { rejectUnauthorized: false } };
 
