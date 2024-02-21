@@ -1,7 +1,7 @@
 import { Icon } from '~/bundles/common/components/components.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { CircularProgress } from './components/components.js';
+import { CircleProgress } from '../components.js';
 import { GoalTypes } from './enums/goal-types.enums.js';
 
 type WidgetProperties = {
@@ -13,14 +13,14 @@ type WidgetProperties = {
 };
 
 const GoalWidget = ({
-    goalType = GoalTypes.GENERAL,
+    goalType = GoalTypes.OVERVIEW,
     title = 'Track Your Daily Activities',
     subTitle = '',
     value,
     target,
 }: WidgetProperties): JSX.Element => {
     const rightTitle =
-        goalType === GoalTypes.GENERAL ? 'Exercises' : 'Running on Track';
+        goalType === GoalTypes.OVERVIEW ? 'Exercises' : 'Running on Track';
 
     return (
         <div className="bg-goalWidget flex max-w-[50rem] items-center rounded-xl">
@@ -34,36 +34,17 @@ const GoalWidget = ({
             </div>
             <div className="flex w-3/6 items-center justify-end">
                 <div className="flex w-2/4 text-white">
-                    {goalType === GoalTypes.GENERAL ?? (
+                    {goalType === GoalTypes.OVERVIEW ?? (
                         <Icon name="logoIcon" size="md"></Icon>
                     )}
                     <p className="text-md font-extrabold">{rightTitle}</p>
                 </div>
                 <div className="flex w-2/4 items-center justify-center">
-                    <CircularProgress value={value} target={target} />
-                    <div className="absolute text-white">
-                        {goalType === GoalTypes.GENERAL && (
-                            <>
-                                <p className="inline-flex text-4xl font-extrabold">
-                                    {value}
-                                </p>
-                                <p className="inline-flex font-normal">
-                                    /{target}
-                                </p>
-                            </>
-                        )}
-                        {goalType === GoalTypes.RUNNING ||
-                            (goalType === GoalTypes.WALKING && (
-                                <>
-                                    <p className="inline-flex text-4xl font-extrabold">
-                                        {value}
-                                    </p>
-                                    <p className="inline-flex font-normal">
-                                        km
-                                    </p>
-                                </>
-                            ))}
-                    </div>
+                    <CircleProgress
+                        value={value}
+                        target={target}
+                        goalType={goalType}
+                    />
                 </div>
             </div>
         </div>
