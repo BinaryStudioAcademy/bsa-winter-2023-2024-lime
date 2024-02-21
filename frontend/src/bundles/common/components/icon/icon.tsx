@@ -35,4 +35,4 @@ const Icon = ({ name, color, size, className }: Properties): JSX.Element => {
     );
 };
 
-export { Icon };
+export { Icon, sizeToClass };

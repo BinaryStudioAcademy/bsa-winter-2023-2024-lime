@@ -13,14 +13,13 @@ import {
     OverviewIcon,
     ScheduleIcon,
 } from '../icon/enums/icon-components.enum.js';
+import { sizeToClass } from '../icon/icon.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
 import { iconsSvgr } from './enums/enums.js';
 
 type Properties = {
     isOpen?: boolean;
 };
-
-const ICON_CLASSNAME = 'inline h-8 w-8 flex justify-center items-center';
 
 const styles = {
     baseStyle:
@@ -55,7 +54,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             <div className="inner h-3/4 w-full border-gray-700 ">
                 <div className="flex flex-col gap-4">
                     <SidebarNav
-                        icon={<OverviewIcon className={ICON_CLASSNAME} />}
+                        icon={<OverviewIcon className={sizeToClass['lg']} />}
                         text="Overview"
                         to={AppRoute.OVERVIEW}
                         isActive={activeRoute === AppRoute.OVERVIEW}
@@ -73,7 +72,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         isActive={activeRoute === AppRoute.GOALS}
                     />
                     <SidebarNav
-                        icon={<ScheduleIcon className={ICON_CLASSNAME} />}
+                        icon={<ScheduleIcon className={sizeToClass['lg']} />}
                         text="My schedule"
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
@@ -84,13 +83,13 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             <div className="flex h-1/4 w-full">
                 <div className="flex w-full flex-col justify-center gap-3">
                     <SidebarNav
-                        icon={<HelpIcon className={ICON_CLASSNAME} />}
+                        icon={<HelpIcon className={sizeToClass['lg']} />}
                         text="Help"
                         to={AppRoute.HELP}
                         isActive={activeRoute === AppRoute.HELP}
                     />
                     <SidebarNav
-                        icon={<LogoutIcon className={ICON_CLASSNAME} />}
+                        icon={<LogoutIcon className={sizeToClass['lg']} />}
                         text="Logout"
                         to={AppRoute.LOGOUT}
                     />
