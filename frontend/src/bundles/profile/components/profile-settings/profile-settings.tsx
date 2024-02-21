@@ -25,6 +25,10 @@ type Properties = {
     isLoading: boolean;
 };
 
+const extractNumbers = (value: string | undefined | null): string => {
+    return (value || '').trim().replaceAll(/\D/g, '');
+};
+
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const userId = useAppSelector((state) => state.auth.user?.id);
 
@@ -49,6 +53,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
             const payload: UserUpdateProfileRequestDto = {
                 ...getValues(),
+                weight: extractNumbers(getValues().weight),
+                height: extractNumbers(getValues().height),
+                fullName: (getValues().fullName || '').trim(),
+                username: (getValues().username || '').trim(),
                 id: userId ?? null,
             };
 
