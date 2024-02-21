@@ -11,7 +11,7 @@ import {
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { NotFound } from '~/bundles/common/pages/pages.js';
+import { Goals, NotFound } from '~/bundles/common/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
 const routes = [
@@ -33,6 +33,10 @@ const routes = [
     {
         path: AppRoute.SIGN_UP,
         element: <Auth />,
+    },
+    {
+        path: AppRoute.GOALS,
+        element: <Goals />,
     },
     {
         path: AppRoute.NOT_FOUND,
