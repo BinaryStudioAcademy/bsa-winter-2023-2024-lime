@@ -75,7 +75,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <p className="text-center text-sm font-normal leading-4">
                 No account?{' '}
                 <Link to={AppRoute.SIGN_UP}>
-                    <span className="text-lm-black-100 font-extrabold dark:text-lm-yellow-100 dark:font-normal">
+                    <span className="text-lm-black-100 dark:text-lm-yellow-100 font-extrabold dark:font-normal">
                         Go to Create an account
                     </span>
                 </Link>
