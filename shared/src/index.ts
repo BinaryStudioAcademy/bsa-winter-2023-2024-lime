@@ -1,5 +1,9 @@
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export {
+    type ConnectionsOAuthResponseDto,
+    ConnectionsOAuthPath,
+} from './bundles/connections/connections.js';
+export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
