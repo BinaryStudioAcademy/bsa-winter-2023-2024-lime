@@ -25,7 +25,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
     const { control, errors, handleSubmit } = useAppForm<PasswordResetPayload>({
         defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
         validationSchema: passwordResetValidationSchema,
-        mode: 'onSubmit',
+        mode: 'onTouched',
     });
 
     const handleFormSubmit = useCallback(
@@ -49,6 +49,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
             </div>
 
@@ -60,6 +61,7 @@ const ResetPasswordForm: React.FC<Properties> = ({
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
             </div>
 

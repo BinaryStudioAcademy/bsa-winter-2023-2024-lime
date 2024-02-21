@@ -30,7 +30,7 @@ const SignInForm: React.FC<Properties> = ({
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
-        mode: 'onSubmit',
+        mode: 'onTouched',
     });
 
     const handleFormSubmit = useCallback(
@@ -42,10 +42,29 @@ const SignInForm: React.FC<Properties> = ({
 
     return (
         <>
-            <h1 className="text-center text-3xl font-bold leading-8">
+            <h1 className="text-left text-[1.875rem] font-bold text-white">
                 Hi! Login to your Account
             </h1>
-            <form onSubmit={handleFormSubmit} className="text-sm">
+            <div className="flex flex-col gap-4">
+                <Button
+                    size={ComponentSize.MEDIUM}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="G"
+                />
+                <Button
+                    size={ComponentSize.MEDIUM}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="f"
+                />
+            </div>
+
+            <p className="text-lm-grey-100 text-center text-xs">
+                or Sign in with Email
+            </p>
+
+            <form onSubmit={handleFormSubmit}>
                 <Input
                     type="email"
                     label="Email"
@@ -54,9 +73,10 @@ const SignInForm: React.FC<Properties> = ({
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
 
-                <div className="relative">
+                <div className="relative mb-8">
                     <Input
                         type="password"
                         label="Password"
@@ -64,9 +84,10 @@ const SignInForm: React.FC<Properties> = ({
                         control={control}
                         errors={errors}
                         isDisabled={isLoading}
+                        required
                     />
 
-                    <div className="absolute -top-1 right-0">
+                    <div className="absolute right-0 top-0">
                         <Button
                             className="[&]:text-lm-grey-100 h-[1.5rem] px-[0] py-[0]"
                             label="Forgot password?"

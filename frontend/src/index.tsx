@@ -25,6 +25,7 @@ const routes = [
                 element: 'Root',
             },
         ],
+        isPrivate: true,
     },
     {
         path: AppRoute.SIGN_IN,

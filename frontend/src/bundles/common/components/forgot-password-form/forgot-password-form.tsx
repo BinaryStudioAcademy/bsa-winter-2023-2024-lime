@@ -28,7 +28,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
         useAppForm<PasswordForgotRequestDto>({
             defaultValues: DEFAULT_PASSWORD_FORGOT_PAYLOAD,
             validationSchema: passwordForgotValidationSchema,
-            mode: 'onSubmit',
+            mode: 'onTouched',
         });
 
     const handleFormSubmit = useCallback(
@@ -53,6 +53,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
             </div>
 
