@@ -37,8 +37,7 @@ const CircleProgress = ({
     const { baseCircleClass, progressCircleClass } = color;
     const innerRadius = radius - stroke * 2;
     const circumference = innerRadius * 2 * Math.PI;
-    const progressCircleOffset =
-        circumference - (done / toDo) * circumference;
+    const progressCircleOffset = circumference - (done / toDo) * circumference;
 
     return (
         <div className="relative flex items-center justify-center">
