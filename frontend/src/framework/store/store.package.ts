@@ -41,7 +41,7 @@ class Store {
             reducer: {
                 auth: authReducer,
                 users: usersReducer,
-                theme: themeReducer
+                theme: themeReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({

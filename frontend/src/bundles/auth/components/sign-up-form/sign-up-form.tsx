@@ -53,7 +53,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
             </div>
 
-            <p className="text-lm-grey-100 text-center text-xs">
+            <p className="dark:text-lm-grey-100 text-center text-xs">
                 or Sign up with Email
             </p>
             <form onSubmit={handleFormSubmit}>
@@ -98,7 +98,10 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             </form>
             <p className="text-center text-sm">
                 Already have an account? Go to
-                <Link to={AppRoute.SIGN_IN} className="text-lm-yellow-100">
+                <Link
+                    to={AppRoute.SIGN_IN}
+                    className="text-lm-black-100 dark:text-lm-yellow-100 font-bold"
+                >
                     {' '}
                     Log in
                 </Link>

@@ -59,7 +59,7 @@ const Input = <T extends FieldValues>({
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
-                    className={`focus:border-lm-yellow-100 disabled:text-lm-grey-300 h-9 w-full rounded-lg border p-4 focus:outline-none text-lm-black-100 placeholder:text-grey-200 dark:text-white dark:placeholder:text-lm-grey-100 ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
+                    className={`focus:border-lm-yellow-100 disabled:text-lm-grey-300 text-lm-black-100 placeholder:text-grey-200 dark:placeholder:text-lm-grey-100 h-9 w-full rounded-lg border p-4 focus:outline-none dark:text-white ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
                     onFocus={onFocus}
                 />
                 {isPassword && (
@@ -78,7 +78,7 @@ const Input = <T extends FieldValues>({
                 )}
             </div>
             {hasError && (
-                <span className="text-lm-red bg-lm-black-100 dark:text-lm-red dark:bg-transparent p-1 dark:rounded-lg">
+                <span className="text-lm-red bg-lm-black-100 dark:text-lm-red p-1 dark:rounded-lg dark:bg-transparent">
                     {error as string}
                 </span>
             )}

@@ -39,9 +39,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <h1
-                className='text-center text-3xl font-bold leading-8 text-lm-black-100 dark:text-white'
-            >
+            <h1 className="text-lm-black-100 text-center text-3xl font-bold leading-8 dark:text-white">
                 Hi! Login to your Account
             </h1>
             <form onSubmit={handleFormSubmit} className="text-sm">
@@ -77,7 +75,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <p className="text-center text-sm font-normal leading-4">
                 No account?{' '}
                 <Link to={AppRoute.SIGN_UP}>
-                    <span className="text-lm-yellow-100">
+                    <span className="text-lm-black-100 font-extrabold dark:text-lm-yellow-100 dark:font-normal">
                         Go to Create an account
                     </span>
                 </Link>
