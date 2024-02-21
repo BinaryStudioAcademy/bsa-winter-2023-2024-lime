@@ -1,4 +1,5 @@
-import { Icon } from '../../components/components.js';
+import { Icon } from '~/bundles/common/components/components.js';
+
 import { CircularProgress } from './components/components.js';
 
 type WidgetProperties = {
