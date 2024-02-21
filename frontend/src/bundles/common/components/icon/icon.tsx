@@ -3,6 +3,7 @@ import { type ValueOf } from 'shared/src/types/types.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
+import { iconsSvgr } from '../sidebar/enums/enums.js';
 import { type IconColor } from './enums/enums.js';
 import { IconComponent } from './enums/icon-components.enum.js';
 import { type IconName } from './types/icon.type.js';
@@ -35,4 +36,18 @@ const Icon = ({ name, color, size, className }: Properties): JSX.Element => {
     );
 };
 
-export { Icon };
+const WorkoutIcon = (): JSX.Element => {
+    return <Icon name={iconsSvgr.WORKOUT} size={'lg'} />;
+};
+
+const GoalsIcon = (): JSX.Element => {
+    return <Icon name={iconsSvgr.GOALS} size={'lg'} />;
+};
+
+export { GoalsIcon, Icon, WorkoutIcon };
+export { CalendarDaysIcon as ScheduleIcon } from '@heroicons/react/16/solid';
+export {
+    QuestionMarkCircleIcon as HelpIcon,
+    ArrowLeftStartOnRectangleIcon as LogoutIcon,
+    Squares2X2Icon as OverviewIcon,
+} from '@heroicons/react/24/outline';

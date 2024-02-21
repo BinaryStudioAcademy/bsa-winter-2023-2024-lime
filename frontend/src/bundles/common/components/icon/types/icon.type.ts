@@ -2,11 +2,7 @@ type IconName =
     | 'arrowDown'
     | 'logoIcon'
     | 'notFoundIcon'
-    | 'goalsIcon'
-    | 'overviewIcon'
-    | 'workoutIcon'
-    | 'helpIcon'
-    | 'logoutIcon'
-    | 'scheduleIcon';
+    | 'goalsIcon'    
+    | 'workoutIcon';
 
 export { type IconName };

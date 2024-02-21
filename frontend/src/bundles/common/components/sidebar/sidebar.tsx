@@ -13,12 +13,14 @@ import {
     OverviewIcon,
     ScheduleIcon,
     WorkoutIcon,
-} from '../icons/sidebar-icons/sidebar-icons.js';
+} from '../icon/icon.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
 
 type Properties = {
     isOpen?: boolean;
 };
+
+const ICON_CLASSNAME = 'inline h-8 w-8 flex justify-center items-center';
 
 const styles = {
     baseStyle:
@@ -32,7 +34,6 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     const [activeRoute, setActiveRoute] = useState(pathname);
 
     const [sidebarStyle, setSidebarStyle] = useState({});
-
     useEffect(() => {
         setActiveRoute(pathname);
     }, [pathname]);
@@ -54,7 +55,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             <div className="inner h-3/4 w-full border-gray-700 ">
                 <div className="flex flex-col gap-4">
                     <SidebarNav
-                        icon={<OverviewIcon />}
+                        icon={<OverviewIcon className={ICON_CLASSNAME} />}
                         text="Overview"
                         to={AppRoute.OVERVIEW}
                         isActive={activeRoute === AppRoute.OVERVIEW}
@@ -72,7 +73,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         isActive={activeRoute === AppRoute.GOALS}
                     />
                     <SidebarNav
-                        icon={<ScheduleIcon />}
+                        icon={<ScheduleIcon className={ICON_CLASSNAME} />}
                         text="My schedule"
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
@@ -83,13 +84,13 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             <div className="flex h-1/4 w-full">
                 <div className="flex w-full flex-col justify-center gap-3">
                     <SidebarNav
-                        icon={<HelpIcon />}
+                        icon={<HelpIcon className={ICON_CLASSNAME} />}
                         text="Help"
                         to={AppRoute.HELP}
                         isActive={activeRoute === AppRoute.HELP}
                     />
                     <SidebarNav
-                        icon={<LogoutIcon />}
+                        icon={<LogoutIcon className={ICON_CLASSNAME} />}
                         text="Logout"
                         to={AppRoute.LOGOUT}
                     />
