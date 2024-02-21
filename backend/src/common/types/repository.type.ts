@@ -3,7 +3,7 @@ type Repository<T = unknown> = {
     findAll(): Promise<T[]>;
     create(payload: unknown): Promise<T>;
     update(): Promise<T>;
-    delete(): Promise<boolean>;
+    delete(payload: unknown): Promise<boolean>;
 };
 
 export { type Repository };
