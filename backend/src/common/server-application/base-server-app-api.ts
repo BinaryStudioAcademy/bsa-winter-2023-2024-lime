@@ -42,7 +42,7 @@ class BaseServerAppApi implements ServerAppApi {
                     version: `${this.version}.0.0`,
                 },
             },
-            apis: [`*/bundles/**/*.controller.${controllerExtension}`],
+            apis: [`src/bundles/**/*.controller.${controllerExtension}`],
         });
     }
 }
