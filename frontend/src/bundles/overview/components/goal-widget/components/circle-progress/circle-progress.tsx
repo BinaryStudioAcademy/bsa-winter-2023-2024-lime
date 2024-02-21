@@ -31,7 +31,11 @@ const CircularProgress = ({
         circumference - (value / target) * circumference;
 
     return (
-        <svg height={radius * 2} width={radius * 2}>
+        <svg
+            height={radius * 2}
+            width={radius * 2}
+            style={{ transform: 'rotate(90deg)' }}
+        >
             <circle
                 className={getValidClassNames(BaseClass, baseCircleClass)}
                 strokeWidth={stroke}
