@@ -1,34 +1,49 @@
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
+import {
+    CircularProgressColors,
+    CircularProgressSizes,
+} from '~/bundles/overview/enums/enums.js';
+
 type CircularProgressProperties = {
     value: number;
     target: number;
+    size?: ValueOf<typeof CircularProgressSizes>;
+    color?: ValueOf<typeof CircularProgressColors>;
 };
+
+const BaseClass =
+    'rounded-sm fill-transparent transition-all duration-1000 ease-in-out transform';
 
 const CircularProgress = ({
     value,
     target,
+    size = CircularProgressSizes.medium,
+    color = CircularProgressColors.primary,
 }: CircularProgressProperties): JSX.Element => {
-    const radius = 72;
-    const stroke = 10;
-    const normalizedRadius = radius - stroke * 2;
-    const circumference = normalizedRadius * 2 * Math.PI;
-    const strokeDashoffset = circumference - (value / target) * circumference;
+    const { radius, stroke } = size;
+    const { baseCircleClass, progressCircleClass } = color;
+    const innerRadius = radius - stroke * 2;
+    const circumference = innerRadius * 2 * Math.PI;
+    const progressCircleOffset =
+        circumference - (value / target) * circumference;
 
     return (
         <svg height={radius * 2} width={radius * 2}>
             <circle
-                className="stroke-lm-black-100 rounded-34 fill-transparent"
+                className={getValidClassNames(BaseClass, baseCircleClass)}
                 strokeWidth={stroke}
-                r={normalizedRadius}
+                r={innerRadius}
                 cx={radius}
                 cy={radius}
             />
             <circle
-                className="stroke-lm-yellow-100 rounded-sm fill-transparent transition-all duration-1000 ease-in-out"
+                className={getValidClassNames(BaseClass, progressCircleClass)}
                 strokeWidth={stroke}
                 strokeDasharray={circumference + ' ' + circumference}
-                style={{ strokeDashoffset }}
+                style={{ strokeDashoffset: progressCircleOffset }}
                 strokeLinecap="round"
-                r={normalizedRadius}
+                r={innerRadius}
                 cx={radius}
                 cy={radius}
             />
