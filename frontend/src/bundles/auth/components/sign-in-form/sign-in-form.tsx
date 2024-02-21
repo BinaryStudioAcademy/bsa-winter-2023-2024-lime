@@ -105,4 +105,3 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 };
 
 export { SignInForm };
-

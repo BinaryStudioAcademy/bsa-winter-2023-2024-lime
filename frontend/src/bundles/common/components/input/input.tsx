@@ -63,7 +63,7 @@ const Input = <T extends FieldValues>({
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
-                    className={`focus:border-lm-yellow-100 disabled:text-lm-grey-300 text-lm-black-100 placeholder:text-grey-200 dark:placeholder:text-lm-grey-100 h-9 w-full rounded-lg border p-4 focus:outline-none dark:text-lm-black-100 ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
+                    className={`focus:border-lm-yellow-100 disabled:text-lm-grey-300 text-lm-black-100 placeholder:text-grey-200 dark:placeholder:text-lm-grey-100 dark:text-lm-black-100 h-9 w-full rounded-lg border p-4 focus:outline-none ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
                     onFocus={onFocus}
                 />
                 {isPassword && (
@@ -82,7 +82,7 @@ const Input = <T extends FieldValues>({
                 )}
             </div>
             {hasError && (
-                <span className="text-lm-red px-3 text-sm rounded-lg bg-lm-black-100 dark:text-lm-red dark:rounded-lg dark:bg-transparent dark:font-normal">
+                <span className="text-lm-red bg-lm-black-100 dark:text-lm-red rounded-lg px-3 text-sm dark:rounded-lg dark:bg-transparent dark:font-normal">
                     {error as string}
                 </span>
             )}
@@ -91,4 +91,3 @@ const Input = <T extends FieldValues>({
 };
 
 export { Input };
-

@@ -93,4 +93,3 @@ const Auth: React.FC = () => {
 };
 
 export { Auth };
-
