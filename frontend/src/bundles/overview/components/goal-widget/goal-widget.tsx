@@ -16,8 +16,8 @@ const GoalWidget = ({
     goalType = GoalTypes.GENERAL,
     title = 'Track Your Daily Activities',
     subTitle = '',
-    value = 6,
-    target = 10,
+    value,
+    target,
 }: WidgetProperties): JSX.Element => {
     const rightTitle =
         goalType === GoalTypes.GENERAL ? 'Exercises' : 'Running on Track';
