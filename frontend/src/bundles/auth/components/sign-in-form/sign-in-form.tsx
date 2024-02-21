@@ -22,13 +22,11 @@ type Properties = {
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const { control, errors, isDirty, isValid, handleSubmit } =
-        useAppForm<UserAuthRequestDto>({
-            defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-            validationSchema: userAuthValidationSchema,
-            mode: 'onBlur',
-            shouldUnregister: false,
-        });
+    const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
+        defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+        validationSchema: userAuthValidationSchema,
+        mode: 'onBlur',
+    });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -39,44 +37,64 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <h1 className="text-center text-3xl font-bold leading-8">
+            <h1 className="text-left text-[1.875rem] font-bold text-white">
                 Hi! Login to your Account
             </h1>
-            <form onSubmit={handleFormSubmit} className="text-sm">
-                <Input
-                    control={control}
-                    errors={errors}
-                    placeholder="email@gmail.com"
-                    label="Email"
-                    name="email"
-                    type="text"
-                    isDisabled={isLoading}
-                />
-                <Input
-                    control={control}
-                    errors={errors}
-                    placeholder="&bull;"
-                    label="Password"
-                    name="password"
-                    type="password"
-                    isDisabled={isLoading}
+            <div className="flex flex-col gap-4">
+                <Button
+                    size={ComponentSize.MEDIUM}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="G"
                 />
                 <Button
-                    label={isLoading ? '' : 'Log In'}
-                    leftIcon={
-                        isLoading && <Loader color={IconColor.SECONDARY} />
-                    }
-                    type="submit"
-                    isDisabled={!isDirty || !isValid || isLoading}
                     size={ComponentSize.MEDIUM}
-                    variant={ButtonVariant.PRIMARY}
+                    variant={ButtonVariant.SECONDARY}
+                    label="Continue with "
+                    rightIcon="f"
                 />
+            </div>
+
+            <p className="text-lm-grey-100 text-center text-xs">
+                or Sign in with Email
+            </p>
+
+            <form onSubmit={handleFormSubmit}>
+                <Input
+                    type="email"
+                    label="Email"
+                    placeholder="email@gmail.com"
+                    name="email"
+                    control={control}
+                    errors={errors}
+                    isDisabled={isLoading}
+                />
+                <Input
+                    type="password"
+                    label="Password"
+                    name="password"
+                    control={control}
+                    errors={errors}
+                    isDisabled={isLoading}
+                />
+
+                <div className="mt-3">
+                    <Button
+                        type="submit"
+                        label={isLoading ? '' : 'Log In'}
+                        variant={ButtonVariant.PRIMARY}
+                        size={ComponentSize.MEDIUM}
+                        leftIcon={
+                            isLoading && <Loader color={IconColor.SECONDARY} />
+                        }
+                    />
+                </div>
             </form>
-            <p className="text-center text-sm font-normal leading-4">
-                No account?{' '}
+            <p className="text-center text-sm">
+                No account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">
-                        Go to Create an account
+                        Create an account
                     </span>
                 </Link>
             </p>
