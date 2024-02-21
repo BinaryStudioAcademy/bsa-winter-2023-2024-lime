@@ -2,7 +2,8 @@ const GoalTypes = {
     RUNNING: 'running',
     CYCLING: 'cycling',
     WALKING: 'walking',
-    GENERAL: 'general',
+    OVERVIEW: 'overview',
+    STANDART: 'standart',
 } as const;
 
 export { GoalTypes };
