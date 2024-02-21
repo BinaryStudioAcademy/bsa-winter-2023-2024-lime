@@ -10,8 +10,8 @@ import {
 import { GoalTypes } from '../goal-widget/enums/goal-types.enums.js';
 
 type CircularProgressProperties = {
-    value: number;
-    target: number;
+    done: number;
+    toDo: number;
     size?: CircleSizes;
     goalType?: ValueOf<typeof GoalTypes>;
     color?: ValueOf<typeof CircularProgressColors>;
@@ -27,8 +27,8 @@ const classes = {
 ('rounded-sm fill-transparent transition-all duration-1000 ease-in-out transform');
 
 const CircleProgress = ({
-    value,
-    target,
+    done,
+    toDo,
     size = ComponentSize.MEDIUM,
     color = CircularProgressColors.primary,
     goalType = GoalTypes.STANDART,
@@ -38,7 +38,7 @@ const CircleProgress = ({
     const innerRadius = radius - stroke * 2;
     const circumference = innerRadius * 2 * Math.PI;
     const progressCircleOffset =
-        circumference - (value / target) * circumference;
+        circumference - (done / toDo) * circumference;
 
     return (
         <div className="relative flex items-center justify-center">
@@ -80,9 +80,9 @@ const CircleProgress = ({
                                 fontSize,
                             )}
                         >
-                            {value}
+                            {done}
                         </p>
-                        <p className="inline-flex font-normal">/{target}</p>
+                        <p className="inline-flex font-normal">/{toDo}</p>
                     </>
                 )}
                 {goalType === GoalTypes.STANDART && (
@@ -93,7 +93,7 @@ const CircleProgress = ({
                                 fontSize,
                             )}
                         >
-                            {value}
+                            {done}
                         </p>
                     </>
                 )}
@@ -105,7 +105,7 @@ const CircleProgress = ({
                                 fontSize,
                             )}
                         >
-                            {value}
+                            {done}
                         </p>
                         <p className="inline-flex font-normal">km</p>
                     </>

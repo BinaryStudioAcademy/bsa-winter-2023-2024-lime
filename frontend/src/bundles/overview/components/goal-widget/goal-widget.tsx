@@ -8,16 +8,16 @@ type WidgetProperties = {
     goalType?: ValueOf<typeof GoalTypes>;
     title: string;
     subTitle?: string;
-    value: number;
-    target: number;
+    done: number;
+    toDo: number;
 };
 
 const GoalWidget = ({
     goalType = GoalTypes.OVERVIEW,
     title = 'Track Your Daily Activities',
     subTitle = '',
-    value,
-    target,
+    done,
+    toDo,
 }: WidgetProperties): JSX.Element => {
     const rightTitle =
         goalType === GoalTypes.OVERVIEW ? 'Exercises' : 'Running on Track';
@@ -41,8 +41,8 @@ const GoalWidget = ({
                 </div>
                 <div className="flex w-2/4 items-center justify-center">
                     <CircleProgress
-                        value={value}
-                        target={target}
+                        done={done}
+                        toDo={toDo}
                         goalType={goalType}
                     />
                 </div>
