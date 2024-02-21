@@ -1,7 +1,6 @@
-import { useCallback } from '~/bundles/common/hooks/hooks.js';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
-import { Icon } from '../../components.js';
-import { IconColor } from '../../icon/enums/icon-colors.enum.js';
+import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
 type SwitchProperties = {
     checked: boolean;
@@ -23,12 +22,15 @@ const Switch = ({
             style={{ width: size, height: size }}
             onClick={handleChange}
         >
-            <span className="slider" style={{ width: size, height: size }}>
-                <Icon
-                    name={checked ? 'moonIcon' : 'sunIcon'}
-                    size={'lg'}
-                    color={IconColor.PRIMARY}
-                />
+            <span
+                className="slider text-lm-yellow-100"
+                style={{ width: size, height: size }}
+            >
+                {checked ? (
+                    <MoonIcon className="h-8 w-8" />
+                ) : (
+                    <SunIcon className="h-8 w-8" />
+                )}
             </span>
         </button>
     );

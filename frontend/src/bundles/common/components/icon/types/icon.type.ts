@@ -1,8 +1,3 @@
-type IconName =
-    | 'arrowDown'
-    | 'logoIcon'
-    | 'notFoundIcon'
-    | 'moonIcon'
-    | 'sunIcon';
+type IconName = 'arrowDown' | 'logoIcon' | 'notFoundIcon';
 
 export { type IconName };
