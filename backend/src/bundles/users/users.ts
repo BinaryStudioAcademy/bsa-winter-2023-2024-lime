@@ -13,8 +13,12 @@ export { userController, userService };
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserUpdateProfileRequestDto,
 } from './types/types.js';
 export { UserEntity } from './user.entity.js';
 export { UserModel } from './user.model.js';
 export { UserService } from './user.service.js';
-export { userAuthValidationSchema } from './validation-schemas/validation-schemas.js';
+export {
+    userAuthValidationSchema,
+    userUpdateProfileValidationSchema,
+} from './validation-schemas/validation-schemas.js';

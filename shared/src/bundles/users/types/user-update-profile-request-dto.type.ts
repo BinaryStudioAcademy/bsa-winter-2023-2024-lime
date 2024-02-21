@@ -3,8 +3,9 @@ import { type Gender } from '../users.js';
 
 type UserUpdateProfileRequestDto = {
     id: number | null;
-    fullname: string;
+    fullName: string;
     username: string;
+    avatarUrl: string;
     dateOfBirth: string;
     weight: string;
     height: string;

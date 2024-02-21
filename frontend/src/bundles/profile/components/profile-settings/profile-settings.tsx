@@ -90,7 +90,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     type="text"
                     label="Full Name"
                     placeholder="John Doe"
-                    name="fullname"
+                    name="fullName"
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}

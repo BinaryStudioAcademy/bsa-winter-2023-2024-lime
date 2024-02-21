@@ -1,8 +1,10 @@
 import { type UserService } from '~/bundles/users/user.service.js';
+import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 import {
+    type ApiHandlerOptions,
     type ApiHandlerResponse,
-    BaseController,
 } from '~/common/controller/controller.js';
+import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
@@ -38,6 +40,19 @@ class UserController extends BaseController {
             // isProtected: true, we can add it later and it will require token
             handler: () => this.findAll(),
         });
+
+        this.addRoute({
+            path: `${UsersApiPath.UPDATE_USER}/:userId`,
+            method: 'PATCH',
+            // isProtected: true
+            handler: (options) =>
+                this.updateUser(
+                    options as ApiHandlerOptions<{
+                        body: UserUpdateProfileRequestDto;
+                        params: { userId: string };
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -60,6 +75,36 @@ class UserController extends BaseController {
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
         };
+    }
+
+    private async updateUser(
+        options: ApiHandlerOptions<{
+            body: UserUpdateProfileRequestDto;
+            params: { userId: string };
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { body, params } = options;
+        const userId = params.userId;
+        try {
+            const updatedUser = await this.userService.update(
+                Number(userId),
+                body,
+            );
+            return {
+                status: HttpCode.OK,
+                payload: updatedUser,
+            };
+        } catch (error) {
+            return error instanceof Error
+                ? {
+                      status: HttpCode.NOT_FOUND,
+                      payload: { error: error.message },
+                  }
+                : {
+                      status: HttpCode.INTERNAL_SERVER_ERROR,
+                      payload: { error: 'An unexpected error occurred.' },
+                  };
+        }
     }
 }
 

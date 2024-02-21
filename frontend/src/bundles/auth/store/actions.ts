@@ -38,8 +38,10 @@ const updateUser = createAsyncThunk<
     UserUpdateProfileRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/update-user`, async (updateUserPayload, { extra }) => {
-    const { authApi } = extra;
-    return await authApi.updateUser(updateUserPayload);
+    const { userApi } = extra;
+    const { id: userId } = updateUserPayload;
+    const userIdAsString: string = userId === null ? '' : userId.toString();
+    return await userApi.updateUser(userIdAsString, updateUserPayload);
 });
 
 export { signIn, signUp, updateUser };

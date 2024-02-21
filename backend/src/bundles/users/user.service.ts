@@ -7,7 +7,9 @@ import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllResponseDto,
+    type UserUpdateProfileRequestDto,
 } from './types/types.js';
+import { type UserDetailsModel } from './user-details.model.js';
 
 class UserService implements Service {
     private userRepository: UserRepository;
@@ -46,8 +48,42 @@ class UserService implements Service {
         return user.toObject() as UserAuthResponseDto;
     }
 
-    public update(): ReturnType<Service['update']> {
-        return Promise.resolve(null);
+    public async update(
+        userId: number,
+        userRequest: UserUpdateProfileRequestDto,
+    ): Promise<UserAuthResponseDto | null> {
+        try {
+            const existingUser = await this.userRepository.find({
+                id: userId,
+            });
+
+            if (existingUser) {
+                const updatedUserDetails: Partial<UserDetailsModel> = {
+                    fullName: userRequest.fullName,
+                    avatarUrl: userRequest.avatarUrl,
+                    username: userRequest.username,
+                    dateOfBirth: userRequest.dateOfBirth,
+                    weight: Number(userRequest.weight),
+                    height: Number(userRequest.height),
+                    gender: userRequest.gender,
+                };
+
+                const updatedUser = await this.userRepository.update(
+                    userId,
+                    updatedUserDetails,
+                );
+
+                if (!updatedUser) {
+                    throw new Error('User not found');
+                }
+
+                return updatedUser.toObject() as UserAuthResponseDto;
+            } else {
+                throw new Error('User not found');
+            }
+        } catch (error) {
+            throw new Error(`Error occured ${error}`);
+        }
     }
 
     public delete(): ReturnType<Service['delete']> {

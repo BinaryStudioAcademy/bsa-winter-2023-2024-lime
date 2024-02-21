@@ -3,11 +3,12 @@ import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 
 const DEFAULT_UPDATE_PROFILE_PAYLOAD: UserUpdateProfileRequestDto = {
     id: 0,
-    fullname: '',
+    fullName: '',
     username: '',
     dateOfBirth: '',
     weight: '',
     height: '',
+    avatarUrl: '',
     gender: Gender.OTHER,
 };
 

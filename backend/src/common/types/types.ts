@@ -7,6 +7,7 @@ export {
     type ServerCommonErrorResponse,
     type ServerErrorResponse,
     type ServerValidationErrorResponse,
+    type UserUpdateProfileRequestDto,
     type ValidationSchema,
     type ValueOf,
 } from 'shared';

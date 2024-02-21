@@ -4,7 +4,7 @@ import { UserValidationMessage, UserValidationRule } from '../enums/enums.js';
 import { UnicodePattern } from './constants/constants.js';
 
 type UserUpdateProfileRequestValidationDto = {
-    fullname: z.ZodString;
+    fullName: z.ZodString;
     username: z.ZodString;
     dateOfBirth: z.ZodString;
     weight: z.ZodString;
@@ -20,7 +20,7 @@ type UserUpdateProfileRequestValidationDto = {
 
 const userUpdateProfile = z
     .object<UserUpdateProfileRequestValidationDto>({
-        fullname: z
+        fullName: z
             .string()
             .trim()
             .regex(UnicodePattern.FULLNAME_PATTERN, {
