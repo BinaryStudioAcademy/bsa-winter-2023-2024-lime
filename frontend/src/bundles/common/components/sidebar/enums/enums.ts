@@ -1,1 +1,1 @@
-export { icons } from './icons/icons.js';
+export { iconsSvgr } from './icons/icons.js';

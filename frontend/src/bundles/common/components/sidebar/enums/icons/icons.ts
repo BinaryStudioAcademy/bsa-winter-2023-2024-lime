@@ -1,10 +1,6 @@
-const icons = {
-    OVERVIEW: 'overviewIcon',
-    GOALS: 'goalsIcon',
+const iconsSvgr = {
     WORKOUT: 'workoutIcon',
-    HELP: 'helpIcon',
-    SCHEDULE: 'scheduleIcon',
-    LOGOUT: 'logoutIcon',
+    GOALS: 'goalsIcon',
 } as const;
 
-export { icons };
+export { iconsSvgr };

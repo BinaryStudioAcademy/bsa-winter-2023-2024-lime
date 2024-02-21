@@ -6,8 +6,15 @@ import {
 
 import { AppRoute } from '../../enums/app-route.enum.js';
 import { getValidClassNames } from '../../helpers/helpers.js';
+import {
+    GoalsIcon,
+    HelpIcon,
+    LogoutIcon,
+    OverviewIcon,
+    ScheduleIcon,
+    WorkoutIcon,
+} from '../icons/sidebar-icons/sidebar-icons.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
-import { icons } from './enums/enums.js';
 
 type Properties = {
     isOpen?: boolean;
@@ -47,25 +54,25 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             <div className="inner h-3/4 w-full border-gray-700 ">
                 <div className="flex flex-col gap-4">
                     <SidebarNav
-                        icon={icons.OVERVIEW}
+                        icon={<OverviewIcon />}
                         text="Overview"
                         to={AppRoute.OVERVIEW}
                         isActive={activeRoute === AppRoute.OVERVIEW}
                     />
                     <SidebarNav
-                        icon={icons.WORKOUT}
+                        icon={<WorkoutIcon />}
                         text="Workout"
                         to={AppRoute.WORKOUT}
                         isActive={activeRoute === AppRoute.WORKOUT}
                     />
                     <SidebarNav
-                        icon={icons.GOALS}
+                        icon={<GoalsIcon />}
                         text="Goals"
                         to={AppRoute.GOALS}
                         isActive={activeRoute === AppRoute.GOALS}
                     />
                     <SidebarNav
-                        icon={icons.SCHEDULE}
+                        icon={<ScheduleIcon />}
                         text="My schedule"
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
@@ -76,13 +83,13 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             <div className="flex h-1/4 w-full">
                 <div className="flex w-full flex-col justify-center gap-3">
                     <SidebarNav
-                        icon={icons.HELP}
+                        icon={<HelpIcon />}
                         text="Help"
                         to={AppRoute.HELP}
                         isActive={activeRoute === AppRoute.HELP}
                     />
                     <SidebarNav
-                        icon={icons.LOGOUT}
+                        icon={<LogoutIcon />}
                         text="Logout"
                         to={AppRoute.LOGOUT}
                     />
