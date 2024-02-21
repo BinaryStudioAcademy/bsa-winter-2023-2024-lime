@@ -29,10 +29,10 @@ class BaseServerAppApi implements ServerAppApi {
     }
 
     public generateDoc(): ReturnType<typeof swaggerJsdoc> {
-        const isProduction =
-            this.config.ENV.APP.ENVIRONMENT === AppEnvironment.PRODUCTION;
+        const isLocal =
+            this.config.ENV.APP.ENVIRONMENT === AppEnvironment.LOCAL;
 
-        const controllerExtension = isProduction ? 'js' : 'ts';
+        const controllerExtension = isLocal ? 'ts' : 'js';
 
         return swaggerJsdoc({
             definition: {
@@ -42,7 +42,7 @@ class BaseServerAppApi implements ServerAppApi {
                     version: `${this.version}.0.0`,
                 },
             },
-            apis: [`src/packages/**/*.controller.${controllerExtension}`],
+            apis: [`src/bundles/**/*.controller.${controllerExtension}`],
         });
     }
 }

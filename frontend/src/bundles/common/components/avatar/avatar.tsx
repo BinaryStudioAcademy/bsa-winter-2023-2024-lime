@@ -1,21 +1,26 @@
-import { Size } from '~/bundles/common/enums/enums.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
+type AvatarSize = Exclude<
+    ValueOf<typeof ComponentSize>,
+    typeof ComponentSize.EXTRA_LARGE
+>;
+
 type Properties = {
-    size: ValueOf<typeof Size>;
+    size: AvatarSize;
 };
 
-const sizeToClass: Record<ValueOf<typeof Size>, string> = {
-    [Size.SMALL]: 'h-10 w-10',
-    [Size.MEDIUM]: 'h-20 w-20',
-    [Size.LARGE]: 'h-30 w-30',
+const sizeToClass: Record<AvatarSize, string> = {
+    [ComponentSize.SMALL]: 'h-10 w-10',
+    [ComponentSize.MEDIUM]: 'h-20 w-20',
+    [ComponentSize.LARGE]: 'h-30 w-30',
 };
 
-const sizeMap: Record<ValueOf<typeof Size>, string> = {
-    [Size.SMALL]: 'text-xl',
-    [Size.MEDIUM]: 'text-3xl',
-    [Size.LARGE]: 'text-4xl',
+const sizeMap: Record<AvatarSize, string> = {
+    [ComponentSize.SMALL]: 'text-xl',
+    [ComponentSize.MEDIUM]: 'text-3xl',
+    [ComponentSize.LARGE]: 'text-4xl',
 };
 
 const Avatar = ({ size }: Properties): JSX.Element => {
