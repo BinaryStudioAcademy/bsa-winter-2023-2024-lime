@@ -1,5 +1,4 @@
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 type AvatarSize = Exclude<
@@ -9,6 +8,8 @@ type AvatarSize = Exclude<
 
 type Properties = {
     size: AvatarSize;
+    email: string;
+    avatarUrl: string;
 };
 
 const sizeToClass: Record<AvatarSize, string> = {
@@ -23,11 +24,7 @@ const sizeMap: Record<AvatarSize, string> = {
     [ComponentSize.LARGE]: 'text-4xl',
 };
 
-const Avatar = ({ size }: Properties): JSX.Element => {
-    const { email, avatarUrl } = useAppSelector(
-        (state) => state.auth.user || { email: '', avatarUrl: '' },
-    );
-
+const Avatar = ({ size, email, avatarUrl }: Properties): JSX.Element => {
     const firstLetter = email ? email.charAt(0).toUpperCase() : '';
 
     return (
