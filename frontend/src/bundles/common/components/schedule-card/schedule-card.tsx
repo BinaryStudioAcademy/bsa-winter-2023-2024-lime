@@ -35,10 +35,14 @@ const ScheduleCard: React.FC<Properties> = ({
                     )}
 
                     <div>
-                        <div className="text-lm-grey-200 leading-1 mb-2 text-sm font-bold">
+                        <div
+                            className={`text-lm-grey-200 leading-1 mb-2 text-sm ${imageSrc ? 'font-extrabold' : 'font-bold'}`}
+                        >
                             {name}
                         </div>
-                        <div className="text-lm-grey-300 leading-1 text-xs font-normal">
+                        <div
+                            className={`leading-1 text-xs font-normal ${imageSrc ? 'text-lm-grey-200' : 'text-lm-grey-300'}`}
+                        >
                             {data}
                         </div>
                     </div>
