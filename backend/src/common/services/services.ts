@@ -6,10 +6,11 @@ import { EmailService } from './email/email.service.js';
 import { OpenAIService } from './open-ai/open-ai.service.js';
 
 const { API_KEY, FROM } = config.ENV.EMAIL;
+const { JWT_SECRET, OPEN_AI_API_KEY, OPEN_AI_MODEL } = config.ENV.APP;
 
 const cryptService = new CryptService();
-const jwtService = new JwtService(config.ENV.APP.JWT_SECRET);
+const jwtService = new JwtService(JWT_SECRET);
 const emailService = new EmailService(API_KEY, FROM);
-const openAIService = new OpenAIService(config.ENV.APP.OPEN_AI_API_KEY);
+const openAIService = new OpenAIService(OPEN_AI_API_KEY, OPEN_AI_MODEL);
 
 export { cryptService, emailService, jwtService, openAIService };

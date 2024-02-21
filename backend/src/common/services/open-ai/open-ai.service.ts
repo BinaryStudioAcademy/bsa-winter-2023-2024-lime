@@ -7,8 +7,10 @@ import {
 
 class OpenAIService {
     private openai: OpenAI;
-    public constructor(apiKey: string) {
+    private model: string;
+    public constructor(apiKey: string, model: string) {
         this.openai = new OpenAI({ apiKey });
+        this.model = model;
     }
 
     public async sendRequest(
@@ -16,7 +18,7 @@ class OpenAIService {
     ): Promise<ChatCompletion> {
         const parameters: ChatCompletionCreateParams = {
             messages,
-            model: 'gpt-3.5-turbo-0125',
+            model: this.model,
         };
         return this.openai.chat.completions.create(parameters);
     }

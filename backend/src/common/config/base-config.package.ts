@@ -59,6 +59,12 @@ class BaseConfig implements Config {
                     env: 'OPEN_AI_API_KEY',
                     default: null,
                 },
+                OPEN_AI_MODEL: {
+                    doc: 'AI model',
+                    format: String,
+                    env: 'OPEN_AI_MODEL',
+                    default: null,
+                },
             },
             DB: {
                 USERNAME: {
