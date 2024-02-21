@@ -13,8 +13,6 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { ThemeCompose } from '../../enums/theme-colors.js';
-
 type Properties<T extends FieldValues> = {
     control: Control<T, null>;
     errors: FieldErrors<T>;
@@ -61,7 +59,7 @@ const Input = <T extends FieldValues>({
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
-                    className={`focus:border-lm-yellow-100 disabled:text-lm-grey-300 h-9 w-full rounded-lg border p-4 focus:outline-none ${ThemeCompose.INPUT.TEXT} ${ThemeCompose.INPUT.BACKGROUND} ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
+                    className={`focus:border-lm-yellow-100 disabled:text-lm-grey-300 h-9 w-full rounded-lg border p-4 focus:outline-none text-lm-black-100 placeholder:text-grey-200 dark:text-white dark:placeholder:text-lm-grey-100 ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
                     onFocus={onFocus}
                 />
                 {isPassword && (
@@ -80,7 +78,7 @@ const Input = <T extends FieldValues>({
                 )}
             </div>
             {hasError && (
-                <span className={ThemeCompose.ERROR.TEXT}>
+                <span className="text-lm-red bg-lm-black-100 dark:text-lm-red dark:bg-transparent p-1 dark:rounded-lg">
                     {error as string}
                 </span>
             )}

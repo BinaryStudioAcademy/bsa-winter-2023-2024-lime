@@ -8,7 +8,6 @@ import {
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { ThemeCompose } from '~/bundles/common/enums/theme-colors.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserAuthRequestDto,
@@ -41,7 +40,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <>
             <h1
-                className={`text-center text-3xl font-bold leading-8 ${ThemeCompose.STANDART.TEXT}`}
+                className='text-center text-3xl font-bold leading-8 text-lm-black-100 dark:text-white'
             >
                 Hi! Login to your Account
             </h1>
