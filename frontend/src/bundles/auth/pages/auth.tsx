@@ -72,8 +72,8 @@ const Auth: React.FC = () => {
     };
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem] text-lm-black-100 dark:text-white bg-lm-grey-200 bg-lm-bglight dark:bg-lm-black-200',
-        form: 'justify-between px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem] text-lm-black-100 dark:text-white bg-lm-grey-200 bg-lm-bglight dark:bg-lm-black-200',
+        form: 'justify-between text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
         main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
         logoContainer:
             'hidden flex-1 items-center justify-center text-xl text-white lg:flex',
