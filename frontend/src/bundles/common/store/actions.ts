@@ -8,7 +8,7 @@ import { type Theme } from '../types/types.js';
 const fetchTheme = createAsyncThunk<Theme, undefined>(
     'theme/fetchTheme',
     async () => {
-        const currentTheme = await storage.get('theme');        
+        const currentTheme = await storage.get('theme');
         const theme = currentTheme === null ? 'dark' : (currentTheme as Theme);
         await storage.set('theme', theme);
         applyThemeClassname(theme);

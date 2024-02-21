@@ -1,10 +1,10 @@
-import { fetchTheme, setTheme  } from './actions.js';
+import { fetchTheme, setTheme } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
-  ...actions,
-  fetchTheme,
-  setTheme,
+    ...actions,
+    fetchTheme,
+    setTheme,
 };
 
 export { allActions as actions };

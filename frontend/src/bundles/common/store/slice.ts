@@ -14,7 +14,7 @@ const initialState = {
     loading: true,
 };
 
-const { reducer, actions, name }= createSlice({
+const { reducer, actions, name } = createSlice({
     initialState,
     name: 'theme',
     reducers: {},
@@ -23,17 +23,23 @@ const { reducer, actions, name }= createSlice({
             .addCase(fetchTheme.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(fetchTheme.fulfilled, (state, action: PayloadAction<Theme>) => {
-                state.theme = action.payload;
-                state.loading = false;
-            })
+            .addCase(
+                fetchTheme.fulfilled,
+                (state, action: PayloadAction<Theme>) => {
+                    state.theme = action.payload;
+                    state.loading = false;
+                },
+            )
             .addCase(setTheme.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(setTheme.fulfilled, (state, action: PayloadAction<Theme>) => {
-                state.theme = action.payload;
-                state.loading = false;
-            });
+            .addCase(
+                setTheme.fulfilled,
+                (state, action: PayloadAction<Theme>) => {
+                    state.theme = action.payload;
+                    state.loading = false;
+                },
+            );
     },
 });
 
