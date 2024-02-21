@@ -1,6 +1,7 @@
 import fastifyPlugin from 'fastify-plugin';
 import { UserValidationMessage } from 'shared';
 
+import { userService } from '~/bundles/users/users.js';
 import { SERVED_PAGE_PATH } from '~/common/constants/constants.js';
 import { PluginName } from '~/common/enums/enums.js';
 import { extractTokenFromHeaders } from '~/common/helpers/helpers.js';
@@ -27,7 +28,10 @@ const authPlugin = fastifyPlugin(
                     });
                 }
                 try {
-                    request.user = await jwtService.verifyToken(token);
+                    const { userId } = await jwtService.verifyToken(token);
+                    const user = await userService.find({ id: userId });
+
+                    request.user = user?.toObject();
                 } catch {
                     throw new HttpError({
                         status: HttpCode.UNAUTHORIZED,

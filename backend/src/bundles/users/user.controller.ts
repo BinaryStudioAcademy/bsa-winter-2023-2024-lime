@@ -77,22 +77,37 @@ class UserController extends BaseController {
         };
     }
 
-    private async getCurrentUser(
+    /**
+     * @swagger
+     * /current:
+     *    get:
+     *      description: Returns the current user
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                   user:
+     *                  $ref: '#/components/schemas/User'
+     */
+    private getCurrentUser(
         options: ApiHandlerOptions<{ user: UserGetCurrentRequestDto }>,
-    ): Promise<ApiHandlerResponse> {
-        const { userId } = options.user;
-        const user = await this.userService.find({ id: userId });
+    ): ApiHandlerResponse {
+        const { user } = options;
 
         if (!user) {
             throw new HttpError({
-                message: `User with id: ${userId} was not found`,
+                message: 'User was not found',
                 status: HttpCode.NOT_FOUND,
             });
         }
 
         return {
             status: HttpCode.OK,
-            payload: user.toObject(),
+            payload: user,
         };
     }
 }

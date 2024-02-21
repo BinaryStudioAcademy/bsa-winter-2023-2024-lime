@@ -5,7 +5,7 @@ import {
     Loader,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -16,15 +16,16 @@ import {
 const App: React.FC = () => {
     const { pathname } = useLocation();
     const dispatch = useAppDispatch();
-    const { isRefreshing } = useAppSelector(({ auth }) => ({
+    const { dataStatus } = useAppSelector(({ auth }) => ({
         isRefreshing: auth.isRefreshing,
+        dataStatus: auth.dataStatus,
     }));
 
     useEffect(() => {
         void dispatch(authActions.refreshUser());
     }, [dispatch]);
 
-    if (isRefreshing) {
+    if (dataStatus === DataStatus.PENDING) {
         return <Loader />;
     }
 
