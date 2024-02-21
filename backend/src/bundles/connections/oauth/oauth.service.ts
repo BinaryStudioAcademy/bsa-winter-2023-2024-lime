@@ -5,11 +5,12 @@ import { type OAuthRepository } from './oauth.repository.js';
 import { type ConnectionsOAuthResponseDto } from './types/types.js';
 
 abstract class OAuthService implements Service {
-    protected oAuthRepository: OAuthRepository;
+    private oAuthRepository: OAuthRepository;
 
     public constructor(oAuthRepository: OAuthRepository) {
         this.oAuthRepository = oAuthRepository;
     }
+
     public async find(
         query: Record<string, unknown>,
     ): Promise<ConnectionsOAuthResponseDto | null> {

@@ -3,7 +3,7 @@ import { type RelationMappings, Model } from 'objection';
 import {
     OAuthInfoAttributes,
     OAuthModel,
-} from '~/bundles/connections/connections.js';
+} from '~/bundles/connections/oauth/oauth.js';
 import {
     AbstractModel,
     DatabaseTableName,

@@ -1,0 +1,1 @@
+export { StravaPaths } from 'shared';
