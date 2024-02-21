@@ -61,9 +61,7 @@ class UserService implements Service {
                 for (const property of Object.keys(userRequest)) {
                     const value = userRequest[property];
                     if (this.shouldUpdateProperty(value)) {
-                        /* eslint-disable @typescript-eslint/no-explicit-any */
-                        (updatedUserDetails as any)[property] =
-                            /* eslint-enable @typescript-eslint/no-explicit-any */
+                        updatedUserDetails[property] =
                             property === 'weight' || property === 'height'
                                 ? Number(userRequest[property])
                                 : userRequest[property];
