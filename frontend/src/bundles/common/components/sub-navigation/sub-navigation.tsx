@@ -1,8 +1,9 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 
+import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { useLocation } from '~/bundles/common/hooks/hooks.js';
 
-import { Button, ButtonSize, ButtonVariant } from '../components.js';
+import { Button, ButtonVariant } from '../components.js';
 import { SubNavItem } from './components/sub-nav-item.js';
 
 type Properties = {
@@ -39,7 +40,7 @@ const SubNavigation = ({ items, title, button }: Properties): JSX.Element => {
                 <Button
                     label={button.label}
                     onClick={button.onClick}
-                    size={ButtonSize.SMALL}
+                    size={ComponentSize.SMALL}
                     leftIcon={<PlusIcon className="h-5 w-5" />}
                     variant={ButtonVariant.SECONDARY}
                 />
