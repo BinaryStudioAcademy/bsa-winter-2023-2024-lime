@@ -13,7 +13,7 @@ export default {
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
             'lm-magenta': '#DC40CD',
-            'lm-background-light': '#a9ccff',
+            'lm-bglight': '#a9ccff',
             'lm-yellow': {
                 100: '#E0FE10',
                 200: '#B2CA0D',
