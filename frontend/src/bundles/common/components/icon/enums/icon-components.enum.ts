@@ -13,9 +13,8 @@ const IconComponent: Record<
     arrowDown: ArrowDownIcon,
     logoIcon: LogoIcon,
     notFoundIcon: NotFoundIcon,
-    goalsIcon: GoalsIcon,        
+    goalsIcon: GoalsIcon,
     workoutIcon: WorkoutIcon,
-    
 } as const;
 
 export { IconComponent };
