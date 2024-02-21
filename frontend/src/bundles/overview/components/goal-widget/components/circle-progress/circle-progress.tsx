@@ -16,14 +16,14 @@ const CircularProgress = ({
     return (
         <svg height={radius * 2} width={radius * 2}>
             <circle
-                className="stroke-lm-black-100 fill-transparent rounded-34"
+                className="stroke-lm-black-100 rounded-34 fill-transparent"
                 strokeWidth={stroke}
                 r={normalizedRadius}
                 cx={radius}
                 cy={radius}
             />
             <circle
-                className="stroke-lm-yellow-100 fill-transparent rounded-sm transition-all duration-1000 ease-in-out"
+                className="stroke-lm-yellow-100 rounded-sm fill-transparent transition-all duration-1000 ease-in-out"
                 strokeWidth={stroke}
                 strokeDasharray={circumference + ' ' + circumference}
                 style={{ strokeDashoffset }}
