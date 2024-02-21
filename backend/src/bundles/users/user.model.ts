@@ -1,6 +1,10 @@
 import { type RelationMappings, Model } from 'objection';
 
 import {
+    OAuthInfoAttributes,
+    OAuthModel,
+} from '~/bundles/connections/connections.js';
+import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
@@ -15,6 +19,8 @@ class UserModel extends AbstractModel {
 
     public 'userDetails': UserDetailsModel;
 
+    public 'userOAuthInfo': OAuthModel;
+
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
     }
@@ -27,6 +33,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            oAuthInfo: {
+                relation: Model.HasManyRelation,
+                modelClass: OAuthModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.OAUTH_INFO}.${OAuthInfoAttributes.ID}`,
                 },
             },
         };
