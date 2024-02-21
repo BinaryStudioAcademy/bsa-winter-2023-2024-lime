@@ -1,5 +1,6 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
+import { stripeService } from '~/common/services/services.js';
 import { type Repository } from '~/common/types/types.js';
 
 class UserRepository implements Repository {
@@ -15,14 +16,14 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('userDetails')
+            .withGraphFetched('[userDetails, subscriptions]')
             .execute();
 
         if (!user) {
             return null;
         }
 
-        const { userDetails, ...userInfo } = user;
+        const { userDetails, subscriptions, ...userInfo } = user;
 
         return UserEntity.initialize({
             ...userInfo,
@@ -33,18 +34,21 @@ class UserRepository implements Repository {
             weight: userDetails.weight,
             height: userDetails.height,
             gender: userDetails.gender,
-            customerToken: userDetails.customerToken,
+            customerToken: subscriptions.customerToken,
+            subscriptionId: subscriptions.id,
+            subscriptionStatus: subscriptions.status,
+            subscriptionExpirationDate: subscriptions.expirationDate,
         });
     }
 
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('userDetails')
+            .withGraphFetched('[userDetails, subscriptions]')
             .execute();
 
         return users.map((user) => {
-            const { userDetails, ...userInfo } = user;
+            const { userDetails, subscriptions, ...userInfo } = user;
 
             return UserEntity.initialize({
                 ...userInfo,
@@ -55,7 +59,10 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                customerToken: userDetails.customerToken,
+                customerToken: subscriptions.customerToken,
+                subscriptionId: subscriptions.id,
+                subscriptionStatus: subscriptions.status,
+                subscriptionExpirationDate: subscriptions.expirationDate,
             });
         });
     }
@@ -78,6 +85,11 @@ class UserRepository implements Repository {
                 .$relatedQuery('userDetails', trx)
                 .insert({});
 
+            const customerToken = await stripeService.createCustomer({ email });
+            const subscriptions = await user
+                .$relatedQuery('subscriptions', trx)
+                .insert({ customerToken });
+
             await trx.commit();
 
             return UserEntity.initialize({
@@ -89,7 +101,10 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                customerToken: userDetails.customerToken,
+                customerToken: subscriptions.customerToken,
+                subscriptionId: subscriptions.id,
+                subscriptionStatus: subscriptions.status,
+                subscriptionExpirationDate: subscriptions.expirationDate,
             });
         } catch (error) {
             await trx.rollback();
@@ -99,16 +114,6 @@ class UserRepository implements Repository {
 
     public update(): ReturnType<Repository['update']> {
         return Promise.resolve(null);
-    }
-
-    public async updateStripeCustomerToken(
-        id: number,
-        customerToken: string,
-    ): Promise<void> {
-        await this.userModel.relatedQuery('userDetails').for(id).patch({
-            customerToken,
-            updatedAt: new Date().toISOString(),
-        });
     }
 
     public delete(): ReturnType<Repository['delete']> {

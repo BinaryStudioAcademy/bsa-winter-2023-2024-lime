@@ -3,13 +3,45 @@ import { type Repository } from '~/common/types/repository.type.js';
 import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionModel } from './subscription.model.js';
 
-class SubscriptionRepository
-    implements Omit<Repository, 'findAll' | 'update' | 'delete'>
-{
+class SubscriptionRepository implements Omit<Repository, 'findAll' | 'delete'> {
     private subscriptionModel: typeof SubscriptionModel;
 
     public constructor(subscriptionModel: typeof SubscriptionModel) {
         this.subscriptionModel = subscriptionModel;
+    }
+
+    public update(): Promise<unknown> {
+        throw new Error('Method not implemented.');
+    }
+
+    public async updateSubscription({
+        userId,
+        planId,
+        status,
+        subscriptionToken,
+        expirationDate,
+    }: {
+        userId: number;
+        planId: number | null;
+        status: string | null;
+        subscriptionToken: string | null;
+        expirationDate: Date | null;
+    }): Promise<SubscriptionEntity | null> {
+        await this.subscriptionModel
+            .query()
+            .findOne({ userId })
+            .patch({ planId, status, subscriptionToken, expirationDate })
+            .execute();
+
+        const updatedSubscription = await this.find({ userId });
+
+        if (!updatedSubscription) {
+            return null;
+        }
+
+        return SubscriptionEntity.initialize({
+            ...updatedSubscription.toObject(),
+        });
     }
 
     public async find(
@@ -18,7 +50,6 @@ class SubscriptionRepository
         const subcription = await this.subscriptionModel
             .query()
             .findOne(query)
-            .withGraphFetched('[user, subscriptionPlan]')
             .execute();
 
         if (!subcription) {
@@ -33,17 +64,12 @@ class SubscriptionRepository
     public async create(
         entity: SubscriptionEntity,
     ): Promise<SubscriptionEntity> {
-        const { userId, planId, subscriptionToken, status, expirationDate } =
-            entity.toNewObject();
+        const { userId } = entity.toNewObject();
 
         const subscription = await this.subscriptionModel
             .query()
             .insert({
                 userId,
-                planId,
-                subscriptionToken,
-                status,
-                expirationDate,
             })
             .returning('*')
             .execute();

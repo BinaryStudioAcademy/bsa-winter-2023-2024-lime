@@ -8,8 +8,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
-import { reducer as subscriptionsReducer } from '~/bundles/profile/pages/subscription/store/subscriptions.js';
-import { subscriptionApi } from '~/bundles/profile/pages/subscription/subscription.js';
+import { reducer as subscriptionsReducer } from '~/bundles/profile/components/subscription/store/slice.js';
+import { subscriptionPlansApi } from '~/bundles/profile/components/subscription/subscription.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { type Config } from '~/framework/config/config.js';
@@ -25,7 +25,7 @@ type RootReducer = {
 type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
-    subscriptionApi: typeof subscriptionApi;
+    subscriptionPlansApi: typeof subscriptionPlansApi;
 };
 
 class Store {
@@ -58,7 +58,7 @@ class Store {
         return {
             authApi,
             userApi,
-            subscriptionApi,
+            subscriptionPlansApi,
         };
     }
 }

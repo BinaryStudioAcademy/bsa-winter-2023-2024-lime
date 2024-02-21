@@ -11,12 +11,12 @@ type Constructor = {
     storage: Storage;
 };
 
-class SubscriptionApi extends BaseHttpApi {
+class SubscriptionPlansApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
         super({ path: '/subscription-plans', baseUrl, http, storage });
     }
 
-    public async getAll(): Promise<SubscriptionPlansGetAllResponseDto> {
+    public async getAllSubscriptionPlans(): Promise<SubscriptionPlansGetAllResponseDto> {
         const response = await this.load(this.getFullEndpoint('/', {}), {
             method: 'GET',
             contentType: ContentType.JSON,
@@ -27,4 +27,4 @@ class SubscriptionApi extends BaseHttpApi {
     }
 }
 
-export { SubscriptionApi };
+export { SubscriptionPlansApi };

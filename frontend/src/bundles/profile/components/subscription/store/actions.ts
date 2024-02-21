@@ -8,8 +8,8 @@ const loadAllSubscriptionPlans = createAsyncThunk<
     SubscriptionPlansGetAllResponseDto,
     undefined,
     AsyncThunkConfig
->('subscriptions-plans/loadAll', (_, { extra: { subscriptionApi } }) => {
-    return subscriptionApi.getAll();
+>('subscriptions-plans/loadAll', (_, { extra: { subscriptionPlansApi } }) => {
+    return subscriptionPlansApi.getAllSubscriptionPlans();
 });
 
 export { loadAllSubscriptionPlans };

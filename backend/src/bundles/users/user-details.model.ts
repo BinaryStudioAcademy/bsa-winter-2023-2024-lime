@@ -23,8 +23,6 @@ class UserDetailsModel extends AbstractModel {
 
     public 'gender': ValueOf<typeof Gender> | null;
 
-    public 'customerToken': string | null;
-
     public static override get tableName(): string {
         return DatabaseTableName.USER_DETAILS;
     }

@@ -26,6 +26,12 @@ class UserEntity implements Entity {
 
     public 'customerToken': string | null;
 
+    public 'subscriptionId': number | null;
+
+    public 'subscriptionStatus': string | null;
+
+    public 'subscriptionExpirationDate': Date | null;
+
     private constructor({
         id,
         email,
@@ -38,6 +44,9 @@ class UserEntity implements Entity {
         height,
         gender,
         customerToken,
+        subscriptionId,
+        subscriptionStatus,
+        subscriptionExpirationDate,
     }: {
         id: number | null;
         email: string;
@@ -50,6 +59,9 @@ class UserEntity implements Entity {
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
         customerToken: string | null;
+        subscriptionId: number | null;
+        subscriptionStatus: string | null;
+        subscriptionExpirationDate: Date | null;
     }) {
         this.id = id;
         this.email = email;
@@ -62,6 +74,9 @@ class UserEntity implements Entity {
         this.height = height;
         this.gender = gender;
         this.customerToken = customerToken;
+        this.subscriptionId = subscriptionId;
+        this.subscriptionStatus = subscriptionStatus;
+        this.subscriptionExpirationDate = subscriptionExpirationDate;
     }
 
     public getPasswordHash(): string {
@@ -80,6 +95,9 @@ class UserEntity implements Entity {
         height,
         gender,
         customerToken,
+        subscriptionId,
+        subscriptionStatus,
+        subscriptionExpirationDate,
     }: {
         id: number;
         email: string;
@@ -92,6 +110,9 @@ class UserEntity implements Entity {
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
         customerToken: string | null;
+        subscriptionId: number | null;
+        subscriptionStatus: string | null;
+        subscriptionExpirationDate: Date | null;
     }): UserEntity {
         return new UserEntity({
             id,
@@ -105,6 +126,9 @@ class UserEntity implements Entity {
             height,
             gender,
             customerToken,
+            subscriptionId,
+            subscriptionStatus,
+            subscriptionExpirationDate,
         });
     }
 
@@ -127,6 +151,9 @@ class UserEntity implements Entity {
             height: null,
             gender: null,
             customerToken: null,
+            subscriptionId: null,
+            subscriptionStatus: null,
+            subscriptionExpirationDate: null,
         });
     }
 
@@ -141,6 +168,9 @@ class UserEntity implements Entity {
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
         customerToken: string | null;
+        subscriptionId: number | null;
+        subscriptionStatus: string | null;
+        subscriptionExpirationDate: Date | null;
     } {
         return {
             id: this.id as number,
@@ -153,6 +183,9 @@ class UserEntity implements Entity {
             height: this.height as number,
             gender: this.gender,
             customerToken: this.customerToken,
+            subscriptionId: this.subscriptionId as number,
+            subscriptionStatus: this.subscriptionStatus,
+            subscriptionExpirationDate: this.subscriptionExpirationDate,
         };
     }
 

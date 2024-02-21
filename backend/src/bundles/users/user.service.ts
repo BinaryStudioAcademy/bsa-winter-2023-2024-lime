@@ -1,6 +1,6 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
-import { cryptService, stripeService } from '~/common/services/services.js';
+import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import {
@@ -52,39 +52,6 @@ class UserService implements Service {
 
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
-    }
-
-    public async getOrCreateStripeCustomer({
-        userId,
-    }: {
-        userId: number;
-    }): Promise<string | null> {
-        const user = await this.find({ id: userId });
-        const userObject = user?.toObject();
-
-        if (!user || !userObject || !userObject.email) {
-            return null;
-        }
-
-        if (!user.customerToken) {
-            const customerToken = await stripeService.createCustomer({
-                email: userObject.email,
-            });
-
-            try {
-                await this.userRepository.updateStripeCustomerToken(
-                    userObject.id,
-                    customerToken,
-                );
-
-                return customerToken;
-            } catch (error) {
-                await stripeService.deleteCustomer({ id: customerToken });
-                return (error as Error).message;
-            }
-        }
-
-        return user.customerToken;
     }
 }
 

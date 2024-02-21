@@ -87,6 +87,16 @@ class StipeService {
             expirationDate: new Date(subscription.current_period_end),
         };
     }
+
+    public async cancelSubscription({
+        subscriptionToken,
+    }: {
+        subscriptionToken: string;
+    }): Promise<boolean> {
+        return (await this.stripeApi.subscriptions.cancel(subscriptionToken))
+            ? true
+            : false;
+    }
 }
 
 export { StipeService };

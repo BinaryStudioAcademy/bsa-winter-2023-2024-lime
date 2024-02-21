@@ -5,56 +5,64 @@ class SubscriptionEntity implements Entity {
 
     private 'userId': number;
 
-    private 'planId': number;
+    private 'planId': number | null;
 
-    private 'subscriptionToken': string;
+    private 'subscriptionToken': string | null;
 
-    private 'status': string;
+    private 'customerToken': string | null;
 
-    private 'expirationDate': Date;
+    private 'status': string | null;
+
+    private 'expirationDate': Date | null;
 
     private constructor({
         id,
         userId,
         planId,
-        subscriptionToken,
         status,
+        subscriptionToken,
+        customerToken,
         expirationDate,
     }: {
         id: number | null;
         userId: number;
-        planId: number;
-        subscriptionToken: string;
-        status: string;
-        expirationDate: Date;
+        planId: number | null;
+        status: string | null;
+        subscriptionToken: string | null;
+        customerToken: string | null;
+        expirationDate: Date | null;
     }) {
         this.id = id;
         this.userId = userId;
         this.planId = planId;
-        this.subscriptionToken = subscriptionToken;
+        this.customerToken = customerToken;
         this.status = status;
         this.expirationDate = expirationDate;
+        this.subscriptionToken = subscriptionToken;
     }
 
     public static initialize({
         id,
         userId,
         planId,
+        customerToken,
         subscriptionToken,
         status,
         expirationDate,
     }: {
         id: number | null;
         userId: number;
-        planId: number;
-        subscriptionToken: string;
-        status: string;
-        expirationDate: Date;
+        planId: number | null;
+        status: string | null;
+        subscriptionToken: string | null;
+        customerToken: string | null;
+        expirationDate: Date | null;
     }): SubscriptionEntity {
         return new SubscriptionEntity({
             id,
             userId,
             planId,
+            customerToken,
             subscriptionToken,
             status,
             expirationDate,
@@ -63,59 +71,45 @@ class SubscriptionEntity implements Entity {
 
     public static initializeNew({
         userId,
-        planId,
-        subscriptionToken,
-        status,
-        expirationDate,
     }: {
         userId: number;
-        planId: number;
-        subscriptionToken: string;
-        customerToken: string;
-        status: string;
-        expirationDate: Date;
     }): SubscriptionEntity {
         return new SubscriptionEntity({
             id: null,
             userId,
-            planId,
-            subscriptionToken,
-            status,
-            expirationDate,
+            planId: null,
+            subscriptionToken: null,
+            customerToken: null,
+            status: null,
+            expirationDate: null,
         });
     }
 
     public toObject(): {
-        id: number;
+        id: number | null;
         userId: number;
-        planId: number;
-        subscriptionToken: string;
-        status: string;
-        expirationDate: Date;
+        planId: number | null;
+        status: string | null;
+        subscriptionToken: string | null;
+        customerToken: string | null;
+        expirationDate: Date | null;
     } {
         return {
             id: this.id as number,
             userId: this.userId,
-            planId: this.planId,
+            planId: this.planId as number,
+            customerToken: this.customerToken,
             subscriptionToken: this.subscriptionToken,
             status: this.status,
-            expirationDate: this.expirationDate,
+            expirationDate: this.expirationDate as Date,
         };
     }
 
     public toNewObject(): {
         userId: number;
-        planId: number;
-        subscriptionToken: string;
-        status: string;
-        expirationDate: Date;
     } {
         return {
             userId: this.userId,
-            planId: this.planId,
-            subscriptionToken: this.subscriptionToken,
-            status: this.status,
-            expirationDate: this.expirationDate,
         };
     }
 }

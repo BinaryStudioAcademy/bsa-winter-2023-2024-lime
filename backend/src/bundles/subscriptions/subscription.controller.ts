@@ -8,10 +8,16 @@ import { type Logger } from '~/common/logger/types/types.js';
 
 import { type SubscriptionService } from './subscription.service.js';
 
-type OptionsType = {
+type OptionsTypeSubscribe = {
     planId: number;
     userId: number;
     priceToken: string;
+    customerToken: string;
+};
+
+type OptionsTypeCancelSubscribe = {
+    planId: number;
+    userId: number;
 };
 
 class SubscriptionController extends BaseController {
@@ -30,14 +36,27 @@ class SubscriptionController extends BaseController {
             method: 'POST',
             handler: (options) =>
                 this.subscribe(
-                    options as ApiHandlerOptions<{ body: OptionsType }>,
+                    options as ApiHandlerOptions<{
+                        body: OptionsTypeSubscribe;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: '/cancel-subscription',
+            method: 'POST',
+            handler: (options) =>
+                this.cancelSubscribtion(
+                    options as ApiHandlerOptions<{
+                        body: OptionsTypeCancelSubscribe;
+                    }>,
                 ),
         });
     }
 
     private async subscribe(
         options: ApiHandlerOptions<{
-            body: OptionsType;
+            body: OptionsTypeSubscribe;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
@@ -46,6 +65,21 @@ class SubscriptionController extends BaseController {
                 planId: options.body.planId,
                 userId: options.body.userId,
                 priceToken: options.body.priceToken,
+                customerToken: options.body.customerToken,
+            }),
+        };
+    }
+
+    private async cancelSubscribtion(
+        options: ApiHandlerOptions<{
+            body: OptionsTypeCancelSubscribe;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        return {
+            status: HttpCode.OK,
+            payload: await this.subscriptionService.cancelSubscribtion({
+                planId: options.body.planId,
+                userId: options.body.userId,
             }),
         };
     }

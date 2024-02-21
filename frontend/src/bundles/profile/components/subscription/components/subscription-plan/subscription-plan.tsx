@@ -16,7 +16,7 @@ const SubscriptionPlan = ({
     return (
         <div
             className={
-                'bg-lm-black-100 flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:p-6 '
+                'bg-lm-black-100 flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:p-6'
             }
         >
             <div

@@ -14,13 +14,15 @@ import { SunscriptionAttributes } from './enums/enums.js';
 class SubscriptionModel extends AbstractModel {
     public 'userId': number;
 
-    public 'planId': number;
+    public 'planId': number | null;
 
-    public 'subscriptionToken': string;
+    public 'subscriptionToken': string | null;
 
-    public 'status': string;
+    public 'customerToken': string | null;
 
-    public 'expirationDate': Date;
+    public 'status': string | null;
+
+    public 'expirationDate': Date | null;
 
     public static override get tableName(): string {
         return DatabaseTableName.SUBSCRIPTIONS;
