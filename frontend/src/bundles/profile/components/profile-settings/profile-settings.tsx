@@ -7,6 +7,7 @@ import {
     Loader,
     RadioCard,
 } from '~/bundles/common/components/components.js';
+import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { Gender } from '~/bundles/common/enums/enums.js';
 import {
@@ -50,10 +51,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 ...getValues(),
                 id: userId ?? null,
             };
+
             onSubmit(payload);
-            // void handleSubmit(onSubmit)(event_);
+            reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
         },
-        [onSubmit, getValues, userId],
+        [onSubmit, getValues, userId, reset],
     );
 
     const handleCancel = useCallback((): void => {
@@ -61,7 +63,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     }, [reset]);
 
     return (
-        <div className="bg-lm-black-100 w-[874px] px-12 pl-[52px] pr-[78px] pt-[48px]">
+        <div className="bg-lm-black-200 w-[874px] px-12 pl-[52px] pr-[78px] pt-[48px]">
             <div className="flex items-center pb-[47px]">
                 <Avatar size="lg" />
 
@@ -73,7 +75,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     className="hidden"
                 />
                 <Button
-                    className="w-120 ml-[13px] h-[38px] rounded-[20px]"
+                    className="ml-[13px] h-[38px] w-[120px] rounded-[20px]"
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
@@ -86,7 +88,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 onSubmit={handleFormSubmit}
             >
                 <Input
-                    className="col-start-1 col-end-3"
+                    className="col-start-1 col-end-3 border-0"
                     type="text"
                     label="Full Name"
                     placeholder="John Doe"
@@ -97,7 +99,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
 
                 <Input
-                    className="col-start-3 col-end-5"
+                    className="col-start-3 col-end-5 border-0"
                     type="text"
                     label="Nickname"
                     placeholder="MyNickname2024"
@@ -106,18 +108,16 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     errors={errors}
                     isDisabled={isLoading}
                 />
-                <Input
-                    className="col-start-1 col-end-3"
-                    type="text"
-                    label="Date of birth"
-                    placeholder="DD/MM/YYYY"
+                <DatePicker
                     name="dateOfBirth"
                     control={control}
                     errors={errors}
-                    isDisabled={isLoading}
+                    label="Date of birth"
+                    placeholder="DD/MM/YYYY"
+                    className="col-start-1 col-end-3"
                 />
                 <Input
-                    className="col-start-3 col-end-4"
+                    className="col-start-3 col-end-4 border-0"
                     type="text"
                     label="Weight"
                     placeholder="0 kg"
@@ -127,7 +127,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
                 <Input
-                    className="col-start-4 col-end-5"
+                    className="col-start-4 col-end-5 border-0"
                     type="text"
                     label="Height"
                     placeholder="0 sm"
@@ -136,27 +136,29 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     errors={errors}
                     isDisabled={isLoading}
                 />
-                <RadioCard
-                    id="1"
-                    name="gender"
-                    label="Male"
-                    value={Gender.MALE}
-                    control={control}
-                />
-                <RadioCard
-                    id="1"
-                    name="gender"
-                    label="Female"
-                    value={Gender.FEMALE}
-                    control={control}
-                />
-                <RadioCard
-                    id="1"
-                    name="gender"
-                    label="Prefer not to say"
-                    value={Gender.OTHER}
-                    control={control}
-                />
+                <div className="col-start-1 col-end-3 flex">
+                    <RadioCard
+                        id="1"
+                        name="gender"
+                        label="Male"
+                        value={Gender.MALE}
+                        control={control}
+                    />
+                    <RadioCard
+                        id="1"
+                        name="gender"
+                        label="Female"
+                        value={Gender.FEMALE}
+                        control={control}
+                    />
+                    <RadioCard
+                        id="1"
+                        name="gender"
+                        label="Prefer not to say"
+                        value={Gender.OTHER}
+                        control={control}
+                    />
+                </div>
                 <ul className="col-start-3 col-end-5 row-start-4 mt-6 flex">
                     <li className="mr-6 w-full">
                         <Button

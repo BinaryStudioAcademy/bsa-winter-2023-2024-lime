@@ -56,27 +56,26 @@ class UserService implements Service {
             const existingUser = await this.userRepository.find({
                 id: userId,
             });
-
             if (existingUser) {
-                const updatedUserDetails: Partial<UserDetailsModel> = {
-                    fullName: userRequest.fullName,
-                    avatarUrl: userRequest.avatarUrl,
-                    username: userRequest.username,
-                    dateOfBirth: userRequest.dateOfBirth,
-                    weight: Number(userRequest.weight),
-                    height: Number(userRequest.height),
-                    gender: userRequest.gender,
-                };
-
+                const updatedUserDetails: Partial<UserDetailsModel> = {};
+                for (const property of Object.keys(userRequest)) {
+                    const value = userRequest[property];
+                    if (this.shouldUpdateProperty(value)) {
+                        /* eslint-disable @typescript-eslint/no-explicit-any */
+                        (updatedUserDetails as any)[property] =
+                            /* eslint-enable @typescript-eslint/no-explicit-any */
+                            property === 'weight' || property === 'height'
+                                ? Number(userRequest[property])
+                                : userRequest[property];
+                    }
+                }
                 const updatedUser = await this.userRepository.update(
                     userId,
                     updatedUserDetails,
                 );
-
                 if (!updatedUser) {
                     throw new Error('User not found');
                 }
-
                 return updatedUser.toObject() as UserAuthResponseDto;
             } else {
                 throw new Error('User not found');
@@ -85,7 +84,9 @@ class UserService implements Service {
             throw new Error(`Error occured ${error}`);
         }
     }
-
+    private shouldUpdateProperty(value: unknown): boolean {
+        return value !== null && value !== '';
+    }
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
     }

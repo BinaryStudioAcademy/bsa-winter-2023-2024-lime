@@ -4,7 +4,10 @@ import {
     type FieldValues,
 } from 'react-hook-form';
 
-import { useFormController } from '~/bundles/common/hooks/hooks.js';
+import {
+    useCallback,
+    useFormController,
+} from '~/bundles/common/hooks/hooks.js';
 
 import styles from './styles.module.css';
 
@@ -25,8 +28,14 @@ const RadioCard = <T extends FieldValues>({
     control,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
+
+    const handleLabelClick = useCallback((): void => {
+        void field.onChange(value);
+    }, [field, value]);
+
     return (
-        <div className="flex items-center py-1">
+        /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
+        <div className="">
             <input
                 {...field}
                 id={id}
@@ -35,10 +44,15 @@ const RadioCard = <T extends FieldValues>({
                 type="radio"
                 className={styles['radio-card']}
             />
-            <label htmlFor={name} className={styles['label']}>
+            <label
+                htmlFor={name}
+                className={styles['label']}
+                onClick={handleLabelClick}
+            >
                 {label}
             </label>
         </div>
+        /* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
     );
 };
 

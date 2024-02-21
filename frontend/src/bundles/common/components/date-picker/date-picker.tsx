@@ -33,7 +33,8 @@ const DatePicker = <T extends FieldValues>({
     const handleDaySelect = useCallback(
         (date: DateObjectProperties): false | undefined => {
             if ((date as DateObject).isValid) {
-                field.onChange((date as DateObject).format());
+                const formattedDate = (date as DateObject).format('DD/MM/YYYY');
+                field.onChange(formattedDate);
                 return;
             }
 
@@ -47,6 +48,7 @@ const DatePicker = <T extends FieldValues>({
                 containerClassName={'custom-date-picker'}
                 onChange={handleDaySelect}
                 offsetY={label ? -10 : -30}
+                format="DD/MM/YYYY"
                 render={
                     <Input
                         type="text"

@@ -1,14 +1,11 @@
 .label {
-    display: table-cell;
-    width: 83px;
-    height: 37px;
-    padding: 9px, 24px;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 5px;
-    cursor: pointer;
+    @apply text-lm-grey-200 bg-lm-black-100 table-cell h-[47px]  cursor-pointer px-[9px] py-[24px] text-center align-middle;
+}
+
+.radio-card {
+    @apply hidden;
 }
 
 .radio-card:checked + .label {
-    @apply bg-lm-yellow-100;
+    @apply bg-lm-yellow-100 text-lm-black-100;
 }
