@@ -18,3 +18,10 @@ const IconComponent: Record<
 } as const;
 
 export { IconComponent };
+export { CalendarDaysIcon as ScheduleIcon } from '@heroicons/react/16/solid';
+export {
+    QuestionMarkCircleIcon as HelpIcon,
+    ArrowLeftStartOnRectangleIcon as LogoutIcon,
+    Squares2X2Icon as OverviewIcon,
+} from '@heroicons/react/24/outline';
+

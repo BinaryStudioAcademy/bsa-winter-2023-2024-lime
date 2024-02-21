@@ -6,15 +6,15 @@ import {
 
 import { AppRoute } from '../../enums/app-route.enum.js';
 import { getValidClassNames } from '../../helpers/helpers.js';
+import { Icon } from '../components.js';
 import {
-    GoalsIcon,
     HelpIcon,
     LogoutIcon,
     OverviewIcon,
     ScheduleIcon,
-    WorkoutIcon,
-} from '../icon/icon.js';
+} from '../icon/enums/icon-components.enum.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
+import { iconsSvgr } from './enums/enums.js';
 
 type Properties = {
     isOpen?: boolean;
@@ -61,13 +61,13 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         isActive={activeRoute === AppRoute.OVERVIEW}
                     />
                     <SidebarNav
-                        icon={<WorkoutIcon />}
+                        icon={<Icon name={iconsSvgr.WORKOUT} size={'lg'} />}
                         text="Workout"
                         to={AppRoute.WORKOUT}
                         isActive={activeRoute === AppRoute.WORKOUT}
                     />
                     <SidebarNav
-                        icon={<GoalsIcon />}
+                        icon={<Icon name={iconsSvgr.GOALS} size={'lg'} />}
                         text="Goals"
                         to={AppRoute.GOALS}
                         isActive={activeRoute === AppRoute.GOALS}
