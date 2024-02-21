@@ -12,6 +12,23 @@ import { UsersApiPath } from './enums/enums.js';
 /**
  * @swagger
  * components:
+ *   schemas:
+ *     Error:
+ *       type: object
+ *       properties:
+ *         errorType:
+ *           type: string
+ *           enum:
+ *              - COMMON
+ *              - VALIDATION
+ *         message:
+ *           type: string
+ *
+ */
+
+/**
+ * @swagger
+ * components:
  *    schemas:
  *      User:
  *        type: object
@@ -46,6 +63,9 @@ import { UsersApiPath } from './enums/enums.js';
  *          gender:
  *            type: string
  *            nullable: true
+ *            enum:
+ *              - male
+ *              - female
  */
 class UserController extends BaseController {
     private userService: UserService;
@@ -58,7 +78,7 @@ class UserController extends BaseController {
         this.addRoute({
             path: UsersApiPath.ROOT,
             method: 'GET',
-            // isProtected: true, we can add it later and it will require token
+            isProtected: true,
             handler: () => this.findAll(),
         });
     }
@@ -70,6 +90,8 @@ class UserController extends BaseController {
      *      tags:
      *       - Users
      *      description: Returns an array of users
+     *      security:
+     *        - bearer_auth_token: []
      *      responses:
      *        200:
      *          description: Successful operation
@@ -82,6 +104,20 @@ class UserController extends BaseController {
      *                     type: array
      *                     items:
      *                       $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     *
+     * components:
+     *   securitySchemes:
+     *     bearer_auth_token:
+     *       type: http
+     *       scheme: bearer
+     *       bearerFormat: JWT
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {

@@ -82,6 +82,13 @@ class AuthController extends BaseController {
      *                    $ref: '#/components/schemas/User'
      *                  token:
      *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                    type: object
+     *                    $ref: '#/components/schemas/Error'
      */
 
     private async signIn(
@@ -128,6 +135,13 @@ class AuthController extends BaseController {
      *                    $ref: '#/components/schemas/User'
      *                  token:
      *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                    type: object
+     *                    $ref: '#/components/schemas/Error'
      */
     private async signUp(
         options: ApiHandlerOptions<{
