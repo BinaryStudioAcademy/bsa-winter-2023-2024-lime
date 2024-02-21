@@ -7,6 +7,7 @@ type CircleSizes = ValueOf<typeof ComponentSize>;
 type CircleProperties = {
     radius: number;
     stroke: number;
+    fontSize: string;
 };
 
 const CircularColorEnum = {
@@ -16,10 +17,10 @@ const CircularColorEnum = {
 } as const;
 
 const CircularSizes: Record<CircleSizes, CircleProperties> = {
-    [ComponentSize.SMALL]: { radius: 48, stroke: 10 },
-    [ComponentSize.MEDIUM]: { radius: 80, stroke: 15 },
-    [ComponentSize.LARGE]: { radius: 120, stroke: 20 },
-    [ComponentSize.EXTRA_LARGE]: { radius: 160, stroke: 25 },
+    [ComponentSize.SMALL]: { radius: 48, stroke: 10, fontSize: 'text-2xl' },
+    [ComponentSize.MEDIUM]: { radius: 90, stroke: 15, fontSize: 'text-4xl' },
+    [ComponentSize.LARGE]: { radius: 120, stroke: 20, fontSize: 'text-4xl' },
+    [ComponentSize.EXTRA_LARGE]: { radius: 160, stroke: 25,  fontSize: 'text-4xl' },
 } as const;
 
 const CircularColors: Record<
