@@ -1,13 +1,13 @@
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
+
+import { GoalTypes } from '../goal-widget/enums/goal-types.enums.js';
 import {
     type CircleSizes,
     CircularProgressColors,
     CircularProgressSizes,
-} from '~/bundles/overview/enums/enums.js';
-
-import { GoalTypes } from '../goal-widget/enums/goal-types.enums.js';
+} from './enums/enums.js';
 
 type CircularProgressProperties = {
     done: number;
@@ -15,7 +15,6 @@ type CircularProgressProperties = {
     size?: CircleSizes;
     goalType?: ValueOf<typeof GoalTypes>;
     color?: ValueOf<typeof CircularProgressColors>;
-    children?: React.ReactNode;
 };
 
 const classes = {
@@ -24,7 +23,6 @@ const classes = {
     innerTextTop: 'inline-flex font-extrabold',
     innerTextBottom: 'inline-flex font-normal',
 };
-('rounded-sm fill-transparent transition-all duration-1000 ease-in-out transform');
 
 const CircleProgress = ({
     done,
