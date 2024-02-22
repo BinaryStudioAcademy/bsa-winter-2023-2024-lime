@@ -21,6 +21,20 @@ class OAuthRepository implements Repository {
         return oAuthInfo ? OAuthEntity.initialize(oAuthInfo) : null;
     }
 
+    public async findMany(
+        query: Record<string, unknown>,
+    ): Promise<OAuthEntity[]> {
+        const oAuthConnections = await this.oAuthModel
+            .query()
+            .select('*')
+            .where(query)
+            .execute();
+
+        return oAuthConnections.map((connection) => {
+            return OAuthEntity.initialize(connection);
+        });
+    }
+
     public async findAll(): Promise<OAuthEntity[]> {
         const oAuthConnections = await this.oAuthModel.query().execute();
 

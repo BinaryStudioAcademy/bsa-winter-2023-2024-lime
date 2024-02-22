@@ -5,7 +5,7 @@ import { type OAuthRepository } from './oauth.repository.js';
 import { type ConnectionsOAuthResponseDto } from './types/types.js';
 
 abstract class OAuthService implements Service {
-    private oAuthRepository: OAuthRepository;
+    protected oAuthRepository: OAuthRepository;
 
     public constructor(oAuthRepository: OAuthRepository) {
         this.oAuthRepository = oAuthRepository;
@@ -17,6 +17,16 @@ abstract class OAuthService implements Service {
         const oAuthInfo = await this.oAuthRepository.find(query);
 
         return oAuthInfo ? oAuthInfo.toObject() : null;
+    }
+
+    public async findMany(
+        query: Record<string, unknown>,
+    ): Promise<{ items: ConnectionsOAuthResponseDto[] }> {
+        const items = await this.oAuthRepository.findMany(query);
+
+        return {
+            items: items.map((it) => it.toObject()),
+        };
     }
 
     public async findAll(): Promise<{ items: ConnectionsOAuthResponseDto[] }> {

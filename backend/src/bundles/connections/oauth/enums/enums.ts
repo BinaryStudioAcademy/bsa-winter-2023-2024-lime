@@ -1,3 +1,8 @@
 export { OAuthInfoAttributes } from './oauth-info-attributes.enum.js';
 export { Providers } from './providers.enum.js';
-export { ApiPath, ConnectionsOAuthPath } from 'shared';
+export {
+    ApiPath,
+    ConnectionsOAuthActionsPath,
+    ConnectionsOAuthPath,
+    HttpCode,
+} from 'shared';

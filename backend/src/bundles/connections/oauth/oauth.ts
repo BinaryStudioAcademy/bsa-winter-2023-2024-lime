@@ -1,4 +1,10 @@
-export { OAuthInfoAttributes, Providers } from './enums/enums.js';
+export {
+    ConnectionsOAuthActionsPath,
+    ConnectionsOAuthPath,
+    HttpCode,
+    OAuthInfoAttributes,
+    Providers,
+} from './enums/enums.js';
 export { OAuthEntity } from './oauth.entity.js';
 export { OAuthModel } from './oauth.model.js';
 export { OAuthRepository } from './oauth.repository.js';

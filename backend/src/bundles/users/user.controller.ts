@@ -1,6 +1,7 @@
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
     BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -57,6 +58,7 @@ class UserController extends BaseController {
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
         };
