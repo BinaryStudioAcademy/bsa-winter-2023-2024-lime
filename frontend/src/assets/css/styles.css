@@ -39,6 +39,7 @@
     --button-primary: rgb(224 254 16); /* lm-yellow-100 */
     --button-secondary: rgb(64 68 75); /* lm-black-100 */
     --background-primary: rgb(255 255 255); /* White */
+    --background-secondary: rgba(243 243 243 1); /* lm-yellow-100 */
     --text-primary: rgb(0 0 0); /* Black */
     --text-secondary: rgb(224 254 16); /* lm-yellow-100 */
     --background-transparent: rgb(64 68 75); /* lm-black-100 */
@@ -50,4 +51,5 @@
     --text-primary: rgb(255 255 255); /* White */
     --text-secondary: rgb(224 254 16); /* lm-yellow-100 */
     --background-primary: rgb(64 68 75); /* lm-black-100 */
+    --background-secondary: rgb(28 34 39); /* lm-black-200 */
 }

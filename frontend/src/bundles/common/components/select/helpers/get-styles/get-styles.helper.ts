@@ -39,8 +39,7 @@ const getStyles = <
         multiValueLabel: () => `${textColor} `,
         multiValueRemove: () => `${textColor} hover:opacity-9`,
         clearIndicator: () => 'p-0 text-lm-grey-500 mr-4 hover:opacity-9',
-        menuList: () =>
-            'max-h-200 overflow-auto custom-scrollbar bg-lm-black-200',
+        menuList: () => 'max-h-200 overflow-auto custom-scrollbar bg-secondary',
         noOptionsMessage: () => 'text-lm-grey-200 p-4',
         menu: () => 'mt-1',
     };

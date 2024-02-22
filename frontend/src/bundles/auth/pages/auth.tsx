@@ -76,7 +76,7 @@ const Auth: React.FC = () => {
         form: 'justify-between text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
         main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
         logoContainer:
-            'hidden flex-1 items-center justify-center text-xl text-white lg:flex',
+            'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
     };
 
     return (

@@ -86,6 +86,7 @@ export default {
             },
             backgroundColor: {
                 primary: 'var(--background-primary)',
+                secondary: 'var(--background-secondary)',
                 buttonPrimary: 'var(--button-primary)',
                 transparent: 'var(--background-transparent)',
             },

@@ -44,7 +44,7 @@ const Avatar = ({ size }: Properties): JSX.Element => {
                 />
             ) : (
                 <span
-                    className={`object-cover font-bold text-white ${sizeMap[size]}`}
+                    className={`text-primary object-cover font-bold ${sizeMap[size]}`}
                 >
                     {firstLetter}
                 </span>
