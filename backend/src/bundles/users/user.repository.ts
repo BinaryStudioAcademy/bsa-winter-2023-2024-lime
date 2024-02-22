@@ -2,6 +2,7 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type Repository } from '~/common/types/types.js';
 
+import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
 class UserRepository implements Repository {
@@ -106,7 +107,10 @@ class UserRepository implements Repository {
             const user = await this.userModel.query(trx).findById(userId);
 
             if (!user) {
-                throw new Error('User not found');
+                throw new HttpError({
+                    message: UserValidationMessage.USER_NOT_FOUND,
+                    status: HttpCode.NOT_FOUND,
+                });
             }
             await user
                 .$relatedQuery('userDetails', trx)

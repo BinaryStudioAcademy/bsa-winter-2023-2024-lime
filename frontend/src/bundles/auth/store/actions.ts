@@ -40,7 +40,7 @@ const updateUser = createAsyncThunk<
 >(`${sliceName}/update-user`, async (updateUserPayload, { extra }) => {
     const { userApi } = extra;
     const { id: userId } = updateUserPayload;
-    const userIdAsString: string = userId === null ? '' : userId.toString();
+    const userIdAsString: string = userId ? userId.toString() : '';
     return await userApi.updateUser(userIdAsString, updateUserPayload);
 });
 

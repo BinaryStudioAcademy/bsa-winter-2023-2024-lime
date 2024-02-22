@@ -3,6 +3,7 @@ import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
+import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
@@ -72,11 +73,17 @@ class UserService implements Service {
                     updatedUserDetails,
                 );
                 if (!updatedUser) {
-                    throw new Error('User not found');
+                    throw new HttpError({
+                        message: UserValidationMessage.USER_NOT_FOUND,
+                        status: HttpCode.NOT_FOUND,
+                    });
                 }
                 return updatedUser.toObject() as UserAuthResponseDto;
             } else {
-                throw new Error('User not found');
+                throw new HttpError({
+                    message: UserValidationMessage.USER_NOT_FOUND,
+                    status: HttpCode.NOT_FOUND,
+                });
             }
         } catch (error) {
             throw new Error(`Error occured ${error}`);

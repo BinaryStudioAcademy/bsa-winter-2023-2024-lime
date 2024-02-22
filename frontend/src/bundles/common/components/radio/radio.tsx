@@ -22,6 +22,7 @@ const Radio = <T extends FieldValues>({
     control,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
+
     return (
         <div className="flex items-center py-1">
             <input

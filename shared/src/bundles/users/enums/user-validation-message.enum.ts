@@ -25,6 +25,7 @@ const UserValidationMessage = {
     HEIGHT_WRONG:
         'Height should consist of digits, Latin letters, middle-placed comma, middle-placed dot.',
     HEIGHT_LENGTH: 'Height should have from 2 to 20 characters.',
+    USER_NOT_FOUND: 'User not found',
 } as const;
 
 export { UserValidationMessage };

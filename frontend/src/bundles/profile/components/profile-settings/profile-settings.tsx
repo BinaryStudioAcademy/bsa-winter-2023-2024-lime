@@ -26,7 +26,7 @@ type Properties = {
 };
 
 const extractNumbers = (value: string | undefined | null): string => {
-    return (value || '').trim().replaceAll(/\D/g, '');
+    return (value ?? '').trim().replaceAll(/\D/g, '');
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
@@ -39,13 +39,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             mode: 'onBlur',
             shouldUnregister: false,
         });
-
-    // const handleUpdateFileButtonClick = (): void => {
-    //     const inputElement = document.querySelector(
-    //         '#avatarInput',
-    //     ) as HTMLInputElement;
-    //     inputElement?.click();
-    // };
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -79,7 +72,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     id="avatarInput"
                     type="file"
                     accept="image/jpeg, image/png"
-                    // onChange={handleAvatarChange}
                     className="hidden"
                 />
                 <Button
@@ -88,7 +80,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
                     size={ButtonSize.SMALL}
-                    // onClick={handleUpdateFileButtonClick}
                 />
             </div>
             <form
