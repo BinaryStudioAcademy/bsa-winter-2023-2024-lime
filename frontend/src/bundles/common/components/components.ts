@@ -1,7 +1,5 @@
-export { AchievementCard } from './achievement-card/achievement-card.js';
 export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonVariant } from './button/button.js';
-export { GoalCard, GoalVariant } from './goal-card/goal-card.js';
 export { Header } from './header/header.js';
 export { Icon } from './icon/icon.js';
 export { Input } from './input/input.js';

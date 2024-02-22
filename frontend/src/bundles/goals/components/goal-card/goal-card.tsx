@@ -1,40 +1,40 @@
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
 
 const GoalVariant = {
+    WALKING: 'walking',
     RUNNING: 'running',
-    FITNESS: 'fitness',
+    CYCLING: 'cycling',
 } as const;
 
 type Properties = {
-    title: string;
-    frequency: string;
-    variant: ValueOf<typeof GoalVariant>;
+    activity: string;
+    frequency: number;
+    progress: number;
 };
 
 const baseClasses = 'h-[45px] w-[45px] rounded';
 
-const GoalVariantToClasses: Record<ValueOf<typeof GoalVariant>, string> = {
-    [GoalVariant.RUNNING]: 'bg-[#05CFCF]',
-    [GoalVariant.FITNESS]: 'bg-[#056ECF]',
+const GoalVariantToClasses: Record<string, string> = {
+    [GoalVariant.WALKING]: 'bg-[#05CFCF]',
+    [GoalVariant.RUNNING]: 'bg-[#056ECF]',
+    [GoalVariant.CYCLING]: 'bg-[#DC40CD]',
 };
 
 const GoalCard: React.FC<Properties> = ({
-    title,
+    activity,
     frequency,
-    variant,
 }): JSX.Element => {
     return (
-        <div className="bg-lm-black-100 flex h-full w-full items-center gap-4 rounded-xl p-5 pl-8">
+        <div className="bg-lm-black-100 flex h-[7.5rem] h-full w-96 items-center gap-4 rounded-xl p-5 pl-8">
             <div
                 className={getValidClassNames(
                     baseClasses,
-                    GoalVariantToClasses[variant],
+                    GoalVariantToClasses[activity],
                 )}
             ></div>
             <div className="flex flex-col">
                 <p className="text-base font-extrabold leading-5 text-white">
-                    {title}
+                    {activity}
                 </p>
                 <p className="text-lm-grey-200 text-xs font-normal leading-3">
                     {frequency}
