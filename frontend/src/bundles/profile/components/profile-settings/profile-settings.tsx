@@ -146,7 +146,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
                 <div className="col-start-1 col-end-3 flex">
                     <RadioCard
-                        id="1"
+                        id="radio-male"
                         name="gender"
                         label="Male"
                         value={Gender.MALE}
@@ -154,7 +154,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         className="rounded-bl-5 w-[83px] rounded-l-lg "
                     />
                     <RadioCard
-                        id="1"
+                        id="radio-female"
                         name="gender"
                         label="Female"
                         value={Gender.FEMALE}
@@ -162,7 +162,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         className=" w-[83px] "
                     />
                     <RadioCard
-                        id="1"
+                        id="radio-other"
                         name="gender"
                         label="Prefer not to say"
                         value={Gender.OTHER}
