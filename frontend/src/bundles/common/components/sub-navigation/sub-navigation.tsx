@@ -1,7 +1,6 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
-import { useLocation } from '~/bundles/common/hooks/hooks.js';
 
 import { Button, ButtonVariant } from '../components.js';
 import { SubNavItem } from './components/sub-nav-item.js';
@@ -13,8 +12,6 @@ type Properties = {
 };
 
 const SubNavigation = ({ items, title, button }: Properties): JSX.Element => {
-    const { pathname } = useLocation();
-
     const bgColors = [
         'bg-lm-yellow-100',
         'bg-lm-magenta',
@@ -30,7 +27,6 @@ const SubNavigation = ({ items, title, button }: Properties): JSX.Element => {
                     key={index}
                     label={item.label}
                     to={item.to}
-                    isActive={pathname === item.to}
                     bgColor={
                         bgColors[index % bgColors.length] ?? 'bg-lm-purple'
                     }
