@@ -55,7 +55,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
             </div>
 
-            <p className="text-lm-grey-100 text-center text-xs">
+            <p className="text-secondary text-center text-xs">
                 or Sign in with Email
             </p>
 
@@ -95,7 +95,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <p className="text-center text-sm">
                 No account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
-                    <span className="text-secondary">Create an account</span>
+                    <span className="text-action">Create an account</span>
                 </Link>
             </p>
         </>
