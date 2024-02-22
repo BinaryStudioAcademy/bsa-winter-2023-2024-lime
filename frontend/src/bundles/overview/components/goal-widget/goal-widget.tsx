@@ -5,19 +5,19 @@ import { CircleProgress } from '../components.js';
 import { GoalTypes } from './enums/goal-types.enums.js';
 
 type WidgetProperties = {
+    value: number;
+    target: number;
     goalType?: ValueOf<typeof GoalTypes>;
     title?: string;
     subTitle?: string;
-    done: number;
-    target: number;
 };
 
 const GoalWidget = ({
+    value,
+    target,
     goalType = GoalTypes.OVERVIEW,
     title = 'Track Your Daily Activities',
     subTitle = '',
-    done,
-    target,
 }: WidgetProperties): JSX.Element => {
     const rightTitle =
         goalType === GoalTypes.OVERVIEW ? 'Exercises' : 'Running on Track';
@@ -41,7 +41,7 @@ const GoalWidget = ({
                 </div>
                 <div className="flex w-2/4 items-center justify-center">
                     <CircleProgress
-                        done={done}
+                        value={value}
                         target={target}
                         goalType={goalType}
                     />

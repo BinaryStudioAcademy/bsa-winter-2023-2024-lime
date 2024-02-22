@@ -10,7 +10,7 @@ import {
 } from './enums/enums.js';
 
 type CircularProgressProperties = {
-    done: number;
+    value: number;
     target: number;
     size?: CircleSizes;
     goalType?: ValueOf<typeof GoalTypes>;
@@ -25,7 +25,7 @@ const classes = {
 };
 
 const CircleProgress = ({
-    done,
+    value,
     target,
     size = ComponentSize.MEDIUM,
     color = CircularProgressColors.primary,
@@ -36,7 +36,7 @@ const CircleProgress = ({
     const innerRadius = radius - stroke * 2;
     const circumference = innerRadius * 2 * Math.PI;
     const progressCircleOffset =
-        circumference - (done / target) * circumference;
+        circumference - (value / target) * circumference;
 
     return (
         <div className="relative flex items-center justify-center">
@@ -78,7 +78,7 @@ const CircleProgress = ({
                                 fontSize,
                             )}
                         >
-                            {done}
+                            {value}
                         </p>
                         <p className="inline-flex font-normal">/{target}</p>
                     </>
@@ -91,7 +91,7 @@ const CircleProgress = ({
                                 fontSize,
                             )}
                         >
-                            {done}
+                            {value}
                         </p>
                     </>
                 )}
@@ -103,7 +103,7 @@ const CircleProgress = ({
                                 fontSize,
                             )}
                         >
-                            {done}
+                            {value}
                         </p>
                         <p className="inline-flex font-normal">km</p>
                     </>
