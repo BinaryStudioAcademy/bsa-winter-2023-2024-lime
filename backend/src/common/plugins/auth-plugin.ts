@@ -38,7 +38,7 @@ const authPlugin = fastifyPlugin(
                         });
                     }
 
-                    request.user = user?.toObject();
+                    request.user = user.toObject();
                 } catch {
                     throw new HttpError({
                         status: HttpCode.UNAUTHORIZED,

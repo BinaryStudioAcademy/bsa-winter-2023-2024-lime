@@ -1,6 +1,5 @@
-import { type UserAuthResponseDto } from 'shared';
-
 import { type UserService } from '~/bundles/users/user.service.js';
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -126,13 +125,6 @@ class UserController extends BaseController {
      *                  schema:
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
-     *
-     * components:
-     *   securitySchemes:
-     *     bearer_auth_token:
-     *       type: http
-     *       scheme: bearer
-     *       bearerFormat: JWT
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
@@ -164,12 +156,6 @@ class UserController extends BaseController {
      *                  schema:
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
-     * components:
-     *   securitySchemes:
-     *     bearer_auth_token:
-     *       type: http
-     *       scheme: bearer
-     *       bearerFormat: JWT
      */
     private getCurrentUser(
         options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,

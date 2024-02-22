@@ -1,8 +1,10 @@
+import { type UserAuthResponseDto } from 'shared';
+
 type DefaultApiHandlerOptions = {
     body?: unknown;
     query?: unknown;
     params?: unknown;
-    user?: unknown;
+    user?: UserAuthResponseDto | null;
 };
 
 type ApiHandlerOptions<
