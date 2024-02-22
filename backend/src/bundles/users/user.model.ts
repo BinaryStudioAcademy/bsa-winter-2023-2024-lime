@@ -5,7 +5,10 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { SubscriptionModel } from '../subscriptions/subscription.model.js';
+import {
+    SubscriptionModel,
+    SunscriptionAttributes,
+} from '../subscriptions/subscriptions.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -37,7 +40,7 @@ class UserModel extends AbstractModel {
                 modelClass: SubscriptionModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.SUBSCRIPTIONS}.${UserDetailsAttributes.USER_ID}`,
+                    to: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.USER_ID}`,
                 },
             },
         };

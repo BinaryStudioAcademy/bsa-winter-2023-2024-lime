@@ -3,6 +3,7 @@ import { BaseController } from '~/common/controller/controller.js';
 import { HttpCode } from '~/common/http/enums/enums.js';
 import { type Logger } from '~/common/logger/types/types.js';
 
+import { SubscriptionPlansApiPath } from './enums/enums.js';
 import { type SubscriptionPlanService } from './subscription-plan.service.js';
 
 class SubscriptionPlanController extends BaseController {
@@ -17,7 +18,7 @@ class SubscriptionPlanController extends BaseController {
         this.subscriptionPlanService = subscriptionPlanService;
 
         this.addRoute({
-            path: '/',
+            path: SubscriptionPlansApiPath.ROOT,
             method: 'GET',
             handler: () => this.findAll(),
         });

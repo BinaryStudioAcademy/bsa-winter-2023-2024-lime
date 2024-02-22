@@ -10,6 +10,8 @@ type UserAuthResponseDto = {
     weight: number | null;
     height: number | null;
     gender: ValueOf<typeof Gender> | null;
+    customerToken: string | null;
+    currentPlanId: number | null;
 };
 
 export { type UserAuthResponseDto };

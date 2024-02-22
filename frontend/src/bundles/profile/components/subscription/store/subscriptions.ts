@@ -1,9 +1,17 @@
-import { loadAllSubscriptionPlans } from './actions.js';
+import {
+    cancelSubscription,
+    confirmPayment,
+    createSubscription,
+    loadAllSubscriptionPlans,
+} from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     loadAllSubscriptionPlans,
+    createSubscription,
+    cancelSubscription,
+    confirmPayment,
 };
 
 export { allActions as actions };

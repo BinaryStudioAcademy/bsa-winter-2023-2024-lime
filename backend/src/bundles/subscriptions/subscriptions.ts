@@ -13,3 +13,7 @@ const subscriptionController = new SubscriptionController(
 );
 
 export { subscriptionController, subscriptionService };
+export { SunscriptionAttributes } from './enums/enums.js';
+export { SubscriptionEntity } from './subscription.entity.js';
+export { SubscriptionModel } from './subscription.model.js';
+export { SubscriptionService } from './subscription.service.js';

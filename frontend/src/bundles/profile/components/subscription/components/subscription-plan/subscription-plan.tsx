@@ -1,18 +1,34 @@
+import { useCallback } from 'react';
+
 import { Button } from '~/bundles/common/components/components.js';
 
 type Properties = {
+    id: number;
     name: string;
     description: string;
     price: number;
-    productToken: string;
+    priceToken: string;
+    handleClick: ({
+        planId,
+        priceToken,
+    }: {
+        planId: number;
+        priceToken: string;
+    }) => void;
 };
 
 const SubscriptionPlan = ({
+    id,
     name,
     description,
     price,
-    productToken,
+    priceToken,
+    handleClick,
 }: Properties): JSX.Element => {
+    const handleButtonClick = useCallback(() => {
+        handleClick({ planId: id, priceToken });
+    }, [id, priceToken, handleClick]);
+
     return (
         <div
             className={
@@ -45,12 +61,13 @@ const SubscriptionPlan = ({
                     </p>
                 </div>
             </div>
-            <div>{productToken}</div>
+
             <Button
                 type={'button'}
                 label={'Subscribe'}
                 variant={'primary'}
                 size={'medium'}
+                onClick={handleButtonClick}
             />
         </div>
     );

@@ -21,3 +21,6 @@ export {
     subscriptionPlanRepository,
     subscriptionPlanService,
 };
+export { SubscriptionPlanEntity } from './subscription-plan.entity.js';
+export { SubscriptionPlanModel } from './subscription-plan.model.js';
+export { SubscriptionPlanService } from './subscription-plan.service.js';

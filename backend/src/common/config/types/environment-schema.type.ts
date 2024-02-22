@@ -24,6 +24,7 @@ type EnvironmentSchema = {
     };
     STRIPE: {
         SECRET_KEY: string;
+        WEBHOOK_SECRET: string;
     };
 };
 

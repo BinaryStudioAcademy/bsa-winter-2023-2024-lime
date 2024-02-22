@@ -1,147 +1,157 @@
+import { type SubscriptionItemResponseDto } from 'shared/src/bundles/subscriptions/types/types.js';
+import { type Stripe } from 'stripe';
+
 import { stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
+import {
+    HttpCode,
+    HttpError,
+    SubscriptionValidationMessage,
+    SubscriptionWebHooks,
+} from './enums/enums.js';
 import { type SubscriptionRepository } from './subscription.repository.js';
+import {
+    type SubscribeRequestDto,
+    type SubscribeResponseDto,
+} from './types/types.js';
 
-type SubscriptionObject = {
-    id: number | null;
-    userId: number;
-    planId: number | null;
-    status: string | null;
-    subscriptionToken: string | null;
-    customerToken: string | null;
-    expirationDate: Date | null;
-};
-
-class SubscriptionService implements Service {
+class SubscriptionService
+    implements
+        Omit<Service, 'find' | 'findAll' | 'create' | 'update' | 'delete'>
+{
     private subscriptionRepository: SubscriptionRepository;
 
     public constructor(subscriptionRepository: SubscriptionRepository) {
         this.subscriptionRepository = subscriptionRepository;
     }
 
-    public find(): ReturnType<Service['find']> {
-        return Promise.resolve(null);
-    }
-
-    public findAll(): ReturnType<Service['findAll']> {
-        return Promise.resolve({ items: [] });
-    }
-
-    public create(): ReturnType<Service['create']> {
-        return Promise.resolve(null);
-    }
-
-    public update(): ReturnType<Service['update']> {
-        return Promise.resolve(null);
-    }
-
-    public delete(): ReturnType<Service['delete']> {
-        return Promise.resolve(true);
-    }
-
-    private async getSubscriptionByUserIdPlanId({
-        planId,
-        userId,
-    }: {
-        userId: number;
-        planId: number;
-    }): Promise<SubscriptionObject | null> {
-        const currentPlan = await this.subscriptionRepository.find({
-            planId,
+    public async findByUserId(
+        userId: number,
+    ): Promise<SubscriptionItemResponseDto> {
+        const subscription = await this.subscriptionRepository.find({
             userId,
         });
-        if (!currentPlan) {
-            return null;
+
+        if (!subscription) {
+            throw new HttpError({
+                message: SubscriptionValidationMessage.SUBSCRIPTION_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
         }
-        return currentPlan?.toObject();
+
+        return subscription.toObject();
     }
 
-    public async subscribe({
-        planId,
-        userId,
-        customerToken,
-        priceToken,
-    }: {
-        userId: number;
-        planId: number;
-        customerToken: string;
-        priceToken: string;
-    }): Promise<{ subscriptionId: string; clientSecret: string } | null> {
-        if (!planId || !userId || !customerToken || !priceToken) {
-            return null;
+    public async subscribe(
+        payload: SubscribeRequestDto,
+    ): Promise<SubscribeResponseDto> {
+        if (!payload) {
+            throw new HttpError({
+                message:
+                    SubscriptionValidationMessage.SUBSCRIPTION_INVALID_REQUEST,
+                status: HttpCode.BAD_REQUEST,
+            });
         }
 
-        const currentSubscription = await this.getSubscriptionByUserIdPlanId({
-            userId,
-            planId,
-        });
+        const { planId, userId, customerToken, priceToken } = payload;
+
+        const currentSubscription = await this.findByUserId(userId);
+
         if (
-            !currentSubscription ||
-            (currentSubscription.planId === planId &&
-                currentSubscription.status === 'active')
+            currentSubscription.planId === planId &&
+            currentSubscription.status === 'active'
         ) {
-            return null;
+            throw new HttpError({
+                message:
+                    SubscriptionValidationMessage.SUBSCRIPTION_ALREDY_IN_USE,
+                status: HttpCode.CONFLICT,
+            });
         }
 
-        const { subscriptionId, clientSecret, status, expirationDate } =
+        const { subscriptionToken, clientSecret, status, expirationDate } =
             await stripeService.createSubscription({
                 customerId: customerToken,
                 priceId: priceToken,
             });
 
-        if (!subscriptionId || !clientSecret) {
-            return null;
-        }
-
         try {
-            await this.subscriptionRepository.updateSubscription({
-                userId,
-                planId,
-                status,
-                subscriptionToken: subscriptionId,
-                expirationDate,
-            });
+            await this.subscriptionRepository.updateSubscription(
+                { userId },
+                {
+                    planId,
+                    status,
+                    subscriptionToken,
+                    expirationDate,
+                },
+            );
 
-            return { subscriptionId, clientSecret };
+            return { subscriptionId: subscriptionToken, clientSecret };
         } catch (error) {
-            await stripeService.cancelSubscription({
-                subscriptionToken: subscriptionId,
+            await stripeService.immediateCancelSubscription({
+                subscriptionToken,
             });
 
-            throw error;
+            throw new HttpError({
+                message: (error as Error).message,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
         }
     }
 
     public async cancelSubscribtion({
-        planId,
         userId,
     }: {
         userId: number;
-        planId: number;
-    }): Promise<boolean> {
-        const currentSubscription = await this.getSubscriptionByUserIdPlanId({
-            userId,
-            planId,
-        });
+    }): Promise<void> {
+        const currentSubscription = await this.findByUserId(userId);
 
-        if (!currentSubscription || !currentSubscription.subscriptionToken) {
-            return false;
+        if (!currentSubscription.subscriptionToken) {
+            throw new HttpError({
+                message:
+                    SubscriptionValidationMessage.SUBSCRIPTION_CANNOT_BE_CANCELED,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
         }
 
-        await stripeService.cancelSubscription({
-            subscriptionToken: currentSubscription.subscriptionToken,
-        });
+        try {
+            await stripeService.softCancelSubscription({
+                subscriptionToken: currentSubscription.subscriptionToken,
+            });
+        } catch (error) {
+            throw new HttpError({
+                message: (error as Error).message,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 
-        await this.subscriptionRepository.updateSubscription({
-            userId,
-            planId: null,
-            status: null,
-            subscriptionToken: null,
-            expirationDate: null,
-        });
+    public async webHooksListener({ body }: { body: unknown }): Promise<void> {
+        const stripeResponse = body as Stripe.Event;
+        if (
+            !stripeResponse ||
+            !stripeResponse.type ||
+            !stripeResponse.data.object
+        ) {
+            return;
+        }
 
-        return true;
+        switch (stripeResponse.type) {
+            case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_UPDATED: {
+                const subscription = stripeResponse.data.object;
+                await this.subscriptionRepository.updateSubscription(
+                    { subscriptionToken: subscription.id },
+                    { status: subscription.status },
+                );
+                break;
+            }
+            case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_DELETED: {
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 }
 

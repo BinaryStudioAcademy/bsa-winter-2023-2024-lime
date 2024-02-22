@@ -125,6 +125,12 @@ class BaseConfig implements Config {
                     env: 'STRIPE_SECRET_KEY',
                     default: null,
                 },
+                WEBHOOK_SECRET: {
+                    doc: 'Stripe webhook secret key',
+                    format: String,
+                    env: 'STRIPE_WEBHOOK_SECRET',
+                    default: null,
+                },
             },
         });
     }

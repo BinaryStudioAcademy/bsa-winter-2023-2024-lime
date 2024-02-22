@@ -14,6 +14,9 @@ import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
+import { SubscriptionCheckout } from './bundles/profile/components/subscription/pages/subscription-checkout/subscription-checkout.js';
+import { SubscriptionPage } from './bundles/profile/components/subscription/pages/subscription-page/subscription-page.js';
+
 const routes = [
     {
         path: AppRoute.ROOT,
@@ -30,6 +33,14 @@ const routes = [
             {
                 path: AppRoute.SIGN_UP,
                 element: <Auth />,
+            },
+            {
+                path: AppRoute.SUBSCRIPTION,
+                element: <SubscriptionPage />,
+            },
+            {
+                path: AppRoute.SUBSCRIPTION_CHECKOUT,
+                element: <SubscriptionCheckout />,
             },
         ],
     },

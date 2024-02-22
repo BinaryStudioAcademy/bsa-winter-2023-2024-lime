@@ -1,11 +1,23 @@
+import { Button } from '~/bundles/common/components/components.js';
+import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks.js';
+
+import { actions as subscriptionActions } from '../../store/subscriptions.js';
+
 const SubscriptionUserPanel = (): JSX.Element => {
+    const dispatch = useAppDispatch();
+    const userId = 5;
+
+    const handleCancelSubscription = useCallback((): void => {
+        void dispatch(subscriptionActions.cancelSubscription({ userId }));
+    }, [dispatch]);
+
     return (
         <div
             className={
-                'bg-lm-yellow-100 w-full max-w-[30rem] rounded-2xl p-4 md:p-6'
+                'bg-lm-yellow-200 w-full max-w-[30rem] rounded-2xl p-4 md:max-w-full md:p-6'
             }
         >
-            <div>
+            <div className="flex flex-col gap-3">
                 <h3 className={'mb-2 text-center text-xl font-extrabold'}>
                     Hi,{' '}
                 </h3>
@@ -33,6 +45,13 @@ const SubscriptionUserPanel = (): JSX.Element => {
                         </div>
                     </div>
                 </div>
+                <Button
+                    variant="primary"
+                    label="Cancel subscription"
+                    size="medium"
+                    type="button"
+                    onClick={handleCancelSubscription}
+                />
             </div>
         </div>
     );

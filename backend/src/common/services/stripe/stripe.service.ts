@@ -1,5 +1,7 @@
 import Stripe from 'stripe';
 
+import { config } from '~/common/config/config.js';
+
 class StipeService {
     private readonly stripeSecretKey: string;
 
@@ -62,8 +64,8 @@ class StipeService {
         customerId: string;
         priceId: string;
     }): Promise<{
-        subscriptionId: string;
-        clientSecret: string | null;
+        subscriptionToken: string;
+        clientSecret: string;
         status: string;
         expirationDate: Date;
     }> {
@@ -78,17 +80,27 @@ class StipeService {
         });
 
         return {
-            subscriptionId: subscription.id,
+            subscriptionToken: subscription.id,
             clientSecret: (
                 (subscription.latest_invoice as Stripe.Invoice)
                     .payment_intent as Stripe.PaymentIntent
-            ).client_secret,
+            ).client_secret as string,
             status: subscription.status,
-            expirationDate: new Date(subscription.current_period_end),
+            expirationDate: new Date(subscription.current_period_end * 1000),
         };
     }
 
-    public async cancelSubscription({
+    public async softCancelSubscription({
+        subscriptionToken,
+    }: {
+        subscriptionToken: string;
+    }): Promise<void> {
+        await this.stripeApi.subscriptions.update(subscriptionToken, {
+            cancel_at_period_end: true,
+        });
+    }
+
+    public async immediateCancelSubscription({
         subscriptionToken,
     }: {
         subscriptionToken: string;
@@ -96,6 +108,26 @@ class StipeService {
         return (await this.stripeApi.subscriptions.cancel(subscriptionToken))
             ? true
             : false;
+    }
+
+    public async stripeEventContructor({
+        payload,
+        signature,
+    }: {
+        payload: string;
+        signature: string;
+    }): Promise<Stripe.Event | null> {
+        const event = await this.stripeApi.webhooks.constructEventAsync(
+            payload,
+            signature,
+            config.ENV.STRIPE.WEBHOOK_SECRET,
+        );
+
+        if (!event) {
+            return null;
+        }
+
+        return event;
     }
 }
 

@@ -2,7 +2,16 @@ export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export {
     type SubscriptionPlansGetAllItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,
+    SubscriptionPlansApiPath,
 } from './bundles/subscription-plans/subscription-plans.js';
+export {
+    type CancelSubscriptionRequestDto,
+    type SubscribeRequestDto,
+    type SubscribeResponseDto,
+    type SubscriptionItemResponseDto,
+    SubscriptionsApiPath,
+    SubscriptionValidationMessage,
+} from './bundles/subscriptions/subscriptions.js';
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,

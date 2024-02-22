@@ -35,9 +35,7 @@ class UserRepository implements Repository {
             height: userDetails.height,
             gender: userDetails.gender,
             customerToken: subscriptions.customerToken,
-            subscriptionId: subscriptions.id,
-            subscriptionStatus: subscriptions.status,
-            subscriptionExpirationDate: subscriptions.expirationDate,
+            currentPlanId: subscriptions.planId,
         });
     }
 
@@ -60,9 +58,7 @@ class UserRepository implements Repository {
                 height: userDetails.height,
                 gender: userDetails.gender,
                 customerToken: subscriptions.customerToken,
-                subscriptionId: subscriptions.id,
-                subscriptionStatus: subscriptions.status,
-                subscriptionExpirationDate: subscriptions.expirationDate,
+                currentPlanId: subscriptions.planId,
             });
         });
     }
@@ -102,9 +98,7 @@ class UserRepository implements Repository {
                 height: userDetails.height,
                 gender: userDetails.gender,
                 customerToken: subscriptions.customerToken,
-                subscriptionId: subscriptions.id,
-                subscriptionStatus: subscriptions.status,
-                subscriptionExpirationDate: subscriptions.expirationDate,
+                currentPlanId: subscriptions.planId,
             });
         } catch (error) {
             await trx.rollback();

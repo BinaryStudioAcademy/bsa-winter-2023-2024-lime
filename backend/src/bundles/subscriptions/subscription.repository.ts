@@ -3,45 +3,13 @@ import { type Repository } from '~/common/types/repository.type.js';
 import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionModel } from './subscription.model.js';
 
-class SubscriptionRepository implements Omit<Repository, 'findAll' | 'delete'> {
+class SubscriptionRepository
+    implements Omit<Repository, 'findAll' | 'delete' | 'update'>
+{
     private subscriptionModel: typeof SubscriptionModel;
 
     public constructor(subscriptionModel: typeof SubscriptionModel) {
         this.subscriptionModel = subscriptionModel;
-    }
-
-    public update(): Promise<unknown> {
-        throw new Error('Method not implemented.');
-    }
-
-    public async updateSubscription({
-        userId,
-        planId,
-        status,
-        subscriptionToken,
-        expirationDate,
-    }: {
-        userId: number;
-        planId: number | null;
-        status: string | null;
-        subscriptionToken: string | null;
-        expirationDate: Date | null;
-    }): Promise<SubscriptionEntity | null> {
-        await this.subscriptionModel
-            .query()
-            .findOne({ userId })
-            .patch({ planId, status, subscriptionToken, expirationDate })
-            .execute();
-
-        const updatedSubscription = await this.find({ userId });
-
-        if (!updatedSubscription) {
-            return null;
-        }
-
-        return SubscriptionEntity.initialize({
-            ...updatedSubscription.toObject(),
-        });
     }
 
     public async find(
@@ -75,6 +43,27 @@ class SubscriptionRepository implements Omit<Repository, 'findAll' | 'delete'> {
             .execute();
 
         return SubscriptionEntity.initialize({ ...subscription });
+    }
+
+    public async updateSubscription(
+        toUpdateBy: Record<string, unknown>,
+        query: Record<string, unknown>,
+    ): Promise<SubscriptionEntity | null> {
+        await this.subscriptionModel
+            .query()
+            .findOne(toUpdateBy)
+            .patch(query)
+            .execute();
+
+        const updatedSubscription = await this.find(toUpdateBy);
+
+        if (!updatedSubscription) {
+            return null;
+        }
+
+        return SubscriptionEntity.initialize({
+            ...updatedSubscription.toObject(),
+        });
     }
 }
 

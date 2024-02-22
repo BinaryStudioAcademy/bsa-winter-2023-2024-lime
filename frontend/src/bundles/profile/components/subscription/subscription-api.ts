@@ -27,4 +27,56 @@ class SubscriptionPlansApi extends BaseHttpApi {
     }
 }
 
-export { SubscriptionPlansApi };
+type SubscribeOptions = {
+    planId: number;
+    userId: number;
+    priceToken: string;
+    customerToken: string;
+};
+
+type CancelSubscribeOptions = {
+    userId: number;
+};
+
+class SubscriptionsApi extends BaseHttpApi {
+    public constructor({ baseUrl, http, storage }: Constructor) {
+        super({ path: '/subscriptions', baseUrl, http, storage });
+    }
+
+    public async createSubscription(
+        payload: SubscribeOptions,
+    ): Promise<{ subscriptionToken: string; clientSecret: string }> {
+        const response = await this.load(
+            this.getFullEndpoint('/subscribe', {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(payload),
+            },
+        );
+
+        return await response.json<{
+            subscriptionToken: string;
+            clientSecret: string;
+        }>();
+    }
+
+    public async cancelSubscription(
+        payload: CancelSubscribeOptions,
+    ): Promise<{ isCanceled: boolean }> {
+        const response = await this.load(
+            this.getFullEndpoint('/cancel-subscription', {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(payload),
+            },
+        );
+
+        return await response.json<{ isCanceled: boolean }>();
+    }
+}
+
+export { SubscriptionPlansApi, SubscriptionsApi };
