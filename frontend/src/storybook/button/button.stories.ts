@@ -6,7 +6,7 @@ import {
     Button,
     ButtonSize,
     ButtonVariant,
-} from '~/bundles/common/components/button/button.js';
+} from '~/bundles/common/components/components.js';
 
 const meta: Meta<typeof Button> = {
     component: Button,

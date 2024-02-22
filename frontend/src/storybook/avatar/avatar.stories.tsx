@@ -3,11 +3,12 @@
 
 import { type Meta, type StoryObj } from '@storybook/react';
 
+import {
+    Avatar,
+    StoreProvider,
+} from '~/bundles/common/components/components.js';
+import { Size } from '~/bundles/common/enums/size.enum.js';
 import { store } from '~/framework/store/store.js';
-
-import { Avatar } from '../../bundles/common/components/avatar/avatar.js';
-import { StoreProvider } from '../../bundles/common/components/components.js';
-import { Size } from '../../bundles/common/enums/size.enum.js';
 
 // eslint-disable-next-line import/no-default-export
 const meta: Meta<typeof Avatar> = {
