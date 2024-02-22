@@ -17,7 +17,7 @@ const getStyles = <
         control: (state) =>
             getValidClassNames(
                 state.isFocused ? `${borderColor}` : 'border-0',
-                `w-full p-2.5 min-h-11 bg-lm-black-100 border
+                `w-full p-2.5 min-h-11 bg-primary border
                 outline-none rounded-md text-inherit shadow-none hover:cursor-pointer`,
             ),
         dropdownIndicator: (state) => {
@@ -31,7 +31,7 @@ const getStyles = <
         option: () =>
             getValidClassNames(
                 errorMessage ? 'hover:text-lm-red' : 'hover:text-lm-yellow-100',
-                'bg-lm-black-100 text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
+                'bg-primary text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
             ),
         singleValue: () => 'text-lm-grey-200',
         multiValue: () =>

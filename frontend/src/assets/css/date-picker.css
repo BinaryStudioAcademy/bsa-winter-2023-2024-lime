@@ -33,7 +33,7 @@
 }
 
 .custom-date-picker .rmdp-calendar {
-    @apply bg-lm-black-100 rounded-md;
+    @apply bg-primary rounded-md;
 }
 
 .custom-date-picker .rmdp-day.rmdp-today span {

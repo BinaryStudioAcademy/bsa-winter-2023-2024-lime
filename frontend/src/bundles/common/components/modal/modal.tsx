@@ -16,7 +16,7 @@ const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
         overlayClass:
             'overlay bg-lm-black-400 fixed inset-0 z-50 cursor-pointer opacity-15',
         contentClass:
-            'bg-lm-black-100 rounded-34 fixed left-1/2 top-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-start justify-center px-32 pb-24 pt-16 shadow-md transition-all',
+            'bg-primary rounded-34 fixed left-1/2 top-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-start justify-center px-32 pb-24 pt-16 shadow-md transition-all',
         closeIconClass:
             'stroke-lm-grey-500 fill-lm-grey-500 hover:stroke-lm-yellow-100 hover:fill-lm-yellow-100 absolute right-8 top-8 h-3 w-3 cursor-pointer transition-all ',
         titleClass: 'text-lm-grey-200 mb-10 text-xl font-extrabold leading-6 ',
