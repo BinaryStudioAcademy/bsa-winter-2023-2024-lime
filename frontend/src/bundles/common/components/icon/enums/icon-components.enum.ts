@@ -24,4 +24,3 @@ export {
     ArrowLeftStartOnRectangleIcon as LogoutIcon,
     Squares2X2Icon as OverviewIcon,
 } from '@heroicons/react/24/outline';
-
