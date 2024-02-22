@@ -1,4 +1,4 @@
-import { type UserGetCurrentRequestDto } from 'shared';
+import { type UserAuthResponseDto } from 'shared';
 
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
@@ -7,7 +7,7 @@ import {
     BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { HttpCode, HttpError } from '~/common/http/http.js';
+import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import { UsersApiPath } from './enums/enums.js';
@@ -92,7 +92,7 @@ class UserController extends BaseController {
             handler: (options) =>
                 this.getCurrentUser(
                     options as ApiHandlerOptions<{
-                        user: UserGetCurrentRequestDto;
+                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
@@ -118,7 +118,7 @@ class UserController extends BaseController {
      *                   items:
      *                     type: array
      *                     items:
-     *                       $ref: '#/components/schemas/User'
+     *                       $ref: '#/components/schemas/User/'
      *        401:
      *          description: Failed operation
      *          content:
@@ -143,31 +143,38 @@ class UserController extends BaseController {
 
     /**
      * @swagger
-     * /current:
+     * /api/v1/users/current:
      *    get:
-     *      description: Returns the current user
+     *      tags:
+     *       - Current user
+     *      description: Returns current user
+     *      security:
+     *        - bearer_auth_token: []
      *      responses:
      *        200:
      *          description: Successful operation
      *          content:
      *            application/json:
      *              schema:
-     *                type: object
-     *                properties:
-     *                   user:
-     *                  $ref: '#/components/schemas/User'
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     * components:
+     *   securitySchemes:
+     *     bearer_auth_token:
+     *       type: http
+     *       scheme: bearer
+     *       bearerFormat: JWT
      */
     private getCurrentUser(
-        options: ApiHandlerOptions<{ user: UserGetCurrentRequestDto }>,
+        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
     ): ApiHandlerResponse {
         const { user } = options;
-
-        if (!user) {
-            throw new HttpError({
-                message: 'User was not found',
-                status: HttpCode.NOT_FOUND,
-            });
-        }
 
         return {
             status: HttpCode.OK,

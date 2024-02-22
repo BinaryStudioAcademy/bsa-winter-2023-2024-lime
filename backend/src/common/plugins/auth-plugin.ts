@@ -31,6 +31,13 @@ const authPlugin = fastifyPlugin(
                     const { userId } = await jwtService.verifyToken(token);
                     const user = await userService.find({ id: userId });
 
+                    if (!user) {
+                        throw new HttpError({
+                            status: HttpCode.UNAUTHORIZED,
+                            message: UserValidationMessage.TOKEN_INVALID,
+                        });
+                    }
+
                     request.user = user?.toObject();
                 } catch {
                     throw new HttpError({
