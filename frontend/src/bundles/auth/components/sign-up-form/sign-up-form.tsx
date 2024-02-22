@@ -101,7 +101,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <p className="text-center text-sm">
                 Already have an account? Go to{' '}
                 <Link to={AppRoute.SIGN_IN}>
-                    <span className="text-lm-yellow-100">Log in</span>
+                    <span className="text-action">Log in</span>
                 </Link>
             </p>
         </>

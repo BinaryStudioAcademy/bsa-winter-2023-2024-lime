@@ -23,7 +23,7 @@ const Switch = ({
             onClick={handleChange}
         >
             <span
-                className="slider text-lm-yellow-100"
+                className="slider text-action"
                 style={{ width: size, height: size }}
             >
                 {checked ? (

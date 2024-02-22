@@ -21,15 +21,15 @@
 }
 
 .custom-date-picker .rmdp-header-values {
-    @apply text-lm-yellow-100;
+    @apply text-action;
 }
 
 .custom-date-picker .rmdp-header-values span {
-    @apply text-lm-yellow-100 hover:opacity-90;
+    @apply text-action hover:opacity-90;
 }
 
 .custom-date-picker .rmdp-week .rmdp-week-day {
-    @apply text-lm-yellow-100;
+    @apply text-action;
 }
 
 .custom-date-picker .rmdp-calendar {

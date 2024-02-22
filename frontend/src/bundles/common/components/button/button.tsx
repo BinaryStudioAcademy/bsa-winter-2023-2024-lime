@@ -36,9 +36,9 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.PRIMARY]:
         'rounded-lg bg-lm-yellow-100 text-lm-black-300 hover:bg-lm-yellow-200 disabled:text-lm-grey-200 disabled:bg-lm-grey-300',
     [ButtonVariant.SECONDARY]:
-        'border border-lm-yellow-100 rounded-lg bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 hover:border-lm-yellow-200 disabled:text-lm-grey-300 disabled:border-lm-grey-300',
+        'border border-lm-yellow-100 rounded-lg bg-transparent text-action hover:text-lm-yellow-200 hover:border-lm-yellow-200 disabled:text-lm-grey-300 disabled:border-lm-grey-300',
     [ButtonVariant.TERTIARY]:
-        'bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
+        'bg-transparent text-action hover:text-lm-yellow-200 disabled:text-lm-grey-300',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {

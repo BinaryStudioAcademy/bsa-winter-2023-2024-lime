@@ -10,7 +10,7 @@ const getStyles = <
 >(
     errorMessage: string,
 ): ClassNamesConfig<SelectOption, isMulti, Group> => {
-    const textColor = errorMessage ? 'text-lm-red' : 'text-lm-yellow-100';
+    const textColor = errorMessage ? 'text-lm-red' : 'text-action';
     const borderColor = errorMessage ? 'border-lm-red' : 'border-lm-yellow-100';
 
     const defaultStyles: ClassNamesConfig<SelectOption, isMulti, Group> = {
@@ -30,7 +30,7 @@ const getStyles = <
         input: () => 'm-0 p-0 text-white',
         option: () =>
             getValidClassNames(
-                errorMessage ? 'hover:text-lm-red' : 'hover:text-lm-yellow-100',
+                errorMessage ? 'hover:text-lm-red' : 'hover:text-action',
                 'bg-primary text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
             ),
         singleValue: () => 'text-lm-grey-200',
