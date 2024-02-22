@@ -1,7 +1,10 @@
 import { UserValidationMessage } from 'shared';
 
 import { type UserService } from '~/bundles/users/user.service.js';
-import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthResponseDto,
+    type UserUpdateProfileRequestDto,
+} from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -46,10 +49,11 @@ class UserController extends BaseController {
         this.addRoute({
             path: `${UsersApiPath.UPDATE_USER}/:userId`,
             method: 'PATCH',
-            // isProtected: true
+            isProtected: true,
             handler: (options) =>
                 this.updateUser(
                     options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
                         params: { userId: string };
                     }>,
@@ -81,13 +85,18 @@ class UserController extends BaseController {
 
     private async updateUser(
         options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
             body: UserUpdateProfileRequestDto;
             params: { userId: string };
         }>,
     ): Promise<ApiHandlerResponse> {
-        const { body, params } = options;
+        const { user, body, params } = options;
         const userId = params.userId;
+
         try {
+            if (Number(userId) !== Number(user.id)) {
+                throw new Error('Token mismatch');
+            }
             const updatedUser = await this.userService.update(
                 Number(userId),
                 body,
