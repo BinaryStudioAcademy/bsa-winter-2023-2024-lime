@@ -1,19 +1,20 @@
+import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { Icon } from '../components.js';
-import { IconColor, IconSize } from '../icon/enums/enums.js';
+import { IconColor } from '../icon/enums/enums.js';
 
 type Properties = {
     isOverflow?: boolean;
     color?: ValueOf<typeof IconColor>;
-    size?: ValueOf<typeof IconSize>;
+    size?: ValueOf<typeof ComponentSize>;
 };
 
 const Loader: React.FC<Properties> = ({
     isOverflow,
     color = IconColor.PRIMARY,
-    size = IconSize.LARGE,
+    size = ComponentSize.LARGE,
 }: Properties): JSX.Element => {
     const spinner = (
         <>

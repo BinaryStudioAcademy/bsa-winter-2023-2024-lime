@@ -1,13 +1,11 @@
 import {
     Button,
-    ButtonSize,
     ButtonVariant,
     Icon,
 } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
-
-import { IconColor, IconSize } from '../../components/icon/enums/enums.js';
 
 const NotFound: React.FC = () => {
     const navigate = useNavigate();
@@ -21,7 +19,7 @@ const NotFound: React.FC = () => {
             <div className="text-center">
                 <Icon
                     color={IconColor.PRIMARY}
-                    size={IconSize.EXTRA_LARGE}
+                    size={ComponentSize.EXTRA_LARGE}
                     name="notFoundIcon"
                     className="ml-auto mr-auto block"
                 />
@@ -30,7 +28,7 @@ const NotFound: React.FC = () => {
                 </h1>
                 <Button
                     label="Go to homepage"
-                    size={ButtonSize.MEDIUM}
+                    size={ComponentSize.MEDIUM}
                     variant={ButtonVariant.PRIMARY}
                     className="mt-5 w-40"
                     onClick={redirectToHomepage}
