@@ -13,9 +13,20 @@
         "lint": "npm run lint:type && npm run lint:js",
         "start:dev": "vite",
         "build": "tsc -p tsconfig.build.json && vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
     },
     "devDependencies": {
+        "@storybook/addon-essentials": "7.6.17",
+        "@storybook/addon-interactions": "7.6.17",
+        "@storybook/addon-links": "7.6.17",
+        "@storybook/addon-onboarding": "1.0.11",
+        "@storybook/blocks": "7.6.17",
+        "@storybook/builder-vite": "7.6.17",
+        "@storybook/react": "7.6.17",
+        "@storybook/react-vite": "7.6.17",
+        "@storybook/test": "7.6.17",
         "@types/react": "18.2.55",
         "@types/react-dom": "18.2.19",
         "@vitejs/plugin-react": "4.2.1",
@@ -25,10 +36,12 @@
         "eslint-plugin-react-hooks": "4.6.0",
         "postcss": "8.4.35",
         "prettier-plugin-tailwindcss": "0.5.11",
+        "prop-types": "15.8.1",
+        "storybook": "7.6.17",
         "tailwindcss": "3.4.1",
         "vite": "5.0.12",
-        "vite-plugin-svgr": "4.2.0",
-        "vite-plugin-pwa": "0.18.1"
+        "vite-plugin-pwa": "0.18.1",
+        "vite-plugin-svgr": "4.2.0"
     },
     "dependencies": {
         "@heroicons/react": "2.1.1",
