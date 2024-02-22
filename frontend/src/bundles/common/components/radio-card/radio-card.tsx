@@ -18,6 +18,7 @@ type Properties<T extends FieldValues> = {
     value: string;
     control: Control<T>;
     checked?: boolean;
+    className?: string;
 };
 
 const RadioCard = <T extends FieldValues>({
@@ -26,6 +27,7 @@ const RadioCard = <T extends FieldValues>({
     label,
     value,
     control,
+    className = '',
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
@@ -46,7 +48,7 @@ const RadioCard = <T extends FieldValues>({
             />
             <label
                 htmlFor={name}
-                className={styles['label']}
+                className={`${styles['label']} ${className}`}
                 onClick={handleLabelClick}
             >
                 {label}

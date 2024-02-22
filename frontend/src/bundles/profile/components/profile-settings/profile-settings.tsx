@@ -83,7 +83,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     className="hidden"
                 />
                 <Button
-                    className="ml-[13px] h-[38px] w-[120px] rounded-[20px]"
+                    className="ml-[13px] h-[38px] w-[110px] rounded-[20px]"
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
@@ -107,7 +107,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
 
                 <Input
-                    className="col-start-3 col-end-5 border-0"
+                    className="col-start-3 col-end-5"
                     type="text"
                     label="Nickname"
                     placeholder="MyNickname2024"
@@ -122,10 +122,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     errors={errors}
                     label="Date of birth"
                     placeholder="DD/MM/YYYY"
-                    className="col-start-1 col-end-3"
+                    className="col-start-1 col-end-3 "
                 />
                 <Input
-                    className="col-start-3 col-end-4 border-0"
+                    className="col-start-3 col-end-4 "
                     type="text"
                     label="Weight"
                     placeholder="0 kg"
@@ -135,7 +135,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
                 <Input
-                    className="col-start-4 col-end-5 border-0"
+                    className="col-start-4 col-end-5 "
                     type="text"
                     label="Height"
                     placeholder="0 sm"
@@ -151,6 +151,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Male"
                         value={Gender.MALE}
                         control={control}
+                        className="rounded-bl-5 w-[83px] rounded-l-lg "
                     />
                     <RadioCard
                         id="1"
@@ -158,6 +159,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Female"
                         value={Gender.FEMALE}
                         control={control}
+                        className=" w-[83px] "
                     />
                     <RadioCard
                         id="1"
@@ -165,6 +167,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Prefer not to say"
                         value={Gender.OTHER}
                         control={control}
+                        className="w-[200px] rounded-r-lg"
                     />
                 </div>
                 <ul className="col-start-3 col-end-5 row-start-4 mt-6 flex">
