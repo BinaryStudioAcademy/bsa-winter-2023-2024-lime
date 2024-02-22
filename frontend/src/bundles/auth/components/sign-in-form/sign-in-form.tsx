@@ -25,7 +25,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
-        mode: 'onBlur',
+        mode: 'onTouched',
     });
 
     const handleFormSubmit = useCallback(
