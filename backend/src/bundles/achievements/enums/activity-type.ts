@@ -1,7 +1,7 @@
-const Activities = {
+const ActivityType = {
     CYCLING: 'cycling',
     RUNNING: 'running',
     WALKING: 'walking',
 } as const;
 
-export { Activities };
+export { ActivityType };
