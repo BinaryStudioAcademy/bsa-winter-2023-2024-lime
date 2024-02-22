@@ -11,7 +11,7 @@ import {
 
 type CircularProgressProperties = {
     done: number;
-    toDo: number;
+    target: number;
     size?: CircleSizes;
     goalType?: ValueOf<typeof GoalTypes>;
     color?: ValueOf<typeof CircularProgressColors>;
@@ -26,7 +26,7 @@ const classes = {
 
 const CircleProgress = ({
     done,
-    toDo,
+    target,
     size = ComponentSize.MEDIUM,
     color = CircularProgressColors.primary,
     goalType = GoalTypes.STANDART,
@@ -35,7 +35,8 @@ const CircleProgress = ({
     const { baseCircleClass, progressCircleClass } = color;
     const innerRadius = radius - stroke * 2;
     const circumference = innerRadius * 2 * Math.PI;
-    const progressCircleOffset = circumference - (done / toDo) * circumference;
+    const progressCircleOffset =
+        circumference - (done / target) * circumference;
 
     return (
         <div className="relative flex items-center justify-center">
@@ -79,7 +80,7 @@ const CircleProgress = ({
                         >
                             {done}
                         </p>
-                        <p className="inline-flex font-normal">/{toDo}</p>
+                        <p className="inline-flex font-normal">/{target}</p>
                     </>
                 )}
                 {goalType === GoalTypes.STANDART && (

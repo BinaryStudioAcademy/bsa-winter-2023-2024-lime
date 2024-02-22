@@ -6,10 +6,10 @@ import { GoalTypes } from './enums/goal-types.enums.js';
 
 type WidgetProperties = {
     goalType?: ValueOf<typeof GoalTypes>;
-    title: string;
+    title?: string;
     subTitle?: string;
     done: number;
-    toDo: number;
+    target: number;
 };
 
 const GoalWidget = ({
@@ -17,32 +17,32 @@ const GoalWidget = ({
     title = 'Track Your Daily Activities',
     subTitle = '',
     done,
-    toDo,
+    target,
 }: WidgetProperties): JSX.Element => {
     const rightTitle =
         goalType === GoalTypes.OVERVIEW ? 'Exercises' : 'Running on Track';
 
     return (
-        <div className="bg-goalWidget flex max-w-[50rem] items-center rounded-xl">
-            <div className="w-4/6 bg-gray-200 p-4">
-                <p className="font-bolder text-lm-black-100 text-[24px]">
+        <div className="bg-goalWidget flex h-full max-h-40 w-full max-w-[50rem] items-center rounded-xl">
+            <div className="w-4/6 bg-gray-200 p-6">
+                <p className="font-bolder text-lm-black-100 line text-[24px] leading-7">
                     {title}
                 </p>
                 {subTitle && (
                     <p className="text-lm-black-100 text-[14px]">{subTitle}</p>
                 )}
             </div>
-            <div className="flex w-3/6 items-center justify-end">
-                <div className="flex w-2/4 text-white">
+            <div className="flex w-3/6 items-center justify-end p-4">
+                <div className="flex w-2/4 justify-end text-white">
                     {goalType === GoalTypes.OVERVIEW ?? (
-                        <Icon name="logoIcon" size="md"></Icon>
+                        <Icon name="workoutIcon" size="md"></Icon>
                     )}
                     <p className="text-md font-extrabold">{rightTitle}</p>
                 </div>
                 <div className="flex w-2/4 items-center justify-center">
                     <CircleProgress
                         done={done}
-                        toDo={toDo}
+                        target={target}
                         goalType={goalType}
                     />
                 </div>
