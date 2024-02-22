@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable import/no-default-export */
 import { type Meta, type StoryObj } from '@storybook/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -21,13 +19,15 @@ const meta: Meta<typeof Link> = {
     tags: ['autodocs'],
 };
 
+// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof Link>;
 
-// eslint-disable-next-line no-restricted-syntax
-export const LinkStory: Story = {
+const LinkStory: Story = {
     args: {
         to: AppRoute.ROOT,
         children: ' ',
     },
 };
+
+export { LinkStory };

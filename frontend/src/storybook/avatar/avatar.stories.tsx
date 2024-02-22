@@ -1,6 +1,3 @@
-/* eslint-disable import/no-default-export */
-/* eslint-disable no-restricted-syntax */
-
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import {
@@ -9,7 +6,6 @@ import {
 } from '~/bundles/common/components/components.js';
 import { store } from '~/framework/store/store.js';
 
-// eslint-disable-next-line import/no-default-export
 const meta: Meta<typeof Avatar> = {
     component: Avatar,
     title: 'Components/Avatar',
@@ -21,21 +17,24 @@ const meta: Meta<typeof Avatar> = {
     tags: ['autodocs'],
 };
 
+// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof Avatar>;
 
-export const Small: Story = {
+const Small: Story = {
     args: {
         size: 'sm',
     },
 };
-export const Medium: Story = {
+const Medium: Story = {
     args: {
         size: 'md',
     },
 };
-export const Large: Story = {
+const Large: Story = {
     args: {
         size: 'lg',
     },
 };
+
+export { Large, Medium, Small };

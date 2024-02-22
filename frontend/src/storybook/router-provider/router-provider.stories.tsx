@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/padding-line-between-statements */
-/* eslint-disable import/no-default-export */
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import { RouterProvider } from '~/bundles/common/components/router-provider/router-provider.js';
@@ -37,12 +34,14 @@ const meta: Meta<typeof RouterProvider> = {
     tags: ['autodocs'],
 };
 
+// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof RouterProvider>;
 
-// eslint-disable-next-line no-restricted-syntax
-export const RouterProviderStory: Story = {
+const RouterProviderStory: Story = {
     args: {
         routes,
     },
 };
+
+export { RouterProviderStory };

@@ -1,10 +1,6 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable @typescript-eslint/padding-line-between-statements */
-/* eslint-disable import/no-default-export */
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
-import { IconSize } from '~/bundles/common/components/icon/enums/icon-size.enum.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
 
 const meta: Meta<typeof Icon> = {
@@ -13,143 +9,166 @@ const meta: Meta<typeof Icon> = {
     tags: ['autodocs'],
 };
 
+// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof Icon>;
 
-// eslint-disable-next-line no-restricted-syntax
-export const ArrowSmall: Story = {
+const ArrowSmall: Story = {
     args: {
         name: 'arrowDown',
-        size: IconSize.SMALL,
+        size: 'h-5 w-5',
     },
 };
-export const ArrowMedium: Story = {
+const ArrowMedium: Story = {
     args: {
         name: 'arrowDown',
-        size: IconSize.MEDIUM,
+        size: 'h-6 w-6',
     },
 };
-export const ArrowLarge: Story = {
+const ArrowLarge: Story = {
     args: {
         name: 'arrowDown',
-        size: IconSize.LARGE,
+        size: 'h-8 w-8',
     },
 };
-export const ArrowExtraLarge: Story = {
+const ArrowExtraLarge: Story = {
     args: {
         name: 'arrowDown',
-        size: IconSize.EXTRA_LARGE,
+        size: 'h-40 w-40',
     },
 };
-export const LogoSmallPrimary: Story = {
+const LogoSmallPrimary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.SMALL,
+        size: 'h-5 w-5',
         color: IconColor.PRIMARY,
     },
 };
-export const LogoMediumPrimary: Story = {
+const LogoMediumPrimary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.MEDIUM,
+        size: 'h-6 w-6',
         color: IconColor.PRIMARY,
     },
 };
-export const LogoLargePrimary: Story = {
+const LogoLargePrimary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.LARGE,
+        size: 'h-8 w-8',
         color: IconColor.PRIMARY,
     },
 };
-export const LogoExtraLargePrimary: Story = {
+const LogoExtraLargePrimary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.EXTRA_LARGE,
+        size: 'h-40 w-40',
         color: IconColor.PRIMARY,
     },
 };
-export const LogoSmallSecondary: Story = {
+const LogoSmallSecondary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.SMALL,
+        size: 'h-5 w-5',
         color: IconColor.SECONDARY,
     },
 };
-export const LogoMediumSecondary: Story = {
+const LogoMediumSecondary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.MEDIUM,
+        size: 'h-6 w-6',
         color: IconColor.SECONDARY,
     },
 };
-export const LogoLargeSecondary: Story = {
+const LogoLargeSecondary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.LARGE,
+        size: 'h-8 w-8',
         color: IconColor.SECONDARY,
     },
 };
-export const LogoExtraLargeSecondary: Story = {
+const LogoExtraLargeSecondary: Story = {
     args: {
         name: 'logoIcon',
-        size: IconSize.EXTRA_LARGE,
+        size: 'h-40 w-40',
         color: IconColor.SECONDARY,
     },
 };
-export const NotFoundSmallPrimary: Story = {
+const NotFoundSmallPrimary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.SMALL,
+        size: 'h-5 w-5',
         color: IconColor.PRIMARY,
     },
 };
-export const NotFoundMediumPrimary: Story = {
+const NotFoundMediumPrimary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.MEDIUM,
+        size: 'h-6 w-6',
         color: IconColor.PRIMARY,
     },
 };
-export const NotFoundLargePrimary: Story = {
+const NotFoundLargePrimary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.LARGE,
+        size: 'h-8 w-8',
         color: IconColor.PRIMARY,
     },
 };
-export const NotFoundExtraLargePrimary: Story = {
+const NotFoundExtraLargePrimary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.EXTRA_LARGE,
+        size: 'h-40 w-40',
         color: IconColor.PRIMARY,
     },
 };
-export const NotFoundSmallSecondary: Story = {
+const NotFoundSmallSecondary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.SMALL,
+        size: 'h-5 w-5',
         color: IconColor.SECONDARY,
     },
 };
-export const NotFoundMediumSecondary: Story = {
+const NotFoundMediumSecondary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.MEDIUM,
+        size: 'h-6 w-6',
         color: IconColor.SECONDARY,
     },
 };
-export const NotFoundLargeSecondary: Story = {
+const NotFoundLargeSecondary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.LARGE,
+        size: 'h-8 w-8',
         color: IconColor.SECONDARY,
     },
 };
-export const NotFoundExtraLargeSecondary: Story = {
+const NotFoundExtraLargeSecondary: Story = {
     args: {
         name: 'notFoundIcon',
-        size: IconSize.EXTRA_LARGE,
+        size: 'h-40 w-40',
         color: IconColor.SECONDARY,
     },
+};
+
+export {
+    ArrowExtraLarge,
+    ArrowLarge,
+    ArrowMedium,
+    ArrowSmall,
+    LogoExtraLargePrimary,
+    LogoExtraLargeSecondary,
+    LogoLargePrimary,
+    LogoLargeSecondary,
+    LogoMediumPrimary,
+    LogoMediumSecondary,
+    LogoSmallPrimary,
+    LogoSmallSecondary,
+    NotFoundExtraLargePrimary,
+    NotFoundExtraLargeSecondary,
+    NotFoundLargePrimary,
+    NotFoundLargeSecondary,
+    NotFoundMediumPrimary,
+    NotFoundMediumSecondary,
+    NotFoundSmallPrimary,
+    NotFoundSmallSecondary,
 };

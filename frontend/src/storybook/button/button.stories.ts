@@ -1,10 +1,7 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable import/no-default-export */
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import {
     Button,
-    ButtonSize,
     ButtonVariant,
 } from '~/bundles/common/components/components.js';
 
@@ -18,63 +15,76 @@ const meta: Meta<typeof Button> = {
     tags: ['autodocs'],
 };
 
+// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const MediumPrimary: Story = {
+const MediumPrimary: Story = {
     args: {
-        size: ButtonSize.MEDIUM,
+        size: 'medium',
         variant: ButtonVariant.PRIMARY,
     },
 };
-export const MediumPrimaryDisabled: Story = {
+const MediumPrimaryDisabled: Story = {
     args: {
-        size: ButtonSize.MEDIUM,
+        size: 'medium',
         variant: ButtonVariant.PRIMARY,
         isDisabled: true,
     },
 };
-export const MediumSecondary: Story = {
+const MediumSecondary: Story = {
     args: {
-        size: ButtonSize.MEDIUM,
+        size: 'medium',
         variant: ButtonVariant.SECONDARY,
     },
 };
-export const MediumSecondaryDisabled: Story = {
+const MediumSecondaryDisabled: Story = {
     args: {
-        size: ButtonSize.MEDIUM,
+        size: 'medium',
         variant: ButtonVariant.SECONDARY,
         isDisabled: true,
     },
 };
-export const MediumTertiary: Story = {
+const MediumTertiary: Story = {
     args: {
-        size: ButtonSize.MEDIUM,
+        size: 'medium',
         variant: ButtonVariant.TERTIARY,
     },
 };
-export const MediumTertiaryDisabled: Story = {
+const MediumTertiaryDisabled: Story = {
     args: {
-        size: ButtonSize.MEDIUM,
+        size: 'medium',
         variant: ButtonVariant.TERTIARY,
         isDisabled: true,
     },
 };
-export const SmallPrimary: Story = {
+const SmallPrimary: Story = {
     args: {
-        size: ButtonSize.SMALL,
+        size: 'small',
         variant: ButtonVariant.PRIMARY,
     },
 };
-export const SmallSecondary: Story = {
+const SmallSecondary: Story = {
     args: {
-        size: ButtonSize.SMALL,
+        size: 'small',
         variant: ButtonVariant.SECONDARY,
     },
 };
-export const SmallTertiary: Story = {
+const SmallTertiary: Story = {
     args: {
-        size: ButtonSize.SMALL,
+        size: 'small',
         variant: ButtonVariant.TERTIARY,
     },
+};
+
+export {
+    MediumPrimary,
+    MediumPrimaryDisabled,
+    MediumSecondary,
+    MediumSecondaryDisabled,
+    MediumTertiary,
+    MediumTertiaryDisabled,
+    SmallPrimary,
+    SmallSecondary,
+    SmallTertiary,
 };

@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable import/no-default-export */
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import { DatePickerStory } from './date-picker-story.js';
@@ -10,14 +8,16 @@ const meta: Meta<typeof DatePickerStory> = {
     tags: ['autodocs'],
 };
 
+// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof DatePickerStory>;
 
-// eslint-disable-next-line no-restricted-syntax
-export const DateStory: Story = {
+const DateStory: Story = {
     args: {
         label: 'Date',
         placeholder: 'Pick a date',
         className: 'w-80',
     },
 };
+
+export { DateStory };

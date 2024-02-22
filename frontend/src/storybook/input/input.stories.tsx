@@ -1,6 +1,4 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable import/no-default-export */
-import type { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 
 import { InputStory } from './input-story.js';
 
@@ -10,10 +8,11 @@ const meta: Meta<typeof InputStory> = {
     tags: ['autodocs'],
 };
 
+// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof InputStory>;
 
-export const Text: Story = {
+const Text: Story = {
     args: {
         label: 'Text',
         placeholder: 'placeholder',
@@ -21,10 +20,12 @@ export const Text: Story = {
         type: 'text',
     },
 };
-export const Password: Story = {
+const Password: Story = {
     args: {
         label: 'Password',
         name: 'password',
         type: 'password',
     },
 };
+
+export { Password, Text };
