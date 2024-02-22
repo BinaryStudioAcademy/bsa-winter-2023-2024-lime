@@ -36,20 +36,23 @@
 
 :root,
 .light {
+    --text-primary: rgb(0 0 0); /* Black */
+    --text-secondary: rgb(49 49 52); /* lm-grey-400 */
+    --text-action: rgb(178 202 13); /*  lm-yellow-200 */
     --button-primary: rgb(224 254 16); /* lm-yellow-100 */
     --button-secondary: rgb(64 68 75); /* lm-black-100 */
     --background-primary: rgb(255 255 255); /* White */
     --background-secondary: rgba(243 243 243 1); /* lm-yellow-100 */
-    --text-primary: rgb(0 0 0); /* Black */
-    --text-secondary: rgb(224 254 16); /* lm-yellow-100 */
     --background-transparent: rgb(64 68 75); /* lm-black-100 */
 }
 
 .dark {
-    --background-transparent: rgba(0 0 0 0%); /* Transparent */
-    --button-primary: rgb(224 254 16); /* lm-yellow-100 */
     --text-primary: rgb(255 255 255); /* White */
-    --text-secondary: rgb(224 254 16); /* lm-yellow-100 */
+    --text-secondary: rgb(121 131 146); /* lm-yellow-200 */
+    --text-action: rgb(224 254 16); /* lm-yellow-100 */
+    --button-primary: rgb(224 254 16); /* lm-yellow-100 */
+    --button-secondary: rgb(64 68 75); /* lm-black-100 */
     --background-primary: rgb(64 68 75); /* lm-black-100 */
     --background-secondary: rgb(28 34 39); /* lm-black-200 */
+    --background-transparent: rgba(0 0 0 0%); /* Transparent */
 }

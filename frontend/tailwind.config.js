@@ -83,6 +83,7 @@ export default {
             textColor: {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
+                action: 'var(--text-action)',
             },
             backgroundColor: {
                 primary: 'var(--background-primary)',
