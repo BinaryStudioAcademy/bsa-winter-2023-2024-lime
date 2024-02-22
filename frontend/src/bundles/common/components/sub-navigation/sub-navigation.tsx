@@ -20,7 +20,7 @@ const SubNavigation = ({ items, title, button }: Properties): JSX.Element => {
     ];
 
     return (
-        <div className="bg-lm-black-200 flex h-full w-[20rem] flex-col gap-[1.75rem] p-[2.5rem]">
+        <div className="bg-lm-black-200 flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2.5rem]">
             {title && <h1 className="text-xl font-bold text-white">{title}</h1>}
             {items.map((item, index) => (
                 <SubNavItem
