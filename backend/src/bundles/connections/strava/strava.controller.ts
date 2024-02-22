@@ -17,9 +17,7 @@ import { type Logger } from '~/common/logger/logger.js';
 
 import { StravaPaths } from './enums/enums.js';
 import { type StravaService } from './strava.service.js';
-
-//  Strava OAuth Url to open a prompt window for auth (replace client_id):
-//  https://www.strava.com/oauth/authorize?client_id=REPLACE_WITH_CLIENT_ID&response_type=code&redirect_uri=http://localhost:3001/api/v1/connections/strava/exchange-token&approval_prompt=force&scope=read,activity:read_all
+import { type StravaOAuthQuery } from './types/types.js';
 
 class StravaController extends BaseController {
     private stravaService: StravaService;
@@ -57,7 +55,7 @@ class StravaController extends BaseController {
             handler: (options) =>
                 this.exchangeToken(
                     options as ApiHandlerOptions<{
-                        query: { code: string };
+                        query: StravaOAuthQuery;
                     }>,
                 ),
         });
@@ -83,15 +81,17 @@ class StravaController extends BaseController {
 
     private async exchangeToken(
         options: ApiHandlerOptions<{
-            query: { code: string };
+            query: StravaOAuthQuery;
         }>,
     ): Promise<ApiHandlerResponse> {
         const mockId = 23;
 
+        const { code, scope } = options.query;
+
         const config = {
             client_id: this.clientConfig.CLIENT_ID,
             client_secret: this.clientConfig.CLIENT_SECRET,
-            code: options.query.code,
+            code,
             grant_type: 'authorization_code',
         };
 
@@ -106,6 +106,7 @@ class StravaController extends BaseController {
             expiresAt: oAuthResponse.data.expires_at,
             refreshToken: oAuthResponse.data.refresh_token,
             accessToken: oAuthResponse.data.access_token,
+            scope,
         };
 
         await this.stravaService.create({

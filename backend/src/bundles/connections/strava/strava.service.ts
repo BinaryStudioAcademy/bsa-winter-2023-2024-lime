@@ -8,11 +8,8 @@ import { type StravaOAuthResponseDto } from './types/types.js';
 
 class StravaService extends OAuthService {
     public async create(payload: StravaOAuthResponseDto): Promise<unknown> {
-        const mockScope = 'scope';
-
         const oAuthEntity = OAuthEntity.initializeNew({
             ...payload,
-            scope: mockScope,
             provider: Providers.STRAVA,
         });
 

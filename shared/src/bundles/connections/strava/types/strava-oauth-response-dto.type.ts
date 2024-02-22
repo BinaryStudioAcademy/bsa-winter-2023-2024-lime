@@ -5,6 +5,7 @@ type StravaOAuthResponseDto = {
     expiresAt: number;
     refreshToken: string;
     accessToken: string;
+    scope: string;
 };
 
 export { type StravaOAuthResponseDto };
