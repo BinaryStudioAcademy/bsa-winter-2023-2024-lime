@@ -1,3 +1,4 @@
+export { ActivityIcon } from './activity-icon/activity-icon.js';
 export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonVariant } from './button/button.js';
 export { Header } from './header/header.js';

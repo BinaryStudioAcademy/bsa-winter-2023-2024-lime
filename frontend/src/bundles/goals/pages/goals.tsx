@@ -100,15 +100,17 @@ const Goals: React.FC = () => {
                                     </p>
                                 )}
                             </div>
-                            <Button
-                                type="button"
-                                label="Set the new goal"
-                                variant={ButtonVariant.SECONDARY}
-                                size={ComponentSize.LARGE}
-                                leftIcon={<PlusIcon className="w-6" />}
-                                className="h-[7.5rem] w-96"
-                                onClick={handleOpenModal}
-                            />
+                            <div className="w-96">
+                                <Button
+                                    type="button"
+                                    label="Set the new goal"
+                                    variant={ButtonVariant.SECONDARY}
+                                    size={ComponentSize.LARGE}
+                                    leftIcon={<PlusIcon className="w-6" />}
+                                    className="h-[7.5rem]"
+                                    onClick={handleOpenModal}
+                                />
+                            </div>
                         </section>
                     </div>
 
