@@ -33,3 +33,21 @@
         @apply text-xs leading-3;
     }
 }
+
+:root,
+.light {
+    --button-primary: rgb(224 254 16); /* lm-yellow-100 */
+    --button-secondary: rgb(64 68 75); /* lm-black-100 */
+    --background-primary: rgb(255 255 255); /* White */
+    --text-primary: rgb(0 0 0); /* Black */
+    --text-secondary: rgb(224 254 16); /* lm-yellow-100 */
+    --background-transparent: rgb(64 68 75); /* lm-black-100 */
+}
+
+.dark {
+    --background-transparent: rgba(0 0 0 0%); /* Transparent */
+    --button-primary: rgb(224 254 16); /* lm-yellow-100 */
+    --text-primary: rgb(255 255 255); /* White */
+    --text-secondary: rgb(224 254 16); /* lm-yellow-100 */
+    --background-primary: rgb(64 68 75); /* lm-black-100 */
+}

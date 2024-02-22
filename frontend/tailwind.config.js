@@ -6,13 +6,11 @@ export default {
     darkMode: 'class',
     theme: {
         colors: {
-            transparent: 'transparent',
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
             'lm-purple': '#7306FF',
             'lm-magenta': '#DC40CD',
-            'lm-bglight': '#a9ccff',
             'lm-yellow': {
                 100: '#E0FE10',
                 200: '#B2CA0D',
@@ -81,6 +79,15 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
+            },
+            textColor: {
+                primary: 'var(--text-primary)',
+                secondary: 'var(--text-secondary)',
+            },
+            backgroundColor: {
+                primary: 'var(--background-primary)',
+                buttonPrimary: 'var(--button-primary)',
+                transparent: 'var(--background-transparent)',
             },
         },
     },
