@@ -59,8 +59,8 @@ class OAuthRepository implements Repository {
         return Promise.resolve(null);
     }
 
-    public async delete(id: number): Promise<boolean> {
-        const deletedRows = await this.oAuthModel.query().deleteById(id);
+    public async delete(query: Record<string, unknown>): Promise<boolean> {
+        const deletedRows = await this.oAuthModel.query().where(query).delete();
 
         return deletedRows > 0;
     }

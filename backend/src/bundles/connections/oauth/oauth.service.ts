@@ -43,11 +43,7 @@ abstract class OAuthService implements Service {
         return Promise.resolve(null);
     }
 
-    public async delete(OAuthEntity: OAuthEntity): Promise<boolean> {
-        const { id } = OAuthEntity.toObject();
-
-        return await this.oAuthRepository.delete(id);
-    }
+    public abstract delete(query: Record<string, unknown>): Promise<boolean>;
 
     public tokenHasExpired(OAuthEntity: OAuthEntity): boolean {
         const oAuthObject = OAuthEntity.toObject();

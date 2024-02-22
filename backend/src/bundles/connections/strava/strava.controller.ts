@@ -66,6 +66,18 @@ class StravaController extends BaseController {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: `${ConnectionsOAuthPath.STRAVA}${ConnectionsOAuthActionsPath.DEAUTHORIZE}`,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.deauthorize(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
     }
 
     private async getUserConnections(
@@ -97,6 +109,7 @@ class StravaController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { code, scope } = options.query;
+        const { id } = options.user;
 
         const config = {
             client_id: this.clientConfig.CLIENT_ID,
@@ -121,8 +134,24 @@ class StravaController extends BaseController {
 
         await this.stravaService.create({
             ...payload,
-            userId: options.user.id,
+            userId: id,
         });
+
+        return {
+            type: ApiHandlerResponseType.REDIRECT,
+            status: HttpCode.FOUND,
+            redirectUrl: 'http://localhost:3001/api/v1/connections/',
+        };
+    }
+
+    private async deauthorize(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { id } = options.user;
+
+        await this.stravaService.delete({ userId: id });
 
         return {
             type: ApiHandlerResponseType.REDIRECT,

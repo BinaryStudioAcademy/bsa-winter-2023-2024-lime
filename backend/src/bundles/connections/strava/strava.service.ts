@@ -17,6 +17,13 @@ class StravaService extends OAuthService {
 
         return oAuthInfo.toObject();
     }
+
+    public async delete(query: Record<string, unknown>): Promise<boolean> {
+        return await this.oAuthRepository.delete({
+            ...query,
+            provider: Providers.STRAVA,
+        });
+    }
 }
 
 export { StravaService };
