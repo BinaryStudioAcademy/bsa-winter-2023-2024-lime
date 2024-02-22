@@ -4,18 +4,21 @@ import {
     ButtonVariant,
     Input,
     Loader,
-    RadioCard,
+    Radio,
 } from '~/bundles/common/components/components.js';
 import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
-import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
+import { RadioType } from '~/bundles/common/enums/radio-type.enum.js';
 import {
     useAppForm,
     useAppSelector,
     useCallback,
 } from '~/bundles/common/hooks/hooks.js';
-import { userUpdateProfileValidationSchema } from '~/bundles/users/users.js';
-import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserUpdateProfileRequestDto,
+    userUpdateProfileValidationSchema,
+} from '~/bundles/users/users.js';
 
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
@@ -65,8 +68,8 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     }, [reset]);
 
     return (
-        <div className="bg-lm-black-200 w-[874px] px-12 pl-[52px] pr-[78px] pt-[48px]">
-            <div className="flex items-center pb-[47px]">
+        <div className="bg-lm-black-200 pl-13 pr-18 w-[874px] px-12 pt-3">
+            <div className="flex items-center pb-12">
                 <Avatar
                     size="lg"
                     email={user ? user?.email : ''}
@@ -80,7 +83,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     className="hidden"
                 />
                 <Button
-                    className="ml-[13px] h-[38px] w-[115px] rounded-[20px]"
+                    className="w-115 ml-3 h-[38px] rounded-[20px]"
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
@@ -141,29 +144,32 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
                 <div className="col-start-1 col-end-3 flex">
-                    <RadioCard
+                    <Radio
                         id="radio-male"
                         name="gender"
                         label="Male"
                         value={Gender.MALE}
                         control={control}
-                        className="rounded-bl-5 w-[83px] rounded-l-lg "
+                        type={RadioType.CARD}
+                        className="rounded-bl-5 w-83 rounded-l-lg "
                     />
-                    <RadioCard
+                    <Radio
                         id="radio-female"
                         name="gender"
                         label="Female"
                         value={Gender.FEMALE}
                         control={control}
-                        className=" w-[83px] "
+                        type={RadioType.CARD}
+                        className="w-83"
                     />
-                    <RadioCard
+                    <Radio
                         id="radio-other"
                         name="gender"
                         label="Prefer not to say"
                         value={Gender.OTHER}
                         control={control}
-                        className="w-[200px] rounded-r-lg"
+                        type={RadioType.CARD}
+                        className="w-50 rounded-r-lg"
                     />
                 </div>
                 <ul className="col-start-3 col-end-5 row-start-4 mt-6 flex">
