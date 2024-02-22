@@ -187,15 +187,10 @@ class UserController extends BaseController {
                 payload: updatedUser,
             };
         } catch (error) {
-            return error instanceof Error
-                ? {
-                      status: HttpCode.NOT_FOUND,
-                      payload: { error: error.message },
-                  }
-                : {
-                      status: HttpCode.INTERNAL_SERVER_ERROR,
-                      payload: { error: 'An unexpected error occurred.' },
-                  };
+            throw new HttpError({
+                message: `Something went wrong ${error}`,
+                status: HttpCode.BAD_REQUEST,
+            });
         }
     }
 }
