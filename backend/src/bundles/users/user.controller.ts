@@ -165,6 +165,7 @@ class UserController extends BaseController {
         const { user } = options;
 
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: user,
         };

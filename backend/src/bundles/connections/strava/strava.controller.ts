@@ -6,6 +6,7 @@ import {
     ConnectionsOAuthPath,
     HttpCode,
 } from '~/bundles/connections/oauth/oauth.js';
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -38,7 +39,12 @@ class StravaController extends BaseController {
             path: ConnectionsOAuthPath.ROOT,
             method: 'GET',
             isProtected: true,
-            handler: () => this.getUserConnections(),
+            handler: (options) =>
+                this.getUserConnections(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                    }>,
+                ),
         });
 
         this.addRoute({
@@ -56,18 +62,23 @@ class StravaController extends BaseController {
                 this.exchangeToken(
                     options as ApiHandlerOptions<{
                         query: StravaOAuthQuery;
+                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
     }
 
-    private async getUserConnections(): Promise<ApiHandlerResponse> {
-        const mockId = 23;
-
+    private async getUserConnections(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.stravaService.findMany({ userId: mockId }),
+            payload: await this.stravaService.findMany({
+                userId: options.user.id,
+            }),
         };
     }
 
@@ -82,10 +93,9 @@ class StravaController extends BaseController {
     private async exchangeToken(
         options: ApiHandlerOptions<{
             query: StravaOAuthQuery;
+            user: UserAuthResponseDto;
         }>,
     ): Promise<ApiHandlerResponse> {
-        const mockId = 23;
-
         const { code, scope } = options.query;
 
         const config = {
@@ -111,7 +121,7 @@ class StravaController extends BaseController {
 
         await this.stravaService.create({
             ...payload,
-            userId: mockId,
+            userId: options.user.id,
         });
 
         return {
