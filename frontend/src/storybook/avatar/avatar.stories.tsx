@@ -4,6 +4,7 @@ import {
     Avatar,
     StoreProvider,
 } from '~/bundles/common/components/components.js';
+import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { store } from '~/framework/store/store.js';
 
 const meta: Meta<typeof Avatar> = {
@@ -23,17 +24,17 @@ type Story = StoryObj<typeof Avatar>;
 
 const Small: Story = {
     args: {
-        size: 'sm',
+        size: ComponentSize.SMALL,
     },
 };
 const Medium: Story = {
     args: {
-        size: 'md',
+        size: ComponentSize.MEDIUM,
     },
 };
 const Large: Story = {
     args: {
-        size: 'lg',
+        size: ComponentSize.LARGE,
     },
 };
 

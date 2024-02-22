@@ -4,6 +4,7 @@ import {
     Button,
     ButtonVariant,
 } from '~/bundles/common/components/components.js';
+import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 
 const meta: Meta<typeof Button> = {
     component: Button,
@@ -21,58 +22,58 @@ type Story = StoryObj<typeof Button>;
 
 const MediumPrimary: Story = {
     args: {
-        size: 'medium',
+        size: ComponentSize.MEDIUM,
         variant: ButtonVariant.PRIMARY,
     },
 };
 const MediumPrimaryDisabled: Story = {
     args: {
-        size: 'medium',
+        size: ComponentSize.MEDIUM,
         variant: ButtonVariant.PRIMARY,
         isDisabled: true,
     },
 };
 const MediumSecondary: Story = {
     args: {
-        size: 'medium',
+        size: ComponentSize.MEDIUM,
         variant: ButtonVariant.SECONDARY,
     },
 };
 const MediumSecondaryDisabled: Story = {
     args: {
-        size: 'medium',
+        size: ComponentSize.MEDIUM,
         variant: ButtonVariant.SECONDARY,
         isDisabled: true,
     },
 };
 const MediumTertiary: Story = {
     args: {
-        size: 'medium',
+        size: ComponentSize.MEDIUM,
         variant: ButtonVariant.TERTIARY,
     },
 };
 const MediumTertiaryDisabled: Story = {
     args: {
-        size: 'medium',
+        size: ComponentSize.MEDIUM,
         variant: ButtonVariant.TERTIARY,
         isDisabled: true,
     },
 };
 const SmallPrimary: Story = {
     args: {
-        size: 'small',
+        size: ComponentSize.SMALL,
         variant: ButtonVariant.PRIMARY,
     },
 };
 const SmallSecondary: Story = {
     args: {
-        size: 'small',
+        size: ComponentSize.SMALL,
         variant: ButtonVariant.SECONDARY,
     },
 };
 const SmallTertiary: Story = {
     args: {
-        size: 'small',
+        size: ComponentSize.SMALL,
         variant: ButtonVariant.TERTIARY,
     },
 };

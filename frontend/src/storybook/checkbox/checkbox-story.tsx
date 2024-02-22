@@ -1,6 +1,5 @@
 import { Checkbox } from '~/bundles/common/components/checkbox/checkbox.js';
-
-import { useAppForm } from '../../bundles/common/hooks/hooks.js';
+import { useAppForm } from '~/bundles/common/hooks/hooks.js';
 
 const CheckboxStory = ({ label }: { label: string }): JSX.Element => {
     const { control, errors } = useAppForm<{ checkbox: boolean }>({
