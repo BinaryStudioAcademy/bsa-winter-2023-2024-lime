@@ -9,7 +9,7 @@ const DEFAULT_UPDATE_PROFILE_PAYLOAD: UserUpdateProfileRequestDto = {
     weight: '',
     height: '',
     avatarUrl: '',
-    gender: Gender.OTHER,
+    gender: Gender.MALE,
 };
 
 export { DEFAULT_UPDATE_PROFILE_PAYLOAD };
