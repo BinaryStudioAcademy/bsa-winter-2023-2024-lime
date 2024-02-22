@@ -20,5 +20,6 @@ export {
 } from './types/types.js';
 export {
     userAuthValidationSchema,
+    userSignUpValidationSchema,
     userUpdateProfileValidationSchema,
 } from './validation-schemas/validation-schemas.js';

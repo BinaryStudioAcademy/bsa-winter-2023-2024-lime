@@ -1,7 +1,5 @@
-import {
-    type UserAuthRequestDto,
-    userAuthValidationSchema,
-} from '~/bundles/users/users.js';
+import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import { userAuthValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -51,6 +49,48 @@ class AuthController extends BaseController {
         });
     }
 
+    /**
+     * @swagger
+     * /api/v1/auth/sign-in:
+     *    post:
+     *      tags:
+     *        - Auth
+     *      description: This endpoint authenticates a user by verifying their credentials
+     *      requestBody:
+     *        description: User auth data
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                email:
+     *                  type: string
+     *                  format: email
+     *                password:
+     *                  type: string
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  user:
+     *                    type: object
+     *                    $ref: '#/components/schemas/User'
+     *                  token:
+     *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                    type: object
+     *                    $ref: '#/components/schemas/Error'
+     */
+
     private async signIn(
         options: ApiHandlerOptions<{
             body: UserAuthRequestDto;
@@ -64,8 +104,10 @@ class AuthController extends BaseController {
 
     /**
      * @swagger
-     * /auth/sign-up:
+     * /api/v1/auth/sign-up:
      *    post:
+     *      tags:
+     *         - Auth
      *      description: Sign up user into the application
      *      requestBody:
      *        description: User auth data
@@ -88,9 +130,18 @@ class AuthController extends BaseController {
      *              schema:
      *                type: object
      *                properties:
-     *                  message:
+     *                  user:
      *                    type: object
      *                    $ref: '#/components/schemas/User'
+     *                  token:
+     *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                    type: object
+     *                    $ref: '#/components/schemas/Error'
      */
     private async signUp(
         options: ApiHandlerOptions<{

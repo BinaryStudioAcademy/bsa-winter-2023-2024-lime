@@ -23,6 +23,7 @@ type Properties<T extends FieldValues> = {
     isDisabled?: boolean;
     placeholder?: string;
     onFocus?: FocusEventHandler<HTMLInputElement>;
+    required?: boolean;
 };
 
 const Input = <T extends FieldValues>({
@@ -35,6 +36,7 @@ const Input = <T extends FieldValues>({
     isDisabled = false,
     placeholder = '',
     onFocus,
+    required = false,
 }: Properties<T>): JSX.Element => {
     const [isMasked, setIsMasked] = useState(false);
     const { field } = useFormController({ name, control });
@@ -48,12 +50,14 @@ const Input = <T extends FieldValues>({
     }, []);
 
     const placeholderGenerator = (): string => {
-        return isPassword ? placeholder.repeat(6) : placeholder;
+        return isPassword ? '\u2022'.repeat(6) : placeholder;
     };
 
     return (
         <label className={`${className} flex h-20 flex-col text-sm text-white`}>
-            <span className="font-medium">{label}</span>
+            <span className="mb-[0.5rem] font-medium">
+                {label} {required && <span className="text-lm-red">*</span>}
+            </span>
             <div className="relative">
                 <input
                     {...field}
@@ -69,7 +73,7 @@ const Input = <T extends FieldValues>({
                         onClick={onMaskPassword}
                         onKeyDown={onMaskPassword}
                         role="button"
-                        tabIndex={0}
+                        tabIndex={-1}
                     >
                         {isMasked ? (
                             <EyeIcon className="text-lm-grey-200 absolute bottom-2 right-2 w-5" />

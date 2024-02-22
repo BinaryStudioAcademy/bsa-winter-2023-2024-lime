@@ -34,7 +34,7 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
 
 const useAppForm = <T extends FieldValues = FieldValues>({
     defaultValues,
-    mode = 'onSubmit',
+    mode = 'onTouched',
     validationSchema,
     shouldUnregister = true,
 }: Parameters<T>): ReturnValue<T> => {

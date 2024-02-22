@@ -6,5 +6,8 @@ export {
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
-export { userAuth as userAuthValidationSchema } from './validation-schemas/validation-schemas.js';
-export { userUpdateProfile as userUpdateProfileValidationSchema } from './validation-schemas/validation-schemas.js';
+export {
+    userAuth as userAuthValidationSchema,
+    userAuthPWConfirm as userSignUpValidationSchema,
+    userUpdateProfile as userUpdateProfileValidationSchema,
+} from './validation-schemas/validation-schemas.js';

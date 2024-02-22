@@ -1,7 +1,6 @@
 import {
     Avatar,
     Button,
-    ButtonSize,
     ButtonVariant,
     Input,
     Loader,
@@ -9,7 +8,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
-import { Gender } from '~/bundles/common/enums/enums.js';
+import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     useAppForm,
     useAppSelector,
@@ -31,7 +30,9 @@ const extractNumbers = (value: string | undefined | null): string => {
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const userId = useAppSelector((state) => state.auth.user?.id);
-
+    const { user } = useAppSelector(({ auth }) => ({
+        user: auth.user,
+    }));
     const { control, errors, isDirty, isValid, reset, getValues } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
@@ -66,7 +67,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <div className="bg-lm-black-200 w-[874px] px-12 pl-[52px] pr-[78px] pt-[48px]">
             <div className="flex items-center pb-[47px]">
-                <Avatar size="lg" />
+                <Avatar
+                    size="lg"
+                    email={user ? user?.email : ''}
+                    avatarUrl={user ? user.avatarUrl : ''}
+                />
 
                 <input
                     id="avatarInput"
@@ -79,7 +84,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}
-                    size={ButtonSize.SMALL}
+                    size={ComponentSize.SMALL}
                 />
             </div>
             <form
@@ -173,7 +178,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                             onClick={handleCancel}
                             isDisabled={!isDirty || isLoading}
                             variant={ButtonVariant.SECONDARY}
-                            size={ButtonSize.MEDIUM}
+                            size={ComponentSize.MEDIUM}
                         />
                     </li>
                     <li className="w-full">
@@ -187,7 +192,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                             type="submit"
                             isDisabled={!isDirty || !isValid}
                             variant={ButtonVariant.PRIMARY}
-                            size={ButtonSize.MEDIUM}
+                            size={ComponentSize.MEDIUM}
                         />
                     </li>
                 </ul>

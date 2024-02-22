@@ -8,6 +8,7 @@ export {
     Gender,
     userAuthValidationSchema,
     UsersApiPath,
+    userSignUpValidationSchema,
     userUpdateProfileValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
