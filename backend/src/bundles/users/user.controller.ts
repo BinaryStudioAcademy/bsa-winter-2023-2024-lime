@@ -105,7 +105,7 @@ class UserController extends BaseController {
      *       - Users
      *      description: Returns an array of users
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      responses:
      *        200:
      *          description: Successful operation
@@ -141,7 +141,7 @@ class UserController extends BaseController {
      *       - Current user
      *      description: Returns current user
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      responses:
      *        200:
      *          description: Successful operation
