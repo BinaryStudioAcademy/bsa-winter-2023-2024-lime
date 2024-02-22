@@ -23,7 +23,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, handleSubmit } = useAppForm<UserSignUpForm>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
         validationSchema: userSignUpValidationSchema,
-        mode: 'onBlur',
+        mode: 'onTouched',
     });
 
     const handleFormSubmit = useCallback(
