@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/padding-line-between-statements */
+/* eslint-disable import/no-default-export */
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
@@ -13,65 +16,55 @@ const meta: Meta<typeof Loader> = {
     tags: ['autodocs'],
 };
 
+export default meta;
 type Story = StoryObj<typeof Loader>;
 
-const LoaderSmallPrimary: Story = {
+// eslint-disable-next-line no-restricted-syntax
+export const LoaderSmallPrimary: Story = {
     args: {
         color: IconColor.PRIMARY,
         size: IconSize.SMALL,
     },
 };
-const LoaderMediumPrimary: Story = {
+export const LoaderMediumPrimary: Story = {
     args: {
         color: IconColor.PRIMARY,
         size: IconSize.MEDIUM,
     },
 };
-const LoaderLargePrimary: Story = {
+export const LoaderLargePrimary: Story = {
     args: {
         color: IconColor.PRIMARY,
         size: IconSize.LARGE,
     },
 };
-const LoaderExtraLargePrimary: Story = {
+export const LoaderExtraLargePrimary: Story = {
     args: {
         color: IconColor.PRIMARY,
         size: IconSize.EXTRA_LARGE,
     },
 };
-const LoaderSmallSecondary: Story = {
+export const LoaderSmallSecondary: Story = {
     args: {
         color: IconColor.SECONDARY,
         size: IconSize.SMALL,
     },
 };
-const LoaderMediumSecondary: Story = {
+export const LoaderMediumSecondary: Story = {
     args: {
         color: IconColor.SECONDARY,
         size: IconSize.MEDIUM,
     },
 };
-const LoaderLargeSecondary: Story = {
+export const LoaderLargeSecondary: Story = {
     args: {
         color: IconColor.SECONDARY,
         size: IconSize.LARGE,
     },
 };
-const LoaderExtraLargeSecondary: Story = {
+export const LoaderExtraLargeSecondary: Story = {
     args: {
         color: IconColor.SECONDARY,
         size: IconSize.EXTRA_LARGE,
     },
-};
-
-export {
-    LoaderExtraLargePrimary,
-    LoaderExtraLargeSecondary,
-    LoaderLargePrimary,
-    LoaderLargeSecondary,
-    LoaderMediumPrimary,
-    LoaderMediumSecondary,
-    LoaderSmallPrimary,
-    LoaderSmallSecondary,
-    meta,
 };

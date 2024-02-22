@@ -1,12 +1,15 @@
+/* eslint-disable import/no-default-export */
+/* eslint-disable no-restricted-syntax */
+
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import {
     Avatar,
     StoreProvider,
 } from '~/bundles/common/components/components.js';
-import { Size } from '~/bundles/common/enums/size.enum.js';
 import { store } from '~/framework/store/store.js';
 
+// eslint-disable-next-line import/no-default-export
 const meta: Meta<typeof Avatar> = {
     component: Avatar,
     title: 'Components/Avatar',
@@ -18,22 +21,21 @@ const meta: Meta<typeof Avatar> = {
     tags: ['autodocs'],
 };
 
+export default meta;
 type Story = StoryObj<typeof Avatar>;
 
-const Small: Story = {
+export const Small: Story = {
     args: {
-        size: Size.SMALL,
+        size: 'sm',
     },
 };
-const Medium: Story = {
+export const Medium: Story = {
     args: {
-        size: Size.MEDIUM,
+        size: 'md',
     },
 };
-const Large: Story = {
+export const Large: Story = {
     args: {
-        size: Size.LARGE,
+        size: 'lg',
     },
 };
-
-export { Large, Medium, meta, Small };
