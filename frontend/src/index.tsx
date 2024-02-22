@@ -24,14 +24,6 @@ const routes = [
                 element: 'Root',
             },
             {
-                path: AppRoute.SIGN_IN,
-                element: <Auth />,
-            },
-            {
-                path: AppRoute.SIGN_UP,
-                element: <Auth />,
-            },
-            {
                 path: AppRoute.GOALS,
                 element: <div>GOALS PAGE</div>,
             },
@@ -57,6 +49,14 @@ const routes = [
             },
         ],
         isPrivate: true,
+    },
+    {
+        path: AppRoute.SIGN_IN,
+        element: <Auth />,
+    },
+    {
+        path: AppRoute.SIGN_UP,
+        element: <Auth />,
     },
     {
         path: AppRoute.NOT_FOUND,
