@@ -33,7 +33,9 @@ const SidebarNav = ({
             <Button
                 type="button"
                 label={text}
-                className={getValidClassNames(isActive ? classes.active : classes.inactive)}
+                className={getValidClassNames(
+                    isActive ? classes.active : classes.inactive,
+                )}
                 leftIcon={icon}
                 variant={ButtonVariant.SIDEBAR}
                 onClick={handleNavigation}
