@@ -37,7 +37,7 @@ const GoalWidget = ({
                     {goalType === GoalTypes.OVERVIEW && (
                         <Icon name="workoutIcon" size="lg" />
                     )}
-                    <p className="text-md font-extrabold">{rightTitle}</p>
+                    <p className="text-md font-heavybold">{rightTitle}</p>
                 </div>
                 <div className="flex w-2/4 items-center justify-center">
                     <CircleProgress
