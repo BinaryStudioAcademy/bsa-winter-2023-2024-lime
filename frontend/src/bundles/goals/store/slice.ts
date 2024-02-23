@@ -6,38 +6,46 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type GoalResponseDto } from '../types/types.js';
 import { createGoal, getGoals } from './actions.js';
 
-const goals = [
+const goals: GoalResponseDto[] = [
     {
         id: 1,
         activity: 'walking',
         frequency: 100,
+        frequencyType: 'day',
         distance: 23,
         duration: 11,
-        progress: 10,
+        progress: 20,
+        completedAt: '11/22/2024',
     },
     {
         id: 2,
         activity: 'running',
-        frequency: 100,
+        frequency: 120,
+        frequencyType: 'month',
         distance: 23,
         duration: 11,
-        progress: 10,
+        progress: 40,
+        completedAt: '13/22/2024',
     },
     {
         id: 3,
-        activity: 'walking',
-        frequency: 100,
+        activity: 'cycling',
+        frequency: 140,
+        frequencyType: 'day',
         distance: 23,
         duration: 11,
-        progress: 10,
+        progress: 70,
+        completedAt: '11/22/2024',
     },
     {
         id: 4,
-        activity: 'cycling',
-        frequency: 100,
+        activity: 'walking',
+        frequency: 160,
+        frequencyType: 'week',
         distance: 23,
         duration: 11,
-        progress: 10,
+        progress: 95,
+        completedAt: null,
     },
 ];
 

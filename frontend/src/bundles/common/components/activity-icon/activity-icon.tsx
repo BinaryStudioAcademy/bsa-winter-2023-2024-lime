@@ -9,11 +9,12 @@ type Properties = {
     className?: string;
 };
 
-const baseClass = 'text-white p-3';
+const baseClass = 'text-white p-2';
 
 const ActivitySizeToClasses: Record<string, string> = {
-    [ComponentSize.MEDIUM]: 'h-[45px] w-[45px] rounded',
-    [ComponentSize.LARGE]: 'h-[50px] w-[50px] rounded-full',
+    [ComponentSize.SMALL]: 'h-9 w-9 rounded-full',
+    [ComponentSize.MEDIUM]: 'h-11 w-11 rounded',
+    [ComponentSize.LARGE]: 'h-12 w-12 rounded-full',
 };
 
 const ActivityIcon = ({
@@ -21,7 +22,7 @@ const ActivityIcon = ({
     size,
     className = '',
 }: Properties): JSX.Element => {
-    const Component = ActivityVariantIcon[activity] as React.FC<
+    const IconComponent = ActivityVariantIcon[activity] as React.FC<
         React.SVGProps<SVGSVGElement>
     >;
     return (
@@ -33,7 +34,7 @@ const ActivityIcon = ({
                 className,
             )}
         >
-            <Component className="h-full w-full fill-white" />
+            <IconComponent className="h-full w-full fill-white" />
         </div>
     );
 };

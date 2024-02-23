@@ -4,5 +4,11 @@ const Activity = {
     CYCLING: 'cycling',
 } as const;
 
+const FrequencyType = {
+    DAY: 'day',
+    WEEK: 'week',
+    MONTH: 'month',
+} as const;
+
 export { AuthApiPath } from 'shared';
-export { Activity };
+export { Activity, FrequencyType };

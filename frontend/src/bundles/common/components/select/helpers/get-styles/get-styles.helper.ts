@@ -17,7 +17,7 @@ const getStyles = <
         control: (state) =>
             getValidClassNames(
                 state.isFocused ? `${borderColor}` : 'border-0',
-                `w-full p-2.5 min-h-11 bg-lm-black-100 border
+                `w-full p-2.5 h-9 bg-lm-black-100 border
                 outline-none rounded-md text-inherit shadow-none hover:cursor-pointer`,
             ),
         dropdownIndicator: (state) => {

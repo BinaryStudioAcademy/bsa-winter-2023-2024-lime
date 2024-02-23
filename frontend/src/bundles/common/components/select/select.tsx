@@ -89,9 +89,9 @@ const Select = <
     );
 
     return (
-        <div className="bg-lm-black-200 mx-20 p-5">
+        <label className="bg-lm-black-200">
             {label && (
-                <span className="text-base font-medium text-white">
+                <span className="mb-[0.5rem] block text-base font-medium text-white">
                     {label}
                 </span>
             )}
@@ -111,7 +111,7 @@ const Select = <
                 {...rest}
             />
             <span className="text-lm-red">{error}</span>
-        </div>
+        </label>
     );
 };
 
