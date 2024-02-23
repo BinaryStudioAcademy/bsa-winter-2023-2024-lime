@@ -13,7 +13,6 @@ const meta: Meta<NotificationType> = {
     render: ({ notification }) => (
         <>
             <button
-                // eslint-disable-next-line react/jsx-no-bind
                 onClick={() => toast(notification)}
                 className="bg-lm-yellow-100 rounded-md p-1 px-3"
             >
@@ -25,7 +24,6 @@ const meta: Meta<NotificationType> = {
     tags: ['autodocs'],
 };
 
-// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<NotificationType>;
 

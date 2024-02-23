@@ -8,7 +8,6 @@ const meta: Meta<typeof GoogleAds> = {
     tags: ['autodocs'],
 };
 
-// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof GoogleAds>;
 

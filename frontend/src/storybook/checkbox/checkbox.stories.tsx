@@ -8,11 +8,8 @@ const meta: Meta<typeof CheckboxStory> = {
     tags: ['autodocs'],
 };
 
-// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof CheckboxStory>;
-
-// eslint-disable-next-line no-restricted-syntax
 
 const Checkbox: Story = {
     args: {

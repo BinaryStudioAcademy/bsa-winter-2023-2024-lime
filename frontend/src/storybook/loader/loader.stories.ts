@@ -13,7 +13,6 @@ const meta: Meta<typeof Loader> = {
     tags: ['autodocs'],
 };
 
-// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof Loader>;
 

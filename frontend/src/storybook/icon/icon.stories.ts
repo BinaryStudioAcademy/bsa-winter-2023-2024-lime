@@ -10,7 +10,6 @@ const meta: Meta<typeof Icon> = {
     tags: ['autodocs'],
 };
 
-// eslint-disable-next-line import/no-default-export
 export default meta;
 type Story = StoryObj<typeof Icon>;
 
