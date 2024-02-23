@@ -111,10 +111,21 @@ class StravaController extends BaseController {
 
         const redirectUri = `${this.apiUlr}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}?user_id=${id}`;
 
+        const queryData = {
+            client_id: this.clientConfig.CLIENT_ID,
+            response_type: 'code',
+            redirect_uri: redirectUri,
+            approval_prompt: 'force',
+            scope: 'read,activity:read_all,activity:write',
+            state: uuid,
+        };
+
+        const queryParameters = new URLSearchParams(queryData).toString();
+
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${StravaPaths.AUTHORIZE}?client_id=${this.clientConfig.CLIENT_ID}&response_type=code&redirect_uri=${redirectUri}&approval_prompt=force&scope=read,activity:read_all,activity:write&state=${uuid}`,
+            redirectUrl: `${StravaPaths.AUTHORIZE}?${queryParameters}`,
         };
     }
 
