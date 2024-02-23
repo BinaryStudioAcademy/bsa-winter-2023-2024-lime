@@ -36,7 +36,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <>
             <div>
-                <h3 className="mb-6 text-primary text-left text-[1.875rem] font-bold">
+                <h3 className="text-primary mb-6 text-left text-[1.875rem] font-bold">
                     Hi! Create an account
                 </h3>
                 <div className="flex flex-col gap-4">
