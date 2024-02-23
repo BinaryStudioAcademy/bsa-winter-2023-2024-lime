@@ -1,11 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
+const ButtonColors = {
+    ONE: 'var(--button-one)',
+    TWO: 'var(--button-two)',
+    THREE: 'var(--button-third)',
+    FOUR: 'var(--button-fourth)',
+};
+
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     darkMode: 'class',
     theme: {
         colors: {
+            transparent: 'transparent',
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
@@ -88,12 +96,25 @@ export default {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
                 action: 'var(--text-action)',
+                buttonPrimary: ButtonColors.ONE,
+                buttonSecondary: ButtonColors.TWO,
+                buttonTertiary: ButtonColors.THREE,
+                buttonQuaternary: ButtonColors.FOUR,
             },
             backgroundColor: {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
-                buttonPrimary: 'var(--button-primary)',
-                transparent: 'var(--background-transparent)',
+
+                buttonPrimary: ButtonColors.ONE,
+                buttonSecondary: ButtonColors.TWO,
+                buttonTertiary: ButtonColors.THREE,
+                buttonQuaternary: ButtonColors.FOUR,
+            },
+            borderColor: {
+                buttonPrimary: ButtonColors.ONE,
+                buttonSecondary: ButtonColors.TWO,
+                buttonTertiary: ButtonColors.THREE,
+                buttonQuaternary: ButtonColors.FOUR,
             },
         },
     },
