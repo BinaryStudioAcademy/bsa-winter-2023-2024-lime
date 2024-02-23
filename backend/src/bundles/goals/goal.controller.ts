@@ -171,7 +171,7 @@ class GoalController extends BaseController {
      *       - Goals
      *      description: Returns an array of goals
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      responses:
      *        200:
      *          description: Successful operation
@@ -218,7 +218,7 @@ class GoalController extends BaseController {
      *       - Goals
      *      description: Returns goal by id
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      responses:
      *        200:
      *          description: Successful operation
@@ -257,7 +257,7 @@ class GoalController extends BaseController {
      *        - Goals
      *      description: Create goal and return it
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      requestBody:
      *        description: Goal data
      *        required: true
@@ -310,7 +310,7 @@ class GoalController extends BaseController {
      *        - Goals
      *      description: Update goal and return it
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      requestBody:
      *        description: Goal data
      *        required: true
@@ -368,7 +368,7 @@ class GoalController extends BaseController {
      *        - Goals
      *      description: Delete goal and return true
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      responses:
      *        200:
      *          description: Successful operation
