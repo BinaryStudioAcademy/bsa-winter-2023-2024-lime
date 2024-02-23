@@ -107,6 +107,11 @@ const checkBranch = (branchPattern: RegExp): void => {
 };
 
 const applyDanger = (): void => {
+
+    if (/release/i.test(pr.head.ref)) {
+        return;
+    }
+
     if (DangerConfig.TITLE.IS_REQUIRED) {
         checkTitle(DangerConfig.TITLE.PATTERN);
     }
