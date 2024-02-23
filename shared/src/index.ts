@@ -1,6 +1,13 @@
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export {
+    type GoalRequestDto,
+    type GoalResponseDto,
+    FrequencyType,
+    GoalsApiPath,
+    goalValidationSchema,
+} from './bundles/goals/goals.js';
+export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
@@ -12,6 +19,7 @@ export {
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
+    Activity,
     ApiPath,
     AppEnvironment,
     ContentType,
