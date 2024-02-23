@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
-
 import {
     Button,
     ButtonVariant,
     Input,
+    Link,
     Loader,
 } from '~/bundles/common/components/components.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
@@ -20,11 +20,11 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const { control, errors, isValid, handleSubmit } =
-        useAppForm<UserSignUpForm>({
-            defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-            validationSchema: userSignUpValidationSchema,
-        });
+    const { control, errors, handleSubmit } = useAppForm<UserSignUpForm>({
+        defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
+        validationSchema: userSignUpValidationSchema,
+        mode: 'onTouched',
+    });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -35,7 +35,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <h3 className="text-center text-[1.88rem] font-bold text-slate-50">
+            <h3 className="text-left text-[1.875rem] font-bold text-white">
                 Hi! Create an account
             </h3>
             <div className="flex flex-col gap-4">
@@ -65,6 +65,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
 
                 <Input
@@ -74,6 +75,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
 
                 <Input
@@ -83,6 +85,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     control={control}
                     errors={errors}
                     isDisabled={isLoading}
+                    required
                 />
 
                 <div className="mt-3">
@@ -91,16 +94,16 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label={isLoading ? '' : 'Sign Up'}
                         variant={ButtonVariant.PRIMARY}
                         size={ComponentSize.MEDIUM}
-                        isDisabled={!isValid || isLoading}
-                        leftIcon={isLoading && <Loader />}
+                        leftIcon={
+                            isLoading && <Loader color={IconColor.SECONDARY} />
+                        }
                     />
                 </div>
             </form>
             <p className="text-center text-sm">
-                Already have an account? Go to
-                <Link to={AppRoute.SIGN_IN} className="text-lm-yellow-100">
-                    {' '}
-                    Log in
+                Already have an account? Go to{' '}
+                <Link to={AppRoute.SIGN_IN}>
+                    <span className="text-lm-yellow-100">Log in</span>
                 </Link>
             </p>
         </>

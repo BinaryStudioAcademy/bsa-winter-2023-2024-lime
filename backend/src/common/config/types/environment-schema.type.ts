@@ -10,6 +10,12 @@ type EnvironmentSchema = {
         OPEN_AI_API_KEY: string;
         OPEN_AI_MODEL: string;
     };
+    AWS: {
+        S3_ACCESS_KEY: string;
+        S3_SECRET_KEY: string;
+        S3_BUCKET_NAME: string;
+        S3_REGION: string;
+    };
     DB: {
         USERNAME: string;
         PASSWORD: string;
