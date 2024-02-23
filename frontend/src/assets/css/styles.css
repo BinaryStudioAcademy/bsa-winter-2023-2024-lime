@@ -50,7 +50,7 @@
 
     /* BACKGROUND */
     --background-primary: rgb(255 255 255); /* White */
-    --background-secondary: rgb(243 243 243); /* #F3F3F3 */    
+    --background-secondary: rgb(243 243 243); /* #F3F3F3 */
 }
 
 .dark {
@@ -64,8 +64,8 @@
     --text-primary: rgb(255 255 255); /* White */
     --text-secondary: rgb(121 131 146); /* lm-yellow-200 */
     --text-action: rgb(224 254 16); /* lm-yellow-100 */
-    
+
     /* BACKGROUND */
     --background-primary: rgb(64 68 75); /* lm-black-100 */
-    --background-secondary: rgb(28 34 39); /* lm-black-200 */    
+    --background-secondary: rgb(28 34 39); /* lm-black-200 */
 }
