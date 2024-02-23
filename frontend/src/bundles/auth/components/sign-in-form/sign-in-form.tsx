@@ -25,7 +25,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
-        mode: 'onBlur',
+        mode: 'onTouched',
     });
 
     const handleFormSubmit = useCallback(
@@ -37,61 +37,65 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <h1 className="text-primary text-left text-[1.875rem] font-bold">
-                Hi! Login to your Account
-            </h1>
-            <div className="flex flex-col gap-4">
-                <Button
-                    size={ComponentSize.MEDIUM}
-                    variant={ButtonVariant.SECONDARY}
-                    label="Continue with "
-                    rightIcon="G"
-                />
-                <Button
-                    size={ComponentSize.MEDIUM}
-                    variant={ButtonVariant.SECONDARY}
-                    label="Continue with "
-                    rightIcon="f"
-                />
-            </div>
-
-            <p className="text-secondary text-center text-xs">
-                or Sign in with Email
-            </p>
-
-            <form onSubmit={handleFormSubmit}>
-                <Input
-                    type="email"
-                    label="Email"
-                    placeholder="email@gmail.com"
-                    name="email"
-                    control={control}
-                    errors={errors}
-                    isDisabled={isLoading}
-                    required
-                />
-                <Input
-                    type="password"
-                    label="Password"
-                    name="password"
-                    control={control}
-                    errors={errors}
-                    isDisabled={isLoading}
-                    required
-                />
-
-                <div className="mt-3">
+            <div>
+                <h1 className="mb-6 text-primary text-left text-[1.875rem] font-bold">
+                    Hi! Login to your Account
+                </h1>
+                <div className="flex flex-col gap-4">
                     <Button
-                        type="submit"
-                        label={isLoading ? '' : 'Log In'}
-                        variant={ButtonVariant.PRIMARY}
                         size={ComponentSize.MEDIUM}
-                        leftIcon={
-                            isLoading && <Loader color={IconColor.SECONDARY} />
-                        }
+                        variant={ButtonVariant.SECONDARY}
+                        label="Continue with "
+                        rightIcon="G"
+                    />
+                    <Button
+                        size={ComponentSize.MEDIUM}
+                        variant={ButtonVariant.SECONDARY}
+                        label="Continue with "
+                        rightIcon="f"
                     />
                 </div>
-            </form>
+
+                <p className="text-secondary mb-6 mt-10 text-center text-xs">
+                    or Sign in with Email
+                </p>
+
+                <form onSubmit={handleFormSubmit}>
+                    <Input
+                        type="email"
+                        label="Email"
+                        placeholder="email@gmail.com"
+                        name="email"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                        required
+                    />
+                    <Input
+                        type="password"
+                        label="Password"
+                        name="password"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                        required
+                    />
+
+                    <div className="mt-3">
+                        <Button
+                            type="submit"
+                            label={isLoading ? '' : 'Log In'}
+                            variant={ButtonVariant.PRIMARY}
+                            size={ComponentSize.MEDIUM}
+                            leftIcon={
+                                isLoading && (
+                                    <Loader color={IconColor.SECONDARY} />
+                                )
+                            }
+                        />
+                    </div>
+                </form>
+            </div>
             <p className="text-center text-sm">
                 No account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
