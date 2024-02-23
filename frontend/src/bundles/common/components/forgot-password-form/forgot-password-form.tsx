@@ -15,15 +15,10 @@ import { DEFAULT_PASSWORD_FORGOT_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: PasswordForgotRequestDto) => void;
-    onCancel: () => void;
     isLoading: boolean;
 };
 
-const ForgotPasswordForm: React.FC<Properties> = ({
-    onSubmit,
-    onCancel,
-    isLoading,
-}) => {
+const ForgotPasswordForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, handleSubmit } =
         useAppForm<PasswordForgotRequestDto>({
             defaultValues: DEFAULT_PASSWORD_FORGOT_PAYLOAD,
@@ -37,10 +32,6 @@ const ForgotPasswordForm: React.FC<Properties> = ({
         },
         [handleSubmit, onSubmit],
     );
-
-    const handleFormCancel = useCallback((): void => {
-        void onCancel();
-    }, [onCancel]);
 
     return (
         <form className="text-sm text-white" onSubmit={handleFormSubmit}>
@@ -57,24 +48,13 @@ const ForgotPasswordForm: React.FC<Properties> = ({
                 />
             </div>
 
-            <div className="flex gap-4 sm:flex-col lg:flex-row">
-                <Button
-                    type="submit"
-                    label="Send"
-                    variant={ButtonVariant.PRIMARY}
-                    size={ComponentSize.MEDIUM}
-                    isDisabled={isLoading}
-                />
-
-                <Button
-                    type="button"
-                    label="Cancel"
-                    variant={ButtonVariant.PRIMARY}
-                    size={ComponentSize.MEDIUM}
-                    isDisabled={isLoading}
-                    onClick={handleFormCancel}
-                />
-            </div>
+            <Button
+                type="submit"
+                label="Send"
+                variant={ButtonVariant.PRIMARY}
+                size={ComponentSize.MEDIUM}
+                isDisabled={isLoading}
+            />
         </form>
     );
 };

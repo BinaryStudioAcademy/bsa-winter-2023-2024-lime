@@ -157,7 +157,6 @@ const Auth: React.FC = () => {
                     <ForgotPasswordForm
                         isLoading={isResetPasswordLoading}
                         onSubmit={handleForgotPassword}
-                        onCancel={handleCloseModal}
                     />
                 )}
             </Modal>

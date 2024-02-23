@@ -111,15 +111,15 @@ const SignInForm: React.FC<Properties> = ({
                         variant={ButtonVariant.PRIMARY}
                     />
                 </form>
-                <p className="text-center text-sm">
-                    No account? Go to{' '}
-                    <Link to={AppRoute.SIGN_UP}>
-                        <span className="text-lm-yellow-100">
-                            Create an account
-                        </span>
-                    </Link>
-                </p>
             </div>
+            <p className="text-center text-sm">
+                No account? Go to{' '}
+                <Link to={AppRoute.SIGN_UP}>
+                    <span className="text-lm-yellow-100">
+                        Create an account
+                    </span>
+                </Link>
+            </p>
         </>
     );
 };

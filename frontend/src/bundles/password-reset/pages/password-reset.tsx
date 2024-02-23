@@ -1,6 +1,6 @@
 import authLogo from '~/assets/img/auth-logo.svg';
 import { ResetPasswordForm } from '~/bundles/common/components/components.js';
-import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
+import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
     getValidClassNames,
@@ -56,10 +56,6 @@ const PasswordReset: React.FC = () => {
         [dispatch, resetToken, userId],
     );
 
-    const handleCancel = useCallback((): void => {
-        void navigate(AppRoute.SIGN_IN);
-    }, [navigate]);
-
     useEffect(() => {
         if (dataStatus === DataStatus.FULFILLED) {
             setIsPasswordReset(true);
@@ -74,7 +70,7 @@ const PasswordReset: React.FC = () => {
     return (
         <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
             <div className={getValidClassNames(classes.base, classes.form)}>
-                <h3 className="text-center text-3xl font-bold leading-8">
+                <h3 className="text-left text-3xl font-bold leading-8">
                     Set Up Your New Password
                 </h3>
                 {isPasswordReset ? (
@@ -83,7 +79,6 @@ const PasswordReset: React.FC = () => {
                     <ResetPasswordForm
                         isLoading={isLoading}
                         onSubmit={handleResetPassword}
-                        onCancel={handleCancel}
                     />
                 )}
             </div>

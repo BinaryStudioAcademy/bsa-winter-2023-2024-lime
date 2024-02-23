@@ -1,1 +1,1 @@
-export { PasswordResetApiPath } from 'shared';
+export { PasswordResetApiPath, passwordResetValidationSchema } from 'shared';
