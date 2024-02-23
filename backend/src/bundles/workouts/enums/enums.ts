@@ -1,1 +1,1 @@
-export { WorkoutTypesAttributes } from './workout-types-attributes.enum.js';
+export { UserWorkoutAttributes } from './user-workout-attributes.enum.js';

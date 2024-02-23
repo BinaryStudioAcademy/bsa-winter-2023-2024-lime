@@ -17,8 +17,7 @@ class WorkoutRepository {
         }
 
         return WorkoutEntity.initialize({
-            id: data.id,
-            workoutType: data.workout.workoutType,
+            ...data
         });
     }
 }

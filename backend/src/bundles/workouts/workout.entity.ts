@@ -2,58 +2,85 @@ import { type Entity } from '~/common/types/types.js';
 
 class WorkoutEntity implements Entity {
     private 'id': number | null;
-    private 'workoutType': string | null;
-
+    private 'duration': number | null;
+    private 'steps': number | null;
+    private 'kilocalories': number | null;
     private constructor({
         id,
-        workoutType,
+        duration,
+        steps,
+        kilocalories
     }: {
         id: number | null;
-        workoutType: string | null;
+        duration: number | null
+        kilocalories: number | null
+        steps: number | null
     }) {
         this.id = id;
-        this.workoutType = workoutType;
+        this.steps = steps;
+        this.kilocalories = kilocalories;
+        this.duration = duration;
     }
 
     public static initialize({
         id,
-        workoutType,
+        duration,
+        steps,
+        kilocalories
     }: {
         id: number;
-        workoutType: string;
+        duration: number
+        kilocalories: number
+        steps: number
     }): WorkoutEntity {
         return new WorkoutEntity({
             id,
-            workoutType,
+            duration,
+            steps,
+            kilocalories
         });
     }
 
     public static initializeNew({
-        workoutType,
+        steps,
+        kilocalories,
+        duration
     }: {
-        workoutType: string;
+        duration: number
+        kilocalories: number
+        steps: number
     }): WorkoutEntity {
         return new WorkoutEntity({
             id: null,
-            workoutType,
+            duration,
+            steps,
+            kilocalories
         });
     }
 
     public toObject(): {
         id: number;
-        workoutType: string;
+        duration: number
+        kilocalories: number
+        steps: number
     } {
         return {
             id: this.id as number,
-            workoutType: this.workoutType as string,
+            duration: this.duration as number,
+            kilocalories: this.kilocalories as number,
+            steps: this.steps as number
         };
     }
 
     public toNewObject(): {
-        workoutType: string | null;
+        duration: number | null
+        kilocalories: number | null
+        steps: number | null
     } {
         return {
-            workoutType: this.workoutType,
+            duration: this.duration,
+            kilocalories: this.kilocalories,
+            steps: this.steps
         };
     }
 }

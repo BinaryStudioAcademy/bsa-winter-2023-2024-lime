@@ -2,12 +2,10 @@ import { type Knex } from 'knex';
 
 const TABLE_NAME = 'user_workouts';
 const USERS_TABLE_NAME = 'users';
-const WORKOUTS_TABLE_NAME = 'workouts';
 
 const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
-    WORKOUT_ID: 'workout_id',
     STEPS: 'steps',
     DURATION: 'duration',
     KILOCALORIES: 'kilocalories',
@@ -27,18 +25,8 @@ async function up(knex: Knex): Promise<void> {
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
 
-        table
-            .integer(ColumnName.WORKOUT_ID)
-            .unsigned()
-            .unique()
-            .notNullable()
-            .references(ColumnName.ID)
-            .inTable(WORKOUTS_TABLE_NAME)
-            .onUpdate('CASCADE')
-            .onDelete('CASCADE');
-
-        table.string(ColumnName.STEPS).nullable();
-        table.string(ColumnName.KILOCALORIES).nullable();
+        table.integer(ColumnName.STEPS).nullable();
+        table.integer(ColumnName.KILOCALORIES).nullable();
         table.timestamp(ColumnName.DURATION).nullable();
 
         table
