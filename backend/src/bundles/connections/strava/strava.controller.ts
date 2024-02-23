@@ -7,6 +7,7 @@ import {
     HttpCode,
 } from '~/bundles/connections/oauth/oauth.js';
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
+import { config } from '~/common/config/config.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -25,6 +26,8 @@ class StravaController extends BaseController {
 
     private clientConfig: OAuthClient;
 
+    private apiUlr: string;
+
     public constructor(
         logger: Logger,
         stravaService: StravaService,
@@ -34,6 +37,7 @@ class StravaController extends BaseController {
 
         this.stravaService = stravaService;
         this.clientConfig = clientConfig;
+        this.apiUlr = `http:/${config.ENV.APP.HOST}/v1`;
 
         this.addRoute({
             path: ConnectionsOAuthPath.ROOT,
@@ -106,7 +110,7 @@ class StravaController extends BaseController {
         const { uuid } = await this.stravaService.createOAuthState(id);
 
         const redirectUri = encodeURIComponent(
-            `http://localhost:3001/api/v1${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}?user_id=${id}`,
+            `${this.apiUlr}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}?user_id=${id}`,
         );
 
         return {
@@ -146,7 +150,7 @@ class StravaController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: 'http://localhost:3001/api/v1/connections/',
+            redirectUrl: `${this.apiUlr}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.ROOT}`,
         };
     }
 
@@ -162,7 +166,7 @@ class StravaController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: 'http://localhost:3001/api/v1/connections/',
+            redirectUrl: `${this.apiUlr}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.ROOT}`,
         };
     }
 }
