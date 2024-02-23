@@ -28,7 +28,7 @@ const DangerConfig = {
     TITLE: {
         IS_REQUIRED: true,
         PATTERN: new RegExp(
-            `^((${
+            `^(?!Release \\\\d+\\\\.\\\\d+\\\\.\\\\d+$)((${
                 ProjectPrefix.APP
             })-[0-9]{1,6}): (.*\\S)$|(${ProjectPrefix.ENVIRONMENTS.join(
                 '|',
@@ -47,7 +47,7 @@ const DangerConfig = {
     BRANCH: {
         IS_REQUIRED: true,
         PATTERN: new RegExp(
-            `^((${Object.values(BranchPrefix).join('|')})/(${
+            `^(?!release-\\\\d+\\\\.\\\\d+\\\\.\\\\d+$)((${Object.values(BranchPrefix).join('|')})/(${
                 ProjectPrefix.APP
             })-[0-9]{1,6})-[a-zA-Z0-9-]+$|(${ProjectPrefix.ENVIRONMENTS.join(
                 '|',
@@ -107,10 +107,6 @@ const checkBranch = (branchPattern: RegExp): void => {
 };
 
 const applyDanger = (): void => {
-
-    if (/release/i.test(pr.head.ref)) {
-        return;
-    }
 
     if (DangerConfig.TITLE.IS_REQUIRED) {
         checkTitle(DangerConfig.TITLE.PATTERN);
