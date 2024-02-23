@@ -37,7 +37,7 @@ class StravaController extends BaseController {
 
         this.stravaService = stravaService;
         this.clientConfig = clientConfig;
-        this.apiUlr = `http:/${config.ENV.APP.HOST}/v1`;
+        this.apiUlr = `http://${config.ENV.APP.HOST}:${config.ENV.APP.PORT}/api/v1`;
 
         this.addRoute({
             path: ConnectionsOAuthPath.ROOT,
@@ -109,14 +109,12 @@ class StravaController extends BaseController {
         const { id } = options.user;
         const { uuid } = await this.stravaService.createOAuthState(id);
 
-        const redirectUri = encodeURIComponent(
-            `${this.apiUlr}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}?user_id=${id}`,
-        );
+        const redirectUri = `${this.apiUlr}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}?user_id=${id}`;
 
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${StravaPaths.AUTHORIZE}?client_id=${this.clientConfig.CLIENT_ID}&response_type=code&redirect_uri=${redirectUri}&approval_prompt=force&scope=read,activity:read_all&state=${uuid}`,
+            redirectUrl: `${StravaPaths.AUTHORIZE}?client_id=${this.clientConfig.CLIENT_ID}&response_type=code&redirect_uri=${redirectUri}&approval_prompt=force&scope=read,activity:read_all,activity:write&state=${uuid}`,
         };
     }
 
@@ -127,14 +125,14 @@ class StravaController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { code, scope, state: uuid, user_id: userId } = options.query;
 
+        await this.stravaService.verifyState({ userId, uuid });
+
         const config = {
             client_id: this.clientConfig.CLIENT_ID,
             client_secret: this.clientConfig.CLIENT_SECRET,
             code,
             grant_type: 'authorization_code',
         };
-
-        await this.stravaService.verifyState({ userId, uuid });
 
         const oAuthResponse = await axios.post(
             StravaPaths.TOKEN_EXCHANGE,
@@ -160,6 +158,14 @@ class StravaController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { id } = options.user;
+
+        const oAuthInfo = await this.stravaService.find({ userId: id });
+
+        const config = {
+            access_token: oAuthInfo?.accessToken,
+        };
+
+        await axios.post(StravaPaths.DEAUTHRORIZE, config);
 
         await this.stravaService.delete({ userId: id });
 

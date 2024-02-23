@@ -1,4 +1,5 @@
 import {
+    type ConnectionsOAuthResponseDto,
     ErrorMessage,
     HttpCode,
     HttpError,
@@ -14,6 +15,17 @@ import {
 } from './types/types.js';
 
 class StravaService extends OAuthService {
+    public async find(
+        query: Record<string, unknown>,
+    ): Promise<ConnectionsOAuthResponseDto | null> {
+        const oAuthInfo = await this.oAuthRepository.find({
+            ...query,
+            provider: Providers.STRAVA,
+        });
+
+        return oAuthInfo ? oAuthInfo.toObject() : null;
+    }
+
     public async create(payload: StravaOAuthApiResponse): Promise<unknown> {
         const mappedPayload = snakeToCamel(payload) as StravaOAuthResponseDto;
         const provider = Providers.STRAVA;

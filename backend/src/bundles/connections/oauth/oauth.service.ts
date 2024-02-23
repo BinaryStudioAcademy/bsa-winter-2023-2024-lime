@@ -24,13 +24,9 @@ abstract class OAuthService implements Service {
         this.oAuthStateRepository = oAuthStateRepository;
     }
 
-    public async find(
+    public abstract find(
         query: Record<string, unknown>,
-    ): Promise<ConnectionsOAuthResponseDto | null> {
-        const oAuthInfo = await this.oAuthRepository.find(query);
-
-        return oAuthInfo ? oAuthInfo.toObject() : null;
-    }
+    ): Promise<ConnectionsOAuthResponseDto | null>;
 
     public async findMany(
         query: Record<string, unknown>,
