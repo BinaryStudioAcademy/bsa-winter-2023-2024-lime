@@ -6,6 +6,7 @@ export {
     ConnectionsOAuthPath,
     StravaPaths,
 } from './bundles/connections/connections.js';
+export { FileValidationMessage } from './bundles/file/file.js';
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
