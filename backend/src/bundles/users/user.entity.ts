@@ -10,6 +10,8 @@ class UserEntity implements Entity {
 
     private 'passwordHash': string;
 
+    private 'customerToken': string;
+
     private 'fullName': string | null;
 
     private 'avatarUrl': string | null;
@@ -24,14 +26,13 @@ class UserEntity implements Entity {
 
     private 'gender': ValueOf<typeof Gender> | null;
 
-    public 'customerToken': string | null;
-
-    public 'currentPlanId': number | null;
+    private 'currentPlanId': number | null;
 
     private constructor({
         id,
         email,
         passwordHash,
+        customerToken,
         fullName,
         avatarUrl,
         username,
@@ -39,12 +40,12 @@ class UserEntity implements Entity {
         weight,
         height,
         gender,
-        customerToken,
         currentPlanId,
     }: {
         id: number | null;
         email: string;
         passwordHash: string;
+        customerToken: string;
         fullName: string | null;
         avatarUrl: string | null;
         username: string | null;
@@ -52,12 +53,12 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
-        customerToken: string | null;
         currentPlanId: number | null;
     }) {
         this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.customerToken = customerToken;
         this.fullName = fullName;
         this.avatarUrl = avatarUrl;
         this.username = username;
@@ -65,7 +66,6 @@ class UserEntity implements Entity {
         this.weight = weight;
         this.height = height;
         this.gender = gender;
-        this.customerToken = customerToken;
         this.currentPlanId = currentPlanId;
     }
 
@@ -77,6 +77,7 @@ class UserEntity implements Entity {
         id,
         email,
         passwordHash,
+        customerToken,
         fullName,
         avatarUrl,
         username,
@@ -84,12 +85,12 @@ class UserEntity implements Entity {
         weight,
         height,
         gender,
-        customerToken,
         currentPlanId,
     }: {
         id: number;
         email: string;
         passwordHash: string;
+        customerToken: string;
         fullName: string | null;
         avatarUrl: string | null;
         username: string | null;
@@ -97,13 +98,13 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
-        customerToken: string | null;
         currentPlanId: number | null;
     }): UserEntity {
         return new UserEntity({
             id,
             email,
             passwordHash,
+            customerToken,
             fullName,
             avatarUrl,
             username,
@@ -111,7 +112,6 @@ class UserEntity implements Entity {
             weight,
             height,
             gender,
-            customerToken,
             currentPlanId,
         });
     }
@@ -119,14 +119,17 @@ class UserEntity implements Entity {
     public static initializeNew({
         email,
         passwordHash,
+        customerToken,
     }: {
         email: string;
         passwordHash: string;
+        customerToken: string;
     }): UserEntity {
         return new UserEntity({
             id: null,
             email,
             passwordHash,
+            customerToken,
             fullName: null,
             avatarUrl: null,
             username: null,
@@ -134,7 +137,6 @@ class UserEntity implements Entity {
             weight: null,
             height: null,
             gender: null,
-            customerToken: null,
             currentPlanId: null,
         });
     }
@@ -142,6 +144,7 @@ class UserEntity implements Entity {
     public toObject(): {
         id: number;
         email: string;
+        customerToken: string;
         fullName: string | null;
         avatarUrl: string | null;
         username: string | null;
@@ -149,12 +152,12 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
-        customerToken: string | null;
         currentPlanId: number | null;
     } {
         return {
             id: this.id as number,
             email: this.email,
+            customerToken: this.customerToken,
             fullName: this.fullName,
             avatarUrl: this.avatarUrl,
             username: this.username,
@@ -162,7 +165,6 @@ class UserEntity implements Entity {
             weight: this.weight as number,
             height: this.height as number,
             gender: this.gender,
-            customerToken: this.customerToken,
             currentPlanId: this.currentPlanId,
         };
     }
@@ -170,10 +172,12 @@ class UserEntity implements Entity {
     public toNewObject(): {
         email: string;
         passwordHash: string;
+        customerToken: string;
     } {
         return {
             email: this.email,
             passwordHash: this.passwordHash,
+            customerToken: this.customerToken,
         };
     }
 }

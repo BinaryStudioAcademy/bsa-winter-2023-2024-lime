@@ -27,7 +27,7 @@ const initialState: State = {
     confirmPaymentStatus: DataStatus.IDLE,
 };
 
-const { reducer, actions, name } = createSlice({
+const { reducer, name, actions } = createSlice({
     initialState,
     name: 'subscriptions',
     reducers: {},

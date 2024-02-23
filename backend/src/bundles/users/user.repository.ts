@@ -1,6 +1,5 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
-import { stripeService } from '~/common/services/services.js';
 import { type Repository } from '~/common/types/types.js';
 
 class UserRepository implements Repository {
@@ -34,7 +33,6 @@ class UserRepository implements Repository {
             weight: userDetails.weight,
             height: userDetails.height,
             gender: userDetails.gender,
-            customerToken: subscriptions.customerToken,
             currentPlanId: subscriptions.planId,
         });
     }
@@ -57,14 +55,13 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                customerToken: subscriptions.customerToken,
                 currentPlanId: subscriptions.planId,
             });
         });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordHash } = entity.toNewObject();
+        const { email, passwordHash, customerToken } = entity.toNewObject();
         const trx = await this.userModel.startTransaction();
 
         try {
@@ -73,6 +70,7 @@ class UserRepository implements Repository {
                 .insert({
                     email,
                     passwordHash,
+                    customerToken,
                 })
                 .returning('*')
                 .execute();
@@ -81,10 +79,9 @@ class UserRepository implements Repository {
                 .$relatedQuery('userDetails', trx)
                 .insert({});
 
-            const customerToken = await stripeService.createCustomer({ email });
             const subscriptions = await user
                 .$relatedQuery('subscriptions', trx)
-                .insert({ customerToken });
+                .insert({});
 
             await trx.commit();
 
@@ -97,7 +94,6 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                customerToken: subscriptions.customerToken,
                 currentPlanId: subscriptions.planId,
             });
         } catch (error) {

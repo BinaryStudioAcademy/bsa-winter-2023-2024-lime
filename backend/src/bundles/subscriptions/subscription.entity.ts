@@ -9,7 +9,7 @@ class SubscriptionEntity implements Entity {
 
     private 'subscriptionToken': string | null;
 
-    private 'customerToken': string | null;
+    private 'cancelAtPeriodEnd': boolean | null;
 
     private 'status': string | null;
 
@@ -20,8 +20,8 @@ class SubscriptionEntity implements Entity {
         userId,
         planId,
         status,
+        cancelAtPeriodEnd,
         subscriptionToken,
-        customerToken,
         expirationDate,
     }: {
         id: number | null;
@@ -29,14 +29,14 @@ class SubscriptionEntity implements Entity {
         planId: number | null;
         status: string | null;
         subscriptionToken: string | null;
-        customerToken: string | null;
+        cancelAtPeriodEnd: boolean | null;
         expirationDate: Date | null;
     }) {
         this.id = id;
         this.userId = userId;
         this.planId = planId;
-        this.customerToken = customerToken;
         this.status = status;
+        this.cancelAtPeriodEnd = cancelAtPeriodEnd;
         this.expirationDate = expirationDate;
         this.subscriptionToken = subscriptionToken;
     }
@@ -45,26 +45,26 @@ class SubscriptionEntity implements Entity {
         id,
         userId,
         planId,
-        customerToken,
         subscriptionToken,
+        cancelAtPeriodEnd,
         status,
         expirationDate,
     }: {
         id: number | null;
         userId: number;
         planId: number | null;
-        status: string | null;
         subscriptionToken: string | null;
-        customerToken: string | null;
+        cancelAtPeriodEnd: boolean | null;
+        status: string | null;
         expirationDate: Date | null;
     }): SubscriptionEntity {
         return new SubscriptionEntity({
             id,
             userId,
             planId,
-            customerToken,
             subscriptionToken,
             status,
+            cancelAtPeriodEnd,
             expirationDate,
         });
     }
@@ -79,8 +79,8 @@ class SubscriptionEntity implements Entity {
             userId,
             planId: null,
             subscriptionToken: null,
-            customerToken: null,
             status: null,
+            cancelAtPeriodEnd: null,
             expirationDate: null,
         });
     }
@@ -90,17 +90,17 @@ class SubscriptionEntity implements Entity {
         userId: number;
         planId: number | null;
         status: string | null;
+        cancelAtPeriodEnd: boolean | null;
         subscriptionToken: string | null;
-        customerToken: string | null;
         expirationDate: Date | null;
     } {
         return {
             id: this.id as number,
             userId: this.userId,
             planId: this.planId as number,
-            customerToken: this.customerToken,
             subscriptionToken: this.subscriptionToken,
             status: this.status,
+            cancelAtPeriodEnd: this.cancelAtPeriodEnd as boolean,
             expirationDate: this.expirationDate as Date,
         };
     }

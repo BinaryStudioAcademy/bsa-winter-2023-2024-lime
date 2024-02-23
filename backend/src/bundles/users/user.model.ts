@@ -17,6 +17,8 @@ class UserModel extends AbstractModel {
 
     public 'passwordHash': string;
 
+    public 'customerToken': string;
+
     public 'userDetails': UserDetailsModel;
 
     public 'subscriptions': SubscriptionModel;

@@ -12,6 +12,7 @@ import {
 } from './enums/enums.js';
 import { type SubscriptionRepository } from './subscription.repository.js';
 import {
+    type CancelSubscriptionRequestDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
 } from './types/types.js';
@@ -43,19 +44,12 @@ class SubscriptionService
         return subscription.toObject();
     }
 
-    public async subscribe(
-        payload: SubscribeRequestDto,
-    ): Promise<SubscribeResponseDto> {
-        if (!payload) {
-            throw new HttpError({
-                message:
-                    SubscriptionValidationMessage.SUBSCRIPTION_INVALID_REQUEST,
-                status: HttpCode.BAD_REQUEST,
-            });
-        }
-
-        const { planId, userId, customerToken, priceToken } = payload;
-
+    public async subscribe({
+        planId,
+        userId,
+        customerToken,
+        priceToken,
+    }: SubscribeRequestDto): Promise<SubscribeResponseDto> {
         const currentSubscription = await this.findByUserId(userId);
 
         if (
@@ -101,16 +95,17 @@ class SubscriptionService
 
     public async cancelSubscribtion({
         userId,
-    }: {
-        userId: number;
-    }): Promise<void> {
+    }: CancelSubscriptionRequestDto): Promise<boolean> {
         const currentSubscription = await this.findByUserId(userId);
 
-        if (!currentSubscription.subscriptionToken) {
+        if (
+            !currentSubscription.subscriptionToken ||
+            currentSubscription.cancelAtPeriodEnd
+        ) {
             throw new HttpError({
                 message:
                     SubscriptionValidationMessage.SUBSCRIPTION_CANNOT_BE_CANCELED,
-                status: HttpCode.INTERNAL_SERVER_ERROR,
+                status: HttpCode.BAD_REQUEST,
             });
         }
 
@@ -118,6 +113,8 @@ class SubscriptionService
             await stripeService.softCancelSubscription({
                 subscriptionToken: currentSubscription.subscriptionToken,
             });
+
+            return true;
         } catch (error) {
             throw new HttpError({
                 message: (error as Error).message,
@@ -141,11 +138,25 @@ class SubscriptionService
                 const subscription = stripeResponse.data.object;
                 await this.subscriptionRepository.updateSubscription(
                     { subscriptionToken: subscription.id },
-                    { status: subscription.status },
+                    {
+                        status: subscription.status,
+                        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+                        expirationDate: new Date(
+                            subscription.current_period_end * 1000,
+                        ),
+                    },
                 );
                 break;
             }
             case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_DELETED: {
+                const subscription = stripeResponse.data.object;
+                await this.subscriptionRepository.updateSubscription(
+                    { subscriptionToken: subscription.id },
+                    {
+                        status: subscription.status,
+                        expirationDate: null,
+                    },
+                );
                 break;
             }
             default: {

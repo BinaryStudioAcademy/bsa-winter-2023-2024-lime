@@ -1,0 +1,1 @@
+export { SubscriptionsApiPath } from 'shared';

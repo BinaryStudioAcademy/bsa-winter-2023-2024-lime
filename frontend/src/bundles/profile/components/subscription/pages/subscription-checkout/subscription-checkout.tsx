@@ -19,12 +19,15 @@ const SubscriptionCheckout = (): JSX.Element => {
     const options: StripeElementsOptions = {
         clientSecret: clientSecret ?? '',
         appearance: {
-            theme: 'flat',
+            theme: 'night',
+            variables: {
+                colorPrimary: '#E0FE10',
+            },
         },
     };
 
     return (
-        <section className={'bg-lm-yellow-200 mx-10 rounded-lg p-6'}>
+        <section className={'bg-lm-black-100 mx-10 rounded-lg p-6'}>
             {Boolean(clientSecret) && (
                 <Elements options={options} stripe={stripe}>
                     <CheckoutForm />

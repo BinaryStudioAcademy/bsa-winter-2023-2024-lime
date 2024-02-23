@@ -5,8 +5,7 @@ const SubscriptionValidationMessage = {
         'Could not understand the request due to invalid syntax.',
     SUBSCRIPTION_ALREDY_IN_USE:
         'You have already purchased this product, so you does not need to update it again.',
-    SUBSCRIPTION_CANNOT_BE_CANCELED:
-        'Subscription cannot be cancelled due to internal server error.',
+    SUBSCRIPTION_CANNOT_BE_CANCELED: 'Subscription cannot be cancelled.',
 } as const;
 
 export { SubscriptionValidationMessage };

@@ -18,7 +18,7 @@ class SubscriptionModel extends AbstractModel {
 
     public 'subscriptionToken': string | null;
 
-    public 'customerToken': string | null;
+    public 'cancelAtPeriodEnd': boolean | null;
 
     public 'status': string | null;
 

@@ -4,13 +4,17 @@ const SUBSCRIPTIONS_TABLE_NAME = 'subscriptions';
 const USERS_TABLE_NAME = 'users';
 const SUBSCRIPTION_PLANS_TABLE_NAME = 'subscription_plans';
 
+const UsersColumn = {
+    CUSTOMER_TOKEN: 'customer_token',
+};
+
 const SubscriptionsColumn = {
     ID: 'id',
     USER_ID: 'user_id',
     PLAN_ID: 'plan_id',
     PRICE: 'price',
     STATUS: 'status',
-    CUSTOMER_TOKEN: 'customer_token',
+    CANCEL_AT_PERIOD_END: 'cancel_at_period_end',
     SUBSCRIPTION_TOKEN: 'subscription_token',
     EXPIRATION_DATE: 'expiration_date',
     CREATED_AT: 'created_at',
@@ -18,6 +22,10 @@ const SubscriptionsColumn = {
 };
 
 async function up(knex: Knex): Promise<void> {
+    await knex.schema.alterTable(USERS_TABLE_NAME, (table) => {
+        table.string(UsersColumn.CUSTOMER_TOKEN).unique().notNullable();
+    });
+
     await knex.schema.createTable(SUBSCRIPTIONS_TABLE_NAME, (table) => {
         table.increments(SubscriptionsColumn.ID).primary();
         table
@@ -42,7 +50,7 @@ async function up(knex: Knex): Promise<void> {
             .string(SubscriptionsColumn.SUBSCRIPTION_TOKEN)
             .unique()
             .nullable();
-        table.string(SubscriptionsColumn.CUSTOMER_TOKEN).unique().nullable();
+        table.boolean(SubscriptionsColumn.CANCEL_AT_PERIOD_END).nullable();
         table.string(SubscriptionsColumn.STATUS).nullable();
         table.dateTime(SubscriptionsColumn.EXPIRATION_DATE).nullable();
         table
@@ -56,6 +64,9 @@ async function up(knex: Knex): Promise<void> {
     });
 }
 async function down(knex: Knex): Promise<void> {
+    await knex.schema.alterTable(USERS_TABLE_NAME, (table) => {
+        table.dropColumn(UsersColumn.CUSTOMER_TOKEN);
+    });
     await knex.schema.dropTableIfExists(SUBSCRIPTIONS_TABLE_NAME);
 }
 

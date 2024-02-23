@@ -17,8 +17,8 @@ const SubscriptionPage = (): JSX.Element => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const userId = 5;
-    const customerToken = 'cus_PbaegsnO6k6Ubk';
+    const userId = 2;
+    const customerToken = 'cus_PcADwJZ6Jprcdg';
     const { subscriptionPlans } = useAppSelector((state) => {
         return {
             subscriptionPlans: state.subscriptions.subscriptionPlans,

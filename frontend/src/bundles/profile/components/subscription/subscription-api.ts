@@ -1,9 +1,15 @@
-import { ContentType } from '~/bundles/common/enums/enums.js';
+import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { type Http } from '~/framework/http/types/types.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
-import { type SubscriptionPlansGetAllResponseDto } from './types/types.js';
+import { SubscriptionsApiPath } from './enums/enums.js';
+import {
+    type CancelSubscriptionRequestDto,
+    type SubscribeRequestDto,
+    type SubscribeResponseDto,
+    type SubscriptionPlansGetAllResponseDto,
+} from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -27,27 +33,16 @@ class SubscriptionPlansApi extends BaseHttpApi {
     }
 }
 
-type SubscribeOptions = {
-    planId: number;
-    userId: number;
-    priceToken: string;
-    customerToken: string;
-};
-
-type CancelSubscribeOptions = {
-    userId: number;
-};
-
 class SubscriptionsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
-        super({ path: '/subscriptions', baseUrl, http, storage });
+        super({ path: ApiPath.SUBSCRIPTIONS, baseUrl, http, storage });
     }
 
     public async createSubscription(
-        payload: SubscribeOptions,
-    ): Promise<{ subscriptionToken: string; clientSecret: string }> {
+        payload: SubscribeRequestDto,
+    ): Promise<SubscribeResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint('/subscribe', {}),
+            this.getFullEndpoint(SubscriptionsApiPath.SUBSCRIBE, {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
@@ -56,17 +51,14 @@ class SubscriptionsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<{
-            subscriptionToken: string;
-            clientSecret: string;
-        }>();
+        return await response.json<SubscribeResponseDto>();
     }
 
     public async cancelSubscription(
-        payload: CancelSubscribeOptions,
-    ): Promise<{ isCanceled: boolean }> {
+        payload: CancelSubscriptionRequestDto,
+    ): Promise<boolean> {
         const response = await this.load(
-            this.getFullEndpoint('/cancel-subscription', {}),
+            this.getFullEndpoint(SubscriptionsApiPath.CANCEL_SUBSCRIPTION, {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
@@ -75,7 +67,7 @@ class SubscriptionsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<{ isCanceled: boolean }>();
+        return await response.json<boolean>();
     }
 }
 

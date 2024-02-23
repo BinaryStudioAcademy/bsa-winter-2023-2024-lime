@@ -4,7 +4,7 @@ type SubscriptionItemResponseDto = {
     planId: number | null;
     status: string | null;
     subscriptionToken: string | null;
-    customerToken: string | null;
+    cancelAtPeriodEnd: boolean | null;
     expirationDate: Date | null;
 };
 
