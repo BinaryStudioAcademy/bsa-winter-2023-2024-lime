@@ -5,8 +5,16 @@ import { NotificationIcon } from './notifications-header.js';
 
 const NotificationComponent = (): JSX.Element => {
     const [notifications, setNotifications] = useState([
-        'Notification 1',
-        'Notification 2',
+        {
+            id: '202404',
+            title: 'Notification 1',
+            description: 'This is a description of the notification 1',
+        },
+        {
+            id: '202401',
+            title: 'Notification 2',
+            description: 'This is a description of the notification 1',
+        },
     ]);
     const [showList, setShowList] = useState(false);
 
@@ -15,11 +23,11 @@ const NotificationComponent = (): JSX.Element => {
     }, [showList]);
 
     const handleNotificationClick = useCallback(
-        (index: number) => {
+        (id: number) => {
             setNotifications(
                 notifications.filter(
-                    (_: string, indexNotifications: number) =>
-                        indexNotifications !== index,
+                    (notification) =>
+                        notification.id.toString() !== id.toString(),
                 ),
             );
             setShowList(notifications.length > 1);
