@@ -24,12 +24,10 @@ type Properties = {
 const styles = {
     baseStyle:
         'bg-lm-black-100 flex h-[95vh] w-72 flex-col content-center items-center p-7 text-white',
-    animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]'    
+    animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({
-    isOpen = true
-}: Properties): JSX.Element => {
+const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute, setActiveRoute] = useState(pathname);
@@ -57,27 +55,19 @@ const Sidebar = ({
             <div className="inner h-3/4 w-full border-gray-700 ">
                 <div className="flex flex-col gap-4">
                     <SidebarNav
-                        icon={ <OverviewIcon />}
+                        icon={<OverviewIcon />}
                         text="Overview"
                         to={AppRoute.OVERVIEW}
                         isActive={activeRoute === AppRoute.OVERVIEW}
                     />
                     <SidebarNav
-                        icon={
-                            <Icon
-                                name={IconName.workoutIcon}               
-                            />
-                        }
+                        icon={<Icon name={IconName.workoutIcon} />}
                         text="Workout"
                         to={AppRoute.WORKOUT}
                         isActive={activeRoute === AppRoute.WORKOUT}
                     />
                     <SidebarNav
-                        icon={
-                            <Icon
-                                name={IconName.goalsIcon}
-                            />
-                        }
+                        icon={<Icon name={IconName.goalsIcon} />}
                         text="Goals"
                         to={AppRoute.GOALS}
                         isActive={activeRoute === AppRoute.GOALS}
