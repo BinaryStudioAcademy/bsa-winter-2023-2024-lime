@@ -1,6 +1,6 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
-import { cryptService, jwtService } from '~/common/services/services.js';
+import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import {
@@ -52,13 +52,6 @@ class UserService implements Service {
 
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
-    }
-
-    // Temporary mock
-    public async getByToken(token: string): Promise<UserEntity | null> {
-        const { id } = await jwtService.verifyToken(token);
-
-        return await this.find({ id });
     }
 }
 
