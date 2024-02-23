@@ -1,10 +1,13 @@
 import { type ValueOf } from 'shared';
 
 import {
+    type ActivityType,
+    type Metric,
+} from '../../../../shared/src/bundles/achievements/enums/enums.js';
+import {
     AbstractModel,
     DatabaseTableName,
 } from '../../common/database/database.js';
-import { type ActivityType, type Metric } from './enums/enums.js';
 
 class AchievementModel extends AbstractModel {
     public 'name': string;

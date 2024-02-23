@@ -9,7 +9,7 @@ const ColumnName = {
     REQUIREMENT: 'requirement',
     REQUIREMENT_METRIC: 'requirement_metric',
     CREATED_AT: 'created_at',
-};
+} as const;
 
 const ACTIVITY_ENUM = `${ColumnName.ACTIVITY}_enum`;
 const REQUIREMENT_METRIC_ENUM = `${ColumnName.REQUIREMENT_METRIC}_enum`;
@@ -18,14 +18,14 @@ const ActivityType = {
     CYCLING: 'cycling',
     RUNNING: 'running',
     WALKING: 'walking',
-};
+} as const;
 
 const Metric = {
     KILOMETERS: 'km',
     MINUTES: 'minutes',
     STEPS: 'steps',
     KILOCALORIES: 'kcal',
-};
+} as const;
 
 async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable(TABLE_NAME, (table) => {

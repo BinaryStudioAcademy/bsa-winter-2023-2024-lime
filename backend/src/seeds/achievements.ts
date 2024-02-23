@@ -4,14 +4,14 @@ const ActivityType = {
     CYCLING: 'cycling',
     RUNNING: 'running',
     WALKING: 'walking',
-};
+} as const;
 
 const Metric = {
     KILOMETERS: 'km',
     MINUTES: 'minutes',
     STEPS: 'steps',
     KILOCALORIES: 'kcal',
-};
+} as const;
 
 const Achievements = [
     {

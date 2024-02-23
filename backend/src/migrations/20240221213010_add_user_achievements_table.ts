@@ -7,7 +7,7 @@ const ColumnName = {
     USER_ID: 'user_id',
     ACHIEVEMENT_ID: 'achievement_id',
     DATE_ACHIEVED: 'date_achieved',
-};
+} as const;
 
 async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable(TABLE_NAME, (table) => {
