@@ -1,4 +1,8 @@
-import { Button, ButtonVariant, Link } from '~/bundles/common/components/components.js';
+import {
+    Button,
+    ButtonVariant,
+    Link,
+} from '~/bundles/common/components/components.js';
 import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/helpers.js';
 import { type AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
