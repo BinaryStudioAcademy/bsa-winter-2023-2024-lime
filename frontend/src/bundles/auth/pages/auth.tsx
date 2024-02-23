@@ -72,7 +72,7 @@ const Auth: React.FC = () => {
 
     const classes = {
         base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
-        form: 'justify-between text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        form: 'justify-between text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem] lg:justify-center lg:pt-0 lg:pb-0',
     };
 
     return (
