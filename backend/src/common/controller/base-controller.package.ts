@@ -53,6 +53,7 @@ class BaseController implements Controller {
             body,
             query,
             params,
+            user,
             headers: { origin },
         } = request;
 
@@ -60,6 +61,7 @@ class BaseController implements Controller {
             body,
             query,
             params,
+            user,
             origin,
         };
     }
