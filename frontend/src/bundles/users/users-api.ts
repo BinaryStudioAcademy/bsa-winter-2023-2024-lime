@@ -34,6 +34,19 @@ class UserApi extends BaseHttpApi {
         return await response.json<UserGetAllResponseDto>();
     }
 
+    public async refreshUser(): Promise<UserAuthResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(UsersApiPath.CURRENT, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<UserAuthResponseDto>();
+    }
+
     public async updateUser(
         userId: string,
         payload: UserUpdateProfileRequestDto,

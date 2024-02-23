@@ -6,16 +6,18 @@ import {
     type ValueOf,
 } from '~/bundles/common/types/types.js';
 
-import { signIn, signUp, updateUser } from './actions.js';
+import { refreshUser, signIn, signUp, updateUser } from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     user: UserAuthResponseDto | null;
+    isRefreshing: boolean;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     user: null,
+    isRefreshing: false,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -42,6 +44,19 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(signIn.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(refreshUser.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+            state.isRefreshing = true;
+        });
+        builder.addCase(refreshUser.fulfilled, (state, { payload }) => {
+            state.user = payload;
+            state.dataStatus = DataStatus.FULFILLED;
+            state.isRefreshing = false;
+        });
+        builder.addCase(refreshUser.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+            state.isRefreshing = false;
         });
         builder.addCase(updateUser.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;
