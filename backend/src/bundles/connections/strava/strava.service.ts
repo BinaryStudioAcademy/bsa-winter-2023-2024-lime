@@ -3,13 +3,19 @@ import {
     OAuthService,
     Providers,
 } from '~/bundles/connections/oauth/oauth.js';
+import { snakeToCamel } from '~/common/helpers/helpers.js';
 
-import { type StravaOAuthResponseDto } from './types/types.js';
+import {
+    type StravaOAuthApiResponse,
+    type StravaOAuthResponseDto,
+} from './types/types.js';
 
 class StravaService extends OAuthService {
-    public async create(payload: StravaOAuthResponseDto): Promise<unknown> {
+    public async create(payload: StravaOAuthApiResponse): Promise<unknown> {
+        const mappedPayload = snakeToCamel(payload) as StravaOAuthResponseDto;
+
         const oAuthEntity = OAuthEntity.initializeNew({
-            ...payload,
+            ...mappedPayload,
             provider: Providers.STRAVA,
         });
 

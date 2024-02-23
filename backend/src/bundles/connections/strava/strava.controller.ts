@@ -137,17 +137,9 @@ class StravaController extends BaseController {
             config,
         );
 
-        const payload = {
-            tokenType: oAuthResponse.data.token_type,
-            expiresIn: oAuthResponse.data.expires_in,
-            expiresAt: oAuthResponse.data.expires_at,
-            refreshToken: oAuthResponse.data.refresh_token,
-            accessToken: oAuthResponse.data.access_token,
-            scope,
-        };
-
         await this.stravaService.create({
-            ...payload,
+            ...oAuthResponse.data,
+            scope,
             userId,
         });
 
