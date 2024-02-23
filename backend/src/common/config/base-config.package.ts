@@ -53,6 +53,18 @@ class BaseConfig implements Config {
                     env: 'JWT_SECRET',
                     default: null,
                 },
+                OPEN_AI_API_KEY: {
+                    doc: 'Api key for working with AI',
+                    format: String,
+                    env: 'OPEN_AI_API_KEY',
+                    default: null,
+                },
+                OPEN_AI_MODEL: {
+                    doc: 'AI model',
+                    format: String,
+                    env: 'OPEN_AI_MODEL',
+                    default: null,
+                },
             },
             AWS: {
                 S3_ACCESS_KEY: {

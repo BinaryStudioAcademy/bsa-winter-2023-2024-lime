@@ -7,6 +7,8 @@ type EnvironmentSchema = {
         ENVIRONMENT: ValueOf<typeof AppEnvironment>;
         HOST: string;
         JWT_SECRET: string;
+        OPEN_AI_API_KEY: string;
+        OPEN_AI_MODEL: string;
     };
     AWS: {
         S3_ACCESS_KEY: string;
