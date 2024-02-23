@@ -54,6 +54,32 @@ class BaseConfig implements Config {
                     default: null,
                 },
             },
+            AWS: {
+                S3_ACCESS_KEY: {
+                    doc: 'Access key for aws connection',
+                    format: String,
+                    env: 'S3_ACCESS_KEY',
+                    default: null,
+                },
+                S3_SECRET_KEY: {
+                    doc: 'Secret key for aws connection',
+                    format: String,
+                    env: 'S3_SECRET_KEY',
+                    default: null,
+                },
+                S3_BUCKET_NAME: {
+                    doc: 'Bucket name for aws connection',
+                    format: String,
+                    env: 'S3_BUCKET_NAME',
+                    default: null,
+                },
+                S3_REGION: {
+                    doc: 'Region for aws connection',
+                    format: String,
+                    env: 'S3_REGION',
+                    default: null,
+                },
+            },
             DB: {
                 USERNAME: {
                     doc: 'Database connection username',
