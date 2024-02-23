@@ -1,5 +1,7 @@
 import { type UserService } from '~/bundles/users/user.service.js';
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
+    type ApiHandlerOptions,
     type ApiHandlerResponse,
     BaseController,
 } from '~/common/controller/controller.js';
@@ -81,6 +83,18 @@ class UserController extends BaseController {
             isProtected: true,
             handler: () => this.findAll(),
         });
+
+        this.addRoute({
+            path: UsersApiPath.CURRENT,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getCurrentUser(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -91,7 +105,7 @@ class UserController extends BaseController {
      *       - Users
      *      description: Returns an array of users
      *      security:
-     *        - bearer_auth_token: []
+     *        - bearerAuth: []
      *      responses:
      *        200:
      *          description: Successful operation
@@ -103,7 +117,7 @@ class UserController extends BaseController {
      *                   items:
      *                     type: array
      *                     items:
-     *                       $ref: '#/components/schemas/User'
+     *                       $ref: '#/components/schemas/User/'
      *        401:
      *          description: Failed operation
      *          content:
@@ -111,18 +125,46 @@ class UserController extends BaseController {
      *                  schema:
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
-     *
-     * components:
-     *   securitySchemes:
-     *     bearer_auth_token:
-     *       type: http
-     *       scheme: bearer
-     *       bearerFormat: JWT
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
+        };
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/current:
+     *    get:
+     *      tags:
+     *       - Current user
+     *      description: Returns current user
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private getCurrentUser(
+        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
+    ): ApiHandlerResponse {
+        const { user } = options;
+
+        return {
+            status: HttpCode.OK,
+            payload: user,
         };
     }
 }
