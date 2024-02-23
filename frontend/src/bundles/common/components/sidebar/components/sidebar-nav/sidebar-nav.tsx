@@ -1,9 +1,9 @@
-import { type AppRoute } from '~/bundles/common/enums/enums.js';
+import { Button, ButtonVariant, Link } from '~/bundles/common/components/components.js';
+import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/helpers.js';
+import { type AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
-
-import { Button, ButtonVariant, Link } from '../../../components.js';
 
 type SidebarNavProperties = {
     text: string;
@@ -28,6 +28,11 @@ const SidebarNav = ({
         inactive: 'text-lm-grey-200 hover:text-lm-black-400',
     };
 
+    const enhacedIcon = addSizePropertyHeroIcons({
+        icon,
+        size: ComponentSize.MEDIUM,
+    });
+
     return (
         <Link to={to} className="flex items-center justify-center">
             <Button
@@ -36,11 +41,11 @@ const SidebarNav = ({
                 className={getValidClassNames(
                     isActive ? classes.active : classes.inactive,
                 )}
-                leftIcon={icon}
+                leftIcon={enhacedIcon}
                 variant={ButtonVariant.SIDEBAR}
                 onClick={handleNavigation}
                 isActive={isActive}
-                size={'md'}
+                size={ComponentSize.MEDIUM}
             />
         </Link>
     );
