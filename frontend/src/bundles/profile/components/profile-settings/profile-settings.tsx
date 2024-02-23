@@ -36,11 +36,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
-    const { control, errors, isDirty, isValid, reset, getValues } =
+    const { control, errors, reset, getValues } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
-            mode: 'onBlur',
+            mode: 'onTouched',
             shouldUnregister: false,
         });
 
@@ -68,7 +68,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     }, [reset]);
 
     return (
-        <div className="bg-lm-black-200 pl-13 pr-18 w-[874px] px-12 pt-3">
+        <div className="bg-lm-black-200 pl-13 pr-18 w-[874px] px-12 pb-9 pt-3">
             <div className="flex items-center pb-12">
                 <Avatar
                     size="lg"
@@ -182,7 +182,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                                 )
                             }
                             onClick={handleCancel}
-                            isDisabled={!isDirty || isLoading}
                             variant={ButtonVariant.SECONDARY}
                             size={ComponentSize.MEDIUM}
                         />
@@ -196,7 +195,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                                 )
                             }
                             type="submit"
-                            isDisabled={!isDirty || !isValid}
                             variant={ButtonVariant.PRIMARY}
                             size={ComponentSize.MEDIUM}
                         />
