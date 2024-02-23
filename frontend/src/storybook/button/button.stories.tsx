@@ -3,6 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react';
 import {
     Button,
     ButtonVariant,
+    Icon,
 } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 
@@ -10,7 +11,6 @@ const meta: Meta<typeof Button> = {
     component: Button,
     title: 'Components/Button',
     args: {
-        className: 'w-[375px]',
         label: 'Button',
     },
     tags: ['autodocs'],
@@ -77,8 +77,19 @@ const SmallTertiary: Story = {
         variant: ButtonVariant.TERTIARY,
     },
 };
+const ButtonWithIcon: Story = {
+    render: () => (
+        <Button
+            rightIcon={<Icon name={'logoIcon'} size="md" />}
+            size={ComponentSize.MEDIUM}
+            variant={ButtonVariant.PRIMARY}
+            label=""
+        />
+    ),
+};
 
 export {
+    ButtonWithIcon,
     MediumPrimary,
     MediumPrimaryDisabled,
     MediumSecondary,
