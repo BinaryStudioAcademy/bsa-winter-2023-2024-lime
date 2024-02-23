@@ -6,13 +6,7 @@ type Properties = {
     chip: string;
 };
 
-const ScheduleCard: React.FC<Properties> = ({
-    title,
-    imageSrc,
-    name,
-    data,
-    chip,
-}) => {
+const Card: React.FC<Properties> = ({ title, imageSrc, name, data, chip }) => {
     return (
         <div className="schedule-card bg-lm-black-100 w-full rounded-lg border p-4 ">
             {title && (
@@ -56,4 +50,4 @@ const ScheduleCard: React.FC<Properties> = ({
     );
 };
 
-export { ScheduleCard };
+export { Card };
