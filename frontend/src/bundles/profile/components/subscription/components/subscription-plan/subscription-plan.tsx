@@ -66,7 +66,7 @@ const SubscriptionPlan = ({
                 type={'button'}
                 label={'Subscribe'}
                 variant={'primary'}
-                size={'medium'}
+                size={'md'}
                 onClick={handleButtonClick}
             />
         </div>

@@ -27,14 +27,6 @@ const routes = [
                 element: 'Root',
             },
             {
-                path: AppRoute.SIGN_IN,
-                element: <Auth />,
-            },
-            {
-                path: AppRoute.SIGN_UP,
-                element: <Auth />,
-            },
-            {
                 path: AppRoute.SUBSCRIPTION,
                 element: <SubscriptionPage />,
             },
@@ -43,6 +35,15 @@ const routes = [
                 element: <SubscriptionCheckout />,
             },
         ],
+        isPrivate: true,
+    },
+    {
+        path: AppRoute.SIGN_IN,
+        element: <Auth />,
+    },
+    {
+        path: AppRoute.SIGN_UP,
+        element: <Auth />,
     },
     {
         path: AppRoute.NOT_FOUND,

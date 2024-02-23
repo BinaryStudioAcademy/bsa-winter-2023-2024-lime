@@ -66,7 +66,7 @@ const SubscriptionUserPanel = (): JSX.Element => {
                 <Button
                     variant="primary"
                     label="Cancel subscription"
-                    size="medium"
+                    size="md"
                     type="button"
                     onClick={handleCancelSubscription}
                 />

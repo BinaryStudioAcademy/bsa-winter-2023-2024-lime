@@ -20,6 +20,7 @@ export {
     Gender,
     userAuthValidationSchema,
     UsersApiPath,
+    userSignUpValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {

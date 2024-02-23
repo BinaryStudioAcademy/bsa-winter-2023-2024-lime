@@ -36,7 +36,7 @@ const CheckoutForm = (): JSX.Element => {
                     type={'submit'}
                     label={'Pay now!'}
                     variant={'primary'}
-                    size={'medium'}
+                    size={'md'}
                 />
             </div>
         </form>

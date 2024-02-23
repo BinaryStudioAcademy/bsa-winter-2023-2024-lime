@@ -12,6 +12,7 @@ import {
 import { type UserAuthRequestDto } from '~/bundles/users/users.js';
 
 import { SignInForm, SignUpForm } from '../components/components.js';
+import { type UserSignUpForm } from '../components/sign-up-form/type.js';
 import { actions as authActions } from '../store/auth.js';
 
 const Auth: React.FC = () => {
@@ -31,8 +32,11 @@ const Auth: React.FC = () => {
     );
 
     const handleSignUpSubmit = useCallback(
-        (payload: UserAuthRequestDto): void => {
-            void dispatch(authActions.signUp(payload));
+        (payload: UserSignUpForm): void => {
+            const { email, password } = payload;
+            const signUpDTO: UserAuthRequestDto = { email, password };
+
+            void dispatch(authActions.signUp(signUpDTO));
         },
         [dispatch],
     );
@@ -54,7 +58,12 @@ const Auth: React.FC = () => {
                 );
             }
             case AppRoute.SIGN_UP: {
-                return <SignUpForm onSubmit={handleSignUpSubmit} />;
+                return (
+                    <SignUpForm
+                        onSubmit={handleSignUpSubmit}
+                        isLoading={isLoading}
+                    />
+                );
             }
         }
 
@@ -62,7 +71,7 @@ const Auth: React.FC = () => {
     };
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem]',
+        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
         form: 'justify-between text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
     };
 
@@ -71,7 +80,7 @@ const Auth: React.FC = () => {
             <div className={getValidClassNames(classes.base, classes.form)}>
                 {getScreen(pathname)}
             </div>
-            <div className="flex flex-1 items-center justify-center text-xl text-white">
+            <div className="hidden flex-1 items-center justify-center text-xl text-white lg:flex">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
         </main>
