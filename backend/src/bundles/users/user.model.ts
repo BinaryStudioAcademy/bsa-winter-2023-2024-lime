@@ -3,6 +3,8 @@ import { type RelationMappings, Model } from 'objection';
 import {
     OAuthInfoAttributes,
     OAuthModel,
+    OAuthStateAttributes,
+    OAuthStateModel,
 } from '~/bundles/connections/oauth/oauth.js';
 import {
     AbstractModel,
@@ -20,6 +22,8 @@ class UserModel extends AbstractModel {
     public 'userDetails': UserDetailsModel;
 
     public 'userOAuthInfo': OAuthModel;
+
+    public 'userOAuthState': OAuthStateModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -41,6 +45,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.OAUTH_INFO}.${OAuthInfoAttributes.ID}`,
+                },
+            },
+            oAuthState: {
+                relation: Model.HasManyRelation,
+                modelClass: OAuthStateModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.OAUTH_STATE}.${OAuthStateAttributes.ID}`,
                 },
             },
         };

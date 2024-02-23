@@ -1,14 +1,26 @@
+import crypto from 'node:crypto';
+
 import { type Service } from '~/common/types/service.type.js';
 
 import { type OAuthEntity } from './oauth.entity.js';
 import { type OAuthRepository } from './oauth.repository.js';
-import { type ConnectionsOAuthResponseDto } from './types/types.js';
+import { OAuthStateEntity } from './oauth-state.entity.js';
+import { type OAuthStateRepository } from './oauth-state.repository.js';
+import {
+    type ConnectionsOAuthResponseDto,
+    type OAuthState,
+} from './types/types.js';
 
 abstract class OAuthService implements Service {
     protected oAuthRepository: OAuthRepository;
+    protected oAuthStateRepository: OAuthStateRepository;
 
-    public constructor(oAuthRepository: OAuthRepository) {
+    public constructor(
+        oAuthRepository: OAuthRepository,
+        oAuthStateRepository: OAuthStateRepository,
+    ) {
         this.oAuthRepository = oAuthRepository;
+        this.oAuthStateRepository = oAuthStateRepository;
     }
 
     public async find(
@@ -44,6 +56,27 @@ abstract class OAuthService implements Service {
     }
 
     public abstract delete(query: Record<string, unknown>): Promise<boolean>;
+
+    public async createOAuthState(userId: number): Promise<OAuthState> {
+        const uuid = crypto.randomUUID();
+        const stateEntity = OAuthStateEntity.initializeNew({ userId, uuid });
+        const state = await this.oAuthStateRepository.create(stateEntity);
+
+        return state.toObject();
+    }
+
+    public async verifyState({
+        userId,
+        uuid,
+    }: OAuthState): Promise<OAuthState> {
+        const state = await this.oAuthStateRepository.find({ uuid, userId });
+
+        if (!state) {
+            throw new Error('loshara');
+        }
+
+        return state.toObject();
+    }
 
     public tokenHasExpired(OAuthEntity: OAuthEntity): boolean {
         const oAuthObject = OAuthEntity.toObject();

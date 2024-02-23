@@ -47,6 +47,7 @@ class BaseController implements Controller {
 
         if (apiHandlerResponse.type === ApiHandlerResponseType.REDIRECT) {
             const { status, redirectUrl } = apiHandlerResponse;
+
             return await reply.redirect(status, redirectUrl);
         }
 

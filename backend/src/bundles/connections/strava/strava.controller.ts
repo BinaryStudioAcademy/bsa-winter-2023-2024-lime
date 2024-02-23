@@ -51,18 +51,21 @@ class StravaController extends BaseController {
             path: `${ConnectionsOAuthPath.STRAVA}${ConnectionsOAuthActionsPath.AUTHORIZE}`,
             method: 'GET',
             isProtected: true,
-            handler: () => this.authorize(),
+            handler: (options) =>
+                this.authorize(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                    }>,
+                ),
         });
 
         this.addRoute({
             path: `${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}`,
             method: 'GET',
-            isProtected: true,
             handler: (options) =>
                 this.exchangeToken(
                     options as ApiHandlerOptions<{
                         query: StravaOAuthQuery;
-                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
@@ -94,22 +97,31 @@ class StravaController extends BaseController {
         };
     }
 
-    private authorize(): ApiHandlerResponse {
+    private async authorize(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { id } = options.user;
+        const { uuid } = await this.stravaService.createOAuthState(id);
+
+        const redirectUri = encodeURIComponent(
+            `http://localhost:3001/api/v1${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}?user_id=${id}`,
+        );
+
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${StravaPaths.AUTHORIZE}?client_id=${this.clientConfig.CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3001/api/v1${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.STRAVA}${StravaPaths.REDIRECT_URI}&approval_prompt=force&scope=read,activity:read_all`,
+            redirectUrl: `${StravaPaths.AUTHORIZE}?client_id=${this.clientConfig.CLIENT_ID}&response_type=code&redirect_uri=${redirectUri}&approval_prompt=force&scope=read,activity:read_all&state=${uuid}`,
         };
     }
 
     private async exchangeToken(
         options: ApiHandlerOptions<{
             query: StravaOAuthQuery;
-            user: UserAuthResponseDto;
         }>,
     ): Promise<ApiHandlerResponse> {
-        const { code, scope } = options.query;
-        const { id } = options.user;
+        const { code, scope, state: uuid, user_id: userId } = options.query;
 
         const config = {
             client_id: this.clientConfig.CLIENT_ID,
@@ -117,6 +129,8 @@ class StravaController extends BaseController {
             code,
             grant_type: 'authorization_code',
         };
+
+        await this.stravaService.verifyState({ userId, uuid });
 
         const oAuthResponse = await axios.post(
             StravaPaths.TOKEN_EXCHANGE,
@@ -134,7 +148,7 @@ class StravaController extends BaseController {
 
         await this.stravaService.create({
             ...payload,
-            userId: id,
+            userId,
         });
 
         return {
