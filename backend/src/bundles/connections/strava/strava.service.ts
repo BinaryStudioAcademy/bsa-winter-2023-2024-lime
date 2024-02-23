@@ -1,4 +1,7 @@
 import {
+    ErrorMessage,
+    HttpCode,
+    HttpError,
     OAuthEntity,
     OAuthService,
     Providers,
@@ -13,10 +16,23 @@ import {
 class StravaService extends OAuthService {
     public async create(payload: StravaOAuthApiResponse): Promise<unknown> {
         const mappedPayload = snakeToCamel(payload) as StravaOAuthResponseDto;
+        const provider = Providers.STRAVA;
+
+        const connectionExists = await this.oAuthRepository.find({
+            userId: mappedPayload.userId,
+            provider,
+        });
+
+        if (connectionExists) {
+            throw new HttpError({
+                message: ErrorMessage.CONNECTION_EXISTS,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
 
         const oAuthEntity = OAuthEntity.initializeNew({
             ...mappedPayload,
-            provider: Providers.STRAVA,
+            provider,
         });
 
         const oAuthInfo = await this.oAuthRepository.create(oAuthEntity);

@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 
 import { type Service } from '~/common/types/service.type.js';
 
+import { ErrorMessage, HttpCode, HttpError } from './enums/enums.js';
 import { type OAuthEntity } from './oauth.entity.js';
 import { type OAuthRepository } from './oauth.repository.js';
 import { OAuthStateEntity } from './oauth-state.entity.js';
@@ -72,7 +73,10 @@ abstract class OAuthService implements Service {
         const state = await this.oAuthStateRepository.find({ uuid, userId });
 
         if (!state) {
-            throw new Error('loshara');
+            throw new HttpError({
+                status: HttpCode.UNAUTHORIZED,
+                message: ErrorMessage.UNVERIFIED,
+            });
         }
 
         return state.toObject();

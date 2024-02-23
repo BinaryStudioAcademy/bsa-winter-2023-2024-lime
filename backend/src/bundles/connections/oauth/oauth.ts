@@ -1,7 +1,9 @@
 export {
     ConnectionsOAuthActionsPath,
     ConnectionsOAuthPath,
+    ErrorMessage,
     HttpCode,
+    HttpError,
     OAuthInfoAttributes,
     OAuthStateAttributes,
     Providers,
