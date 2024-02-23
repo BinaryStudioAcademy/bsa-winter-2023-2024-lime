@@ -28,7 +28,7 @@ const DangerConfig = {
     TITLE: {
         IS_REQUIRED: true,
         PATTERN: new RegExp(
-            `^(?!Release [0-9]+\\.[0-9]+\\.[0-9]+$)((${
+            `^(?!Release \\d+\\.\\d+\\.\\d+$).*((${
                 ProjectPrefix.APP
             })-[0-9]{1,6}): (.*\\S)$|(${ProjectPrefix.ENVIRONMENTS.join(
                 '|',
