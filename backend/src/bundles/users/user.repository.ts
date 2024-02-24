@@ -15,14 +15,14 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('[userDetails, subscriptions]')
+            .withGraphFetched('[userDetails]')
             .execute();
 
         if (!user) {
             return null;
         }
 
-        const { userDetails, subscriptions, ...userInfo } = user;
+        const { userDetails, ...userInfo } = user;
 
         return UserEntity.initialize({
             ...userInfo,
@@ -33,18 +33,17 @@ class UserRepository implements Repository {
             weight: userDetails.weight,
             height: userDetails.height,
             gender: userDetails.gender,
-            currentPlanId: subscriptions.planId,
         });
     }
 
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('[userDetails, subscriptions]')
+            .withGraphFetched('[userDetails]')
             .execute();
 
         return users.map((user) => {
-            const { userDetails, subscriptions, ...userInfo } = user;
+            const { userDetails, ...userInfo } = user;
 
             return UserEntity.initialize({
                 ...userInfo,
@@ -55,7 +54,6 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                currentPlanId: subscriptions.planId,
             });
         });
     }
@@ -81,10 +79,6 @@ class UserRepository implements Repository {
                 .returning('*')
                 .execute();
 
-            const subscriptions = await user
-                .$relatedQuery('subscriptions', trx)
-                .insert({});
-
             await trx.commit();
 
             return UserEntity.initialize({
@@ -96,7 +90,6 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                currentPlanId: subscriptions.planId,
             });
         } catch (error) {
             await trx.rollback();

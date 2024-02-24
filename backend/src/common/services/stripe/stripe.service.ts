@@ -90,13 +90,15 @@ class StipeService {
         };
     }
 
-    public async softCancelSubscription({
+    public async softUpdateCancelSubscription({
         subscriptionToken,
+        cancelAtPeriodEnd,
     }: {
         subscriptionToken: string;
+        cancelAtPeriodEnd: boolean;
     }): Promise<void> {
         await this.stripeApi.subscriptions.update(subscriptionToken, {
-            cancel_at_period_end: true,
+            cancel_at_period_end: cancelAtPeriodEnd,
         });
     }
 

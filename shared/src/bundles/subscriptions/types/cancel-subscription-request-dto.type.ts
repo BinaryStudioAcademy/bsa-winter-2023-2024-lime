@@ -1,5 +1,6 @@
 type CancelSubscriptionRequestDto = {
-    userId: number;
+    subscriptionToken: string;
+    cancelAtPeriodEnd: boolean;
 };
 
 export { type CancelSubscriptionRequestDto };

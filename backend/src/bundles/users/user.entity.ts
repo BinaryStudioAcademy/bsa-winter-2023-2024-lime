@@ -26,8 +26,6 @@ class UserEntity implements Entity {
 
     private 'gender': ValueOf<typeof Gender> | null;
 
-    private 'currentPlanId': number | null;
-
     private constructor({
         id,
         email,
@@ -40,7 +38,6 @@ class UserEntity implements Entity {
         weight,
         height,
         gender,
-        currentPlanId,
     }: {
         id: number | null;
         email: string;
@@ -53,7 +50,6 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
-        currentPlanId: number | null;
     }) {
         this.id = id;
         this.email = email;
@@ -66,7 +62,6 @@ class UserEntity implements Entity {
         this.weight = weight;
         this.height = height;
         this.gender = gender;
-        this.currentPlanId = currentPlanId;
     }
 
     public getPasswordHash(): string {
@@ -85,7 +80,6 @@ class UserEntity implements Entity {
         weight,
         height,
         gender,
-        currentPlanId,
     }: {
         id: number;
         email: string;
@@ -98,7 +92,6 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
-        currentPlanId: number | null;
     }): UserEntity {
         return new UserEntity({
             id,
@@ -112,7 +105,6 @@ class UserEntity implements Entity {
             weight,
             height,
             gender,
-            currentPlanId,
         });
     }
 
@@ -137,7 +129,6 @@ class UserEntity implements Entity {
             weight: null,
             height: null,
             gender: null,
-            currentPlanId: null,
         });
     }
 
@@ -152,7 +143,6 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
-        currentPlanId: number | null;
     } {
         return {
             id: this.id as number,
@@ -165,7 +155,6 @@ class UserEntity implements Entity {
             weight: this.weight as number,
             height: this.height as number,
             gender: this.gender,
-            currentPlanId: this.currentPlanId,
         };
     }
 

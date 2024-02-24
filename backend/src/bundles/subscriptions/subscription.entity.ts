@@ -5,15 +5,21 @@ class SubscriptionEntity implements Entity {
 
     private 'userId': number;
 
-    private 'planId': number | null;
+    private 'planId': number;
 
-    private 'subscriptionToken': string | null;
+    private 'subscriptionToken': string;
 
-    private 'cancelAtPeriodEnd': boolean | null;
+    private 'cancelAtPeriodEnd': boolean;
 
-    private 'status': string | null;
+    private 'status': string;
 
-    private 'expirationDate': Date | null;
+    private 'expirationDate': Date;
+
+    private 'subscriptionPlanName': string | null;
+
+    private 'subscriptionPlanPrice': number | null;
+
+    private 'subscriptionPlanDescription': string | null;
 
     private constructor({
         id,
@@ -23,14 +29,20 @@ class SubscriptionEntity implements Entity {
         cancelAtPeriodEnd,
         subscriptionToken,
         expirationDate,
+        subscriptionPlanName,
+        subscriptionPlanPrice,
+        subscriptionPlanDescription,
     }: {
         id: number | null;
         userId: number;
-        planId: number | null;
-        status: string | null;
-        subscriptionToken: string | null;
-        cancelAtPeriodEnd: boolean | null;
-        expirationDate: Date | null;
+        planId: number;
+        status: string;
+        subscriptionToken: string;
+        cancelAtPeriodEnd: boolean;
+        expirationDate: Date;
+        subscriptionPlanName: string | null;
+        subscriptionPlanPrice: number | null;
+        subscriptionPlanDescription: string | null;
     }) {
         this.id = id;
         this.userId = userId;
@@ -39,6 +51,9 @@ class SubscriptionEntity implements Entity {
         this.cancelAtPeriodEnd = cancelAtPeriodEnd;
         this.expirationDate = expirationDate;
         this.subscriptionToken = subscriptionToken;
+        this.subscriptionPlanName = subscriptionPlanName;
+        this.subscriptionPlanPrice = subscriptionPlanPrice;
+        this.subscriptionPlanDescription = subscriptionPlanDescription;
     }
 
     public static initialize({
@@ -49,14 +64,20 @@ class SubscriptionEntity implements Entity {
         cancelAtPeriodEnd,
         status,
         expirationDate,
+        subscriptionPlanName,
+        subscriptionPlanPrice,
+        subscriptionPlanDescription,
     }: {
-        id: number | null;
+        id: number;
         userId: number;
-        planId: number | null;
-        subscriptionToken: string | null;
-        cancelAtPeriodEnd: boolean | null;
-        status: string | null;
-        expirationDate: Date | null;
+        planId: number;
+        subscriptionToken: string;
+        cancelAtPeriodEnd: boolean;
+        status: string;
+        expirationDate: Date;
+        subscriptionPlanName: string | null;
+        subscriptionPlanPrice: number | null;
+        subscriptionPlanDescription: string | null;
     }): SubscriptionEntity {
         return new SubscriptionEntity({
             id,
@@ -66,50 +87,82 @@ class SubscriptionEntity implements Entity {
             status,
             cancelAtPeriodEnd,
             expirationDate,
+            subscriptionPlanName,
+            subscriptionPlanPrice,
+            subscriptionPlanDescription,
         });
     }
 
     public static initializeNew({
         userId,
+        planId,
+        subscriptionToken,
+        cancelAtPeriodEnd,
+        status,
+        expirationDate,
     }: {
         userId: number;
+        planId: number;
+        subscriptionToken: string;
+        cancelAtPeriodEnd: boolean;
+        status: string;
+        expirationDate: Date;
     }): SubscriptionEntity {
         return new SubscriptionEntity({
             id: null,
             userId,
-            planId: null,
-            subscriptionToken: null,
-            status: null,
-            cancelAtPeriodEnd: null,
-            expirationDate: null,
+            planId,
+            subscriptionToken,
+            status,
+            cancelAtPeriodEnd,
+            expirationDate,
+            subscriptionPlanName: null,
+            subscriptionPlanPrice: null,
+            subscriptionPlanDescription: null,
         });
     }
 
     public toObject(): {
-        id: number | null;
+        id: number;
         userId: number;
-        planId: number | null;
-        status: string | null;
-        cancelAtPeriodEnd: boolean | null;
-        subscriptionToken: string | null;
-        expirationDate: Date | null;
+        planId: number;
+        status: string;
+        cancelAtPeriodEnd: boolean;
+        subscriptionToken: string;
+        expirationDate: Date;
+        subscriptionPlanName: string | null;
+        subscriptionPlanPrice: number | null;
+        subscriptionPlanDescription: string | null;
     } {
         return {
             id: this.id as number,
             userId: this.userId,
-            planId: this.planId as number,
+            planId: this.planId,
             subscriptionToken: this.subscriptionToken,
             status: this.status,
             cancelAtPeriodEnd: this.cancelAtPeriodEnd as boolean,
-            expirationDate: this.expirationDate as Date,
+            expirationDate: this.expirationDate,
+            subscriptionPlanName: this.subscriptionPlanName,
+            subscriptionPlanPrice: this.subscriptionPlanPrice as number,
+            subscriptionPlanDescription: this.subscriptionPlanDescription,
         };
     }
 
     public toNewObject(): {
         userId: number;
+        planId: number;
+        status: string;
+        cancelAtPeriodEnd: boolean;
+        subscriptionToken: string;
+        expirationDate: Date;
     } {
         return {
             userId: this.userId,
+            planId: this.planId,
+            status: this.status,
+            cancelAtPeriodEnd: this.cancelAtPeriodEnd,
+            subscriptionToken: this.subscriptionToken,
+            expirationDate: this.expirationDate,
         };
     }
 }

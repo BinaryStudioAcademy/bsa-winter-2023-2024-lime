@@ -35,7 +35,8 @@ const routes = [
                 element: <SubscriptionCheckout />,
             },
         ],
-        isPrivate: true,
+        //change to true
+        isPrivate: false,
     },
     {
         path: AppRoute.SIGN_IN,

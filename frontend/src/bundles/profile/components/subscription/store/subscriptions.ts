@@ -1,16 +1,18 @@
 import {
-    cancelSubscription,
     confirmPayment,
     createSubscription,
     loadAllSubscriptionPlans,
+    loadCurrentSubscription,
+    updateCancelSubscription,
 } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     loadAllSubscriptionPlans,
+    loadCurrentSubscription,
     createSubscription,
-    cancelSubscription,
+    updateCancelSubscription,
     confirmPayment,
 };
 

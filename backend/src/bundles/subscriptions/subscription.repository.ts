@@ -15,34 +15,60 @@ class SubscriptionRepository
     public async find(
         query: Record<string, unknown>,
     ): Promise<SubscriptionEntity | null> {
-        const subcription = await this.subscriptionModel
+        const subscription = await this.subscriptionModel
             .query()
             .findOne(query)
+            .where('status', 'active')
+            .orderBy('createdAt', 'desc')
+            .withGraphFetched('[subscriptionPlan]')
             .execute();
 
-        if (!subcription) {
+        if (!subscription) {
             return null;
         }
 
+        const { subscriptionPlan, ...subscriptionInfo } = subscription;
         return SubscriptionEntity.initialize({
-            ...subcription,
+            ...subscriptionInfo,
+            subscriptionPlanName: subscriptionPlan?.name ?? null,
+            subscriptionPlanPrice: subscriptionPlan?.price ?? null,
+            subscriptionPlanDescription: subscriptionPlan?.description ?? null,
         });
     }
 
     public async create(
         entity: SubscriptionEntity,
     ): Promise<SubscriptionEntity> {
-        const { userId } = entity.toNewObject();
+        const {
+            userId,
+            planId,
+            subscriptionToken,
+            status,
+            expirationDate,
+            cancelAtPeriodEnd,
+        } = entity.toNewObject();
 
         const subscription = await this.subscriptionModel
             .query()
             .insert({
                 userId,
+                planId,
+                subscriptionToken,
+                status,
+                expirationDate,
+                cancelAtPeriodEnd,
             })
             .returning('*')
             .execute();
 
-        return SubscriptionEntity.initialize({ ...subscription });
+        const { subscriptionPlan, ...subscriptionInfo } = subscription;
+
+        return SubscriptionEntity.initialize({
+            ...subscriptionInfo,
+            subscriptionPlanName: subscriptionPlan?.name ?? null,
+            subscriptionPlanPrice: subscriptionPlan?.price ?? null,
+            subscriptionPlanDescription: subscriptionPlan?.description ?? null,
+        });
     }
 
     public async updateSubscription(

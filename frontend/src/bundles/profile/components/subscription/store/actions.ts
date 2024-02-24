@@ -10,6 +10,7 @@ import {
     type ConfirmPaymentPayload,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
+    type SubscriptionGetItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,
 } from '../types/types.js';
 
@@ -25,6 +26,14 @@ const loadAllSubscriptionPlans = createAsyncThunk<
     },
 );
 
+const loadCurrentSubscription = createAsyncThunk<
+    SubscriptionGetItemResponseDto,
+    undefined,
+    AsyncThunkConfig
+>('subscriptions/loadCurrent', async (_, { extra: { subscriptionApi } }) => {
+    return subscriptionApi.loadCurrentSubscription();
+});
+
 const createSubscription = createAsyncThunk<
     SubscribeResponseDto,
     SubscribeRequestDto,
@@ -36,22 +45,24 @@ const createSubscription = createAsyncThunk<
     },
 );
 
-const cancelSubscription = createAsyncThunk<
-    unknown,
+const updateCancelSubscription = createAsyncThunk<
+    boolean,
     CancelSubscriptionRequestDto,
     AsyncThunkConfig
 >(
     'subscriptions/cancelSubscription',
     async (payload, { extra: { subscriptionApi } }) => {
-        const isCanceled = await subscriptionApi.cancelSubscription(payload);
+        const isCancelled = await subscriptionApi.cancelSubscription(payload);
 
-        if (isCanceled) {
+        if (isCancelled) {
             notificationManager.success(
-                'Your subscription was successully canceled!',
+                'You successfuly cancelled a subscription!',
             );
-        } else {
-            notificationManager.error('Your subscription was not canceled!');
+            return true;
         }
+
+        notificationManager.success('You successfuly renewed a subscription!');
+        return false;
     },
 );
 
@@ -81,8 +92,9 @@ const confirmPayment = createAsyncThunk<
 });
 
 export {
-    cancelSubscription,
     confirmPayment,
     createSubscription,
     loadAllSubscriptionPlans,
+    loadCurrentSubscription,
+    updateCancelSubscription,
 };

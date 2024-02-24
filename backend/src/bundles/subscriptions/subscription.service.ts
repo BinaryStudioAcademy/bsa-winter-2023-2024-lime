@@ -1,4 +1,3 @@
-import { type SubscriptionItemResponseDto } from 'shared/src/bundles/subscriptions/types/types.js';
 import { type Stripe } from 'stripe';
 
 import { stripeService } from '~/common/services/services.js';
@@ -10,16 +9,17 @@ import {
     SubscriptionValidationMessage,
     SubscriptionWebHooks,
 } from './enums/enums.js';
+import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionRepository } from './subscription.repository.js';
 import {
     type CancelSubscriptionRequestDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
+    type SubscriptionGetItemResponseDto,
 } from './types/types.js';
 
 class SubscriptionService
-    implements
-        Omit<Service, 'find' | 'findAll' | 'create' | 'update' | 'delete'>
+    implements Omit<Service, 'findAll' | 'create' | 'update' | 'delete'>
 {
     private subscriptionRepository: SubscriptionRepository;
 
@@ -27,18 +27,13 @@ class SubscriptionService
         this.subscriptionRepository = subscriptionRepository;
     }
 
-    public async findByUserId(
-        userId: number,
-    ): Promise<SubscriptionItemResponseDto> {
-        const subscription = await this.subscriptionRepository.find({
-            userId,
-        });
+    public async find(
+        query: Record<string, unknown>,
+    ): Promise<SubscriptionGetItemResponseDto | null> {
+        const subscription = await this.subscriptionRepository.find(query);
 
         if (!subscription) {
-            throw new HttpError({
-                message: SubscriptionValidationMessage.SUBSCRIPTION_NOT_FOUND,
-                status: HttpCode.NOT_FOUND,
-            });
+            return null;
         }
 
         return subscription.toObject();
@@ -50,9 +45,10 @@ class SubscriptionService
         customerToken,
         priceToken,
     }: SubscribeRequestDto): Promise<SubscribeResponseDto> {
-        const currentSubscription = await this.findByUserId(userId);
+        const currentSubscription = await this.find({ userId });
 
         if (
+            currentSubscription &&
             currentSubscription.planId === planId &&
             currentSubscription.status === 'active'
         ) {
@@ -70,14 +66,15 @@ class SubscriptionService
             });
 
         try {
-            await this.subscriptionRepository.updateSubscription(
-                { userId },
-                {
+            await this.subscriptionRepository.create(
+                SubscriptionEntity.initializeNew({
+                    userId,
                     planId,
                     status,
                     subscriptionToken,
                     expirationDate,
-                },
+                    cancelAtPeriodEnd: false,
+                }),
             );
 
             return { subscriptionId: subscriptionToken, clientSecret };
@@ -93,15 +90,11 @@ class SubscriptionService
         }
     }
 
-    public async cancelSubscribtion({
-        userId,
+    public async updateCancelSubscribtion({
+        subscriptionToken,
+        cancelAtPeriodEnd,
     }: CancelSubscriptionRequestDto): Promise<boolean> {
-        const currentSubscription = await this.findByUserId(userId);
-
-        if (
-            !currentSubscription.subscriptionToken ||
-            currentSubscription.cancelAtPeriodEnd
-        ) {
+        if (!subscriptionToken) {
             throw new HttpError({
                 message:
                     SubscriptionValidationMessage.SUBSCRIPTION_CANNOT_BE_CANCELED,
@@ -110,11 +103,12 @@ class SubscriptionService
         }
 
         try {
-            await stripeService.softCancelSubscription({
-                subscriptionToken: currentSubscription.subscriptionToken,
+            await stripeService.softUpdateCancelSubscription({
+                subscriptionToken,
+                cancelAtPeriodEnd,
             });
 
-            return true;
+            return cancelAtPeriodEnd;
         } catch (error) {
             throw new HttpError({
                 message: (error as Error).message,
@@ -154,6 +148,7 @@ class SubscriptionService
                     { subscriptionToken: subscription.id },
                     {
                         status: subscription.status,
+                        cancelAtPeriodEnd: subscription.cancel_at_period_end,
                         expirationDate: null,
                     },
                 );

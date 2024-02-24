@@ -13,7 +13,7 @@ class SubscriptionPlanModel extends AbstractModel {
 
     public 'price': number;
 
-    public 'description': string;
+    public 'description': string | null;
 
     public 'productToken': string;
 

@@ -14,15 +14,17 @@ import { SunscriptionAttributes } from './enums/enums.js';
 class SubscriptionModel extends AbstractModel {
     public 'userId': number;
 
-    public 'planId': number | null;
+    public 'planId': number;
 
-    public 'subscriptionToken': string | null;
+    public 'subscriptionToken': string;
 
-    public 'cancelAtPeriodEnd': boolean | null;
+    public 'cancelAtPeriodEnd': boolean;
 
-    public 'status': string | null;
+    public 'status': string;
 
-    public 'expirationDate': Date | null;
+    public 'expirationDate': Date;
+
+    public 'subscriptionPlan': SubscriptionPlanModel | null;
 
     public static override get tableName(): string {
         return DatabaseTableName.SUBSCRIPTIONS;
@@ -30,7 +32,7 @@ class SubscriptionModel extends AbstractModel {
 
     public static override get relationMappings(): RelationMappings {
         return {
-            subscriptionPlans: {
+            subscriptionPlan: {
                 relation: Model.HasOneRelation,
                 modelClass: SubscriptionPlanModel,
                 join: {
@@ -38,7 +40,7 @@ class SubscriptionModel extends AbstractModel {
                     to: `${DatabaseTableName.SUBSCRIPTION_PLANS}.${SubscriptionPlanAttributes.ID}`,
                 },
             },
-            users: {
+            user: {
                 relation: Model.HasOneRelation,
                 modelClass: UserModel,
                 join: {

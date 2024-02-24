@@ -1,15 +1,38 @@
+import { type SubscriptionGetItemResponseDto } from 'shared';
+
 import { Button } from '~/bundles/common/components/components.js';
 import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks.js';
 
 import { actions as subscriptionActions } from '../../store/subscriptions.js';
 
-const SubscriptionUserPanel = (): JSX.Element => {
+type Properties = {
+    currentSubscription: SubscriptionGetItemResponseDto;
+};
+
+const SubscriptionUserPanel = ({
+    currentSubscription,
+}: Properties): JSX.Element => {
     const dispatch = useAppDispatch();
-    const userId = 2;
 
     const handleCancelSubscription = useCallback((): void => {
-        void dispatch(subscriptionActions.cancelSubscription({ userId }));
-    }, [dispatch]);
+        void dispatch(
+            subscriptionActions.updateCancelSubscription({
+                subscriptionToken:
+                    currentSubscription?.subscriptionToken as string,
+                cancelAtPeriodEnd: true,
+            }),
+        );
+    }, [dispatch, currentSubscription]);
+
+    const handleRenewSubscription = useCallback((): void => {
+        void dispatch(
+            subscriptionActions.updateCancelSubscription({
+                subscriptionToken:
+                    currentSubscription?.subscriptionToken as string,
+                cancelAtPeriodEnd: false,
+            }),
+        );
+    }, [dispatch, currentSubscription]);
 
     return (
         <div
@@ -18,58 +41,63 @@ const SubscriptionUserPanel = (): JSX.Element => {
             }
         >
             <div className="flex flex-col gap-3">
-                <h3
-                    className={
-                        'mb-2 text-center text-xl font-extrabold text-white'
-                    }
-                >
-                    Hi, <span className="text-lm-yellow-100">Name</span>
-                </h3>
                 <div>
-                    <div className={'rounded-md border-2 border-white p-5'}>
+                    <div className="rounded-md border-2 border-white p-5">
                         <p className="text-lg font-bold text-white">
                             Your Subscription
                         </p>
-                        <p
-                            className={
-                                'text-lm-yellow-100 text-3xl font-extrabold'
-                            }
-                        >
-                            PRO
+                        <p className="text-lm-yellow-100 text-3xl font-extrabold">
+                            {currentSubscription.subscriptionPlanName}
+                        </p>
+                        <p className="text-lg font-bold text-white">Status</p>
+                        <p className="text-lm-yellow-100 text-3xl font-extrabold">
+                            {currentSubscription.status?.toUpperCase()}
                         </p>
                         <div>
                             <p className="text-lg font-bold text-white">
-                                Renews on
+                                {currentSubscription.cancelAtPeriodEnd ? (
+                                    <span className="text-lm-red">
+                                        Expire on
+                                    </span>
+                                ) : (
+                                    <span className="text-white">
+                                        Renews on
+                                    </span>
+                                )}
                             </p>
-                            <p
-                                className={
-                                    'text-lm-yellow-100 text-2xl font-bold'
-                                }
-                            >
-                                29.12.2029
+                            <p className="text-lm-yellow-100 text-2xl font-bold">
+                                {currentSubscription.expirationDate?.toString()}
                             </p>
                         </div>
                         <div>
                             <p className="text-lg font-bold text-white">
                                 Payment
                             </p>
-                            <p
-                                className={
-                                    'text-lm-yellow-100 text-2xl font-bold'
-                                }
-                            >
-                                $9.99/month
+                            <p className="text-lm-yellow-100 text-2xl font-bold">
+                                ${currentSubscription.subscriptionPlanPrice} /
+                                month
                             </p>
                         </div>
                     </div>
                 </div>
-                <Button
-                    variant="primary"
-                    label="Cancel subscription"
-                    size="md"
-                    type="button"
-                    onClick={handleCancelSubscription}
-                />
+                {currentSubscription.cancelAtPeriodEnd ? (
+                    <Button
+                        variant="primary"
+                        label="Renew subscription"
+                        size="md"
+                        type="button"
+                        onClick={handleRenewSubscription}
+                    />
+                ) : (
+                    <Button
+                        variant="primary"
+                        label="Cancel subscription"
+                        size="md"
+                        type="button"
+                        className={'text-lm-red'}
+                        onClick={handleCancelSubscription}
+                    />
+                )}
             </div>
         </div>
     );

@@ -31,7 +31,6 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(SubscriptionsColumn.USER_ID)
             .unsigned()
-            .unique()
             .notNullable()
             .references(SubscriptionsColumn.ID)
             .inTable(USERS_TABLE_NAME)
@@ -40,7 +39,6 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(SubscriptionsColumn.PLAN_ID)
             .unsigned()
-            .unique()
             .nullable()
             .references(SubscriptionsColumn.ID)
             .inTable(SUBSCRIPTION_PLANS_TABLE_NAME)

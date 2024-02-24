@@ -10,14 +10,14 @@ import { CheckoutForm } from './components/components.js';
 const stripe = loadStripe(config.ENV.STRIPE.PUBLIC_KEY);
 
 const SubscriptionCheckout = (): JSX.Element => {
-    const { clientSecret } = useAppSelector((state) => {
+    const { clientSecret } = useAppSelector(({ subscriptions }) => {
         return {
-            clientSecret: state.subscriptions.clientSecret,
+            clientSecret: subscriptions?.clientSecret as string,
         };
     });
 
     const options: StripeElementsOptions = {
-        clientSecret: clientSecret ?? '',
+        clientSecret,
         appearance: {
             theme: 'night',
             variables: {

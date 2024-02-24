@@ -3,6 +3,7 @@ export {
     type CancelSubscriptionRequestDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
+    type SubscriptionGetItemResponseDto,
     type SubscriptionPlansGetAllItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,
 } from 'shared';

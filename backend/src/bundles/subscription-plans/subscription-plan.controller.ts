@@ -1,5 +1,6 @@
 import { type ApiHandlerResponse } from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
+import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/enums/enums.js';
 import { type Logger } from '~/common/logger/types/types.js';
 
@@ -13,7 +14,7 @@ class SubscriptionPlanController extends BaseController {
         logger: Logger,
         subscriptionPlanService: SubscriptionPlanService,
     ) {
-        super(logger, '/subscription-plans');
+        super(logger, ApiPath.SUBSCRIPTIONS_PLANS);
 
         this.subscriptionPlanService = subscriptionPlanService;
 

@@ -21,8 +21,6 @@ class UserModel extends AbstractModel {
 
     public 'userDetails': UserDetailsModel;
 
-    public 'subscriptions': SubscriptionModel;
-
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
     }

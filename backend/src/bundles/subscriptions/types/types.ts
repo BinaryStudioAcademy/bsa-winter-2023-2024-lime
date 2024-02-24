@@ -2,5 +2,5 @@ export {
     type CancelSubscriptionRequestDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
-    type SubscriptionItemResponseDto,
+    type SubscriptionGetItemResponseDto,
 } from 'shared';

@@ -20,13 +20,11 @@ const App: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { dataStatus, redirectPath } = useAppSelector(
-        ({ auth, app }) => ({
-            isRefreshing: auth.isRefreshing,
-            dataStatus: auth.dataStatus,
-            redirectPath: app.redirectPath,
-        }),
-    );
+    const { dataStatus, redirectPath } = useAppSelector(({ auth, app }) => ({
+        isRefreshing: auth.isRefreshing,
+        dataStatus: auth.dataStatus,
+        redirectPath: app.redirectPath,
+    }));
 
     useEffect(() => {
         if (redirectPath) {

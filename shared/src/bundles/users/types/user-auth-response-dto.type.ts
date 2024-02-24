@@ -4,14 +4,13 @@ import { type Gender } from '../users.js';
 type UserAuthResponseDto = {
     id: number;
     email: string;
+    customerToken: string;
     avatarUrl: string | null;
     username: string | null;
     dateOfBirth: string | null;
     weight: number | null;
     height: number | null;
     gender: ValueOf<typeof Gender> | null;
-    customerToken: string | null;
-    currentPlanId: number | null;
 };
 
 export { type UserAuthResponseDto };

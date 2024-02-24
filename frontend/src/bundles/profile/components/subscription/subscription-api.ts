@@ -8,6 +8,7 @@ import {
     type CancelSubscriptionRequestDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
+    type SubscriptionGetItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,
 } from './types/types.js';
 
@@ -36,6 +37,16 @@ class SubscriptionPlansApi extends BaseHttpApi {
 class SubscriptionsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
         super({ path: ApiPath.SUBSCRIPTIONS, baseUrl, http, storage });
+    }
+
+    public async loadCurrentSubscription(): Promise<SubscriptionGetItemResponseDto> {
+        const response = await this.load(this.getFullEndpoint('/current', {}), {
+            method: 'GET',
+            contentType: ContentType.JSON,
+            hasAuth: true,
+        });
+
+        return await response.json<SubscriptionGetItemResponseDto>();
     }
 
     public async createSubscription(

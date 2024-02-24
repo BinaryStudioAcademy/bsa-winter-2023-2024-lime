@@ -3,16 +3,21 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { type SubscriptionPlansGetAllItemResponseDto } from '../types/types.js';
 import {
-    cancelSubscription,
+    type SubscriptionGetItemResponseDto,
+    type SubscriptionPlansGetAllItemResponseDto,
+} from '../types/types.js';
+import {
     confirmPayment,
     createSubscription,
     loadAllSubscriptionPlans,
+    loadCurrentSubscription,
+    updateCancelSubscription,
 } from './actions.js';
 
 type State = {
     subscriptionPlans: SubscriptionPlansGetAllItemResponseDto[];
+    currentSubscription: SubscriptionGetItemResponseDto | null;
     clientSecret: string | null;
     subscriptionToken: string | null;
     dataStatus: ValueOf<typeof DataStatus>;
@@ -21,6 +26,7 @@ type State = {
 
 const initialState: State = {
     subscriptionPlans: [],
+    currentSubscription: null,
     clientSecret: null,
     subscriptionToken: null,
     dataStatus: DataStatus.IDLE,
@@ -36,11 +42,22 @@ const { reducer, name, actions } = createSlice({
             state.subscriptionPlans = action.payload.items;
             state.dataStatus = DataStatus.FULFILLED;
         });
+        builder.addCase(loadCurrentSubscription.fulfilled, (state, action) => {
+            state.currentSubscription = action.payload;
+            state.dataStatus = DataStatus.FULFILLED;
+        });
         builder.addCase(createSubscription.fulfilled, (state, action) => {
             state.clientSecret = action.payload.clientSecret;
             state.dataStatus = DataStatus.FULFILLED;
         });
-        builder.addCase(cancelSubscription.fulfilled, (state) => {
+        builder.addCase(updateCancelSubscription.fulfilled, (state, action) => {
+            const isCancelled = action.payload;
+            const updatedSubscription = {
+                ...state.currentSubscription,
+                cancelAtPeriodEnd: isCancelled,
+            } as SubscriptionGetItemResponseDto;
+
+            state.currentSubscription = updatedSubscription;
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(confirmPayment.pending, (state) => {
@@ -56,7 +73,8 @@ const { reducer, name, actions } = createSlice({
             isAnyOf(
                 loadAllSubscriptionPlans.pending,
                 createSubscription.pending,
-                cancelSubscription.pending,
+                updateCancelSubscription.pending,
+                loadCurrentSubscription.pending,
             ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
@@ -66,7 +84,8 @@ const { reducer, name, actions } = createSlice({
             isAnyOf(
                 loadAllSubscriptionPlans.rejected,
                 createSubscription.rejected,
-                cancelSubscription.rejected,
+                updateCancelSubscription.rejected,
+                loadCurrentSubscription.rejected,
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;

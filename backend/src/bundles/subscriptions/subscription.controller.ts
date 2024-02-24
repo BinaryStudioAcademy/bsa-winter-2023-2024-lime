@@ -1,3 +1,4 @@
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -26,8 +27,21 @@ class SubscriptionController extends BaseController {
         this.subscriptionService = subscriptionService;
 
         this.addRoute({
+            path: '/current',
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.find(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
             path: SubscriptionsApiPath.SUBSCRIBE,
             method: 'POST',
+            isProtected: true,
             handler: (options) =>
                 this.subscribe(
                     options as ApiHandlerOptions<{
@@ -39,8 +53,9 @@ class SubscriptionController extends BaseController {
         this.addRoute({
             path: SubscriptionsApiPath.CANCEL_SUBSCRIPTION,
             method: 'POST',
+            isProtected: true,
             handler: (options) =>
-                this.cancelSubscribtion(
+                this.updateCancelSubscribtion(
                     options as ApiHandlerOptions<{
                         body: CancelSubscriptionRequestDto;
                     }>,
@@ -60,6 +75,19 @@ class SubscriptionController extends BaseController {
         });
     }
 
+    private async find(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        return {
+            status: HttpCode.OK,
+            payload: await this.subscriptionService.find({
+                userId: options.user.id,
+            }),
+        };
+    }
+
     private async subscribe(
         options: ApiHandlerOptions<{
             body: SubscribeRequestDto;
@@ -73,15 +101,18 @@ class SubscriptionController extends BaseController {
         };
     }
 
-    private async cancelSubscribtion(
+    private async updateCancelSubscribtion(
         options: ApiHandlerOptions<{
             body: CancelSubscriptionRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const { cancelAtPeriodEnd, subscriptionToken } = options.body;
+
         return {
             status: HttpCode.OK,
-            payload: await this.subscriptionService.cancelSubscribtion({
-                userId: options.body.userId,
+            payload: await this.subscriptionService.updateCancelSubscribtion({
+                subscriptionToken,
+                cancelAtPeriodEnd,
             }),
         };
     }

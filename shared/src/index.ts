@@ -8,7 +8,7 @@ export {
     type CancelSubscriptionRequestDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
-    type SubscriptionItemResponseDto,
+    type SubscriptionGetItemResponseDto,
     SubscriptionsApiPath,
     SubscriptionValidationMessage,
 } from './bundles/subscriptions/subscriptions.js';

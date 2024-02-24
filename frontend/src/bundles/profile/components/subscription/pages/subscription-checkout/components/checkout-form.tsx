@@ -14,8 +14,8 @@ const CheckoutForm = (): JSX.Element => {
     const elements = useElements();
 
     const handleSubmitPayment = useCallback(
-        (event_: React.FormEvent<HTMLFormElement>) => {
-            event_.preventDefault();
+        (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
 
             if (!stripe || !elements) {
                 return;
