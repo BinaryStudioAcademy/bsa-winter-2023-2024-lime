@@ -5,10 +5,8 @@ export {
     type PasswordForgotResponseDto,
     type PasswordResetRequestDto,
     type PasswordResetResponseDto,
-    passwordForgotValidationSchema,
     PasswordResetApiPath,
     PasswordResetValidationMessage,
-    passwordResetValidationSchema,
 } from './bundles/password-reset/password-reset.js';
 export {
     type UserAuthRequestDto,
@@ -16,6 +14,8 @@ export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     Gender,
+    passwordForgotValidationSchema,
+    passwordResetValidationSchema,
     userAuthValidationSchema,
     UsersApiPath,
     userSignUpValidationSchema,

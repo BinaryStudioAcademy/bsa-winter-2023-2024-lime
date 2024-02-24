@@ -6,6 +6,8 @@ export {
     type UserGetAllResponseDto,
 } from './types/types.js';
 export {
+    passwordForgot as passwordForgotValidationSchema,
+    passwordReset as passwordResetValidationSchema,
     userAuth as userAuthValidationSchema,
     userAuthPWConfirm as userSignUpValidationSchema,
 } from './validation-schemas/validation-schemas.js';
