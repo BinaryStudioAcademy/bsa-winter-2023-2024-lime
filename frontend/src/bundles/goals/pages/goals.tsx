@@ -1,5 +1,6 @@
 import { PlusIcon } from '@heroicons/react/16/solid';
 
+import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
 import {
     Button,
     ButtonVariant,
@@ -28,51 +29,35 @@ import {
 } from '~/bundles/goals/enums/enums.js';
 import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
 
-const achievements = [
-    {
-        id: 1,
-        activity: 'walking',
-        distance: 23,
-        duration: 11,
-        completedAt: 'Saturday, April 14 | 08:00 AM',
-    },
-    {
-        id: 2,
-        activity: 'running',
-        distance: 23,
-        duration: 11,
-        completedAt: 'Saturday, April 15 | 08:00 AM',
-    },
-    {
-        id: 3,
-        activity: 'cycling',
-        distance: 23,
-        duration: 11,
-        completedAt: 'Saturday, April 16 | 08:00 AM',
-    },
-    {
-        id: 4,
-        activity: 'running',
-        distance: 23,
-        duration: 11,
-        completedAt: 'Saturday, April 17 | 08:00 AM',
-    },
-];
-
 const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const { dataStatus, goals } = useAppSelector(({ goals }) => ({
-        dataStatus: goals.dataStatus,
-        goals: goals.goals,
-    }));
+    const { dataStatus: dataStatusGoals, goals } = useAppSelector(
+        ({ goals }) => ({
+            dataStatus: goals.dataStatus,
+            goals: goals.goals,
+        }),
+    );
 
-    const isLoading = dataStatus === DataStatus.PENDING;
+    const { dataStatus: dataStatusAchievements, achievements } = useAppSelector(
+        ({ achievements }) => ({
+            dataStatus: achievements.dataStatus,
+            achievements: achievements.achievements,
+        }),
+    );
+
+    const isLoading =
+        dataStatusGoals === DataStatus.PENDING ||
+        dataStatusAchievements === DataStatus.PENDING;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         void dispatch(goalsActions.getGoals());
+    }, [dispatch]);
+
+    useEffect(() => {
+        void dispatch(achievementsActions.getAchievements());
     }, [dispatch]);
 
     const handleOpenModal = useCallback((): void => {
@@ -94,7 +79,6 @@ const Goals: React.FC = () => {
                 distance: Number(payload.distance) || null,
                 duration: Number(payload.duration) || null,
             };
-
             void dispatch(goalsActions.createGoal(createGoalPayload));
         },
         [dispatch],
@@ -170,17 +154,12 @@ const Goals: React.FC = () => {
                         <div className="flex flex-col gap-4 overflow-y-auto">
                             {achievements?.length > 0 &&
                                 achievements.map(
-                                    ({
-                                        id,
-                                        activity,
-                                        completedAt,
-                                        distance,
-                                    }) => (
+                                    ({ id, activity, createdAt, name }) => (
                                         <AchievementCard
                                             key={id}
                                             activity={activity}
-                                            date={completedAt}
-                                            distance={distance}
+                                            date={createdAt}
+                                            achievement={name}
                                         />
                                     ),
                                 )}

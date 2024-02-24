@@ -10,6 +10,7 @@ import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { DEFAULT_CREATE_GOAL_PAYLOAD } from './constants/constants.js';
 import { goalActivity, goalFrequency } from './enums/enums.js';
 import { type GoalRequest } from './types/types.js';
+import { goalValidationSchema } from './validation-schemas/goal.validation-schema.js';
 
 type Properties = {
     onSubmit: (payload: GoalRequest) => void;
@@ -19,7 +20,7 @@ type Properties = {
 const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, handleSubmit } = useAppForm<GoalRequest>({
         defaultValues: DEFAULT_CREATE_GOAL_PAYLOAD,
-        // validationSchema: ,
+        validationSchema: goalValidationSchema,
         mode: 'onTouched',
     });
 

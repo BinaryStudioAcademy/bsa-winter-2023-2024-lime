@@ -5,6 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 
+import { achievementsApi } from '~/bundles/achievements/achievements.js';
+import { reducer as achievementsReducer } from '~/bundles/achievements/store/achievements.js';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
@@ -20,12 +22,14 @@ type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     users: ReturnType<typeof usersReducer>;
     goals: ReturnType<typeof goalsReducer>;
+    achievements: ReturnType<typeof achievementsReducer>;
 };
 
 type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
     goalsApi: typeof goalsApi;
+    achievementsApi: typeof achievementsApi;
 };
 
 class Store {
@@ -44,6 +48,7 @@ class Store {
                 auth: authReducer,
                 users: usersReducer,
                 goals: goalsReducer,
+                achievements: achievementsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -59,6 +64,7 @@ class Store {
             authApi,
             userApi,
             goalsApi,
+            achievementsApi,
         };
     }
 }

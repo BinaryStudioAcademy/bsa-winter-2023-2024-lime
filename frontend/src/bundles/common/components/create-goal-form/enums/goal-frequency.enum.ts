@@ -13,7 +13,7 @@ const Label = {
     SEVEN_PER_WEEK: '7 time per week',
 } as const;
 
-const Value = {
+const FrequencyValue = {
     ONE_PER_DAY: '1 day',
     TWO_PER_DAY: '2 day',
     ONE_PER_WEEK: '1 week',
@@ -24,13 +24,13 @@ const Value = {
 } as const;
 
 const goalFrequency: FrequencyType[] = [
-    { label: Label.ONE_PER_DAY, value: Value.ONE_PER_DAY },
-    { label: Label.TWO_PER_DAY, value: Value.TWO_PER_DAY },
-    { label: Label.ONE_PER_WEEK, value: Value.ONE_PER_WEEK },
-    { label: Label.TWO_PER_WEEK, value: Value.THREE_PER_WEEK },
-    { label: Label.THREE_PER_WEEK, value: Value.THREE_PER_WEEK },
-    { label: Label.FIVE_PER_WEEK, value: Value.FIVE_PER_WEEK },
-    { label: Label.SEVEN_PER_WEEK, value: Value.SEVEN_PER_WEEK },
+    { label: Label.ONE_PER_DAY, value: FrequencyValue.ONE_PER_DAY },
+    { label: Label.TWO_PER_DAY, value: FrequencyValue.TWO_PER_DAY },
+    { label: Label.ONE_PER_WEEK, value: FrequencyValue.ONE_PER_WEEK },
+    { label: Label.TWO_PER_WEEK, value: FrequencyValue.THREE_PER_WEEK },
+    { label: Label.THREE_PER_WEEK, value: FrequencyValue.THREE_PER_WEEK },
+    { label: Label.FIVE_PER_WEEK, value: FrequencyValue.FIVE_PER_WEEK },
+    { label: Label.SEVEN_PER_WEEK, value: FrequencyValue.SEVEN_PER_WEEK },
 ];
 
-export { goalFrequency };
+export { FrequencyValue, goalFrequency };

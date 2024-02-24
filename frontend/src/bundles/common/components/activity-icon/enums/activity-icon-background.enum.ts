@@ -1,9 +1,9 @@
 import { Activity } from '~/bundles/goals/enums/enums.js';
 
 const ActivityBackground: Record<string, string> = {
-    [Activity.WALKING]: 'bg-[#05CFCF]',
-    [Activity.RUNNING]: 'bg-[#056ECF]',
-    [Activity.CYCLING]: 'bg-[#DC40CD]',
+    [Activity.WALKING]: 'bg-lm-cyan',
+    [Activity.RUNNING]: 'bg-lm-blue',
+    [Activity.CYCLING]: 'bg-lm-magenta',
 };
 
 export { ActivityBackground };

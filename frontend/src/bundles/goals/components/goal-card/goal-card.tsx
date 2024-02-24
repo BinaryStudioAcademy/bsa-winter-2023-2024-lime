@@ -1,5 +1,6 @@
 import { ActivityIcon } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
+import { capitalizeString } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { CircleProgress } from '~/bundles/goals/components/components.js';
 
@@ -23,7 +24,7 @@ const GoalCard: React.FC<Properties> = ({
                 <ActivityIcon activity={activity} size={ComponentSize.MEDIUM} />
                 <div className="flex flex-col">
                     <p className="text-base font-extrabold leading-5 text-white">
-                        {activity}
+                        {capitalizeString(activity)}
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
                         {frequency}{' '}

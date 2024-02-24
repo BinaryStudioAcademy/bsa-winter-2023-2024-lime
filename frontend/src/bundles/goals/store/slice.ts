@@ -10,8 +10,8 @@ const goals: GoalResponseDto[] = [
     {
         id: 1,
         activity: 'walking',
-        frequency: 100,
-        frequencyType: 'day',
+        frequency: 7,
+        frequencyType: 'week',
         distance: 23,
         duration: 11,
         progress: 20,
@@ -20,7 +20,7 @@ const goals: GoalResponseDto[] = [
     {
         id: 2,
         activity: 'running',
-        frequency: 120,
+        frequency: 3,
         frequencyType: 'month',
         distance: 23,
         duration: 11,
@@ -30,7 +30,7 @@ const goals: GoalResponseDto[] = [
     {
         id: 3,
         activity: 'cycling',
-        frequency: 140,
+        frequency: 2,
         frequencyType: 'day',
         distance: 23,
         duration: 11,
@@ -40,7 +40,7 @@ const goals: GoalResponseDto[] = [
     {
         id: 4,
         activity: 'walking',
-        frequency: 160,
+        frequency: 1,
         frequencyType: 'week',
         distance: 23,
         duration: 11,
