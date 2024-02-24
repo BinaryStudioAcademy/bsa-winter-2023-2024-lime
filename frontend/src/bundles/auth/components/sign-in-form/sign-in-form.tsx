@@ -8,7 +8,11 @@ import {
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import {
+    useAppForm,
+    useCallback,
+    useHeight,
+} from '~/bundles/common/hooks/hooks.js';
 import {
     type UserAuthRequestDto,
     userAuthValidationSchema,
@@ -22,6 +26,8 @@ type Properties = {
 };
 
 const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+    const isHeight = useHeight();
+
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
@@ -38,25 +44,33 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <>
             <div>
-                <h1 className="mb-6 text-left text-[1.875rem] font-bold text-white">
+                <h1 className="hmd:mb-1 hsm:text-[1.2rem] mb-6 text-center text-[1.875rem] font-bold text-white">
                     Hi! Login to your Account
                 </h1>
                 <div className="flex flex-col gap-4">
                     <Button
-                        size={ComponentSize.MEDIUM}
+                        size={
+                            isHeight
+                                ? ComponentSize.SMALL
+                                : ComponentSize.MEDIUM
+                        }
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
                         rightIcon="G"
                     />
                     <Button
-                        size={ComponentSize.MEDIUM}
+                        size={
+                            isHeight
+                                ? ComponentSize.SMALL
+                                : ComponentSize.MEDIUM
+                        }
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
                         rightIcon="f"
                     />
                 </div>
 
-                <p className="text-lm-grey-100 mb-6 mt-10 text-center text-xs">
+                <p className="text-lm-grey-100 hlg:mb-0 hlg:mt-3 mb-6 mt-10 text-center text-xs">
                     or Sign in with Email
                 </p>
 
@@ -86,7 +100,11 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                             type="submit"
                             label={isLoading ? '' : 'Log In'}
                             variant={ButtonVariant.PRIMARY}
-                            size={ComponentSize.MEDIUM}
+                            size={
+                                isHeight
+                                    ? ComponentSize.SMALL
+                                    : ComponentSize.MEDIUM
+                            }
                             leftIcon={
                                 isLoading && (
                                     <Loader color={IconColor.SECONDARY} />
@@ -96,7 +114,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     </div>
                 </form>
             </div>
-            <p className="text-center text-sm">
+            <p className="hmd:mt-2 text-center text-sm">
                 No account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">

@@ -61,6 +61,9 @@ export default {
             'md': '768px',
             'lg': '1024px',
             'xl': '1280px',
+            'hsm': { 'raw': '(max-height: 490px)' },
+            'hmd': { 'raw': '(max-height: 680px)' },
+            'hlg': { 'raw': '(max-height: 870px)' },
         },
         extend: {
             animation: {

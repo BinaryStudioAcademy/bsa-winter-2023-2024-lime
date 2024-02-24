@@ -52,8 +52,8 @@ const Input = <T extends FieldValues>({
     };
 
     return (
-        <label className="flex h-20 w-full flex-col text-sm">
-            <span className="mb-[0.5rem] font-medium">
+        <label className="hmd:h-16 flex h-20 w-full flex-col text-sm">
+            <span className="hmd:mb-0 mb-[0.5rem] font-medium">
                 {label} {required && <span className="text-lm-red">*</span>}
             </span>
             <div className="relative">
@@ -63,7 +63,7 @@ const Input = <T extends FieldValues>({
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
-                    className={`bg-lm-black-100 text-lm-grey-100 placeholder:text-lm-grey-200 focus:border-lm-yellow-100 disabled:text-lm-grey-300 h-9 w-full rounded-lg border p-4 focus:outline-none ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
+                    className={`bg-lm-black-100 text-lm-grey-100 placeholder:text-lm-grey-200 focus:border-lm-yellow-100 disabled:text-lm-grey-300 hmd:h-8 hsm:h-3 h-9 w-full rounded-lg border p-4 focus:outline-none ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
                     onFocus={onFocus}
                 />
                 {isPassword && (
