@@ -84,6 +84,9 @@ export default {
             height: {
                 '30': '7.5625rem',
             },
+            spacing: {
+                '60': '3.75rem',
+            },
         },
     },
     plugins: [],
