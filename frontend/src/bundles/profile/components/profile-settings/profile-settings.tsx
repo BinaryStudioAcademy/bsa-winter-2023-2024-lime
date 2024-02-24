@@ -68,7 +68,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     }, [reset]);
 
     return (
-        <div className="bg-lm-black-200 pl-13 pr-18 w-[874px] px-12 pb-9 pt-3">
+        <div className="bg-lm-black-200 pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
             <div className="flex items-center pb-12">
                 <Avatar
                     size="lg"
@@ -91,11 +91,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
             </div>
             <form
-                className=" w-100 h-100 grid-cols-gap-28 grid grid-cols-4 grid-rows-2 gap-x-6"
+                className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4"
                 onSubmit={handleFormSubmit}
             >
                 <Input
-                    className="col-start-1 col-end-3 border-0"
+                    className="border-0 lg:col-start-1 lg:col-end-3"
                     type="text"
                     label="Full Name"
                     placeholder="John Doe"
@@ -106,7 +106,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 />
 
                 <Input
-                    className="col-start-3 col-end-5"
+                    className="lg:col-start-3 lg:col-end-5"
                     type="text"
                     label="Nickname"
                     placeholder="MyNickname2024"
@@ -121,10 +121,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     errors={errors}
                     label="Date of birth"
                     placeholder="DD/MM/YYYY"
-                    className="col-start-1 col-end-3 "
+                    className="lg:col-start-1 lg:col-end-3 "
                 />
                 <Input
-                    className="col-start-3 col-end-4 "
+                    className="lg:col-start-3 lg:col-end-4 "
                     type="text"
                     label="Weight"
                     placeholder="0 kg"
@@ -134,7 +134,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     isDisabled={isLoading}
                 />
                 <Input
-                    className="col-start-4 col-end-5 "
+                    className="lg:col-start-4 lg:col-end-5 "
                     type="text"
                     label="Height"
                     placeholder="0 sm"
@@ -143,7 +143,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     errors={errors}
                     isDisabled={isLoading}
                 />
-                <div className="col-start-1 col-end-3 flex">
+                <div className="flex lg:col-start-1 lg:col-end-3">
                     <Radio
                         id="radio-male"
                         name="gender"
@@ -151,7 +151,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         value={Gender.MALE}
                         control={control}
                         type={RadioType.CARD}
-                        className="rounded-bl-5 w-83 rounded-l-lg "
+                        className="rounded-bl-5 lg:w-83 rounded-l-lg "
                     />
                     <Radio
                         id="radio-female"
@@ -160,7 +160,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         value={Gender.FEMALE}
                         control={control}
                         type={RadioType.CARD}
-                        className="w-83"
+                        className="lg:w-83"
                     />
                     <Radio
                         id="radio-other"
@@ -169,10 +169,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         value={Gender.OTHER}
                         control={control}
                         type={RadioType.CARD}
-                        className="w-50 rounded-r-lg"
+                        className="lg:w-50 rounded-r-lg"
                     />
                 </div>
-                <ul className="col-start-3 col-end-5 row-start-4 mt-6 flex">
+                <ul className="mt-14 flex lg:col-start-3 lg:col-end-5 lg:row-start-4 lg:mt-6">
                     <li className="mr-6 w-full">
                         <Button
                             label={isLoading ? '' : 'Cancel'}
