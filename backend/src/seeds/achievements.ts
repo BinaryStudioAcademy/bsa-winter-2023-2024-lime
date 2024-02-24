@@ -111,6 +111,12 @@ const Achievements = [
         requirementMetric: Metric.KILOMETERS,
     },
     {
+        name: '20 runs in a month',
+        activity: ActivityType.RUNNING,
+        requirement: 20,
+        requirementMetric: null,
+    },
+    {
         name: 'First 5000 steps in a day',
         activity: ActivityType.WALKING,
         requirement: 5000,
@@ -157,6 +163,12 @@ const Achievements = [
         activity: ActivityType.WALKING,
         requirement: 500,
         requirementMetric: Metric.KILOCALORIES,
+    },
+    {
+        name: 'Joining Lime',
+        activity: null,
+        requirement: 1,
+        requirementMetric: null,
     },
 ];
 

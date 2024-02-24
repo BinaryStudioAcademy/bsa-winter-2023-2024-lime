@@ -1,6 +1,6 @@
 import { type Knex } from 'knex';
 
-const TABLE_NAME = 'achievements';
+import { DatabaseTableName } from '~/common/database/database.js';
 
 const ColumnName = {
     ID: 'id',
@@ -9,6 +9,7 @@ const ColumnName = {
     REQUIREMENT: 'requirement',
     REQUIREMENT_METRIC: 'requirement_metric',
     CREATED_AT: 'created_at',
+    UPDATED_AT: 'updated_at',
 } as const;
 
 const ACTIVITY_ENUM = `${ColumnName.ACTIVITY}_enum`;
@@ -28,7 +29,7 @@ const Metric = {
 } as const;
 
 async function up(knex: Knex): Promise<void> {
-    return knex.schema.createTable(TABLE_NAME, (table) => {
+    await knex.schema.createTable(DatabaseTableName.ACHIEVEMENTS, (table) => {
         table.increments(ColumnName.ID).primary();
         table.string(ColumnName.NAME).notNullable();
         table
@@ -36,23 +37,29 @@ async function up(knex: Knex): Promise<void> {
                 enumName: ACTIVITY_ENUM,
                 useNative: true,
             })
-            .notNullable();
+            .nullable();
         table.integer(ColumnName.REQUIREMENT).notNullable();
         table
             .enu(ColumnName.REQUIREMENT_METRIC, Object.values(Metric), {
                 enumName: REQUIREMENT_METRIC_ENUM,
                 useNative: true,
             })
-            .notNullable();
+            .nullable();
         table
             .dateTime(ColumnName.CREATED_AT)
+            .notNullable()
+            .defaultTo(knex.fn.now());
+        table
+            .dateTime(ColumnName.UPDATED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
     });
 }
 
 async function down(knex: Knex): Promise<void> {
-    return knex.schema.dropTableIfExists(TABLE_NAME);
+    await knex.schema.dropTableIfExists(DatabaseTableName.ACHIEVEMENTS);
+    await knex.schema.raw(`DROP TYPE IF EXISTS ${ACTIVITY_ENUM}`);
+    await knex.schema.raw(`DROP TYPE IF EXISTS ${REQUIREMENT_METRIC_ENUM}`);
 }
 
 export { down, up };

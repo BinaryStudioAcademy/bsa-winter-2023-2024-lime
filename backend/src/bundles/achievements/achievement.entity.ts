@@ -1,9 +1,9 @@
-import { type Entity, type ValueOf } from '~/common/types/types.js';
-
 import {
     type ActivityType,
+    type Entity,
     type Metric,
-} from '../../../../shared/src/bundles/achievements/enums/enums.js';
+    type ValueOf,
+} from './enums/enums.js';
 
 class AchievementEntity implements Entity {
     private 'id': number | null;
