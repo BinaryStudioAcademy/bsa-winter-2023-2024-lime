@@ -22,17 +22,17 @@ const routes = [
             {
                 path: AppRoute.ROOT,
                 element: 'Root',
+                isPrivate: true,
+            },
+            {
+                path: AppRoute.SIGN_IN,
+                element: <Auth />,
+            },
+            {
+                path: AppRoute.SIGN_UP,
+                element: <Auth />,
             },
         ],
-        isPrivate: true,
-    },
-    {
-        path: AppRoute.SIGN_IN,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.SIGN_UP,
-        element: <Auth />,
     },
     {
         path: AppRoute.NOT_FOUND,

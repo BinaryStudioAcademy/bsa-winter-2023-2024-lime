@@ -51,5 +51,8 @@
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged",
         "commit-msg": "npx commitlint --edit $1"
+    },
+    "dependencies": {
+        "@rollup/rollup-win32-x64-msvc": "4.12.0"
     }
 }
