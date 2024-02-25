@@ -21,6 +21,7 @@ import {
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import {
     AchievementCard,
+    FinishedGoalCard,
     GoalCard,
 } from '~/bundles/goals/components/components.js';
 import {
@@ -84,6 +85,8 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
+    const lastAchievement = achievements.at(-1);
+
     return (
         <main className="bg-lm-black-200 flex w-screen flex-col gap-8 px-16 pb-14 pt-10 md:h-screen md:flex-row md:justify-between lg:justify-normal">
             {isLoading ? (
@@ -92,15 +95,10 @@ const Goals: React.FC = () => {
                 <>
                     <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem]">
-                            {achievements?.length === 0 &&
-                            goals?.length === 0 ? (
-                                <div className="bg-lm-yellow-100 h-[160px] w-full rounded-xl">
-                                    Unleash your fitness potential with new
-                                    goals
-                                </div>
-                            ) : (
-                                <div className="bg-lm-yellow-100 h-[160px] w-full rounded-xl"></div>
-                            )}
+                            <FinishedGoalCard
+                                achievement={lastAchievement?.name}
+                                activity={lastAchievement?.activity}
+                            />
                         </section>
                         <section className="overflow-y-auto overflow-x-hidden">
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">

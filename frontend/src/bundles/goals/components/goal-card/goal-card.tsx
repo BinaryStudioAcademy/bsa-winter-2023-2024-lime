@@ -32,7 +32,9 @@ const GoalCard: React.FC<Properties> = ({
                     </p>
                 </div>
             </div>
-            <CircleProgress progress={progress} />
+            <div className="h-16 w-16 md:h-20 md:w-20">
+                <CircleProgress progress={progress} />
+            </div>
         </div>
     );
 };
