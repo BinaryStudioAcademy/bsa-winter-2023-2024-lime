@@ -35,6 +35,7 @@ export default {
             xs: '0.75rem',
             sm: '0.875rem',
             base: '1rem',
+            md: '1.125rem',
             xl: '1.25rem',
             '2xl': '1.375rem',
             '3xl': '1.75rem',
@@ -48,6 +49,8 @@ export default {
             heavybold: '800',
         },
         lineHeight: {
+            '1': '0.75rem',
+            '2': '0.875rem',
             '3': '1rem',
             '4': '1.25rem',
             '5': '1.375rem',
@@ -77,6 +80,7 @@ export default {
                     'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%)',
             },
             borderRadius: {
+                '30': '1.9rem',
                 '34': '2.1rem',
             },
             width: {

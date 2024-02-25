@@ -1,4 +1,5 @@
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export { FileValidationMessage } from './bundles/file/file.js';
 export {
     type GoalRequestDto,
     type GoalResponseDto,
