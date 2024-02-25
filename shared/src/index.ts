@@ -12,6 +12,15 @@ export {
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
+    type CreateWorkoutRequestDto,
+    type WorkoutRequestDto,
+    type WorkoutResponseDto,
+    createUserWorkoutsValidationSchema,
+    updateUserWorkoutsValidationSchema,
+    WorkoutsApiPath,
+} from './bundles/workouts/workouts.js';
+export {
+    Activity,
     ApiPath,
     AppEnvironment,
     ContentType,

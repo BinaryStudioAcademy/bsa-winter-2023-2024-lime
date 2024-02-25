@@ -6,28 +6,35 @@ const USERS_TABLE_NAME = 'users';
 const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
+    ACTIVITY: 'activity',
     STEPS: 'steps',
     DURATION: 'duration',
     KILOCALORIES: 'kilocalories',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at',
 };
+
+const ACTIVITY_ENUM = `${ColumnName.ACTIVITY}_enum`;
+
+const Activity = {
+    CYCLING: 'cycling',
+    RUNNING: 'running',
+    WALKING: 'walking',
+} as const;
 async function up(knex: Knex): Promise<void> {
-    return knex.schema.createTable(TABLE_NAME, (table) => {
+    await knex.schema.createTable(TABLE_NAME, (table) => {
         table.increments(ColumnName.ID).primary();
         table
             .integer(ColumnName.USER_ID)
             .unsigned()
-            .unique()
             .notNullable()
             .references(ColumnName.ID)
             .inTable(USERS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
-
         table.integer(ColumnName.STEPS).nullable();
         table.integer(ColumnName.KILOCALORIES).nullable();
-        table.timestamp(ColumnName.DURATION).nullable();
+        table.integer(ColumnName.DURATION).nullable();
 
         table
             .dateTime(ColumnName.CREATED_AT)
@@ -38,10 +45,18 @@ async function up(knex: Knex): Promise<void> {
             .notNullable()
             .defaultTo(knex.fn.now());
     });
+
+    await knex.schema.raw(
+        `CREATE TYPE ${ACTIVITY_ENUM} AS ENUM ('${Activity.CYCLING}', '${Activity.RUNNING}', '${Activity.WALKING}');`,
+    );
+    await knex.schema.raw(
+        `ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.ACTIVITY} ${ACTIVITY_ENUM}`,
+    );
 }
 
 async function down(knex: Knex): Promise<void> {
-    return knex.schema.dropTableIfExists(TABLE_NAME);
+    await knex.schema.dropTableIfExists(TABLE_NAME);
+    await knex.schema.raw(`DROP TYPE IF EXISTS ${ACTIVITY_ENUM}`);
 }
 
 export { down, up };

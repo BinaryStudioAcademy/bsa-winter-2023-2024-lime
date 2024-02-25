@@ -1,22 +1,31 @@
-import { type Entity } from '~/common/types/types.js';
+import { type Activity } from '~/common/enums/enums.js';
+import { type Entity, type ValueOf } from '~/common/types/types.js';
 
 class WorkoutEntity implements Entity {
     private 'id': number | null;
-    private 'duration': number | null;
-    private 'steps': number | null;
-    private 'kilocalories': number | null;
+    private 'userId': number;
+    private 'activity': ValueOf<typeof Activity>;
+    private 'duration': number;
+    private 'steps': number;
+    private 'kilocalories': number;
     private constructor({
         id,
+        userId,
+        activity,
         duration,
         steps,
-        kilocalories
+        kilocalories,
     }: {
         id: number | null;
-        duration: number | null
-        kilocalories: number | null
-        steps: number | null
+        userId: number;
+        activity: ValueOf<typeof Activity>;
+        duration: number;
+        kilocalories: number;
+        steps: number;
     }) {
         this.id = id;
+        this.userId = userId;
+        this.activity = activity;
         this.steps = steps;
         this.kilocalories = kilocalories;
         this.duration = duration;
@@ -24,63 +33,75 @@ class WorkoutEntity implements Entity {
 
     public static initialize({
         id,
+        userId,
+        activity,
         duration,
         steps,
-        kilocalories
+        kilocalories,
     }: {
         id: number;
-        duration: number
-        kilocalories: number
-        steps: number
+        userId: number;
+        activity: ValueOf<typeof Activity>;
+        duration: number;
+        kilocalories: number;
+        steps: number;
     }): WorkoutEntity {
         return new WorkoutEntity({
             id,
+            userId,
+            activity,
             duration,
             steps,
-            kilocalories
+            kilocalories,
         });
     }
 
     public static initializeNew({
-        steps,
-        kilocalories,
-        duration
+        activity,
+        userId,
     }: {
-        duration: number
-        kilocalories: number
-        steps: number
+        activity: ValueOf<typeof Activity>;
+        userId: number;
     }): WorkoutEntity {
         return new WorkoutEntity({
             id: null,
-            duration,
-            steps,
-            kilocalories
+            userId,
+            activity,
+            duration: 0,
+            steps: 0,
+            kilocalories: 0,
         });
     }
 
     public toObject(): {
         id: number;
-        duration: number
-        kilocalories: number
-        steps: number
+        activity: ValueOf<typeof Activity>;
+        duration: number;
+        kilocalories: number;
+        steps: number;
     } {
         return {
             id: this.id as number,
-            duration: this.duration as number,
-            kilocalories: this.kilocalories as number,
-            steps: this.steps as number
+            activity: this.activity,
+            duration: this.duration,
+            kilocalories: this.kilocalories,
+            steps: this.steps,
         };
     }
 
     public toNewObject(): {
-        duration: number | null
-        kilocalories: number | null
-        steps: number | null
+        userId: number;
+        activity: ValueOf<typeof Activity>;
+        duration: number;
+        kilocalories: number;
+        steps: number;
     } {
         return {
+            userId: this.userId,
+            activity: this.activity,
             duration: this.duration,
             kilocalories: this.kilocalories,
-            steps: this.steps
+            steps: this.steps,
         };
     }
 }
