@@ -63,8 +63,8 @@ const PasswordReset: React.FC = () => {
     }, [dataStatus, navigate]);
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[44rem]',
-        form: 'gap-6 text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
+        form: 'justify-between gap-6 text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
     };
 
     return (
