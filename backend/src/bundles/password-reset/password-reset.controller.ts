@@ -58,9 +58,11 @@ class PasswordResetController extends BaseController {
 
     /**
      * @swagger
-     * /auth/forgot-password:
+     * /api/v1/auth/forgot-password:
      *    post:
-     *      description: Request link for password reset
+     *      tags:
+     *        - Forgot
+     *      description: This endpoint requests link for password reset
      *      requestBody:
      *        description: Password forgot data
      *        required: true
@@ -81,7 +83,14 @@ class PasswordResetController extends BaseController {
      *                type: object
      *                properties:
      *                  message:
+     *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
      *                    type: object
+     *                    $ref: '#/components/schemas/Error'
      */
 
     private async forgotPassword(
@@ -101,9 +110,11 @@ class PasswordResetController extends BaseController {
 
     /**
      * @swagger
-     * /auth/reset-password:
+     * /api/v1/auth/reset-password:
      *    post:
-     *      description: Password reset
+     *      tags:
+     *        - Reset
+     *      description: This endpoint resets password
      *      requestBody:
      *        description: Password reset data
      *        required: true
@@ -112,6 +123,7 @@ class PasswordResetController extends BaseController {
      *            schema:
      *              type: object
      *              properties:
+     *                properties:
      *                id:
      *                  type: number
      *                token:
@@ -129,7 +141,14 @@ class PasswordResetController extends BaseController {
      *                type: object
      *                properties:
      *                  message:
+     *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
      *                    type: object
+     *                    $ref: '#/components/schemas/Error'
      */
 
     private async resetPassword(
