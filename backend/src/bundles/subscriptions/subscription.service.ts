@@ -1,4 +1,5 @@
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
+import { formatToDateFromUnix } from '~/common/helpers/helpers.js';
 import { stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
@@ -133,8 +134,8 @@ class SubscriptionService
                             status: subscription.status,
                             cancelAtPeriodEnd:
                                 subscription.cancel_at_period_end,
-                            expirationDate: new Date(
-                                subscription.current_period_end * 1000,
+                            expirationDate: formatToDateFromUnix(
+                                subscription.current_period_end,
                             ),
                         },
                     );
@@ -174,8 +175,8 @@ class SubscriptionService
                     {
                         status: subscription.status,
                         cancelAtPeriodEnd: subscription.cancel_at_period_end,
-                        expirationDate: new Date(
-                            subscription.current_period_end * 1000,
+                        expirationDate: formatToDateFromUnix(
+                            subscription.current_period_end,
                         ),
                     },
                 );

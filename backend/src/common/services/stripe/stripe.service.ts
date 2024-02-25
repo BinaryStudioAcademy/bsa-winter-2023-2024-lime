@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 
 import { type SubscriptionStatus } from '~/bundles/subscriptions/enums/enums.js';
+import { formatToDateFromUnix } from '~/common/helpers/helpers.js';
 import { type ValueOf } from '~/common/types/types.js';
 
 class StipeService {
@@ -78,7 +79,9 @@ class StipeService {
                     .payment_intent as Stripe.PaymentIntent
             ).client_secret as string,
             status: subscription.status as ValueOf<typeof SubscriptionStatus>,
-            expirationDate: new Date(subscription.current_period_end * 1000),
+            expirationDate: formatToDateFromUnix(
+                subscription.current_period_end,
+            ),
         };
     }
 
