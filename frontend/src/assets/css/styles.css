@@ -38,7 +38,7 @@
 :root,
 .light {
     /* BUTTON */
-    --button-one: rgb(255 255 255); /* White */
+    --button-text: rgb(255 255 255); /* White */
     --button-two: rgb(178 202 13); /* #B2CA0D */
     --button-third: rgb(148 168 7); /* #94A807 */
     --button-fourth: rgb(178 192 211); /* #B2C0D3 */
@@ -55,7 +55,7 @@
 
 .dark {
     /* BUTTON */
-    --button-one: rgb(49 49 52); /* lm-black-300 */
+    --button-text: rgb(49 49 52); /* lm-black-300 */
     --button-two: rgb(224 254 16); /* lm-yellow-100 */
     --button-third: rgb(178 202 13); /* lm-yellow-200 */
     --button-fourth: rgb(71 85 105); /* lm-grey-300 */

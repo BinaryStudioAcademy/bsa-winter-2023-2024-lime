@@ -2,10 +2,10 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 const ButtonColors = {
-    ONE: 'var(--button-one)',
-    TWO: 'var(--button-two)',
-    THREE: 'var(--button-third)',
-    FOUR: 'var(--button-fourth)',
+    TEXT: 'var(--button-text)',
+    PRIMARY: 'var(--button-two)',
+    SECONDARY: 'var(--button-third)',
+    TERTIARY: 'var(--button-fourth)',
 };
 
 export default {
@@ -96,25 +96,22 @@ export default {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
                 action: 'var(--text-action)',
-                buttonPrimary: ButtonColors.ONE,
-                buttonSecondary: ButtonColors.TWO,
-                buttonTertiary: ButtonColors.THREE,
-                buttonQuaternary: ButtonColors.FOUR,
+                buttonText: ButtonColors.TEXT,
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
             },
             backgroundColor: {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
-
-                buttonPrimary: ButtonColors.ONE,
-                buttonSecondary: ButtonColors.TWO,
-                buttonTertiary: ButtonColors.THREE,
-                buttonQuaternary: ButtonColors.FOUR,
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
             },
             borderColor: {
-                buttonPrimary: ButtonColors.ONE,
-                buttonSecondary: ButtonColors.TWO,
-                buttonTertiary: ButtonColors.THREE,
-                buttonQuaternary: ButtonColors.FOUR,
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
             },
         },
     },

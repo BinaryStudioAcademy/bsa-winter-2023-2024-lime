@@ -34,11 +34,11 @@ const baseClasses =
 
 const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.PRIMARY]:
-        'rounded-lg bg-buttonSecondary text-buttonPrimary hover:bg-buttonTertiary  disabled:bg-buttonQuaternary',
+        'rounded-lg bg-buttonPrimary text-buttonText hover:bg-buttonSecondary  disabled:bg-buttonTertiary',
     [ButtonVariant.SECONDARY]:
-        'border border-buttonSecondary rounded-lg bg-transparent text-buttonSecondary hover:text-buttonTertiary hover:border-buttonTertiary disabled:text-buttonQuaternary disabled:border-buttonQuaternary',
+        'border border-buttonPrimary rounded-lg bg-transparent text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary disabled:border-buttonTertiary',
     [ButtonVariant.TERTIARY]:
-        'bg-transparent text-buttonSecondary hover:text-buttonTertiary hover:border-buttonTertiary disabled:text-buttonQuaternary',
+        'bg-transparent text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {
