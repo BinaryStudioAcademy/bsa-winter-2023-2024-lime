@@ -9,11 +9,11 @@ import { reducer as appReducer } from '~/app/store/app.js';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
-import { reducer as subscriptionsReducer } from '~/bundles/profile/components/subscription/store/slice.js';
+import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';
 import {
     subscriptionApi,
     subscriptionPlansApi,
-} from '~/bundles/profile/components/subscription/subscription.js';
+} from '~/bundles/subscription/subscription.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { type Config } from '~/framework/config/config.js';

@@ -14,7 +14,6 @@ import {
     type SubscriptionPlansGetAllResponseDto,
 } from '../types/types.js';
 
-//notificationManager has to be changed by notification action
 const loadAllSubscriptionPlans = createAsyncThunk<
     SubscriptionPlansGetAllResponseDto,
     undefined,
@@ -27,11 +26,12 @@ const loadAllSubscriptionPlans = createAsyncThunk<
 );
 
 const loadCurrentSubscription = createAsyncThunk<
-    SubscriptionGetItemResponseDto,
+    Record<'currentSubscription', SubscriptionGetItemResponseDto>,
     undefined,
     AsyncThunkConfig
 >('subscriptions/loadCurrent', async (_, { extra: { subscriptionApi } }) => {
-    return subscriptionApi.loadCurrentSubscription();
+    const currentSubscription = await subscriptionApi.loadCurrentSubscription();
+    return { currentSubscription };
 });
 
 const createSubscription = createAsyncThunk<
@@ -52,17 +52,20 @@ const updateCancelSubscription = createAsyncThunk<
 >(
     'subscriptions/cancelSubscription',
     async (payload, { extra: { subscriptionApi } }) => {
-        const isCancelled = await subscriptionApi.cancelSubscription(payload);
+        const { cancelAtPeriodEnd } =
+            await subscriptionApi.cancelSubscription(payload);
 
-        if (isCancelled) {
+        if (cancelAtPeriodEnd) {
             notificationManager.success(
                 'You successfuly cancelled a subscription!',
             );
-            return true;
+        } else {
+            notificationManager.success(
+                'You successfuly renewed a subscription!',
+            );
         }
 
-        notificationManager.success('You successfuly renewed a subscription!');
-        return false;
+        return cancelAtPeriodEnd;
     },
 );
 

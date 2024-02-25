@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 
-import { config } from '~/common/config/config.js';
+import { type SubscriptionStatus } from '~/bundles/subscriptions/enums/enums.js';
+import { type ValueOf } from '~/common/types/types.js';
 
 class StipeService {
     private readonly stripeSecretKey: string;
@@ -17,15 +18,6 @@ class StipeService {
     public async createCustomer({ email }: { email: string }): Promise<string> {
         const { id } = await this.stripeApi.customers.create({ email });
         return id;
-    }
-
-    public async deleteCustomer({ id }: { id: string }): Promise<boolean> {
-        try {
-            await this.stripeApi.customers.del(id);
-            return true;
-        } catch {
-            return false;
-        }
     }
 
     public async createSubscriptionPlan({
@@ -66,7 +58,7 @@ class StipeService {
     }): Promise<{
         subscriptionToken: string;
         clientSecret: string;
-        status: string;
+        status: ValueOf<typeof SubscriptionStatus>;
         expirationDate: Date;
     }> {
         const subscription = await this.stripeApi.subscriptions.create({
@@ -85,12 +77,12 @@ class StipeService {
                 (subscription.latest_invoice as Stripe.Invoice)
                     .payment_intent as Stripe.PaymentIntent
             ).client_secret as string,
-            status: subscription.status,
+            status: subscription.status as ValueOf<typeof SubscriptionStatus>,
             expirationDate: new Date(subscription.current_period_end * 1000),
         };
     }
 
-    public async softUpdateCancelSubscription({
+    public async updateCancelSubscription({
         subscriptionToken,
         cancelAtPeriodEnd,
     }: {
@@ -110,26 +102,6 @@ class StipeService {
         return (await this.stripeApi.subscriptions.cancel(subscriptionToken))
             ? true
             : false;
-    }
-
-    public async stripeEventContructor({
-        payload,
-        signature,
-    }: {
-        payload: string;
-        signature: string;
-    }): Promise<Stripe.Event | null> {
-        const event = await this.stripeApi.webhooks.constructEventAsync(
-            payload,
-            signature,
-            config.ENV.STRIPE.WEBHOOK_SECRET,
-        );
-
-        if (!event) {
-            return null;
-        }
-
-        return event;
     }
 }
 

@@ -1,4 +1,6 @@
-import { type Entity } from '~/common/types/types.js';
+import { type Entity, type ValueOf } from '~/common/types/types.js';
+
+import { type SubscriptionStatus } from './enums/enums.js';
 
 class SubscriptionEntity implements Entity {
     private 'id': number | null;
@@ -11,7 +13,7 @@ class SubscriptionEntity implements Entity {
 
     private 'cancelAtPeriodEnd': boolean;
 
-    private 'status': string;
+    private 'status': ValueOf<typeof SubscriptionStatus>;
 
     private 'expirationDate': Date;
 
@@ -36,7 +38,7 @@ class SubscriptionEntity implements Entity {
         id: number | null;
         userId: number;
         planId: number;
-        status: string;
+        status: ValueOf<typeof SubscriptionStatus>;
         subscriptionToken: string;
         cancelAtPeriodEnd: boolean;
         expirationDate: Date;
@@ -73,7 +75,7 @@ class SubscriptionEntity implements Entity {
         planId: number;
         subscriptionToken: string;
         cancelAtPeriodEnd: boolean;
-        status: string;
+        status: ValueOf<typeof SubscriptionStatus>;
         expirationDate: Date;
         subscriptionPlanName: string | null;
         subscriptionPlanPrice: number | null;
@@ -105,7 +107,7 @@ class SubscriptionEntity implements Entity {
         planId: number;
         subscriptionToken: string;
         cancelAtPeriodEnd: boolean;
-        status: string;
+        status: ValueOf<typeof SubscriptionStatus>;
         expirationDate: Date;
     }): SubscriptionEntity {
         return new SubscriptionEntity({
@@ -126,7 +128,7 @@ class SubscriptionEntity implements Entity {
         id: number;
         userId: number;
         planId: number;
-        status: string;
+        status: ValueOf<typeof SubscriptionStatus>;
         cancelAtPeriodEnd: boolean;
         subscriptionToken: string;
         expirationDate: Date;
@@ -151,7 +153,7 @@ class SubscriptionEntity implements Entity {
     public toNewObject(): {
         userId: number;
         planId: number;
-        status: string;
+        status: ValueOf<typeof SubscriptionStatus>;
         cancelAtPeriodEnd: boolean;
         subscriptionToken: string;
         expirationDate: Date;

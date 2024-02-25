@@ -2,19 +2,15 @@ import { useCallback } from 'react';
 
 import { Button } from '~/bundles/common/components/components.js';
 
+import { type SubscribeRequestDto } from '../../types/types.js';
+
 type Properties = {
     id: number;
     name: string;
     description: string;
     price: number;
     priceToken: string;
-    handleClick: ({
-        planId,
-        priceToken,
-    }: {
-        planId: number;
-        priceToken: string;
-    }) => void;
+    handleClick: ({ planId, priceToken }: SubscribeRequestDto) => void;
 };
 
 const SubscriptionPlan = ({
@@ -25,14 +21,14 @@ const SubscriptionPlan = ({
     priceToken,
     handleClick,
 }: Properties): JSX.Element => {
-    const handleButtonClick = useCallback(() => {
+    const handleSubscribeButtonClick = useCallback(() => {
         handleClick({ planId: id, priceToken });
     }, [id, priceToken, handleClick]);
 
     return (
         <div
             className={
-                'bg-lm-black-100 flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:p-6'
+                'bg-lm-black-100 flex w-full  flex-col rounded-2xl p-4 md:p-6'
             }
         >
             <div
@@ -45,7 +41,7 @@ const SubscriptionPlan = ({
                         'text-lm-yellow-100 text-3xl font-extrabold md:text-4xl'
                     }
                 >
-                    {name.toUpperCase()}
+                    {name}
                 </p>
                 <span className={'text-lm-yellow-100 text-xl font-bold'}>
                     ${price}
@@ -63,11 +59,11 @@ const SubscriptionPlan = ({
             </div>
 
             <Button
-                type={'button'}
-                label={'Subscribe'}
-                variant={'primary'}
-                size={'md'}
-                onClick={handleButtonClick}
+                type="button"
+                label="Subscribe"
+                variant="primary"
+                size="md"
+                onClick={handleSubscribeButtonClick}
             />
         </div>
     );

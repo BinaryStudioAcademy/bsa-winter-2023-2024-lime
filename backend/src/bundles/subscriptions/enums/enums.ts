@@ -4,5 +4,6 @@ export {
     HttpCode,
     HttpError,
     SubscriptionsApiPath,
+    SubscriptionStatus,
     SubscriptionValidationMessage,
 } from 'shared';

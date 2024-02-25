@@ -27,7 +27,7 @@ class SubscriptionController extends BaseController {
         this.subscriptionService = subscriptionService;
 
         this.addRoute({
-            path: '/current',
+            path: SubscriptionsApiPath.CURRENT_SUBSCRIPTION,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
@@ -45,6 +45,7 @@ class SubscriptionController extends BaseController {
             handler: (options) =>
                 this.subscribe(
                     options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
                         body: SubscribeRequestDto;
                     }>,
                 ),
@@ -90,13 +91,16 @@ class SubscriptionController extends BaseController {
 
     private async subscribe(
         options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
             body: SubscribeRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const { planId, priceToken } = options.body;
         return {
             status: HttpCode.CREATED,
-            payload: await this.subscriptionService.subscribe({
-                ...options.body,
+            payload: await this.subscriptionService.subscribe(options.user, {
+                planId,
+                priceToken,
             }),
         };
     }
@@ -126,7 +130,7 @@ class SubscriptionController extends BaseController {
 
         return {
             status: HttpCode.OK,
-            payload: await this.subscriptionService.webHooksListener({
+            payload: await this.subscriptionService.webHookListener({
                 body,
             }),
         };

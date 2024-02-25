@@ -1,10 +1,11 @@
 import { type Repository } from '~/common/types/repository.type.js';
 
+import { SubscriptionStatus, SunscriptionAttributes } from './enums/enums.js';
 import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionModel } from './subscription.model.js';
 
 class SubscriptionRepository
-    implements Omit<Repository, 'findAll' | 'delete' | 'update'>
+    implements Omit<Repository, 'find' | 'findAll' | 'delete' | 'update'>
 {
     private subscriptionModel: typeof SubscriptionModel;
 
@@ -12,14 +13,41 @@ class SubscriptionRepository
         this.subscriptionModel = subscriptionModel;
     }
 
-    public async find(
+    public async findAllActiveUserSubscriptions(
+        userId: number,
+    ): Promise<SubscriptionEntity[] | null> {
+        const subscriptions = await this.subscriptionModel
+            .query()
+            .where(SunscriptionAttributes.USER_ID, userId)
+            .andWhere(SunscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
+            .orderBy(SunscriptionAttributes.CREATED_AT, 'desc')
+            .withGraphFetched('[subscriptionPlan]')
+            .execute();
+
+        if (!subscriptions) {
+            return null;
+        }
+
+        return subscriptions.map((subscription) => {
+            const { subscriptionPlan, ...subscriptionInfo } = subscription;
+            return SubscriptionEntity.initialize({
+                ...subscriptionInfo,
+                subscriptionPlanName: subscriptionPlan?.name ?? null,
+                subscriptionPlanPrice: subscriptionPlan?.price ?? null,
+                subscriptionPlanDescription:
+                    subscriptionPlan?.description ?? null,
+            });
+        });
+    }
+
+    public async findCurrentSubscription(
         query: Record<string, unknown>,
     ): Promise<SubscriptionEntity | null> {
         const subscription = await this.subscriptionModel
             .query()
             .findOne(query)
-            .where('status', 'active')
-            .orderBy('createdAt', 'desc')
+            .where(SunscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
+            .orderBy(SunscriptionAttributes.CREATED_AT, 'DESC')
             .withGraphFetched('[subscriptionPlan]')
             .execute();
 
@@ -71,17 +99,19 @@ class SubscriptionRepository
         });
     }
 
-    public async updateSubscription(
-        toUpdateBy: Record<string, unknown>,
+    public async updateSubscriptionByToken(
+        subscriptionToken: string,
         query: Record<string, unknown>,
     ): Promise<SubscriptionEntity | null> {
         await this.subscriptionModel
             .query()
-            .findOne(toUpdateBy)
+            .findOne({ subscriptionToken })
             .patch(query)
             .execute();
 
-        const updatedSubscription = await this.find(toUpdateBy);
+        const updatedSubscription = await this.findCurrentSubscription({
+            subscriptionToken,
+        });
 
         if (!updatedSubscription) {
             return null;

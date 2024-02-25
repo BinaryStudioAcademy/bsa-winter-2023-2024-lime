@@ -58,6 +58,9 @@ const App: React.FC = () => {
                 <li>
                     <Link to={AppRoute.SUBSCRIPTION}>SUBSCRIPTION</Link>
                 </li>
+                <li>
+                    <Link to={AppRoute.SUBSCRIPTION_CHECKOUT}>CHECKOUT</Link>
+                </li>
             </ul>
             <p>Current path: {pathname}</p>
 

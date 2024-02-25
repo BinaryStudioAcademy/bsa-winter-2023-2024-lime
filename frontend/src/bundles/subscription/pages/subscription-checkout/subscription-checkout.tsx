@@ -3,9 +3,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import { type StripeElementsOptions } from '@stripe/stripe-js';
 
 import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
+import { CheckoutForm } from '~/bundles/subscription/components/components.js';
 import { config } from '~/framework/config/config.js';
-
-import { CheckoutForm } from './components/components.js';
 
 const stripe = loadStripe(config.ENV.STRIPE.PUBLIC_KEY);
 

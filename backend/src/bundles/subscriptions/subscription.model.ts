@@ -4,27 +4,29 @@ import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
+import { type ValueOf } from '~/common/types/types.js';
 
 import { SubscriptionPlanAttributes } from '../subscription-plans/enums/enums.js';
 import { SubscriptionPlanModel } from '../subscription-plans/subscription-plan.model.js';
 import { UserAttributes } from '../users/enums/enums.js';
 import { UserModel } from '../users/user.model.js';
+import { type SubscriptionStatus } from './enums/enums.js';
 import { SunscriptionAttributes } from './enums/enums.js';
 
 class SubscriptionModel extends AbstractModel {
     public 'userId': number;
 
-    public 'planId': number;
-
     public 'subscriptionToken': string;
+
+    public 'planId': number;
 
     public 'cancelAtPeriodEnd': boolean;
 
-    public 'status': string;
+    public 'status': ValueOf<typeof SubscriptionStatus>;
 
     public 'expirationDate': Date;
 
-    public 'subscriptionPlan': SubscriptionPlanModel | null;
+    public 'subscriptionPlan': SubscriptionPlanModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.SUBSCRIPTIONS;

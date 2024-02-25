@@ -1,38 +1,48 @@
-import { type SubscriptionGetItemResponseDto } from 'shared';
-
 import { Button } from '~/bundles/common/components/components.js';
-import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks.js';
+import {
+    useAppDispatch,
+    useCallback,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 
+import { type SubscriptionStatus } from '../../enums/enums.js';
 import { actions as subscriptionActions } from '../../store/subscriptions.js';
 
 type Properties = {
-    currentSubscription: SubscriptionGetItemResponseDto;
+    subscriptionPlanName: string;
+    subscriptionPlanPrice: number;
+    status: ValueOf<typeof SubscriptionStatus>;
+    cancelAtPeriodEnd: boolean;
+    expirationDate: Date;
+    subscriptionToken: string;
+    handleChangeSubscription: () => void;
 };
 
 const SubscriptionUserPanel = ({
-    currentSubscription,
+    subscriptionPlanName,
+    subscriptionPlanPrice,
+    status,
+    cancelAtPeriodEnd,
+    expirationDate,
+    subscriptionToken,
+    handleChangeSubscription,
 }: Properties): JSX.Element => {
     const dispatch = useAppDispatch();
 
-    const handleCancelSubscription = useCallback((): void => {
-        void dispatch(
-            subscriptionActions.updateCancelSubscription({
-                subscriptionToken:
-                    currentSubscription?.subscriptionToken as string,
-                cancelAtPeriodEnd: true,
-            }),
-        );
-    }, [dispatch, currentSubscription]);
+    const [currentCancelAtPeriodEnd, setCurrentCancelAtPeriodEnd] =
+        useState(cancelAtPeriodEnd);
 
-    const handleRenewSubscription = useCallback((): void => {
+    const handleUpdateCancelSubscription = useCallback((): void => {
         void dispatch(
             subscriptionActions.updateCancelSubscription({
-                subscriptionToken:
-                    currentSubscription?.subscriptionToken as string,
-                cancelAtPeriodEnd: false,
+                subscriptionToken,
+                cancelAtPeriodEnd: !currentCancelAtPeriodEnd,
             }),
         );
-    }, [dispatch, currentSubscription]);
+
+        setCurrentCancelAtPeriodEnd(!currentCancelAtPeriodEnd);
+    }, [dispatch, subscriptionToken, currentCancelAtPeriodEnd]);
 
     return (
         <div
@@ -47,15 +57,15 @@ const SubscriptionUserPanel = ({
                             Your Subscription
                         </p>
                         <p className="text-lm-yellow-100 text-3xl font-extrabold">
-                            {currentSubscription.subscriptionPlanName}
+                            {subscriptionPlanName}
                         </p>
                         <p className="text-lg font-bold text-white">Status</p>
                         <p className="text-lm-yellow-100 text-3xl font-extrabold">
-                            {currentSubscription.status?.toUpperCase()}
+                            {status.toUpperCase()}
                         </p>
                         <div>
                             <p className="text-lg font-bold text-white">
-                                {currentSubscription.cancelAtPeriodEnd ? (
+                                {cancelAtPeriodEnd ? (
                                     <span className="text-lm-red">
                                         Expire on
                                     </span>
@@ -66,7 +76,7 @@ const SubscriptionUserPanel = ({
                                 )}
                             </p>
                             <p className="text-lm-yellow-100 text-2xl font-bold">
-                                {currentSubscription.expirationDate?.toString()}
+                                {expirationDate?.toString()}
                             </p>
                         </div>
                         <div>
@@ -74,30 +84,32 @@ const SubscriptionUserPanel = ({
                                 Payment
                             </p>
                             <p className="text-lm-yellow-100 text-2xl font-bold">
-                                ${currentSubscription.subscriptionPlanPrice} /
-                                month
+                                ${subscriptionPlanPrice} / month
                             </p>
                         </div>
                     </div>
                 </div>
-                {currentSubscription.cancelAtPeriodEnd ? (
-                    <Button
-                        variant="primary"
-                        label="Renew subscription"
-                        size="md"
-                        type="button"
-                        onClick={handleRenewSubscription}
-                    />
-                ) : (
-                    <Button
-                        variant="primary"
-                        label="Cancel subscription"
-                        size="md"
-                        type="button"
-                        className={'text-lm-red'}
-                        onClick={handleCancelSubscription}
-                    />
-                )}
+                <Button
+                    variant="primary"
+                    label={
+                        cancelAtPeriodEnd
+                            ? 'Renew subscription'
+                            : 'Cancel subscription'
+                    }
+                    size="md"
+                    type="button"
+                    className={
+                        cancelAtPeriodEnd ? 'text-lm-black-100' : 'text-lm-red'
+                    }
+                    onClick={handleUpdateCancelSubscription}
+                />
+                <Button
+                    type="button"
+                    size="md"
+                    variant="primary"
+                    label="Change subscription plan"
+                    onClick={handleChangeSubscription}
+                />
             </div>
         </div>
     );

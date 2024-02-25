@@ -43,7 +43,7 @@ const { reducer, name, actions } = createSlice({
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(loadCurrentSubscription.fulfilled, (state, action) => {
-            state.currentSubscription = action.payload;
+            state.currentSubscription = action.payload.currentSubscription;
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(createSubscription.fulfilled, (state, action) => {

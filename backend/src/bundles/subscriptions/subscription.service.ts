@@ -1,5 +1,4 @@
-import { type Stripe } from 'stripe';
-
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import { stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
@@ -13,6 +12,8 @@ import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionRepository } from './subscription.repository.js';
 import {
     type CancelSubscriptionRequestDto,
+    type CancelSubscriptionResponseDto,
+    type Stripe,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
     type SubscriptionGetItemResponseDto,
@@ -30,7 +31,8 @@ class SubscriptionService
     public async find(
         query: Record<string, unknown>,
     ): Promise<SubscriptionGetItemResponseDto | null> {
-        const subscription = await this.subscriptionRepository.find(query);
+        const subscription =
+            await this.subscriptionRepository.findCurrentSubscription(query);
 
         if (!subscription) {
             return null;
@@ -39,19 +41,13 @@ class SubscriptionService
         return subscription.toObject();
     }
 
-    public async subscribe({
-        planId,
-        userId,
-        customerToken,
-        priceToken,
-    }: SubscribeRequestDto): Promise<SubscribeResponseDto> {
+    public async subscribe(
+        { id: userId, customerToken }: UserAuthResponseDto,
+        { planId, priceToken }: SubscribeRequestDto,
+    ): Promise<SubscribeResponseDto> {
         const currentSubscription = await this.find({ userId });
 
-        if (
-            currentSubscription &&
-            currentSubscription.planId === planId &&
-            currentSubscription.status === 'active'
-        ) {
+        if (currentSubscription && currentSubscription.planId === planId) {
             throw new HttpError({
                 message:
                     SubscriptionValidationMessage.SUBSCRIPTION_ALREDY_IN_USE,
@@ -93,8 +89,8 @@ class SubscriptionService
     public async updateCancelSubscribtion({
         subscriptionToken,
         cancelAtPeriodEnd,
-    }: CancelSubscriptionRequestDto): Promise<boolean> {
-        if (!subscriptionToken) {
+    }: CancelSubscriptionRequestDto): Promise<CancelSubscriptionResponseDto> {
+        if (!subscriptionToken || typeof cancelAtPeriodEnd !== 'boolean') {
             throw new HttpError({
                 message:
                     SubscriptionValidationMessage.SUBSCRIPTION_CANNOT_BE_CANCELED,
@@ -103,12 +99,12 @@ class SubscriptionService
         }
 
         try {
-            await stripeService.softUpdateCancelSubscription({
+            await stripeService.updateCancelSubscription({
                 subscriptionToken,
                 cancelAtPeriodEnd,
             });
 
-            return cancelAtPeriodEnd;
+            return { cancelAtPeriodEnd };
         } catch (error) {
             throw new HttpError({
                 message: (error as Error).message,
@@ -117,7 +113,7 @@ class SubscriptionService
         }
     }
 
-    public async webHooksListener({ body }: { body: unknown }): Promise<void> {
+    public async webHookListener({ body }: { body: unknown }): Promise<void> {
         const stripeResponse = body as Stripe.Event;
         if (
             !stripeResponse ||
@@ -130,26 +126,60 @@ class SubscriptionService
         switch (stripeResponse.type) {
             case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_UPDATED: {
                 const subscription = stripeResponse.data.object;
-                await this.subscriptionRepository.updateSubscription(
-                    { subscriptionToken: subscription.id },
+                const currentSubscription =
+                    await this.subscriptionRepository.updateSubscriptionByToken(
+                        subscription.id,
+                        {
+                            status: subscription.status,
+                            cancelAtPeriodEnd:
+                                subscription.cancel_at_period_end,
+                            expirationDate: new Date(
+                                subscription.current_period_end * 1000,
+                            ),
+                        },
+                    );
+
+                if (!currentSubscription) {
+                    return;
+                }
+
+                const { userId } = currentSubscription.toNewObject();
+
+                const activeSubscriptions =
+                    await this.subscriptionRepository.findAllActiveUserSubscriptions(
+                        userId,
+                    );
+                if (
+                    activeSubscriptions &&
+                    activeSubscriptions.length > 1 &&
+                    activeSubscriptions
+                ) {
+                    for (const [
+                        index,
+                        subscription,
+                    ] of activeSubscriptions.entries()) {
+                        if (index !== 0) {
+                            const { subscriptionToken } =
+                                subscription.toNewObject();
+                            await stripeService.immediateCancelSubscription({
+                                subscriptionToken,
+                            });
+                        }
+                    }
+                }
+
+                break;
+            }
+            case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_DELETED: {
+                const subscription = stripeResponse.data.object;
+                await this.subscriptionRepository.updateSubscriptionByToken(
+                    subscription.id,
                     {
                         status: subscription.status,
                         cancelAtPeriodEnd: subscription.cancel_at_period_end,
                         expirationDate: new Date(
                             subscription.current_period_end * 1000,
                         ),
-                    },
-                );
-                break;
-            }
-            case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_DELETED: {
-                const subscription = stripeResponse.data.object;
-                await this.subscriptionRepository.updateSubscription(
-                    { subscriptionToken: subscription.id },
-                    {
-                        status: subscription.status,
-                        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-                        expirationDate: null,
                     },
                 );
                 break;

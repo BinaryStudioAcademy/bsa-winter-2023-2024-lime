@@ -6,6 +6,7 @@ import { type Storage } from '~/framework/storage/storage.js';
 import { SubscriptionsApiPath } from './enums/enums.js';
 import {
     type CancelSubscriptionRequestDto,
+    type CancelSubscriptionResponseDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
     type SubscriptionGetItemResponseDto,
@@ -40,11 +41,14 @@ class SubscriptionsApi extends BaseHttpApi {
     }
 
     public async loadCurrentSubscription(): Promise<SubscriptionGetItemResponseDto> {
-        const response = await this.load(this.getFullEndpoint('/current', {}), {
-            method: 'GET',
-            contentType: ContentType.JSON,
-            hasAuth: true,
-        });
+        const response = await this.load(
+            this.getFullEndpoint('/current-subscription', {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
 
         return await response.json<SubscriptionGetItemResponseDto>();
     }
@@ -67,7 +71,7 @@ class SubscriptionsApi extends BaseHttpApi {
 
     public async cancelSubscription(
         payload: CancelSubscriptionRequestDto,
-    ): Promise<boolean> {
+    ): Promise<CancelSubscriptionResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(SubscriptionsApiPath.CANCEL_SUBSCRIPTION, {}),
             {
@@ -78,7 +82,7 @@ class SubscriptionsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<boolean>();
+        return await response.json<CancelSubscriptionResponseDto>();
     }
 }
 
