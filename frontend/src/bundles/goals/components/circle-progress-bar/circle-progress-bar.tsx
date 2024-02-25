@@ -3,11 +3,11 @@ type CircularProgressBarProperties = {
 };
 
 const classes = {
-    svgBase: 'fill-transparent w-20 h-20 stroke-[0.375rem] rotate-90',
+    svgBase: 'fill-transparent w-full h-full stroke-[0.375rem] rotate-90',
     baseCircle: 'stroke-lm-black-200',
     progressCircle: 'stroke-lm-yellow-100',
     progressText:
-        'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl font-extrabold',
+        'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-base md:text-2xl font-extrabold',
 };
 
 const CircleProgress: React.FC<CircularProgressBarProperties> = ({
@@ -18,7 +18,7 @@ const CircleProgress: React.FC<CircularProgressBarProperties> = ({
     const offset = circumference * ((100 - progress) / 100);
 
     return (
-        <div className="relative">
+        <div className="relative h-16 w-16 md:h-20 md:w-20">
             <svg viewBox="0 0 80 80" className={classes.svgBase}>
                 <circle
                     r={radius}

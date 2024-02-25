@@ -85,12 +85,12 @@ const Goals: React.FC = () => {
     );
 
     return (
-        <main className="bg-lm-black-200 flex h-screen gap-10 px-8 pb-14 pt-10">
+        <main className="bg-lm-black-200 flex w-screen flex-col gap-8 px-16 pb-14 pt-10 md:h-screen md:flex-row md:justify-between lg:justify-normal">
             {isLoading ? (
                 <Loader />
             ) : (
                 <>
-                    <div className="flex flex-col gap-8">
+                    <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem]">
                             {achievements?.length === 0 &&
                             goals?.length === 0 ? (
@@ -102,11 +102,11 @@ const Goals: React.FC = () => {
                                 <div className="bg-lm-yellow-100 h-[160px] w-full rounded-xl"></div>
                             )}
                         </section>
-                        <section className="overflow-y-auto overflow-x-hidden px-4">
+                        <section className="overflow-y-auto overflow-x-hidden">
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                 Goals
                             </h2>
-                            <div className="mb-4 flex w-[49rem] flex-wrap gap-4">
+                            <div className="mb-4 flex flex-col gap-4 lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
                                 {goals.length === 0 && (
                                     <p className="mb-5 w-full text-xl font-extrabold text-white">
                                         No goals yet
@@ -132,21 +132,21 @@ const Goals: React.FC = () => {
                                         ),
                                     )}
                             </div>
-                            <div className="w-96">
+                            <div className="md:w-72 xl:w-96">
                                 <Button
                                     type="button"
                                     label="Set the new goal"
                                     variant={ButtonVariant.SECONDARY}
                                     size={ComponentSize.LARGE}
                                     leftIcon={<PlusIcon className="w-6" />}
-                                    className="h-[7.5rem]"
+                                    className="h-[5rem] sm:text-sm md:h-[7.5rem] md:text-xl"
                                     onClick={handleOpenModal}
                                 />
                             </div>
                         </section>
                     </div>
 
-                    <section className="overflow-y-auto overflow-x-hidden px-4">
+                    <section className="overflow-y-auto overflow-x-hidden">
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                             Achievements
                         </h2>

@@ -19,11 +19,11 @@ const GoalCard: React.FC<Properties> = ({
     frequencyType,
 }): JSX.Element => {
     return (
-        <div className="bg-lm-black-100 flex h-[7.5rem] w-96 justify-between rounded-xl p-5 pl-8">
+        <div className="bg-lm-black-100 flex h-[5rem] items-center justify-between rounded-xl p-3 pl-5 md:h-[7.5rem] md:w-72 lg:p-5 lg:pl-8 xl:w-96">
             <div className="flex items-center gap-4">
                 <ActivityIcon activity={activity} size={ComponentSize.MEDIUM} />
                 <div className="flex flex-col">
-                    <p className="text-base font-extrabold leading-5 text-white">
+                    <p className="text-sm font-extrabold leading-5 text-white md:text-base">
                         {capitalizeString(activity)}
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
