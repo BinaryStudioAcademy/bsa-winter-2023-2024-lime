@@ -3,9 +3,9 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 const ButtonColors = {
     TEXT: 'var(--button-text)',
-    PRIMARY: 'var(--button-two)',
-    SECONDARY: 'var(--button-third)',
-    TERTIARY: 'var(--button-fourth)',
+    PRIMARY: 'var(--button-primary)',
+    SECONDARY: 'var(--button-secondary)',
+    TERTIARY: 'var(--button-tertiary)',
 };
 
 export default {
