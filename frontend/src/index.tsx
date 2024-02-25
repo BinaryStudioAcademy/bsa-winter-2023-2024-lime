@@ -14,8 +14,10 @@ import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
-import { SubscriptionCheckout } from './bundles/subscription/pages/subscription-checkout/subscription-checkout.js';
-import { SubscriptionPage } from './bundles/subscription/pages/subscription-page/subscription-page.js';
+import {
+    SubscriptionCheckout,
+    SubscriptionPage,
+} from './bundles/subscription/subscription.js';
 
 const routes = [
     {

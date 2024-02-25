@@ -9,11 +9,13 @@ import { config } from '~/framework/config/config.js';
 const stripe = loadStripe(config.ENV.STRIPE.PUBLIC_KEY);
 
 const SubscriptionCheckout = (): JSX.Element => {
-    const { clientSecret } = useAppSelector(({ subscriptions }) => {
-        return {
-            clientSecret: subscriptions?.clientSecret as string,
-        };
-    });
+    const { clientSecret } = useAppSelector(
+        ({ subscriptions }) => {
+            return {
+                clientSecret: subscriptions?.clientSecret as string,
+            };
+        },
+    );
 
     const options: StripeElementsOptions = {
         clientSecret,

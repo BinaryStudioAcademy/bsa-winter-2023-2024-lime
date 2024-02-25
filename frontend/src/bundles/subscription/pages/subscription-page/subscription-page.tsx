@@ -1,4 +1,6 @@
+import { Loader } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
+import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -17,12 +19,12 @@ import { type SubscribeRequestDto } from '../../types/types.js';
 
 const SubscriptionPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
-    const { subscriptionPlans, currentSubscription } = useAppSelector(
-        ({ subscriptions }) => ({
+    const { dataStatus, subscriptionPlans, currentSubscription } =
+        useAppSelector(({ subscriptions }) => ({
             subscriptionPlans: subscriptions.subscriptionPlans,
             currentSubscription: subscriptions.currentSubscription,
-        }),
-    );
+            dataStatus: subscriptions.dataStatus,
+        }));
 
     const navigate = useNavigate();
 
@@ -61,6 +63,10 @@ const SubscriptionPage = (): JSX.Element => {
         [dispatch, navigate],
     );
 
+    if (dataStatus === DataStatus.PENDING) {
+        return <Loader />;
+    }
+
     return (
         <div
             className={
@@ -98,38 +104,39 @@ const SubscriptionPage = (): JSX.Element => {
                 )}
             </div>
             <div className={'flex w-full flex-col items-center gap-6'}>
-                {subscriptionPlans.map((plan) => {
-                    if (
-                        currentSubscription &&
-                        changeSubscription &&
-                        currentSubscription.planId !== plan.id
-                    ) {
-                        return (
-                            <SubscriptionPlan
-                                key={plan.id}
-                                id={plan.id}
-                                name={plan.name}
-                                price={plan.price}
-                                description={plan.description ?? ''}
-                                priceToken={plan.priceToken}
-                                handleClick={handleCreateSubscription}
-                            />
-                        );
-                    }
-                    if (!currentSubscription) {
-                        return (
-                            <SubscriptionPlan
-                                key={plan.id}
-                                id={plan.id}
-                                name={plan.name}
-                                price={plan.price}
-                                description={plan.description ?? ''}
-                                priceToken={plan.priceToken}
-                                handleClick={handleCreateSubscription}
-                            />
-                        );
-                    }
-                })}
+                {subscriptionPlans &&
+                    subscriptionPlans.map((plan) => {
+                        if (
+                            currentSubscription &&
+                            changeSubscription &&
+                            currentSubscription.planId !== plan.id
+                        ) {
+                            return (
+                                <SubscriptionPlan
+                                    key={plan.id}
+                                    id={plan.id}
+                                    name={plan.name}
+                                    price={plan.price}
+                                    description={plan.description ?? ''}
+                                    priceToken={plan.priceToken}
+                                    handleClick={handleCreateSubscription}
+                                />
+                            );
+                        }
+                        if (!currentSubscription) {
+                            return (
+                                <SubscriptionPlan
+                                    key={plan.id}
+                                    id={plan.id}
+                                    name={plan.name}
+                                    price={plan.price}
+                                    description={plan.description ?? ''}
+                                    priceToken={plan.priceToken}
+                                    handleClick={handleCreateSubscription}
+                                />
+                            );
+                        }
+                    })}
             </div>
         </div>
     );

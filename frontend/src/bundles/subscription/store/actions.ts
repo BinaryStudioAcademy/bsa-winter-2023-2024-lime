@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { actions as appActions } from '~/app/store/app.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import { notificationManager } from '~/framework/notification/notification.js';
@@ -19,7 +18,7 @@ const loadAllSubscriptionPlans = createAsyncThunk<
     undefined,
     AsyncThunkConfig
 >(
-    'subscriptions/loadAllPlans',
+    'subscription/loadAllPlans',
     async (_, { extra: { subscriptionPlansApi } }) => {
         return subscriptionPlansApi.getAllSubscriptionPlans();
     },
@@ -29,7 +28,7 @@ const loadCurrentSubscription = createAsyncThunk<
     Record<'currentSubscription', SubscriptionGetItemResponseDto>,
     undefined,
     AsyncThunkConfig
->('subscriptions/loadCurrent', async (_, { extra: { subscriptionApi } }) => {
+>('subscription/loadCurrent', async (_, { extra: { subscriptionApi } }) => {
     const currentSubscription = await subscriptionApi.loadCurrentSubscription();
     return { currentSubscription };
 });
@@ -39,7 +38,7 @@ const createSubscription = createAsyncThunk<
     SubscribeRequestDto,
     AsyncThunkConfig
 >(
-    'subscriptions/createSubscription',
+    'subscription/createSubscription',
     async (payload, { extra: { subscriptionApi } }) => {
         return subscriptionApi.createSubscription(payload);
     },
@@ -50,7 +49,7 @@ const updateCancelSubscription = createAsyncThunk<
     CancelSubscriptionRequestDto,
     AsyncThunkConfig
 >(
-    'subscriptions/cancelSubscription',
+    'subscription/cancelSubscription',
     async (payload, { extra: { subscriptionApi } }) => {
         const { cancelAtPeriodEnd } =
             await subscriptionApi.cancelSubscription(payload);
@@ -73,7 +72,7 @@ const confirmPayment = createAsyncThunk<
     unknown,
     ConfirmPaymentPayload,
     AsyncThunkConfig
->('subscriptions/confirm-payment-intent', async (payload, { dispatch }) => {
+>('subscription/confirm-payment-intent', async (payload) => {
     const { stripe, elements } = payload;
 
     const { error } = await stripe.confirmPayment({
@@ -87,10 +86,7 @@ const confirmPayment = createAsyncThunk<
         error &&
         (error.type === 'card_error' || error.type === 'validation_error')
     ) {
-        notificationManager.error('Payment error!');
-    } else {
-        notificationManager.success('You successfuly bought a subscription!');
-        void dispatch(appActions.navigate(AppRoute.SUBSCRIPTION));
+        notificationManager.error(error.message as string);
     }
 });
 

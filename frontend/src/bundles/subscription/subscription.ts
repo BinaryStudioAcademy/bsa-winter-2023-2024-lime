@@ -17,3 +17,5 @@ const subscriptionApi = new SubscriptionsApi({
 });
 
 export { subscriptionApi, subscriptionPlansApi };
+export { SubscriptionCheckout } from './pages/subscription-checkout/subscription-checkout.js';
+export { SubscriptionPage } from './pages/subscription-page/subscription-page.js';

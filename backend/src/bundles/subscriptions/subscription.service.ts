@@ -6,7 +6,7 @@ import {
     HttpCode,
     HttpError,
     SubscriptionValidationMessage,
-    SubscriptionWebHooks,
+    SubscriptionWebHook,
 } from './enums/enums.js';
 import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionRepository } from './subscription.repository.js';
@@ -124,7 +124,7 @@ class SubscriptionService
         }
 
         switch (stripeResponse.type) {
-            case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_UPDATED: {
+            case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_UPDATED: {
                 const subscription = stripeResponse.data.object;
                 const currentSubscription =
                     await this.subscriptionRepository.updateSubscriptionByToken(
@@ -149,11 +149,7 @@ class SubscriptionService
                     await this.subscriptionRepository.findAllActiveUserSubscriptions(
                         userId,
                     );
-                if (
-                    activeSubscriptions &&
-                    activeSubscriptions.length > 1 &&
-                    activeSubscriptions
-                ) {
+                if (activeSubscriptions && activeSubscriptions.length > 1) {
                     for (const [
                         index,
                         subscription,
@@ -170,7 +166,8 @@ class SubscriptionService
 
                 break;
             }
-            case SubscriptionWebHooks.CUSTOMER_SUBSCRIPTION_DELETED: {
+            //Considered delete subscription from database if it's cancelled
+            case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_DELETED: {
                 const subscription = stripeResponse.data.object;
                 await this.subscriptionRepository.updateSubscriptionByToken(
                     subscription.id,
