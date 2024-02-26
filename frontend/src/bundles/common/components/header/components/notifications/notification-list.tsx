@@ -22,18 +22,20 @@ const NotificationList = ({
         <div className="bg-lm-black-100 absolute right-0 flex w-52 flex-col items-center justify-start rounded-md text-white">
             {notifications.map((notification, index) => (
                 <>
-                    <details className="w-full border rounded" key={notification.id}>
-                        <summary className=" bg-lm-black-100 hover:bg-lm-black-300 cursor-pointer flex items-center justify-center rounded-md p-2 text-white">
-                            
+                    <details
+                        className="w-full rounded border"
+                        key={notification.id}
+                    >
+                        <summary className=" bg-lm-black-100 hover:bg-lm-black-300 flex cursor-pointer items-center justify-center rounded-md p-2 text-white">
                             {notification.title}
                         </summary>
                         <button
                             key={index}
                             data-index={notification.id}
                             onClick={handleClick}
-                            type='button'
+                            type="button"
                         >
-                            <p className="bg-lm-black-100 hover:bg-lm-black-200 p-4 rounded">
+                            <p className="bg-lm-black-100 hover:bg-lm-black-200 rounded p-4">
                                 {notification.description}
                             </p>
                         </button>
