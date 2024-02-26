@@ -23,6 +23,30 @@ const routes = [
                 path: AppRoute.ROOT,
                 element: 'Root',
             },
+            {
+                path: AppRoute.GOALS,
+                element: <div>GOALS PAGE</div>,
+            },
+            {
+                path: AppRoute.WORKOUT,
+                element: <div>WORKOUT PAGE</div>,
+            },
+            {
+                path: AppRoute.OVERVIEW,
+                element: <div>Overview</div>,
+            },
+            {
+                path: AppRoute.SCHEDULE,
+                element: <div>SCHEDULE PAGE</div>,
+            },
+            {
+                path: AppRoute.HELP,
+                element: <div>HELP PAGE</div>,
+            },
+            {
+                path: AppRoute.LOGOUT,
+                element: <div>LOGOUT PAGE</div>,
+            },
         ],
         isPrivate: true,
     },
