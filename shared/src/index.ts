@@ -1,5 +1,12 @@
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export {
+    type NotificationRequestDto,
+    type NotificationResponseDto,
+    NotificationsApiPath,
+    NotificationType,
+    notificationValidationSchema,
+} from './bundles/notifications/notifications.js';
+export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
@@ -32,6 +39,7 @@ export {
 export { type Storage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type PaginationParameters,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,
