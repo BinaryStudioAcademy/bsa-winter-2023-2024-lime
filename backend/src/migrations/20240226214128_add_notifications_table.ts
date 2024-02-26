@@ -1,7 +1,6 @@
 import { type Knex } from 'knex';
 
-//TODO
-import { NotificationType } from '~/bundles/notifications/types/notification-type.type.js';
+import { NotificationType } from '~/bundles/notifications/notifications.js';
 
 const TABLE_NAME = 'notifications';
 const USERS_TABLE_NAME = 'users';
