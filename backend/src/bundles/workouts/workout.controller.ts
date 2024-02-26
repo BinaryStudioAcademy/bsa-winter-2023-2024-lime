@@ -20,6 +20,34 @@ import {
 } from './validation-schemas/validation-schemas.js';
 import { type WorkoutService } from './workout.service.js';
 
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      Workout:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          activity:
+ *            type: string
+ *            enum:
+ *              - cycling
+ *              - running
+ *              - walking
+ *          steps:
+ *            type: number
+ *            minimum: 0
+ *          duration:
+ *            type: number
+ *            minimum: 0
+ *          kilocalories:
+ *            type: number
+ *            minimum: 0
+ */
+
 class WorkoutController extends BaseController {
     private workoutService: WorkoutService;
 
@@ -84,6 +112,35 @@ class WorkoutController extends BaseController {
                 ),
         });
     }
+    /**
+     * @swagger
+     * /api/v1/workouts/:
+     *    get:
+     *      tags:
+     *       - Workouts
+     *      description: Returns an array of workouts
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 properties:
+     *                   items:
+     *                     type: array
+     *                     items:
+     *                       $ref: '#/components/schemas/Workout'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async find(
         options: ApiHandlerOptions<{
             params: { id: string };
@@ -94,6 +151,35 @@ class WorkoutController extends BaseController {
             payload: await this.workoutService.find({ id: options.params.id }),
         };
     }
+    /**
+     * @swagger
+     * /api/v1/workouts/{id}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *      tags:
+     *       - Workouts
+     *      description: Returns workout
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/Workout'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async findAll(
         options: ApiHandlerOptions,
     ): Promise<ApiHandlerResponse> {
@@ -105,6 +191,45 @@ class WorkoutController extends BaseController {
         };
     }
 
+    /**
+     * @swagger
+     * /api/v1/workouts/:
+     *    post:
+     *      tags:
+     *       - Workouts
+     *      description: Creates workout
+     *      security:
+     *        - bearerAuth: []
+     *      requestBody:
+     *        description: Data for workout
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                 activity:
+     *                     type: string
+     *                     enum:
+     *                        - cycling
+     *                        - running
+     *                        - walking
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/Workout'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async create(
         options: ApiHandlerOptions<{
             body: CreateWorkoutRequestDto;
@@ -118,6 +243,58 @@ class WorkoutController extends BaseController {
             }),
         };
     }
+    /**
+     * @swagger
+     * /api/v1/workouts/{id}:
+     *    put:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *      tags:
+     *       - Workouts
+     *      description: Updates workout
+     *      security:
+     *        - bearerAuth: []
+     *      requestBody:
+     *        description: Data for workout
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                 activity:
+     *                     type: string
+     *                     enum:
+     *                        - cycling
+     *                        - running
+     *                        - walking
+     *                 steps:
+     *                     type: number
+     *                     minimum: 0
+     *                 duration:
+     *                     type: number
+     *                     minimum: 0
+     *                 kilocalories:
+     *                     type: number
+     *                     minimum: 0
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/Workout'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async update(
         options: ApiHandlerOptions<{
             body: WorkoutRequestDto;
@@ -133,6 +310,34 @@ class WorkoutController extends BaseController {
         };
     }
 
+    /**
+     * @swagger
+     * /api/v1/workouts/{id}:
+     *    delete:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *      tags:
+     *       - Workouts
+     *      description: Deletes workout
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: boolean
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async delete(
         options: ApiHandlerOptions<{
             params: { id: string };
