@@ -6,7 +6,6 @@ const AppRoute = {
     SIGN_UP: '/sign-up',
     GOALS: '/goals',
     OVERVIEW: '/overview',
-    GOALS: '/goals',
     WORKOUT: '/workout',
     SCHEDULE: '/schedule',
     NOT_FOUND: '*',
