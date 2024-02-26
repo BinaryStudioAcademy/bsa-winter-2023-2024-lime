@@ -1,14 +1,16 @@
 import { type ValueOf } from 'shared/src/types/types.js';
 
-import { getValidClassNames } from '../../helpers/helpers.js';
-import { type IconColor, type IconSize } from './enums/enums.js';
+import { type ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+
+import { type IconColor, type IconName } from './enums/enums.js';
 import { IconComponent } from './enums/icon-components.enum.js';
-import { type IconName } from './types/icon.type.js';
+import { sizeToClass } from './helpers/helpers.js';
 
 type Properties = {
-    name: IconName;
+    name: ValueOf<typeof IconName>;
     color?: ValueOf<typeof IconColor>;
-    size?: ValueOf<typeof IconSize>;
+    size?: ValueOf<typeof ComponentSize>;
     className?: string;
 };
 
@@ -17,7 +19,11 @@ const Icon = ({ name, color, size, className }: Properties): JSX.Element => {
 
     return (
         <SvgIconComponent
-            className={getValidClassNames(className, color, size)}
+            className={getValidClassNames(
+                className,
+                color,
+                size && sizeToClass[size],
+            )}
         />
     );
 };

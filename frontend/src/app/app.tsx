@@ -1,72 +1,35 @@
-import reactLogo from '~/assets/img/react.svg';
-import { BaseLayout } from '~/bundles/common/components/base-layout/base-layout.js';
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import {
-    Link,
     Loader,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
-import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
-    useAppSelector,
     useEffect,
-    useLocation,
+    useState,
 } from '~/bundles/common/hooks/hooks.js';
-import { actions as userActions } from '~/bundles/users/store/users.js';
 
 const App: React.FC = () => {
-    const { pathname } = useLocation();
+    const [isRefreshing, setIsRefreshing] = useState(true);
     const dispatch = useAppDispatch();
-    const { users, dataStatus } = useAppSelector(({ users }) => ({
-        users: users.users,
-        dataStatus: users.dataStatus,
-    }));
-
-    const isRoot = pathname === AppRoute.ROOT;
-    const isLoading =
-        dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
     useEffect(() => {
-        if (isRoot) {
-            void dispatch(userActions.loadAll());
-        }
-    }, [isRoot, dispatch]);
+        const refreshUser = async (): Promise<void> => {
+            try {
+                await dispatch(authActions.refreshUser());
+            } finally {
+                setIsRefreshing(false);
+            }
+        };
 
-    return (
-        <>
-            <BaseLayout>
-                <img src={reactLogo} width="30" alt="logo" />
+        void refreshUser();
+    }, [dispatch]);
 
-                <ul>
-                    <li>
-                        <Link to={AppRoute.ROOT}>Root</Link>
-                    </li>
-                    <li>
-                        <Link to={AppRoute.SIGN_IN}>Sign in</Link>
-                    </li>
-                    <li>
-                        <Link to={AppRoute.SIGN_UP}>Sign up</Link>
-                    </li>
-                </ul>
-                <p>Current path: {pathname}</p>
+    if (isRefreshing) {
+        return <Loader isOverflow />;
+    }
 
-                <div>
-                    <RouterOutlet />
-                </div>
-                {isRoot && (
-                    <>
-                        <h2>Users:</h2>
-                        <h3>Status: {isLoading ? <Loader /> : dataStatus}</h3>
-                        <ul>
-                            {users.map((it) => (
-                                <li key={it.id}>{it.email}</li>
-                            ))}
-                        </ul>
-                    </>
-                )}
-            </BaseLayout>
-        </>
-    );
+    return <RouterOutlet />;
 };
 
 export { App };

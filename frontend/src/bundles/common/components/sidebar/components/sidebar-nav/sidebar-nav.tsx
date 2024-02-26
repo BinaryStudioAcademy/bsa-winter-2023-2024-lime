@@ -1,26 +1,19 @@
-import { IconSize } from '~/bundles/common/components/icon/enums/enums.js';
-import { type IconName } from '~/bundles/common/components/icon/types/types.js';
-import { type AppRoute } from '~/bundles/common/enums/enums.js';
+import {
+    Button,
+    ButtonVariant,
+    Link,
+} from '~/bundles/common/components/components.js';
+import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/helpers.js';
+import { type AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import {
-    Button,
-    ButtonSize,
-    ButtonVariant,
-    Icon,
-    Link,
-} from '../../../components.js';
-
 type SidebarNavProperties = {
     text: string;
-    icon: IconName;
+    icon: JSX.Element;
     to: ValueOf<typeof AppRoute>;
     isActive?: boolean;
-};
-
-const getIcon = (name: IconName): JSX.Element => {
-    return <Icon name={name} size={IconSize.LARGE} />;
 };
 
 const SidebarNav = ({
@@ -33,20 +26,30 @@ const SidebarNav = ({
     const handleNavigation = useCallback((): void => {
         navigate(to);
     }, [navigate, to]);
-    const iconElement = getIcon(icon);
+
+    const classes = {
+        active: 'text-lm-black-100 hover:text-lm-black-200',
+        inactive: 'text-lm-grey-200 hover:text-lm-black-400',
+    };
+
+    const enhacedIcon = addSizePropertyHeroIcons({
+        icon,
+        size: ComponentSize.MEDIUM,
+    });
+
     return (
-        <Link
-            to={to}
-            className="text-lm-grey-200 hover:text-lm-black-200 flex items-center"
-        >
+        <Link to={to} className="flex items-center justify-center">
             <Button
                 type="button"
                 label={text}
-                leftIcon={iconElement}
+                className={getValidClassNames(
+                    isActive ? classes.active : classes.inactive,
+                )}
+                leftIcon={enhacedIcon}
                 variant={ButtonVariant.SIDEBAR}
                 onClick={handleNavigation}
                 isActive={isActive}
-                size={ButtonSize.MEDIUM}
+                size={ComponentSize.MEDIUM}
             />
         </Link>
     );
