@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { type PayloadAction , type ValueOf } from '~/bundles/common/types/types.js';
+import {
+    type PayloadAction,
+    type ValueOf,
+} from '~/bundles/common/types/types.js';
 
 import { type Theme } from '../enums/theme.js';
 import { fetchTheme, setTheme } from './actions.js';
