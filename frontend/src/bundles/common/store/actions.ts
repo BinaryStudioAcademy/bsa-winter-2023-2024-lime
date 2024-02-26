@@ -19,7 +19,7 @@ const fetchTheme = createAsyncThunk<ValueOf<typeof Theme>, undefined>(
     },
 );
 
-const setTheme = createAsyncThunk<ValueOf<typeof Theme>, ValueOf<typeof Theme>>(
+const toggleTheme = createAsyncThunk<ValueOf<typeof Theme>, ValueOf<typeof Theme>>(
     'theme/toggleTheme',
     async (theme: ValueOf<typeof Theme>) => {
         applyThemeClassname(theme);
@@ -29,4 +29,4 @@ const setTheme = createAsyncThunk<ValueOf<typeof Theme>, ValueOf<typeof Theme>>(
     },
 );
 
-export { fetchTheme, setTheme };
+export { fetchTheme, toggleTheme };

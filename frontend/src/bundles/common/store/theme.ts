@@ -1,11 +1,11 @@
-import { fetchTheme, setTheme } from './actions.js';
+import { fetchTheme, toggleTheme } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     fetchTheme,
-    setTheme,
+    toggleTheme,
 };
 
-export { allActions as actions };
 export { reducer } from './slice.js';
+export { allActions as actions };

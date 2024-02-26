@@ -6,27 +6,22 @@ import {
     useCallback,
     useEffect,
 } from '../../hooks/hooks.js';
-import { Loader } from '../components.js';
 import { Switch } from './components/switch.js';
 
 function ThemeSwitcher(): JSX.Element {
     const dispatch = useAppDispatch();
-    const { theme, loading } = useAppSelector((state) => state.theme);
+    const { theme } = useAppSelector((state) => state.theme);
 
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());
     }, [dispatch]);
 
     const toggleTheme = useCallback(() => {
-        if (!loading && theme) {
+        if (theme) {
             const newTheme = theme === 'dark' ? 'light' : 'dark';
-            void dispatch(themeActions.setTheme(newTheme));
+            void dispatch(themeActions.toggleTheme(newTheme));
         }
-    }, [dispatch, loading, theme]);
-
-    if (loading) {
-        return <Loader />;
-    }
+    }, [dispatch, theme]);
 
     return (
         <>
