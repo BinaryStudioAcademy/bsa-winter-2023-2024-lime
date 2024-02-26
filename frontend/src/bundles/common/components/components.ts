@@ -14,6 +14,7 @@ export { Radio } from './radio/radio.js';
 export { ResetPasswordForm } from './reset-password-form/reset-password-form.js';
 export { RouterProvider } from './router-provider/router-provider.js';
 export { Select } from './select/select.js';
+export { SubNavigation } from './sub-navigation/sub-navigation.js';
 export { ThemeSwitcher } from './theme-switcher/theme-switcher.js';
 export { Toggle } from './toggle/toggle.js';
 export { Provider as StoreProvider } from 'react-redux';
