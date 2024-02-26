@@ -9,7 +9,6 @@ import {
 import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
-import { RadioType } from '~/bundles/common/enums/radio-type.enum.js';
 import {
     useAppForm,
     useAppSelector,
@@ -150,7 +149,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Male"
                         value={Gender.MALE}
                         control={control}
-                        type={RadioType.CARD}
+                        type="card"
                         className="rounded-bl-5 lg:w-83 rounded-l-lg "
                     />
                     <Radio
@@ -159,7 +158,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Female"
                         value={Gender.FEMALE}
                         control={control}
-                        type={RadioType.CARD}
+                        type="card"
                         className="lg:w-83"
                     />
                     <Radio
@@ -168,7 +167,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Prefer not to say"
                         value={Gender.OTHER}
                         control={control}
-                        type={RadioType.CARD}
+                        type="card"
                         className="lg:w-50 rounded-r-lg"
                     />
                 </div>
