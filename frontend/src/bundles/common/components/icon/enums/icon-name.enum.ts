@@ -4,6 +4,7 @@ const IconName = {
     notFoundIcon: 'notFoundIcon',
     stravaIcon: 'stravaIcon',
     googleFitIcon: 'googleFitIcon',
+    goalsIcon: 'goalsIcon',
     workoutIcon: 'workoutIcon',
 } as const;
 
