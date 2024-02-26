@@ -1,12 +1,7 @@
 import { z } from 'zod';
 
-import { ParametersValidationMessage } from '../enums/enums.js';
-
 const idParameterSchema = z.object({
-    id: z
-        .string()
-        .regex(/^\d+$/, ParametersValidationMessage.INVALID_ID)
-        .transform(Number),
+    id: z.coerce.number().min(1).int(),
 });
 
 export { idParameterSchema };
