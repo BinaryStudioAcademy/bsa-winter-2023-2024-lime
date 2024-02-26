@@ -1,11 +1,21 @@
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export {
+    type PasswordForgotRequestDto,
+    type PasswordForgotResponseDto,
+    type PasswordResetRequestDto,
+    type PasswordResetResponseDto,
+    PasswordResetApiPath,
+    PasswordResetValidationMessage,
+} from './bundles/password-reset/password-reset.js';
+export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     Gender,
+    passwordForgotValidationSchema,
+    passwordResetValidationSchema,
     userAuthValidationSchema,
     UsersApiPath,
     userSignUpValidationSchema,
