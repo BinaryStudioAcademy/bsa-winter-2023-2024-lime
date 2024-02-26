@@ -29,12 +29,12 @@ jobs:
 
         steps:
             - name: Checkout Source Code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   fetch-depth: 0
 
             - name: Install NodeJS
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version-file: .nvmrc
 
@@ -52,14 +52,3 @@ jobs:
 
               run: |
                   npx danger ci --failOnErrors --text-only
-
-            - name: Add Folder Labels
-              uses: actions/labeler@v4
-              with:
-                  repo-token: '${{ secrets.GITHUB_TOKEN }}'
-                  sync-labels: true
-
-            - name: Add Environment Labels
-              uses: ffittschen/pr-branch-labeler@v1
-              with:
-                  repo-token: '${{ secrets.GITHUB_TOKEN }}'

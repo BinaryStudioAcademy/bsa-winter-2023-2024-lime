@@ -10,8 +10,11 @@ import { type Config } from '~/common/config/config.js';
 import { type Database } from '~/common/database/database.js';
 import { ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
+import { createProtectedRoutes } from '~/common/helpers/create-protected-routes-helper.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
+import { authPlugin } from '~/common/plugins/plugins.js';
+import { jwtService } from '~/common/services/services.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -116,6 +119,13 @@ class BaseServerApp implements ServerApp {
         );
     }
 
+    private async initPlugins(): Promise<void> {
+        await this.app.register(authPlugin, {
+            jwtService,
+            protectedRoutes: createProtectedRoutes(this.apis),
+        });
+    }
+
     private initValidationCompiler(): void {
         this.app.setValidatorCompiler<ValidationSchema>(({ schema }) => {
             return <T, R = ReturnType<ValidationSchema['parse']>>(
@@ -188,6 +198,8 @@ class BaseServerApp implements ServerApp {
 
         await this.initMiddlewares();
 
+        await this.initPlugins();
+
         this.initValidationCompiler();
 
         this.initErrorHandler();
@@ -199,6 +211,7 @@ class BaseServerApp implements ServerApp {
         await this.app
             .listen({
                 port: this.config.ENV.APP.PORT,
+                host: this.config.ENV.APP.HOST,
             })
             .catch((error: Error) => {
                 this.logger.error(error.message, {

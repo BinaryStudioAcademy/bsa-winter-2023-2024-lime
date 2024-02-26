@@ -1,1 +1,6 @@
-export { AuthApiPath } from 'shared/build/index.js';
+export {
+    AuthApiPath,
+    HttpCode,
+    HttpError,
+    UserValidationMessage,
+} from 'shared';

@@ -1,4 +1,4 @@
-import pino, { type Logger as TLogger } from 'pino';
+import { type Logger as TLogger, pino } from 'pino';
 import pretty from 'pino-pretty';
 
 import { type Logger } from './types/types.js';
@@ -7,7 +7,7 @@ class BaseLogger implements Logger {
     private logger: TLogger;
 
     public constructor() {
-        this.logger = pino(pretty());
+        this.logger = pino(pretty.default());
 
         this.logger.info('Logger is created…');
     }

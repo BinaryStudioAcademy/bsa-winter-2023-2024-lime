@@ -1,8 +1,9 @@
-import { type UserSignUpRequestDto } from '~/bundles/users/users';
+import { type UserSignUpForm } from '../type.js';
 
-const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDto = {
+const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpForm = {
     email: '',
     password: '',
+    passwordConfirm: '',
 };
 
 export { DEFAULT_SIGN_UP_PAYLOAD };

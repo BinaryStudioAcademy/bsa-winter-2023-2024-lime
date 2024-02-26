@@ -6,11 +6,13 @@ import {
 import { configureStore } from '@reduxjs/toolkit';
 
 import { authApi } from '~/bundles/auth/auth.js';
-import { reducer as authReducer } from '~/bundles/auth/store/';
+import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
-import { reducer as usersReducer } from '~/bundles/users/store/';
+import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { type Config } from '~/framework/config/config.js';
+
+import { errorMiddleware } from './middlewares/error-middleware.js';
 
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
@@ -38,13 +40,12 @@ class Store {
                 auth: authReducer,
                 users: usersReducer,
             },
-            middleware: (getDefaultMiddleware) => {
-                return getDefaultMiddleware({
+            middleware: (getDefaultMiddleware) =>
+                getDefaultMiddleware({
                     thunk: {
                         extraArgument: this.extraArguments,
                     },
-                });
-            },
+                }).prepend(errorMiddleware),
         });
     }
 

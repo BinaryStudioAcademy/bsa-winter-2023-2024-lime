@@ -28,7 +28,7 @@ const DangerConfig = {
     TITLE: {
         IS_REQUIRED: true,
         PATTERN: new RegExp(
-            `^((${
+            `^Release [0-9]+\\.[0-9]+\\.[0-9]+$|((${
                 ProjectPrefix.APP
             })-[0-9]{1,6}): (.*\\S)$|(${ProjectPrefix.ENVIRONMENTS.join(
                 '|',
@@ -37,9 +37,6 @@ const DangerConfig = {
     },
     ASSIGNEES: {
         IS_REQUIRED: true,
-    },
-    PROJECTS: {
-        IS_REQUIRED: false,
     },
     MILESTONE: {
         IS_REQUIRED: true,
@@ -50,7 +47,7 @@ const DangerConfig = {
     BRANCH: {
         IS_REQUIRED: true,
         PATTERN: new RegExp(
-            `^((${Object.values(BranchPrefix).join('|')})/(${
+            `^release-[0-9]+\\.[0-9]+\\.[0-9]+$|((${Object.values(BranchPrefix).join('|')})/(${
                 ProjectPrefix.APP
             })-[0-9]{1,6})-[a-zA-Z0-9-]+$|(${ProjectPrefix.ENVIRONMENTS.join(
                 '|',
@@ -78,14 +75,6 @@ const checkTitle = (titlePattern: RegExp): void => {
                 titlePattern,
             )}.`,
         );
-    }
-};
-
-const checkProjects = (): void => {
-    const { has_projects: hasProjects } = pr.head.repo;
-
-    if (!hasProjects) {
-        fail('This pull request should be linked to a project.');
     }
 };
 
@@ -124,10 +113,6 @@ const applyDanger = (): void => {
 
     if (DangerConfig.ASSIGNEES.IS_REQUIRED) {
         checkAssignees();
-    }
-
-    if (DangerConfig.PROJECTS.IS_REQUIRED) {
-        checkProjects();
     }
 
     if (DangerConfig.MILESTONE.IS_REQUIRED) {

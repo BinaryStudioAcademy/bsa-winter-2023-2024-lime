@@ -4,9 +4,9 @@ import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import {
+    type UserAuthRequestDto,
+    type UserAuthResponseDto,
     type UserGetAllResponseDto,
-    type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
 } from './types/types.js';
 
 class UserService implements Service {
@@ -16,8 +16,10 @@ class UserService implements Service {
         this.userRepository = userRepository;
     }
 
-    public find(): ReturnType<Service['find']> {
-        return Promise.resolve(null);
+    public async find(
+        query: Record<string, unknown>,
+    ): Promise<UserEntity | null> {
+        return await this.userRepository.find(query);
     }
 
     public async findAll(): Promise<UserGetAllResponseDto> {
@@ -29,18 +31,19 @@ class UserService implements Service {
     }
 
     public async create(
-        payload: UserSignUpRequestDto,
-    ): Promise<UserSignUpResponseDto> {
-        const { hash, salt } = cryptService.encryptSync(payload.password);
+        payload: UserAuthRequestDto,
+    ): Promise<UserAuthResponseDto> {
+        const { email, password } = payload;
+        const { hash } = cryptService.encryptSync(password);
+
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
-                email: payload.email,
-                passwordSalt: salt, // TODO
-                passwordHash: hash, // TODO
+                email,
+                passwordHash: hash,
             }),
         );
 
-        return user.toObject();
+        return user.toObject() as UserAuthResponseDto;
     }
 
     public update(): ReturnType<Service['update']> {

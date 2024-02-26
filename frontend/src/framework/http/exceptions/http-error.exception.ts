@@ -1,4 +1,4 @@
-import { HttpError as LibraryHttpError } from 'shared/build/index.js';
+import { HttpError as LibraryHttpError } from 'shared';
 
 import { type ServerErrorType } from '~/bundles/common/enums/enums.js';
 import {
@@ -12,12 +12,12 @@ type Constructor = {
     status: ValueOf<typeof HttpCode>;
     details: ServerErrorDetail[];
     message: string;
-    errorType: ServerErrorType;
+    errorType: ValueOf<typeof ServerErrorType>;
     cause?: unknown;
 };
 
 class HttpError extends LibraryHttpError {
-    public errorType: ServerErrorType;
+    public errorType: ValueOf<typeof ServerErrorType>;
 
     public details: ServerErrorDetail[];
 

@@ -1,1 +1,1 @@
-export { HttpError } from 'shared/build/index.js';
+export { HttpError } from 'shared';

@@ -1,46 +1,62 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import {
     type Control,
     type DefaultValues,
     type FieldErrors,
     type FieldValues,
     type UseFormHandleSubmit,
+    type UseFormProps,
     type ValidationMode,
 } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { type ValidationSchema } from '~/bundles/common/types/types.js';
 
 type Parameters<T extends FieldValues = FieldValues> = {
     defaultValues: DefaultValues<T>;
-    validationSchema?: ValidationSchema;
     mode?: keyof ValidationMode;
+    validationSchema?: ValidationSchema;
+    shouldUnregister?: boolean;
 };
 
 type ReturnValue<T extends FieldValues = FieldValues> = {
     control: Control<T, null>;
     errors: FieldErrors<T>;
+    isDirty: boolean;
+    isValid: boolean;
     handleSubmit: UseFormHandleSubmit<T>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
-    validationSchema,
     defaultValues,
-    mode,
+    mode = 'onTouched',
+    validationSchema,
+    shouldUnregister = true,
 }: Parameters<T>): ReturnValue<T> => {
+    let parameters: UseFormProps<T> = {
+        defaultValues,
+        mode,
+        shouldUnregister,
+    };
+
+    if (validationSchema) {
+        parameters = {
+            ...parameters,
+            resolver: zodResolver(validationSchema),
+        };
+    }
+
     const {
         control,
+        formState: { errors, isDirty, isValid },
         handleSubmit,
-        formState: { errors },
-    } = useForm<T>({
-        mode,
-        defaultValues,
-        resolver: validationSchema ? zodResolver(validationSchema) : undefined,
-    });
+    } = useForm<T>(parameters);
 
     return {
         control,
         errors,
+        isDirty,
+        isValid,
         handleSubmit,
     };
 };

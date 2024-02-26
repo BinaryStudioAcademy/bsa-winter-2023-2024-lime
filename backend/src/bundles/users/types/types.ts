@@ -1,5 +1,6 @@
 export {
+    type UserAuthRequestDto,
+    type UserAuthResponseDto,
     type UserGetAllResponseDto,
-    type UserSignUpRequestDto,
-    type UserSignUpResponseDto,
-} from 'shared/build/index.js';
+    type ValueOf,
+} from 'shared';
