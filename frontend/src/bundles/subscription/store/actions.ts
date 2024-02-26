@@ -45,7 +45,7 @@ const createSubscription = createAsyncThunk<
 );
 
 const updateCancelSubscription = createAsyncThunk<
-    boolean,
+    Record<'cancelAtPeriodEnd', boolean>,
     CancelSubscriptionRequestDto,
     AsyncThunkConfig
 >(
@@ -64,7 +64,7 @@ const updateCancelSubscription = createAsyncThunk<
             );
         }
 
-        return cancelAtPeriodEnd;
+        return { cancelAtPeriodEnd };
     },
 );
 

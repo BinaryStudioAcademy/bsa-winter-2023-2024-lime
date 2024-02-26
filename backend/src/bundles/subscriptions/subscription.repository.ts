@@ -67,24 +67,10 @@ class SubscriptionRepository
     public async create(
         entity: SubscriptionEntity,
     ): Promise<SubscriptionEntity> {
-        const {
-            userId,
-            planId,
-            subscriptionToken,
-            status,
-            expirationDate,
-            cancelAtPeriodEnd,
-        } = entity.toNewObject();
-
         const subscription = await this.subscriptionModel
             .query()
             .insert({
-                userId,
-                planId,
-                subscriptionToken,
-                status,
-                expirationDate,
-                cancelAtPeriodEnd,
+                ...entity.toNewObject(),
             })
             .returning('*')
             .execute();
@@ -103,23 +89,35 @@ class SubscriptionRepository
         subscriptionToken: string,
         query: Record<string, unknown>,
     ): Promise<SubscriptionEntity | null> {
-        await this.subscriptionModel
+        const updatedSubscription = await this.subscriptionModel
             .query()
             .findOne({ subscriptionToken })
             .patch(query)
+            .returning('*')
+            .first()
             .execute();
-
-        const updatedSubscription = await this.findCurrentSubscription({
-            subscriptionToken,
-        });
 
         if (!updatedSubscription) {
             return null;
         }
 
+        const { subscriptionPlan, ...subscriptionInfo } = updatedSubscription;
+
         return SubscriptionEntity.initialize({
-            ...updatedSubscription.toObject(),
+            ...subscriptionInfo,
+            subscriptionPlanName: subscriptionPlan?.name ?? null,
+            subscriptionPlanPrice: subscriptionPlan?.price ?? null,
+            subscriptionPlanDescription: subscriptionPlan?.description ?? null,
         });
+    }
+
+    public async delete(query: Record<string, unknown>): Promise<boolean> {
+        const deletedRows = await this.subscriptionModel
+            .query()
+            .where(query)
+            .delete();
+
+        return deletedRows > 0;
     }
 }
 

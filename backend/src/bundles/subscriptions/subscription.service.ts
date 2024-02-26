@@ -114,7 +114,7 @@ class SubscriptionService
         }
     }
 
-    public async webHookListener({ body }: { body: unknown }): Promise<void> {
+    public async webHookListener(body: unknown): Promise<void> {
         const stripeResponse = body as Stripe.Event;
         if (
             !stripeResponse ||
@@ -127,7 +127,7 @@ class SubscriptionService
         switch (stripeResponse.type) {
             case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_UPDATED: {
                 const subscription = stripeResponse.data.object;
-                const currentSubscription =
+                const updatedSubscription =
                     await this.subscriptionRepository.updateSubscriptionByToken(
                         subscription.id,
                         {
@@ -139,17 +139,17 @@ class SubscriptionService
                             ),
                         },
                     );
-
-                if (!currentSubscription) {
+                if (!updatedSubscription) {
                     return;
                 }
 
-                const { userId } = currentSubscription.toNewObject();
+                const { userId } = updatedSubscription.toObject();
 
                 const activeSubscriptions =
                     await this.subscriptionRepository.findAllActiveUserSubscriptions(
                         userId,
                     );
+
                 if (activeSubscriptions && activeSubscriptions.length > 1) {
                     for (const [
                         index,
@@ -164,22 +164,13 @@ class SubscriptionService
                         }
                     }
                 }
-
                 break;
             }
-            //Considered delete subscription from database if it's cancelled
             case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_DELETED: {
                 const subscription = stripeResponse.data.object;
-                await this.subscriptionRepository.updateSubscriptionByToken(
-                    subscription.id,
-                    {
-                        status: subscription.status,
-                        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-                        expirationDate: formatToDateFromUnix(
-                            subscription.current_period_end,
-                        ),
-                    },
-                );
+                await this.subscriptionRepository.delete({
+                    subscriptionToken: subscription.id,
+                });
                 break;
             }
             default: {

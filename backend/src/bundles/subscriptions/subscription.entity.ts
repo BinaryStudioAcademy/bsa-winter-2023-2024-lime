@@ -70,7 +70,7 @@ class SubscriptionEntity implements Entity {
         subscriptionPlanPrice,
         subscriptionPlanDescription,
     }: {
-        id: number;
+        id: number | null;
         userId: number;
         planId: number;
         subscriptionToken: string;

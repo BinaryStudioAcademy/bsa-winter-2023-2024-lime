@@ -67,7 +67,7 @@ class SubscriptionController extends BaseController {
             path: SubscriptionsApiPath.WEBHOOK,
             method: 'POST',
             handler: (options) => {
-                return this.webHooksListener(
+                return this.webHookListener(
                     options as ApiHandlerOptions<{
                         body: unknown;
                     }>,
@@ -121,18 +121,16 @@ class SubscriptionController extends BaseController {
         };
     }
 
-    private async webHooksListener(
+    private async webHookListener(
         options: ApiHandlerOptions<{
             body: unknown;
         }>,
     ): Promise<ApiHandlerResponse> {
-        const body = options.body;
-
         return {
             status: HttpCode.OK,
-            payload: await this.subscriptionService.webHookListener({
-                body,
-            }),
+            payload: await this.subscriptionService.webHookListener(
+                options.body,
+            ),
         };
     }
 }

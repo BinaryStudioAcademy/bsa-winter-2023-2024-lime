@@ -26,38 +26,25 @@ const SubscriptionPlan = ({
     }, [id, priceToken, handleClick]);
 
     return (
-        <div
-            className={
-                'bg-lm-black-100 flex w-full  flex-col rounded-2xl p-4 md:p-6'
-            }
-        >
-            <div
-                className={
-                    'border-lm-grey-200 mb-4 rounded-md border p-4 text-white md:border-2'
-                }
-            >
-                <p
-                    className={
-                        'text-lm-yellow-100 text-3xl font-extrabold md:text-4xl'
-                    }
-                >
-                    {name}
-                </p>
-                <span className={'text-lm-yellow-100 text-xl font-bold'}>
-                    ${price}
-                </span>{' '}
-                / month
-                <div className={'mt-2.5'}>
-                    <p
-                        className={
-                            'text-lm-grey-100 text-xs sm:text-sm md:text-base'
-                        }
-                    >
-                        {description}
+        <div className="bg-lm-black-100 flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">
+            <div className="border-lm-grey-200 mb-4 flex w-full justify-between rounded-md border p-4 md:border-2">
+                <div className=" flex flex-col text-white">
+                    <p className="text-lm-yellow-100 text-3xl">
+                        {name.toUpperCase()}
                     </p>
+                    <p>
+                        <span className="text-lm-yellow-100 text-xl">
+                            ${price}
+                        </span>
+                        / month
+                    </p>
+                    <div className="mt-2.5">
+                        <p className="text-lm-grey-100 text-xs sm:text-sm md:text-base">
+                            {description}
+                        </p>
+                    </div>
                 </div>
             </div>
-
             <Button
                 type="button"
                 label="Subscribe"

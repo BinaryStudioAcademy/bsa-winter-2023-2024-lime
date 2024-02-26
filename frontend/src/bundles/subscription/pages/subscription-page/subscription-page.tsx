@@ -18,7 +18,6 @@ import { actions as subscriptionActions } from '../../store/subscriptions.js';
 import { type SubscribeRequestDto } from '../../types/types.js';
 
 const SubscriptionPage = (): JSX.Element => {
-    const dispatch = useAppDispatch();
     const { dataStatus, subscriptionPlans, currentSubscription } =
         useAppSelector(({ subscriptions }) => ({
             subscriptionPlans: subscriptions.subscriptionPlans,
@@ -26,9 +25,11 @@ const SubscriptionPage = (): JSX.Element => {
             dataStatus: subscriptions.dataStatus,
         }));
 
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [changeSubscription, setChangeSubscription] = useState(false);
+
     const handleChangeSubscription = useCallback((): void => {
         setChangeSubscription(!changeSubscription);
     }, [changeSubscription]);
@@ -68,11 +69,7 @@ const SubscriptionPage = (): JSX.Element => {
     }
 
     return (
-        <div
-            className={
-                'mx-auto mt-5 flex max-w-[50rem] flex-col justify-center gap-10'
-            }
-        >
+        <div className="mx-auto mt-5 flex max-w-[50rem] flex-col justify-center gap-10 px-2">
             <div className={'flex flex-col items-center justify-center gap-2'}>
                 {currentSubscription ? (
                     <SubscriptionUserPanel
@@ -123,6 +120,7 @@ const SubscriptionPage = (): JSX.Element => {
                                 />
                             );
                         }
+
                         if (!currentSubscription) {
                             return (
                                 <SubscriptionPlan
