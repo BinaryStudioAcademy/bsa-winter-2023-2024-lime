@@ -1,1 +1,1 @@
-export { StravaPaths } from 'shared';
+export { StravaPaths } from './strava-paths.enum.js';

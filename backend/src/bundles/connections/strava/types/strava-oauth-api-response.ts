@@ -1,4 +1,6 @@
 type StravaOAuthApiResponse = {
+    user_id: number;
+    scope: string;
     token_type: string;
     expires_in: number;
     expires_at: number;

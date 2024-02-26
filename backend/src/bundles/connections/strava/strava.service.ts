@@ -12,13 +12,9 @@ import {
     OAuthService,
     Providers,
 } from '~/bundles/connections/oauth/oauth.js';
-import { snakeToCamel } from '~/common/helpers/helpers.js';
 
 import { StravaPaths } from './enums/enums.js';
-import {
-    type StravaOAuthApiResponse,
-    type StravaOAuthResponseDto,
-} from './types/types.js';
+import { type StravaOAuthApiResponse } from './types/types.js';
 
 type Parameters = {
     oAuthRepository: OAuthRepository;
@@ -50,7 +46,15 @@ class StravaService extends OAuthService {
     public async create(
         payload: StravaOAuthApiResponse,
     ): Promise<OAuthConnection> {
-        const mappedPayload = snakeToCamel(payload) as StravaOAuthResponseDto;
+        const mappedPayload = {
+            userId: payload.user_id,
+            scope: payload.scope,
+            tokenType: payload.token_type,
+            expiresIn: payload.expires_in,
+            expiresAt: payload.expires_at,
+            accessToken: payload.access_token,
+            refreshToken: payload.refresh_token,
+        };
 
         const connectionExists = await this.oAuthRepository.find({
             userId: mappedPayload.userId,
@@ -119,13 +123,18 @@ class StravaService extends OAuthService {
             config,
         );
 
-        const responseData = snakeToCamel(
-            oAuthResponse.data,
-        ) as StravaOAuthResponseDto;
+        const { data } = oAuthResponse;
+        const mappedData = {
+            tokenType: data.token_type,
+            expiresIn: data.expires_in,
+            expiresAt: data.expires_at,
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+        };
 
         const updatedOAuthInfo = await super.update(
             { userId, provider: this.provider },
-            responseData,
+            mappedData,
         );
 
         if (!updatedOAuthInfo) {
@@ -136,6 +145,25 @@ class StravaService extends OAuthService {
         }
 
         return updatedOAuthInfo;
+    }
+
+    public async deauthorize(userId: number): Promise<void> {
+        const oAuthInfo = await this.find({ userId });
+
+        if (!oAuthInfo) {
+            throw new HttpError({
+                status: HttpCode.BAD_REQUEST,
+                message: ErrorMessage.NO_CONNECTION,
+            });
+        }
+
+        const config = {
+            access_token: oAuthInfo.accessToken,
+        };
+
+        await axios.post(StravaPaths.DEAUTHRORIZE, config);
+
+        await this.delete({ userId });
     }
 }
 

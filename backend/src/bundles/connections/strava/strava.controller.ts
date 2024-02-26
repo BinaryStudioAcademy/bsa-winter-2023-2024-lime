@@ -155,7 +155,7 @@ class StravaController extends BaseController {
         await this.stravaService.create({
             ...oAuthResponse.data,
             scope,
-            userId,
+            user_id: userId,
         });
 
         return {
@@ -172,15 +172,7 @@ class StravaController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { id } = options.user;
 
-        const oAuthInfo = await this.stravaService.find({ userId: id });
-
-        const config = {
-            access_token: oAuthInfo?.accessToken,
-        };
-
-        await axios.post(StravaPaths.DEAUTHRORIZE, config);
-
-        await this.stravaService.delete({ userId: id });
+        await this.stravaService.deauthorize(id);
 
         return {
             type: ApiHandlerResponseType.REDIRECT,

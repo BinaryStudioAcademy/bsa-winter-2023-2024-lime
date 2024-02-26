@@ -97,6 +97,8 @@ abstract class OAuthService implements Service {
     public abstract getToken(userId: number): Promise<string>;
 
     public abstract refreshToken(payload: unknown): Promise<unknown>;
+
+    public abstract deauthorize(payload: unknown): Promise<void>;
 }
 
 export { OAuthService };
