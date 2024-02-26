@@ -66,6 +66,6 @@
     --text-action: rgb(224 254 16); /* lm-yellow-100 */
 
     /* BACKGROUND */
-    --background-primary: rgb(64 68 75); /* lm-black-100 */
-    --background-secondary: rgb(28 34 39); /* lm-black-200 */
+    --background-primary: rgb(28 34 39); /* lm-black-200 */
+    --background-secondary: rgb(42 47 55); /* lm-black-100 */
 }

@@ -63,7 +63,7 @@ const Input = <T extends FieldValues>({
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
-                    className={`bg-primary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg border p-4 focus:outline-none ${hasError && 'border-lm-red'} ${isPassword && 'pr-8'}`}
+                    className={`bg-secondary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`}
                     onFocus={onFocus}
                 />
                 {isPassword && (
