@@ -20,7 +20,7 @@ const fetchTheme = createAsyncThunk<ValueOf<typeof Theme>, undefined>(
 );
 
 const setTheme = createAsyncThunk<ValueOf<typeof Theme>, ValueOf<typeof Theme>>(
-    'theme/setTheme',
+    'theme/toggleTheme',
     async (theme: ValueOf<typeof Theme>) => {
         applyThemeClassname(theme);
         await storage.set('theme', theme);
