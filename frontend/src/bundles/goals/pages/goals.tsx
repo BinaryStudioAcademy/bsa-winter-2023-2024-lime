@@ -77,8 +77,8 @@ const Goals: React.FC = () => {
                 activity: payload.activity as ValueOf<typeof Activity>,
                 frequency: Number(frequency),
                 frequencyType: frequencyType as ValueOf<typeof FrequencyType>,
-                distance: Number(payload.distance) || null,
-                duration: Number(payload.duration) || null,
+                distance: Number(payload.distance) ?? null,
+                duration: Number(payload.duration) ?? null,
             };
             void dispatch(goalsActions.createGoal(createGoalPayload));
         },
