@@ -1,2 +1,2 @@
-export { ActivityType } from './activity-type.js';
-export { Metric } from './metric.js';
+export { ActivityType } from '../../../enums/activity-type.js';
+export { Metric } from '../../../enums/metric.js';

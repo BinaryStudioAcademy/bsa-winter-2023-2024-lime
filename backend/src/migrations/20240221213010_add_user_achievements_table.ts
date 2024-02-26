@@ -11,8 +11,9 @@ const ColumnName = {
 } as const;
 
 async function up(knex: Knex): Promise<void> {
-    return knex.schema
-        .createTable(DatabaseTableName.USER_ACHIEVEMENTS, (table) => {
+    return knex.schema.createTable(
+        DatabaseTableName.USER_ACHIEVEMENTS,
+        (table) => {
             table.increments(ColumnName.ID).primary();
             table
                 .integer(ColumnName.USER_ID)
@@ -20,6 +21,7 @@ async function up(knex: Knex): Promise<void> {
                 .notNullable()
                 .references(ColumnName.ID)
                 .inTable(DatabaseTableName.USERS)
+                .index()
                 .onDelete('CASCADE');
             table
                 .integer(ColumnName.ACHIEVEMENT_ID)
@@ -36,15 +38,8 @@ async function up(knex: Knex): Promise<void> {
                 .dateTime(ColumnName.UPDATED_AT)
                 .notNullable()
                 .defaultTo(knex.fn.now());
-        })
-        .then(() => {
-            return knex.schema.alterTable(
-                DatabaseTableName.USER_ACHIEVEMENTS,
-                (table) => {
-                    table.index(ColumnName.USER_ID);
-                },
-            );
-        });
+        },
+    );
 }
 
 async function down(knex: Knex): Promise<void> {
