@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
 import { userController } from '~/bundles/users/users.js';
 import { workoutController } from '~/bundles/workouts/workouts.js';
 import { config } from '~/common/config/config.js';
@@ -14,6 +15,7 @@ const apiV1 = new BaseServerAppApi(
     ...authController.routes,
     ...userController.routes,
     ...workoutController.routes,
+    ...passwordResetController.routes,
 );
 const serverApp = new BaseServerApp({
     config,
