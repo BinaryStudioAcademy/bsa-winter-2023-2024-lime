@@ -23,6 +23,15 @@ const routes = [
             {
                 path: AppRoute.ROOT,
                 element: 'Root',
+                isPrivate: true,
+            },
+            {
+                path: AppRoute.SIGN_IN,
+                element: <Auth />,
+            },
+            {
+                path: AppRoute.SIGN_UP,
+                element: <Auth />,
             },
             {
                 path: AppRoute.GOALS,
@@ -49,15 +58,6 @@ const routes = [
                 element: <div>LOGOUT PAGE</div>,
             },
         ],
-        isPrivate: true,
-    },
-    {
-        path: AppRoute.SIGN_IN,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.SIGN_UP,
-        element: <Auth />,
     },
     {
         path: AppRoute.PASSWORD_RESET,
