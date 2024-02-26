@@ -47,7 +47,7 @@ class SubscriptionModel extends AbstractModel {
                 modelClass: UserModel,
                 join: {
                     from: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.USER_ID}`,
-                    to: `${DatabaseTableName.SUBSCRIPTION_PLANS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },
         };
