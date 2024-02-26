@@ -40,6 +40,7 @@ const NotificationComponent = (): JSX.Element => {
             <NotificationIcon
                 count={notifications.length}
                 onClick={handleIconClick}
+                showList={showList}
             />
             {showList && (
                 <NotificationList
