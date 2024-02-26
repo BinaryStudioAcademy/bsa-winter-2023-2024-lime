@@ -50,7 +50,6 @@ class StravaService extends OAuthService {
             userId: payload.user_id,
             scope: payload.scope,
             tokenType: payload.token_type,
-            expiresIn: payload.expires_in,
             expiresAt: payload.expires_at,
             accessToken: payload.access_token,
             refreshToken: payload.refresh_token,
@@ -126,7 +125,6 @@ class StravaService extends OAuthService {
         const { data } = oAuthResponse;
         const mappedData = {
             tokenType: data.token_type,
-            expiresIn: data.expires_in,
             expiresAt: data.expires_at,
             accessToken: data.access_token,
             refreshToken: data.refresh_token,

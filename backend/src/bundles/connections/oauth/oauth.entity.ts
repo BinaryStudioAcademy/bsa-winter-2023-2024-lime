@@ -10,8 +10,6 @@ class OAuthEntity implements Entity {
 
     private 'tokenType': string;
 
-    private 'expiresIn': number;
-
     private 'expiresAt': number;
 
     private 'accessToken': string;
@@ -26,7 +24,6 @@ class OAuthEntity implements Entity {
         id,
         userId,
         tokenType,
-        expiresIn,
         expiresAt,
         accessToken,
         refreshToken,
@@ -36,7 +33,6 @@ class OAuthEntity implements Entity {
         id: number | null;
         userId: number;
         tokenType: string;
-        expiresIn: number;
         expiresAt: number;
         accessToken: string;
         refreshToken: string;
@@ -46,7 +42,6 @@ class OAuthEntity implements Entity {
         this.id = id;
         this.userId = userId;
         this.tokenType = tokenType;
-        this.expiresIn = expiresIn;
         this.expiresAt = expiresAt;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
@@ -58,7 +53,6 @@ class OAuthEntity implements Entity {
         id,
         userId,
         tokenType,
-        expiresIn,
         expiresAt,
         accessToken,
         refreshToken,
@@ -68,7 +62,6 @@ class OAuthEntity implements Entity {
         id: number;
         userId: number;
         tokenType: string;
-        expiresIn: number;
         expiresAt: number;
         accessToken: string;
         refreshToken: string;
@@ -79,7 +72,6 @@ class OAuthEntity implements Entity {
             id,
             userId,
             tokenType,
-            expiresIn,
             expiresAt,
             accessToken,
             refreshToken,
@@ -91,7 +83,6 @@ class OAuthEntity implements Entity {
     public static initializeNew({
         userId,
         tokenType,
-        expiresIn,
         expiresAt,
         accessToken,
         refreshToken,
@@ -100,7 +91,6 @@ class OAuthEntity implements Entity {
     }: {
         userId: number;
         tokenType: string;
-        expiresIn: number;
         expiresAt: number;
         accessToken: string;
         refreshToken: string;
@@ -111,7 +101,6 @@ class OAuthEntity implements Entity {
             id: null,
             userId,
             tokenType,
-            expiresIn,
             expiresAt,
             accessToken,
             refreshToken,
@@ -124,7 +113,6 @@ class OAuthEntity implements Entity {
         id: number;
         userId: number;
         tokenType: string;
-        expiresIn: number;
         expiresAt: number;
         accessToken: string;
         refreshToken: string;
@@ -135,7 +123,6 @@ class OAuthEntity implements Entity {
             id: this.id as number,
             userId: this.userId,
             tokenType: this.tokenType,
-            expiresIn: this.expiresIn,
             expiresAt: this.expiresAt,
             accessToken: this.accessToken,
             refreshToken: this.refreshToken,
@@ -147,7 +134,6 @@ class OAuthEntity implements Entity {
     public toNewObject(): {
         userId: number;
         tokenType: string;
-        expiresIn: number;
         expiresAt: number;
         accessToken: string;
         refreshToken: string;
@@ -157,7 +143,6 @@ class OAuthEntity implements Entity {
         return {
             userId: this.userId,
             tokenType: this.tokenType,
-            expiresIn: this.expiresIn,
             expiresAt: this.expiresAt,
             accessToken: this.accessToken,
             refreshToken: this.refreshToken,

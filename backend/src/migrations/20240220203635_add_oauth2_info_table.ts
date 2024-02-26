@@ -8,7 +8,6 @@ const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
     TOKEN_TYPE: 'token_type',
-    EXPIRES_IN: 'expires_in',
     EXPIRES_AT: 'expires_at',
     ACCESS_TOKEN: 'access_token',
     REFRESH_TOKEN: 'refresh_token',
@@ -32,7 +31,6 @@ async function up(knex: Knex): Promise<void> {
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
         table.string(ColumnName.TOKEN_TYPE).notNullable();
-        table.bigInteger(ColumnName.EXPIRES_IN).unsigned().notNullable();
         table.bigInteger(ColumnName.EXPIRES_AT).unsigned().notNullable();
         table.text(ColumnName.ACCESS_TOKEN).notNullable();
         table.text(ColumnName.REFRESH_TOKEN).notNullable();

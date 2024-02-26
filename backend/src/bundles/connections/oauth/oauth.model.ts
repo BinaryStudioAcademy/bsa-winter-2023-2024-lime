@@ -11,8 +11,6 @@ class OAuthModel extends AbstractModel {
 
     public 'tokenType': string;
 
-    public 'expiresIn': number;
-
     public 'expiresAt': number;
 
     public 'accessToken': string;

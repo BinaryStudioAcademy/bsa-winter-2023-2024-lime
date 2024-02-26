@@ -5,7 +5,6 @@ type OAuthConnection = {
     id: number;
     userId: number;
     tokenType: string;
-    expiresIn: number;
     expiresAt: number;
     refreshToken: string;
     accessToken: string;
