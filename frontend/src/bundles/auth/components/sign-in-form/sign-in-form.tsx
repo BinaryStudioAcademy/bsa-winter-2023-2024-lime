@@ -38,8 +38,8 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <>
             <div>
-                <h1 className="mb-6 text-left text-[1.875rem] font-bold text-white">
-                    Hi! Login to your Account
+                <h1 className="mb-6 text-left text-[1.8rem] font-bold text-white">
+                    Hi! Sign in to your Account
                 </h1>
                 <div className="flex flex-col gap-4">
                     <Button
@@ -84,7 +84,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     <div className="mt-3">
                         <Button
                             type="submit"
-                            label={isLoading ? '' : 'Log In'}
+                            label={isLoading ? '' : 'Sign In'}
                             variant={ButtonVariant.PRIMARY}
                             size={ComponentSize.MEDIUM}
                             leftIcon={
@@ -97,10 +97,10 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 </form>
             </div>
             <p className="text-center text-sm">
-                No account? Go to{' '}
+                No Account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-lm-yellow-100">
-                        Create an account
+                        Create an Account
                     </span>
                 </Link>
             </p>

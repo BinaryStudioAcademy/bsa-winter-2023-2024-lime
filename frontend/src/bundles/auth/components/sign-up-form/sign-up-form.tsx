@@ -36,8 +36,8 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <>
             <div>
-                <h3 className="mb-6 text-left text-[1.875rem] font-bold text-white">
-                    Hi! Create an account
+                <h3 className="mb-6 text-left text-[1.8rem] font-bold text-white">
+                    Hi! Create an Account
                 </h3>
                 <div className="flex flex-col gap-4">
                     <Button
@@ -105,9 +105,9 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 </form>
             </div>
             <p className="text-center text-sm">
-                Already have an account? Go to{' '}
+                Already have an Account? Go to{' '}
                 <Link to={AppRoute.SIGN_IN}>
-                    <span className="text-lm-yellow-100">Log in</span>
+                    <span className="text-lm-yellow-100">Sign in</span>
                 </Link>
             </p>
         </>
