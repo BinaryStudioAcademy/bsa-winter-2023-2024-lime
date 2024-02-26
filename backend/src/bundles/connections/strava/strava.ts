@@ -13,12 +13,16 @@ import { StravaService } from './strava.service.js';
 const oAuthRepository = new OAuthRepository(OAuthModel);
 const oAuthStateRepository = new OAuthStateRepository(OAuthStateModel);
 
-const stravaService = new StravaService(oAuthRepository, oAuthStateRepository);
-const stravaConfig = config.ENV.STRAVA;
-const stravaController = new StravaController(
+const clientConfig = config.ENV.STRAVA;
+const stravaService = new StravaService({
+    oAuthRepository,
+    oAuthStateRepository,
+    clientConfig,
+});
+const stravaController = new StravaController({
     logger,
     stravaService,
-    stravaConfig,
-);
+    clientConfig,
+});
 
 export { stravaController };

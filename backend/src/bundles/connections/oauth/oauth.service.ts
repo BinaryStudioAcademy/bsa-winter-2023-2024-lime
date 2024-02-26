@@ -3,14 +3,10 @@ import crypto from 'node:crypto';
 import { type Service } from '~/common/types/service.type.js';
 
 import { ErrorMessage, HttpCode, HttpError } from './enums/enums.js';
-import { type OAuthEntity } from './oauth.entity.js';
 import { type OAuthRepository } from './oauth.repository.js';
 import { OAuthStateEntity } from './oauth-state.entity.js';
 import { type OAuthStateRepository } from './oauth-state.repository.js';
-import {
-    type ConnectionsOAuthResponseDto,
-    type OAuthState,
-} from './types/types.js';
+import { type OAuthConnection, type OAuthState } from './types/types.js';
 
 abstract class OAuthService implements Service {
     protected oAuthRepository: OAuthRepository;
@@ -24,13 +20,17 @@ abstract class OAuthService implements Service {
         this.oAuthStateRepository = oAuthStateRepository;
     }
 
-    public abstract find(
+    public async find(
         query: Record<string, unknown>,
-    ): Promise<ConnectionsOAuthResponseDto | null>;
+    ): Promise<OAuthConnection | null> {
+        const oAuthInfo = await this.oAuthRepository.find(query);
+
+        return oAuthInfo ? oAuthInfo.toObject() : null;
+    }
 
     public async findMany(
         query: Record<string, unknown>,
-    ): Promise<{ items: ConnectionsOAuthResponseDto[] }> {
+    ): Promise<{ items: OAuthConnection[] }> {
         const items = await this.oAuthRepository.findMany(query);
 
         return {
@@ -38,7 +38,7 @@ abstract class OAuthService implements Service {
         };
     }
 
-    public async findAll(): Promise<{ items: ConnectionsOAuthResponseDto[] }> {
+    public async findAll(): Promise<{ items: OAuthConnection[] }> {
         const items = await this.oAuthRepository.findAll();
 
         return {
@@ -46,13 +46,21 @@ abstract class OAuthService implements Service {
         };
     }
 
-    public abstract create(payload: unknown): Promise<unknown>;
+    public async update(
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): Promise<OAuthConnection | null> {
+        const updatedOAuthInfo = await this.oAuthRepository.update(
+            query,
+            payload,
+        );
 
-    public update(): Promise<unknown> {
-        return Promise.resolve(null);
+        return updatedOAuthInfo ? updatedOAuthInfo.toObject() : null;
     }
 
-    public abstract delete(query: Record<string, unknown>): Promise<boolean>;
+    public async delete(query: Record<string, unknown>): Promise<boolean> {
+        return await this.oAuthRepository.delete(query);
+    }
 
     public async createOAuthState(userId: number): Promise<OAuthState> {
         const uuid = crypto.randomUUID();
@@ -78,12 +86,17 @@ abstract class OAuthService implements Service {
         return state.toObject();
     }
 
-    public tokenHasExpired(OAuthEntity: OAuthEntity): boolean {
-        const oAuthObject = OAuthEntity.toObject();
+    public tokenHasExpired(oAuthObject: OAuthConnection): boolean {
         const secondsSinceEpoch = Math.round(Date.now() / 1000);
 
         return oAuthObject.expiresAt <= secondsSinceEpoch;
     }
+
+    public abstract create(payload: unknown): Promise<unknown>;
+
+    public abstract getToken(userId: number): Promise<string>;
+
+    public abstract refreshToken(payload: unknown): Promise<unknown>;
 }
 
 export { OAuthService };

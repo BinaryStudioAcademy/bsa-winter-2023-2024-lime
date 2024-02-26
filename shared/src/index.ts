@@ -1,6 +1,5 @@
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export {
-    type ConnectionsOAuthResponseDto,
     type StravaOAuthResponseDto,
     ConnectionsOAuthActionsPath,
     ConnectionsOAuthPath,

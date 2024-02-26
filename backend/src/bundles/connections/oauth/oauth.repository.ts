@@ -55,8 +55,21 @@ class OAuthRepository implements Repository {
         return OAuthEntity.initialize(oAuthInfoEntity);
     }
 
-    public update(): Promise<unknown> {
-        return Promise.resolve(null);
+    public async update(
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): Promise<OAuthEntity | null> {
+        const updatedOAuthInfo = await this.oAuthModel
+            .query()
+            .patch(payload)
+            .where(query)
+            .returning('*')
+            .first()
+            .execute();
+
+        return updatedOAuthInfo
+            ? OAuthEntity.initialize(updatedOAuthInfo)
+            : null;
     }
 
     public async delete(query: Record<string, unknown>): Promise<boolean> {

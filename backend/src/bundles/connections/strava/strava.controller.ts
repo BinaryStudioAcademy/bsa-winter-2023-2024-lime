@@ -21,6 +21,12 @@ import { StravaPaths } from './enums/enums.js';
 import { type StravaService } from './strava.service.js';
 import { type StravaOAuthQuery } from './types/types.js';
 
+type Parameters = {
+    logger: Logger;
+    stravaService: StravaService;
+    clientConfig: OAuthClient;
+};
+
 class StravaController extends BaseController {
     private stravaService: StravaService;
 
@@ -28,11 +34,7 @@ class StravaController extends BaseController {
 
     private apiUlr: string;
 
-    public constructor(
-        logger: Logger,
-        stravaService: StravaService,
-        clientConfig: OAuthClient,
-    ) {
+    public constructor({ logger, stravaService, clientConfig }: Parameters) {
         super(logger, ApiPath.CONNECTIONS);
 
         this.stravaService = stravaService;

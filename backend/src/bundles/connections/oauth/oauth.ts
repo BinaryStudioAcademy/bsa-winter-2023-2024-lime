@@ -15,7 +15,7 @@ export { OAuthService } from './oauth.service.js';
 export { OAuthStateModel } from './oauth-state.model.js';
 export { OAuthStateRepository } from './oauth-state.repository.js';
 export {
-    type ConnectionsOAuthResponseDto,
     type OAuthClient,
+    type OAuthConnection,
     type ProviderOAuthPaths,
 } from './types/types.js';
