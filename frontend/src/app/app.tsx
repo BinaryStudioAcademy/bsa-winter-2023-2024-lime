@@ -26,7 +26,7 @@ const App: React.FC = () => {
     }, [dispatch]);
 
     if (isRefreshing) {
-        return <Loader />;
+        return <Loader isOverflow />;
     }
 
     return <RouterOutlet />;
