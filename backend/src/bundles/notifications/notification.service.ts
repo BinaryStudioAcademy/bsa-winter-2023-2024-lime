@@ -76,10 +76,10 @@ class NotificationService implements Service {
         }
 
         const updatedNotification = await this.notificationRepository.update(
+            notification.toObject().id,
             {
                 isRead: true,
             },
-            notification.toObject().id,
         );
 
         return updatedNotification.toObject();

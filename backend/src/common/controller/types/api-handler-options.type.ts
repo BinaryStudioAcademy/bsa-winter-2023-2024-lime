@@ -4,7 +4,8 @@ type DefaultApiHandlerOptions = {
     body?: unknown;
     query?: unknown;
     params?: unknown;
-    user?: UserAuthResponseDto | null;
+    user?: UserAuthResponseDto;
+    origin?: unknown;
 };
 
 type ApiHandlerOptions<
@@ -14,6 +15,7 @@ type ApiHandlerOptions<
     query: T['query'];
     params: T['params'];
     user: T['user'];
+    origin: T['origin'];
 };
 
 export { type ApiHandlerOptions };

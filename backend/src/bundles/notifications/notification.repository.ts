@@ -80,8 +80,8 @@ class NotificationRepository implements Repository {
     }
 
     public async update(
-        query: Record<string, unknown>,
         notificationId: number,
+        query: Record<string, unknown>,
     ): Promise<NotificationEntity> {
         const notification = await this.notificationModel
             .query()
