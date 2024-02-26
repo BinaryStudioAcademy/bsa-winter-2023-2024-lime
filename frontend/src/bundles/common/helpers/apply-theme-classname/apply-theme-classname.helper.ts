@@ -1,6 +1,6 @@
-import { type Theme } from '../../types/types.js';
+import { type Theme, type ValueOf } from '../../types/types.js';
 
-function applyThemeClassname(theme: Theme): void {
+function applyThemeClassname(theme: ValueOf<typeof Theme>): void {
     const root = window.document.documentElement;
     root.classList.remove('dark', 'light');
     root.classList.add(theme);

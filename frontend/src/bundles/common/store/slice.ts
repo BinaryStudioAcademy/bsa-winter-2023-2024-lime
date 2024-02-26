@@ -1,16 +1,17 @@
-import { type PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-import { type Theme } from '../types/types.js';
+import { type PayloadAction , type ValueOf } from '~/bundles/common/types/types.js';
+
+import { type Theme } from '../enums/theme.js';
 import { fetchTheme, setTheme } from './actions.js';
 
 type State = {
-    theme: Theme | null;
+    theme: ValueOf<typeof Theme> | null;
     loading: boolean;
 };
 
 const initialState = {
-    theme: null as Theme | null,
+    theme: null as ValueOf<typeof Theme> | null,
     loading: true,
 };
 
@@ -25,7 +26,7 @@ const { reducer, actions, name } = createSlice({
             })
             .addCase(
                 fetchTheme.fulfilled,
-                (state, action: PayloadAction<Theme>) => {
+                (state, action: PayloadAction<ValueOf<typeof Theme>>) => {
                     state.theme = action.payload;
                     state.loading = false;
                 },
@@ -35,7 +36,7 @@ const { reducer, actions, name } = createSlice({
             })
             .addCase(
                 setTheme.fulfilled,
-                (state, action: PayloadAction<Theme>) => {
+                (state, action: PayloadAction<ValueOf<typeof Theme>>) => {
                     state.theme = action.payload;
                     state.loading = false;
                 },
