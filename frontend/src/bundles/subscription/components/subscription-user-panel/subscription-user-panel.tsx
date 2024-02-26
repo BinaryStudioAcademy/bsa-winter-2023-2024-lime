@@ -1,5 +1,3 @@
-import { DateObject } from 'react-multi-date-picker';
-
 import { Button } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -10,6 +8,7 @@ import {
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type SubscriptionStatus } from '../../enums/enums.js';
+import { dateConverter } from '../../helpers/helpers.js';
 import { actions as subscriptionActions } from '../../store/subscriptions.js';
 
 type Properties = {
@@ -67,9 +66,7 @@ const SubscriptionUserPanel = ({
                                 <span className="text-white">Renews on</span>
                             )}
                             <p className="text-lm-yellow-100 text-2xl">
-                                {new DateObject(expirationDate).format(
-                                    'DD.MM.YYYY',
-                                )}
+                                {dateConverter(expirationDate)}
                             </p>
                         </div>
                         <div>

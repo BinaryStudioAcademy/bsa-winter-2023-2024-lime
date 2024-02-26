@@ -4,6 +4,7 @@ import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import { notificationManager } from '~/framework/notification/notification.js';
 
+import { StripeError } from '../enums/enums.js';
 import {
     type CancelSubscriptionRequestDto,
     type ConfirmPaymentPayload,
@@ -84,7 +85,8 @@ const confirmPayment = createAsyncThunk<
 
     if (
         error &&
-        (error.type === 'card_error' || error.type === 'validation_error')
+        (error.type === StripeError.CARD_ERROR ||
+            error.type === StripeError.VALIDATION_ERROR)
     ) {
         notificationManager.error(error.message as string);
     }
