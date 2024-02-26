@@ -48,8 +48,13 @@ class WorkoutRepository implements Repository {
         }
     }
 
-    public async findAll(): Promise<WorkoutEntity[]> {
-        const userWorkouts = await this.userWorkoutsModel.query().execute();
+    public async findAll(
+        query: Record<string, unknown>,
+    ): Promise<WorkoutEntity[]> {
+        const userWorkouts = await this.userWorkoutsModel
+            .query()
+            .where(query)
+            .execute();
         return userWorkouts.map((userWorkout) => {
             return WorkoutEntity.initialize({
                 ...userWorkout,

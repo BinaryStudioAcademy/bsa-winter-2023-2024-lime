@@ -1,6 +1,6 @@
 type Service<T = unknown> = {
     find(query: Record<string, T>): Promise<T>;
-    findAll(): Promise<{
+    findAll(query: Record<string, T>): Promise<{
         items: T[];
     }>;
     create(payload: unknown): Promise<T>;

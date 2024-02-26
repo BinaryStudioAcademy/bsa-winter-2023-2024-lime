@@ -41,7 +41,7 @@ class WorkoutController extends BaseController {
             path: WorkoutsApiPath.ROOT,
             method: 'GET',
             isProtected: true,
-            handler: () => this.findAll(),
+            handler: (options) => this.findAll(options),
         });
         this.addRoute({
             path: WorkoutsApiPath.ROOT,
@@ -94,10 +94,14 @@ class WorkoutController extends BaseController {
             payload: await this.workoutService.find({ id: options.params.id }),
         };
     }
-    private async findAll(): Promise<ApiHandlerResponse> {
+    private async findAll(
+        options: ApiHandlerOptions,
+    ): Promise<ApiHandlerResponse> {
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.findAll(),
+            payload: await this.workoutService.findAll({
+                userId: (options.user as UserAuthResponseDto).id,
+            }),
         };
     }
 

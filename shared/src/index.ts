@@ -18,6 +18,7 @@ export {
     createUserWorkoutsValidationSchema,
     updateUserWorkoutsValidationSchema,
     WorkoutsApiPath,
+    WorkoutValidationMessage,
 } from './bundles/workouts/workouts.js';
 export {
     Activity,

@@ -1,5 +1,7 @@
 import { type RelationMappings, Model } from 'objection';
 
+import { UserWorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
+import { UserWorkoutsModel } from '~/bundles/workouts/workouts.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -14,6 +16,7 @@ class UserModel extends AbstractModel {
     public 'passwordHash': string;
 
     public 'userDetails': UserDetailsModel;
+    public 'userWorkouts': UserWorkoutsModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -27,6 +30,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            userWorkouts: {
+                relation: Model.HasOneRelation,
+                modelClass: UserWorkoutsModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_WORKOUTS}.${UserWorkoutAttributes.USER_ID}`,
                 },
             },
         };

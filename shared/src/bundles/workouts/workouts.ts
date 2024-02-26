@@ -1,4 +1,4 @@
-export { WorkoutsApiPath } from './enums/enums.js';
+export { WorkoutsApiPath, WorkoutValidationMessage } from './enums/enums.js';
 export {
     type CreateWorkoutRequestDto,
     type WorkoutRequestDto,

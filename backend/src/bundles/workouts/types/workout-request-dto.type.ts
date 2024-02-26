@@ -1,12 +1,7 @@
-import { type Activity } from '~/common/enums/enums.js';
-import { type ValueOf } from '~/common/types/types.js';
+import { type WorkoutRequestDto as GlobalWorkoutRequestDto } from 'shared';
 
-type WorkoutRequestDto = {
+type WorkoutRequestDto = GlobalWorkoutRequestDto & {
     userId: number;
-    activity: ValueOf<typeof Activity>;
-    duration: number;
-    kilocalories: number;
-    steps: number;
 };
 
 export { type WorkoutRequestDto };
