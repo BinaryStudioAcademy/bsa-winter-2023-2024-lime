@@ -12,6 +12,9 @@ type Properties = {
     progress: number;
     frequencyType: ValueOf<typeof FrequencyType>;
 };
+
+const PLURAL = 's';
+
 const GoalCard: React.FC<Properties> = ({
     activity,
     frequency,
@@ -28,7 +31,9 @@ const GoalCard: React.FC<Properties> = ({
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
                         {frequency}{' '}
-                        {frequency === 1 ? frequencyType : frequencyType + 's'}
+                        {frequency === 1
+                            ? frequencyType
+                            : frequencyType + PLURAL}
                     </p>
                 </div>
             </div>

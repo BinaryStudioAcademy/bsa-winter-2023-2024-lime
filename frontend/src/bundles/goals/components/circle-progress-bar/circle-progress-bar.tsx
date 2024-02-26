@@ -5,6 +5,13 @@ type CircularProgressBarProperties = {
     achievement?: string | undefined;
 };
 
+const CircleProgressRadius = {
+    LARGE: 59,
+    SMALL: 34,
+} as const;
+
+const CENTER = 6;
+
 const classes = {
     svgBase: 'fill-transparent w-full h-full rotate-90',
     baseCircle: 'stroke-lm-black-200',
@@ -17,10 +24,12 @@ const CircleProgress: React.FC<CircularProgressBarProperties> = ({
     progress,
     achievement,
 }): JSX.Element => {
-    const radius = achievement ? 59 : 34;
+    const radius = achievement
+        ? CircleProgressRadius.LARGE
+        : CircleProgressRadius.SMALL;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference * ((100 - progress) / 100);
-    const coordinate = radius + 6;
+    const coordinate = radius + CENTER;
 
     return (
         <div className="relative h-full w-full">
