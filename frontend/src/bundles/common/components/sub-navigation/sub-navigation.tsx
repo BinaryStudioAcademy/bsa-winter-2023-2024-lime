@@ -6,7 +6,7 @@ import { Button, ButtonVariant } from '../components.js';
 import { SubNavItem } from './components/sub-nav-item.js';
 
 type Properties = {
-    items: { label: string; to: string }[];
+    items: { id: string; label: string; to: string }[];
     title?: string;
     button?: { label: string; onClick: () => void };
 };
@@ -24,7 +24,7 @@ const SubNavigation = ({ items, title, button }: Properties): JSX.Element => {
             {title && <h1 className="text-xl font-bold text-white">{title}</h1>}
             {items.map((item, index) => (
                 <SubNavItem
-                    key={index}
+                    key={item.id}
                     label={item.label}
                     to={item.to}
                     bgColor={
