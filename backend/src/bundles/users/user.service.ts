@@ -61,7 +61,7 @@ class UserService implements Service {
                 const updatedUserDetails: Partial<UserDetailsModel> = {};
                 for (const property of Object.keys(userRequest)) {
                     const value = userRequest[property];
-                    if (this.shouldUpdateProperty(value)) {
+                    if (value) {
                         updatedUserDetails[property] =
                             property === 'weight' || property === 'height'
                                 ? Number(userRequest[property])
@@ -88,9 +88,6 @@ class UserService implements Service {
         } catch (error) {
             throw new Error(`Error occured ${error}`);
         }
-    }
-    private shouldUpdateProperty(value: unknown): boolean {
-        return value !== null && value !== '';
     }
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
