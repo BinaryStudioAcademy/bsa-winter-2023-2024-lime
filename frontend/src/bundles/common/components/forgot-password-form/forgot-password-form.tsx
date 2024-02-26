@@ -23,7 +23,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         useAppForm<PasswordForgotRequestDto>({
             defaultValues: DEFAULT_PASSWORD_FORGOT_PAYLOAD,
             validationSchema: passwordForgotValidationSchema,
-            mode: 'onTouched',
+            mode: 'onSubmit',
         });
 
     const handleFormSubmit = useCallback(
