@@ -3,8 +3,8 @@ import { capitalizeString } from '~/bundles/common/helpers/helpers.js';
 import { CircleProgress } from '../components.js';
 
 type Properties = {
-    activity: string | undefined;
-    achievement: string | undefined;
+    activity?: string;
+    achievement?: string;
 };
 
 const FinishedGoalCard = ({

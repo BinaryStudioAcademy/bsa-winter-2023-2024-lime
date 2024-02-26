@@ -1,7 +1,4 @@
-type FrequencyType = {
-    label: string;
-    value: string;
-};
+import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
 
 const Label = {
     ONE_PER_DAY: '1 time a day',
@@ -23,7 +20,7 @@ const FrequencyValue = {
     SEVEN_PER_WEEK: '7 week',
 } as const;
 
-const goalFrequency: FrequencyType[] = [
+const goalFrequency: SelectOption[] = [
     { label: Label.ONE_PER_DAY, value: FrequencyValue.ONE_PER_DAY },
     { label: Label.TWO_PER_DAY, value: FrequencyValue.TWO_PER_DAY },
     { label: Label.ONE_PER_WEEK, value: FrequencyValue.ONE_PER_WEEK },

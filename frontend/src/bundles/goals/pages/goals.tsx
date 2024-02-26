@@ -96,8 +96,8 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem]">
                             <FinishedGoalCard
-                                achievement={lastAchievement?.name}
-                                activity={lastAchievement?.activity}
+                                achievement={lastAchievement?.name as string}
+                                activity={lastAchievement?.activity as string}
                             />
                         </section>
                         <section className="overflow-y-auto overflow-x-hidden">
