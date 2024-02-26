@@ -1,3 +1,4 @@
+export { type EntityIdParameterDto } from './entity-id-parameter-dto.type.js';
 export { type ServerErrorDetail } from './server-error-detail.type.js';
 export {
     type ServerCommonErrorResponse,

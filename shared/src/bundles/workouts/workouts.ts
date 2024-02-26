@@ -7,4 +7,4 @@ export {
 export {
     createUserWorkouts as createUserWorkoutsValidationSchema,
     updateUserWorkouts as updateUserWorkoutsValidationSchema,
-} from './validation-schemas/user-workouts.validation-schema.js';
+} from './validation-schemas/validation-schemas.js';

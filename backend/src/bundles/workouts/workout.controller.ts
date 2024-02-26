@@ -12,10 +12,12 @@ import { type Logger } from '~/common/logger/logger.js';
 
 import {
     type CreateWorkoutRequestDto,
-    type WorkoutRequestDto,
+    type EntityIdParameterDto,
+    type UpdateWorkoutRequestDto,
 } from './types/types.js';
 import {
     createUserWorkoutsValidationSchema,
+    idParameterValidationSchema,
     updateUserWorkoutsValidationSchema,
 } from './validation-schemas/validation-schemas.js';
 import { type WorkoutService } from './workout.service.js';
@@ -61,7 +63,7 @@ class WorkoutController extends BaseController {
             handler: (options) =>
                 this.find(
                     options as ApiHandlerOptions<{
-                        params: { id: string };
+                        params: EntityIdParameterDto;
                     }>,
                 ),
         });
@@ -95,8 +97,8 @@ class WorkoutController extends BaseController {
             handler: (options) =>
                 this.update(
                     options as ApiHandlerOptions<{
-                        body: WorkoutRequestDto;
-                        params: { id: string };
+                        body: UpdateWorkoutRequestDto;
+                        params: EntityIdParameterDto;
                     }>,
                 ),
         });
@@ -107,7 +109,7 @@ class WorkoutController extends BaseController {
             handler: (options) =>
                 this.delete(
                     options as ApiHandlerOptions<{
-                        params: { id: string };
+                        params: EntityIdParameterDto;
                     }>,
                 ),
         });
@@ -143,12 +145,13 @@ class WorkoutController extends BaseController {
      */
     private async find(
         options: ApiHandlerOptions<{
-            params: { id: string };
+            params: EntityIdParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const { id } = idParameterValidationSchema.parse(options.params);
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.find({ id: options.params.id }),
+            payload: await this.workoutService.find({ id }),
         };
     }
     /**
@@ -297,13 +300,14 @@ class WorkoutController extends BaseController {
      */
     private async update(
         options: ApiHandlerOptions<{
-            body: WorkoutRequestDto;
-            params: { id: string };
+            body: UpdateWorkoutRequestDto;
+            params: EntityIdParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const { id } = idParameterValidationSchema.parse(options.params);
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.update(+options.params.id, {
+            payload: await this.workoutService.update(id, {
                 ...options.body,
                 userId: (options.user as UserAuthResponseDto).id,
             }),
@@ -340,12 +344,13 @@ class WorkoutController extends BaseController {
      */
     private async delete(
         options: ApiHandlerOptions<{
-            params: { id: string };
+            params: EntityIdParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const { id } = idParameterValidationSchema.parse(options.params);
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.delete(+options.params.id),
+            payload: await this.workoutService.delete(id),
         };
     }
 }

@@ -33,7 +33,7 @@ class UserModel extends AbstractModel {
                 },
             },
             userWorkouts: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: UserWorkoutsModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,

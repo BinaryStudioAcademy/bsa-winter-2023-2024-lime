@@ -43,6 +43,7 @@ export {
 export { type Storage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type EntityIdParameterDto,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,
@@ -50,3 +51,4 @@ export {
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';
+export { idParameterSchema as idParameterValidationSchema } from './validation-schemas/validation-schemas.js';
