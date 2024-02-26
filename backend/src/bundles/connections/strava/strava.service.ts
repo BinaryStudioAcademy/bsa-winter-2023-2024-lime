@@ -14,7 +14,10 @@ import {
 } from '~/bundles/connections/oauth/oauth.js';
 
 import { StravaPaths } from './enums/enums.js';
-import { type StravaOAuthApiResponse } from './types/types.js';
+import {
+    type StravaOAuthApiResponse,
+    type StravaOAuthQuery,
+} from './types/types.js';
 
 type Parameters = {
     oAuthRepository: OAuthRepository;
@@ -143,6 +146,30 @@ class StravaService extends OAuthService {
         }
 
         return updatedOAuthInfo;
+    }
+
+    public async exchangeToken(query: StravaOAuthQuery): Promise<void> {
+        const { code, scope, state: uuid, user_id: userId } = query;
+
+        await this.verifyState({ userId, uuid });
+
+        const config = {
+            client_id: this.clientConfig.CLIENT_ID,
+            client_secret: this.clientConfig.CLIENT_SECRET,
+            code,
+            grant_type: 'authorization_code',
+        };
+
+        const oAuthResponse = await axios.post(
+            StravaPaths.TOKEN_EXCHANGE,
+            config,
+        );
+
+        await this.create({
+            ...oAuthResponse.data,
+            scope,
+            user_id: userId,
+        });
     }
 
     public async deauthorize(userId: number): Promise<void> {

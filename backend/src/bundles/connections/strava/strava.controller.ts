@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import {
     type OAuthClient,
     ConnectionsOAuthActionsPath,
@@ -136,27 +134,7 @@ class StravaController extends BaseController {
             query: StravaOAuthQuery;
         }>,
     ): Promise<ApiHandlerResponse> {
-        const { code, scope, state: uuid, user_id: userId } = options.query;
-
-        await this.stravaService.verifyState({ userId, uuid });
-
-        const config = {
-            client_id: this.clientConfig.CLIENT_ID,
-            client_secret: this.clientConfig.CLIENT_SECRET,
-            code,
-            grant_type: 'authorization_code',
-        };
-
-        const oAuthResponse = await axios.post(
-            StravaPaths.TOKEN_EXCHANGE,
-            config,
-        );
-
-        await this.stravaService.create({
-            ...oAuthResponse.data,
-            scope,
-            user_id: userId,
-        });
+        await this.stravaService.exchangeToken(options.query);
 
         return {
             type: ApiHandlerResponseType.REDIRECT,
