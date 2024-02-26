@@ -1,4 +1,4 @@
-import { type UserAuthResponseDto } from 'shared';
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
 type DefaultApiHandlerOptions = {
     body?: unknown;

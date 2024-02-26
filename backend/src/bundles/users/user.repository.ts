@@ -74,7 +74,9 @@ class UserRepository implements Repository {
 
             const userDetails = await user
                 .$relatedQuery('userDetails', trx)
-                .insert({});
+                .insert({})
+                .returning('*')
+                .execute();
 
             await trx.commit();
 
