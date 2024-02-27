@@ -1,12 +1,13 @@
 import { type RelationMappings, Model } from 'objection';
 
 import { UserWorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
-import { UserWorkoutsModel } from '~/bundles/workouts/workouts.js';
+import { WorkoutsModel } from '~/bundles/workouts/workouts.js';
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
 
+import { UserAchievementModel } from '../achievements/user-achievement.model.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -16,7 +17,7 @@ class UserModel extends AbstractModel {
     public 'passwordHash': string;
 
     public 'userDetails': UserDetailsModel;
-    public 'userWorkouts': UserWorkoutsModel;
+    public 'workouts': WorkoutsModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -32,12 +33,20 @@ class UserModel extends AbstractModel {
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
-            userWorkouts: {
+            userAchievement: {
+                relation: Model.HasOneRelation,
+                modelClass: UserAchievementModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.id`,
+                    to: `${DatabaseTableName.USER_ACHIEVEMENTS}.userId`,
+                },
+            },
+            workouts: {
                 relation: Model.HasManyRelation,
-                modelClass: UserWorkoutsModel,
+                modelClass: WorkoutsModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.USER_WORKOUTS}.${UserWorkoutAttributes.USER_ID}`,
+                    to: `${DatabaseTableName.WORKOUTS}.${UserWorkoutAttributes.USER_ID}`,
                 },
             },
         };

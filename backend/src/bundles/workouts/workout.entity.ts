@@ -1,74 +1,84 @@
-import { type Activity } from '~/common/enums/enums.js';
+import { Activity } from '~/common/enums/enums.js';
 import { type Entity, type ValueOf } from '~/common/types/types.js';
 
 class WorkoutEntity implements Entity {
     private 'id': number | null;
     private 'userId': number;
     private 'activity': ValueOf<typeof Activity>;
-    private 'duration': number;
-    private 'steps': number;
+    private 'steps': number | undefined;
+    private 'heartRate': number;
+    private 'startTime': Date;
+    private 'endTime': Date | null;
+    private 'distance': number;
+    private 'speed': number;
     private 'kilocalories': number;
+
     private constructor({
         id,
         userId,
         activity,
-        duration,
-        steps,
+        heartRate,
+        startTime,
+        endTime,
+        distance,
+        speed,
         kilocalories,
     }: {
         id: number | null;
         userId: number;
         activity: ValueOf<typeof Activity>;
-        duration: number;
+        steps?: number;
+        heartRate: number;
+        startTime: Date;
+        endTime: Date | null;
+        distance: number;
+        speed: number;
         kilocalories: number;
-        steps: number;
     }) {
         this.id = id;
         this.userId = userId;
         this.activity = activity;
-        this.steps = steps;
+        this.heartRate = heartRate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.distance = distance;
+        this.speed = speed;
         this.kilocalories = kilocalories;
-        this.duration = duration;
+        if (activity === Activity.WALKING) {
+            this.steps = 0;
+        }
     }
 
-    public static initialize({
-        id,
-        userId,
-        activity,
-        duration,
-        steps,
-        kilocalories,
-    }: {
+    public static initialize(payload: {
         id: number;
         userId: number;
         activity: ValueOf<typeof Activity>;
-        duration: number;
+        steps?: number;
+        heartRate: number;
+        startTime: Date;
+        endTime: Date | null;
+        distance: number;
+        speed: number;
         kilocalories: number;
-        steps: number;
     }): WorkoutEntity {
         return new WorkoutEntity({
-            id,
-            userId,
-            activity,
-            duration,
-            steps,
-            kilocalories,
+            ...payload,
         });
     }
 
-    public static initializeNew({
-        activity,
-        userId,
-    }: {
+    public static initializeNew(payload: {
         activity: ValueOf<typeof Activity>;
         userId: number;
+        steps?: number;
     }): WorkoutEntity {
         return new WorkoutEntity({
+            ...payload,
             id: null,
-            userId,
-            activity,
-            duration: 0,
-            steps: 0,
+            heartRate: 0,
+            startTime: new Date(),
+            endTime: null,
+            distance: 0,
+            speed: 0,
             kilocalories: 0,
         });
     }
@@ -76,32 +86,48 @@ class WorkoutEntity implements Entity {
     public toObject(): {
         id: number;
         activity: ValueOf<typeof Activity>;
-        duration: number;
+        steps?: number;
+        heartRate: number;
+        startTime: Date;
+        endTime: Date | null;
+        distance: number;
+        speed: number;
         kilocalories: number;
-        steps: number;
     } {
         return {
             id: this.id as number,
             activity: this.activity,
-            duration: this.duration,
+            steps: this.steps as number,
+            heartRate: this.heartRate,
+            startTime: this.startTime,
+            endTime: this.endTime,
+            distance: this.distance,
+            speed: this.speed,
             kilocalories: this.kilocalories,
-            steps: this.steps,
         };
     }
 
     public toNewObject(): {
         userId: number;
         activity: ValueOf<typeof Activity>;
-        duration: number;
+        steps?: number;
+        heartRate: number;
+        startTime: Date;
+        endTime: Date | null;
+        distance: number;
+        speed: number;
         kilocalories: number;
-        steps: number;
     } {
         return {
             userId: this.userId,
             activity: this.activity,
-            duration: this.duration,
+            steps: this.steps as number,
+            heartRate: this.heartRate,
+            startTime: this.startTime,
+            endTime: this.endTime,
+            distance: this.distance,
+            speed: this.speed,
             kilocalories: this.kilocalories,
-            steps: this.steps,
         };
     }
 }

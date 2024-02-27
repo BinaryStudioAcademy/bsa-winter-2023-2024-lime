@@ -11,15 +11,19 @@ import { type ValueOf } from '~/common/types/types.js';
 
 import { UserWorkoutAttributes } from './enums/enums.js';
 
-class UserWorkoutsModel extends AbstractModel {
+class WorkoutsModel extends AbstractModel {
     public 'userId': number;
     public 'activity': ValueOf<typeof Activity>;
     public 'steps': number;
-    public 'duration': number;
+    public 'heartRate': number;
+    public 'startTime': Date;
+    public 'endTime': Date | null;
+    public 'distance': number;
+    public 'speed': number;
     public 'kilocalories': number;
 
     public static override get tableName(): string {
-        return DatabaseTableName.USER_WORKOUTS;
+        return DatabaseTableName.WORKOUTS;
     }
 
     public static override get relationMappings(): RelationMappings {
@@ -28,7 +32,7 @@ class UserWorkoutsModel extends AbstractModel {
                 relation: Model.BelongsToOneRelation,
                 modelClass: UserModel,
                 join: {
-                    from: `${DatabaseTableName.USER_WORKOUTS}.${UserWorkoutAttributes.USER_ID}`,
+                    from: `${DatabaseTableName.WORKOUTS}.${UserWorkoutAttributes.USER_ID}`,
                     to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },
@@ -36,4 +40,4 @@ class UserWorkoutsModel extends AbstractModel {
     }
 }
 
-export { UserWorkoutsModel };
+export { WorkoutsModel };

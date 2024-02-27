@@ -307,10 +307,13 @@ class WorkoutController extends BaseController {
         const { id } = idParameterValidationSchema.parse(options.params);
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.update(id, {
-                ...options.body,
-                userId: (options.user as UserAuthResponseDto).id,
-            }),
+            payload: await this.workoutService.update(
+                { id },
+                {
+                    ...options.body,
+                    userId: (options.user as UserAuthResponseDto).id,
+                },
+            ),
         };
     }
 
@@ -350,7 +353,7 @@ class WorkoutController extends BaseController {
         const { id } = idParameterValidationSchema.parse(options.params);
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.delete(id),
+            payload: await this.workoutService.delete({ id }),
         };
     }
 }

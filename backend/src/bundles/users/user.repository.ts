@@ -97,12 +97,12 @@ class UserRepository implements Repository {
     }
 
     public async update(
-        id: number,
+        query: Record<string, unknown>,
         changes: object,
     ): ReturnType<Repository['update']> {
         return await this.userModel
             .query()
-            .findById(id)
+            .findOne(query)
             .update(changes)
             .returning('*');
     }

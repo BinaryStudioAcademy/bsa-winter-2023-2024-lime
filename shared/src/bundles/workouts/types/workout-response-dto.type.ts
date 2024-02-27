@@ -4,8 +4,12 @@ import { type ValueOf } from '../../../types/types.js';
 type WorkoutResponseDto = {
     id: number;
     activity: ValueOf<typeof Activity>;
-    duration: number;
-    steps: number;
+    startTime: Date;
+    endTime: Date | null;
+    speed: number;
+    distance: number;
+    heartRate: number;
+    steps?: number;
     kilocalories: number;
 };
 

@@ -1,12 +1,14 @@
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Repository } from '~/common/types/types.js';
 
-import { type UserWorkoutsModel } from './user-workouts.model.js';
+import { WorkoutValidationMessage } from './enums/enums.js';
 import { WorkoutEntity } from './workout.entity.js';
+import { type WorkoutsModel } from './workouts.model.js';
 
 class WorkoutRepository implements Repository {
-    private userWorkoutsModel: typeof UserWorkoutsModel;
+    private userWorkoutsModel: typeof WorkoutsModel;
 
-    public constructor(userWorkoutsModel: typeof UserWorkoutsModel) {
+    public constructor(userWorkoutsModel: typeof WorkoutsModel) {
         this.userWorkoutsModel = userWorkoutsModel;
     }
 
@@ -28,24 +30,16 @@ class WorkoutRepository implements Repository {
 
     public async create(entity: WorkoutEntity): Promise<WorkoutEntity> {
         const data = entity.toNewObject();
-        const trx = await this.userWorkoutsModel.startTransaction();
 
-        try {
-            const userWorkout = await this.userWorkoutsModel
-                .query(trx)
-                .insert(data)
-                .returning('*')
-                .execute();
+        const userWorkout = await this.userWorkoutsModel
+            .query()
+            .insert(data)
+            .returning('*')
+            .execute();
 
-            await trx.commit();
-
-            return WorkoutEntity.initialize({
-                ...userWorkout,
-            });
-        } catch (error) {
-            await trx.rollback();
-            throw error;
-        }
+        return WorkoutEntity.initialize({
+            ...userWorkout,
+        });
     }
 
     public async findAll(
@@ -63,48 +57,36 @@ class WorkoutRepository implements Repository {
     }
 
     public async update(
-        id: number,
+        query: Record<string, unknown>,
         entity: WorkoutEntity,
     ): Promise<WorkoutEntity | null> {
-        const workout = await this.userWorkoutsModel
-            .query()
-            .where('id', id)
-            .execute();
-        if (!workout) {
-            return null;
-        }
         const data = entity.toNewObject();
-        const trx = await this.userWorkoutsModel.startTransaction();
 
-        try {
-            const updatedUserWorkout = await this.userWorkoutsModel
-                .query(trx)
-                .update(data)
-                .where('id', id)
-                .returning('*')
-                .first()
-                .execute();
+        const updatedUserWorkout = await this.userWorkoutsModel
+            .query()
+            .update(data)
+            .where(query)
+            .returning('*')
+            .first()
+            .execute();
 
-            await trx.commit();
-
-            if (!updatedUserWorkout) {
-                return null;
-            }
-
-            return WorkoutEntity.initialize({
-                ...updatedUserWorkout,
+        if (!updatedUserWorkout) {
+            throw new HttpError({
+                status: HttpCode.BAD_REQUEST,
+                message: WorkoutValidationMessage.NOT_FOUND,
             });
-        } catch (error) {
-            await trx.rollback();
-            throw error;
         }
+
+        return WorkoutEntity.initialize({
+            ...updatedUserWorkout,
+        });
     }
 
-    public async delete(id: number): Promise<boolean> {
+    public async delete(query: Record<string, unknown>): Promise<boolean> {
         return !!(await this.userWorkoutsModel
             .query()
-            .delete()
-            .where('id', id)
+            .where(query)
+            .del()
             .execute());
     }
 }

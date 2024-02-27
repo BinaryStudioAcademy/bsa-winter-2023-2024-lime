@@ -3,9 +3,13 @@ import { type ValueOf } from '../../../types/types.js';
 
 type WorkoutRequestDto = {
     activity: ValueOf<typeof Activity>;
-    duration: number;
+    startTime: Date;
+    endTime: Date | null;
+    speed: number;
+    distance: number;
+    heartRate: number;
+    steps?: number;
     kilocalories: number;
-    steps: number;
 };
 
 export { type WorkoutRequestDto };

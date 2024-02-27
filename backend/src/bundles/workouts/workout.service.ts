@@ -4,6 +4,7 @@ import { type Service } from '~/common/types/types.js';
 import { WorkoutValidationMessage } from './enums/enums.js';
 import {
     type CreateWorkoutRequestDto,
+    type EntityIdParameterDto,
     type UpdateWorkoutRequestDto,
     type WorkoutResponseDto,
 } from './types/types.js';
@@ -48,35 +49,35 @@ class WorkoutService implements Service {
         return workout.toObject() as WorkoutResponseDto;
     }
     public async update(
-        id: number,
+        query: Record<string, unknown>,
         payload: UpdateWorkoutRequestDto,
     ): Promise<WorkoutResponseDto> {
-        const item = await this.workoutRepository.find({ id });
-        if (!item) {
+        const workout = await this.workoutRepository.update(
+            query,
+            WorkoutEntity.initialize({
+                id: +(query as EntityIdParameterDto).id,
+                ...payload,
+            }),
+        );
+
+        if (!workout) {
             throw new HttpError({
                 status: HttpCode.BAD_REQUEST,
                 message: WorkoutValidationMessage.NOT_FOUND,
             });
         }
-        const workout = (await this.workoutRepository.update(
-            id,
-            WorkoutEntity.initialize({
-                id,
-                ...payload,
-            }),
-        )) as WorkoutEntity;
 
         return workout.toObject();
     }
-    public async delete(id: number): Promise<boolean> {
-        const item = await this.workoutRepository.find({ id });
+    public async delete(query: Record<string, unknown>): Promise<boolean> {
+        const item = await this.workoutRepository.find(query);
         if (!item) {
             throw new HttpError({
                 status: HttpCode.BAD_REQUEST,
                 message: WorkoutValidationMessage.NOT_FOUND,
             });
         }
-        return await this.workoutRepository.delete(id);
+        return await this.workoutRepository.delete(query);
     }
 }
 
