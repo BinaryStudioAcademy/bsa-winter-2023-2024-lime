@@ -35,7 +35,10 @@ async function up(knex: Knex): Promise<void> {
         table.integer(ColumnName.STEPS).nullable();
         table.integer(ColumnName.KILOCALORIES).nullable();
         table.integer(ColumnName.DURATION).nullable();
-
+        table.enum(ColumnName.ACTIVITY, Object.values(Activity), {
+            useNative: true,
+            enumName: `${ColumnName.ACTIVITY}_enum`,
+        });
         table
             .dateTime(ColumnName.CREATED_AT)
             .notNullable()
@@ -45,13 +48,6 @@ async function up(knex: Knex): Promise<void> {
             .notNullable()
             .defaultTo(knex.fn.now());
     });
-
-    await knex.schema.raw(
-        `CREATE TYPE ${ACTIVITY_ENUM} AS ENUM ('${Activity.CYCLING}', '${Activity.RUNNING}', '${Activity.WALKING}');`,
-    );
-    await knex.schema.raw(
-        `ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.ACTIVITY} ${ACTIVITY_ENUM}`,
-    );
 }
 
 async function down(knex: Knex): Promise<void> {
