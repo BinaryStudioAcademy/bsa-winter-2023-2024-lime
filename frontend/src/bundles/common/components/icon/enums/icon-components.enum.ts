@@ -1,4 +1,5 @@
 import ArrowDownIcon from '~/assets/img/icons/arrow-down-icon.svg?react';
+import DotIcon from '~/assets/img/icons/dot-icon.svg?react';
 import GoalsIcon from '~/assets/img/icons/goals-icon.svg?react';
 import GoogleFitIcon from '~/assets/img/icons/google-fit-icon.svg?react';
 import LogoIcon from '~/assets/img/icons/logo-icon.svg?react';
@@ -20,6 +21,7 @@ const IconComponent: Record<
     workoutIcon: WorkoutIcon,
     stravaIcon: StravaIcon,
     googleFitIcon: GoogleFitIcon,
+    dotIcon: DotIcon,
 } as const;
 
 export { IconComponent };
