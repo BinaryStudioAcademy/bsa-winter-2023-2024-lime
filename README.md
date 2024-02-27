@@ -33,8 +33,9 @@ Will be added soon
 2. Fill ENVs
 3. Install pre-commit hooks: **`npx simple-git-hooks`**
 4. Run migrations: **`npm run migrate:dev -w backend`**
-5. Run backend: **`npm run start:dev -w backend`**
-6. Run fronend: **`npm run start:dev -w frontend`**
+5. Run seeds: **`npm run seed:run -w backend`**
+6. Run backend: **`npm run start:dev -w backend`**
+7. Run fronend: **`npm run start:dev -w frontend`**
 
 ### 🌑 Backend
 
