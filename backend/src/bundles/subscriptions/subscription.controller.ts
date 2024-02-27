@@ -147,7 +147,7 @@ class SubscriptionController extends BaseController {
      * /api/v1/subscriptions/current-subscription:
      *    get:
      *      tags:
-     *       - Current subscription
+     *       - Subscription
      *      description: Returns current subscription of authorized user
      *      security:
      *        - bearerAuth: []
@@ -184,7 +184,7 @@ class SubscriptionController extends BaseController {
      * /api/v1/subscriptions/subscribe:
      *   post:
      *     tags:
-     *       - Current subscription
+     *       - Subscription
      *     summary: Subscribe to a plan
      *     description: Subscribe a user to a subscription plan
      *     security:
@@ -250,7 +250,7 @@ class SubscriptionController extends BaseController {
      * /api/v1/subscriptions/cancel-subscription:
      *   patch:
      *     tags:
-     *       - Current subscription
+     *       - Subscription
      *     summary: Cancel a subscription
      *     description: Update the cancellation status of a subscription
      *     security:
@@ -313,7 +313,7 @@ class SubscriptionController extends BaseController {
      * /api/v1/subscriptions/stripe-webhook:
      *   post:
      *     tags:
-     *       - Webhook
+     *       - Subscription
      *     summary: Webhook Listener
      *     description: Listen to webhook events from Stripe and update subscription statuses accordingly
      *     requestBody:
