@@ -42,7 +42,7 @@ class SubscriptionsApi extends BaseHttpApi {
 
     public async loadCurrentSubscription(): Promise<SubscriptionGetItemResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint('/current-subscription', {}),
+            this.getFullEndpoint(SubscriptionsApiPath.CURRENT_SUBSCRIPTION, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
@@ -75,7 +75,7 @@ class SubscriptionsApi extends BaseHttpApi {
         const response = await this.load(
             this.getFullEndpoint(SubscriptionsApiPath.CANCEL_SUBSCRIPTION, {}),
             {
-                method: 'POST',
+                method: 'PATCH',
                 contentType: ContentType.JSON,
                 hasAuth: true,
                 payload: JSON.stringify(payload),

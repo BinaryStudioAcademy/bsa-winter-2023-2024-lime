@@ -61,6 +61,7 @@ class SubscriptionPlanController extends BaseController {
         this.addRoute({
             path: SubscriptionPlansApiPath.ROOT,
             method: 'GET',
+            isProtected: true,
             handler: () => this.findAll(),
         });
     }
@@ -72,6 +73,8 @@ class SubscriptionPlanController extends BaseController {
      *      tags:
      *       - SubscriptionPlans
      *      description: Returns an array of subscription plans
+     *      security:
+     *       - bearerAuth: []
      *      responses:
      *        200:
      *          description: Successful operation

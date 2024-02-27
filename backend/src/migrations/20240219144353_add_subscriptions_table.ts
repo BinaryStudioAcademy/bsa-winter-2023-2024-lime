@@ -64,7 +64,7 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(SubscriptionsColumn.PLAN_ID)
             .unsigned()
-            .nullable()
+            .notNullable()
             .references(SubscriptionsColumn.ID)
             .inTable(SUBSCRIPTION_PLANS_TABLE_NAME)
             .onUpdate('CASCADE')
@@ -72,9 +72,9 @@ async function up(knex: Knex): Promise<void> {
         table
             .string(SubscriptionsColumn.STRIPE_SUBSCRIPTION_ID)
             .unique()
-            .nullable();
-        table.boolean(SubscriptionsColumn.IS_CANCELED).nullable();
-        table.dateTime(SubscriptionsColumn.EXPIRES_AT).nullable();
+            .notNullable();
+        table.boolean(SubscriptionsColumn.IS_CANCELED).notNullable();
+        table.dateTime(SubscriptionsColumn.EXPIRES_AT).notNullable();
         table
             .dateTime(SubscriptionsColumn.CREATED_AT)
             .notNullable()

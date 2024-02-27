@@ -3,7 +3,7 @@ const SubscriptionsApiPath = {
     SUBSCRIBE: '/subscribe',
     CURRENT_SUBSCRIPTION: '/current-subscription',
     CANCEL_SUBSCRIPTION: '/cancel-subscription',
-    WEBHOOK: '/webhook',
+    STRIPE_WEBHOOK: '/stripe-webhook',
 } as const;
 
 export { SubscriptionsApiPath };

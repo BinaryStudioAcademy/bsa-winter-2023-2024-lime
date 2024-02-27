@@ -15,6 +15,72 @@ import {
     type SubscribeRequestDto,
 } from './types/types.js';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Error:
+ *       type: object
+ *       properties:
+ *         errorType:
+ *           type: string
+ *           enum:
+ *              - COMMON
+ *              - VALIDATION
+ *         message:
+ *           type: string
+ *
+ */
+
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      Subscription:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          userId:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          planId:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          stripeSubscriptionId:
+ *            type: string
+ *            format: string
+ *          status:
+ *            type: string
+ *            enum:
+ *              - incomplete
+ *              - incomplete_expired
+ *              - active
+ *              - past_due
+ *              - canceled
+ *              - unpaid
+ *              - trialing
+ *              - paused
+ *          isCanceled:
+ *            type: boolean
+ *            format: boolean
+ *          expiresAt:
+ *            type: string
+ *            format: date
+ *          subscriptionPlanName:
+ *            type: string
+ *            nullable: true
+ *          subscriptionPlanPrice:
+ *            type: string
+ *            nullable: true
+ *          subscriptionPlanDescription:
+ *            type: string
+ *            nullable: true
+ */
 class SubscriptionController extends BaseController {
     private subscriptionService: SubscriptionService;
 
@@ -53,7 +119,7 @@ class SubscriptionController extends BaseController {
 
         this.addRoute({
             path: SubscriptionsApiPath.CANCEL_SUBSCRIPTION,
-            method: 'POST',
+            method: 'PATCH',
             isProtected: true,
             handler: (options) =>
                 this.updateCancelSubscribtion(
@@ -64,7 +130,7 @@ class SubscriptionController extends BaseController {
         });
 
         this.addRoute({
-            path: SubscriptionsApiPath.WEBHOOK,
+            path: SubscriptionsApiPath.STRIPE_WEBHOOK,
             method: 'POST',
             handler: (options) => {
                 return this.webHookListener(
@@ -76,6 +142,30 @@ class SubscriptionController extends BaseController {
         });
     }
 
+    /**
+     * @swagger
+     * /api/v1/subscriptions/current-subscription:
+     *    get:
+     *      tags:
+     *       - Current subscription
+     *      description: Returns current subscription of authorized user
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/Subscription'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async find(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
@@ -89,6 +179,56 @@ class SubscriptionController extends BaseController {
         };
     }
 
+    /**
+     * @swagger
+     * /api/v1/subscriptions/subscribe:
+     *   post:
+     *     tags:
+     *       - Current subscription
+     *     summary: Subscribe to a plan
+     *     description: Subscribe a user to a subscription plan
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               planId:
+     *                 type: string
+     *                 description: The ID of the plan to subscribe to.
+     *               stripePriceId:
+     *                 type: string
+     *                 description: The Stripe price ID associated with the plan.
+     *     responses:
+     *       200:
+     *         description: Subscription successful
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 stripeSubscriptionId:
+     *                   type: string
+     *                   description: The ID of the subscription created in Stripe.
+     *                 clientSecret:
+     *                   type: string
+     *                   description: The client secret required for confirming the subscription on the client side.
+     *       409:
+     *         description: Conflict - User already has an active subscription to the same plan
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     *       500:
+     *         description: Internal Server Error - Error occurred during subscription process
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
     private async subscribe(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
@@ -105,6 +245,53 @@ class SubscriptionController extends BaseController {
         };
     }
 
+    /**
+     * @swagger
+     * /api/v1/subscriptions/cancel-subscription:
+     *   patch:
+     *     tags:
+     *       - Current subscription
+     *     summary: Cancel a subscription
+     *     description: Update the cancellation status of a subscription
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               stripeSubscriptionId:
+     *                 type: string
+     *                 description: The ID of the subscription in Stripe.
+     *               isCanceled:
+     *                 type: boolean
+     *                 description: The status indicating whether the subscription is canceled.
+     *     responses:
+     *       200:
+     *         description: Subscription cancellation successful
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 isCanceled:
+     *                   type: boolean
+     *                   description: The updated cancellation status of the subscription.
+     *       400:
+     *         description: Bad Request - Missing or invalid parameters
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     *       500:
+     *         description: Internal Server Error - Error occurred during subscription cancellation process
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
     private async updateCancelSubscribtion(
         options: ApiHandlerOptions<{
             body: CancelSubscriptionRequestDto;
@@ -121,6 +308,30 @@ class SubscriptionController extends BaseController {
         };
     }
 
+    /**
+     * @swagger
+     * /api/v1/subscriptions/stripe-webhook:
+     *   post:
+     *     tags:
+     *       - Webhook
+     *     summary: Webhook Listener
+     *     description: Listen to webhook events from Stripe and update subscription statuses accordingly
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               body:
+     *                 type: object
+     *                 description: The body of the webhook event from Stripe.
+     *     responses:
+     *       200:
+     *         description: Webhook event processed successfully
+     *       500:
+     *         description: Internal Server Error - Error occurred while processing the webhook event
+     */
     private async webHookListener(
         options: ApiHandlerOptions<{
             body: unknown;
