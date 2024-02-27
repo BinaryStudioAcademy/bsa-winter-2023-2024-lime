@@ -47,9 +47,9 @@ const FriendCard = ({
                 />
             </div>
             <div className="bg-primary rounded-b-xl p-4">
-                <div className="flex ">
-                    <i className="h-4 w-4">{isActive ? '🟢' : '🔴'}</i>
-                    <h3 className="text-primary">{name}</h3>
+                <div className="flex gap-1 items-center">
+                    <i className="h-4 w-4 text-[0.5rem] flex items-center">{isActive ? '🟢' : '🔴'}</i>
+                    <h3 className="text-primary font-extrabold">{name}</h3>
                 </div>
                 <div className="flex w-full justify-between">
                     <div className="inline-flex w-3/4 items-center">
