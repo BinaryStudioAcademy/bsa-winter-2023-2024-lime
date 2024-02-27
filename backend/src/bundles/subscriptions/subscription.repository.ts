@@ -20,7 +20,7 @@ class SubscriptionRepository
             .query()
             .where(SunscriptionAttributes.USER_ID, userId)
             .andWhere(SunscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
-            .orderBy(SunscriptionAttributes.CREATED_AT, 'desc')
+            .orderBy(SunscriptionAttributes.CREATED_AT, 'DESC')
             .withGraphFetched('[subscriptionPlan]')
             .execute();
 
@@ -85,7 +85,7 @@ class SubscriptionRepository
         });
     }
 
-    public async updateSubscriptionByToken(
+    public async updateByStripeSubscriptionId(
         stripeSubscriptionId: string,
         payload: Record<string, unknown>,
     ): Promise<SubscriptionEntity | null> {

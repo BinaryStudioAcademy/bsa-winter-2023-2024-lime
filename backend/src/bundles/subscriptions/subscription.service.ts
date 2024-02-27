@@ -127,7 +127,7 @@ class SubscriptionService
             case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_UPDATED: {
                 const subscription = stripeResponse.data.object;
                 const updatedSubscription =
-                    await this.subscriptionRepository.updateSubscriptionByToken(
+                    await this.subscriptionRepository.updateByStripeSubscriptionId(
                         subscription.id,
                         {
                             status: subscription.status,
