@@ -115,8 +115,8 @@ class OAuthController extends BaseController {
      *          headers:
      *            Location:
      *              description: The URL to Third-Party authorization prompt
-     *                schema:
-     *                  type: string
+     *              schema:
+     *                type: string
      *        400:
      *          description: Failed operation
      *          content:
@@ -177,8 +177,8 @@ class OAuthController extends BaseController {
      *          headers:
      *            Location:
      *              description: The URL endpoint with user connections
-     *                schema:
-     *                  type: string
+     *              schema:
+     *                type: string
      *        400:
      *          description: Failed operation
      *          content:

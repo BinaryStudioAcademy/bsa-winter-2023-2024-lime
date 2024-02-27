@@ -12,25 +12,28 @@ import {
 import { type Config } from '~/common/config/config.js';
 
 import { REQUIRED_SCOPE } from './constants/strava-required-scope.js';
-import { StravaPath } from './enums/enums.js';
+import { ApiPath, StravaPath } from './enums/enums.js';
 import { type StravaOAuthResponseDto } from './types/types.js';
 
 class StravaOAuthStrategy implements OAuthStrategy {
     private config: Config;
 
-    private apiUrl: string;
+    private baseUrl: string;
+
+    private apiPath: string;
 
     public constructor(config: Config) {
         this.config = config;
-        this.apiUrl = `http://${config.ENV.APP.HOST}:${config.ENV.APP.PORT}`;
+        this.baseUrl = `http://${config.ENV.APP.HOST}:${config.ENV.APP.PORT}`;
+        this.apiPath = '/api/v1';
     }
 
     public getAuthorizeRedirectUrl(oAuthStateEntity: OAuthStateEntity): URL {
         const { userId, uuid } = oAuthStateEntity.toObject();
 
         const redirectUri = new URL(
-            `/api/v1/oauth/strava${OAuthActionsPath.EXCHANGE_TOKEN}`,
-            this.apiUrl,
+            `${this.apiPath}${ApiPath.OAUTH}/${OAuthProvider.STRAVA}${OAuthActionsPath.EXCHANGE_TOKEN}`,
+            this.baseUrl,
         );
         redirectUri.searchParams.set('userId', userId.toString());
 
