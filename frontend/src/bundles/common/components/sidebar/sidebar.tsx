@@ -23,7 +23,7 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-primary flex h-[95vh] w-72 flex-col content-center items-center p-7 text-primary',
+        'bg-lm-black-100 flex h-[95vh] w-72 flex-col content-center items-center p-7 text-white',
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
@@ -40,7 +40,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
 
     useEffect(() => {
         isOpen
-            ? setSidebarStyle({ transform: 'translateX(0)' })
+            ? setSidebarStyle({ transform: 'translateX(0)', gridArea: 'aside' })
             : setSidebarStyle({ transform: 'translateX(-100%)' });
     }, [isOpen]);
 
