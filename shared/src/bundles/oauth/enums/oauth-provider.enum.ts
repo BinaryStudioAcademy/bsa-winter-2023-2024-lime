@@ -1,6 +1,6 @@
-const OAuthProvider = {
-    STRAVA: 'strava',
-    GOOGLE_FIT: 'google-fit',
-} as const;
+enum OAuthProvider {
+    STRAVA = 'strava',
+    GOOGLE_FIT = 'google-fit',
+}
 
 export { OAuthProvider };

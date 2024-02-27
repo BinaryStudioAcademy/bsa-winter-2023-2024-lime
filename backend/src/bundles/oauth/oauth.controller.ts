@@ -1,7 +1,4 @@
-import {
-    type OAuthProvider,
-    type OAuthService,
-} from '~/bundles/oauth/oauth.js';
+import { type OAuthService } from '~/bundles/oauth/oauth.js';
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import { type Config } from '~/common/config/config.js';
 import {
@@ -14,7 +11,11 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import { ConnectionsPath, HttpCode, OAuthActionsPath } from './enums/enums.js';
-import { type OAuthExchangeAuthCodeDto, type ValueOf } from './types/types.js';
+import {
+    type OAuthExchangeAuthCodeDto,
+    type OAuthProviderParameterDto,
+} from './types/types.js';
+import { oAuthProviderValidationSchema } from './validation-schemas/validation-schemas.js';
 
 /**
  * @swagger
@@ -52,39 +53,48 @@ class OAuthController extends BaseController {
         this.baseUrl = `http://${this.config.ENV.APP.HOST}:${this.config.ENV.APP.PORT}/api/v1`;
 
         this.addRoute({
-            path: `/:provider${OAuthActionsPath.AUTHORIZE}`,
+            path: OAuthActionsPath.$PROVIDER_AUTHORIZE,
             method: 'GET',
+            validation: {
+                params: oAuthProviderValidationSchema,
+            },
             isProtected: true,
             handler: (options) =>
                 this.authorize(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
-                        params: { provider: ValueOf<typeof OAuthProvider> };
+                        params: OAuthProviderParameterDto;
                     }>,
                 ),
         });
 
         this.addRoute({
-            path: `/:provider${OAuthActionsPath.EXCHANGE_TOKEN}`,
+            path: OAuthActionsPath.$PROVIDER_EXCHANGE_TOKEN,
             method: 'GET',
+            validation: {
+                params: oAuthProviderValidationSchema,
+            },
             handler: (options) =>
                 this.exchangeToken(
                     options as ApiHandlerOptions<{
                         query: OAuthExchangeAuthCodeDto;
-                        params: { provider: ValueOf<typeof OAuthProvider> };
+                        params: OAuthProviderParameterDto;
                     }>,
                 ),
         });
 
         this.addRoute({
-            path: `/:provider${OAuthActionsPath.DEAUTHORIZE}`,
+            path: OAuthActionsPath.$PROVIDER_DEAUTHORIZE,
             method: 'GET',
+            validation: {
+                params: oAuthProviderValidationSchema,
+            },
             isProtected: true,
             handler: (options) =>
                 this.deauthorize(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
-                        params: { provider: ValueOf<typeof OAuthProvider> };
+                        params: OAuthProviderParameterDto;
                     }>,
                 ),
         });
@@ -119,7 +129,7 @@ class OAuthController extends BaseController {
     private async authorize(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
-            params: { provider: ValueOf<typeof OAuthProvider> };
+            params: OAuthProviderParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { id } = options.user;
@@ -139,7 +149,7 @@ class OAuthController extends BaseController {
     private async exchangeToken(
         options: ApiHandlerOptions<{
             query: OAuthExchangeAuthCodeDto;
-            params: { provider: ValueOf<typeof OAuthProvider> };
+            params: OAuthProviderParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { provider } = options.params;
@@ -181,7 +191,7 @@ class OAuthController extends BaseController {
     private async deauthorize(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
-            params: { provider: ValueOf<typeof OAuthProvider> };
+            params: OAuthProviderParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { id } = options.user;
