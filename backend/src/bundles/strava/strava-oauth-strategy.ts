@@ -29,7 +29,7 @@ class StravaOAuthStrategy implements OAuthStrategy {
         const { userId, uuid } = oAuthStateEntity.toObject();
 
         const redirectUri = new URL(
-            `/api/v1/oauth/strava/${OAuthActionsPath.EXCHANGE_TOKEN}`,
+            `/api/v1/oauth/strava${OAuthActionsPath.EXCHANGE_TOKEN}`,
             this.apiUrl,
         );
         redirectUri.searchParams.set('userId', userId.toString());

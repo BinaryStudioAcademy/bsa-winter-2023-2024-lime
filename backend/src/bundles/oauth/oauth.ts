@@ -48,6 +48,6 @@ export { OAuthStateModel } from './oauth-state.model.js';
 export { OAuthStateRepository } from './oauth-state.repository.js';
 export {
     type OAuthClient,
-    type OAuthConnection,
+    type OAuthResponseDto,
     type ProviderOAuthPaths,
 } from './types/types.js';

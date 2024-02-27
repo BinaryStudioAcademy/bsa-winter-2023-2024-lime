@@ -1,11 +1,11 @@
 import crypto from 'node:crypto';
 
 import {
-    type OAuthConnection,
     type OAuthEntity,
     type OAuthExchangeAuthCodeDto,
     type OAuthProvider,
     type OAuthRepository,
+    type OAuthResponseDto,
     type OAuthStateRepository,
     ErrorMessage,
     HttpCode,
@@ -43,11 +43,11 @@ class OAuthService {
 
     public async findMany(
         query: Record<string, unknown>,
-    ): Promise<{ items: OAuthConnection[] }> {
+    ): Promise<{ items: OAuthResponseDto[] }> {
         const items = await this.oAuthRepository.findMany(query);
 
         return {
-            items: items.map((it) => it.toObject()),
+            items: items.map((it) => it.toPublicObject()),
         };
     }
 

@@ -150,6 +150,20 @@ class OAuthEntity implements Entity {
             provider: this.provider,
         };
     }
+
+    public toPublicObject(): {
+        id: number;
+        userId: number;
+        scope: string;
+        provider: ValueOf<typeof OAuthProvider>;
+    } {
+        return {
+            id: this.id as number,
+            userId: this.userId,
+            scope: this.scope,
+            provider: this.provider,
+        };
+    }
 }
 
 export { OAuthEntity };

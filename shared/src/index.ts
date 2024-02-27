@@ -2,7 +2,11 @@ export { ActivityType, Metric } from './bundles/achievements/enums/enums.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
-export { OAuthActionsPath } from './bundles/oauth/oauth.js';
+export {
+    type OAuthResponseDto,
+    OAuthActionsPath,
+    OAuthProvider,
+} from './bundles/oauth/oauth.js';
 export {
     type PasswordForgotRequestDto,
     type PasswordForgotResponseDto,

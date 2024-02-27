@@ -43,16 +43,6 @@ import { ConnectionsPath } from './enums/enums.js';
  *            type: number
  *            format: number
  *            minimum: 1
- *          tokenType:
- *            type: string
- *          expiresAt:
- *            type: number
- *            format: number
- *            minimum: 0
- *          accessToken:
- *            type: string
- *          refreshToken:
- *            type: string
  *          scope:
  *            type: string
  *            nullable: true
