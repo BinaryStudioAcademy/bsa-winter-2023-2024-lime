@@ -1,8 +1,6 @@
-import { ChatBubbleLeftEllipsisIcon as MessageIcon } from '@heroicons/react/24/solid';
 import { useCallback } from 'react';
 
 import { Button, Icon } from '~/bundles/common/components/components.js';
-import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/add-size-hero-icons.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 
 type FriendProperties = {
@@ -13,6 +11,12 @@ type FriendProperties = {
     isFriend: boolean;
     addFriend: (id: number) => void;
     messageFriend: (id: number) => void;
+};
+
+const isValidImg = (url: string): boolean => {
+    const img = new Image();
+    img.src = url;
+    return img.complete;
 };
 
 const FriendCard = ({
@@ -32,11 +36,6 @@ const FriendCard = ({
         messageFriend(id);
     }, [messageFriend, id]);
 
-    const IconMessage = addSizePropertyHeroIcons({
-        icon: <MessageIcon />,
-        size: ComponentSize.SMALL,
-    });
-
     const variantButton = isFriend ? 'secondary' : 'primary';
     const classesButtonResponsive =
         'lg:px-4 lg:py-2 lg:h-8  sm:text-[0.7rem] sm:h-6 sm:px-1 sm:py-1';
@@ -44,15 +43,23 @@ const FriendCard = ({
         add: 'Add friend',
         remove: 'Remove friend',
     };
+    const icon = 'messageIcon';
+    const size = 'sm';
 
     return (
         <div className="hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent sm:max-w-40 lg:max-w-64">
             <div className="h-3/4 w-full">
-                <img
-                    src={avatar}
-                    alt={name}
-                    className="aspect-square rounded-t-xl object-cover"
-                />
+                {isValidImg(avatar) ? (
+                    <img
+                        src={avatar}
+                        alt={name}
+                        className="aspect-square rounded-t-xl object-cover"
+                    />
+                ) : (
+                    <div className="bg-lm-grey-100 flex aspect-square items-center justify-center rounded-t-xl">
+                        <p>Error loading image</p>
+                    </div>
+                )}
             </div>
             <div className="bg-primary rounded-b-xl p-4">
                 <div className="flex items-center gap-1">
@@ -92,7 +99,7 @@ const FriendCard = ({
                         onClick={handleSendMessage}
                         className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10"
                     >
-                        {IconMessage}
+                        <Icon name={icon} size={size} />
                     </button>
                 </div>
             </div>
