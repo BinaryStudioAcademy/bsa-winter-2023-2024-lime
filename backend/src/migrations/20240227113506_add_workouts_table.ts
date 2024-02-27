@@ -9,8 +9,8 @@ const ColumnName = {
     ACTIVITY: 'activity',
     STEPS: 'steps',
     HEART_RATE: 'heart_rate',
-    START_TIME: 'start_time',
-    END_TIME: 'end_time',
+    WORKOUT_STARTED_AT: 'workout_started_at',
+    WORKOUT_ENDED_AT: 'workout_ended_at',
     DISTANCE: 'distance',
     SPEED: 'speed',
     KILOCALORIES: 'kilocalories',
@@ -40,10 +40,10 @@ async function up(knex: Knex): Promise<void> {
         table.integer(ColumnName.KILOCALORIES).notNullable();
         table.integer(ColumnName.HEART_RATE).notNullable();
         table
-            .dateTime(ColumnName.START_TIME)
+            .dateTime(ColumnName.WORKOUT_STARTED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
-        table.dateTime(ColumnName.END_TIME).nullable();
+        table.dateTime(ColumnName.WORKOUT_ENDED_AT).nullable();
         table.integer(ColumnName.DISTANCE).notNullable();
         table.integer(ColumnName.SPEED).notNullable();
         table.enum(ColumnName.ACTIVITY, Object.values(Activity), {

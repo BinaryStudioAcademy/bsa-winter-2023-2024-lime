@@ -7,8 +7,8 @@ class WorkoutEntity implements Entity {
     private 'activity': ValueOf<typeof Activity>;
     private 'steps': number | undefined;
     private 'heartRate': number;
-    private 'startTime': Date;
-    private 'endTime': Date | null;
+    private 'workoutStartedAt': Date;
+    private 'workoutEndedAt': Date | null;
     private 'distance': number;
     private 'speed': number;
     private 'kilocalories': number;
@@ -18,8 +18,8 @@ class WorkoutEntity implements Entity {
         userId,
         activity,
         heartRate,
-        startTime,
-        endTime,
+        workoutStartedAt,
+        workoutEndedAt,
         distance,
         speed,
         kilocalories,
@@ -29,8 +29,8 @@ class WorkoutEntity implements Entity {
         activity: ValueOf<typeof Activity>;
         steps?: number;
         heartRate: number;
-        startTime: Date;
-        endTime: Date | null;
+        workoutStartedAt: Date;
+        workoutEndedAt: Date | null;
         distance: number;
         speed: number;
         kilocalories: number;
@@ -39,8 +39,8 @@ class WorkoutEntity implements Entity {
         this.userId = userId;
         this.activity = activity;
         this.heartRate = heartRate;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.workoutStartedAt = workoutStartedAt;
+        this.workoutEndedAt = workoutEndedAt;
         this.distance = distance;
         this.speed = speed;
         this.kilocalories = kilocalories;
@@ -55,8 +55,8 @@ class WorkoutEntity implements Entity {
         activity: ValueOf<typeof Activity>;
         steps?: number;
         heartRate: number;
-        startTime: Date;
-        endTime: Date | null;
+        workoutStartedAt: Date;
+        workoutEndedAt: Date | null;
         distance: number;
         speed: number;
         kilocalories: number;
@@ -75,8 +75,8 @@ class WorkoutEntity implements Entity {
             ...payload,
             id: null,
             heartRate: 0,
-            startTime: new Date(),
-            endTime: null,
+            workoutStartedAt: new Date(),
+            workoutEndedAt: null,
             distance: 0,
             speed: 0,
             kilocalories: 0,
@@ -88,8 +88,8 @@ class WorkoutEntity implements Entity {
         activity: ValueOf<typeof Activity>;
         steps?: number;
         heartRate: number;
-        startTime: Date;
-        endTime: Date | null;
+        workoutStartedAt: Date;
+        workoutEndedAt: Date | null;
         distance: number;
         speed: number;
         kilocalories: number;
@@ -99,8 +99,8 @@ class WorkoutEntity implements Entity {
             activity: this.activity,
             steps: this.steps as number,
             heartRate: this.heartRate,
-            startTime: this.startTime,
-            endTime: this.endTime,
+            workoutStartedAt: this.workoutStartedAt,
+            workoutEndedAt: this.workoutEndedAt,
             distance: this.distance,
             speed: this.speed,
             kilocalories: this.kilocalories,
@@ -112,8 +112,8 @@ class WorkoutEntity implements Entity {
         activity: ValueOf<typeof Activity>;
         steps?: number;
         heartRate: number;
-        startTime: Date;
-        endTime: Date | null;
+        workoutStartedAt: Date;
+        workoutEndedAt: Date | null;
         distance: number;
         speed: number;
         kilocalories: number;
@@ -123,8 +123,8 @@ class WorkoutEntity implements Entity {
             activity: this.activity,
             steps: this.steps as number,
             heartRate: this.heartRate,
-            startTime: this.startTime,
-            endTime: this.endTime,
+            workoutStartedAt: this.workoutStartedAt,
+            workoutEndedAt: this.workoutEndedAt,
             distance: this.distance,
             speed: this.speed,
             kilocalories: this.kilocalories,

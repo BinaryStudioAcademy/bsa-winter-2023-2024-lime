@@ -3,8 +3,8 @@ import { type ValueOf } from '../../../types/types.js';
 
 type WorkoutRequestDto = {
     activity: ValueOf<typeof Activity>;
-    startTime: Date;
-    endTime: Date | null;
+    workoutStartedAt: Date;
+    workoutEndedAt: Date | null;
     speed: number;
     distance: number;
     heartRate: number;
