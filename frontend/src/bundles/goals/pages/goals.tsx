@@ -2,6 +2,7 @@ import { PlusIcon } from '@heroicons/react/16/solid';
 
 import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
 import {
+    AchievementCard,
     Button,
     ButtonVariant,
     Loader,
@@ -20,7 +21,6 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import {
-    AchievementCard,
     FinishedGoalCard,
     GoalCard,
 } from '~/bundles/goals/components/components.js';
