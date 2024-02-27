@@ -1,4 +1,4 @@
-import { type Activity } from '~/common/enums/enums.js';
+import { type ActivityType } from '~/common/enums/enums.js';
 import { type Entity, type ValueOf } from '~/common/types/types.js';
 
 import { type FrequencyType } from './enums/enums.js';
@@ -8,7 +8,7 @@ class GoalEntity implements Entity {
 
     private 'userId': number;
 
-    private 'activity': ValueOf<typeof Activity>;
+    private 'activityType': ValueOf<typeof ActivityType>;
 
     private 'frequency': number;
 
@@ -25,7 +25,7 @@ class GoalEntity implements Entity {
     private constructor({
         id,
         userId,
-        activity,
+        activityType,
         frequency,
         frequencyType,
         distance,
@@ -35,7 +35,7 @@ class GoalEntity implements Entity {
     }: {
         id: number | null;
         userId: number;
-        activity: ValueOf<typeof Activity>;
+        activityType: ValueOf<typeof ActivityType>;
         frequency: number;
         frequencyType: ValueOf<typeof FrequencyType>;
         distance: number | null;
@@ -45,7 +45,7 @@ class GoalEntity implements Entity {
     }) {
         this.id = id;
         this.userId = userId;
-        this.activity = activity;
+        this.activityType = activityType;
         this.frequency = frequency;
         this.frequencyType = frequencyType;
         this.distance = distance;
@@ -57,7 +57,7 @@ class GoalEntity implements Entity {
     public static initialize({
         id,
         userId,
-        activity,
+        activityType,
         frequency,
         frequencyType,
         distance,
@@ -67,7 +67,7 @@ class GoalEntity implements Entity {
     }: {
         id: number;
         userId: number;
-        activity: ValueOf<typeof Activity>;
+        activityType: ValueOf<typeof ActivityType>;
         frequency: number;
         frequencyType: ValueOf<typeof FrequencyType>;
         distance: number | null;
@@ -78,7 +78,7 @@ class GoalEntity implements Entity {
         return new GoalEntity({
             id,
             userId,
-            activity,
+            activityType,
             frequency,
             frequencyType,
             distance,
@@ -90,7 +90,7 @@ class GoalEntity implements Entity {
 
     public static initializeNew({
         userId,
-        activity,
+        activityType,
         frequency,
         frequencyType,
         distance,
@@ -99,7 +99,7 @@ class GoalEntity implements Entity {
         completedAt,
     }: {
         userId: number;
-        activity: ValueOf<typeof Activity>;
+        activityType: ValueOf<typeof ActivityType>;
         frequency: number;
         frequencyType: ValueOf<typeof FrequencyType>;
         distance: number | null;
@@ -110,7 +110,7 @@ class GoalEntity implements Entity {
         return new GoalEntity({
             id: null,
             userId,
-            activity,
+            activityType,
             frequency,
             frequencyType,
             distance,
@@ -122,7 +122,7 @@ class GoalEntity implements Entity {
 
     public toObject(): {
         id: number;
-        activity: ValueOf<typeof Activity>;
+        activityType: ValueOf<typeof ActivityType>;
         frequency: number;
         frequencyType: ValueOf<typeof FrequencyType>;
         distance: number | null;
@@ -132,7 +132,7 @@ class GoalEntity implements Entity {
     } {
         return {
             id: this.id as number,
-            activity: this.activity,
+            activityType: this.activityType,
             frequency: this.frequency,
             frequencyType: this.frequencyType,
             distance: this.distance,
@@ -144,7 +144,7 @@ class GoalEntity implements Entity {
 
     public toNewObject(): {
         userId: number;
-        activity: ValueOf<typeof Activity>;
+        activityType: ValueOf<typeof ActivityType>;
         frequency: number;
         frequencyType: ValueOf<typeof FrequencyType>;
         distance: number | null;
@@ -154,7 +154,7 @@ class GoalEntity implements Entity {
     } {
         return {
             userId: this.userId,
-            activity: this.activity,
+            activityType: this.activityType,
             frequency: this.frequency,
             frequencyType: this.frequencyType,
             distance: this.distance,

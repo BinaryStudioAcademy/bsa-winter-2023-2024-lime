@@ -25,7 +25,7 @@ import { goalValidationSchema } from './validation-schemas/validation-schemas.js
  *            type: number
  *            format: number
  *            minimum: 1
- *          activity:
+ *          activityType:
  *            type: string
  *            enum:
  *              - cycling
@@ -57,7 +57,7 @@ import { goalValidationSchema } from './validation-schemas/validation-schemas.js
  *      GoalRequestDto:
  *        type: object
  *        properties:
- *          activity:
+ *          activityType:
  *            type: string
  *            enum:
  *              - cycling

@@ -6,7 +6,7 @@ const USERS_TABLE_NAME = 'users';
 const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
-    ACTIVITY: 'activity',
+    ACTIVITY_TYPE: 'activity_type',
     FREQUENCY: 'frequency',
     FREQUENCY_TYPE: 'frequency_type',
     DISTANCE: 'distance',
@@ -17,11 +17,11 @@ const ColumnName = {
     UPDATED_AT: 'updated_at',
 };
 
-const ACTIVITY_ENUM = `${ColumnName.ACTIVITY}_enum`;
+const ACTIVITY_TYPE_ENUM = `${ColumnName.ACTIVITY_TYPE}_enum`;
 
 const FREQUENCY_TYPE_ENUM = `${ColumnName.FREQUENCY_TYPE}_enum`;
 
-const Activity = {
+const ActivityType = {
     CYCLING: 'cycling',
     RUNNING: 'running',
     WALKING: 'walking',
@@ -64,11 +64,11 @@ async function up(knex: Knex): Promise<void> {
     });
 
     await knex.schema.raw(
-        `CREATE TYPE ${ACTIVITY_ENUM} AS ENUM ('${Activity.CYCLING}', '${Activity.RUNNING}', '${Activity.WALKING}');`,
+        `CREATE TYPE ${ACTIVITY_TYPE_ENUM} AS ENUM ('${ActivityType.CYCLING}', '${ActivityType.RUNNING}', '${ActivityType.WALKING}');`,
     );
 
     await knex.schema.raw(
-        `ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.ACTIVITY} ${ACTIVITY_ENUM} NOT NULL;`,
+        `ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.ACTIVITY_TYPE} ${ACTIVITY_TYPE_ENUM} NOT NULL;`,
     );
 
     await knex.schema.raw(
@@ -82,7 +82,7 @@ async function up(knex: Knex): Promise<void> {
 
 async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(TABLE_NAME);
-    await knex.schema.raw(`DROP TYPE IF EXISTS ${ACTIVITY_ENUM};`);
+    await knex.schema.raw(`DROP TYPE IF EXISTS ${ACTIVITY_TYPE_ENUM};`);
     await knex.schema.raw(`DROP TYPE IF EXISTS ${FREQUENCY_TYPE_ENUM};`);
 }
 

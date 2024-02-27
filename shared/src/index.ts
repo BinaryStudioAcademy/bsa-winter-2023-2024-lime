@@ -29,7 +29,7 @@ export {
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
-    Activity,
+    ActivityType,
     ApiPath,
     AppEnvironment,
     ContentType,

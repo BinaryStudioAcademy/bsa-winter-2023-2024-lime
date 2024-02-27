@@ -2,7 +2,7 @@ import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
-import { type Activity } from '~/common/enums/enums.js';
+import { type ActivityType } from '~/common/enums/enums.js';
 import { type ValueOf } from '~/common/types/types.js';
 
 import { type FrequencyType } from './enums/enums.js';
@@ -10,7 +10,7 @@ import { type FrequencyType } from './enums/enums.js';
 class GoalModel extends AbstractModel {
     public 'userId': number;
 
-    public 'activity': ValueOf<typeof Activity>;
+    public 'activityType': ValueOf<typeof ActivityType>;
 
     public 'frequency': number;
 
