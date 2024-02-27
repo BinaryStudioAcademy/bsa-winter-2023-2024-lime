@@ -34,7 +34,7 @@ const ForgotPasswordForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     );
 
     return (
-        <form className="text-primary text-sm" onSubmit={handleFormSubmit}>
+        <form className="text-sm text-white" onSubmit={handleFormSubmit}>
             <div className="mb-8">
                 <Input
                     type="email"
