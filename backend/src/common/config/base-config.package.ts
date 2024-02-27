@@ -53,6 +53,12 @@ class BaseConfig implements Config {
                     env: 'JWT_SECRET',
                     default: null,
                 },
+                TOKEN_EXPIRATION_TIME: {
+                    doc: 'Token expiration time',
+                    format: Number,
+                    env: 'TOKEN_EXPIRATION_TIME',
+                    default: null,
+                },
                 OPEN_AI_API_KEY: {
                     doc: 'Api key for working with AI',
                     format: String,
