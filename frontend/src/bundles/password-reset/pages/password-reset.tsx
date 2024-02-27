@@ -1,5 +1,8 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import { ResetPasswordForm } from '~/bundles/common/components/components.js';
+import {
+    ResetPasswordForm,
+    ThemeSwitcher,
+} from '~/bundles/common/components/components.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
@@ -63,8 +66,8 @@ const PasswordReset: React.FC = () => {
     }, [dataStatus, navigate]);
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
-        form: 'justify-between gap-6 text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        base: 'relative flex flex-col flex-1 bg-primary mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem] lg:static',
+        form: 'justify-between gap-6 text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
     };
 
     return (
@@ -81,8 +84,9 @@ const PasswordReset: React.FC = () => {
                         onSubmit={handleResetPassword}
                     />
                 )}
+                <ThemeSwitcher />
             </div>
-            <div className="items-center justify-center text-xl text-white sm:hidden md:flex md:flex-1">
+            <div className="text-primary items-center justify-center text-xl sm:hidden md:flex md:flex-1">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
         </main>

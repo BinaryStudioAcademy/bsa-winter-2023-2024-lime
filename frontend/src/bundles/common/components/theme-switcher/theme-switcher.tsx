@@ -25,7 +25,7 @@ function ThemeSwitcher(): JSX.Element {
 
     return (
         <>
-            <div className="absolute bottom-0 right-0">
+            <div className="absolute bottom-3 right-3">
                 <Switch
                     checked={theme === 'dark' ? true : false}
                     onChange={toggleTheme}

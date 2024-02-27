@@ -135,7 +135,7 @@ const Auth: React.FC = () => {
     };
 
     const classes = {
-        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem] bg-primary',
+        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-primary lg:flex-none lg:w-[45rem] lg:static',
         form: 'justify-between text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
         main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
         logoContainer:
@@ -146,6 +146,7 @@ const Auth: React.FC = () => {
         <main className={getValidClassNames(classes.main)}>
             <div className={getValidClassNames(classes.base, classes.form)}>
                 {getScreen(pathname)}
+                <ThemeSwitcher />
             </div>
             <div className={getValidClassNames(classes.logoContainer)}>
                 <img src={authLogo} alt="LIME Logo" />
@@ -164,7 +165,6 @@ const Auth: React.FC = () => {
                     />
                 )}
             </Modal>
-            <ThemeSwitcher />
         </main>
     );
 };

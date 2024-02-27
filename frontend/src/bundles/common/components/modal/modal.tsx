@@ -19,7 +19,7 @@ const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
             'bg-primary rounded-34 fixed left-1/2 top-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-start justify-center px-32 pb-24 pt-16 shadow-md transition-all',
         closeIconClass:
             'stroke-lm-grey-500 fill-lm-grey-500 hover:stroke-lm-yellow-100 hover:fill-lm-yellow-100 absolute right-8 top-8 h-3 w-3 cursor-pointer transition-all ',
-        titleClass: 'mb-10 text-left text-[1.875rem] font-bold text-white',
+        titleClass: 'mb-10 text-left text-[1.875rem] font-bold text-primary',
     };
     return (
         <div className={getValidClassNames(classes.modalClass)}>
@@ -35,7 +35,7 @@ const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
                 />
 
                 <div className="max-w-xs">
-                    <h3 className="mb-10 text-left text-[1.875rem] font-bold text-white">
+                    <h3 className={getValidClassNames(classes.titleClass)}>
                         {title}
                     </h3>
 
