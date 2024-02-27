@@ -79,7 +79,7 @@ const SubscriptionUserPanel = ({
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-col gap-2 md:flex-row md:gap-4">
                     <Button
                         type="button"
                         size="md"
