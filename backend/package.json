@@ -6,6 +6,7 @@
         "npm": ">=9.x.x"
     },
     "scripts": {
+        "knex": "cross-env NODE_OPTIONS=\"--loader ts-paths-esm-loader\" knex",
         "lint:type": "npx tsc --noEmit",
         "lint:js": "npx eslint \"src/**/*.ts\"",
         "lint": "npm run lint:type && npm run lint:js",
@@ -16,6 +17,7 @@
         "migrate:dev:rollback": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:rollback --all",
         "build": "tsc && tsc-alias -p tsconfig.json && npm run build:copy",
         "build:copy": "cp -r package.json build",
+        "seed:run": "npm run knex seed:run",
         "start": "node ./src/index.js",
         "prestart": "npm run migrate",
         "migrate": "knex migrate:latest"
@@ -24,6 +26,7 @@
         "@types/bcrypt": "5.0.2",
         "@types/convict": "6.1.6",
         "@types/swagger-jsdoc": "6.0.4",
+        "cross-env": "7.0.3",
         "nodemon": "3.0.3",
         "ts-paths-esm-loader": "1.4.3",
         "tsx": "4.7.0"
