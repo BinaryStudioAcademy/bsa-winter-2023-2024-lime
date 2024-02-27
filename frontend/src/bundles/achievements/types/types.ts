@@ -1,9 +1,9 @@
 import { type ValueOf } from '~/bundles/common/types/types.js';
-import { type Activity } from '~/bundles/goals/enums/enums.js';
+import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
 type AchievementResponseDto = {
     id: number;
-    activity: ValueOf<typeof Activity>;
+    activity: ValueOf<typeof ActivityType>;
     name: string;
     createdAt: string;
 };

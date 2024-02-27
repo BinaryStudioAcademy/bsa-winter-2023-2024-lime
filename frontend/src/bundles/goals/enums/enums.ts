@@ -1,5 +1,5 @@
 export {
-    Activity,
+    ActivityType,
     AuthApiPath,
     FrequencyType,
     goalValidationSchema,

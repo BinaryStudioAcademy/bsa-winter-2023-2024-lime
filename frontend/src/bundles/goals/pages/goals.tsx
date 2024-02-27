@@ -25,7 +25,7 @@ import {
     GoalCard,
 } from '~/bundles/goals/components/components.js';
 import {
-    type Activity,
+    type ActivityType,
     type FrequencyType,
 } from '~/bundles/goals/enums/enums.js';
 import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
@@ -74,7 +74,7 @@ const Goals: React.FC = () => {
             const [frequency, frequencyType] = payload.frequency.split(' ');
 
             const createGoalPayload = {
-                activity: payload.activity as ValueOf<typeof Activity>,
+                activity: payload.activity as ValueOf<typeof ActivityType>,
                 frequency: Number(frequency),
                 frequencyType: frequencyType as ValueOf<typeof FrequencyType>,
                 distance: Number(payload.distance) ?? null,
