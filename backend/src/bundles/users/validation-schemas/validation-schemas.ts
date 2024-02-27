@@ -1,1 +1,5 @@
-export { userAuthValidationSchema } from 'shared';
+export {
+    passwordForgotValidationSchema,
+    passwordResetValidationSchema,
+    userAuthValidationSchema,
+} from 'shared';

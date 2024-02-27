@@ -5,7 +5,7 @@ import {
     Link,
     Loader,
 } from '~/bundles/common/components/components.js';
-import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import {
@@ -22,12 +22,16 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserAuthRequestDto) => void;
+    onModalOpen: () => void;
     isLoading: boolean;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+const SignInForm: React.FC<Properties> = ({
+    onSubmit,
+    onModalOpen,
+    isLoading,
+}) => {
     const isHeight = useHeight();
-
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
@@ -85,33 +89,42 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         isDisabled={isLoading}
                         required
                     />
-                    <Input
-                        type="password"
-                        label="Password"
-                        name="password"
-                        control={control}
-                        errors={errors}
-                        isDisabled={isLoading}
-                        required
-                    />
 
-                    <div className="mt-3">
-                        <Button
-                            type="submit"
-                            label={isLoading ? '' : 'Log In'}
-                            variant={ButtonVariant.PRIMARY}
-                            size={
-                                isHeight
-                                    ? ComponentSize.SMALL
-                                    : ComponentSize.MEDIUM
-                            }
-                            leftIcon={
-                                isLoading && (
-                                    <Loader color={IconColor.SECONDARY} />
-                                )
-                            }
+                    <div className="relative mb-8">
+                        <Input
+                            type="password"
+                            label="Password"
+                            name="password"
+                            control={control}
+                            errors={errors}
+                            isDisabled={isLoading}
+                            required
                         />
+
+                        <div className="absolute right-0 top-0">
+                            <Button
+                                className="[&]:text-lm-grey-100 h-[1.5rem] px-[0] py-[0]"
+                                label="Forgot password?"
+                                type="button"
+                                size={ComponentSize.SMALL}
+                                variant={ButtonVariant.TERTIARY}
+                                onClick={onModalOpen}
+                            />
+                        </div>
                     </div>
+                    <Button
+                        type="submit"
+                        label={isLoading ? '' : 'Log In'}
+                        variant={ButtonVariant.PRIMARY}
+                        size={
+                            isHeight
+                                ? ComponentSize.SMALL
+                                : ComponentSize.MEDIUM
+                        }
+                        leftIcon={
+                            isLoading && <Loader color={IconColor.SECONDARY} />
+                        }
+                    />
                 </form>
             </div>
             <p className="hmd:mt-2 text-center text-sm">
