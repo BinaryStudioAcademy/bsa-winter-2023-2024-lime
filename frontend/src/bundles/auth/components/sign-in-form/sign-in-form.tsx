@@ -101,7 +101,7 @@ const SignInForm: React.FC<Properties> = ({
                     </div>
 
                     <Button
-                        label={isLoading ? '' : 'Log In'}
+                        label={isLoading ? '' : 'Sign In'}
                         leftIcon={
                             isLoading && <Loader color={IconColor.SECONDARY} />
                         }
