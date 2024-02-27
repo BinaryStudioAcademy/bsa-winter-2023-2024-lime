@@ -1,5 +1,4 @@
 import { Button } from '~/bundles/common/components/components.js';
-import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useCallback,
@@ -80,27 +79,26 @@ const SubscriptionUserPanel = ({
                         </div>
                     </div>
                 </div>
-                <Button
-                    variant="primary"
-                    label={
-                        isCanceled
-                            ? 'Renew subscription'
-                            : 'Cancel subscription'
-                    }
-                    size="md"
-                    type="button"
-                    className={getValidClassNames(
-                        isCanceled ? 'text-lm-black-100' : 'text-lm-red',
-                    )}
-                    onClick={handleUpdateCancelSubscription}
-                />
-                <Button
-                    type="button"
-                    size="md"
-                    variant="primary"
-                    label="Change subscription plan"
-                    onClick={handleChangeSubscription}
-                />
+                <div className="flex gap-4">
+                    <Button
+                        type="button"
+                        size="md"
+                        variant={isCanceled ? 'primary' : 'danger'}
+                        label={
+                            isCanceled
+                                ? 'Renew subscription'
+                                : 'Cancel subscription'
+                        }
+                        onClick={handleUpdateCancelSubscription}
+                    />
+                    <Button
+                        type="button"
+                        size="md"
+                        variant="primary"
+                        label="Change subscription plan"
+                        onClick={handleChangeSubscription}
+                    />
+                </div>
             </div>
         </div>
     );
