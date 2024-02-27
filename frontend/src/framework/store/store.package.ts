@@ -10,6 +10,7 @@ import { reducer as achievementsReducer } from '~/bundles/achievements/store/ach
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
+import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
@@ -26,6 +27,7 @@ type RootReducer = {
     users: ReturnType<typeof usersReducer>;
     goals: ReturnType<typeof goalsReducer>;
     achievements: ReturnType<typeof achievementsReducer>;
+    theme: ReturnType<typeof themeReducer>;
 };
 
 type ExtraArguments = {
@@ -54,6 +56,7 @@ class Store {
                 users: usersReducer,
                 goals: goalsReducer,
                 achievements: achievementsReducer,
+                theme: themeReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({

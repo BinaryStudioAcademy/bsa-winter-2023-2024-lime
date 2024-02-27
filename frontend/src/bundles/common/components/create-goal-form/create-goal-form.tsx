@@ -32,7 +32,10 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     );
 
     return (
-        <form className="w-full text-sm text-white" onSubmit={handleFormSubmit}>
+        <form
+            className="w-80 text-sm text-white md:w-[22.375rem]"
+            onSubmit={handleFormSubmit}
+        >
             <div className="mb-10 flex flex-col gap-6">
                 <Select
                     label="Type of activity"
@@ -77,7 +80,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
             <Button
                 type="submit"
-                label="Send"
+                label="Save"
                 variant={ButtonVariant.PRIMARY}
                 size={ComponentSize.MEDIUM}
                 isDisabled={isLoading}

@@ -1,3 +1,4 @@
+export { applyThemeClassname } from './apply-theme-classname/apply-theme-classname.helper.js';
 export { capitalizeString } from './capitalize-string/capitalize-string.js';
 export { dateConverter } from './date-converter/date-converter.js';
 export { getUserId } from './get-user-id/get-user-id.js';
