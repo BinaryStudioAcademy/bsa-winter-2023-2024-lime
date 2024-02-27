@@ -30,7 +30,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, handleSubmit } = useAppForm<UserSignUpForm>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
         validationSchema: userSignUpValidationSchema,
-        mode: 'onTouched',
+        mode: 'onSubmit',
     });
 
     const handleFormSubmit = useCallback(
@@ -43,7 +43,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <>
             <div>
-                <h3 className="hmd:mb-1 hsm:text-[1.2rem] mb-6 text-center text-[1.875rem] font-bold text-white">
+                <h3 className="text-primary mb-6 text-left text-[1.875rem] font-bold">
                     Hi! Create an account
                 </h3>
                 <div className="flex flex-col gap-4">
@@ -123,10 +123,10 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     </div>
                 </form>
             </div>
-            <p className="hmd:mt-2 mt-3 text-center text-sm">
+            <p className="text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
                 Already have an account? Go to{' '}
                 <Link to={AppRoute.SIGN_IN}>
-                    <span className="text-lm-yellow-100">Log in</span>
+                    <span className="text-action">Log in</span>
                 </Link>
             </p>
         </>

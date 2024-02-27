@@ -1,4 +1,5 @@
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
+import { BaseLayout } from '~/bundles/common/components/base-layout/base-layout.js';
 import {
     Loader,
     RouterOutlet,
@@ -29,7 +30,11 @@ const App: React.FC = () => {
         return <Loader isOverflow />;
     }
 
-    return <RouterOutlet />;
+    return (
+        <BaseLayout>
+            <RouterOutlet />
+        </BaseLayout>
+    );
 };
 
 export { App };
