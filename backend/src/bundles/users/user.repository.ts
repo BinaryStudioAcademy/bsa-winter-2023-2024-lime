@@ -100,6 +100,17 @@ class UserRepository implements Repository {
         }
     }
 
+    public async updatePassword(
+        id: number,
+        changes: object,
+    ): ReturnType<Repository['update']> {
+        return await this.userModel
+            .query()
+            .findById(id)
+            .update(changes)
+            .returning('*');
+    }
+
     public async update(
         userId: number,
         updatedUserDetails: Partial<UserDetailsModel>,

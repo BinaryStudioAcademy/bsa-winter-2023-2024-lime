@@ -58,14 +58,14 @@ import { UsersApiPath } from './enums/enums.js';
  *            type: string
  *            nullable: true
  *          dateOfBirth:
+ *            type: date
+ *            format: DD/MM/YYYY
+ *            nullable: true
+ *          weight:
  *            type: string
  *            nullable: true
- *            format: date
- *          weight:
- *            type: number
- *            nullable: true
  *          height:
- *            type: number
+ *            type: string
  *            nullable: true
  *          gender:
  *            type: string

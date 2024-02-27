@@ -91,6 +91,13 @@ class UserService implements Service {
             throw new Error(`Error occured ${error}`);
         }
     }
+    public async updatePassword(
+        id: number,
+        changes: object,
+    ): ReturnType<Service['updatePassword']> {
+        return await this.userRepository.update(id, changes);
+    }
+
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
     }

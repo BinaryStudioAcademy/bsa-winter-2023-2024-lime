@@ -12,6 +12,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
+import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
 import { store } from '~/framework/store/store.js';
 
@@ -23,6 +24,15 @@ const routes = [
             {
                 path: AppRoute.ROOT,
                 element: 'Root',
+                isPrivate: true,
+            },
+            {
+                path: AppRoute.SIGN_IN,
+                element: <Auth />,
+            },
+            {
+                path: AppRoute.SIGN_UP,
+                element: <Auth />,
             },
             {
                 path: AppRoute.GOALS,
@@ -48,21 +58,16 @@ const routes = [
                 path: AppRoute.LOGOUT,
                 element: <div>LOGOUT PAGE</div>,
             },
+            {
+                path: AppRoute.PROFILE,
+                element: <Profile />,
+                isPrivate: true,
+            },
         ],
-        isPrivate: true,
     },
     {
-        path: AppRoute.SIGN_IN,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.SIGN_UP,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.PROFILE,
-        element: <Profile />,
-        isPrivate: true,
+        path: AppRoute.PASSWORD_RESET,
+        element: <PasswordReset />,
     },
     {
         path: AppRoute.NOT_FOUND,
