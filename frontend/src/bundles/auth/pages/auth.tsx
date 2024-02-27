@@ -76,7 +76,7 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
+        <main className="bg-auth flex h-screen min-h-[29rem] flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
             <div className={getValidClassNames(classes.base, classes.form)}>
                 {getScreen(pathname)}
             </div>
