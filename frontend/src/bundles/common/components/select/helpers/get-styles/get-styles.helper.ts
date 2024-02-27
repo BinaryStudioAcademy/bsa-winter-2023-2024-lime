@@ -10,14 +10,14 @@ const getStyles = <
 >(
     errorMessage: string,
 ): ClassNamesConfig<SelectOption, isMulti, Group> => {
-    const textColor = errorMessage ? 'text-lm-red' : 'text-lm-yellow-100';
+    const textColor = errorMessage ? 'text-lm-red' : 'text-action';
     const borderColor = errorMessage ? 'border-lm-red' : 'border-lm-yellow-100';
 
     const defaultStyles: ClassNamesConfig<SelectOption, isMulti, Group> = {
         control: (state) =>
             getValidClassNames(
                 state.isFocused ? `${borderColor}` : 'border-0',
-                `w-full p-2.5 min-h-11 bg-lm-black-100 border
+                `w-full p-2.5 min-h-11 bg-primary border
                 outline-none rounded-md text-inherit shadow-none hover:cursor-pointer`,
             ),
         dropdownIndicator: (state) => {
@@ -30,8 +30,8 @@ const getStyles = <
         input: () => 'm-0 p-0 text-white',
         option: () =>
             getValidClassNames(
-                errorMessage ? 'hover:text-lm-red' : 'hover:text-lm-yellow-100',
-                'bg-lm-black-100 text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
+                errorMessage ? 'hover:text-lm-red' : 'hover:text-action',
+                'bg-primary text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
             ),
         singleValue: () => 'text-lm-grey-200',
         multiValue: () =>
@@ -39,8 +39,7 @@ const getStyles = <
         multiValueLabel: () => `${textColor} `,
         multiValueRemove: () => `${textColor} hover:opacity-9`,
         clearIndicator: () => 'p-0 text-lm-grey-500 mr-4 hover:opacity-9',
-        menuList: () =>
-            'max-h-200 overflow-auto custom-scrollbar bg-lm-black-200',
+        menuList: () => 'max-h-200 overflow-auto custom-scrollbar bg-secondary',
         noOptionsMessage: () => 'text-lm-grey-200 p-4',
         menu: () => 'mt-1',
     };

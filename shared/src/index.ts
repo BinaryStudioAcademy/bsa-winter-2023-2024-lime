@@ -1,13 +1,24 @@
+export { ActivityType, Metric } from './bundles/achievements/enums/enums.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export { OAuthActionsPath } from './bundles/oauth/oauth.js';
+export {
+    type PasswordForgotRequestDto,
+    type PasswordForgotResponseDto,
+    type PasswordResetRequestDto,
+    type PasswordResetResponseDto,
+    PasswordResetApiPath,
+    PasswordResetValidationMessage,
+} from './bundles/password-reset/password-reset.js';
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     Gender,
+    passwordForgotValidationSchema,
+    passwordResetValidationSchema,
     userAuthValidationSchema,
     UsersApiPath,
     userSignUpValidationSchema,
