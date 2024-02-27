@@ -63,7 +63,7 @@ const FriendCard = ({
                             <Icon name="dotIcon" color="text-lm-grey-200" />
                         )}
                     </i>
-                    <h3 className="text-primary font-extrabold sm:text-xs lg:text-sm">
+                    <h3 className="text-primary font-extrabold sm:text-xs lg:text-[1rem]">
                         {name}
                     </h3>
                 </div>
