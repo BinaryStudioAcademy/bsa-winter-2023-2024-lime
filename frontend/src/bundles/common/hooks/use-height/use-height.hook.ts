@@ -1,24 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-const BREAKPOINT = {
-    MEDIUM: 680,
-} as const;
-
-const useHeight = (): boolean => {
+const useHeight = (height: number): boolean => {
     const [isHeight, setIsHeight] = useState(false);
 
-    const responsiveHighness = (): void => {
-        if (window.innerHeight <= BREAKPOINT.MEDIUM) {
+    const responsiveHighness = useCallback((): void => {
+        if (window.innerHeight <= height) {
             setIsHeight(true);
         } else {
             setIsHeight(false);
         }
-    };
+    }, [height]);
 
     useEffect(() => {
         window.addEventListener('resize', responsiveHighness);
         responsiveHighness();
-    }, [isHeight]);
+
+        return () => window.removeEventListener('resize', responsiveHighness);
+    }, [responsiveHighness]);
 
     return isHeight;
 };
