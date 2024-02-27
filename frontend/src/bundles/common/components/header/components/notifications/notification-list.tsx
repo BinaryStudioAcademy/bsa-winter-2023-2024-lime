@@ -23,7 +23,7 @@ const NotificationList = ({
             {notifications.length > 0 ? (
                 notifications.map((notification, index) => (
                     <div
-                        className="border-lm-yellow-200 bg-lm-black-100 relative w-full rounded border "
+                        className="border-lm-yellow-200 bg-lm-black-100 relative w-full rounded border text-sm"
                         key={notification.id}
                     >
                         <button
