@@ -1,5 +1,3 @@
-import { type Config } from '~/common/config/config.js';
-
 import {
     type OAuthExchangeAuthCodeDto,
     type OAuthStateEntity,
@@ -7,9 +5,12 @@ import {
     ErrorMessage,
     HttpCode,
     HttpError,
+    OAuthActionsPath,
     OAuthEntity,
     OAuthProvider,
-} from '../oauth/oauth.js';
+} from '~/bundles/oauth/oauth.js';
+import { type Config } from '~/common/config/config.js';
+
 import { REQUIRED_SCOPE } from './constants/strava-required-scope.js';
 import { StravaPath } from './enums/enums.js';
 import { type StravaOAuthResponseDto } from './types/types.js';
@@ -28,7 +29,7 @@ class StravaOAuthStrategy implements OAuthStrategy {
         const { userId, uuid } = oAuthStateEntity.toObject();
 
         const redirectUri = new URL(
-            '/api/v1/oauth/strava/exchange-token',
+            `/api/v1/oauth/strava/${OAuthActionsPath.EXCHANGE_TOKEN}`,
             this.apiUrl,
         );
         redirectUri.searchParams.set('userId', userId.toString());

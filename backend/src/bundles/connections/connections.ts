@@ -6,3 +6,4 @@ import { ConnectionController } from './connection.controller.js';
 const connectionController = new ConnectionController(logger, oAuthService);
 
 export { connectionController };
+export { ConnectionsPath } from './enums/enums.js';

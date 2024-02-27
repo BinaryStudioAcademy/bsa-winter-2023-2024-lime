@@ -1,4 +1,1 @@
-export {
-    ConnectionsOAuthActionsPath,
-    ConnectionsOAuthPath,
-} from './oauth/enums/enums.js';
+export { ConnectionsPath } from './enums/enums.js';

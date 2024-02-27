@@ -1,7 +1,7 @@
-const ConnectionsOAuthPath = {
+const ConnectionsPath = {
     ROOT: '/',
     STRAVA: '/strava',
     GOOGLE_FIT: '/google-fit',
 } as const;
 
-export { ConnectionsOAuthPath };
+export { ConnectionsPath };

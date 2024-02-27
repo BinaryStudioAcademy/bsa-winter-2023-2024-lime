@@ -31,11 +31,10 @@ export {
 } from './types/types.js';
 export { oAuthController, oAuthService };
 export {
-    ConnectionsOAuthActionsPath,
-    ConnectionsOAuthPath,
     ErrorMessage,
     HttpCode,
     HttpError,
+    OAuthActionsPath,
     OAuthInfoAttributes,
     OAuthProvider,
     OAuthStateAttributes,

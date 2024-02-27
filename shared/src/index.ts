@@ -1,9 +1,7 @@
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
-export {
-    ConnectionsOAuthActionsPath,
-    ConnectionsOAuthPath,
-} from './bundles/connections/connections.js';
+export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
+export { OAuthActionsPath } from './bundles/oauth/oauth.js';
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,

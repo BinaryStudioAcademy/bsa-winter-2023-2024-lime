@@ -1,3 +1,5 @@
+import { type OAuthService, HttpCode } from '~/bundles/oauth/oauth.js';
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -7,12 +9,7 @@ import {
 import { ApiPath } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import {
-    type OAuthService,
-    ConnectionsOAuthPath,
-    HttpCode,
-} from '../oauth/oauth.js';
-import { type UserAuthResponseDto } from '../users/users.js';
+import { ConnectionsPath } from './enums/enums.js';
 
 class ConnectionController extends BaseController {
     private oAuthService: OAuthService;
@@ -23,7 +20,7 @@ class ConnectionController extends BaseController {
         this.oAuthService = oAuthService;
 
         this.addRoute({
-            path: ConnectionsOAuthPath.ROOT,
+            path: ConnectionsPath.ROOT,
             method: 'GET',
             isProtected: true,
             handler: (options) =>

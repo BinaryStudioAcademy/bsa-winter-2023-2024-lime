@@ -1,3 +1,4 @@
+import { ConnectionsPath } from '~/bundles/connections/connections.js';
 import { type Config } from '~/common/config/config.js';
 import {
     type ApiHandlerOptions,
@@ -8,16 +9,10 @@ import {
 import { ApiPath } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import {
-    type OAuthExchangeAuthCodeDto,
-    type OAuthProvider,
-    type OAuthService,
-    ConnectionsOAuthActionsPath,
-    ConnectionsOAuthPath,
-    HttpCode,
-} from '../oauth/oauth.js';
+import { type OAuthProvider, type OAuthService } from '../oauth/oauth.js';
 import { type UserAuthResponseDto } from '../users/users.js';
-import { type ValueOf } from './types/types.js';
+import { HttpCode, OAuthActionsPath } from './enums/enums.js';
+import { type OAuthExchangeAuthCodeDto, type ValueOf } from './types/types.js';
 
 class OAuthController extends BaseController {
     private oAuthService: OAuthService;
@@ -38,7 +33,7 @@ class OAuthController extends BaseController {
         this.baseUrl = `http://${this.config.ENV.APP.HOST}:${this.config.ENV.APP.PORT}/api/v1`;
 
         this.addRoute({
-            path: `/:provider${ConnectionsOAuthActionsPath.AUTHORIZE}`,
+            path: `/:provider${OAuthActionsPath.AUTHORIZE}`,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
@@ -63,7 +58,7 @@ class OAuthController extends BaseController {
         });
 
         this.addRoute({
-            path: `/:provider${ConnectionsOAuthActionsPath.DEAUTHORIZE}`,
+            path: `/:provider${OAuthActionsPath.DEAUTHORIZE}`,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
@@ -108,7 +103,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.ROOT}`,
+            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 
@@ -126,7 +121,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsOAuthPath.ROOT}`,
+            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 }
