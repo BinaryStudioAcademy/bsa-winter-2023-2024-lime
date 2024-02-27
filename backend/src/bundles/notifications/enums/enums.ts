@@ -1,1 +1,1 @@
-export { NotificationsApiPath } from 'shared';
+export { NotificationsApiPath, NotificationType } from 'shared';

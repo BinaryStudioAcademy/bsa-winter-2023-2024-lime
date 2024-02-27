@@ -1,6 +1,6 @@
 import { type ValueOf } from 'shared';
 
-import { type NotificationType } from './notification-type.type.js';
+import { type NotificationType } from '../notifications.js';
 
 type NotificationRequestDto = {
     title: string;

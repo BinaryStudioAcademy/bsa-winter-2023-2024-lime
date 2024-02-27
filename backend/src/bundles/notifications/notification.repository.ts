@@ -81,11 +81,11 @@ class NotificationRepository implements Repository {
 
     public async update(
         notificationId: number,
-        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
     ): Promise<NotificationEntity> {
         const notification = await this.notificationModel
             .query()
-            .updateAndFetchById(notificationId, query)
+            .patchAndFetchById(notificationId, payload)
             .returning('*');
 
         return NotificationEntity.initialize(notification);
