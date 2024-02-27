@@ -44,7 +44,19 @@ async function up(knex: Knex): Promise<void> {
             .inTable(USERS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
+        table
+            .enum(ColumnName.ACTIVITY_TYPE, Object.values(ActivityType), {
+                useNative: true,
+                enumName: ACTIVITY_TYPE_ENUM,
+            })
+            .notNullable();
         table.integer(ColumnName.FREQUENCY).unsigned().notNullable();
+        table
+            .enum(ColumnName.FREQUENCY_TYPE, Object.values(FrequencyType), {
+                useNative: true,
+                enumName: FREQUENCY_TYPE_ENUM,
+            })
+            .notNullable();
         table.float(ColumnName.DISTANCE).unsigned().nullable();
         table.integer(ColumnName.DURATION).unsigned().nullable();
         table
@@ -62,22 +74,6 @@ async function up(knex: Knex): Promise<void> {
             .notNullable()
             .defaultTo(knex.fn.now());
     });
-
-    await knex.schema.raw(
-        `CREATE TYPE ${ACTIVITY_TYPE_ENUM} AS ENUM ('${ActivityType.CYCLING}', '${ActivityType.RUNNING}', '${ActivityType.WALKING}');`,
-    );
-
-    await knex.schema.raw(
-        `ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.ACTIVITY_TYPE} ${ACTIVITY_TYPE_ENUM} NOT NULL;`,
-    );
-
-    await knex.schema.raw(
-        `CREATE TYPE ${FREQUENCY_TYPE_ENUM} AS ENUM ('${FrequencyType.DAY}', '${FrequencyType.WEEK}', '${FrequencyType.MONTH}');`,
-    );
-
-    await knex.schema.raw(
-        `ALTER TABLE ${TABLE_NAME} ADD COLUMN ${ColumnName.FREQUENCY_TYPE} ${FREQUENCY_TYPE_ENUM} NOT NULL;`,
-    );
 }
 
 async function down(knex: Knex): Promise<void> {
