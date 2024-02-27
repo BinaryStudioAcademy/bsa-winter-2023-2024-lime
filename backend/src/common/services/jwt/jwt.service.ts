@@ -10,17 +10,24 @@ class JwtService {
         this.secretKey = secretKey;
     }
 
-    public async createToken(payload: JwtPayloadOptions): Promise<string> {
+    public async createToken(
+        payload: JwtPayloadOptions,
+        time: string = '7d',
+        additional: string = '',
+    ): Promise<string> {
         return await new SignJWT(payload)
             .setProtectedHeader({ alg: 'HS256' })
-            .setExpirationTime('7d')
-            .sign(new TextEncoder().encode(this.secretKey));
+            .setExpirationTime(time)
+            .sign(new TextEncoder().encode(this.secretKey + additional));
     }
 
-    public async verifyToken(token: string): Promise<JWTPayload> {
+    public async verifyToken(
+        token: string,
+        additional: string = '',
+    ): Promise<JWTPayload> {
         const { payload } = await jwtVerify(
             token,
-            new TextEncoder().encode(this.secretKey),
+            new TextEncoder().encode(this.secretKey + additional),
         );
         return payload;
     }

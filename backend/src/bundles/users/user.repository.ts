@@ -96,8 +96,15 @@ class UserRepository implements Repository {
         }
     }
 
-    public update(): ReturnType<Repository['update']> {
-        return Promise.resolve(null);
+    public async update(
+        id: Record<string, number>,
+        changes: object,
+    ): ReturnType<Repository['update']> {
+        return await this.userModel
+            .query()
+            .findOne(id)
+            .update(changes)
+            .returning('*');
     }
 
     public delete(): ReturnType<Repository['delete']> {

@@ -22,6 +22,10 @@ export default {
                 400: '#64748B',
                 500: '#383F4A',
             },
+            'lm-blue': {
+                400: '#242636',
+                500: '#1E1E2C',
+            },
             'lm-black': {
                 100: '#2A2F37',
                 200: '#1C2227',
@@ -44,6 +48,7 @@ export default {
             semibold: '500',
             bold: '600',
             extrabold: '700',
+            heavybold: '800',
         },
         lineHeight: {
             '1': '0.75rem',
@@ -73,6 +78,8 @@ export default {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
+                'goalWidget':
+                    'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%)',
             },
             borderRadius: {
                 '30': '1.9rem',
