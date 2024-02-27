@@ -4,7 +4,7 @@ import { type Gender } from '../users.js';
 type UserAuthResponseDto = {
     id: number;
     email: string;
-    customerToken: string;
+    stripeCustomerId: string;
     avatarUrl: string | null;
     username: string | null;
     dateOfBirth: string | null;

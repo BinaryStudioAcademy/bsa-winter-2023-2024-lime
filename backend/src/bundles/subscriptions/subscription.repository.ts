@@ -86,13 +86,13 @@ class SubscriptionRepository
     }
 
     public async updateSubscriptionByToken(
-        subscriptionToken: string,
-        query: Record<string, unknown>,
+        stripeSubscriptionId: string,
+        payload: Record<string, unknown>,
     ): Promise<SubscriptionEntity | null> {
         const updatedSubscription = await this.subscriptionModel
             .query()
-            .findOne({ subscriptionToken })
-            .patch(query)
+            .findOne({ stripeSubscriptionId })
+            .patch(payload)
             .returning('*')
             .first()
             .execute();

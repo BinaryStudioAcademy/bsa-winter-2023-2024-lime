@@ -3,8 +3,8 @@ const SubscriptionPlanAttributes = {
     NAME: 'name',
     PRICE: 'price',
     DESCRIPTION: 'description',
-    PRODUCT_TOKEN: 'productToken',
-    PRICE_TOKEN: 'priceToken',
+    STRIPE_PRODUCT_ID: 'stripeProductId',
+    STRIPE_PRICE_ID: 'stripePriceId',
 } as const;
 
 export { SubscriptionPlanAttributes };

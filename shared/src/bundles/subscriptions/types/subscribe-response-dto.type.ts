@@ -1,5 +1,5 @@
 type SubscribeResponseDto = {
-    subscriptionId: string;
+    stripeSubscriptionId: string;
     clientSecret: string;
 };
 

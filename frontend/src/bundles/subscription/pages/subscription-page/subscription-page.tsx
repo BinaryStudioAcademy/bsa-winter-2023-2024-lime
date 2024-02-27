@@ -51,11 +51,11 @@ const SubscriptionPage = (): JSX.Element => {
     }, [handleSubscriptionPlansLoad]);
 
     const handleCreateSubscription = useCallback(
-        ({ planId, priceToken }: SubscribeRequestDto): void => {
+        ({ planId, stripePriceId }: SubscribeRequestDto): void => {
             void dispatch(
                 subscriptionActions.createSubscription({
                     planId,
-                    priceToken,
+                    stripePriceId,
                 }),
             );
 
@@ -79,14 +79,12 @@ const SubscriptionPage = (): JSX.Element => {
                         subscriptionPlanPrice={
                             currentSubscription.subscriptionPlanPrice as number
                         }
+                        stripeSubscriptionId={
+                            currentSubscription.stripeSubscriptionId
+                        }
                         status={currentSubscription.status}
-                        expirationDate={currentSubscription.expirationDate}
-                        cancelAtPeriodEnd={
-                            currentSubscription.cancelAtPeriodEnd
-                        }
-                        subscriptionToken={
-                            currentSubscription.subscriptionToken
-                        }
+                        isCanceled={currentSubscription.isCanceled}
+                        expiresAt={currentSubscription.expiresAt}
                         handleChangeSubscription={handleChangeSubscription}
                     />
                 ) : (
@@ -115,7 +113,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     name={plan.name}
                                     price={plan.price}
                                     description={plan.description ?? ''}
-                                    priceToken={plan.priceToken}
+                                    stripePriceId={plan.stripePriceId}
                                     handleClick={handleCreateSubscription}
                                 />
                             );
@@ -129,7 +127,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     name={plan.name}
                                     price={plan.price}
                                     description={plan.description ?? ''}
-                                    priceToken={plan.priceToken}
+                                    stripePriceId={plan.stripePriceId}
                                     handleClick={handleCreateSubscription}
                                 />
                             );

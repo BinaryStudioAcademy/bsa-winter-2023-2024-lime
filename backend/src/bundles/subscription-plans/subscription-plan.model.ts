@@ -15,9 +15,9 @@ class SubscriptionPlanModel extends AbstractModel {
 
     public 'description': string | null;
 
-    public 'productToken': string;
+    public 'stripeProductId': string;
 
-    public 'priceToken': string;
+    public 'stripePriceId': string;
 
     public static override get tableName(): string {
         return DatabaseTableName.SUBSCRIPTION_PLANS;

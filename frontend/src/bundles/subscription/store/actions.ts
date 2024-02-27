@@ -46,16 +46,16 @@ const createSubscription = createAsyncThunk<
 );
 
 const updateCancelSubscription = createAsyncThunk<
-    Record<'cancelAtPeriodEnd', boolean>,
+    Record<'isCanceled', boolean>,
     CancelSubscriptionRequestDto,
     AsyncThunkConfig
 >(
     'subscription/cancelSubscription',
     async (payload, { extra: { subscriptionApi } }) => {
-        const { cancelAtPeriodEnd } =
+        const { isCanceled } =
             await subscriptionApi.cancelSubscription(payload);
 
-        if (cancelAtPeriodEnd) {
+        if (isCanceled) {
             notificationManager.success(
                 'You successfuly cancelled a subscription!',
             );
@@ -65,7 +65,7 @@ const updateCancelSubscription = createAsyncThunk<
             );
         }
 
-        return { cancelAtPeriodEnd };
+        return { isCanceled };
     },
 );
 

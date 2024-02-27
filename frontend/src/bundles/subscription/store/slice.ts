@@ -63,10 +63,10 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(updateCancelSubscription.fulfilled, (state, action) => {
-            const cancelAtPeriodEnd = action.payload.cancelAtPeriodEnd;
+            const isCanceled = action.payload.isCanceled;
             const updatedSubscription = {
                 ...state.currentSubscription,
-                cancelAtPeriodEnd,
+                isCanceled,
             } as SubscriptionGetItemResponseDto;
 
             state.currentSubscription = updatedSubscription;

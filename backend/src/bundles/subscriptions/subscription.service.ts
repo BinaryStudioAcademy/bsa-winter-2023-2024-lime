@@ -1,11 +1,10 @@
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import { formatToDateFromUnix } from '~/common/helpers/helpers.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import {
-    HttpCode,
-    HttpError,
     SubscriptionValidationMessage,
     SubscriptionWebHook,
 } from './enums/enums.js';
@@ -43,8 +42,8 @@ class SubscriptionService
     }
 
     public async subscribe(
-        { id: userId, customerToken }: UserAuthResponseDto,
-        { planId, priceToken }: SubscribeRequestDto,
+        { id: userId, stripeCustomerId }: UserAuthResponseDto,
+        { planId, stripePriceId }: SubscribeRequestDto,
     ): Promise<SubscribeResponseDto> {
         const currentSubscription = await this.find({ userId });
 
@@ -56,10 +55,10 @@ class SubscriptionService
             });
         }
 
-        const { subscriptionToken, clientSecret, status, expirationDate } =
+        const { stripeSubscriptionId, clientSecret, status, expiresAt } =
             await stripeService.createSubscription({
-                customerId: customerToken,
-                priceId: priceToken,
+                customerId: stripeCustomerId,
+                priceId: stripePriceId,
             });
 
         try {
@@ -68,16 +67,16 @@ class SubscriptionService
                     userId,
                     planId,
                     status,
-                    subscriptionToken,
-                    expirationDate,
-                    cancelAtPeriodEnd: false,
+                    stripeSubscriptionId,
+                    expiresAt,
+                    isCanceled: false,
                 }),
             );
 
-            return { subscriptionId: subscriptionToken, clientSecret };
+            return { stripeSubscriptionId, clientSecret };
         } catch (error) {
             await stripeService.immediateCancelSubscription({
-                subscriptionToken,
+                stripeSubscriptionId,
             });
 
             throw new HttpError({
@@ -88,10 +87,10 @@ class SubscriptionService
     }
 
     public async updateCancelSubscribtion({
-        subscriptionToken,
-        cancelAtPeriodEnd,
+        stripeSubscriptionId,
+        isCanceled,
     }: CancelSubscriptionRequestDto): Promise<CancelSubscriptionResponseDto> {
-        if (!subscriptionToken || typeof cancelAtPeriodEnd !== 'boolean') {
+        if (!stripeSubscriptionId || typeof isCanceled !== 'boolean') {
             throw new HttpError({
                 message:
                     SubscriptionValidationMessage.SUBSCRIPTION_CANNOT_BE_CANCELED,
@@ -101,11 +100,11 @@ class SubscriptionService
 
         try {
             await stripeService.updateCancelSubscription({
-                subscriptionToken,
-                cancelAtPeriodEnd,
+                stripeSubscriptionId,
+                isCanceled,
             });
 
-            return { cancelAtPeriodEnd };
+            return { isCanceled };
         } catch (error) {
             throw new HttpError({
                 message: (error as Error).message,
@@ -132,13 +131,13 @@ class SubscriptionService
                         subscription.id,
                         {
                             status: subscription.status,
-                            cancelAtPeriodEnd:
-                                subscription.cancel_at_period_end,
-                            expirationDate: formatToDateFromUnix(
+                            isCanceled: subscription.cancel_at_period_end,
+                            expiresAt: formatToDateFromUnix(
                                 subscription.current_period_end,
                             ),
                         },
                     );
+
                 if (!updatedSubscription) {
                     return;
                 }
@@ -156,10 +155,10 @@ class SubscriptionService
                         subscription,
                     ] of activeSubscriptions.entries()) {
                         if (index !== 0) {
-                            const { subscriptionToken } =
+                            const { stripeSubscriptionId } =
                                 subscription.toNewObject();
                             await stripeService.immediateCancelSubscription({
-                                subscriptionToken,
+                                stripeSubscriptionId,
                             });
                         }
                     }
@@ -169,7 +168,7 @@ class SubscriptionService
             case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_DELETED: {
                 const subscription = stripeResponse.data.object;
                 await this.subscriptionRepository.delete({
-                    subscriptionToken: subscription.id,
+                    stripeSubscriptionId: subscription.id,
                 });
                 break;
             }

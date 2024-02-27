@@ -3,8 +3,8 @@ type SubscriptionPlansGetAllItemResponseDto = {
     name: string;
     price: number;
     description: string | null;
-    productToken: string;
-    priceToken: string;
+    stripeProductId: string;
+    stripePriceId: string;
 };
 
 export { type SubscriptionPlansGetAllItemResponseDto };

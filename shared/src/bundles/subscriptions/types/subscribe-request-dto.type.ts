@@ -1,6 +1,6 @@
 type SubscribeRequestDto = {
     planId: number;
-    priceToken: string;
+    stripePriceId: string;
 };
 
 export { type SubscribeRequestDto };

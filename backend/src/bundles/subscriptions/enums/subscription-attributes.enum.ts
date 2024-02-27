@@ -3,9 +3,9 @@ const SunscriptionAttributes = {
     PLAN_ID: 'planId',
     USER_ID: 'userId',
     STATUS: 'status',
-    SUBSCRIPTION_TOKEN: 'subscriptionToken',
-    CANCEL_AT_PERIOD_END: 'cancelAtPeriodEnd',
-    EXPIRATION_DATE: 'expirationDate',
+    STRIPE_SUBSCRIPTION_ID: 'stripeSubscriptionId',
+    IS_CANCELED: 'isCanceled',
+    EXPIRES_AT: 'expiresAt',
     CREATED_AT: 'createdAt',
     UPDATED_AT: 'updatedAt',
 } as const;

@@ -38,7 +38,7 @@ class SubscriptionPlanRepository implements Repository {
     public async create(
         entity: SubscriptionPlanEntity,
     ): Promise<SubscriptionPlanEntity> {
-        const { name, price, description, productToken, priceToken } =
+        const { name, price, description, stripeProductId, stripePriceId } =
             entity.toNewObject();
 
         const plan = await this.subscriptionPlanModel
@@ -47,8 +47,8 @@ class SubscriptionPlanRepository implements Repository {
                 name,
                 price,
                 description,
-                productToken,
-                priceToken,
+                stripeProductId,
+                stripePriceId,
             })
             .returning('*')
             .execute();

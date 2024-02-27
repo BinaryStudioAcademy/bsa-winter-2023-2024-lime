@@ -7,8 +7,8 @@ const ColumnName = {
     NAME: 'name',
     DESCRIPTION: 'description',
     PRICE: 'price',
-    PRODUCT_TOKEN: 'product_token',
-    PRICE_TOKEN: 'price_token',
+    STRIPE_PRODUCT_ID: 'stripe_product_id',
+    STRIPE_PRICE_ID: 'stripe_price_id',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at',
 };
@@ -19,8 +19,8 @@ async function up(knex: Knex): Promise<void> {
         table.string(ColumnName.NAME).unique().notNullable();
         table.decimal(ColumnName.PRICE).notNullable();
         table.text(ColumnName.DESCRIPTION);
-        table.string(ColumnName.PRODUCT_TOKEN).unique().notNullable();
-        table.string(ColumnName.PRICE_TOKEN).unique().notNullable();
+        table.string(ColumnName.STRIPE_PRODUCT_ID).unique().notNullable();
+        table.string(ColumnName.STRIPE_PRICE_ID).unique().notNullable();
         table
             .dateTime(ColumnName.CREATED_AT)
             .notNullable()

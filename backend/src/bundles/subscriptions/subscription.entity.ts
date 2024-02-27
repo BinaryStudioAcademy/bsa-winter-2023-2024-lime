@@ -9,13 +9,13 @@ class SubscriptionEntity implements Entity {
 
     private 'planId': number;
 
-    private 'subscriptionToken': string;
-
-    private 'cancelAtPeriodEnd': boolean;
+    private 'stripeSubscriptionId': string;
 
     private 'status': ValueOf<typeof SubscriptionStatus>;
 
-    private 'expirationDate': Date;
+    private 'isCanceled': boolean;
+
+    private 'expiresAt': Date;
 
     private 'subscriptionPlanName': string | null;
 
@@ -27,10 +27,10 @@ class SubscriptionEntity implements Entity {
         id,
         userId,
         planId,
+        stripeSubscriptionId,
         status,
-        cancelAtPeriodEnd,
-        subscriptionToken,
-        expirationDate,
+        isCanceled,
+        expiresAt,
         subscriptionPlanName,
         subscriptionPlanPrice,
         subscriptionPlanDescription,
@@ -38,10 +38,10 @@ class SubscriptionEntity implements Entity {
         id: number | null;
         userId: number;
         planId: number;
+        stripeSubscriptionId: string;
         status: ValueOf<typeof SubscriptionStatus>;
-        subscriptionToken: string;
-        cancelAtPeriodEnd: boolean;
-        expirationDate: Date;
+        isCanceled: boolean;
+        expiresAt: Date;
         subscriptionPlanName: string | null;
         subscriptionPlanPrice: number | null;
         subscriptionPlanDescription: string | null;
@@ -50,9 +50,9 @@ class SubscriptionEntity implements Entity {
         this.userId = userId;
         this.planId = planId;
         this.status = status;
-        this.cancelAtPeriodEnd = cancelAtPeriodEnd;
-        this.expirationDate = expirationDate;
-        this.subscriptionToken = subscriptionToken;
+        this.isCanceled = isCanceled;
+        this.expiresAt = expiresAt;
+        this.stripeSubscriptionId = stripeSubscriptionId;
         this.subscriptionPlanName = subscriptionPlanName;
         this.subscriptionPlanPrice = subscriptionPlanPrice;
         this.subscriptionPlanDescription = subscriptionPlanDescription;
@@ -62,10 +62,10 @@ class SubscriptionEntity implements Entity {
         id,
         userId,
         planId,
-        subscriptionToken,
-        cancelAtPeriodEnd,
+        stripeSubscriptionId,
         status,
-        expirationDate,
+        isCanceled,
+        expiresAt,
         subscriptionPlanName,
         subscriptionPlanPrice,
         subscriptionPlanDescription,
@@ -73,10 +73,10 @@ class SubscriptionEntity implements Entity {
         id: number | null;
         userId: number;
         planId: number;
-        subscriptionToken: string;
-        cancelAtPeriodEnd: boolean;
+        stripeSubscriptionId: string;
         status: ValueOf<typeof SubscriptionStatus>;
-        expirationDate: Date;
+        isCanceled: boolean;
+        expiresAt: Date;
         subscriptionPlanName: string | null;
         subscriptionPlanPrice: number | null;
         subscriptionPlanDescription: string | null;
@@ -85,10 +85,10 @@ class SubscriptionEntity implements Entity {
             id,
             userId,
             planId,
-            subscriptionToken,
+            stripeSubscriptionId,
             status,
-            cancelAtPeriodEnd,
-            expirationDate,
+            isCanceled,
+            expiresAt,
             subscriptionPlanName,
             subscriptionPlanPrice,
             subscriptionPlanDescription,
@@ -98,26 +98,26 @@ class SubscriptionEntity implements Entity {
     public static initializeNew({
         userId,
         planId,
-        subscriptionToken,
-        cancelAtPeriodEnd,
+        stripeSubscriptionId,
         status,
-        expirationDate,
+        isCanceled,
+        expiresAt,
     }: {
         userId: number;
         planId: number;
-        subscriptionToken: string;
-        cancelAtPeriodEnd: boolean;
+        stripeSubscriptionId: string;
         status: ValueOf<typeof SubscriptionStatus>;
-        expirationDate: Date;
+        isCanceled: boolean;
+        expiresAt: Date;
     }): SubscriptionEntity {
         return new SubscriptionEntity({
             id: null,
             userId,
             planId,
-            subscriptionToken,
+            stripeSubscriptionId,
             status,
-            cancelAtPeriodEnd,
-            expirationDate,
+            isCanceled,
+            expiresAt,
             subscriptionPlanName: null,
             subscriptionPlanPrice: null,
             subscriptionPlanDescription: null,
@@ -128,10 +128,10 @@ class SubscriptionEntity implements Entity {
         id: number;
         userId: number;
         planId: number;
+        stripeSubscriptionId: string;
         status: ValueOf<typeof SubscriptionStatus>;
-        cancelAtPeriodEnd: boolean;
-        subscriptionToken: string;
-        expirationDate: Date;
+        isCanceled: boolean;
+        expiresAt: Date;
         subscriptionPlanName: string | null;
         subscriptionPlanPrice: number | null;
         subscriptionPlanDescription: string | null;
@@ -140,10 +140,10 @@ class SubscriptionEntity implements Entity {
             id: this.id as number,
             userId: this.userId,
             planId: this.planId,
-            subscriptionToken: this.subscriptionToken,
+            stripeSubscriptionId: this.stripeSubscriptionId,
             status: this.status,
-            cancelAtPeriodEnd: this.cancelAtPeriodEnd as boolean,
-            expirationDate: this.expirationDate,
+            isCanceled: this.isCanceled as boolean,
+            expiresAt: this.expiresAt,
             subscriptionPlanName: this.subscriptionPlanName,
             subscriptionPlanPrice: this.subscriptionPlanPrice as number,
             subscriptionPlanDescription: this.subscriptionPlanDescription,
@@ -153,18 +153,18 @@ class SubscriptionEntity implements Entity {
     public toNewObject(): {
         userId: number;
         planId: number;
+        stripeSubscriptionId: string;
         status: ValueOf<typeof SubscriptionStatus>;
-        cancelAtPeriodEnd: boolean;
-        subscriptionToken: string;
-        expirationDate: Date;
+        isCanceled: boolean;
+        expiresAt: Date;
     } {
         return {
             userId: this.userId,
             planId: this.planId,
             status: this.status,
-            cancelAtPeriodEnd: this.cancelAtPeriodEnd,
-            subscriptionToken: this.subscriptionToken,
-            expirationDate: this.expirationDate,
+            isCanceled: this.isCanceled,
+            stripeSubscriptionId: this.stripeSubscriptionId,
+            expiresAt: this.expiresAt,
         };
     }
 }

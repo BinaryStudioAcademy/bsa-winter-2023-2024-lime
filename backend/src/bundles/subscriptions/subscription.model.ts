@@ -16,15 +16,15 @@ import { SunscriptionAttributes } from './enums/enums.js';
 class SubscriptionModel extends AbstractModel {
     public 'userId': number;
 
-    public 'subscriptionToken': string;
-
     public 'planId': number;
 
-    public 'cancelAtPeriodEnd': boolean;
+    public 'stripeSubscriptionId': string;
 
     public 'status': ValueOf<typeof SubscriptionStatus>;
 
-    public 'expirationDate': Date;
+    public 'isCanceled': boolean;
+
+    public 'expiresAt': Date;
 
     public 'subscriptionPlan': SubscriptionPlanModel;
 

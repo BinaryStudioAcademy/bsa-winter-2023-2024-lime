@@ -1,5 +1,5 @@
 type CancelSubscriptionResponseDto = {
-    cancelAtPeriodEnd: boolean;
+    isCanceled: boolean;
 };
 
 export { type CancelSubscriptionResponseDto };

@@ -16,9 +16,13 @@ class StipeService {
         });
     }
 
-    public async createCustomer({ email }: { email: string }): Promise<string> {
+    public async createCustomer({
+        email,
+    }: {
+        email: string;
+    }): Promise<{ stripeCustomerId: string }> {
         const { id } = await this.stripeApi.customers.create({ email });
-        return id;
+        return { stripeCustomerId: id };
     }
 
     public async createSubscriptionPlan({
@@ -30,16 +34,16 @@ class StipeService {
         price: number;
         description?: string;
     }): Promise<{
-        productId: string;
-        priceId: string;
+        stripeProductId: string;
+        stripePriceId: string;
     }> {
-        const { id: productId } = await this.stripeApi.products.create({
+        const { id: stripeProductId } = await this.stripeApi.products.create({
             name,
             description,
         });
 
-        const { id: priceId } = await this.stripeApi.prices.create({
-            product: productId,
+        const { id: stripePriceId } = await this.stripeApi.prices.create({
+            product: stripeProductId,
             unit_amount: price * 100,
             currency: 'usd',
             recurring: {
@@ -47,7 +51,7 @@ class StipeService {
             },
         });
 
-        return { productId, priceId };
+        return { stripeProductId, stripePriceId };
     }
 
     public async createSubscription({
@@ -57,10 +61,10 @@ class StipeService {
         customerId: string;
         priceId: string;
     }): Promise<{
-        subscriptionToken: string;
+        stripeSubscriptionId: string;
         clientSecret: string;
         status: ValueOf<typeof SubscriptionStatus>;
-        expirationDate: Date;
+        expiresAt: Date;
     }> {
         const subscription = await this.stripeApi.subscriptions.create({
             customer: customerId,
@@ -73,36 +77,34 @@ class StipeService {
         });
 
         return {
-            subscriptionToken: subscription.id,
+            stripeSubscriptionId: subscription.id,
             clientSecret: (
                 (subscription.latest_invoice as Stripe.Invoice)
                     .payment_intent as Stripe.PaymentIntent
             ).client_secret as string,
             status: subscription.status as ValueOf<typeof SubscriptionStatus>,
-            expirationDate: formatToDateFromUnix(
-                subscription.current_period_end,
-            ),
+            expiresAt: formatToDateFromUnix(subscription.current_period_end),
         };
     }
 
     public async updateCancelSubscription({
-        subscriptionToken,
-        cancelAtPeriodEnd,
+        stripeSubscriptionId,
+        isCanceled,
     }: {
-        subscriptionToken: string;
-        cancelAtPeriodEnd: boolean;
+        stripeSubscriptionId: string;
+        isCanceled: boolean;
     }): Promise<void> {
-        await this.stripeApi.subscriptions.update(subscriptionToken, {
-            cancel_at_period_end: cancelAtPeriodEnd,
+        await this.stripeApi.subscriptions.update(stripeSubscriptionId, {
+            cancel_at_period_end: isCanceled,
         });
     }
 
     public async immediateCancelSubscription({
-        subscriptionToken,
+        stripeSubscriptionId,
     }: {
-        subscriptionToken: string;
+        stripeSubscriptionId: string;
     }): Promise<boolean> {
-        return (await this.stripeApi.subscriptions.cancel(subscriptionToken))
+        return (await this.stripeApi.subscriptions.cancel(stripeSubscriptionId))
             ? true
             : false;
     }

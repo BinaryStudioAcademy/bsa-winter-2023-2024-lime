@@ -9,31 +9,31 @@ class SubscriptionPlanEntity implements Entity {
 
     private 'description': string | null;
 
-    private 'productToken': string;
+    private 'stripeProductId': string;
 
-    private 'priceToken': string;
+    private 'stripePriceId': string;
 
     private constructor({
         id,
         name,
         price,
         description,
-        productToken,
-        priceToken,
+        stripeProductId,
+        stripePriceId,
     }: {
         id: number | null;
         name: string;
         price: number;
         description: string | null;
-        productToken: string;
-        priceToken: string;
+        stripeProductId: string;
+        stripePriceId: string;
     }) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.productToken = productToken;
-        this.priceToken = priceToken;
+        this.stripeProductId = stripeProductId;
+        this.stripePriceId = stripePriceId;
     }
 
     public static initialize({
@@ -41,44 +41,44 @@ class SubscriptionPlanEntity implements Entity {
         name,
         price,
         description,
-        productToken,
-        priceToken,
+        stripeProductId,
+        stripePriceId,
     }: {
         id: number | null;
         name: string;
         price: number;
         description: string | null;
-        productToken: string;
-        priceToken: string;
+        stripeProductId: string;
+        stripePriceId: string;
     }): SubscriptionPlanEntity {
         return new SubscriptionPlanEntity({
             id,
             name,
             price,
             description,
-            productToken,
-            priceToken,
+            stripeProductId,
+            stripePriceId,
         });
     }
 
     public static initializeNew({
         name,
         price,
-        productToken,
-        priceToken,
+        stripeProductId,
+        stripePriceId,
     }: {
         name: string;
         price: number;
-        productToken: string;
-        priceToken: string;
+        stripeProductId: string;
+        stripePriceId: string;
     }): SubscriptionPlanEntity {
         return new SubscriptionPlanEntity({
             id: null,
             name,
             price,
             description: null,
-            productToken,
-            priceToken,
+            stripeProductId,
+            stripePriceId,
         });
     }
 
@@ -87,16 +87,16 @@ class SubscriptionPlanEntity implements Entity {
         name: string;
         price: number;
         description: string;
-        productToken: string;
-        priceToken: string;
+        stripeProductId: string;
+        stripePriceId: string;
     } {
         return {
             id: this.id as number,
             name: this.name,
             price: this.price,
             description: this.description as string,
-            productToken: this.productToken,
-            priceToken: this.priceToken,
+            stripeProductId: this.stripeProductId,
+            stripePriceId: this.stripePriceId,
         };
     }
 
@@ -104,15 +104,15 @@ class SubscriptionPlanEntity implements Entity {
         name: string;
         price: number;
         description: string;
-        productToken: string;
-        priceToken: string;
+        stripeProductId: string;
+        stripePriceId: string;
     } {
         return {
             name: this.name,
             price: this.price,
             description: this.description as string,
-            productToken: this.productToken,
-            priceToken: this.priceToken,
+            stripeProductId: this.stripeProductId,
+            stripePriceId: this.stripePriceId,
         };
     }
 }

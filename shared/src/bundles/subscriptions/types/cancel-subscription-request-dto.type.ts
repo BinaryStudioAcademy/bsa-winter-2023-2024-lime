@@ -1,6 +1,6 @@
 type CancelSubscriptionRequestDto = {
-    subscriptionToken: string;
-    cancelAtPeriodEnd: boolean;
+    stripeSubscriptionId: string;
+    isCanceled: boolean;
 };
 
 export { type CancelSubscriptionRequestDto };

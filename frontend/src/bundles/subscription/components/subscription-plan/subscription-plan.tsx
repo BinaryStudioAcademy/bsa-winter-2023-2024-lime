@@ -9,8 +9,8 @@ type Properties = {
     name: string;
     description: string;
     price: number;
-    priceToken: string;
-    handleClick: ({ planId, priceToken }: SubscribeRequestDto) => void;
+    stripePriceId: string;
+    handleClick: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
 };
 
 const SubscriptionPlan = ({
@@ -18,12 +18,12 @@ const SubscriptionPlan = ({
     name,
     description,
     price,
-    priceToken,
+    stripePriceId,
     handleClick,
 }: Properties): JSX.Element => {
     const handleSubscribeButtonClick = useCallback(() => {
-        handleClick({ planId: id, priceToken });
-    }, [id, priceToken, handleClick]);
+        handleClick({ planId: id, stripePriceId });
+    }, [id, stripePriceId, handleClick]);
 
     return (
         <div className="bg-lm-black-100 flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">

@@ -5,10 +5,10 @@ type SubscriptionGetItemResponseDto = {
     id: number | null;
     userId: number;
     planId: number;
-    subscriptionToken: string;
-    cancelAtPeriodEnd: boolean;
+    stripeSubscriptionId: string;
     status: ValueOf<typeof SubscriptionStatus>;
-    expirationDate: Date;
+    isCanceled: boolean;
+    expiresAt: Date;
     subscriptionPlanName: string | null;
     subscriptionPlanPrice: number | null;
     subscriptionPlanDescription: string | null;

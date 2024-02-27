@@ -95,12 +95,12 @@ class SubscriptionController extends BaseController {
             body: SubscribeRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
-        const { planId, priceToken } = options.body;
+        const { planId, stripePriceId } = options.body;
         return {
             status: HttpCode.CREATED,
             payload: await this.subscriptionService.subscribe(options.user, {
                 planId,
-                priceToken,
+                stripePriceId,
             }),
         };
     }
@@ -110,13 +110,13 @@ class SubscriptionController extends BaseController {
             body: CancelSubscriptionRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
-        const { cancelAtPeriodEnd, subscriptionToken } = options.body;
+        const { isCanceled, stripeSubscriptionId } = options.body;
 
         return {
             status: HttpCode.OK,
             payload: await this.subscriptionService.updateCancelSubscribtion({
-                subscriptionToken,
-                cancelAtPeriodEnd,
+                stripeSubscriptionId,
+                isCanceled,
             }),
         };
     }

@@ -15,9 +15,9 @@ type Properties = {
     subscriptionPlanName: string;
     subscriptionPlanPrice: number;
     status: ValueOf<typeof SubscriptionStatus>;
-    cancelAtPeriodEnd: boolean;
-    expirationDate: Date;
-    subscriptionToken: string;
+    isCanceled: boolean;
+    expiresAt: Date;
+    stripeSubscriptionId: string;
     handleChangeSubscription: () => void;
 };
 
@@ -25,26 +25,26 @@ const SubscriptionUserPanel = ({
     subscriptionPlanName,
     subscriptionPlanPrice,
     status,
-    cancelAtPeriodEnd,
-    expirationDate,
-    subscriptionToken,
+    isCanceled,
+    expiresAt,
+    stripeSubscriptionId,
     handleChangeSubscription,
 }: Properties): JSX.Element => {
     const dispatch = useAppDispatch();
 
     const [currentCancelAtPeriodEnd, setCurrentCancelAtPeriodEnd] =
-        useState(cancelAtPeriodEnd);
+        useState(isCanceled);
 
     const handleUpdateCancelSubscription = useCallback((): void => {
         void dispatch(
             subscriptionActions.updateCancelSubscription({
-                subscriptionToken,
-                cancelAtPeriodEnd: !currentCancelAtPeriodEnd,
+                stripeSubscriptionId,
+                isCanceled: !currentCancelAtPeriodEnd,
             }),
         );
 
         setCurrentCancelAtPeriodEnd(!currentCancelAtPeriodEnd);
-    }, [dispatch, subscriptionToken, currentCancelAtPeriodEnd]);
+    }, [dispatch, stripeSubscriptionId, currentCancelAtPeriodEnd]);
 
     return (
         <div className="bg-lm-black-100 w-full max-w-[30rem] rounded-2xl p-4 md:max-w-full md:p-6">
@@ -60,13 +60,13 @@ const SubscriptionUserPanel = ({
                             {status.toUpperCase()}
                         </p>
                         <div>
-                            {cancelAtPeriodEnd ? (
-                                <span className="text-lm-red">Expire on</span>
+                            {isCanceled ? (
+                                <span className="text-lm-red">Expires at</span>
                             ) : (
                                 <span className="text-white">Renews on</span>
                             )}
                             <p className="text-lm-yellow-100 text-2xl">
-                                {dateConverter(expirationDate)}
+                                {dateConverter(expiresAt)}
                             </p>
                         </div>
                         <div>
@@ -83,14 +83,14 @@ const SubscriptionUserPanel = ({
                 <Button
                     variant="primary"
                     label={
-                        cancelAtPeriodEnd
+                        isCanceled
                             ? 'Renew subscription'
                             : 'Cancel subscription'
                     }
                     size="md"
                     type="button"
                     className={getValidClassNames(
-                        cancelAtPeriodEnd ? 'text-lm-black-100' : 'text-lm-red',
+                        isCanceled ? 'text-lm-black-100' : 'text-lm-red',
                     )}
                     onClick={handleUpdateCancelSubscription}
                 />

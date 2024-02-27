@@ -12,21 +12,21 @@ const subscriptionPro = {
     description: 'This is a pro plan.',
 };
 
-const { productId: basicProductId, priceId: basicPriceId } =
+const { stripeProductId: basicProductId, stripePriceId: basicPriceId } =
     await stripeService.createSubscriptionPlan({ ...subscriptionBasic });
-const { productId: proProductId, priceId: proPriceId } =
+const { stripeProductId: proProductId, stripePriceId: proPriceId } =
     await stripeService.createSubscriptionPlan({ ...subscriptionPro });
 
 const subscriptionPlans = [
     {
         ...subscriptionBasic,
-        productToken: basicProductId,
-        priceToken: basicPriceId,
+        stripeProductId: basicProductId,
+        stripePriceId: basicPriceId,
     },
     {
         ...subscriptionPro,
-        productToken: proProductId,
-        priceToken: proPriceId,
+        stripeProductId: proProductId,
+        stripePriceId: proPriceId,
     },
 ];
 
