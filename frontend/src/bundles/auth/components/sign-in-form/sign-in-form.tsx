@@ -43,7 +43,7 @@ const SignInForm: React.FC<Properties> = ({
     return (
         <>
             <div>
-                <h1 className="mb-6 text-left text-[1.875rem] font-bold text-white">
+                <h1 className="text-primary mb-6 text-left text-[1.875rem] font-bold">
                     Hi! Login to your Account
                 </h1>
                 <div className="flex flex-col gap-4">
@@ -61,7 +61,7 @@ const SignInForm: React.FC<Properties> = ({
                     />
                 </div>
 
-                <p className="text-lm-grey-100 mb-6 mt-10 text-center text-xs">
+                <p className="text-secondary mb-6 mt-10 text-center text-xs">
                     or Sign in with Email
                 </p>
 
@@ -115,9 +115,7 @@ const SignInForm: React.FC<Properties> = ({
             <p className="text-center text-sm">
                 No account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
-                    <span className="text-lm-yellow-100">
-                        Create an account
-                    </span>
+                    <span className="text-action">Create an account</span>
                 </Link>
             </p>
         </>

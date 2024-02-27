@@ -1,8 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
+const ButtonColors = {
+    TEXT: 'var(--button-text)',
+    PRIMARY: 'var(--button-primary)',
+    SECONDARY: 'var(--button-secondary)',
+    TERTIARY: 'var(--button-tertiary)',
+};
+
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    darkMode: 'class',
     theme: {
         colors: {
             transparent: 'transparent',
@@ -90,6 +98,27 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
+            },
+            textColor: {
+                primary: 'var(--text-primary)',
+                secondary: 'var(--text-secondary)',
+                action: 'var(--text-action)',
+                buttonText: ButtonColors.TEXT,
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
+            },
+            backgroundColor: {
+                primary: 'var(--background-primary)',
+                secondary: 'var(--background-secondary)',
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
+            },
+            borderColor: {
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
             },
         },
     },
