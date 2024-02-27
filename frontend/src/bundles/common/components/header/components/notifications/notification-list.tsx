@@ -20,30 +20,34 @@ const NotificationList = ({
     );
     return (
         <div className="absolute right-0 flex w-52 flex-col text-white shadow-lg">
-            {notifications.map((notification, index) => (
-                <div
-                    className="border-lm-yellow-200 relative w-full rounded border "
-                    key={notification.id}
-                >
-                    <button
-                        key={index}
-                        data-index={notification.id}
-                        onClick={handleClick}
-                        type="button"
-                        className="bg-lm-black-100 hover:bg-lm-black-200 hover:rounded-s-34 font-heavybold absolute right-1 top-1 h-4 w-4 text-xs transition-all"
+            {notifications.length > 0 ? (
+                notifications.map((notification, index) => (
+                    <div
+                        className="border-lm-yellow-200 bg-lm-black-100 relative w-full rounded border "
+                        key={notification.id}
                     >
-                        X
-                    </button>
-                    <details>
-                        <summary className=" bg-lm-black-100 flex cursor-pointer items-center justify-center p-2 transition-all">
-                            {notification.title}
-                        </summary>
-                        <p className="bg-lm-black-100 p-4">
-                            {notification.description}
-                        </p>
-                    </details>
-                </div>
-            ))}
+                        <button
+                            key={index}
+                            data-index={notification.id}
+                            onClick={handleClick}
+                            type="button"
+                            className=" hover:bg-lm-black-200 hover:rounded-s-34 font-heavybold absolute right-1 top-1 h-4 w-4 text-xs transition-all"
+                        >
+                            X
+                        </button>
+                        <details>
+                            <summary className=" flex cursor-pointer items-center justify-center p-2 transition-all">
+                                {notification.title}
+                            </summary>
+                            <p className="p-4">{notification.description}</p>
+                        </details>
+                    </div>
+                ))
+            ) : (
+                <p className="bg-lm-black-100 border-lm-yellow-200 rounded border p-4 text-sm">
+                    There are no notifications
+                </p>
+            )}
         </div>
     );
 };
