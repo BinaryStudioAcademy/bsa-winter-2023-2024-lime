@@ -66,7 +66,7 @@ const PasswordReset: React.FC = () => {
     }, [dataStatus, navigate]);
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-primary mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem] lg:static',
+        base: 'relative flex flex-col flex-1 bg-primary mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
         form: 'justify-between gap-6 text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
     };
 
@@ -84,11 +84,11 @@ const PasswordReset: React.FC = () => {
                         onSubmit={handleResetPassword}
                     />
                 )}
-                <ThemeSwitcher />
             </div>
             <div className="text-primary items-center justify-center text-xl sm:hidden md:flex md:flex-1">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
+            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };
