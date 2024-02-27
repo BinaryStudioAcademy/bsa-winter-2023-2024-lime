@@ -1,4 +1,5 @@
 import { authController } from '~/bundles/auth/auth.js';
+import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
 import { subscriptionPlanController } from '~/bundles/subscription-plans/subscription-plan.js';
 import { subscriptionController } from '~/bundles/subscriptions/subscriptions.js';
 import { userController } from '~/bundles/users/users.js';
@@ -16,6 +17,7 @@ const apiV1 = new BaseServerAppApi(
     ...userController.routes,
     ...subscriptionController.routes,
     ...subscriptionPlanController.routes,
+    ...passwordResetController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

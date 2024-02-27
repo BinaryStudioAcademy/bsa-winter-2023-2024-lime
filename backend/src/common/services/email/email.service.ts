@@ -14,8 +14,8 @@ class EmailService {
         await sgMail.send({ ...email, from: this.from } as MailDataRequired);
     }
 
-    public async sendRestorePassword(to: string): Promise<void> {
-        const email = { ...restorePasswordEmail, to };
+    public async sendRestorePassword(to: string, link: string): Promise<void> {
+        const email = { ...restorePasswordEmail(link), to };
 
         await this.send(email);
     }

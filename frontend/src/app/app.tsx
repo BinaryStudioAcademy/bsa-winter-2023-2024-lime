@@ -1,28 +1,23 @@
 import { actions as appActions } from '~/app/store/app.js';
-import reactLogo from '~/assets/img/react.svg';
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import {
-    Link,
     Loader,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
-import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
     useEffect,
-    useLocation,
     useNavigate,
+    useState,
 } from '~/bundles/common/hooks/hooks.js';
 
 const App: React.FC = () => {
-    const { pathname } = useLocation();
+    const [isRefreshing, setIsRefreshing] = useState(true);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { dataStatus, redirectPath } = useAppSelector(({ auth, app }) => ({
-        isRefreshing: auth.isRefreshing,
-        dataStatus: auth.dataStatus,
+    const { redirectPath } = useAppSelector(({ app }) => ({
         redirectPath: app.redirectPath,
     }));
 
@@ -34,41 +29,22 @@ const App: React.FC = () => {
     }, [dispatch, navigate, redirectPath]);
 
     useEffect(() => {
-        void dispatch(authActions.refreshUser());
+        const refreshUser = async (): Promise<void> => {
+            try {
+                await dispatch(authActions.refreshUser());
+            } finally {
+                setIsRefreshing(false);
+            }
+        };
+
+        void refreshUser();
     }, [dispatch]);
 
-    if (dataStatus === DataStatus.PENDING) {
-        return <Loader />;
+    if (isRefreshing) {
+        return <Loader isOverflow />;
     }
 
-    return (
-        <>
-            <img src={reactLogo} width="30" alt="logo" />
-
-            <ul>
-                <li>
-                    <Link to={AppRoute.ROOT}>Root</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SIGN_IN}>Sign in</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SIGN_UP}>Sign up</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SUBSCRIPTION}>SUBSCRIPTION</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SUBSCRIPTION_CHECKOUT}>CHECKOUT</Link>
-                </li>
-            </ul>
-            <p>Current path: {pathname}</p>
-
-            <div>
-                <RouterOutlet />
-            </div>
-        </>
-    );
+    return <RouterOutlet />;
 };
 
 export { App };

@@ -69,7 +69,7 @@ const SubscriptionPage = (): JSX.Element => {
     }
 
     return (
-        <div className="mx-auto mt-5 flex max-w-[50rem] flex-col justify-center gap-10 px-2">
+        <div className="m-auto flex w-full max-w-[50rem] flex-col justify-center gap-10 px-2">
             <div className={'flex flex-col items-center justify-center gap-2'}>
                 {currentSubscription ? (
                     <SubscriptionUserPanel
