@@ -1,3 +1,4 @@
+export { ActivityType, Metric } from './bundles/achievements/enums/enums.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export {

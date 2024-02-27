@@ -92,13 +92,9 @@ class NotificationRepository implements Repository {
     }
 
     public async delete(query: Record<string, unknown>): Promise<boolean> {
-        return (await this.notificationModel
-            .query()
-            .where(query)
-            .del()
-            .execute())
-            ? true
-            : false;
+        return Boolean(
+            await this.notificationModel.query().where(query).del().execute(),
+        );
     }
 }
 

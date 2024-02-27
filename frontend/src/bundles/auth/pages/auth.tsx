@@ -2,6 +2,7 @@ import authLogo from '~/assets/img/auth-logo.svg';
 import {
     ForgotPasswordForm,
     Modal,
+    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
@@ -134,16 +135,19 @@ const Auth: React.FC = () => {
     };
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
-        form: 'justify-between text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem] bg-primary',
+        form: 'justify-between text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem] lg:justify-center lg:pt-0 lg:pb-0',
+        main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
+        logoContainer:
+            'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
     };
 
     return (
-        <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
+        <main className={getValidClassNames(classes.main)}>
             <div className={getValidClassNames(classes.base, classes.form)}>
                 {getScreen(pathname)}
             </div>
-            <div className="hidden flex-1 items-center justify-center text-xl text-white lg:flex">
+            <div className={getValidClassNames(classes.logoContainer)}>
                 <img src={authLogo} alt="LIME Logo" />
             </div>
             <Modal
@@ -160,6 +164,7 @@ const Auth: React.FC = () => {
                     />
                 )}
             </Modal>
+            <ThemeSwitcher />
         </main>
     );
 };

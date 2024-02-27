@@ -176,7 +176,6 @@ class NotificationController extends BaseController {
 
         return {
             status: HttpCode.OK,
-            // payload: await this.notificationService.findAll(user.id)
             payload: await this.notificationService.paginatedFind({
                 userId: user.id,
                 page: +page,
@@ -276,7 +275,6 @@ class NotificationController extends BaseController {
 
         return {
             status: HttpCode.CREATED,
-            // payload: await this.notificationService.create(user.id, body),
             payload: await this.notificationService.create({
                 ...body,
                 userId: user.id,
@@ -323,7 +321,6 @@ class NotificationController extends BaseController {
 
         return {
             status: HttpCode.OK,
-            // payload: await this.notificationService.dismiss(params.notificationId, user.id)
             payload: await this.notificationService.dismiss(
                 params.notificationId,
                 user.id,
@@ -369,7 +366,6 @@ class NotificationController extends BaseController {
 
         return {
             status: HttpCode.OK,
-            // payload: await this.notificationService.delete({id: params.notificationId, userId: id})
             payload: await this.notificationService.delete({
                 id: params.notificationId,
                 userId: user.id,

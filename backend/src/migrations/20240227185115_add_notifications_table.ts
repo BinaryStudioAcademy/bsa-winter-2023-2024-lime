@@ -1,9 +1,6 @@
 import { type Knex } from 'knex';
 
-import { NotificationType } from '~/bundles/notifications/notifications.js';
-
-const TABLE_NAME = 'notifications';
-const USERS_TABLE_NAME = 'users';
+import { DatabaseTableName } from '~/common/database/database.js';
 
 const ColumnName = {
     ID: 'id',
@@ -16,17 +13,20 @@ const ColumnName = {
     TYPE: 'type',
 };
 
+const NotificationType = {
+    DEFAULT: 'default',
+} as const;
+
 async function up(knex: Knex): Promise<void> {
-    await knex.schema.createTable(TABLE_NAME, (table) => {
+    await knex.schema.createTable(DatabaseTableName.NOTIFICATIONS, (table) => {
         table.increments(ColumnName.ID).primary();
         table
             .integer(ColumnName.USER_ID)
             .unsigned()
             .notNullable()
-            .references('id')
-            .inTable(USERS_TABLE_NAME)
-            .onDelete('CASCADE')
-            .onUpdate('CASCADE');
+            .references(ColumnName.ID)
+            .inTable(DatabaseTableName.USERS)
+            .onDelete('CASCADE');
         table.string(ColumnName.TITLE).nullable();
         table.string(ColumnName.MESSAGE).notNullable();
         table.boolean(ColumnName.IS_READ).defaultTo(false);
@@ -43,7 +43,7 @@ async function up(knex: Knex): Promise<void> {
 }
 
 async function down(knex: Knex): Promise<void> {
-    await knex.schema.dropTableIfExists(TABLE_NAME);
+    await knex.schema.dropTableIfExists(DatabaseTableName.NOTIFICATIONS);
 }
 
 export { down, up };
