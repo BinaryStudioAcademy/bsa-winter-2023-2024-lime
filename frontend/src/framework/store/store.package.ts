@@ -12,6 +12,8 @@ import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
+import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
+import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { type Config } from '~/framework/config/config.js';
@@ -20,6 +22,7 @@ import { errorMiddleware } from './middlewares/error-middleware.js';
 
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
+    passwordReset: ReturnType<typeof passwordResetReducer>;
     users: ReturnType<typeof usersReducer>;
     goals: ReturnType<typeof goalsReducer>;
     achievements: ReturnType<typeof achievementsReducer>;
@@ -30,6 +33,7 @@ type ExtraArguments = {
     userApi: typeof userApi;
     goalsApi: typeof goalsApi;
     achievementsApi: typeof achievementsApi;
+    passwordResetApi: typeof passwordResetApi;
 };
 
 class Store {
@@ -46,6 +50,7 @@ class Store {
             devTools: config.ENV.APP.ENVIRONMENT !== AppEnvironment.PRODUCTION,
             reducer: {
                 auth: authReducer,
+                passwordReset: passwordResetReducer,
                 users: usersReducer,
                 goals: goalsReducer,
                 achievements: achievementsReducer,
@@ -65,6 +70,7 @@ class Store {
             userApi,
             goalsApi,
             achievementsApi,
+            passwordResetApi,
         };
     }
 }

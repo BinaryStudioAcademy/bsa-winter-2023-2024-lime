@@ -1,56 +1,35 @@
-import reactLogo from '~/assets/img/react.svg';
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import {
-    Link,
     Loader,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
-import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
-    useAppSelector,
     useEffect,
-    useLocation,
+    useState,
 } from '~/bundles/common/hooks/hooks.js';
 
 const App: React.FC = () => {
-    const { pathname } = useLocation();
+    const [isRefreshing, setIsRefreshing] = useState(true);
     const dispatch = useAppDispatch();
-    const { dataStatus } = useAppSelector(({ auth }) => ({
-        isRefreshing: auth.isRefreshing,
-        dataStatus: auth.dataStatus,
-    }));
 
     useEffect(() => {
-        void dispatch(authActions.refreshUser());
+        const refreshUser = async (): Promise<void> => {
+            try {
+                await dispatch(authActions.refreshUser());
+            } finally {
+                setIsRefreshing(false);
+            }
+        };
+
+        void refreshUser();
     }, [dispatch]);
 
-    if (dataStatus === DataStatus.PENDING) {
-        return <Loader />;
+    if (isRefreshing) {
+        return <Loader isOverflow />;
     }
 
-    return (
-        <>
-            <img src={reactLogo} width="30" alt="logo" />
-
-            <ul>
-                <li>
-                    <Link to={AppRoute.ROOT}>Root</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SIGN_IN}>Sign in</Link>
-                </li>
-                <li>
-                    <Link to={AppRoute.SIGN_UP}>Sign up</Link>
-                </li>
-            </ul>
-            <p>Current path: {pathname}</p>
-
-            <div>
-                <RouterOutlet />
-            </div>
-        </>
-    );
+    return <RouterOutlet />;
 };
 
 export { App };

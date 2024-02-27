@@ -5,6 +5,7 @@ const AppRoute = {
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
     GOALS: '/goals',
+    PASSWORD_RESET: '/reset-password/:resetToken',
     OVERVIEW: '/overview',
     WORKOUT: '/workout',
     SCHEDULE: '/schedule',

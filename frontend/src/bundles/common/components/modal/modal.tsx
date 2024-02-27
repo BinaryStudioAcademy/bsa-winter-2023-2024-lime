@@ -18,17 +18,19 @@ const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
                 onClick={onClose}
                 role="presentation"
             />
-            <div className="bg-lm-black-200 rounded-34 fixed fixed left-1/2 top-1/2 z-50 flex w-[39rem] -translate-x-1/2 -translate-y-1/2 transform flex-col items-start justify-center px-32 pb-24 pt-16 shadow-md transition-all ">
+            <div className="bg-lm-black-200 rounded-34 fixed left-1/2 top-1/2 z-50 flex w-[39rem] -translate-x-1/2 -translate-y-1/2 transform flex-col items-start justify-center px-32 pb-24 pt-16 shadow-md transition-all ">
                 <XMarkIcon
                     onClick={onClose}
                     className="stroke-lm-grey-500 fill-lm-grey-500 hover:stroke-lm-yellow-100 hover:fill-lm-yellow-100 absolute right-8 top-8 h-3 w-3 cursor-pointer transition-all "
                 />
 
-                <h3 className="text-lm-grey-200 mb-10 text-xl font-extrabold leading-6">
-                    {title}
-                </h3>
+                <div className="w-full">
+                    <h3 className="mb-10 text-left text-[1.875rem] font-bold text-white">
+                        {title}
+                    </h3>
 
-                {children}
+                    {children}
+                </div>
             </div>
         </div>
     );
