@@ -3,11 +3,11 @@ import { z } from 'zod';
 
 import { Activity } from '~/bundles/goals/enums/enums.js';
 
-import { FrequencyValue } from '../enums/goal-frequency.enum.js';
+import { GoalFrequency } from '../enums/enums.js';
 
 type GoalRequestValidation = {
     activity: z.ZodNativeEnum<typeof Activity>;
-    frequency: z.ZodNativeEnum<typeof FrequencyValue>;
+    frequency: z.ZodNativeEnum<typeof GoalFrequency>;
     distance: z.ZodOptional<z.ZodString>;
     duration: z.ZodOptional<z.ZodString>;
 };
@@ -16,7 +16,7 @@ const regexDecimalNumbers = new RegExp(/^\d+$/);
 
 const goalValidationSchema = z.object<GoalRequestValidation>({
     activity: z.nativeEnum(Activity),
-    frequency: z.nativeEnum(FrequencyValue),
+    frequency: z.nativeEnum(GoalFrequency),
     distance: z
         .string()
         .regex(regexDecimalNumbers, {

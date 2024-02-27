@@ -1,8 +1,8 @@
-type GoalRequest = {
+type CreateGoalRequest = {
     activity: string;
     frequency: string;
     duration?: string;
     distance?: string;
 };
 
-export { type GoalRequest };
+export { type CreateGoalRequest };

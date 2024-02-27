@@ -3,7 +3,7 @@ import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
-import { type AchievementResponsetDto } from './types/types.js';
+import { type AchievementResponseDto } from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -16,7 +16,7 @@ class AchievementsApi extends BaseHttpApi {
         super({ path: ApiPath.AUTH, baseUrl, http, storage });
     }
 
-    public async getAchievements(): Promise<AchievementResponsetDto[]> {
+    public async getAchievements(): Promise<AchievementResponseDto[]> {
         const response = await this.load(
             this.getFullEndpoint(ApiPath.ACHIEVEMENTS, {}),
             {
@@ -25,7 +25,7 @@ class AchievementsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<AchievementResponsetDto[]>();
+        return await response.json<AchievementResponseDto[]>();
     }
 }
 

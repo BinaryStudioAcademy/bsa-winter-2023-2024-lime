@@ -1,8 +1,8 @@
-import { goalActivity, goalFrequency } from '../enums/enums.js';
+import { goalActivityOptions, goalFrequencyOpitons } from '../enums/enums.js';
 
 const DEFAULT_CREATE_GOAL_PAYLOAD = {
-    activity: goalActivity[0]?.value as string,
-    frequency: goalFrequency[0]?.value as string,
+    activity: goalActivityOptions[0]?.value as string,
+    frequency: goalFrequencyOpitons[0]?.value as string,
     distance: '',
     duration: '',
 };

@@ -8,17 +8,17 @@ import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
 import { DEFAULT_CREATE_GOAL_PAYLOAD } from './constants/constants.js';
-import { goalActivity, goalFrequency } from './enums/enums.js';
-import { type GoalRequest } from './types/types.js';
+import { goalActivityOptions, goalFrequencyOpitons } from './enums/enums.js';
+import { type CreateGoalRequest } from './types/types.js';
 import { goalValidationSchema } from './validation-schemas/goal.validation-schema.js';
 
 type Properties = {
-    onSubmit: (payload: GoalRequest) => void;
+    onSubmit: (payload: CreateGoalRequest) => void;
     isLoading: boolean;
 };
 
 const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const { control, errors, handleSubmit } = useAppForm<GoalRequest>({
+    const { control, errors, handleSubmit } = useAppForm<CreateGoalRequest>({
         defaultValues: DEFAULT_CREATE_GOAL_PAYLOAD,
         validationSchema: goalValidationSchema,
         mode: 'onTouched',
@@ -39,7 +39,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     name="activity"
                     control={control}
                     errors={errors}
-                    options={goalActivity}
+                    options={goalActivityOptions}
                     isDisabled={isLoading}
                     required
                 />
@@ -49,7 +49,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     name="frequency"
                     control={control}
                     errors={errors}
-                    options={goalFrequency}
+                    options={goalFrequencyOpitons}
                     isDisabled={isLoading}
                     required
                 />

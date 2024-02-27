@@ -7,7 +7,7 @@ import {
     Loader,
 } from '~/bundles/common/components/components.js';
 import { CreateGoalForm } from '~/bundles/common/components/create-goal-form/create-goal-form.js';
-import { type GoalRequest } from '~/bundles/common/components/create-goal-form/types/types.js';
+import { type CreateGoalRequest } from '~/bundles/common/components/create-goal-form/types/types.js';
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
@@ -70,7 +70,7 @@ const Goals: React.FC = () => {
     }, []);
 
     const handleAddGoal = useCallback(
-        (payload: GoalRequest): void => {
+        (payload: CreateGoalRequest): void => {
             const [frequency, frequencyType] = payload.frequency.split(' ');
 
             const createGoalPayload = {

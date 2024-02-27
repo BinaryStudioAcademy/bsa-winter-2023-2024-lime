@@ -1,11 +1,19 @@
 import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
 import { capitalizeString } from '~/bundles/common/helpers/helpers.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 import { Activity } from '~/bundles/goals/enums/enums.js';
 
-const goalActivity: SelectOption[] = [
-    { label: capitalizeString(Activity.CYCLING), value: Activity.CYCLING },
-    { label: capitalizeString(Activity.RUNNING), value: Activity.RUNNING },
-    { label: capitalizeString(Activity.WALKING), value: Activity.WALKING },
-];
+const goalActivityToLabel: Record<ValueOf<typeof Activity>, string> = {
+    [Activity.WALKING]: Activity.WALKING,
+    [Activity.RUNNING]: Activity.RUNNING,
+    [Activity.CYCLING]: Activity.CYCLING,
+};
 
-export { goalActivity };
+const goalActivityOptions: SelectOption[] = Object.entries(
+    goalActivityToLabel,
+).map(([value, label]) => ({
+    value,
+    label: capitalizeString(label),
+}));
+
+export { goalActivityOptions };

@@ -24,10 +24,10 @@ const routes = [
                 path: AppRoute.ROOT,
                 element: 'Root',
             },
-            {
-                path: AppRoute.GOALS,
-                element: <div>GOALS PAGE</div>,
-            },
+            // {
+            //     path: AppRoute.GOALS,
+            //     element: <div>GOALS PAGE</div>,
+            // },
             {
                 path: AppRoute.WORKOUT,
                 element: <div>WORKOUT PAGE</div>,
