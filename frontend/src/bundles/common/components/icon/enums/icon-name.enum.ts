@@ -7,6 +7,7 @@ const IconName = {
     goalsIcon: 'goalsIcon',
     workoutIcon: 'workoutIcon',
     dotIcon: 'dotIcon',
+    messageIcon: 'messageIcon',
 } as const;
 
 export { IconName };
