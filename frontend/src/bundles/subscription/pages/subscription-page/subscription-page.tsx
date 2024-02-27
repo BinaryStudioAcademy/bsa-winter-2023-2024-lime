@@ -88,17 +88,13 @@ const SubscriptionPage = (): JSX.Element => {
                         handleChangeSubscription={handleChangeSubscription}
                     />
                 ) : (
-                    <span
-                        className={
-                            'text-lm-black-100 text-start text-xl font-bold'
-                        }
-                    >
+                    <span className="text-lm-black-100 text-start text-xl font-bold">
                         Looks like you dont have subscription yet. Choose from
                         below.
                     </span>
                 )}
             </div>
-            <div className={'flex w-full flex-col items-center gap-6'}>
+            <div className="flex w-full flex-col items-center gap-6">
                 {subscriptionPlans &&
                     subscriptionPlans.map((plan) => {
                         if (

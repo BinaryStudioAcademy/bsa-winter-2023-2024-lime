@@ -63,7 +63,7 @@ const SubscriptionUserPanel = ({
                             {isCanceled ? (
                                 <span className="text-lm-red">Expires at</span>
                             ) : (
-                                <span className="text-white">Renews on</span>
+                                <span className="text-white">Renews at</span>
                             )}
                             <p className="text-lm-yellow-100 text-2xl">
                                 {dateConverter(expiresAt)}

@@ -5,6 +5,7 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
+import { UserAchievementModel } from '../achievements/user-achievement.model.js';
 import {
     SubscriptionModel,
     SunscriptionAttributes,
@@ -41,6 +42,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.USER_ID}`,
+                },
+            },
+            userAchievement: {
+                relation: Model.HasOneRelation,
+                modelClass: UserAchievementModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.id`,
+                    to: `${DatabaseTableName.USER_ACHIEVEMENTS}.userId`,
                 },
             },
         };
