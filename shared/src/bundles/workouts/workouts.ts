@@ -5,6 +5,6 @@ export {
     type WorkoutResponseDto,
 } from './types/types.js';
 export {
-    createUserWorkouts as createUserWorkoutsValidationSchema,
-    updateUserWorkouts as updateUserWorkoutsValidationSchema,
+    createWorkout as createWorkoutValidationSchema,
+    updateWorkout as updateWorkoutValidationSchema,
 } from './validation-schemas/validation-schemas.js';

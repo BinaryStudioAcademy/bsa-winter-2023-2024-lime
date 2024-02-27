@@ -16,9 +16,9 @@ import {
     type UpdateWorkoutRequestDto,
 } from './types/types.js';
 import {
-    createUserWorkoutsValidationSchema,
+    createWorkoutValidationSchema,
     idParameterValidationSchema,
-    updateUserWorkoutsValidationSchema,
+    updateWorkoutValidationSchema,
 } from './validation-schemas/validation-schemas.js';
 import { type WorkoutService } from './workout.service.js';
 
@@ -112,7 +112,7 @@ class WorkoutController extends BaseController {
             path: WorkoutsApiPath.ROOT,
             method: 'POST',
             validation: {
-                body: createUserWorkoutsValidationSchema,
+                body: createWorkoutValidationSchema,
             },
             isProtected: true,
             handler: (options) =>
@@ -126,7 +126,7 @@ class WorkoutController extends BaseController {
             path: WorkoutsApiPath.ID,
             method: 'PUT',
             validation: {
-                body: updateUserWorkoutsValidationSchema,
+                body: updateWorkoutValidationSchema,
             },
             isProtected: true,
             handler: (options) =>

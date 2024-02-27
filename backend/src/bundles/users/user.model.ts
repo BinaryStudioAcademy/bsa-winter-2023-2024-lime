@@ -1,6 +1,6 @@
 import { type RelationMappings, Model } from 'objection';
 
-import { UserWorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
+import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
 import { WorkoutsModel } from '~/bundles/workouts/workouts.js';
 import {
     AbstractModel,
@@ -46,7 +46,7 @@ class UserModel extends AbstractModel {
                 modelClass: WorkoutsModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.WORKOUTS}.${UserWorkoutAttributes.USER_ID}`,
+                    to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
                 },
             },
         };

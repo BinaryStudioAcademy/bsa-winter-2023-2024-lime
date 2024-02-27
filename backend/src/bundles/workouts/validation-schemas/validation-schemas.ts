@@ -1,5 +1,5 @@
 export {
-    createUserWorkoutsValidationSchema,
+    createWorkoutValidationSchema,
     idParameterValidationSchema,
-    updateUserWorkoutsValidationSchema,
+    updateWorkoutValidationSchema,
 } from 'shared';

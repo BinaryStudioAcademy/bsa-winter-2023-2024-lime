@@ -1,4 +1,4 @@
-export { Activity } from './activity.enum.js';
+export { ActivityType } from './activity-type.js';
 export { ApiPath } from './api-path.enum.js';
 export { AppEnvironment } from './app-environment.enum.js';
 export { ContentType } from './content-type.enum.js';

@@ -1,10 +1,10 @@
-import { Activity } from '~/common/enums/enums.js';
+import { ActivityType } from '~/common/enums/enums.js';
 import { type Entity, type ValueOf } from '~/common/types/types.js';
 
 class WorkoutEntity implements Entity {
     private 'id': number | null;
     private 'userId': number;
-    private 'activity': ValueOf<typeof Activity>;
+    private 'activity': ValueOf<typeof ActivityType>;
     private 'steps': number | undefined;
     private 'heartRate': number;
     private 'workoutStartedAt': Date;
@@ -26,7 +26,7 @@ class WorkoutEntity implements Entity {
     }: {
         id: number | null;
         userId: number;
-        activity: ValueOf<typeof Activity>;
+        activity: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
@@ -44,7 +44,7 @@ class WorkoutEntity implements Entity {
         this.distance = distance;
         this.speed = speed;
         this.kilocalories = kilocalories;
-        if (activity === Activity.WALKING) {
+        if (activity === ActivityType.WALKING) {
             this.steps = 0;
         }
     }
@@ -52,7 +52,7 @@ class WorkoutEntity implements Entity {
     public static initialize(payload: {
         id: number;
         userId: number;
-        activity: ValueOf<typeof Activity>;
+        activity: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
@@ -67,7 +67,7 @@ class WorkoutEntity implements Entity {
     }
 
     public static initializeNew(payload: {
-        activity: ValueOf<typeof Activity>;
+        activity: ValueOf<typeof ActivityType>;
         userId: number;
         steps?: number;
     }): WorkoutEntity {
@@ -85,7 +85,7 @@ class WorkoutEntity implements Entity {
 
     public toObject(): {
         id: number;
-        activity: ValueOf<typeof Activity>;
+        activity: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
@@ -109,7 +109,7 @@ class WorkoutEntity implements Entity {
 
     public toNewObject(): {
         userId: number;
-        activity: ValueOf<typeof Activity>;
+        activity: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;

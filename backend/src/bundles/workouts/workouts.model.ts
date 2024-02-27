@@ -6,14 +6,14 @@ import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
-import { type Activity } from '~/common/enums/enums.js';
+import { type ActivityType } from '~/common/enums/enums.js';
 import { type ValueOf } from '~/common/types/types.js';
 
-import { UserWorkoutAttributes } from './enums/enums.js';
+import { WorkoutAttributes } from './enums/enums.js';
 
 class WorkoutsModel extends AbstractModel {
     public 'userId': number;
-    public 'activity': ValueOf<typeof Activity>;
+    public 'activity': ValueOf<typeof ActivityType>;
     public 'steps': number;
     public 'heartRate': number;
     public 'workoutStartedAt': Date;
@@ -32,7 +32,7 @@ class WorkoutsModel extends AbstractModel {
                 relation: Model.BelongsToOneRelation,
                 modelClass: UserModel,
                 join: {
-                    from: `${DatabaseTableName.WORKOUTS}.${UserWorkoutAttributes.USER_ID}`,
+                    from: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
                     to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },

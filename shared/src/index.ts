@@ -26,13 +26,12 @@ export {
     type CreateWorkoutRequestDto,
     type WorkoutRequestDto,
     type WorkoutResponseDto,
-    createUserWorkoutsValidationSchema,
-    updateUserWorkoutsValidationSchema,
+    createWorkoutValidationSchema,
+    updateWorkoutValidationSchema,
     WorkoutsApiPath,
     WorkoutValidationMessage,
 } from './bundles/workouts/workouts.js';
 export {
-    Activity,
     ApiPath,
     AppEnvironment,
     ContentType,
