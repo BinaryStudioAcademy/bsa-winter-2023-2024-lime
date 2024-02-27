@@ -9,6 +9,7 @@ type EnvironmentSchema = {
         JWT_SECRET: string;
         OPEN_AI_API_KEY: string;
         OPEN_AI_MODEL: string;
+        TOKEN_EXPIRATION_TIME: string;
     };
     AWS: {
         S3_ACCESS_KEY: string;

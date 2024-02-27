@@ -55,7 +55,7 @@ class BaseConfig implements Config {
                 },
                 TOKEN_EXPIRATION_TIME: {
                     doc: 'Token expiration time',
-                    format: Number,
+                    format: String,
                     env: 'TOKEN_EXPIRATION_TIME',
                     default: null,
                 },
