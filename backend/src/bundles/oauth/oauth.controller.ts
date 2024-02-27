@@ -1,4 +1,8 @@
-import { ConnectionsPath } from '~/bundles/connections/connections.js';
+import {
+    type OAuthProvider,
+    type OAuthService,
+} from '~/bundles/oauth/oauth.js';
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import { type Config } from '~/common/config/config.js';
 import {
     type ApiHandlerOptions,
@@ -9,9 +13,7 @@ import {
 import { ApiPath } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import { type OAuthProvider, type OAuthService } from '../oauth/oauth.js';
-import { type UserAuthResponseDto } from '../users/users.js';
-import { HttpCode, OAuthActionsPath } from './enums/enums.js';
+import { ConnectionsPath, HttpCode, OAuthActionsPath } from './enums/enums.js';
 import { type OAuthExchangeAuthCodeDto, type ValueOf } from './types/types.js';
 
 class OAuthController extends BaseController {
