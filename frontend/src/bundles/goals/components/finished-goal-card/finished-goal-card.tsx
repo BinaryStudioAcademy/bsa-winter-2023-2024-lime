@@ -7,10 +7,7 @@ type Properties = {
     achievement?: string;
 };
 
-const FinishedGoalCard = ({
-    activity,
-    achievement,
-}: Properties): JSX.Element => {
+const FinishedGoalCard: React.FC<Properties> = ({ activity, achievement }) => {
     return (
         <div className="bg-lm-black-100 bg-goalWidget flex h-40 w-full items-center justify-between rounded-xl px-6 py-5">
             <div className="">
