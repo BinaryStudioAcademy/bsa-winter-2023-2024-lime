@@ -25,29 +25,64 @@ import { type WorkoutService } from './workout.service.js';
 /**
  * @swagger
  * components:
- *    schemas:
- *      Workout:
- *        type: object
- *        properties:
- *          id:
- *            type: number
- *            format: number
- *            minimum: 1
- *          activity:
- *            type: string
- *            enum:
- *              - cycling
- *              - running
- *              - walking
- *          steps:
- *            type: number
- *            minimum: 0
- *          duration:
- *            type: number
- *            minimum: 0
- *          kilocalories:
- *            type: number
- *            minimum: 0
+ *   schemas:
+ *     Workout:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           format: integer
+ *           minimum: 1
+ *         activity:
+ *           type: string
+ *           enum:
+ *             - cycling
+ *             - running
+ *             - walking
+ *         steps:
+ *           type: number
+ *           format: integer
+ *           description: Returns only for walking activity, optional
+ *           minimum: 0
+ *           nullable: true
+ *         heartRate:
+ *           type: number
+ *           format: integer
+ *           description: Average heart rate during the workout
+ *           minimum: 0
+ *         startTime:
+ *           type: string
+ *           format: date-time
+ *           description: The start time of the workout
+ *         endTime:
+ *           type: string
+ *           format: date-time
+ *           description: The end time of the workout, optional
+ *           nullable: true
+ *         distance:
+ *           type: number
+ *           format: float
+ *           description: Distance covered during the workout
+ *           minimum: 0
+ *         speed:
+ *           type: number
+ *           format: float
+ *           description: Average speed during the workout
+ *           minimum: 0
+ *         kilocalories:
+ *           type: number
+ *           format: integer
+ *           description: Calories burned during the workout
+ *           minimum: 0
+ *       required:
+ *         - id
+ *         - activity
+ *         - heartRate
+ *         - startTime
+ *         - endTime
+ *         - distance
+ *         - speed
+ *         - kilocalories
  */
 
 class WorkoutController extends BaseController {
@@ -135,6 +170,18 @@ class WorkoutController extends BaseController {
      *                     type: array
      *                     items:
      *                       $ref: '#/components/schemas/Workout'
+     *              examples:
+     *                  walkingResponse:
+     *                    value:
+     *                      id: 1
+     *                      activity: walking
+     *                      steps: 3000
+     *                      heartRate: 120
+     *                      startTime: '2021-01-01T12:00:00Z'
+     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      distance: 5000
+     *                      speed: 2.7
+     *                      kilocalories: 250
      *        400:
      *          description: Failed operation
      *          content:
@@ -143,17 +190,18 @@ class WorkoutController extends BaseController {
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
      */
-    private async find(
-        options: ApiHandlerOptions<{
-            params: EntityIdParameterDto;
-        }>,
+
+    private async findAll(
+        options: ApiHandlerOptions,
     ): Promise<ApiHandlerResponse> {
-        const { id } = idParameterValidationSchema.parse(options.params);
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.find({ id }),
+            payload: await this.workoutService.findAll({
+                userId: (options.user as UserAuthResponseDto).id,
+            }),
         };
     }
+
     /**
      * @swagger
      * /api/v1/workouts/{id}:
@@ -175,6 +223,18 @@ class WorkoutController extends BaseController {
      *              schema:
      *                 type: object
      *                 $ref: '#/components/schemas/Workout'
+     *              examples:
+     *                  walkingResponse:
+     *                    value:
+     *                      id: 1
+     *                      activity: walking
+     *                      steps: 3000
+     *                      heartRate: 120
+     *                      startTime: '2021-01-01T12:00:00Z'
+     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      distance: 5000
+     *                      speed: 2.7
+     *                      kilocalories: 250
      *        400:
      *          description: Failed operation
      *          content:
@@ -183,14 +243,15 @@ class WorkoutController extends BaseController {
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
      */
-    private async findAll(
-        options: ApiHandlerOptions,
+    private async find(
+        options: ApiHandlerOptions<{
+            params: EntityIdParameterDto;
+        }>,
     ): Promise<ApiHandlerResponse> {
+        const { id } = idParameterValidationSchema.parse(options.params);
         return {
             status: HttpCode.OK,
-            payload: await this.workoutService.findAll({
-                userId: (options.user as UserAuthResponseDto).id,
-            }),
+            payload: await this.workoutService.find({ id }),
         };
     }
 
@@ -217,6 +278,7 @@ class WorkoutController extends BaseController {
      *                        - cycling
      *                        - running
      *                        - walking
+     *                     example: walking
      *      responses:
      *        200:
      *          description: Successful operation
@@ -225,6 +287,18 @@ class WorkoutController extends BaseController {
      *              schema:
      *                 type: object
      *                 $ref: '#/components/schemas/Workout'
+     *              examples:
+     *                  walkingResponse:
+     *                    value:
+     *                      id: 1
+     *                      activity: walking
+     *                      steps: 3000
+     *                      heartRate: 120
+     *                      startTime: '2021-01-01T12:00:00Z'
+     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      distance: 5000
+     *                      speed: 2.7
+     *                      kilocalories: 250
      *        400:
      *          description: Failed operation
      *          content:
@@ -267,21 +341,52 @@ class WorkoutController extends BaseController {
      *            schema:
      *              type: object
      *              properties:
-     *                 activity:
-     *                     type: string
-     *                     enum:
-     *                        - cycling
-     *                        - running
-     *                        - walking
-     *                 steps:
-     *                     type: number
-     *                     minimum: 0
-     *                 duration:
-     *                     type: number
-     *                     minimum: 0
-     *                 kilocalories:
-     *                     type: number
-     *                     minimum: 0
+     *                  id:
+     *                      type: number
+     *                      format: integer
+     *                      minimum: 1
+     *                  activity:
+     *                      type: string
+     *                      enum:
+     *                          - cycling
+     *                          - running
+     *                          - walking
+     *                      example: walking
+     *                  steps:
+     *                      type: number
+     *                      format: integer
+     *                      description: Returns only for walking activity, optional
+     *                      minimum: 0
+     *                      nullable: true
+     *                  heartRate:
+     *                      type: number
+     *                      format: integer
+     *                      description: Average heart rate during the workout
+     *                      minimum: 0
+     *                  startTime:
+     *                      type: string
+     *                      format: date-time
+     *                      description: The start time of the workout
+     *                  endTime:
+     *                      type: string
+     *                      format: date-time
+     *                      description: The end time of the workout, optional
+     *                      nullable: true
+     *                  distance:
+     *                      type: number
+     *                      format: float
+     *                      description: Distance covered during the workout
+     *                      minimum: 0
+     *                  speed:
+     *                      type: number
+     *                      format: float
+     *                      description: Average speed during the workout
+     *                      minimum: 0
+     *                  kilocalories:
+     *                      type: number
+     *                      format: integer
+     *                      description: Calories burned during the workout
+     *                      minimum: 0
      *      responses:
      *        200:
      *          description: Successful operation
@@ -290,6 +395,18 @@ class WorkoutController extends BaseController {
      *              schema:
      *                 type: object
      *                 $ref: '#/components/schemas/Workout'
+     *              examples:
+     *                  walkingResponse:
+     *                    value:
+     *                      id: 1
+     *                      activity: walking
+     *                      steps: 3000
+     *                      heartRate: 120
+     *                      startTime: '2021-01-01T12:00:00Z'
+     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      distance: 5000
+     *                      speed: 2.7
+     *                      kilocalories: 250
      *        400:
      *          description: Failed operation
      *          content:
