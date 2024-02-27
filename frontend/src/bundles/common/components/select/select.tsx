@@ -4,8 +4,11 @@ import {
     type FieldPath,
     type FieldValues,
 } from 'react-hook-form';
-import { type GroupBase, type OnChangeValue, type Props } from 'react-select';
-import ReactSelect from 'react-select';
+import ReactSelect, {
+    type GroupBase,
+    type OnChangeValue,
+    type Props,
+} from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import {
@@ -89,9 +92,9 @@ const Select = <
     );
 
     return (
-        <div className="bg-lm-black-200 mx-20 p-5">
+        <div className="bg-secondary mx-20 p-5">
             {label && (
-                <span className="text-base font-medium text-white">
+                <span className="text-primary text-base font-medium">
                     {label}
                 </span>
             )}

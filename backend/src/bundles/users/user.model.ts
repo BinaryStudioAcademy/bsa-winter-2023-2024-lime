@@ -5,6 +5,7 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
+import { UserAchievementModel } from '../achievements/user-achievement.model.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -27,6 +28,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            userAchievement: {
+                relation: Model.HasOneRelation,
+                modelClass: UserAchievementModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.id`,
+                    to: `${DatabaseTableName.USER_ACHIEVEMENTS}.userId`,
                 },
             },
         };
