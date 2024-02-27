@@ -31,21 +31,8 @@ class GoalRepository implements Repository {
 
     public async create(entity: GoalEntity): Promise<GoalEntity> {
         const goal = entity.toNewObject();
-        const trx = await this.goalModel.startTransaction();
-
-        try {
-            const createdGoal = await this.goalModel
-                .query(trx)
-                .insert(goal)
-                .returning('*')
-                .execute();
-            await trx.commit();
-
-            return GoalEntity.initialize(createdGoal);
-        } catch (error) {
-            await trx.rollback();
-            throw error;
-        }
+        const createdGoal = await this.goalModel.query().insert(goal).execute();
+        return GoalEntity.initialize(createdGoal);
     }
 
     public async update(
@@ -59,26 +46,18 @@ class GoalRepository implements Repository {
         }
 
         const newGoal = entity.toNewObject();
-        const trx = await this.goalModel.startTransaction();
+        const [updatedGoal] = await this.goalModel
+            .query()
+            .where(query)
+            .update(newGoal)
+            .returning('*')
+            .execute();
 
-        try {
-            const [updatedGoal] = await this.goalModel
-                .query(trx)
-                .where(query)
-                .update(newGoal)
-                .returning('*')
-                .execute();
-            await trx.commit();
-
-            if (!updatedGoal) {
-                return null;
-            }
-
-            return GoalEntity.initialize(updatedGoal);
-        } catch (error) {
-            await trx.rollback();
-            throw error;
+        if (!updatedGoal) {
+            return null;
         }
+
+        return GoalEntity.initialize(updatedGoal);
     }
 
     public async delete(query: Record<string, unknown>): Promise<boolean> {
