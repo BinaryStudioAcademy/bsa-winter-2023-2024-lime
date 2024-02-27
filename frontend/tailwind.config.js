@@ -17,10 +17,18 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
-            'lm-purple': '#7306FF',
-            'lm-magenta': '#DC40CD',
             'lm-cyan': '#05CFCF',
             'lm-light-blue': '#056ECF',
+
+            'lm-purple': {
+                100: '#7E51FF',
+                200: '#7306FF',
+            },
+            'lm-magenta': {
+                100: '#FF5EB1',
+                200: '#DC40CD',
+            },
+
             'lm-yellow': {
                 100: '#E0FE10',
                 200: '#B2CA0D',
