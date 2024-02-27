@@ -82,7 +82,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     className="hidden"
                 />
                 <Button
-                    className="w-115 ml-3 h-[38px] rounded-[20px]"
+                    className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
                     type="submit"
                     label="Update file"
                     variant={ButtonVariant.SECONDARY}

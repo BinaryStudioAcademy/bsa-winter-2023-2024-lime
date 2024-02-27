@@ -35,6 +35,11 @@ const routes = [
                 element: <Auth />,
             },
             {
+                path: AppRoute.PROFILE,
+                element: <Profile />,
+                isPrivate: true,
+            },
+            {
                 path: AppRoute.GOALS,
                 element: <div>GOALS PAGE</div>,
             },
@@ -57,11 +62,6 @@ const routes = [
             {
                 path: AppRoute.LOGOUT,
                 element: <div>LOGOUT PAGE</div>,
-            },
-            {
-                path: AppRoute.PROFILE,
-                element: <Profile />,
-                isPrivate: true,
             },
         ],
     },
