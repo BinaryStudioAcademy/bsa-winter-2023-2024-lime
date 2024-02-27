@@ -16,6 +16,23 @@ import { type Logger } from '~/common/logger/logger.js';
 import { ConnectionsPath, HttpCode, OAuthActionsPath } from './enums/enums.js';
 import { type OAuthExchangeAuthCodeDto, type ValueOf } from './types/types.js';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Error:
+ *       type: object
+ *       properties:
+ *         errorType:
+ *           type: string
+ *           enum:
+ *              - COMMON
+ *              - VALIDATION
+ *         message:
+ *           type: string
+ *
+ */
+
 class OAuthController extends BaseController {
     private oAuthService: OAuthService;
 
@@ -48,7 +65,7 @@ class OAuthController extends BaseController {
         });
 
         this.addRoute({
-            path: '/:provider/exchange-token',
+            path: `/:provider${OAuthActionsPath.EXCHANGE_TOKEN}`,
             method: 'GET',
             handler: (options) =>
                 this.exchangeToken(
@@ -72,6 +89,32 @@ class OAuthController extends BaseController {
                 ),
         });
     }
+
+    /**
+     * @swagger
+     * /api/v1/oauth/:provider/authorize:
+     *    get:
+     *      tags:
+     *       - OAuth
+     *      description: Connects user's account of a specified provider. Authorize with Third-Party Service
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        302:
+     *          description: Found
+     *          headers:
+     *            Location:
+     *              description: The URL to Third-Party authorization prompt
+     *                schema:
+     *                  type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
 
     private async authorize(
         options: ApiHandlerOptions<{
@@ -108,6 +151,32 @@ class OAuthController extends BaseController {
             redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
+
+    /**
+     * @swagger
+     * /api/v1/oauth/:provider/deauthorize:
+     *    get:
+     *      tags:
+     *       - OAuth
+     *      description: Disconnects user's account of a specified provider
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        302:
+     *          description: Found
+     *          headers:
+     *            Location:
+     *              description: The URL endpoint with user connections
+     *                schema:
+     *                  type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
 
     private async deauthorize(
         options: ApiHandlerOptions<{
