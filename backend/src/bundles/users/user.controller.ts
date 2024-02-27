@@ -202,7 +202,7 @@ class UserController extends BaseController {
                 throw new Error('Token mismatch');
             }
             const updatedUser = await this.userService.update(
-                Number(userId),
+                { id: Number(userId) },
                 body,
             );
             if (updatedUser && body.dateOfBirth) {

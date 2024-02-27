@@ -1,9 +1,10 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { cryptService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
-import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
+import { UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
@@ -50,22 +51,23 @@ class UserService implements Service {
     }
 
     public async update(
-        userId: number,
-        userRequest: UserUpdateProfileRequestDto,
+        query: Record<string, number>,
+        payload: UserUpdateProfileRequestDto,
     ): Promise<UserAuthResponseDto | null> {
         try {
+            const userId = query['id'] as number;
             const existingUser = await this.userRepository.find({
                 id: userId,
             });
             if (existingUser) {
                 const updatedUserDetails: Partial<UserDetailsModel> = {};
-                for (const property of Object.keys(userRequest)) {
-                    const value = userRequest[property];
+                for (const property of Object.keys(payload)) {
+                    const value = payload[property];
                     if (value) {
                         updatedUserDetails[property] =
                             property === 'weight' || property === 'height'
-                                ? Number(userRequest[property])
-                                : userRequest[property];
+                                ? Number(payload[property])
+                                : payload[property];
                     }
                 }
                 const updatedUser = await this.userRepository.update(

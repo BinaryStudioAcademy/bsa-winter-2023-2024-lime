@@ -1,8 +1,9 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Repository } from '~/common/types/types.js';
 
-import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
+import { UserValidationMessage } from './enums/enums.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
 class UserRepository implements Repository {
@@ -137,7 +138,6 @@ class UserRepository implements Repository {
             throw new Error(`Error updating user details: ${error}`);
         }
     }
-
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
     }

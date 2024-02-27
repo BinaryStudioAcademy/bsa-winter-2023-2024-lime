@@ -1,3 +1,4 @@
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -6,7 +7,6 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 
-import { actions as authActions } from '../../auth/store/auth.js';
 import { ProfileSettings } from '../components/components.js';
 
 const Profile: React.FC = () => {
