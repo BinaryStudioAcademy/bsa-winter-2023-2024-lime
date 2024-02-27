@@ -3,7 +3,7 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { type Providers } from './enums/enums.js';
+import { type OAuthProvider } from './enums/enums.js';
 import { type ValueOf } from './types/types.js';
 
 class OAuthModel extends AbstractModel {
@@ -19,7 +19,7 @@ class OAuthModel extends AbstractModel {
 
     public 'scope': string;
 
-    public 'provider': ValueOf<typeof Providers>;
+    public 'provider': ValueOf<typeof OAuthProvider>;
 
     public static override get tableName(): string {
         return DatabaseTableName.OAUTH_INFO;

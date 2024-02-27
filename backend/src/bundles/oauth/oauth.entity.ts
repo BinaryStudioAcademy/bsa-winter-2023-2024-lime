@@ -1,6 +1,6 @@
 import { type Entity } from '~/common/types/types.js';
 
-import { type Providers } from './enums/enums.js';
+import { type OAuthProvider } from './enums/enums.js';
 import { type ValueOf } from './types/types.js';
 
 class OAuthEntity implements Entity {
@@ -18,7 +18,7 @@ class OAuthEntity implements Entity {
 
     private 'scope': string;
 
-    private 'provider': ValueOf<typeof Providers>;
+    private 'provider': ValueOf<typeof OAuthProvider>;
 
     private constructor({
         id,
@@ -37,7 +37,7 @@ class OAuthEntity implements Entity {
         accessToken: string;
         refreshToken: string;
         scope: string;
-        provider: ValueOf<typeof Providers>;
+        provider: ValueOf<typeof OAuthProvider>;
     }) {
         this.id = id;
         this.userId = userId;
@@ -66,7 +66,7 @@ class OAuthEntity implements Entity {
         accessToken: string;
         refreshToken: string;
         scope: string;
-        provider: ValueOf<typeof Providers>;
+        provider: ValueOf<typeof OAuthProvider>;
     }): OAuthEntity {
         return new OAuthEntity({
             id,
@@ -95,7 +95,7 @@ class OAuthEntity implements Entity {
         accessToken: string;
         refreshToken: string;
         scope: string;
-        provider: ValueOf<typeof Providers>;
+        provider: ValueOf<typeof OAuthProvider>;
     }): OAuthEntity {
         return new OAuthEntity({
             id: null,
@@ -117,7 +117,7 @@ class OAuthEntity implements Entity {
         accessToken: string;
         refreshToken: string;
         scope: string;
-        provider: ValueOf<typeof Providers>;
+        provider: ValueOf<typeof OAuthProvider>;
     } {
         return {
             id: this.id as number,
@@ -138,7 +138,7 @@ class OAuthEntity implements Entity {
         accessToken: string;
         refreshToken: string;
         scope: string;
-        provider: ValueOf<typeof Providers>;
+        provider: ValueOf<typeof OAuthProvider>;
     } {
         return {
             userId: this.userId,

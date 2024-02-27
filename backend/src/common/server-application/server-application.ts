@@ -1,5 +1,6 @@
 import { authController } from '~/bundles/auth/auth.js';
-import { stravaController } from '~/bundles/connections/connections.js';
+import { connectionController } from '~/bundles/connections/connections.js';
+import { oAuthController } from '~/bundles/oauth/oauth.js';
 import { userController } from '~/bundles/users/users.js';
 import { config } from '~/common/config/config.js';
 import { database } from '~/common/database/database.js';
@@ -13,7 +14,8 @@ const apiV1 = new BaseServerAppApi(
     config,
     ...authController.routes,
     ...userController.routes,
-    ...stravaController.routes,
+    ...connectionController.routes,
+    ...oAuthController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

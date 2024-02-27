@@ -5,7 +5,7 @@ import {
     OAuthModel,
     OAuthStateAttributes,
     OAuthStateModel,
-} from '~/bundles/connections/oauth/oauth.js';
+} from '~/bundles/oauth/oauth.js';
 import {
     AbstractModel,
     DatabaseTableName,

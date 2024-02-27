@@ -2,7 +2,7 @@ import { type Knex } from 'knex';
 
 const TABLE_NAME = 'oauth_info';
 const USERS_TABLE_NAME = 'users';
-const PROVIDER_ENUM_NAME = 'provider_enum';
+const PROVIDER_ENUM_NAME = 'oauth_provider_enum';
 
 const ColumnName = {
     ID: 'id',
@@ -17,7 +17,7 @@ const ColumnName = {
     UPDATED_AT: 'updated_at',
 };
 
-const Providers = ['Strava', 'Google Fit'];
+const OAuthProviders = ['strava', 'google-fit'];
 
 async function up(knex: Knex): Promise<void> {
     return await knex.schema.createTable(TABLE_NAME, (table) => {
@@ -36,7 +36,7 @@ async function up(knex: Knex): Promise<void> {
         table.text(ColumnName.REFRESH_TOKEN).notNullable();
         table.string(ColumnName.SCOPE).notNullable();
         table
-            .enum(ColumnName.PROVIDER, Providers, {
+            .enum(ColumnName.PROVIDER, OAuthProviders, {
                 useNative: true,
                 enumName: PROVIDER_ENUM_NAME,
             })

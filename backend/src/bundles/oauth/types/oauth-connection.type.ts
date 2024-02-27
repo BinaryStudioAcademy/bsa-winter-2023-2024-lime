@@ -1,4 +1,4 @@
-import { type Providers } from '../enums/enums.js';
+import { type OAuthProvider } from '../oauth.js';
 import { type ValueOf } from './types.js';
 
 type OAuthConnection = {
@@ -9,7 +9,7 @@ type OAuthConnection = {
     refreshToken: string;
     accessToken: string;
     scope: string;
-    provider: ValueOf<typeof Providers>;
+    provider: ValueOf<typeof OAuthProvider>;
 };
 
 export { type OAuthConnection };
