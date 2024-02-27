@@ -46,7 +46,7 @@ const FriendCard = ({
     };
 
     return (
-        <div className="rounded-34 flex w-full flex-col sm:max-w-40 lg:max-w-64">
+        <div className="hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent sm:max-w-40 lg:max-w-64">
             <div className="h-3/4 w-full">
                 <img
                     src={avatar}
