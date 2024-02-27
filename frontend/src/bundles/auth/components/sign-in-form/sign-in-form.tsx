@@ -5,7 +5,7 @@ import {
     Link,
     Loader,
 } from '~/bundles/common/components/components.js';
-import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
@@ -18,14 +18,19 @@ import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserAuthRequestDto) => void;
+    onModalOpen: () => void;
     isLoading: boolean;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+const SignInForm: React.FC<Properties> = ({
+    onSubmit,
+    onModalOpen,
+    isLoading,
+}) => {
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
-        mode: 'onTouched',
+        mode: 'onSubmit',
     });
 
     const handleFormSubmit = useCallback(
@@ -38,7 +43,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     return (
         <>
             <div>
-                <h1 className="mb-6 text-left text-[1.875rem] font-bold text-white">
+                <h1 className="text-primary mb-6 text-left text-[1.875rem] font-bold">
                     Hi! Login to your Account
                 </h1>
                 <div className="flex flex-col gap-4">
@@ -56,7 +61,7 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     />
                 </div>
 
-                <p className="text-lm-grey-100 mb-6 mt-10 text-center text-xs">
+                <p className="text-secondary mb-6 mt-10 text-center text-xs">
                     or Sign in with Email
                 </p>
 
@@ -71,37 +76,46 @@ const SignInForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         isDisabled={isLoading}
                         required
                     />
-                    <Input
-                        type="password"
-                        label="Password"
-                        name="password"
-                        control={control}
-                        errors={errors}
-                        isDisabled={isLoading}
-                        required
-                    />
 
-                    <div className="mt-3">
-                        <Button
-                            type="submit"
-                            label={isLoading ? '' : 'Log In'}
-                            variant={ButtonVariant.PRIMARY}
-                            size={ComponentSize.MEDIUM}
-                            leftIcon={
-                                isLoading && (
-                                    <Loader color={IconColor.SECONDARY} />
-                                )
-                            }
+                    <div className="relative mb-8">
+                        <Input
+                            type="password"
+                            label="Password"
+                            name="password"
+                            control={control}
+                            errors={errors}
+                            isDisabled={isLoading}
+                            required
                         />
+
+                        <div className="absolute right-0 top-0">
+                            <Button
+                                className="[&]:text-lm-grey-100 h-[1.5rem] px-[0] py-[0]"
+                                label="Forgot password?"
+                                type="button"
+                                size={ComponentSize.SMALL}
+                                variant={ButtonVariant.TERTIARY}
+                                onClick={onModalOpen}
+                            />
+                        </div>
                     </div>
+
+                    <Button
+                        label={isLoading ? '' : 'Log In'}
+                        leftIcon={
+                            isLoading && <Loader color={IconColor.SECONDARY} />
+                        }
+                        type="submit"
+                        isDisabled={isLoading}
+                        size={ComponentSize.MEDIUM}
+                        variant={ButtonVariant.PRIMARY}
+                    />
                 </form>
             </div>
             <p className="text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
                 No account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
-                    <span className="text-lm-yellow-100">
-                        Create an account
-                    </span>
+                    <span className="text-action">Create an account</span>
                 </Link>
             </p>
         </>
