@@ -1,22 +1,50 @@
-import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
+import { type SingleValue } from 'react-select';
+
+import { Select } from '~/bundles/common/components/components.js';
+import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
+import {
+    useAppForm,
+    useCallback,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
 
 import { BarChart } from '../components.js';
+
+const data: SelectOption[] = [
+    {
+        value: 'weekly',
+        label: 'Weekly',
+    },
+    {
+        value: 'monthly',
+        label: 'Monthly',
+    },
+    {
+        value: 'yearly',
+        label: 'Yearly',
+    },
+];
+
+const colors = {
+    workout: {
+        backgroundColor: 'rgba(224, 254, 16, 1)',
+    },
+    calories: {
+        backgroundColor: 'rgba(255, 94, 177, 1)',
+    },
+    steps: {
+        backgroundColor: 'rgba(126, 81, 255, 1)',
+    },
+};
 
 const ChartGoalProgress = (): JSX.Element => {
     //  state for data weekly, monthly, yearly
 
-    const [currentData, setCurrentData] = useState('weekly'); // weekly, monthly, yearly
-    const colors = {
-        workout: {
-            backgroundColor: 'rgba(224, 254, 16, 1)',
-        },
-        calories: {
-            backgroundColor: 'rgba(255, 94, 177, 1)',
-        },
-        steps: {
-            backgroundColor: 'rgba(126, 81, 255, 1)',
-        },
-    };
+    const [currentData, setCurrentData] = useState<SelectOption>({
+        value: 'weekly',
+        label: 'Weekly',
+    });
+
     const weeklyData = {
         labels: [
             'Sunday',
@@ -132,14 +160,11 @@ const ChartGoalProgress = (): JSX.Element => {
                     },
                 },
             },
-            x: {
-                barPercentage: 10,
-                categoryPercentage: 1,
-            },
         },
         barThickness: 'flex',
         borderRadius: 20,
-        barPercentage: 0.4,
+        barPercentage: 0.3,
+        responsive: true,
         plugins: {
             legend: {
                 display: true,
@@ -156,30 +181,40 @@ const ChartGoalProgress = (): JSX.Element => {
         },
     };
 
-    const handleWeekly = useCallback(() => {
-        setCurrentData('weekly');
-    }, []);
+    const { control, errors } = useAppForm({
+        defaultValues: {
+            select: currentData.value,
+        },
+        mode: 'onChange',
+    });
 
-    const handleMonthly = useCallback(() => {
-        setCurrentData('monthly');
-    }, []);
-
-    const handleYearly = useCallback(() => {
-        setCurrentData('yearly');
+    const handleChange = useCallback((newValue: SingleValue<SelectOption>) => {
+        if (newValue !== null) {
+            setCurrentData(newValue);
+        }
     }, []);
 
     return (
-        <div className="bg-secondary max-h-[390px] max-w-[790px] p-8">
-            <div>
-                <button onClick={handleWeekly}>Weekly</button>
-                <button onClick={handleMonthly}>Monthly</button>
-                <button onClick={handleYearly}>Yearly</button>
+        <div className="bg-secondary relative h-[336px] max-w-[790px] p-8">
+            <div className="flex h-10 items-center justify-between">
+                <h1 className="text-secondary">Goal Progress</h1>
+                <div className="">
+                    <Select
+                        className="bg-secondary w-[100px] text-xs"
+                        control={control}
+                        name="select"
+                        options={data}
+                        errors={errors}
+                        value={currentData}
+                        onChange={handleChange}
+                    />
+                </div>
             </div>
             <BarChart
                 chartData={
-                    currentData === 'weekly'
+                    currentData.value === 'weekly'
                         ? weeklyData
-                        : (currentData === 'monthly'
+                        : (currentData.value === 'monthly'
                           ? monthlyData
                           : yearlyData)
                 }

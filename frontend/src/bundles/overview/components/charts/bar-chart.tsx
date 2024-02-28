@@ -1,4 +1,3 @@
-// components/BarChart.js
 import 'chart.js/auto';
 
 import { Bar } from 'react-chartjs-2';
@@ -27,8 +26,14 @@ const BarChart = ({
     charOptions,
 }: BarChartProperties): JSX.Element => {
     return (
-        <div className="h-full w-4/5">
-            <Bar data={chartData} options={charOptions} />
+        <div className="relative flex h-full w-full items-center">
+            <Bar
+                data={chartData}
+                options={charOptions}
+                className="h-full w-full"
+                height={200}
+                width={600}
+            />
         </div>
     );
 };
