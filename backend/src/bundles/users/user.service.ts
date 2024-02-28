@@ -46,8 +46,11 @@ class UserService implements Service {
         return user.toObject() as UserAuthResponseDto;
     }
 
-    public update(): ReturnType<Service['update']> {
-        return Promise.resolve(null);
+    public async update(
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): ReturnType<Service['update']> {
+        return await this.userRepository.update(query, payload);
     }
 
     public delete(): ReturnType<Service['delete']> {

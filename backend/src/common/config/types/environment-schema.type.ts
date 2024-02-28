@@ -7,6 +7,14 @@ type EnvironmentSchema = {
         ENVIRONMENT: ValueOf<typeof AppEnvironment>;
         HOST: string;
         JWT_SECRET: string;
+        OPEN_AI_API_KEY: string;
+        OPEN_AI_MODEL: string;
+    };
+    AWS: {
+        S3_ACCESS_KEY: string;
+        S3_SECRET_KEY: string;
+        S3_BUCKET_NAME: string;
+        S3_REGION: string;
     };
     DB: {
         USERNAME: string;
@@ -21,6 +29,10 @@ type EnvironmentSchema = {
     EMAIL: {
         API_KEY: string;
         FROM: string;
+    };
+    STRAVA: {
+        CLIENT_ID: string;
+        CLIENT_SECRET: string;
     };
 };
 

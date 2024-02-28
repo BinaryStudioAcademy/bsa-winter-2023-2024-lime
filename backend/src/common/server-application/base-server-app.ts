@@ -5,6 +5,7 @@ import fastifyStatic from '@fastify/static';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
+import multer from 'fastify-multer';
 
 import { type Config } from '~/common/config/config.js';
 import { type Database } from '~/common/database/database.js';
@@ -63,6 +64,7 @@ class BaseServerApp implements ServerApp {
             handler,
             schema: {
                 body: validation?.body,
+                params: validation?.params,
             },
         });
 
@@ -124,6 +126,7 @@ class BaseServerApp implements ServerApp {
             jwtService,
             protectedRoutes: createProtectedRoutes(this.apis),
         });
+        await this.app.register(multer.contentParser);
     }
 
     private initValidationCompiler(): void {

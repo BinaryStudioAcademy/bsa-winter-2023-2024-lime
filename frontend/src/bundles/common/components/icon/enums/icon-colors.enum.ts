@@ -1,5 +1,5 @@
 const IconColor = {
-    PRIMARY: 'text-lm-yellow-100',
+    PRIMARY: 'text-action',
     SECONDARY: 'text-lm-grey-200',
 } as const;
 

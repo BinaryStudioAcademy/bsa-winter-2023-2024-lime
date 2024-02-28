@@ -53,6 +53,44 @@ class BaseConfig implements Config {
                     env: 'JWT_SECRET',
                     default: null,
                 },
+                OPEN_AI_API_KEY: {
+                    doc: 'Api key for working with AI',
+                    format: String,
+                    env: 'OPEN_AI_API_KEY',
+                    default: null,
+                },
+                OPEN_AI_MODEL: {
+                    doc: 'AI model',
+                    format: String,
+                    env: 'OPEN_AI_MODEL',
+                    default: null,
+                },
+            },
+            AWS: {
+                S3_ACCESS_KEY: {
+                    doc: 'Access key for aws connection',
+                    format: String,
+                    env: 'S3_ACCESS_KEY',
+                    default: null,
+                },
+                S3_SECRET_KEY: {
+                    doc: 'Secret key for aws connection',
+                    format: String,
+                    env: 'S3_SECRET_KEY',
+                    default: null,
+                },
+                S3_BUCKET_NAME: {
+                    doc: 'Bucket name for aws connection',
+                    format: String,
+                    env: 'S3_BUCKET_NAME',
+                    default: null,
+                },
+                S3_REGION: {
+                    doc: 'Region for aws connection',
+                    format: String,
+                    env: 'S3_REGION',
+                    default: null,
+                },
             },
             DB: {
                 USERNAME: {
@@ -115,6 +153,20 @@ class BaseConfig implements Config {
                     doc: 'Email address to send mails to customers',
                     format: String,
                     env: 'EMAIL_FROM',
+                    default: null,
+                },
+            },
+            STRAVA: {
+                CLIENT_ID: {
+                    doc: 'Strava Client ID',
+                    format: String,
+                    env: 'STRAVA_CLIENT_ID',
+                    default: null,
+                },
+                CLIENT_SECRET: {
+                    doc: 'Strava Client Secret',
+                    format: String,
+                    env: 'STRAVA_CLIENT_SECRET',
                     default: null,
                 },
             },

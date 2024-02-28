@@ -1,6 +1,7 @@
 import { type Logger } from '~/common/logger/logger.js';
 import { type ServerAppRouteParameters } from '~/common/server-application/server-application.js';
 
+import { ApiHandlerResponseType } from './enums/enums.js';
 import {
     type ApiHandler,
     type ApiHandlerOptions,
@@ -41,7 +42,16 @@ class BaseController implements Controller {
         this.logger.info(`${request.method.toUpperCase()} on ${request.url}`);
 
         const handlerOptions = this.mapRequest(request);
-        const { status, payload } = await handler(handlerOptions);
+
+        const apiHandlerResponse = await handler(handlerOptions);
+
+        if (apiHandlerResponse.type === ApiHandlerResponseType.REDIRECT) {
+            const { status, redirectUrl } = apiHandlerResponse;
+
+            return await reply.redirect(status, redirectUrl);
+        }
+
+        const { status, payload } = apiHandlerResponse;
 
         return await reply.status(status).send(payload);
     }
@@ -49,12 +59,20 @@ class BaseController implements Controller {
     private mapRequest(
         request: Parameters<ServerAppRouteParameters['handler']>[0],
     ): ApiHandlerOptions {
-        const { body, query, params } = request;
+        const {
+            body,
+            query,
+            params,
+            user,
+            headers: { origin },
+        } = request;
 
         return {
             body,
             query,
             params,
+            user,
+            origin,
         };
     }
 }

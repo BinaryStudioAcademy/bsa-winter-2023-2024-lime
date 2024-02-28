@@ -74,7 +74,9 @@ class UserRepository implements Repository {
 
             const userDetails = await user
                 .$relatedQuery('userDetails', trx)
-                .insert({});
+                .insert({})
+                .returning('*')
+                .execute();
 
             await trx.commit();
 
@@ -94,8 +96,17 @@ class UserRepository implements Repository {
         }
     }
 
-    public update(): ReturnType<Repository['update']> {
-        return Promise.resolve(null);
+    public async update(
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): ReturnType<Repository['update']> {
+        return await this.userModel
+            .query()
+            .patch(payload)
+            .where(query)
+            .returning('*')
+            .first()
+            .execute();
     }
 
     public delete(): ReturnType<Repository['delete']> {

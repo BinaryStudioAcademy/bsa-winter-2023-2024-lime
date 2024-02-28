@@ -41,6 +41,15 @@ class BaseServerAppApi implements ServerAppApi {
                     title: 'Hello World',
                     version: `${this.version}.0.0`,
                 },
+                components: {
+                    securitySchemes: {
+                        bearerAuth: {
+                            bearerFormat: 'JWT',
+                            scheme: 'bearer',
+                            type: 'http',
+                        },
+                    },
+                },
             },
             apis: [`src/bundles/**/*.controller.${controllerExtension}`],
         });
