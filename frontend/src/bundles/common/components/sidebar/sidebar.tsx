@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         icon={<Icon name={IconName.workoutIcon} />}
                         text="Workout"
                         to={AppRoute.WORKOUT}
-                        isActive={activeRoute === AppRoute.WORKOUT}
+                        isActive={activeRoute.includes(AppRoute.WORKOUT)}
                     />
                     <SidebarNav
                         icon={<Icon name={IconName.goalsIcon} />}
