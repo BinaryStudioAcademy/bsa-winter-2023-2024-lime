@@ -26,7 +26,7 @@ import { notificationManager } from '~/framework/notification/notification.js';
 
 import { PasswordResetSuccessMessage } from '../components/components.js';
 
-const errorText = 'The password reset token you used has expired';
+const errorText = 'The password reset link you used has expired';
 
 const PasswordReset: React.FC = () => {
     const dispatch = useAppDispatch();
