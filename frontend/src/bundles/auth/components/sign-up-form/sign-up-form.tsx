@@ -1,6 +1,7 @@
 import {
     Button,
     ButtonVariant,
+    Icon,
     Input,
     Link,
     Loader,
@@ -44,13 +45,13 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="G"
+                        rightIcon={<Icon name="googleLogoIcon" />}
                     />
                     <Button
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="f"
+                        rightIcon={<Icon name="facebookIcon" />}
                     />
                 </div>
 
