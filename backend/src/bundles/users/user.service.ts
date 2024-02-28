@@ -35,9 +35,7 @@ class UserService implements Service {
     ): Promise<UserAuthResponseDto> {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);
-        const { stripeCustomerId } = await stripeService.createCustomer({
-            email,
-        });
+        const { stripeCustomerId } = await stripeService.createCustomer(email);
 
         const user = await this.userRepository.create(
             UserEntity.initializeNew({

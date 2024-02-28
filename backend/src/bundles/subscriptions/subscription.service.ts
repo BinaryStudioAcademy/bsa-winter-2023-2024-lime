@@ -75,9 +75,9 @@ class SubscriptionService
 
             return { stripeSubscriptionId, clientSecret };
         } catch (error) {
-            await stripeService.immediateCancelSubscription({
+            await stripeService.immediateCancelSubscription(
                 stripeSubscriptionId,
-            });
+            );
 
             throw new HttpError({
                 message: (error as Error).message,
@@ -152,9 +152,9 @@ class SubscriptionService
                         if (index !== 0) {
                             const { stripeSubscriptionId } =
                                 subscription.toNewObject();
-                            await stripeService.immediateCancelSubscription({
+                            await stripeService.immediateCancelSubscription(
                                 stripeSubscriptionId,
-                            });
+                            );
                         }
                     }
                 }

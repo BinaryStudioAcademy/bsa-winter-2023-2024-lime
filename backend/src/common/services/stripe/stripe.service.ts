@@ -2,7 +2,14 @@ import Stripe from 'stripe';
 
 import { type SubscriptionStatus } from '~/bundles/subscriptions/enums/enums.js';
 import { formatToDateFromUnix } from '~/common/helpers/helpers.js';
-import { type ValueOf } from '~/common/types/types.js';
+import {
+    type CreateSubscriptionOptions,
+    type CreateSubscriptionPlanOptions,
+    type CreateSubscriptionPlanResponse,
+    type CreateSubscriptionResponse,
+    type UpdateSubscriptionOptions,
+    type ValueOf,
+} from '~/common/types/types.js';
 
 class StripeService {
     private readonly stripeSecretKey: string;
@@ -22,11 +29,9 @@ class StripeService {
         });
     }
 
-    public async createCustomer({
-        email,
-    }: {
-        email: string;
-    }): Promise<{ stripeCustomerId: string }> {
+    public async createCustomer(
+        email: string,
+    ): Promise<{ stripeCustomerId: string }> {
         const { id } = await this.stripeApi.customers.create({ email });
         return { stripeCustomerId: id };
     }
@@ -35,14 +40,7 @@ class StripeService {
         name,
         price,
         description = '',
-    }: {
-        name: string;
-        price: number;
-        description?: string;
-    }): Promise<{
-        stripeProductId: string;
-        stripePriceId: string;
-    }> {
+    }: CreateSubscriptionPlanOptions): Promise<CreateSubscriptionPlanResponse> {
         const { id: stripeProductId } = await this.stripeApi.products.create({
             name,
             description,
@@ -63,15 +61,7 @@ class StripeService {
     public async createSubscription({
         customerId,
         priceId,
-    }: {
-        customerId: string;
-        priceId: string;
-    }): Promise<{
-        stripeSubscriptionId: string;
-        clientSecret: string;
-        status: ValueOf<typeof SubscriptionStatus>;
-        expiresAt: Date;
-    }> {
+    }: CreateSubscriptionOptions): Promise<CreateSubscriptionResponse> {
         const subscription = await this.stripeApi.subscriptions.create({
             customer: customerId,
             items: [{ price: priceId }],
@@ -96,23 +86,14 @@ class StripeService {
     public async updateCancelSubscription({
         stripeSubscriptionId,
         isCanceled,
-    }: {
-        stripeSubscriptionId: string;
-        isCanceled: boolean;
-    }): Promise<void> {
+    }: UpdateSubscriptionOptions): Promise<void> {
         await this.stripeApi.subscriptions.update(stripeSubscriptionId, {
             cancel_at_period_end: isCanceled,
         });
     }
 
-    public async immediateCancelSubscription({
-        stripeSubscriptionId,
-    }: {
-        stripeSubscriptionId: string;
-    }): Promise<boolean> {
-        return Boolean(
-            await this.stripeApi.subscriptions.cancel(stripeSubscriptionId),
-        );
+    public async immediateCancelSubscription(id: string): Promise<boolean> {
+        return Boolean(await this.stripeApi.subscriptions.cancel(id));
     }
 
     public async verifyWebhookRequest(
