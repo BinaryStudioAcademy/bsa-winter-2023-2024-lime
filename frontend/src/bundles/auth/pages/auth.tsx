@@ -135,7 +135,7 @@ const Auth: React.FC = () => {
     };
 
     const classes = {
-        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem] bg-primary',
+        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-primary lg:flex-none lg:w-[45rem]',
         form: 'justify-between text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem] lg:justify-center lg:pt-0 lg:pb-0',
         main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
         logoContainer:
@@ -143,31 +143,29 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <>
-            <main className={getValidClassNames(classes.main)}>
-                <div className={getValidClassNames(classes.base, classes.form)}>
-                    {getScreen(pathname)}
-                </div>
-                <div className={getValidClassNames(classes.logoContainer)}>
-                    <img src={authLogo} alt="LIME Logo" />
-                </div>
-                <Modal
-                    isOpen={isOpen}
-                    title="Enter Your Email for Password Reset"
-                    onClose={handleCloseModal}
-                >
-                    {isPasswordForgot ? (
-                        <PasswordForgotSuccessMessage />
-                    ) : (
-                        <ForgotPasswordForm
-                            isLoading={isResetPasswordLoading}
-                            onSubmit={handleForgotPassword}
-                        />
-                    )}
-                </Modal>
-                <ThemeSwitcher />
-            </main>
-        </>
+        <main className={getValidClassNames(classes.main)}>
+            <div className={getValidClassNames(classes.base, classes.form)}>
+                {getScreen(pathname)}
+            </div>
+            <div className={getValidClassNames(classes.logoContainer)}>
+                <img src={authLogo} alt="LIME Logo" />
+            </div>
+            <Modal
+                isOpen={isOpen}
+                title="Enter Your Email for Password Reset"
+                onClose={handleCloseModal}
+            >
+                {isPasswordForgot ? (
+                    <PasswordForgotSuccessMessage />
+                ) : (
+                    <ForgotPasswordForm
+                        isLoading={isResetPasswordLoading}
+                        onSubmit={handleForgotPassword}
+                    />
+                )}
+            </Modal>
+            <ThemeSwitcher className="absolute bottom-4 right-4" />
+        </main>
     );
 };
 

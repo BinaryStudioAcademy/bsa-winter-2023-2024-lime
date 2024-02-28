@@ -30,6 +30,10 @@ type EnvironmentSchema = {
         API_KEY: string;
         FROM: string;
     };
+    STRAVA: {
+        CLIENT_ID: string;
+        CLIENT_SECRET: string;
+    };
 };
 
 export { type EnvironmentSchema };
