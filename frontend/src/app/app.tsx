@@ -3,6 +3,7 @@ import { BaseLayout } from '~/bundles/common/components/base-layout/base-layout.
 import {
     Loader,
     RouterOutlet,
+    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import {
     useAppDispatch,
@@ -33,6 +34,7 @@ const App: React.FC = () => {
     return (
         <BaseLayout>
             <RouterOutlet />
+            <ThemeSwitcher />
         </BaseLayout>
     );
 };
