@@ -1,8 +1,7 @@
 import 'chart.js/auto';
 
-import { Bar } from 'react-chartjs-2';
-
-import { optionsBarChart } from '../chart-goal-progress/config/bar-chart-config.config.js';
+import { optionsBarChart } from '../chart-goal-progress/config/config.js';
+import { Bar } from './components/components.js';
 import { type BarChartData, type BarChartOptions } from './types/types.js';
 
 type BarChartProperties = {
