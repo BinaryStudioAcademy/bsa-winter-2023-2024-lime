@@ -1,5 +1,4 @@
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
-import { BaseLayout } from '~/bundles/common/components/base-layout/base-layout.js';
 import {
     Loader,
     RouterOutlet,
@@ -9,6 +8,7 @@ import {
     useEffect,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { storage, StorageKey } from '~/framework/storage/storage.js';
 
 const App: React.FC = () => {
     const [isRefreshing, setIsRefreshing] = useState(true);
@@ -16,25 +16,21 @@ const App: React.FC = () => {
 
     useEffect(() => {
         const refreshUser = async (): Promise<void> => {
-            try {
+            const token = await storage.get(StorageKey.TOKEN);
+
+            if (token) {
                 await dispatch(authActions.refreshUser());
-            } finally {
-                setIsRefreshing(false);
             }
         };
 
-        void refreshUser();
+        void refreshUser().finally(() => setIsRefreshing(false));
     }, [dispatch]);
 
     if (isRefreshing) {
         return <Loader isOverflow />;
     }
 
-    return (
-        <BaseLayout>
-            <RouterOutlet />
-        </BaseLayout>
-    );
+    return <RouterOutlet />;
 };
 
 export { App };
