@@ -82,6 +82,7 @@ export default {
             'xl': '1280px',
             'hsm': { 'raw': '(max-height: 490px)' },
             'hmd': { 'raw': '(max-height: 680px)' },
+            'hxm': { 'raw': '(max-height: 750px)' },
             'hlg': { 'raw': '(max-height: 870px)' },
         },
         extend: {

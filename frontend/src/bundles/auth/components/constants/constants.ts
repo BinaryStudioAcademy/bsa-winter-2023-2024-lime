@@ -1,5 +1,5 @@
 const BREAKPOINTS = {
-    small: 680,
+    small: 734,
 };
 
 export { BREAKPOINTS };
