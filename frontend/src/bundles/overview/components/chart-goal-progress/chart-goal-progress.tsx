@@ -37,9 +37,17 @@ const colors = {
     },
 };
 
-const ChartGoalProgress = (): JSX.Element => {
-    //  state for data weekly, monthly, yearly
+type Data = {
+    labels: string[];
+    datasets: {
+        label: string;
+        data: number[];
+        backgroundColor: string;
+        borderColor: string;
+    }[];
+};
 
+const ChartGoalProgress = (): JSX.Element => {
     const [currentData, setCurrentData] = useState<SelectOption>({
         value: 'weekly',
         label: 'Weekly',
@@ -154,7 +162,6 @@ const ChartGoalProgress = (): JSX.Element => {
                     min: 0,
                     max: 100,
                     stepSize: 20,
-                    // Optional: Include the % sign in the tick labels
                     callback: function (value: number): string {
                         return `${value}%`;
                     },
@@ -179,6 +186,12 @@ const ChartGoalProgress = (): JSX.Element => {
                 },
             },
         },
+    };
+
+    const dataMapping: Record<string, Data> = {
+        'weekly': weeklyData,
+        'monthly': monthlyData,
+        'yearly': yearlyData,
     };
 
     const { control, errors } = useAppForm({
@@ -211,13 +224,7 @@ const ChartGoalProgress = (): JSX.Element => {
                 </div>
             </div>
             <BarChart
-                chartData={
-                    currentData.value === 'weekly'
-                        ? weeklyData
-                        : (currentData.value === 'monthly'
-                          ? monthlyData
-                          : yearlyData)
-                }
+                chartData={dataMapping[currentData.value] || weeklyData}
                 charOptions={options}
             />
         </div>
