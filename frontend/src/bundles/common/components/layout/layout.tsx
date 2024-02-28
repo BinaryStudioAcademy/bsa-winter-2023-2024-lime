@@ -8,7 +8,7 @@ type Properties = {
 };
 
 const Layout = ({ children, className }: Properties): JSX.Element => (
-    <div className={getValidClassNames(className, 'mx-auto my-0 w-full p-6')}>
+    <div className={getValidClassNames(className, 'mx-auto my-0 w-full p-7')}>
         {children}
     </div>
 );
