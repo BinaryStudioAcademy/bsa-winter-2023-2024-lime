@@ -14,8 +14,8 @@ type CreateSubscriptionPlanResponse = {
 };
 
 type CreateSubscriptionOptions = {
-    customerId: string;
-    priceId: string;
+    stripeCustomerId: string;
+    stripePriceId: string;
 };
 
 type CreateSubscriptionResponse = {

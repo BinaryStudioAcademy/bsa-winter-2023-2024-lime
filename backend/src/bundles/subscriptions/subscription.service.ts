@@ -57,8 +57,8 @@ class SubscriptionService
 
         const { stripeSubscriptionId, clientSecret, status, expiresAt } =
             await stripeService.createSubscription({
-                customerId: stripeCustomerId,
-                priceId: stripePriceId,
+                stripeCustomerId,
+                stripePriceId,
             });
 
         try {

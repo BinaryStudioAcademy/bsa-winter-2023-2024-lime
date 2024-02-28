@@ -59,12 +59,12 @@ class StripeService {
     }
 
     public async createSubscription({
-        customerId,
-        priceId,
+        stripeCustomerId,
+        stripePriceId,
     }: CreateSubscriptionOptions): Promise<CreateSubscriptionResponse> {
         const subscription = await this.stripeApi.subscriptions.create({
-            customer: customerId,
-            items: [{ price: priceId }],
+            customer: stripeCustomerId,
+            items: [{ price: stripePriceId }],
             payment_behavior: 'default_incomplete',
             payment_settings: {
                 save_default_payment_method: 'on_subscription',
