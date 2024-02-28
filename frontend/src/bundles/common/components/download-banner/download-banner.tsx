@@ -94,7 +94,7 @@ const DownloadBanner = (): JSX.Element => {
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.PRIMARY}
                         label="Download App"
-                        className="w-150"
+                        className="w-[180px]"
                         onClick={handleInstall}
                     />
                 </div>
