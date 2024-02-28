@@ -6,6 +6,8 @@ const IconName = {
     googleFitIcon: 'googleFitIcon',
     goalsIcon: 'goalsIcon',
     workoutIcon: 'workoutIcon',
+    logoHeader: 'logoHeader',
+    logoHeaderLight: 'logoHeaderLight',
 } as const;
 
 export { IconName };
