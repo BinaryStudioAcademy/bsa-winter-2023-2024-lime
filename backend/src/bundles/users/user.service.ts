@@ -47,10 +47,10 @@ class UserService implements Service {
     }
 
     public async update(
-        id: number,
-        changes: object,
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
     ): ReturnType<Service['update']> {
-        return await this.userRepository.update(id, changes);
+        return await this.userRepository.update(query, payload);
     }
 
     public delete(): ReturnType<Service['delete']> {
