@@ -107,6 +107,7 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
+                'sideBar': 'calc(100vh - 88px)',
             },
             spacing: {
                 '60': '3.75rem',

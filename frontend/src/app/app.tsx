@@ -34,7 +34,7 @@ const App: React.FC = () => {
     return (
         <BaseLayout>
             <RouterOutlet />
-            <ThemeSwitcher />
+            <ThemeSwitcher className='absolute bottom-4 right-4' />
         </BaseLayout>
     );
 };
