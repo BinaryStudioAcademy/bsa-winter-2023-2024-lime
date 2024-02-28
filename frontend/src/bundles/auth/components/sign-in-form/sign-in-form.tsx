@@ -1,6 +1,7 @@
 import {
     Button,
     ButtonVariant,
+    Icon,
     Input,
     Link,
     Loader,
@@ -61,7 +62,7 @@ const SignInForm: React.FC<Properties> = ({
                         }
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="G"
+                        rightIcon={<Icon name="googleLogoIcon" />}
                     />
                     <Button
                         size={
@@ -71,7 +72,7 @@ const SignInForm: React.FC<Properties> = ({
                         }
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="f"
+                        rightIcon={<Icon name="facebookIcon" />}
                     />
                 </div>
 

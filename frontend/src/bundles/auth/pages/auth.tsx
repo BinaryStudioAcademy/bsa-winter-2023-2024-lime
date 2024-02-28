@@ -164,7 +164,7 @@ const Auth: React.FC = () => {
                     />
                 )}
             </Modal>
-            <ThemeSwitcher />
+            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };
