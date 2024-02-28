@@ -4,7 +4,6 @@ import { type Service } from '~/common/types/types.js';
 import { WorkoutValidationMessage } from './enums/enums.js';
 import {
     type CreateWorkoutRequestDto,
-    type EntityIdParameterDto,
     type UpdateWorkoutRequestDto,
     type WorkoutResponseDto,
 } from './types/types.js';
@@ -54,8 +53,7 @@ class WorkoutService implements Service {
     ): Promise<WorkoutResponseDto> {
         const workout = await this.workoutRepository.update(
             query,
-            WorkoutEntity.initialize({
-                id: +(query as EntityIdParameterDto).id,
+            WorkoutEntity.initializeNew({
                 ...payload,
             }),
         );

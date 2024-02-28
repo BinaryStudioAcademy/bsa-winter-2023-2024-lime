@@ -7,6 +7,7 @@ type WorkoutResponseDto = {
     workoutStartedAt: Date;
     workoutEndedAt: Date | null;
     speed: number;
+    duration: number;
     distance: number;
     heartRate: number;
     steps?: number;

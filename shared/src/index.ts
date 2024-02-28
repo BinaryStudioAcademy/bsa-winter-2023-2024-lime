@@ -34,10 +34,9 @@ export {
     type CreateWorkoutRequestDto,
     type WorkoutRequestDto,
     type WorkoutResponseDto,
-    createWorkoutValidationSchema,
-    updateWorkoutValidationSchema,
     WorkoutsApiPath,
     WorkoutValidationMessage,
+    workoutValidationSchema,
 } from './bundles/workouts/workouts.js';
 export {
     ApiPath,

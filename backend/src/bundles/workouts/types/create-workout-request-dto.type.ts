@@ -1,6 +1,6 @@
 import { type WorkoutRequestDto } from 'shared';
 
-type CreateWorkoutRequestDto = Pick<WorkoutRequestDto, 'activity'> & {
+type CreateWorkoutRequestDto = WorkoutRequestDto & {
     userId: number;
 };
 export { type CreateWorkoutRequestDto };

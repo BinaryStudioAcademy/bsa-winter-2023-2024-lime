@@ -17,9 +17,8 @@ import {
     type UpdateWorkoutRequestDto,
 } from './types/types.js';
 import {
-    createWorkoutValidationSchema,
     idParameterValidationSchema,
-    updateWorkoutValidationSchema,
+    workoutValidationSchema,
 } from './validation-schemas/validation-schemas.js';
 import { type WorkoutService } from './workout.service.js';
 
@@ -46,16 +45,21 @@ import { type WorkoutService } from './workout.service.js';
  *           description: Returns only for walking activity, optional
  *           minimum: 0
  *           nullable: true
+ *         duration:
+ *           type: number
+ *           format: integer
+ *           description: Returns duration of activity
+ *           minimum: 0
  *         heartRate:
  *           type: number
  *           format: integer
  *           description: Average heart rate during the workout
  *           minimum: 0
- *         startTime:
+ *         workoutStartedAt:
  *           type: string
  *           format: date-time
  *           description: The start time of the workout
- *         endTime:
+ *         workoutEndedAt:
  *           type: string
  *           format: date-time
  *           description: The end time of the workout, optional
@@ -79,8 +83,9 @@ import { type WorkoutService } from './workout.service.js';
  *         - id
  *         - activity
  *         - heartRate
- *         - startTime
- *         - endTime
+ *         - duration
+ *         - workoutStartedAt
+ *         - workoutEndedAt
  *         - distance
  *         - speed
  *         - kilocalories
@@ -113,7 +118,7 @@ class WorkoutController extends BaseController {
             path: WorkoutsApiPath.ROOT,
             method: 'POST',
             validation: {
-                body: createWorkoutValidationSchema,
+                body: workoutValidationSchema,
             },
             isProtected: true,
             handler: (options) =>
@@ -127,7 +132,7 @@ class WorkoutController extends BaseController {
             path: WorkoutsApiPath.ID,
             method: 'PUT',
             validation: {
-                body: updateWorkoutValidationSchema,
+                body: workoutValidationSchema,
             },
             isProtected: true,
             handler: (options) =>
@@ -177,9 +182,10 @@ class WorkoutController extends BaseController {
      *                      id: 1
      *                      activity: walking
      *                      steps: 3000
+     *                      duration: 0
      *                      heartRate: 120
-     *                      startTime: '2021-01-01T12:00:00Z'
-     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      workoutStartedAt: '2021-01-01T12:00:00Z'
+     *                      workoutEndedAt: '2021-01-01T12:30:00Z'
      *                      distance: 5000
      *                      speed: 2.7
      *                      kilocalories: 250
@@ -232,8 +238,9 @@ class WorkoutController extends BaseController {
      *                      activity: walking
      *                      steps: 3000
      *                      heartRate: 120
-     *                      startTime: '2021-01-01T12:00:00Z'
-     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      duration: 0
+     *                      workoutStartedAt: '2021-01-01T12:00:00Z'
+     *                      workoutEndedAt: '2021-01-01T12:30:00Z'
      *                      distance: 5000
      *                      speed: 2.7
      *                      kilocalories: 250
@@ -275,13 +282,48 @@ class WorkoutController extends BaseController {
      *            schema:
      *              type: object
      *              properties:
-     *                 activity:
-     *                     type: string
-     *                     enum:
-     *                        - cycling
-     *                        - running
-     *                        - walking
-     *                     example: walking
+     *                  activity:
+     *                      type: string
+     *                      enum:
+     *                          - cycling
+     *                          - running
+     *                          - walking
+     *                      example: walking
+     *                  steps:
+     *                      type: number
+     *                      format: integer
+     *                      description: Returns only for walking activity, optional
+     *                      minimum: 0
+     *                      nullable: true
+     *                  heartRate:
+     *                      type: number
+     *                      format: integer
+     *                      description: Average heart rate during the workout
+     *                      minimum: 0
+     *                  distance:
+     *                      type: number
+     *                      format: integer
+     *                      description: Duration of workout
+     *                      minimum: 0
+     *                  workoutStartedAt:
+     *                      type: string
+     *                      format: date-time
+     *                      description: The start time of the workout
+     *                  workoutEndedAt:
+     *                      type: string
+     *                      format: date-time
+     *                      description: The end time of the workout, optional
+     *                      nullable: true
+     *                  speed:
+     *                      type: number
+     *                      format: float
+     *                      description: Average speed during the workout
+     *                      minimum: 0
+     *                  kilocalories:
+     *                      type: number
+     *                      format: integer
+     *                      description: Calories burned during the workout
+     *                      minimum: 0
      *      responses:
      *        200:
      *          description: Successful operation
@@ -297,8 +339,9 @@ class WorkoutController extends BaseController {
      *                      activity: walking
      *                      steps: 3000
      *                      heartRate: 120
-     *                      startTime: '2021-01-01T12:00:00Z'
-     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      duration: 0
+     *                      workoutStartedAt: '2021-01-01T12:00:00Z'
+     *                      workoutEndedAt: '2021-01-01T12:30:00Z'
      *                      distance: 5000
      *                      speed: 2.7
      *                      kilocalories: 250
@@ -367,11 +410,11 @@ class WorkoutController extends BaseController {
      *                      format: integer
      *                      description: Average heart rate during the workout
      *                      minimum: 0
-     *                  startTime:
+     *                  workoutStartedAt:
      *                      type: string
      *                      format: date-time
      *                      description: The start time of the workout
-     *                  endTime:
+     *                  workoutEndedAt:
      *                      type: string
      *                      format: date-time
      *                      description: The end time of the workout, optional
@@ -406,8 +449,9 @@ class WorkoutController extends BaseController {
      *                      activity: walking
      *                      steps: 3000
      *                      heartRate: 120
-     *                      startTime: '2021-01-01T12:00:00Z'
-     *                      endTime: '2021-01-01T12:30:00Z'
+     *                      duration: 0
+     *                      workoutStartedAt: '2021-01-01T12:00:00Z'
+     *                      workoutEndedAt: '2021-01-01T12:30:00Z'
      *                      distance: 5000
      *                      speed: 2.7
      *                      kilocalories: 250

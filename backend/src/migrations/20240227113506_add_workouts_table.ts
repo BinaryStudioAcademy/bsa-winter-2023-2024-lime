@@ -43,7 +43,7 @@ async function up(knex: Knex): Promise<void> {
             .dateTime(ColumnName.WORKOUT_STARTED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
-        table.dateTime(ColumnName.WORKOUT_ENDED_AT).nullable();
+        table.dateTime(ColumnName.WORKOUT_ENDED_AT).notNullable();
         table.integer(ColumnName.DISTANCE).notNullable();
         table.integer(ColumnName.SPEED).notNullable();
         table.enum(ColumnName.ACTIVITY, Object.values(Activity), {

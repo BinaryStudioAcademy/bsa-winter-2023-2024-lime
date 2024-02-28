@@ -2,34 +2,26 @@ import { z } from 'zod';
 
 import { ActivityType } from '../../../enums/enums.js';
 
-type UpdateWorkoutsRequestValidationDto = {
+type WorkoutsRequestValidationDto = {
     activity: z.ZodNativeEnum<typeof ActivityType>;
     steps: z.ZodOptional<z.ZodNumber>;
     heartRate: z.ZodNumber;
-    workoutStartedAt: z.ZodDate;
-    workoutEndedAt: z.ZodNullable<z.ZodDate>;
+    workoutStartedAt: z.ZodString;
+    workoutEndedAt: z.ZodString;
     distance: z.ZodNumber;
     speed: z.ZodNumber;
     kilocalories: z.ZodNumber;
 };
 
-type CreateWorkoutsRequestValidationDto = {
-    activity: z.ZodNativeEnum<typeof ActivityType>;
-};
-
-const updateWorkout = z.object<UpdateWorkoutsRequestValidationDto>({
+const workout = z.object<WorkoutsRequestValidationDto>({
     activity: z.nativeEnum(ActivityType),
     steps: z.number().int().nonnegative().optional(),
     heartRate: z.number().int().nonnegative(),
-    workoutStartedAt: z.date(),
-    workoutEndedAt: z.date().nullable(),
+    workoutStartedAt: z.string(),
+    workoutEndedAt: z.string(),
     distance: z.number().int().nonnegative(),
     speed: z.number().int().nonnegative(),
     kilocalories: z.number().int().nonnegative(),
 });
 
-const createWorkout = z.object<CreateWorkoutsRequestValidationDto>({
-    activity: z.nativeEnum(ActivityType),
-});
-
-export { createWorkout, updateWorkout };
+export { workout };

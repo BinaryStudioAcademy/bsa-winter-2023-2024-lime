@@ -11,13 +11,13 @@ import { type ValueOf } from '~/common/types/types.js';
 
 import { WorkoutAttributes } from './enums/enums.js';
 
-class WorkoutsModel extends AbstractModel {
+class WorkoutModel extends AbstractModel {
     public 'userId': number;
     public 'activity': ValueOf<typeof ActivityType>;
     public 'steps': number;
     public 'heartRate': number;
     public 'workoutStartedAt': Date;
-    public 'workoutEndedAt': Date | null;
+    public 'workoutEndedAt': Date;
     public 'distance': number;
     public 'speed': number;
     public 'kilocalories': number;
@@ -40,4 +40,4 @@ class WorkoutsModel extends AbstractModel {
     }
 }
 
-export { WorkoutsModel };
+export { WorkoutModel };

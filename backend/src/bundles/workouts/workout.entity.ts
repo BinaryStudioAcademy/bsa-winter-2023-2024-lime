@@ -8,7 +8,7 @@ class WorkoutEntity implements Entity {
     private 'steps': number | undefined;
     private 'heartRate': number;
     private 'workoutStartedAt': Date;
-    private 'workoutEndedAt': Date | null;
+    private 'workoutEndedAt': Date;
     private 'distance': number;
     private 'speed': number;
     private 'kilocalories': number;
@@ -18,6 +18,7 @@ class WorkoutEntity implements Entity {
         userId,
         activity,
         heartRate,
+        steps,
         workoutStartedAt,
         workoutEndedAt,
         distance,
@@ -30,7 +31,7 @@ class WorkoutEntity implements Entity {
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
-        workoutEndedAt: Date | null;
+        workoutEndedAt: Date;
         distance: number;
         speed: number;
         kilocalories: number;
@@ -45,7 +46,7 @@ class WorkoutEntity implements Entity {
         this.speed = speed;
         this.kilocalories = kilocalories;
         if (activity === ActivityType.WALKING) {
-            this.steps = 0;
+            this.steps = steps ?? 0;
         }
     }
 
@@ -56,7 +57,7 @@ class WorkoutEntity implements Entity {
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
-        workoutEndedAt: Date | null;
+        workoutEndedAt: Date;
         distance: number;
         speed: number;
         kilocalories: number;
@@ -69,17 +70,17 @@ class WorkoutEntity implements Entity {
     public static initializeNew(payload: {
         activity: ValueOf<typeof ActivityType>;
         userId: number;
+        heartRate: number;
+        distance: number;
+        kilocalories: number;
+        speed: number;
         steps?: number;
+        workoutStartedAt: Date;
+        workoutEndedAt: Date;
     }): WorkoutEntity {
         return new WorkoutEntity({
-            ...payload,
             id: null,
-            heartRate: 0,
-            workoutStartedAt: new Date(),
-            workoutEndedAt: null,
-            distance: 0,
-            speed: 0,
-            kilocalories: 0,
+            ...payload,
         });
     }
 
@@ -88,8 +89,9 @@ class WorkoutEntity implements Entity {
         activity: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
+        duration: number;
         workoutStartedAt: Date;
-        workoutEndedAt: Date | null;
+        workoutEndedAt: Date;
         distance: number;
         speed: number;
         kilocalories: number;
@@ -99,6 +101,8 @@ class WorkoutEntity implements Entity {
             activity: this.activity,
             steps: this.steps as number,
             heartRate: this.heartRate,
+            duration:
+                this.workoutEndedAt.getTime() - this.workoutStartedAt.getTime(),
             workoutStartedAt: this.workoutStartedAt,
             workoutEndedAt: this.workoutEndedAt,
             distance: this.distance,
@@ -113,7 +117,7 @@ class WorkoutEntity implements Entity {
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
-        workoutEndedAt: Date | null;
+        workoutEndedAt: Date;
         distance: number;
         speed: number;
         kilocalories: number;

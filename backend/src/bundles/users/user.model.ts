@@ -7,7 +7,7 @@ import {
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
 import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
-import { WorkoutsModel } from '~/bundles/workouts/workouts.js';
+import { WorkoutModel } from '~/bundles/workouts/workouts.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -23,7 +23,7 @@ class UserModel extends AbstractModel {
     public 'passwordHash': string;
 
     public 'userDetails': UserDetailsModel;
-    public 'workouts': WorkoutsModel;
+    public 'workouts': WorkoutModel;
 
     public 'userOAuthInfo': OAuthModel;
 
@@ -69,7 +69,7 @@ class UserModel extends AbstractModel {
             },
             workouts: {
                 relation: Model.HasManyRelation,
-                modelClass: WorkoutsModel,
+                modelClass: WorkoutModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,

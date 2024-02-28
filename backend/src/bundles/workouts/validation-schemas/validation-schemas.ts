@@ -1,5 +1,1 @@
-export {
-    createWorkoutValidationSchema,
-    idParameterValidationSchema,
-    updateWorkoutValidationSchema,
-} from 'shared';
+export { idParameterValidationSchema, workoutValidationSchema } from 'shared';

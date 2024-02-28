@@ -3,12 +3,12 @@ import { type Repository } from '~/common/types/types.js';
 
 import { WorkoutValidationMessage } from './enums/enums.js';
 import { WorkoutEntity } from './workout.entity.js';
-import { type WorkoutsModel } from './workouts.model.js';
+import { type WorkoutModel } from './workout.model.js';
 
 class WorkoutRepository implements Repository {
-    private workoutsModel: typeof WorkoutsModel;
+    private workoutsModel: typeof WorkoutModel;
 
-    public constructor(workoutsModel: typeof WorkoutsModel) {
+    public constructor(workoutsModel: typeof WorkoutModel) {
         this.workoutsModel = workoutsModel;
     }
 

@@ -1,1 +1,1 @@
-export { createWorkout, updateWorkout } from './workouts.validation-schema.js';
+export { workout } from './workouts.validation-schema.js';
