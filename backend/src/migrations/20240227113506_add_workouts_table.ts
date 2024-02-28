@@ -48,7 +48,7 @@ async function up(knex: Knex): Promise<void> {
         table.integer(ColumnName.SPEED).notNullable();
         table.enum(ColumnName.ACTIVITY, Object.values(Activity), {
             useNative: true,
-            enumName: `${ColumnName.ACTIVITY}_enum`,
+            enumName: ACTIVITY_ENUM,
         });
         table
             .dateTime(ColumnName.CREATED_AT)
