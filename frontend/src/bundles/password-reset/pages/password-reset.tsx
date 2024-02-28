@@ -3,7 +3,7 @@ import {
     ResetPasswordForm,
     ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
-import { DataStatus } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
     getValidClassNames,
@@ -22,14 +22,17 @@ import {
     type PasswordResetPayload,
     type PasswordResetRequestDto,
 } from '~/bundles/password-reset/types/types.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 import { PasswordResetSuccessMessage } from '../components/components.js';
+
+const errorText = 'The password reset token you used has expired';
 
 const PasswordReset: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { resetToken } = useParams();
-    const { userId } = getUserId(resetToken as string);
+    const { userId, exp } = getUserId(resetToken as string);
 
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
@@ -63,7 +66,14 @@ const PasswordReset: React.FC = () => {
         if (dataStatus === DataStatus.FULFILLED) {
             setIsPasswordReset(true);
         }
-    }, [dataStatus, navigate]);
+    }, [dataStatus]);
+
+    useEffect(() => {
+        if (Date.now() > Number(exp)) {
+            navigate(AppRoute.SIGN_IN);
+            notificationManager.error(errorText);
+        }
+    }, [exp, navigate]);
 
     const classes = {
         base: 'relative flex flex-col flex-1 bg-primary mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
