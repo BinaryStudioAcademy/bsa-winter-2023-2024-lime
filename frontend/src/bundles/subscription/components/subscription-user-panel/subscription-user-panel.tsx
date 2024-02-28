@@ -17,7 +17,7 @@ type Properties = {
     isCanceled: boolean;
     expiresAt: Date;
     stripeSubscriptionId: string;
-    handleChangeSubscription: () => void;
+    onChangeSubscription: () => void;
 };
 
 const SubscriptionUserPanel = ({
@@ -27,7 +27,7 @@ const SubscriptionUserPanel = ({
     isCanceled,
     expiresAt,
     stripeSubscriptionId,
-    handleChangeSubscription,
+    onChangeSubscription,
 }: Properties): JSX.Element => {
     const dispatch = useAppDispatch();
 
@@ -96,7 +96,7 @@ const SubscriptionUserPanel = ({
                         size="md"
                         variant="primary"
                         label="Change subscription plan"
-                        onClick={handleChangeSubscription}
+                        onClick={onChangeSubscription}
                     />
                 </div>
             </div>

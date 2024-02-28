@@ -85,7 +85,7 @@ const SubscriptionPage = (): JSX.Element => {
                         status={currentSubscription.status}
                         isCanceled={currentSubscription.isCanceled}
                         expiresAt={currentSubscription.expiresAt}
-                        handleChangeSubscription={handleChangeSubscription}
+                        onChangeSubscription={handleChangeSubscription}
                     />
                 ) : (
                     <span className="font-base text-xl text-white">
@@ -110,7 +110,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     price={plan.price}
                                     description={plan.description ?? ''}
                                     stripePriceId={plan.stripePriceId}
-                                    handleClick={handleCreateSubscription}
+                                    onSubscribe={handleCreateSubscription}
                                 />
                             );
                         }
@@ -124,7 +124,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     price={plan.price}
                                     description={plan.description ?? ''}
                                     stripePriceId={plan.stripePriceId}
-                                    handleClick={handleCreateSubscription}
+                                    onSubscribe={handleCreateSubscription}
                                 />
                             );
                         }

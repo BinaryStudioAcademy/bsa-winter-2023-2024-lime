@@ -35,7 +35,7 @@ class SubscriptionModel extends AbstractModel {
     public static override get relationMappings(): RelationMappings {
         return {
             subscriptionPlan: {
-                relation: Model.HasOneRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: SubscriptionPlanModel,
                 join: {
                     from: `${DatabaseTableName.SUBSCRIPTIONS}.${SubscriptionAttributes.PLAN_ID}`,
@@ -43,7 +43,7 @@ class SubscriptionModel extends AbstractModel {
                 },
             },
             user: {
-                relation: Model.HasOneRelation,
+                relation: Model.BelongsToOneRelation,
                 modelClass: UserModel,
                 join: {
                     from: `${DatabaseTableName.SUBSCRIPTIONS}.${SubscriptionAttributes.USER_ID}`,

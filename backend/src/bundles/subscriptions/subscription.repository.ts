@@ -18,8 +18,10 @@ class SubscriptionRepository
     ): Promise<SubscriptionEntity[] | null> {
         const subscriptions = await this.subscriptionModel
             .query()
-            .where(SubscriptionAttributes.USER_ID, userId)
-            .andWhere(SubscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
+            .where({
+                [SubscriptionAttributes.USER_ID]: userId,
+                [SubscriptionAttributes.STATUS]: SubscriptionStatus.ACTIVE,
+            })
             .orderBy(SubscriptionAttributes.CREATED_AT, 'DESC')
             .withGraphFetched('[subscriptionPlan]')
             .execute();
@@ -47,7 +49,6 @@ class SubscriptionRepository
             .query()
             .findOne(query)
             .where(SubscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
-            .orderBy(SubscriptionAttributes.CREATED_AT, 'DESC')
             .withGraphFetched('[subscriptionPlan]')
             .execute();
 
@@ -69,9 +70,7 @@ class SubscriptionRepository
     ): Promise<SubscriptionEntity> {
         const subscription = await this.subscriptionModel
             .query()
-            .insert({
-                ...entity.toNewObject(),
-            })
+            .insert(entity.toNewObject())
             .returning('*')
             .execute();
 

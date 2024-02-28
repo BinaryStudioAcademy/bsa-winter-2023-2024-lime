@@ -139,7 +139,7 @@ class BaseServerApp implements ServerApp {
             runFirst: true,
             routes: this.apis.map((it) => {
                 return it.buildFullPath(
-                    ApiPath.SUBSCRIPTIONS + SubscriptionsApiPath.STRIPE_WEBHOOK,
+                    `${ApiPath.SUBSCRIPTIONS}${SubscriptionsApiPath.STRIPE_WEBHOOK}`,
                 );
             }),
         });

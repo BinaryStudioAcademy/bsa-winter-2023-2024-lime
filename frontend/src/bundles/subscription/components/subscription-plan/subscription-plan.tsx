@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
-
 import { Button } from '~/bundles/common/components/components.js';
+import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
 import { type SubscribeRequestDto } from '../../types/types.js';
 
@@ -10,7 +9,7 @@ type Properties = {
     description: string;
     price: number;
     stripePriceId: string;
-    handleClick: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
+    onSubscribe: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
 };
 
 const SubscriptionPlan = ({
@@ -19,11 +18,11 @@ const SubscriptionPlan = ({
     description,
     price,
     stripePriceId,
-    handleClick,
+    onSubscribe,
 }: Properties): JSX.Element => {
     const handleSubscribeButtonClick = useCallback(() => {
-        handleClick({ planId: id, stripePriceId });
-    }, [id, stripePriceId, handleClick]);
+        onSubscribe({ planId: id, stripePriceId });
+    }, [id, stripePriceId, onSubscribe]);
 
     return (
         <div className="bg-lm-black-100 flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">
