@@ -1,6 +1,7 @@
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { actions as themeActions } from '~/bundles/common/store/theme.js';
 
+import { Theme } from '../../enums/theme.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -23,7 +24,7 @@ function ThemeSwitcher({ className }: Properties): JSX.Element {
 
     const toggleTheme = useCallback(() => {
         if (theme) {
-            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK;
             void dispatch(themeActions.toggleTheme(newTheme));
         }
     }, [dispatch, theme]);

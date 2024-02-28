@@ -1,4 +1,5 @@
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
+import { Theme } from '../../enums/theme.js';
 import { useAppSelector } from '../../hooks/hooks.js';
 import { Icon, Layout, Link } from '../components.js';
 import { IconColor } from '../icon/enums/enums.js';
@@ -12,7 +13,7 @@ const Header = (): JSX.Element => {
             <Layout className={`${styles['header-container']}`}>
                 <div className="hidden w-full max-w-[16rem]  md:flex">
                     <Link to={AppRoute.ROOT}>
-                        {theme === 'dark' ? (
+                        {theme === Theme.DARK ? (
                             <Icon
                                 name={'logoHeader'}
                                 color={IconColor.PRIMARY}
