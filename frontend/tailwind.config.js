@@ -1,16 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
+const ButtonColors = {
+    TEXT: 'var(--button-text)',
+    PRIMARY: 'var(--button-primary)',
+    SECONDARY: 'var(--button-secondary)',
+    TERTIARY: 'var(--button-tertiary)',
+};
+
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    darkMode: 'class',
     theme: {
         colors: {
             transparent: 'transparent',
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
-            'lm-purple': '#7306FF',
-            'lm-magenta': '#DC40CD',
+            'lm-purple': {
+                100: '#7E51FF',
+                200: '#7306FF',
+            },
+            'lm-magenta': {
+                100: '#FF5EB1',
+                200: '#DC40CD',
+            },
             'lm-yellow': {
                 100: '#E0FE10',
                 200: '#B2CA0D',
@@ -80,6 +94,9 @@ export default {
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
                 'goalWidget':
                     'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%)',
+                'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
+                'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
+                'wave-purple': 'url("~/assets/img/wave-purple.svg")',
             },
             borderRadius: {
                 '30': '1.9rem',
@@ -90,6 +107,30 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
+            },
+            spacing: {
+                '60': '3.75rem',
+            },
+            textColor: {
+                primary: 'var(--text-primary)',
+                secondary: 'var(--text-secondary)',
+                action: 'var(--text-action)',
+                buttonText: ButtonColors.TEXT,
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
+            },
+            backgroundColor: {
+                primary: 'var(--background-primary)',
+                secondary: 'var(--background-secondary)',
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
+            },
+            borderColor: {
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
             },
         },
     },

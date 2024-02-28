@@ -39,11 +39,11 @@ const activeClasses =
 
 const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.PRIMARY]:
-        'rounded-lg justify-center bg-lm-yellow-100 text-lm-black-300 hover:bg-lm-yellow-200 disabled:text-lm-grey-200 disabled:bg-lm-grey-300',
+        'rounded-lg justify-center bg-buttonPrimary text-buttonText hover:bg-buttonSecondary  disabled:bg-buttonTertiary',
     [ButtonVariant.SECONDARY]:
-        'border justify-center border-lm-yellow-100 rounded-lg bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 hover:border-lm-yellow-200 disabled:text-lm-grey-300 disabled:border-lm-grey-300',
+        'border justify-center border-buttonPrimary rounded-lg bg-transparent text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary disabled:border-buttonTertiary',
     [ButtonVariant.TERTIARY]:
-        'bg-transparent justify-center text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
+        'bg-transparent justify-center text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary',
     [ButtonVariant.SIDEBAR]:
         'text-lm-grey-200 align hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
 };

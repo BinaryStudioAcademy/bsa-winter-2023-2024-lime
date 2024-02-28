@@ -1,0 +1,13 @@
+.base-layout {
+    @apply grid grid-cols-2 grid-rows-2;
+
+    grid-template:
+        "header header" 88px
+        "aside main" / 288px;
+}
+
+.content-container {
+    @apply bg-lm-black-200 p-8;
+
+    grid-area: main;
+}
