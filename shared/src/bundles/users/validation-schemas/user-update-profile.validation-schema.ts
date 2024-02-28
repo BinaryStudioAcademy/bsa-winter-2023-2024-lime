@@ -50,30 +50,40 @@ const userUpdateProfile = z
         weight: z.union([
             z
                 .string()
-                .regex(UnicodePattern.WEIGHT_PATTERN, {
-                    message: UserValidationMessage.WEIGHT_WRONG,
-                })
-                .min(UserValidationRule.WEIGHT.MIN_LENGTH, {
-                    message: UserValidationMessage.WEIGHT_LENGTH,
-                })
-                .max(UserValidationRule.WEIGHT.MAX_LENGTH, {
-                    message: UserValidationMessage.WEIGHT_LENGTH,
-                })
+                .refine(
+                    (value) => value === '' || !Number.isNaN(Number(value)),
+                    {
+                        message: UserValidationMessage.WEIGHT_WRONG,
+                    },
+                )
+                .refine(
+                    (value) =>
+                        value.length <= UserValidationRule.WEIGHT.MAX_LENGTH ||
+                        value.length >= UserValidationRule.WEIGHT.MIN_LENGTH,
+                    {
+                        message: UserValidationMessage.WEIGHT_LENGTH,
+                    },
+                )
                 .nullable(),
             z.literal(''),
         ]),
         height: z.union([
             z
                 .string()
-                .regex(UnicodePattern.HEIGHT_PATTERN, {
-                    message: UserValidationMessage.HEIGHT_WRONG,
-                })
-                .min(UserValidationRule.HEIGHT.MIN_LENGTH, {
-                    message: UserValidationMessage.HEIGHT_LENGTH,
-                })
-                .max(UserValidationRule.HEIGHT.MAX_LENGTH, {
-                    message: UserValidationMessage.HEIGHT_LENGTH,
-                })
+                .refine(
+                    (value) => value === '' || !Number.isNaN(Number(value)),
+                    {
+                        message: UserValidationMessage.HEIGHT_WRONG,
+                    },
+                )
+                .refine(
+                    (value) =>
+                        value.length <= UserValidationRule.HEIGHT.MAX_LENGTH ||
+                        value.length >= UserValidationRule.HEIGHT.MIN_LENGTH,
+                    {
+                        message: UserValidationMessage.HEIGHT_LENGTH,
+                    },
+                )
                 .nullable(),
             z.literal(''),
         ]),

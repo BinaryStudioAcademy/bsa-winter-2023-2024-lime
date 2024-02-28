@@ -7,8 +7,8 @@ type UserUpdateProfileRequestDto = {
     username?: string | null;
     avatarUrl?: string | null;
     dateOfBirth?: string | null;
-    weight?: string | null;
-    height?: string | null;
+    weight?: number | null | '';
+    height?: number | null | '';
     gender?: ValueOf<typeof Gender>;
     [key: string]: string | number | null;
 };

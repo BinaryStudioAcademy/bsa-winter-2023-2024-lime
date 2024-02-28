@@ -64,10 +64,7 @@ class UserService implements Service {
                 for (const property of Object.keys(payload)) {
                     const value = payload[property];
                     if (value) {
-                        updatedUserDetails[property] =
-                            property === 'weight' || property === 'height'
-                                ? Number(payload[property])
-                                : payload[property];
+                        updatedUserDetails[property] = payload[property];
                     }
                 }
                 const updatedUser = await this.userRepository.update(
