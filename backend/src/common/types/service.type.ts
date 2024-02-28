@@ -4,7 +4,10 @@ type Service<T = unknown> = {
         items: T[];
     }>;
     create(payload: unknown): Promise<T>;
-    update(query: Record<string, T>, payload: unknown): Promise<T>;
+    update(
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): Promise<T>;
     delete(query: Record<string, T>): Promise<boolean>;
 };
 

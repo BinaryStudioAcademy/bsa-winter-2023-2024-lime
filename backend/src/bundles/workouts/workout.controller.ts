@@ -4,6 +4,7 @@ import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
     BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -195,6 +196,7 @@ class WorkoutController extends BaseController {
         options: ApiHandlerOptions,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.workoutService.findAll({
                 userId: (options.user as UserAuthResponseDto).id,
@@ -250,6 +252,7 @@ class WorkoutController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { id } = idParameterValidationSchema.parse(options.params);
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.workoutService.find({ id }),
         };
@@ -313,6 +316,7 @@ class WorkoutController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.workoutService.create({
                 ...options.body,
@@ -423,6 +427,7 @@ class WorkoutController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { id } = idParameterValidationSchema.parse(options.params);
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.workoutService.update(
                 { id },
@@ -469,6 +474,7 @@ class WorkoutController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { id } = idParameterValidationSchema.parse(options.params);
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.workoutService.delete({ id }),
         };
