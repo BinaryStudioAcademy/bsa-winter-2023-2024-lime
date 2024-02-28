@@ -34,6 +34,10 @@ type EnvironmentSchema = {
         CLIENT_ID: string;
         CLIENT_SECRET: string;
     };
+    GOOGLE_FIT: {
+        CLIENT_ID: string;
+        CLIENT_SECRET: string;
+    };
 };
 
 export { type EnvironmentSchema };
