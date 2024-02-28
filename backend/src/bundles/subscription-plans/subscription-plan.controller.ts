@@ -1,4 +1,7 @@
-import { type ApiHandlerResponse } from '~/common/controller/controller.js';
+import {
+    type ApiHandlerResponse,
+    ApiHandlerResponseType,
+} from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/enums/enums.js';
@@ -97,6 +100,7 @@ class SubscriptionPlanController extends BaseController {
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.subscriptionPlanService.findAll(),
         };

@@ -2,6 +2,7 @@ import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
 } from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -172,6 +173,7 @@ class SubscriptionController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.subscriptionService.find({
                 userId: options.user.id,
@@ -237,6 +239,7 @@ class SubscriptionController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { planId, stripePriceId } = options.body;
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
             payload: await this.subscriptionService.subscribe(options.user, {
                 planId,
@@ -300,6 +303,7 @@ class SubscriptionController extends BaseController {
         const { isCanceled, stripeSubscriptionId } = options.body;
 
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.subscriptionService.updateCancelSubscribtion({
                 stripeSubscriptionId,
@@ -338,6 +342,7 @@ class SubscriptionController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.subscriptionService.webHookListener(
                 options.body.stripeWebhookEvent,

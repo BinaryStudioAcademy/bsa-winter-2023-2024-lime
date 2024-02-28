@@ -170,6 +170,20 @@ class BaseConfig implements Config {
                     default: null,
                 },
             },
+            STRAVA: {
+                CLIENT_ID: {
+                    doc: 'Strava Client ID',
+                    format: String,
+                    env: 'STRAVA_CLIENT_ID',
+                    default: null,
+                },
+                CLIENT_SECRET: {
+                    doc: 'Strava Client Secret',
+                    format: String,
+                    env: 'STRAVA_CLIENT_SECRET',
+                    default: null,
+                },
+            },
         });
     }
 }
