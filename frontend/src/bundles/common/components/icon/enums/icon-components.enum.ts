@@ -7,8 +7,8 @@ import LogoIcon from '~/assets/img/icons/logo-icon.svg?react';
 import NotFoundIcon from '~/assets/img/icons/not-found-icon.svg?react';
 import StravaIcon from '~/assets/img/icons/strava-icon.svg?react';
 import WorkoutIcon from '~/assets/img/icons/workout-icon.svg?react';
-import LogoHeader from '~/assets/img/logoHeader.svg?react';
-import LogoHeaderLight from '~/assets/img/logoHeaderLight.svg?react';
+import LogoHeader from '~/assets/img/logo-header.svg?react';
+import LogoHeaderLight from '~/assets/img/logo-header-light.svg?react';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type IconName } from './enums.js';
