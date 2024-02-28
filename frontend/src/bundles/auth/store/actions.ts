@@ -55,9 +55,7 @@ const updateUser = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/update-user`, async (updateUserPayload, { extra }) => {
     const { userApi } = extra;
-    const { id: userId } = updateUserPayload;
-    const userIdAsString: string = userId ? userId.toString() : '';
-    return await userApi.updateUser(userIdAsString, updateUserPayload);
+    return await userApi.updateUser(updateUserPayload);
 });
 
 export { refreshUser, signIn, signUp, updateUser };

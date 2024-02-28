@@ -1,5 +1,3 @@
-import { UserValidationMessage } from 'shared';
-
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -14,7 +12,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import { UsersApiPath } from './enums/enums.js';
+import { UsersApiPath, UserValidationMessage } from './enums/enums.js';
 
 /**
  * @swagger
@@ -102,7 +100,7 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
-            path: `${UsersApiPath.UPDATE_USER}/:userId`,
+            path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
             handler: (options) =>
@@ -110,7 +108,6 @@ class UserController extends BaseController {
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
-                        params: { userId: string };
                     }>,
                 ),
         });
@@ -191,20 +188,12 @@ class UserController extends BaseController {
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
             body: UserUpdateProfileRequestDto;
-            params: { userId: string };
         }>,
     ): Promise<ApiHandlerResponse> {
-        const { user, body, params } = options;
-        const userId = params.userId;
-
+        const { user, body } = options;
+        const { id } = user;
         try {
-            if (Number(userId) !== Number(user.id)) {
-                throw new Error('Token mismatch');
-            }
-            const updatedUser = await this.userService.update(
-                { id: Number(userId) },
-                body,
-            );
+            const updatedUser = await this.userService.update({ id }, body);
             if (updatedUser && body.dateOfBirth) {
                 const [day, month, year] = body.dateOfBirth.split('/');
                 const parsedDate = new Date(`${year}-${month}-${day}`);
