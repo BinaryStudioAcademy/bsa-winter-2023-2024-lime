@@ -5,7 +5,7 @@ import {
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { SunscriptionAttributes } from '../subscriptions/enums/enums.js';
+import { SubscriptionAttributes } from '../subscriptions/enums/enums.js';
 import { SubscriptionPlanAttributes } from './enums/enums.js';
 
 class SubscriptionPlanModel extends AbstractModel {
@@ -30,7 +30,7 @@ class SubscriptionPlanModel extends AbstractModel {
                 modelClass: SubscriptionPlanModel,
                 join: {
                     from: `${DatabaseTableName.SUBSCRIPTION_PLANS}.${SubscriptionPlanAttributes.ID}`,
-                    to: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.PLAN_ID}`,
+                    to: `${DatabaseTableName.SUBSCRIPTIONS}.${SubscriptionAttributes.PLAN_ID}`,
                 },
             },
         };

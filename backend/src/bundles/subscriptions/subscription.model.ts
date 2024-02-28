@@ -11,7 +11,7 @@ import { SubscriptionPlanModel } from '../subscription-plans/subscription-plan.m
 import { UserAttributes } from '../users/enums/enums.js';
 import { UserModel } from '../users/user.model.js';
 import { type SubscriptionStatus } from './enums/enums.js';
-import { SunscriptionAttributes } from './enums/enums.js';
+import { SubscriptionAttributes } from './enums/enums.js';
 
 class SubscriptionModel extends AbstractModel {
     public 'userId': number;
@@ -38,7 +38,7 @@ class SubscriptionModel extends AbstractModel {
                 relation: Model.HasOneRelation,
                 modelClass: SubscriptionPlanModel,
                 join: {
-                    from: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.PLAN_ID}`,
+                    from: `${DatabaseTableName.SUBSCRIPTIONS}.${SubscriptionAttributes.PLAN_ID}`,
                     to: `${DatabaseTableName.SUBSCRIPTION_PLANS}.${SubscriptionPlanAttributes.ID}`,
                 },
             },
@@ -46,7 +46,7 @@ class SubscriptionModel extends AbstractModel {
                 relation: Model.HasOneRelation,
                 modelClass: UserModel,
                 join: {
-                    from: `${DatabaseTableName.SUBSCRIPTIONS}.${SunscriptionAttributes.USER_ID}`,
+                    from: `${DatabaseTableName.SUBSCRIPTIONS}.${SubscriptionAttributes.USER_ID}`,
                     to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },

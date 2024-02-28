@@ -1,4 +1,4 @@
-const SunscriptionAttributes = {
+const SubscriptionAttributes = {
     ID: 'id',
     PLAN_ID: 'planId',
     USER_ID: 'userId',
@@ -10,4 +10,4 @@ const SunscriptionAttributes = {
     UPDATED_AT: 'updatedAt',
 } as const;
 
-export { SunscriptionAttributes };
+export { SubscriptionAttributes };

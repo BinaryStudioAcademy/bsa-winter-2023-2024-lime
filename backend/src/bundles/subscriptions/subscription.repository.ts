@@ -1,6 +1,6 @@
 import { type Repository } from '~/common/types/repository.type.js';
 
-import { SubscriptionStatus, SunscriptionAttributes } from './enums/enums.js';
+import { SubscriptionAttributes, SubscriptionStatus } from './enums/enums.js';
 import { SubscriptionEntity } from './subscription.entity.js';
 import { type SubscriptionModel } from './subscription.model.js';
 
@@ -18,9 +18,9 @@ class SubscriptionRepository
     ): Promise<SubscriptionEntity[] | null> {
         const subscriptions = await this.subscriptionModel
             .query()
-            .where(SunscriptionAttributes.USER_ID, userId)
-            .andWhere(SunscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
-            .orderBy(SunscriptionAttributes.CREATED_AT, 'DESC')
+            .where(SubscriptionAttributes.USER_ID, userId)
+            .andWhere(SubscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
+            .orderBy(SubscriptionAttributes.CREATED_AT, 'DESC')
             .withGraphFetched('[subscriptionPlan]')
             .execute();
 
@@ -46,8 +46,8 @@ class SubscriptionRepository
         const subscription = await this.subscriptionModel
             .query()
             .findOne(query)
-            .where(SunscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
-            .orderBy(SunscriptionAttributes.CREATED_AT, 'DESC')
+            .where(SubscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
+            .orderBy(SubscriptionAttributes.CREATED_AT, 'DESC')
             .withGraphFetched('[subscriptionPlan]')
             .execute();
 
