@@ -10,22 +10,19 @@ const Header = (): JSX.Element => {
     return (
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
-                <div className='max-w-[16rem] w-full hidden  md:flex'>
+                <div className="hidden w-full max-w-[16rem]  md:flex">
                     <Link to={AppRoute.ROOT}>
-                        <img
-                            src={logo}
-                            alt="Logo"
-                        />
+                        <img src={logo} alt="Logo" />
                     </Link>
                 </div>
-                <div className='mr-5 md:hidden'>
+                <div className="mr-5 md:hidden">
                     <Icon
                         name={'logoIcon'}
                         color={IconColor.PRIMARY}
                         size={ComponentSize.LARGE}
                     />
                 </div>
-                <div className='flex w-full justify-between'>
+                <div className="flex w-full justify-between">
                     <Message />
                     <Navigation />
                 </div>
