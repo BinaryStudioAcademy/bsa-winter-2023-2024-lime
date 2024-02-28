@@ -37,7 +37,7 @@ const routes = [
             {
                 path: AppRoute.GOALS,
                 element: <GoalsPage />,
-                isPrivate: true,
+                // isPrivate: true,
             },
             {
                 path: AppRoute.WORKOUT,

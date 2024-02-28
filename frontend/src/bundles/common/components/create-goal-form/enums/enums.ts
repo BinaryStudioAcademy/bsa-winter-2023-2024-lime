@@ -1,2 +1,1 @@
-export { goalActivityOptions } from './goal-activity.enum.js';
-export { GoalFrequency, goalFrequencyOpitons } from './goal-frequency.enum.js';
+export { GoalFrequency } from './goal-frequency.enum.js';
