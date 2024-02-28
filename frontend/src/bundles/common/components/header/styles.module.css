@@ -1,19 +1,9 @@
 .header {
     @apply bg-lm-black-100 flex w-full items-center;
+
+    grid-area: header;
 }
 
 .header-container {
     @apply flex w-full items-center justify-between;
-}
-
-.header__navigation {
-    @apply flex w-full justify-between;
-}
-
-.header__logo-wrapper {
-    @apply flex hidden md:mr-5 md:flex;
-}
-
-.burger-menu__button {
-    @apply mr-5 md:hidden;
 }

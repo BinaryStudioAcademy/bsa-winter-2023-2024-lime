@@ -2,6 +2,7 @@ import {
     Button,
     ButtonVariant,
     Icon,
+    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
@@ -15,7 +16,7 @@ const NotFound: React.FC = () => {
     }, [navigate]);
 
     return (
-        <div className="bg-lm-black-200 flex flex-1 items-center justify-center pl-3 pr-3">
+        <div className="bg-secondary flex flex-1 items-center justify-center pl-3 pr-3">
             <div className="text-center">
                 <Icon
                     color={IconColor.PRIMARY}
@@ -23,7 +24,7 @@ const NotFound: React.FC = () => {
                     name="notFoundIcon"
                     className="ml-auto mr-auto block"
                 />
-                <h1 className="mt-5 text-4xl text-white">
+                <h1 className="text-primary mt-5 text-4xl">
                     Oops, this page was not found
                 </h1>
                 <Button
@@ -34,6 +35,7 @@ const NotFound: React.FC = () => {
                     onClick={redirectToHomepage}
                 />
             </div>
+            <ThemeSwitcher />
         </div>
     );
 };

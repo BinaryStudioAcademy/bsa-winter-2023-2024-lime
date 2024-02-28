@@ -1,6 +1,7 @@
 import {
     Button,
     ButtonVariant,
+    Icon,
     Input,
     Link,
     Loader,
@@ -30,7 +31,7 @@ const SignInForm: React.FC<Properties> = ({
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
-        mode: 'onTouched',
+        mode: 'onSubmit',
     });
 
     const handleFormSubmit = useCallback(
@@ -43,25 +44,25 @@ const SignInForm: React.FC<Properties> = ({
     return (
         <>
             <div>
-                <h1 className="mb-6 text-left text-[1.875rem] font-bold text-white">
-                    Hi! Login to your Account
+                <h1 className="text-primary mb-6 text-left text-[1.8rem] font-bold">
+                    Hi! Sign in to your Account
                 </h1>
                 <div className="flex flex-col gap-4">
                     <Button
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="G"
+                        rightIcon={<Icon name="googleLogoIcon" />}
                     />
                     <Button
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="f"
+                        rightIcon={<Icon name="facebookIcon" />}
                     />
                 </div>
 
-                <p className="text-lm-grey-100 mb-6 mt-10 text-center text-xs">
+                <p className="text-secondary mb-6 mt-10 text-center text-xs">
                     or Sign in with Email
                 </p>
 
@@ -101,7 +102,7 @@ const SignInForm: React.FC<Properties> = ({
                     </div>
 
                     <Button
-                        label={isLoading ? '' : 'Log In'}
+                        label={isLoading ? '' : 'Sign In'}
                         leftIcon={
                             isLoading && <Loader color={IconColor.SECONDARY} />
                         }
@@ -112,12 +113,10 @@ const SignInForm: React.FC<Properties> = ({
                     />
                 </form>
             </div>
-            <p className="text-center text-sm">
-                No account? Go to{' '}
+            <p className="text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
+                No Account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
-                    <span className="text-lm-yellow-100">
-                        Create an account
-                    </span>
+                    <span className="text-action">Create an Account</span>
                 </Link>
             </p>
         </>
