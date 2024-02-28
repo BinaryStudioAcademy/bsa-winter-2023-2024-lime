@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { App } from '~/app/app.js';
 import { Auth } from '~/bundles/auth/pages/auth.js';
 import {
+    DownloadBanner,
     NotificationContainer,
     RouterProvider,
     StoreProvider,
@@ -74,6 +75,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
         <StoreProvider store={store.instance}>
             <RouterProvider routes={routes} />
             <NotificationContainer />
+            <DownloadBanner />
         </StoreProvider>
     </StrictMode>,
 );

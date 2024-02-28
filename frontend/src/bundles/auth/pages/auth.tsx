@@ -143,29 +143,31 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <main className={getValidClassNames(classes.main)}>
-            <div className={getValidClassNames(classes.base, classes.form)}>
-                {getScreen(pathname)}
-            </div>
-            <div className={getValidClassNames(classes.logoContainer)}>
-                <img src={authLogo} alt="LIME Logo" />
-            </div>
-            <Modal
-                isOpen={isOpen}
-                title="Enter Your Email for Password Reset"
-                onClose={handleCloseModal}
-            >
-                {isPasswordForgot ? (
-                    <PasswordForgotSuccessMessage />
-                ) : (
-                    <ForgotPasswordForm
-                        isLoading={isResetPasswordLoading}
-                        onSubmit={handleForgotPassword}
-                    />
-                )}
-            </Modal>
-            <ThemeSwitcher />
-        </main>
+        <>
+            <main className={getValidClassNames(classes.main)}>
+                <div className={getValidClassNames(classes.base, classes.form)}>
+                    {getScreen(pathname)}
+                </div>
+                <div className={getValidClassNames(classes.logoContainer)}>
+                    <img src={authLogo} alt="LIME Logo" />
+                </div>
+                <Modal
+                    isOpen={isOpen}
+                    title="Enter Your Email for Password Reset"
+                    onClose={handleCloseModal}
+                >
+                    {isPasswordForgot ? (
+                        <PasswordForgotSuccessMessage />
+                    ) : (
+                        <ForgotPasswordForm
+                            isLoading={isResetPasswordLoading}
+                            onSubmit={handleForgotPassword}
+                        />
+                    )}
+                </Modal>
+                <ThemeSwitcher />
+            </main>
+        </>
     );
 };
 

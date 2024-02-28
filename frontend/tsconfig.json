@@ -1,6 +1,11 @@
 {
     "extends": "../tsconfig.json",
-    "include": ["**/*.ts", "**/*.js", "**/*.tsx"],
+    "include": [
+        "**/*.ts",
+        "**/*.js",
+        "**/*.tsx",
+        "src/bundles/common/components/download-banner/download-banner.tsx",
+    ],
     "exclude": ["node_modules", "build"],
     "compilerOptions": {
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
