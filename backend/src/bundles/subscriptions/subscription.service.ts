@@ -113,19 +113,14 @@ class SubscriptionService
         }
     }
 
-    public async webHookListener(body: unknown): Promise<void> {
-        const stripeResponse = body as Stripe.Event;
-        if (
-            !stripeResponse ||
-            !stripeResponse.type ||
-            !stripeResponse.data.object
-        ) {
+    public async webHookListener(event: Stripe.Event): Promise<void> {
+        if (!event || !event.type || !event.data.object) {
             return;
         }
 
-        switch (stripeResponse.type) {
+        switch (event.type) {
             case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_UPDATED: {
-                const subscription = stripeResponse.data.object;
+                const subscription = event.data.object;
                 const updatedSubscription =
                     await this.subscriptionRepository.updateByStripeSubscriptionId(
                         subscription.id,
@@ -166,7 +161,7 @@ class SubscriptionService
                 break;
             }
             case SubscriptionWebHook.CUSTOMER_SUBSCRIPTION_DELETED: {
-                const subscription = stripeResponse.data.object;
+                const subscription = event.data.object;
                 await this.subscriptionRepository.delete({
                     stripeSubscriptionId: subscription.id,
                 });

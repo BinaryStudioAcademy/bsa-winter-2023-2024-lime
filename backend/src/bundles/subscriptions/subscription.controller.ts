@@ -13,6 +13,7 @@ import { type SubscriptionService } from './subscription.service.js';
 import {
     type CancelSubscriptionRequestDto,
     type SubscribeRequestDto,
+    type WebhookBody,
 } from './types/types.js';
 
 /**
@@ -116,7 +117,6 @@ class SubscriptionController extends BaseController {
                     }>,
                 ),
         });
-
         this.addRoute({
             path: SubscriptionsApiPath.CANCEL_SUBSCRIPTION,
             method: 'PATCH',
@@ -135,7 +135,7 @@ class SubscriptionController extends BaseController {
             handler: (options) => {
                 return this.webHookListener(
                     options as ApiHandlerOptions<{
-                        body: unknown;
+                        body: WebhookBody;
                     }>,
                 );
             },
@@ -334,13 +334,13 @@ class SubscriptionController extends BaseController {
      */
     private async webHookListener(
         options: ApiHandlerOptions<{
-            body: unknown;
+            body: WebhookBody;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             status: HttpCode.OK,
             payload: await this.subscriptionService.webHookListener(
-                options.body,
+                options.body.stripeWebhookEvent,
             ),
         };
     }

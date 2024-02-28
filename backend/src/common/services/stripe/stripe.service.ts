@@ -4,13 +4,19 @@ import { type SubscriptionStatus } from '~/bundles/subscriptions/enums/enums.js'
 import { formatToDateFromUnix } from '~/common/helpers/helpers.js';
 import { type ValueOf } from '~/common/types/types.js';
 
-class StipeService {
+class StripeService {
     private readonly stripeSecretKey: string;
+
+    private readonly stripeWebhookSecretKey: string;
 
     private readonly stripeApi: Stripe;
 
-    public constructor(stripeSecretKey: string) {
+    public constructor(
+        stripeSecretKey: string,
+        stripeWebhookSecretKey: string,
+    ) {
         this.stripeSecretKey = stripeSecretKey;
+        this.stripeWebhookSecretKey = stripeWebhookSecretKey;
         this.stripeApi = new Stripe(this.stripeSecretKey, {
             apiVersion: '2023-10-16',
         });
@@ -104,10 +110,21 @@ class StipeService {
     }: {
         stripeSubscriptionId: string;
     }): Promise<boolean> {
-        return (await this.stripeApi.subscriptions.cancel(stripeSubscriptionId))
-            ? true
-            : false;
+        return Boolean(
+            await this.stripeApi.subscriptions.cancel(stripeSubscriptionId),
+        );
+    }
+
+    public async verifyWebhookRequest(
+        body: string | Buffer,
+        signature: string,
+    ): Promise<Stripe.Event> {
+        return await this.stripeApi.webhooks.constructEventAsync(
+            body,
+            signature,
+            this.stripeWebhookSecretKey,
+        );
     }
 }
 
-export { StipeService };
+export { StripeService };

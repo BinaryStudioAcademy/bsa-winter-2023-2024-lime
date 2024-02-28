@@ -1,3 +1,4 @@
+export { type WebhookBody } from './webhook-body.type.js';
 export {
     type CancelSubscriptionRequestDto,
     type CancelSubscriptionResponseDto,

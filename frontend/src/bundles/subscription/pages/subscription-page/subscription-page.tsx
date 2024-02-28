@@ -69,7 +69,7 @@ const SubscriptionPage = (): JSX.Element => {
     }
 
     return (
-        <div className="m-auto flex w-full max-w-[50rem] flex-col justify-center gap-10 px-2">
+        <div className="m-auto mt-5 flex w-full max-w-[50rem] flex-col justify-center gap-10 px-2">
             <div className={'flex flex-col items-center justify-center gap-2'}>
                 {currentSubscription ? (
                     <SubscriptionUserPanel
@@ -88,7 +88,7 @@ const SubscriptionPage = (): JSX.Element => {
                         handleChangeSubscription={handleChangeSubscription}
                     />
                 ) : (
-                    <span className="text-lm-black-100 text-start text-xl font-bold">
+                    <span className="font-base text-xl text-white">
                         Looks like you dont have subscription yet. Choose from
                         below.
                     </span>
