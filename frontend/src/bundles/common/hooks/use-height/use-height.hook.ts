@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 const useHeight = (height: number): boolean => {
     const [isHeight, setIsHeight] = useState(false);
 
-    const responsiveHighness = useCallback((): void => {
+    const handleResize = useCallback((): void => {
         if (window.innerHeight <= height) {
             setIsHeight(true);
         } else {
@@ -12,11 +12,11 @@ const useHeight = (height: number): boolean => {
     }, [height]);
 
     useEffect(() => {
-        window.addEventListener('resize', responsiveHighness);
-        responsiveHighness();
+        window.addEventListener('resize', handleResize);
+        handleResize();
 
-        return () => window.removeEventListener('resize', responsiveHighness);
-    }, [responsiveHighness]);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [handleResize]);
 
     return isHeight;
 };
