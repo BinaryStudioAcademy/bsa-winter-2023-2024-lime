@@ -14,8 +14,8 @@ type Properties = {
 const SubNavigation = ({ items, title, button }: Properties): JSX.Element => {
     const bgColors = [
         'bg-lm-yellow-100',
-        'bg-lm-magenta',
-        'bg-lm-purple',
+        'bg-lm-magenta-200',
+        'bg-lm-purple-200',
         'bg-lm-green',
     ];
 
