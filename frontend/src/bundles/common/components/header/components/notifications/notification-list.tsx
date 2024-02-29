@@ -20,7 +20,7 @@ const NotificationList = ({
         [onNotificationClick],
     );
     return (
-        <div className="bg-secondary rounded-34 absolute right-0 flex w-52 flex-col text-white shadow-lg">
+        <div className="bg-secondary rounded-34 absolute right-0 flex w-52 flex-col text-primary shadow-lg">
             {notifications.length > 0 ? (
                 notifications.map((notification, index) => (
                     <Popover
@@ -28,7 +28,7 @@ const NotificationList = ({
                         content={<></>}
                         key={notification.id}
                     >
-                        <details className="text-primary w-full">
+                        <details className="w-full">
                             <summary className=" flex cursor-pointer items-center justify-center p-2 transition-all">
                                 {notification.title}
                             </summary>
