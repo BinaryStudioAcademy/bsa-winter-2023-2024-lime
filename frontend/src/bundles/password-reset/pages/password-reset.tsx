@@ -66,16 +66,14 @@ const PasswordReset: React.FC = () => {
     }, [dataStatus, navigate]);
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-primary mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
-        form: 'justify-between gap-6 text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
+        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-primary lg:flex-none lg:w-[45rem]',
+        form: 'items-center justify-center text-primary px-[2rem] lg:px-[11rem] lg:justify-center pt-0 pb-0',
     };
 
     return (
-        <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
+        <main className={classes.main}>
             <div className={getValidClassNames(classes.base, classes.form)}>
-                <h3 className="text-left text-3xl font-bold leading-8">
-                    Set Up Your New Password
-                </h3>
                 {isPasswordReset ? (
                     <PasswordResetSuccessMessage />
                 ) : (
@@ -85,7 +83,7 @@ const PasswordReset: React.FC = () => {
                     />
                 )}
             </div>
-            <div className="text-primary items-center justify-center text-xl sm:hidden md:flex md:flex-1">
+            <div className="text-primary hidden flex-1 items-center justify-center text-xl lg:flex">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
             <ThemeSwitcher className="absolute bottom-4 right-4" />
