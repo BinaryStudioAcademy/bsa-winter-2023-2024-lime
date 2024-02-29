@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { Popover } from '~/bundles/common/components/components.js';
+import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
-import { Popover } from '../../../popover/popover.js';
 import { type NotificacitionType } from './enums/notifications.enums.js';
 
 type Properties = {
