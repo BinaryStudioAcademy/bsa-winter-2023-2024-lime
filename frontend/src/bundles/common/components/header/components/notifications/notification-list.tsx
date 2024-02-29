@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { Popover } from '../../../popover/popover.js';
 import { type NotificacitionType } from './enums/notifications.enums.js';
 
 type Properties = {
@@ -19,13 +20,20 @@ const NotificationList = ({
         [onNotificationClick],
     );
     return (
-        <div className="absolute right-0 flex w-52 flex-col text-white shadow-lg">
+        <div className="bg-secondary rounded-34 absolute right-0 flex w-52 flex-col text-white shadow-lg">
             {notifications.length > 0 ? (
                 notifications.map((notification, index) => (
-                    <div
-                        className="border-lm-yellow-200 bg-lm-black-100 relative w-full rounded border text-sm"
+                    <Popover
+                        className="border-buttonTertiary bg-primary relative w-full rounded border text-sm"
+                        content={<></>}
                         key={notification.id}
                     >
+                        <details className="text-primary w-full">
+                            <summary className=" flex cursor-pointer items-center justify-center p-2 transition-all">
+                                {notification.title}
+                            </summary>
+                            <p className="p-4">{notification.description}</p>
+                        </details>
                         <button
                             key={index}
                             data-index={notification.id}
@@ -35,16 +43,10 @@ const NotificationList = ({
                         >
                             X
                         </button>
-                        <details>
-                            <summary className=" flex cursor-pointer items-center justify-center p-2 transition-all">
-                                {notification.title}
-                            </summary>
-                            <p className="p-4">{notification.description}</p>
-                        </details>
-                    </div>
+                    </Popover>
                 ))
             ) : (
-                <p className="bg-lm-black-100 border-lm-yellow-200 rounded border p-4 text-sm">
+                <p className="bg-primary text-primary border-buttonTertiary rounded border p-4 text-sm">
                     There are no notifications
                 </p>
             )}
