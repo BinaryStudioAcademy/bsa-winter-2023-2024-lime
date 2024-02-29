@@ -67,7 +67,7 @@ const PasswordReset: React.FC = () => {
     }, [dataStatus]);
 
     useEffect(() => {
-        if (Date.now() > Number(exp)) {
+        if (Date.now() >= Number(exp) * 1000) {
             navigate(AppRoute.SIGN_IN);
             notificationManager.error(ERROR_MESSAGE_TEXT);
         }
