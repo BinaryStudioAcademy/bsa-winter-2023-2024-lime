@@ -15,6 +15,8 @@
         "migrate:dev:make": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:make -x ts",
         "migrate:dev:down": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:down",
         "migrate:dev:rollback": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js migrate:rollback --all",
+        "seed:dev:make": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js seed:make -x ts",
+        "seed:dev:run": "node --loader ts-paths-esm-loader ../node_modules/knex/bin/cli.js seed:run",
         "build": "tsc && tsc-alias -p tsconfig.json && npm run build:copy",
         "build:copy": "cp -r package.json build",
         "seed:run": "npm run knex seed:run",
@@ -42,6 +44,7 @@
         "dotenv": "16.4.1",
         "fastify": "4.25.2",
         "fastify-multer": "2.0.3",
+        "fastify-raw-body": "4.3.0",
         "googleapis": "133.0.0",
         "jose": "5.2.2",
         "knex": "3.1.0",
@@ -51,6 +54,7 @@
         "pino": "8.17.2",
         "pino-pretty": "10.3.1",
         "shared": "*",
+        "stripe": "14.17.0",
         "swagger-jsdoc": "6.2.8"
     }
 }

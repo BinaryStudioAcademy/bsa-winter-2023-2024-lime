@@ -6,16 +6,18 @@ import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify, { type FastifyError } from 'fastify';
 import multer from 'fastify-multer';
+import fastifyRawBody from 'fastify-raw-body';
+import { SubscriptionsApiPath } from 'shared';
 
 import { type Config } from '~/common/config/config.js';
 import { type Database } from '~/common/database/database.js';
-import { ServerErrorType } from '~/common/enums/enums.js';
+import { ApiPath, ServerErrorType } from '~/common/enums/enums.js';
 import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { createProtectedRoutes } from '~/common/helpers/create-protected-routes-helper.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
-import { authPlugin } from '~/common/plugins/plugins.js';
-import { jwtService } from '~/common/services/services.js';
+import { authPlugin, verifyStripeWebhook } from '~/common/plugins/plugins.js';
+import { jwtService, stripeService } from '~/common/services/services.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -126,6 +128,22 @@ class BaseServerApp implements ServerApp {
             jwtService,
             protectedRoutes: createProtectedRoutes(this.apis),
         });
+
+        await this.app.register(verifyStripeWebhook, {
+            stripeService,
+        });
+
+        await this.app.register(fastifyRawBody, {
+            field: 'rawBody',
+            encoding: 'utf8',
+            runFirst: true,
+            routes: this.apis.map((it) => {
+                return it.buildFullPath(
+                    `${ApiPath.SUBSCRIPTIONS}${SubscriptionsApiPath.STRIPE_WEBHOOK}`,
+                );
+            }),
+        });
+
         await this.app.register(multer.contentParser);
     }
 

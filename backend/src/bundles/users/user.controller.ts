@@ -118,7 +118,7 @@ class UserController extends BaseController {
      *                   items:
      *                     type: array
      *                     items:
-     *                       $ref: '#/components/schemas/User/'
+     *                       $ref: '#/components/schemas/User'
      *        401:
      *          description: Failed operation
      *          content:
