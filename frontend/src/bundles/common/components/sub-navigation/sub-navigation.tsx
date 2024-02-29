@@ -9,19 +9,29 @@ type Properties = {
     items: { id: string; label: string; to: string }[];
     title?: string;
     button?: { label: string; onClick: () => void };
+    className?: string;
 };
 
-const SubNavigation = ({ items, title, button }: Properties): JSX.Element => {
+const SubNavigation = ({
+    items,
+    title,
+    button,
+    className,
+}: Properties): JSX.Element => {
     const bgColors = [
         'bg-lm-yellow-100',
-        'bg-lm-magenta',
-        'bg-lm-purple',
+        'bg-lm-magenta-100',
+        'bg-lm-purple-100',
         'bg-lm-green',
     ];
 
     return (
-        <div className="bg-lm-black-200 flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2.5rem]">
-            {title && <h1 className="text-xl font-bold text-white">{title}</h1>}
+        <div
+            className={`bg-primary flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2rem] ${className}`}
+        >
+            {title && (
+                <h1 className="text-primary text-xl font-bold">{title}</h1>
+            )}
             {items.map((item, index) => (
                 <SubNavItem
                     key={item.id}
