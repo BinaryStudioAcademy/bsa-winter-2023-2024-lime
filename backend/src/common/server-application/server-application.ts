@@ -1,5 +1,6 @@
 import { authController } from '~/bundles/auth/auth.js';
 import { connectionController } from '~/bundles/connections/connections.js';
+import { goalController } from '~/bundles/goals/goals.js';
 import { oAuthController } from '~/bundles/oauth/oauth.js';
 import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
 import { subscriptionPlanController } from '~/bundles/subscription-plans/subscription-plan.js';
@@ -18,6 +19,7 @@ const apiV1 = new BaseServerAppApi(
     config,
     ...authController.routes,
     ...userController.routes,
+    ...goalController.routes,
     ...subscriptionController.routes,
     ...subscriptionPlanController.routes,
     ...workoutController.routes,

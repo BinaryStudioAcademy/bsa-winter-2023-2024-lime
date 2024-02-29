@@ -1,7 +1,14 @@
-export { ActivityType, Metric } from './bundles/achievements/enums/enums.js';
+export { Metric } from './bundles/achievements/enums/enums.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
+export {
+    type GoalRequestDto,
+    type GoalResponseDto,
+    FrequencyType,
+    GoalsApiPath,
+    goalValidationSchema,
+} from './bundles/goals/goals.js';
 export {
     type OAuthProviderParameterDto,
     type OAuthResponseDto,
@@ -54,6 +61,7 @@ export {
     workoutValidationSchema,
 } from './bundles/workouts/workouts.js';
 export {
+    ActivityType,
     ApiPath,
     AppEnvironment,
     ContentType,
