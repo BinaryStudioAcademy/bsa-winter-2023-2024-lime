@@ -152,8 +152,15 @@ class OAuthController extends BaseController {
             params: OAuthProviderParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const query = options.query;
+        const isStateJSON = /{.*}/.test(query.state);
         const { provider } = options.params;
-        await this.oAuthService.exchangeAuthCode(provider, options.query);
+        const data = isStateJSON ? JSON.parse(query.state) : query;
+        const payload = { ...query, userId: data.userId, state: data.uuid };
+        await this.oAuthService.exchangeAuthCode(
+            provider,
+            isStateJSON ? payload : query,
+        );
 
         return {
             type: ApiHandlerResponseType.REDIRECT,

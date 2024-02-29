@@ -11,7 +11,7 @@ import {
 } from '~/bundles/oauth/oauth.js';
 import { type Config } from '~/common/config/config.js';
 
-import { REQUIRED_SCOPE } from './constants/strava-required-scope.js';
+import { REQUIRED_SCOPE } from './constants/strava-required-scope.constant.js';
 import { ApiPath, StravaPath } from './enums/enums.js';
 import { type StravaOAuthResponseDto } from './types/types.js';
 

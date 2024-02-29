@@ -190,6 +190,20 @@ class BaseConfig implements Config {
                     default: null,
                 },
             },
+            GOOGLE_FIT: {
+                CLIENT_ID: {
+                    doc: 'Google fit Client ID',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_ID',
+                    default: null,
+                },
+                CLIENT_SECRET: {
+                    doc: 'Google fit Client Secret',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_SECRET',
+                    default: null,
+                },
+            },
         });
     }
 }
