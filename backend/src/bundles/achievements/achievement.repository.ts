@@ -59,14 +59,16 @@ class AchievementRepository implements Repository {
     }
 
     public async update(
-        id: number,
-        changes: object,
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
     ): ReturnType<Repository['update']> {
         return this.achievementModel
             .query()
-            .findById(id)
-            .update(changes)
-            .returning('*');
+            .patch(payload)
+            .where(query)
+            .returning('*')
+            .first()
+            .execute();
     }
 
     public delete(): ReturnType<Repository['delete']> {

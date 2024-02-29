@@ -3,8 +3,9 @@ import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
+    BaseController,
 } from '~/common/controller/controller.js';
-import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
@@ -144,6 +145,7 @@ class AchievementController extends BaseController {
 
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.achievementService.findAll(),
         };
@@ -187,11 +189,13 @@ class AchievementController extends BaseController {
             );
 
             return {
+                type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
                 payload: achievement,
             };
         } catch {
             return {
+                type: ApiHandlerResponseType.DATA,
                 status: HttpCode.NOT_FOUND,
                 payload: {
                     errorType: 'COMMON',
@@ -242,11 +246,13 @@ class AchievementController extends BaseController {
                 await this.achievementService.findByUserId(id);
 
             return {
+                type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
                 payload: userAchievements,
             };
         } catch {
             return {
+                type: ApiHandlerResponseType.DATA,
                 status: HttpCode.NOT_FOUND,
                 payload: {
                     errorType: 'COMMON',

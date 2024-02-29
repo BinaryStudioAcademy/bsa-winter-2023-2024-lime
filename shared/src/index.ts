@@ -1,10 +1,24 @@
 export {
     AchievementsApiPath,
-    ActivityType,
     Metric,
 } from './bundles/achievements/enums/enums.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
+export {
+    type GoalRequestDto,
+    type GoalResponseDto,
+    FrequencyType,
+    GoalsApiPath,
+    goalValidationSchema,
+} from './bundles/goals/goals.js';
+export {
+    type OAuthProviderParameterDto,
+    type OAuthResponseDto,
+    OAuthActionsPath,
+    OAuthProvider,
+    oAuthProviderValidationSchema,
+} from './bundles/oauth/oauth.js';
 export {
     type PasswordForgotRequestDto,
     type PasswordForgotResponseDto,
@@ -13,6 +27,21 @@ export {
     PasswordResetApiPath,
     PasswordResetValidationMessage,
 } from './bundles/password-reset/password-reset.js';
+export {
+    type SubscriptionPlansGetAllItemResponseDto,
+    type SubscriptionPlansGetAllResponseDto,
+    SubscriptionPlansApiPath,
+} from './bundles/subscription-plans/subscription-plans.js';
+export {
+    type CancelSubscriptionRequestDto,
+    type CancelSubscriptionResponseDto,
+    type SubscribeRequestDto,
+    type SubscribeResponseDto,
+    type SubscriptionGetItemResponseDto,
+    SubscriptionsApiPath,
+    SubscriptionStatus,
+    SubscriptionValidationMessage,
+} from './bundles/subscriptions/subscriptions.js';
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
@@ -27,6 +56,7 @@ export {
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
+    ActivityType,
     ApiPath,
     AppEnvironment,
     ContentType,
