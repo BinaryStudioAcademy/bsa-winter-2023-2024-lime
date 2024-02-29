@@ -13,7 +13,7 @@ const initialState: State = {
 
 const { reducer, actions, name } = createSlice({
     initialState,
-    name: 'auth',
+    name: 'chat',
     reducers: {},
 });
 
