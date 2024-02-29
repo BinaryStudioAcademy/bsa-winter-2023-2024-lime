@@ -70,35 +70,35 @@ const routes = [
                         path: AppRoute.LOGOUT,
                         element: <div>LOGOUT PAGE</div>,
                     },
-                ],
-            },
-            {
-                path: AppRoute.SUBSCRIPTION,
-                element: <SubscriptionPage />,
-            },
-            {
-                path: AppRoute.SUBSCRIPTION_CHECKOUT,
-                element: <SubscriptionCheckout />,
-            },
-            {
-                path: AppRoute.PROFILE,
-                element: <ProfileLayout />,
-                children: [
                     {
-                        path: AppRoute.PROFILE_INFORMATION,
-                        element: <div>PROFILE INFORMATION PAGE</div>,
-                    },
-                    {
-                        path: AppRoute.PROFILE_CONECTIONS,
-                        element: <ConnectionsPage />,
-                    },
-                    {
-                        path: AppRoute.PROFILE_GOALS,
-                        element: <div>PROFILE GOALS PAGE</div>,
-                    },
-                    {
-                        path: AppRoute.PROFILE_PREFERENCES,
-                        element: <div>PROFILE PREFERENCES PAGE</div>,
+                        path: AppRoute.PROFILE,
+                        element: <ProfileLayout />,
+                        children: [
+                            {
+                                path: AppRoute.PROFILE_INFORMATION,
+                                element: <div>PROFILE INFORMATION PAGE</div>,
+                            },
+                            {
+                                path: AppRoute.PROFILE_CONECTIONS,
+                                element: <ConnectionsPage />,
+                            },
+                            {
+                                path: AppRoute.PROFILE_GOALS,
+                                element: <div>PROFILE GOALS PAGE</div>,
+                            },
+                            {
+                                path: AppRoute.PROFILE_PREFERENCES,
+                                element: <div>PROFILE PREFERENCES PAGE</div>,
+                            },
+                            {
+                                path: AppRoute.PROFILE_SUBSCRIPTION,
+                                element: <SubscriptionPage />,
+                            },
+                            {
+                                path: AppRoute.PROFILE_SUBSCRIPTION_CHECKOUT,
+                                element: <SubscriptionCheckout />,
+                            },
+                        ],
                     },
                 ],
             },

@@ -23,6 +23,8 @@ const SubNavigation = ({
         'bg-lm-magenta-100',
         'bg-lm-purple-100',
         'bg-lm-green',
+        'bg-lm-blue-400',
+        'bg-lm-blue-500',
     ];
 
     return (

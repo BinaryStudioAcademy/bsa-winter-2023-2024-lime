@@ -10,6 +10,11 @@ const ProfileNavigation = (): JSX.Element => {
         { id: 'goals', label: 'Fitness goals', to: '/profile/goals' },
         { id: 'preferences', label: 'Preferences', to: '/profile/preferences' },
         { id: 'conections', label: 'Connections', to: '/profile/conections' },
+        {
+            id: 'subscription',
+            label: 'Subscriptions',
+            to: '/profile/subscriptions',
+        },
     ];
     return (
         <div>

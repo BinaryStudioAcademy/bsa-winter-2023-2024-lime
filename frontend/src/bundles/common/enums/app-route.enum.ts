@@ -4,8 +4,6 @@ const AppRoute = {
     HELP: '/help',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
-    SUBSCRIPTION: '/subscriptions',
-    SUBSCRIPTION_CHECKOUT: '/subscriptions-checkout',
     PASSWORD_RESET: '/reset-password/:resetToken',
     OVERVIEW: '/overview',
     GOALS: '/goals',
@@ -16,6 +14,8 @@ const AppRoute = {
     PROFILE_GOALS: '/profile/goals',
     PROFILE_PREFERENCES: '/profile/preferences',
     PROFILE_CONECTIONS: '/profile/conections',
+    PROFILE_SUBSCRIPTION: '/profile/subscriptions',
+    PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
     NOT_FOUND: '*',
 } as const;
 

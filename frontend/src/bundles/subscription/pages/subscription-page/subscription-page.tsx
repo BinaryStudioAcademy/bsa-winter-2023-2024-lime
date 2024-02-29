@@ -59,7 +59,7 @@ const SubscriptionPage = (): JSX.Element => {
                 }),
             );
 
-            navigate(AppRoute.SUBSCRIPTION_CHECKOUT);
+            navigate(AppRoute.PROFILE_SUBSCRIPTION_CHECKOUT);
         },
         [dispatch, navigate],
     );
