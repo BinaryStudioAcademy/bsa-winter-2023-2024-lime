@@ -24,6 +24,8 @@ class UserEntity implements Entity {
 
     private 'gender': ValueOf<typeof Gender> | null;
 
+    private 'referralCode': string | null;
+
     private constructor({
         id,
         email,
@@ -35,6 +37,7 @@ class UserEntity implements Entity {
         weight,
         height,
         gender,
+        referralCode,
     }: {
         id: number | null;
         email: string;
@@ -46,6 +49,7 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
+        referralCode: string | null;
     }) {
         this.id = id;
         this.email = email;
@@ -57,6 +61,7 @@ class UserEntity implements Entity {
         this.weight = weight;
         this.height = height;
         this.gender = gender;
+        this.referralCode = referralCode;
     }
 
     public getPasswordHash(): string {
@@ -74,6 +79,7 @@ class UserEntity implements Entity {
         weight,
         height,
         gender,
+        referralCode,
     }: {
         id: number;
         email: string;
@@ -85,6 +91,7 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
+        referralCode: string | null;
     }): UserEntity {
         return new UserEntity({
             id,
@@ -97,6 +104,7 @@ class UserEntity implements Entity {
             weight,
             height,
             gender,
+            referralCode,
         });
     }
 
@@ -118,6 +126,7 @@ class UserEntity implements Entity {
             weight: null,
             height: null,
             gender: null,
+            referralCode: null,
         });
     }
 
@@ -131,6 +140,7 @@ class UserEntity implements Entity {
         weight: number | null;
         height: number | null;
         gender: ValueOf<typeof Gender> | null;
+        referralCode: string | null;
     } {
         return {
             id: this.id as number,
@@ -142,16 +152,19 @@ class UserEntity implements Entity {
             weight: this.weight as number,
             height: this.height as number,
             gender: this.gender,
+            referralCode: this.referralCode,
         };
     }
 
     public toNewObject(): {
         email: string;
         passwordHash: string;
+        referralCode: string | null;
     } {
         return {
             email: this.email,
             passwordHash: this.passwordHash,
+            referralCode: this.referralCode,
         };
     }
 }

@@ -7,12 +7,12 @@ import {
 
 import { UserAttributes } from '../users/enums/user-attributes.enum.js';
 import { UserModel } from '../users/user.model.js';
-import { ReferralTransactionAttributes } from './enums/enums.js';
+import { UserReferralAttributes } from './enums/enums.js';
 
-class ReferralTransactionModel extends AbstractModel {
+class UserReferralModel extends AbstractModel {
     public 'userId': number;
 
-    public 'referralUserId': number;
+    public 'referralUserId': number | null;
 
     public 'referralCode': string;
 
@@ -26,7 +26,7 @@ class ReferralTransactionModel extends AbstractModel {
                 relation: Model.BelongsToOneRelation,
                 modelClass: UserModel,
                 join: {
-                    from: `${DatabaseTableName.REFERRAL_TRANSACTIONS}.${ReferralTransactionAttributes.USER_ID}`,
+                    from: `${DatabaseTableName.USER_REFERRAL}.${UserReferralAttributes.USER_ID}`,
                     to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },
@@ -34,4 +34,4 @@ class ReferralTransactionModel extends AbstractModel {
     }
 }
 
-export { ReferralTransactionModel };
+export { UserReferralModel };

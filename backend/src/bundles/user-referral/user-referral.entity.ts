@@ -1,11 +1,11 @@
 import { type Entity } from '~/common/types/types.js';
 
-class ReferralTransactionEntity implements Entity {
+class UserReferralEntity implements Entity {
     private 'id': number | null;
 
     private 'userId': number;
 
-    private 'referralUserId': number;
+    private 'referralUserId': number | null;
 
     private 'referralCode': string;
 
@@ -17,7 +17,7 @@ class ReferralTransactionEntity implements Entity {
     }: {
         id: number | null;
         userId: number;
-        referralUserId: number;
+        referralUserId: number | null;
         referralCode: string;
     }) {
         this.id = id;
@@ -34,10 +34,10 @@ class ReferralTransactionEntity implements Entity {
     }: {
         id: number;
         userId: number;
-        referralUserId: number;
+        referralUserId: number | null;
         referralCode: string;
-    }): ReferralTransactionEntity {
-        return new ReferralTransactionEntity({
+    }): UserReferralEntity {
+        return new UserReferralEntity({
             id,
             userId,
             referralUserId,
@@ -51,10 +51,10 @@ class ReferralTransactionEntity implements Entity {
         referralCode,
     }: {
         userId: number;
-        referralUserId: number;
+        referralUserId: number | null;
         referralCode: string;
-    }): ReferralTransactionEntity {
-        return new ReferralTransactionEntity({
+    }): UserReferralEntity {
+        return new UserReferralEntity({
             id: null,
             userId,
             referralUserId,
@@ -65,7 +65,7 @@ class ReferralTransactionEntity implements Entity {
     public toObject(): {
         id: number;
         userId: number;
-        referralUserId: number;
+        referralUserId: number | null;
         referralCode: string;
     } {
         return {
@@ -78,7 +78,7 @@ class ReferralTransactionEntity implements Entity {
 
     public toNewObject(): {
         userId: number;
-        referralUserId: number;
+        referralUserId: number | null;
         referralCode: string;
     } {
         return {
@@ -89,4 +89,4 @@ class ReferralTransactionEntity implements Entity {
     }
 }
 
-export { ReferralTransactionEntity };
+export { UserReferralEntity };

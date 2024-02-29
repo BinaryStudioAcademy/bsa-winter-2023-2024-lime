@@ -12,6 +12,8 @@ import {
 } from '~/common/database/database.js';
 
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
+import { UserReferralAttributes } from '../user-referral/enums/user-referral.js';
+import { UserReferralModel } from '../user-referral/user-referral.model.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -25,6 +27,8 @@ class UserModel extends AbstractModel {
     public 'userOAuthInfo': OAuthModel;
 
     public 'userOAuthState': OAuthStateModel;
+
+    public 'userReferral': UserReferralModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -54,6 +58,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.OAUTH_STATE}.${OAuthStateAttributes.ID}`,
+                },
+            },
+            userReferral: {
+                relation: Model.HasOneRelation,
+                modelClass: UserReferralModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_REFERRAL}.${UserReferralAttributes.ID}`,
                 },
             },
             userAchievement: {

@@ -1,20 +1,18 @@
 import { type Repository } from '~/common/types/types.js';
 
-import { ReferralTransactionEntity } from './referral-transaction.entity.js';
-import { type ReferralTransactionModel } from './referral-transaction.model.js';
+import { UserReferralEntity } from './user-referral.entity.js';
+import { type UserReferralModel } from './user-referral.model.js';
 
-class ReferralTransactionRepository implements Repository {
-    private referralTransactionsModel: typeof ReferralTransactionModel;
+class UserReferralRepository implements Repository {
+    private referralTransactionsModel: typeof UserReferralModel;
 
-    public constructor(
-        referralTransactionsModel: typeof ReferralTransactionModel,
-    ) {
+    public constructor(referralTransactionsModel: typeof UserReferralModel) {
         this.referralTransactionsModel = referralTransactionsModel;
     }
 
     public async find(
         query: Record<string, unknown>,
-    ): Promise<ReferralTransactionEntity | null> {
+    ): Promise<UserReferralEntity | null> {
         const referralTransaction = await this.referralTransactionsModel
             .query()
             .findOne(query)
@@ -24,31 +22,31 @@ class ReferralTransactionRepository implements Repository {
             return null;
         }
 
-        return ReferralTransactionEntity.initialize(referralTransaction);
+        return UserReferralEntity.initialize(referralTransaction);
     }
 
-    public async findAll(): Promise<ReferralTransactionEntity[]> {
+    public async findAll(): Promise<UserReferralEntity[]> {
         const referralTransactions = await this.referralTransactionsModel
             .query()
             .execute();
 
         return referralTransactions.map((referralTransaction) => {
-            return ReferralTransactionEntity.initialize(referralTransaction);
+            return UserReferralEntity.initialize(referralTransaction);
         });
     }
 
     public async create(
-        entity: ReferralTransactionEntity,
-    ): Promise<ReferralTransactionEntity> {
-        const { userId, referralUserId, referralCode } = entity.toNewObject();
+        entity: UserReferralEntity,
+    ): Promise<UserReferralEntity> {
+        const { userId, referralCode } = entity.toNewObject();
 
         const referralTransaction = await this.referralTransactionsModel
             .query()
-            .insert({ userId, referralUserId, referralCode })
+            .insert({ userId, referralCode })
             .returning('*')
             .execute();
 
-        return ReferralTransactionEntity.initialize(referralTransaction);
+        return UserReferralEntity.initialize(referralTransaction);
     }
 
     public update(): ReturnType<Repository['update']> {
@@ -60,4 +58,4 @@ class ReferralTransactionRepository implements Repository {
     }
 }
 
-export { ReferralTransactionRepository };
+export { UserReferralRepository };
