@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { App } from '~/app/app.js';
 import { Auth } from '~/bundles/auth/pages/auth.js';
 import {
+    DownloadBanner,
     NotificationContainer,
     RouterProvider,
     StoreProvider,
@@ -15,39 +16,67 @@ import { NotFound } from '~/bundles/common/pages/pages.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { store } from '~/framework/store/store.js';
 
+import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
+import {
+    SubscriptionCheckout,
+    SubscriptionPage,
+} from './bundles/subscription/subscription.js';
+
 const routes = [
     {
         path: AppRoute.ROOT,
         element: <App />,
         children: [
             {
+                path: AppRoute.SIGN_IN,
+                element: <Auth />,
+            },
+            {
+                path: AppRoute.SIGN_UP,
+                element: <Auth />,
+            },
+            {
                 path: AppRoute.ROOT,
-                element: 'Root',
+                element: <BaseLayout />,
                 isPrivate: true,
+                children: [
+                    {
+                        path: AppRoute.ROOT,
+                        element: 'Root',
+                    },
+                    {
+                        path: AppRoute.GOALS,
+                        element: <div>GOALS PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.WORKOUT,
+                        element: <div>WORKOUT PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.OVERVIEW,
+                        element: <div>Overview</div>,
+                    },
+                    {
+                        path: AppRoute.SCHEDULE,
+                        element: <div>SCHEDULE PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.HELP,
+                        element: <div>HELP PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.LOGOUT,
+                        element: <div>LOGOUT PAGE</div>,
+                    },
+                ],
             },
             {
-                path: AppRoute.GOALS,
-                element: <div>GOALS PAGE</div>,
+                path: AppRoute.SUBSCRIPTION,
+                element: <SubscriptionPage />,
             },
             {
-                path: AppRoute.WORKOUT,
-                element: <div>WORKOUT PAGE</div>,
-            },
-            {
-                path: AppRoute.OVERVIEW,
-                element: <div>Overview</div>,
-            },
-            {
-                path: AppRoute.SCHEDULE,
-                element: <div>SCHEDULE PAGE</div>,
-            },
-            {
-                path: AppRoute.HELP,
-                element: <div>HELP PAGE</div>,
-            },
-            {
-                path: AppRoute.LOGOUT,
-                element: <div>LOGOUT PAGE</div>,
+                path: AppRoute.SUBSCRIPTION_CHECKOUT,
+                element: <SubscriptionCheckout />,
             },
         ],
     },
@@ -59,14 +88,6 @@ const routes = [
         path: AppRoute.NOT_FOUND,
         element: <NotFound />,
     },
-    {
-        path: AppRoute.SIGN_IN,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.SIGN_UP,
-        element: <Auth />,
-    },
 ];
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -74,6 +95,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
         <StoreProvider store={store.instance}>
             <RouterProvider routes={routes} />
             <NotificationContainer />
+            <DownloadBanner />
         </StoreProvider>
     </StrictMode>,
 );

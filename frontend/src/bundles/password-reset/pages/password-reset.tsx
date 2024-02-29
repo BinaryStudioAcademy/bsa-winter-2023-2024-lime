@@ -1,6 +1,9 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import { ResetPasswordForm } from '~/bundles/common/components/components.js';
-import { DataStatus } from '~/bundles/common/enums/enums.js';
+import {
+    ResetPasswordForm,
+    ThemeSwitcher,
+} from '~/bundles/common/components/components.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
     getValidClassNames,
@@ -14,19 +17,20 @@ import {
     useParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { PasswordResetSuccessMessage } from '~/bundles/password-reset/components/components.js';
+import { ERROR_MESSAGE_TEXT } from '~/bundles/password-reset/constants/constants.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import {
     type PasswordResetPayload,
     type PasswordResetRequestDto,
 } from '~/bundles/password-reset/types/types.js';
-
-import { PasswordResetSuccessMessage } from '../components/components.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 const PasswordReset: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { resetToken } = useParams();
-    const { userId } = getUserId(resetToken as string);
+    const { userId, exp } = getUserId(resetToken as string);
 
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
@@ -60,19 +64,24 @@ const PasswordReset: React.FC = () => {
         if (dataStatus === DataStatus.FULFILLED) {
             setIsPasswordReset(true);
         }
-    }, [dataStatus, navigate]);
+    }, [dataStatus]);
+
+    useEffect(() => {
+        if (Date.now() > Number(exp)) {
+            navigate(AppRoute.SIGN_IN);
+            notificationManager.error(ERROR_MESSAGE_TEXT);
+        }
+    }, [exp, navigate]);
 
     const classes = {
-        base: 'relative flex flex-col flex-1 bg-lm-black-200 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem]',
-        form: 'justify-between gap-6 text-white px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
+        main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
+        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-primary lg:flex-none lg:w-[45rem]',
+        form: 'items-center justify-center text-primary px-[2rem] lg:px-[11rem] lg:justify-center pt-0 pb-0',
     };
 
     return (
-        <main className="bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row">
+        <main className={classes.main}>
             <div className={getValidClassNames(classes.base, classes.form)}>
-                <h3 className="text-left text-3xl font-bold leading-8">
-                    Set Up Your New Password
-                </h3>
                 {isPasswordReset ? (
                     <PasswordResetSuccessMessage />
                 ) : (
@@ -82,9 +91,10 @@ const PasswordReset: React.FC = () => {
                     />
                 )}
             </div>
-            <div className="items-center justify-center text-xl text-white sm:hidden md:flex md:flex-1">
+            <div className="text-primary hidden flex-1 items-center justify-center text-xl lg:flex">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
+            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };
