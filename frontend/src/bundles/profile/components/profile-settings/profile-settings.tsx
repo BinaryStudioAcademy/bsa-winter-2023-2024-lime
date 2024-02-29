@@ -9,6 +9,7 @@ import {
 import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
+import { configureISOString } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppForm,
     useAppSelector,
@@ -42,18 +43,21 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             event_.preventDefault();
-
-            const payload: UserUpdateProfileRequestDto = {
-                ...getValues(),
-                fullName: (getValues().fullName || '').trim(),
-                username: (getValues().username || '').trim(),
-                id: userId ?? null,
-            };
-
-            onSubmit(payload);
-            reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
+            if (Object.keys(errors).length === 0) {
+                const payload: UserUpdateProfileRequestDto = {
+                    ...getValues(),
+                    dateOfBirth: getValues().dateOfBirth
+                        ? configureISOString(getValues().dateOfBirth || '')
+                        : null,
+                    fullName: (getValues().fullName || '').trim(),
+                    username: (getValues().username || '').trim(),
+                    id: userId ?? null,
+                };
+                onSubmit(payload);
+                reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
+            }
         },
-        [onSubmit, getValues, userId, reset],
+        [onSubmit, getValues, userId, reset, errors],
     );
 
     const handleCancel = useCallback((): void => {

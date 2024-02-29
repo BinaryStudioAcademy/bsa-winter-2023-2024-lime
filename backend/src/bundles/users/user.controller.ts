@@ -12,7 +12,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import { UsersApiPath, UserValidationMessage } from './enums/enums.js';
+import { UsersApiPath } from './enums/enums.js';
 
 /**
  * @swagger
@@ -194,23 +194,6 @@ class UserController extends BaseController {
         const { id } = user;
         try {
             const updatedUser = await this.userService.update({ id }, body);
-            if (updatedUser && body.dateOfBirth) {
-                const [day, month, year] = body.dateOfBirth.split('/');
-                const parsedDate = new Date(`${year}-${month}-${day}`);
-
-                if (Number.isNaN(parsedDate.getTime())) {
-                    throw new HttpError({
-                        message: UserValidationMessage.BIRTHDATE_FORMAT,
-                        status: HttpCode.BAD_REQUEST,
-                    });
-                } else {
-                    const formattedDate =
-                        parsedDate.toLocaleDateString('en-GB');
-
-                    updatedUser.dateOfBirth = formattedDate;
-                }
-            }
-
             return {
                 status: HttpCode.OK,
                 payload: updatedUser,
