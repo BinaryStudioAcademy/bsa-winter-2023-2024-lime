@@ -46,7 +46,7 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.SIDEBAR]:
         'align-middle hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
     [ButtonVariant.DANGER]:
-        'rounded-lg justify-center bg-lm-red text-white hover:opacity-80',
+        'rounded-lg justify-center bg-lm-red text-primary hover:opacity-80',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {

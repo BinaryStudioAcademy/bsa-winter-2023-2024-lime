@@ -23,7 +23,7 @@ const GoalWidget = ({
         goalType === GoalTypes.OVERVIEW ? 'Exercises' : 'Running on Track';
 
     return (
-        <div className="bg-lm-black-100 bg-goalWidget flex h-full max-h-40 w-full max-w-[50rem] items-center rounded-xl">
+        <div className="bg-secondary bg-goalWidget flex h-full max-h-40 w-full max-w-[50rem] items-center rounded-xl">
             <div className="w-4/6 bg-gray-200 p-6">
                 <p className="font-bolder text-lm-black-100 line text-[24px] leading-7">
                     {title}
@@ -33,7 +33,7 @@ const GoalWidget = ({
                 )}
             </div>
             <div className="flex w-3/6 items-center justify-end p-4">
-                <div className="flex w-2/4 justify-end text-white">
+                <div className="text-primary flex w-2/4 justify-end">
                     {goalType === GoalTypes.OVERVIEW && (
                         <Icon name="workoutIcon" size="lg" />
                     )}
