@@ -30,6 +30,14 @@ type EnvironmentSchema = {
         API_KEY: string;
         FROM: string;
     };
+    STRIPE: {
+        SECRET_KEY: string;
+        WEBHOOK_SECRET: string;
+    };
+    STRAVA: {
+        CLIENT_ID: string;
+        CLIENT_SECRET: string;
+    };
 };
 
 export { type EnvironmentSchema };

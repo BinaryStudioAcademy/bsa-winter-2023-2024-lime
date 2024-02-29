@@ -4,10 +4,11 @@ type Service<T = unknown> = {
         items: T[];
     }>;
     create(payload: unknown): Promise<T>;
-    updatePassword(id: number, changes: unknown): Promise<T>;
-    update(query: Record<string, T>, payload: unknown): Promise<T | null>;
-    updatePassword(id: number, changes: unknown): Promise<T>;
-    delete(): Promise<boolean>;
+    update(
+        query: Record<string, T>,
+        payload: Record<string, unknown>,
+    ): Promise<T | null>;
+    delete(payload: unknown): Promise<boolean>;
 };
 
 export { type Service };

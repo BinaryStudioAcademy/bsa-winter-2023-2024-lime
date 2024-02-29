@@ -1,7 +1,7 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
-import { cryptService } from '~/common/services/services.js';
+import { cryptService, stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import { UserValidationMessage } from './enums/enums.js';
@@ -39,11 +39,13 @@ class UserService implements Service {
     ): Promise<UserAuthResponseDto> {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);
+        const { stripeCustomerId } = await stripeService.createCustomer(email);
 
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
                 passwordHash: hash,
+                stripeCustomerId,
             }),
         );
 
@@ -68,8 +70,8 @@ class UserService implements Service {
                     }
                 }
                 const updatedUser = await this.userRepository.update(
-                    userId,
-                    updatedUserDetails,
+                    { id: userId },
+                    { userDetails: updatedUserDetails },
                 );
                 if (!updatedUser) {
                     throw new HttpError({
@@ -89,10 +91,10 @@ class UserService implements Service {
         }
     }
     public async updatePassword(
-        id: number,
-        changes: object,
-    ): ReturnType<Service['updatePassword']> {
-        return await this.userRepository.update(id, changes);
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): ReturnType<Service['update']> {
+        return await this.userRepository.updatePassword(query, payload);
     }
 
     public delete(): ReturnType<Service['delete']> {

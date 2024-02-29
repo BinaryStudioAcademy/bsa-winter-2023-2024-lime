@@ -109,9 +109,12 @@ class PasswordResetService {
         );
 
         try {
-            await this.userService.updatePassword(passwordResetRequestDto.id, {
-                passwordHash: hash,
-            });
+            await this.userService.updatePassword(
+                { userId: passwordResetRequestDto.id },
+                {
+                    passwordHash: hash,
+                },
+            );
         } catch {
             throw new HttpError({
                 message: PasswordResetValidationMessage.USER_NOT_FOUND,

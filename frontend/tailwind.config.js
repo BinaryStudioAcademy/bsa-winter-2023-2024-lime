@@ -120,6 +120,9 @@ export default {
                 '13': '3.25',
                 '18': '4.875',
             },
+            spacing: {
+                '60': '3.75rem',
+            },
             textColor: {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',

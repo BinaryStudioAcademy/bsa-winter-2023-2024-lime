@@ -68,7 +68,7 @@ const ResetPasswordForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             <p className="text-center text-sm">
                 Don`t whant to change password? Go to{' '}
                 <Link to={AppRoute.SIGN_IN}>
-                    <span className="text-lm-yellow-100">Log in</span>
+                    <span className="text-action">Log in</span>
                 </Link>
             </p>
         </>

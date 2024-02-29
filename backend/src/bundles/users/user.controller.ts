@@ -6,6 +6,7 @@ import {
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
 } from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -133,7 +134,7 @@ class UserController extends BaseController {
      *                   items:
      *                     type: array
      *                     items:
-     *                       $ref: '#/components/schemas/User/'
+     *                       $ref: '#/components/schemas/User'
      *        401:
      *          description: Failed operation
      *          content:
@@ -144,6 +145,7 @@ class UserController extends BaseController {
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
         };
@@ -179,6 +181,7 @@ class UserController extends BaseController {
         const { user } = options;
 
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: user,
         };
@@ -195,6 +198,7 @@ class UserController extends BaseController {
         try {
             const updatedUser = await this.userService.update({ id }, body);
             return {
+                type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
                 payload: updatedUser,
             };
