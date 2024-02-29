@@ -65,6 +65,7 @@ class BaseServerApp implements ServerApp {
             handler,
             schema: {
                 body: validation?.body,
+                params: validation?.params,
             },
         });
 

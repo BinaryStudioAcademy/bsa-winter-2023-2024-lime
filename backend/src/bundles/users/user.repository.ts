@@ -97,14 +97,16 @@ class UserRepository implements Repository {
     }
 
     public async update(
-        id: number,
-        changes: object,
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
     ): ReturnType<Repository['update']> {
         return await this.userModel
             .query()
-            .findById(id)
-            .update(changes)
-            .returning('*');
+            .patch(payload)
+            .where(query)
+            .returning('*')
+            .first()
+            .execute();
     }
 
     public delete(): ReturnType<Repository['delete']> {
