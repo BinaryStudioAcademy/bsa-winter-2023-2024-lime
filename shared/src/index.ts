@@ -41,6 +41,7 @@ export {
     HttpCode,
     HttpHeader,
 } from './framework/http/http.js';
+export { SocketEvent, SocketNamespace } from './framework/socket/socket.js';
 export { type Storage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {

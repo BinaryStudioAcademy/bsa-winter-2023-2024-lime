@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-spread */
 import {
     type ThunkMiddleware,
     type Tuple,
@@ -15,7 +16,10 @@ import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { type Config } from '~/framework/config/config.js';
 
-import { errorMiddleware } from './middlewares/error-middleware.js';
+import {
+    chatSocketMiddleware,
+    errorMiddleware,
+} from './middlewares/middlewares.js';
 
 type RootReducer = {
     auth: ReturnType<typeof authReducer>;
@@ -53,7 +57,9 @@ class Store {
                     thunk: {
                         extraArgument: this.extraArguments,
                     },
-                }).prepend(errorMiddleware),
+                })
+                    .prepend(errorMiddleware)
+                    .concat(chatSocketMiddleware),
         });
     }
 

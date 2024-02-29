@@ -14,8 +14,8 @@ import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { createProtectedRoutes } from '~/common/helpers/create-protected-routes-helper.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
-import { authPlugin } from '~/common/plugins/plugins.js';
-import { jwtService } from '~/common/services/services.js';
+import { authPlugin, socketInjectorPlugin } from '~/common/plugins/plugins.js';
+import { jwtService, socketService } from '~/common/services/services.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -53,6 +53,7 @@ class BaseServerApp implements ServerApp {
         this.apis = apis;
 
         this.app = Fastify();
+        socketService.initializeIo(this.app.server);
     }
 
     public addRoute(parameters: ServerAppRouteParameters): void {
@@ -126,6 +127,7 @@ class BaseServerApp implements ServerApp {
             protectedRoutes: createProtectedRoutes(this.apis),
         });
         await this.app.register(multer.contentParser);
+        await this.app.register(socketInjectorPlugin, { io: socketService.io });
     }
 
     private initValidationCompiler(): void {

@@ -17,6 +17,11 @@ class BaseConfig implements Config {
                     'VITE_APP_API_ORIGIN_URL'
                 ] as string,
             },
+            SOCKET: {
+                ORIGIN_URL: import.meta.env[
+                    'VITE_APP_SOCKET_ORIGIN_URL'
+                ] as string,
+            },
         };
     }
 }
