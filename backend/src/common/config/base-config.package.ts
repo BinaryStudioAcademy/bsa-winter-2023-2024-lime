@@ -53,6 +53,12 @@ class BaseConfig implements Config {
                     env: 'JWT_SECRET',
                     default: null,
                 },
+                TOKEN_EXPIRATION_TIME: {
+                    doc: 'Token expiration time',
+                    format: String,
+                    env: 'TOKEN_EXPIRATION_TIME',
+                    default: null,
+                },
                 OPEN_AI_API_KEY: {
                     doc: 'Api key for working with AI',
                     format: String,
@@ -156,6 +162,20 @@ class BaseConfig implements Config {
                     default: null,
                 },
             },
+            STRIPE: {
+                SECRET_KEY: {
+                    doc: 'Stripe secret key',
+                    format: String,
+                    env: 'STRIPE_SECRET_KEY',
+                    default: null,
+                },
+                WEBHOOK_SECRET: {
+                    doc: 'Stripe webhook secret key',
+                    format: String,
+                    env: 'STRIPE_WEBHOOK_SECRET',
+                    default: null,
+                },
+            },
             STRAVA: {
                 CLIENT_ID: {
                     doc: 'Strava Client ID',
@@ -167,6 +187,20 @@ class BaseConfig implements Config {
                     doc: 'Strava Client Secret',
                     format: String,
                     env: 'STRAVA_CLIENT_SECRET',
+                    default: null,
+                },
+            },
+            GOOGLE_FIT: {
+                CLIENT_ID: {
+                    doc: 'Google fit Client ID',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_ID',
+                    default: null,
+                },
+                CLIENT_SECRET: {
+                    doc: 'Google fit Client Secret',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_SECRET',
                     default: null,
                 },
             },

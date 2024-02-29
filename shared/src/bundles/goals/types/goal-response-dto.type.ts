@@ -4,7 +4,7 @@ import { type FrequencyType } from '../enums/enums.js';
 
 type GoalResponseDto = {
     id: number;
-    activity: ValueOf<typeof ActivityType>;
+    activityType: ValueOf<typeof ActivityType>;
     frequency: number;
     frequencyType: ValueOf<typeof FrequencyType>;
     distance: number | null;

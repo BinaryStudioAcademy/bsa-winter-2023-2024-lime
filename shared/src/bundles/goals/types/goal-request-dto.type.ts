@@ -3,7 +3,7 @@ import { type ValueOf } from '../../../types/types.js';
 import { type FrequencyType } from '../enums/enums.js';
 
 type GoalRequestDto = {
-    activity: ValueOf<typeof ActivityType>;
+    activityType: ValueOf<typeof ActivityType>;
     frequency: number;
     frequencyType: ValueOf<typeof FrequencyType>;
     distance: number | null;

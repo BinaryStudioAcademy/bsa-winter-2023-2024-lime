@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 
+import { reducer as appReducer } from '~/app/store/app.js';
 import { achievementsApi } from '~/bundles/achievements/achievements.js';
 import { reducer as achievementsReducer } from '~/bundles/achievements/store/achievements.js';
 import { authApi } from '~/bundles/auth/auth.js';
@@ -15,6 +16,11 @@ import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
+import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';
+import {
+    subscriptionApi,
+    subscriptionPlansApi,
+} from '~/bundles/subscription/subscription.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { type Config } from '~/framework/config/config.js';
@@ -22,11 +28,13 @@ import { type Config } from '~/framework/config/config.js';
 import { errorMiddleware } from './middlewares/error-middleware.js';
 
 type RootReducer = {
+    app: ReturnType<typeof appReducer>;
     auth: ReturnType<typeof authReducer>;
     passwordReset: ReturnType<typeof passwordResetReducer>;
     users: ReturnType<typeof usersReducer>;
     goals: ReturnType<typeof goalsReducer>;
     achievements: ReturnType<typeof achievementsReducer>;
+    subscriptions: ReturnType<typeof subscriptionsReducer>;
     theme: ReturnType<typeof themeReducer>;
 };
 
@@ -35,6 +43,8 @@ type ExtraArguments = {
     userApi: typeof userApi;
     goalsApi: typeof goalsApi;
     achievementsApi: typeof achievementsApi;
+    subscriptionPlansApi: typeof subscriptionPlansApi;
+    subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
 };
 
@@ -51,11 +61,13 @@ class Store {
         this.instance = configureStore({
             devTools: config.ENV.APP.ENVIRONMENT !== AppEnvironment.PRODUCTION,
             reducer: {
+                app: appReducer,
                 auth: authReducer,
                 passwordReset: passwordResetReducer,
                 users: usersReducer,
                 goals: goalsReducer,
                 achievements: achievementsReducer,
+                subscriptions: subscriptionsReducer,
                 theme: themeReducer,
             },
             middleware: (getDefaultMiddleware) =>
@@ -73,6 +85,8 @@ class Store {
             userApi,
             goalsApi,
             achievementsApi,
+            subscriptionApi,
+            subscriptionPlansApi,
             passwordResetApi,
         };
     }

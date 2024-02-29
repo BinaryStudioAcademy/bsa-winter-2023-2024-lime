@@ -74,7 +74,7 @@ const Goals: React.FC = () => {
             const [frequency, frequencyType] = payload.frequency.split(' ');
 
             const createGoalPayload = {
-                activity: payload.activity as ValueOf<typeof ActivityType>,
+                activityType: payload.activity as ValueOf<typeof ActivityType>,
                 frequency: Number(frequency),
                 frequencyType: frequencyType as ValueOf<typeof FrequencyType>,
                 distance: Number(payload.distance) ?? null,
@@ -115,14 +115,14 @@ const Goals: React.FC = () => {
                                     goals.map(
                                         ({
                                             id,
-                                            activity,
+                                            activityType,
                                             frequency,
                                             frequencyType,
                                             progress,
                                         }) => (
                                             <GoalCard
                                                 key={id}
-                                                activity={activity}
+                                                activity={activityType}
                                                 frequency={frequency}
                                                 frequencyType={frequencyType}
                                                 progress={progress}

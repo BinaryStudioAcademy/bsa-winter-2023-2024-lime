@@ -4,7 +4,7 @@ import { ActivityType } from '../../../enums/enums.js';
 import { FrequencyType } from '../enums/enums.js';
 
 type GoalRequestValidationDto = {
-    activity: z.ZodNativeEnum<typeof ActivityType>;
+    activityType: z.ZodNativeEnum<typeof ActivityType>;
     frequency: z.ZodNumber;
     frequencyType: z.ZodNativeEnum<typeof FrequencyType>;
     distance: z.ZodNullable<z.ZodNumber>;
@@ -12,7 +12,7 @@ type GoalRequestValidationDto = {
 };
 
 const goal = z.object<GoalRequestValidationDto>({
-    activity: z.nativeEnum(ActivityType),
+    activityType: z.nativeEnum(ActivityType),
     frequency: z.number().int().positive(),
     frequencyType: z.nativeEnum(FrequencyType),
     distance: z.number().int().positive().nullable(),

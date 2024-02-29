@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { type ReactNode } from '~/bundles/common/types/types.js';
 
 import { getValidClassNames } from '../../helpers/helpers.js';
 

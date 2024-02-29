@@ -1,6 +1,6 @@
 export {
     ActivityType,
-    AuthApiPath,
     FrequencyType,
+    GoalsApiPath,
     goalValidationSchema,
 } from 'shared';
