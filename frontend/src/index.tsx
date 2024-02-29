@@ -16,6 +16,10 @@ import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js'
 import { store } from '~/framework/store/store.js';
 
 import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
+import {
+    SubscriptionCheckout,
+    SubscriptionPage,
+} from './bundles/subscription/subscription.js';
 
 const routes = [
     {
@@ -64,6 +68,14 @@ const routes = [
                         element: <div>LOGOUT PAGE</div>,
                     },
                 ],
+            },
+            {
+                path: AppRoute.SUBSCRIPTION,
+                element: <SubscriptionPage />,
+            },
+            {
+                path: AppRoute.SUBSCRIPTION_CHECKOUT,
+                element: <SubscriptionCheckout />,
             },
         ],
     },

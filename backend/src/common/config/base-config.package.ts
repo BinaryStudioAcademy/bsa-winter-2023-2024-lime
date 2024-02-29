@@ -53,6 +53,12 @@ class BaseConfig implements Config {
                     env: 'JWT_SECRET',
                     default: null,
                 },
+                TOKEN_EXPIRATION_TIME: {
+                    doc: 'Token expiration time',
+                    format: String,
+                    env: 'TOKEN_EXPIRATION_TIME',
+                    default: null,
+                },
                 OPEN_AI_API_KEY: {
                     doc: 'Api key for working with AI',
                     format: String,
@@ -153,6 +159,34 @@ class BaseConfig implements Config {
                     doc: 'Email address to send mails to customers',
                     format: String,
                     env: 'EMAIL_FROM',
+                    default: null,
+                },
+            },
+            STRIPE: {
+                SECRET_KEY: {
+                    doc: 'Stripe secret key',
+                    format: String,
+                    env: 'STRIPE_SECRET_KEY',
+                    default: null,
+                },
+                WEBHOOK_SECRET: {
+                    doc: 'Stripe webhook secret key',
+                    format: String,
+                    env: 'STRIPE_WEBHOOK_SECRET',
+                    default: null,
+                },
+            },
+            STRAVA: {
+                CLIENT_ID: {
+                    doc: 'Strava Client ID',
+                    format: String,
+                    env: 'STRAVA_CLIENT_ID',
+                    default: null,
+                },
+                CLIENT_SECRET: {
+                    doc: 'Strava Client Secret',
+                    format: String,
+                    env: 'STRAVA_CLIENT_SECRET',
                     default: null,
                 },
             },
