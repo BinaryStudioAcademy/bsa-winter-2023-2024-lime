@@ -17,16 +17,14 @@ import {
     useParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { PasswordResetSuccessMessage } from '~/bundles/password-reset/components/components.js';
+import { ERROR_MESSAGE_TEXT } from '~/bundles/password-reset/constants/constants.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import {
     type PasswordResetPayload,
     type PasswordResetRequestDto,
 } from '~/bundles/password-reset/types/types.js';
 import { notificationManager } from '~/framework/notification/notification.js';
-
-import { PasswordResetSuccessMessage } from '../components/components.js';
-
-const errorText = 'The password reset link you used has expired';
 
 const PasswordReset: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -71,7 +69,7 @@ const PasswordReset: React.FC = () => {
     useEffect(() => {
         if (Date.now() > Number(exp)) {
             navigate(AppRoute.SIGN_IN);
-            notificationManager.error(errorText);
+            notificationManager.error(ERROR_MESSAGE_TEXT);
         }
     }, [exp, navigate]);
 
