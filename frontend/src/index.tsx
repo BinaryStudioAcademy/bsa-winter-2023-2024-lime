@@ -83,14 +83,6 @@ const routes = [
                                 element: <ConnectionsPage />,
                             },
                             {
-                                path: AppRoute.PROFILE_GOALS,
-                                element: <div>PROFILE GOALS PAGE</div>,
-                            },
-                            {
-                                path: AppRoute.PROFILE_PREFERENCES,
-                                element: <div>PROFILE PREFERENCES PAGE</div>,
-                            },
-                            {
                                 path: AppRoute.PROFILE_SUBSCRIPTION,
                                 element: <SubscriptionPage />,
                             },
