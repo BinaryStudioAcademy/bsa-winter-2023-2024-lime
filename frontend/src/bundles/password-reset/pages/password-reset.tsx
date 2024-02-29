@@ -3,7 +3,7 @@ import {
     ResetPasswordForm,
     ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
-import { DataStatus } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
     getValidClassNames,
@@ -17,19 +17,20 @@ import {
     useParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { PasswordResetSuccessMessage } from '~/bundles/password-reset/components/components.js';
+import { ERROR_MESSAGE_TEXT } from '~/bundles/password-reset/constants/constants.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import {
     type PasswordResetPayload,
     type PasswordResetRequestDto,
 } from '~/bundles/password-reset/types/types.js';
-
-import { PasswordResetSuccessMessage } from '../components/components.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 const PasswordReset: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { resetToken } = useParams();
-    const { userId } = getUserId(resetToken as string);
+    const { userId, exp } = getUserId(resetToken as string);
 
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
@@ -63,7 +64,14 @@ const PasswordReset: React.FC = () => {
         if (dataStatus === DataStatus.FULFILLED) {
             setIsPasswordReset(true);
         }
-    }, [dataStatus, navigate]);
+    }, [dataStatus]);
+
+    useEffect(() => {
+        if (Date.now() > Number(exp)) {
+            navigate(AppRoute.SIGN_IN);
+            notificationManager.error(ERROR_MESSAGE_TEXT);
+        }
+    }, [exp, navigate]);
 
     const classes = {
         main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
