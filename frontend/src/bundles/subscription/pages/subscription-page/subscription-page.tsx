@@ -65,11 +65,15 @@ const SubscriptionPage = (): JSX.Element => {
     );
 
     if (dataStatus === DataStatus.PENDING) {
-        return <Loader />;
+        return (
+            <div className="m-auto">
+                <Loader />
+            </div>
+        );
     }
 
     return (
-        <div className="m-auto mt-5 flex w-full max-w-[50rem] flex-col justify-center gap-10 px-2">
+        <div className="m-auto flex w-full max-w-[50rem] flex-col justify-center gap-10">
             <div className={'flex flex-col items-center justify-center gap-2'}>
                 {currentSubscription ? (
                     <SubscriptionUserPanel

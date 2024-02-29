@@ -3,11 +3,7 @@ import { connectionOptionsData } from './constants/constants.js';
 
 const ConnectionsPage = (): JSX.Element => {
     return (
-        <div
-            className={
-                'bg-primary flex flex-col gap-4 px-5 py-10 sm:px-8 md:px-10'
-            }
-        >
+        <div className={'flex flex-col gap-4'}>
             {connectionOptionsData.map((option, id) => (
                 <ConnectionOption
                     key={id}
