@@ -5,14 +5,16 @@ import { type JwtPayloadOptions } from '~/common/types/jwt.type.js';
 
 class JwtService {
     private readonly secretKey: string;
+    private readonly tokenExpirationTime: string;
 
-    public constructor(secretKey: string) {
+    public constructor(secretKey: string, tokenExpirationTime: string) {
         this.secretKey = secretKey;
+        this.tokenExpirationTime = tokenExpirationTime;
     }
 
     public async createToken(
         payload: JwtPayloadOptions,
-        time: string = '7d',
+        time: string = this.tokenExpirationTime,
         additional: string = '',
     ): Promise<string> {
         return await new SignJWT(payload)
