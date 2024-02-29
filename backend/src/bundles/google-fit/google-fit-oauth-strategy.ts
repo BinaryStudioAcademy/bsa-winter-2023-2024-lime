@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
 
 import {
+    GOOGLE_FIT_ACCESS_TYPE,
     GOOGLE_FIT_API_URL,
     READ_SCOPE,
     WRITE_SCOPE,
@@ -40,7 +41,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
     public getAuthorizeRedirectUrl(oAuthStateEntity: OAuthStateEntity): URL {
         const { userId, uuid } = oAuthStateEntity.toObject();
         const url = this.OAuth2.generateAuthUrl({
-            access_type: 'offline',
+            access_type: GOOGLE_FIT_ACCESS_TYPE,
             scope: [
                 `${GOOGLE_FIT_API_URL}${READ_SCOPE}`,
                 `${GOOGLE_FIT_API_URL}${WRITE_SCOPE}`,
@@ -55,8 +56,16 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
     ): Promise<OAuthEntity> {
         const { code, scope, userId } = payload;
         const {
+            res,
             tokens: { access_token, refresh_token, token_type, expiry_date },
         } = await this.OAuth2.getToken(code);
+
+        if (res?.status !== HttpCode.OK) {
+            throw new HttpError({
+                message: ErrorMessage.INVALID_PARAMS,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
 
         return OAuthEntity.initializeNew({
             userId,
@@ -82,6 +91,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
         });
 
         const {
+            res,
             credentials: {
                 refresh_token,
                 token_type,
@@ -89,6 +99,13 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
                 access_token,
             },
         } = await this.OAuth2.refreshAccessToken();
+
+        if (res?.status !== HttpCode.OK) {
+            throw new HttpError({
+                status: HttpCode.FORBIDDEN,
+                message: ErrorMessage.UNVERIFIED,
+            });
+        }
 
         return OAuthEntity.initializeNew({
             provider: OAuthProvider.GOOGLE_FIT,
@@ -103,9 +120,9 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
 
     public async deauthorize(oAuthEntity: OAuthEntity): Promise<void> {
         const { refreshToken } = oAuthEntity.toObject();
-        const { data } = await this.OAuth2.revokeToken(refreshToken);
+        const { status } = await this.OAuth2.revokeToken(refreshToken);
 
-        if (!data.success) {
+        if (status !== HttpCode.OK) {
             throw new HttpError({
                 status: HttpCode.FORBIDDEN,
                 message: ErrorMessage.UNVERIFIED,
