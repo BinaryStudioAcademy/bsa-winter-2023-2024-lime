@@ -16,6 +16,7 @@ import { NotFound } from '~/bundles/common/pages/pages.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { store } from '~/framework/store/store.js';
 
+import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
 import {
     SubscriptionCheckout,
     SubscriptionPage,
@@ -27,33 +28,47 @@ const routes = [
         element: <App />,
         children: [
             {
+                path: AppRoute.SIGN_IN,
+                element: <Auth />,
+            },
+            {
+                path: AppRoute.SIGN_UP,
+                element: <Auth />,
+            },
+            {
                 path: AppRoute.ROOT,
-                element: 'Root',
+                element: <BaseLayout />,
                 isPrivate: true,
-            },
-            {
-                path: AppRoute.GOALS,
-                element: <div>GOALS PAGE</div>,
-            },
-            {
-                path: AppRoute.WORKOUT,
-                element: <div>WORKOUT PAGE</div>,
-            },
-            {
-                path: AppRoute.OVERVIEW,
-                element: <div>Overview</div>,
-            },
-            {
-                path: AppRoute.SCHEDULE,
-                element: <div>SCHEDULE PAGE</div>,
-            },
-            {
-                path: AppRoute.HELP,
-                element: <div>HELP PAGE</div>,
-            },
-            {
-                path: AppRoute.LOGOUT,
-                element: <div>LOGOUT PAGE</div>,
+                children: [
+                    {
+                        path: AppRoute.ROOT,
+                        element: 'Root',
+                    },
+                    {
+                        path: AppRoute.GOALS,
+                        element: <div>GOALS PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.WORKOUT,
+                        element: <div>WORKOUT PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.OVERVIEW,
+                        element: <div>Overview</div>,
+                    },
+                    {
+                        path: AppRoute.SCHEDULE,
+                        element: <div>SCHEDULE PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.HELP,
+                        element: <div>HELP PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.LOGOUT,
+                        element: <div>LOGOUT PAGE</div>,
+                    },
+                ],
             },
             {
                 path: AppRoute.SUBSCRIPTION,
@@ -72,14 +87,6 @@ const routes = [
     {
         path: AppRoute.NOT_FOUND,
         element: <NotFound />,
-    },
-    {
-        path: AppRoute.SIGN_IN,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.SIGN_UP,
-        element: <Auth />,
     },
 ];
 
