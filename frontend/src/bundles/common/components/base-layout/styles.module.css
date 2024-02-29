@@ -1,5 +1,5 @@
 .base-layout {
-    @apply grid grid-cols-2 grid-rows-2;
+    @apply grid grid-cols-2 grid-rows-2 transition-all duration-[0.5s] ease-[ease-in-out];
 
     grid-template:
         "header header" 88px
@@ -10,4 +10,10 @@
     @apply bg-secondary p-8;
 
     grid-area: main;
+}
+
+.base-layout.sidebar-closed {
+    grid-template:
+        "header header" 88px
+        "aside main" / 0%;
 }

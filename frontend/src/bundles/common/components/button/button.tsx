@@ -1,14 +1,13 @@
-import { type ReactNode } from 'react';
-
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
+import { type ReactNode, type ValueOf } from '~/bundles/common/types/types.js';
 
 const ButtonVariant = {
     PRIMARY: 'primary',
     SECONDARY: 'secondary',
     TERTIARY: 'tertiary',
     SIDEBAR: 'sidebar',
+    DANGER: 'danger',
 } as const;
 
 type ButtonSize = Exclude<
@@ -46,6 +45,8 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
         'bg-transparent justify-center text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary',
     [ButtonVariant.SIDEBAR]:
         'align-middle hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
+    [ButtonVariant.DANGER]:
+        'rounded-lg justify-center bg-lm-red text-white hover:opacity-80',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {

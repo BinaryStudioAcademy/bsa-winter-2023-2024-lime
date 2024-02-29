@@ -104,6 +104,7 @@ export default {
             },
             width: {
                 '30': '7.5625rem',
+                '150': '9.375rem',
             },
             height: {
                 '30': '7.5625rem',
