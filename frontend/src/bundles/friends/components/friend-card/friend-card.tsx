@@ -1,6 +1,6 @@
 import { Button, Icon } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
-import { isValidUrlImg } from '~/bundles/common/helpers/helpers.js';
+import { validateImageUrl } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
 type FriendProperties = {
@@ -43,7 +43,7 @@ const FriendCard = ({
     return (
         <div className="hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent sm:max-w-40 lg:max-w-64">
             <div className="h-3/4 w-full">
-                {isValidUrlImg(avatar) ? (
+                {validateImageUrl(avatar) ? (
                     <img
                         src={avatar}
                         alt={name}
