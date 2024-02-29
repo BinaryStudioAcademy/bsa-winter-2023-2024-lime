@@ -14,7 +14,11 @@ type Properties = {
     className?: string;
 };
 
-function ThemeSwitcher({ className }: Properties): JSX.Element {
+const defaultClassName = 'absolute bottom-4 right-4';
+
+function ThemeSwitcher({
+    className = defaultClassName,
+}: Properties): JSX.Element {
     const dispatch = useAppDispatch();
     const { theme } = useAppSelector((state) => state.theme);
 
