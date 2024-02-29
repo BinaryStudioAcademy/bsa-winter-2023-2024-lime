@@ -102,7 +102,9 @@ class WorkoutEntity implements Entity {
             steps: this.steps as number,
             heartRate: this.heartRate,
             duration:
-                (this.workoutEndedAt.getTime() - this.workoutStartedAt.getTime()) / 1000,
+                (this.workoutEndedAt.getTime() -
+                    this.workoutStartedAt.getTime()) /
+                1000,
             workoutStartedAt: this.workoutStartedAt,
             workoutEndedAt: this.workoutEndedAt,
             distance: this.distance,
