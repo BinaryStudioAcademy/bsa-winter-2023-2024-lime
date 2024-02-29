@@ -13,7 +13,6 @@ import { OAuthStateRepository } from './oauth-state.repository.js';
 
 const oAuthStrategies = {
     [OAuthProvider.STRAVA]: stravaOAuthStrategy,
-    // Replace with GoogleFit strategy
     [OAuthProvider.GOOGLE_FIT]: googleFitOAuthStrategy,
 };
 
