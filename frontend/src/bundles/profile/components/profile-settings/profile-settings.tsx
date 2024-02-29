@@ -51,7 +51,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         : null,
                     fullName: (getValues().fullName || '').trim(),
                     username: (getValues().username || '').trim(),
-                    id: userId ?? null,
                 };
                 onSubmit(payload);
                 reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
@@ -79,13 +78,15 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     accept="image/jpeg, image/png"
                     className="hidden"
                 />
-                <Button
-                    className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
-                    type="submit"
-                    label="Update file"
-                    variant={ButtonVariant.SECONDARY}
-                    size={ComponentSize.SMALL}
-                />
+                <div className="h-[38px] w-[115px]">
+                    <Button
+                        className="ml-3 [border-radius:1.25rem]"
+                        type="submit"
+                        label="Update file"
+                        variant={ButtonVariant.SECONDARY}
+                        size={ComponentSize.SMALL}
+                    />
+                </div>
             </div>
             <form
                 className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4"

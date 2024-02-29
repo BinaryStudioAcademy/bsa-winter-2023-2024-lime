@@ -58,34 +58,25 @@ class UserService implements Service {
     ): Promise<UserAuthResponseDto | null> {
         try {
             const userId = query['id'] as number;
-            const existingUser = await this.userRepository.find({
-                id: userId,
-            });
-            if (existingUser) {
-                const updatedUserDetails: Partial<UserDetailsModel> = {};
-                for (const property of Object.keys(payload)) {
-                    const value = payload[property];
-                    if (value) {
-                        updatedUserDetails[property] = payload[property];
-                    }
+
+            const updatedUserDetails: Partial<UserDetailsModel> = {};
+            for (const property of Object.keys(payload)) {
+                const value = payload[property];
+                if (value) {
+                    updatedUserDetails[property] = payload[property];
                 }
-                const updatedUser = await this.userRepository.update(
-                    { id: userId },
-                    { userDetails: updatedUserDetails },
-                );
-                if (!updatedUser) {
-                    throw new HttpError({
-                        message: UserValidationMessage.USER_NOT_FOUND,
-                        status: HttpCode.NOT_FOUND,
-                    });
-                }
-                return updatedUser.toObject() as UserAuthResponseDto;
-            } else {
+            }
+            const updatedUser = await this.userRepository.update(
+                { id: userId },
+                { userDetails: updatedUserDetails },
+            );
+            if (!updatedUser) {
                 throw new HttpError({
                     message: UserValidationMessage.USER_NOT_FOUND,
                     status: HttpCode.NOT_FOUND,
                 });
             }
+            return updatedUser.toObject() as UserAuthResponseDto;
         } catch (error) {
             throw new Error(`Error occured ${error}`);
         }
