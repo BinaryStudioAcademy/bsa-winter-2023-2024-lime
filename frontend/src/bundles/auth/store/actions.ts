@@ -48,10 +48,7 @@ const refreshUser = createAsyncThunk<
 
 const logout = createAsyncThunk<unknown, undefined, AsyncThunkConfig>(
     `${sliceName}/logout`,
-    async (_, { extra }) => {
-        const { authApi } = extra;
-
-        await authApi.logout();
+    async () => {
         await storage.drop(StorageKey.TOKEN);
     },
 );
