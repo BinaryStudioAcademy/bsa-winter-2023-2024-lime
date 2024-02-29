@@ -9,6 +9,7 @@ import {
     NotificationContainer,
     RouterProvider,
     StoreProvider,
+    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
@@ -74,6 +75,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
         <StoreProvider store={store.instance}>
             <RouterProvider routes={routes} />
             <NotificationContainer />
+            <ThemeSwitcher />
         </StoreProvider>
     </StrictMode>,
 );

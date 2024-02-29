@@ -1,8 +1,5 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import {
-    ResetPasswordForm,
-    ThemeSwitcher,
-} from '~/bundles/common/components/components.js';
+import { ResetPasswordForm } from '~/bundles/common/components/components.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
@@ -88,7 +85,6 @@ const PasswordReset: React.FC = () => {
             <div className="text-primary items-center justify-center text-xl sm:hidden md:flex md:flex-1">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
-            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };
