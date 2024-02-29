@@ -1,8 +1,8 @@
 const ReferralTransactionAttributes = {
     ID: 'id',
     USER_ID: 'userId',
-    REFERRAL_ID: 'referralId',
-    ACTION_TYPE: 'actionType',
+    REFERRAL_USER_ID: 'referralUserId',
+    REFERRAL_CODE: 'referralCode',
 } as const;
 
 export { ReferralTransactionAttributes };

@@ -3,73 +3,88 @@ import { type Entity } from '~/common/types/types.js';
 class ReferralTransactionEntity implements Entity {
     private 'id': number | null;
 
-    private 'referringUserId': number;
+    private 'userId': number;
 
-    private 'referredUserId': number;
+    private 'referralUserId': number;
+
+    private 'referralCode': string;
 
     private constructor({
         id,
-        referringUserId,
-        referredUserId,
+        userId,
+        referralUserId,
+        referralCode,
     }: {
         id: number | null;
-        referringUserId: number;
-        referredUserId: number;
+        userId: number;
+        referralUserId: number;
+        referralCode: string;
     }) {
         this.id = id;
-        this.referringUserId = referringUserId;
-        this.referredUserId = referredUserId;
+        this.userId = userId;
+        this.referralUserId = referralUserId;
+        this.referralCode = referralCode;
     }
 
     public static initialize({
         id,
-        referringUserId,
-        referredUserId,
+        userId,
+        referralUserId,
+        referralCode,
     }: {
         id: number;
-        referringUserId: number;
-        referredUserId: number;
+        userId: number;
+        referralUserId: number;
+        referralCode: string;
     }): ReferralTransactionEntity {
         return new ReferralTransactionEntity({
             id,
-            referringUserId,
-            referredUserId,
+            userId,
+            referralUserId,
+            referralCode,
         });
     }
 
     public static initializeNew({
-        referringUserId,
-        referredUserId,
+        userId,
+        referralUserId,
+        referralCode,
     }: {
-        referringUserId: number;
-        referredUserId: number;
+        userId: number;
+        referralUserId: number;
+        referralCode: string;
     }): ReferralTransactionEntity {
         return new ReferralTransactionEntity({
             id: null,
-            referringUserId,
-            referredUserId,
+            userId,
+            referralUserId,
+            referralCode,
         });
     }
 
     public toObject(): {
         id: number;
-        referringUserId: number;
-        referredUserId: number;
+        userId: number;
+        referralUserId: number;
+        referralCode: string;
     } {
         return {
             id: this.id as number,
-            referringUserId: this.referringUserId,
-            referredUserId: this.referredUserId,
+            userId: this.userId,
+            referralUserId: this.referralUserId,
+            referralCode: this.referralCode,
         };
     }
 
     public toNewObject(): {
-        referringUserId: number;
-        referredUserId: number;
+        userId: number;
+        referralUserId: number;
+        referralCode: string;
     } {
         return {
-            referringUserId: this.referringUserId,
-            referredUserId: this.referredUserId,
+            userId: this.userId,
+            referralUserId: this.referralUserId,
+            referralCode: this.referralCode,
         };
     }
 }

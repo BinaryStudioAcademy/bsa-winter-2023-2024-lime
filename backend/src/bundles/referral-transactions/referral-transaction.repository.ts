@@ -40,11 +40,11 @@ class ReferralTransactionRepository implements Repository {
     public async create(
         entity: ReferralTransactionEntity,
     ): Promise<ReferralTransactionEntity> {
-        const { referringUserId, referredUserId } = entity.toNewObject();
+        const { userId, referralUserId, referralCode } = entity.toNewObject();
 
         const referralTransaction = await this.referralTransactionsModel
             .query()
-            .insert({ referringUserId, referredUserId })
+            .insert({ userId, referralUserId, referralCode })
             .returning('*')
             .execute();
 

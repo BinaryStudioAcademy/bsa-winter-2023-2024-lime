@@ -10,9 +10,11 @@ import { UserModel } from '../users/user.model.js';
 import { ReferralTransactionAttributes } from './enums/enums.js';
 
 class ReferralTransactionModel extends AbstractModel {
-    public 'referringUserId': number;
+    public 'userId': number;
 
-    public 'referredUserId': number;
+    public 'referralUserId': number;
+
+    public 'referralCode': string;
 
     public static override get tableName(): string {
         return DatabaseTableName.ACHIEVEMENTS;

@@ -5,8 +5,9 @@ import { type ReferralTransactionRepository } from './referral-transaction.repos
 
 type ReferralTransactionResponseItem = {
     id: number;
-    referringUserId: number;
-    referredUserId: number;
+    userId: number;
+    referralUserId: number;
+    referralCode: string;
 };
 
 class ReferralTransactionService implements Service {
@@ -35,17 +36,20 @@ class ReferralTransactionService implements Service {
     }
 
     public async create({
-        referringUserId,
-        referredUserId,
+        userId,
+        referralUserId,
+        referralCode,
     }: {
-        referringUserId: number;
-        referredUserId: number;
+        userId: number;
+        referralUserId: number;
+        referralCode: string;
     }): Promise<ReferralTransactionResponseItem> {
         const referralTrnasaction =
             await this.referralTransactionRepository.create(
                 ReferralTransactionEntity.initializeNew({
-                    referringUserId,
-                    referredUserId,
+                    userId,
+                    referralUserId,
+                    referralCode,
                 }),
             );
 
