@@ -55,15 +55,14 @@ const FriendCard = ({
                     </div>
                 )}
             </div>
-            <div className="bg-primary rounded-b-xl p-4">
-                <div className="flex items-center gap-1">
-                    <i className="flex h-4 w-4 items-center">
-                        {isActive ? (
-                            <Icon name="dotIcon" color="text-action" />
-                        ) : (
-                            <Icon name="dotIcon" color="text-lm-grey-200" />
-                        )}
-                    </i>
+            <div className="bg-secondary flex flex-col gap-2 rounded-b-xl p-4">
+                <div className="flex items-center gap-2">
+                    {isActive ? (
+                        <div className="bg-buttonPrimary h-2 w-2 rounded-[50%]" />
+                    ) : (
+                        <div className="bg-buttonTertiary h-2 w-2 rounded-[50%]" />
+                    )}
+
                     <h3 className="text-primary font-extrabold sm:text-xs lg:text-[1rem]">
                         {name}
                     </h3>

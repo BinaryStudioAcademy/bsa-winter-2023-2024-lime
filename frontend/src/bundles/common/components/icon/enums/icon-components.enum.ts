@@ -1,5 +1,4 @@
 import ArrowDownIcon from '~/assets/img/icons/arrow-down-icon.svg?react';
-import DotIcon from '~/assets/img/icons/dot-icon.svg?react';
 import FacebookIcon from '~/assets/img/icons/facebook.svg?react';
 import GoalsIcon from '~/assets/img/icons/goals-icon.svg?react';
 import GoogleFitIcon from '~/assets/img/icons/google-fit-icon.svg?react';
@@ -26,7 +25,6 @@ const IconComponent: Record<
     googleFitIcon: GoogleFitIcon,
     googleLogoIcon: GoogleLogoIcon,
     facebookIcon: FacebookIcon,
-    dotIcon: DotIcon,
     messageIcon: MessageIcon,
 } as const;
 
