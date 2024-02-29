@@ -1,4 +1,5 @@
-import closeIcon from '~/assets/img/icons/close-icon.svg';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import {
     useCallback,
@@ -27,7 +28,7 @@ const isAppInstalled = (): boolean => {
     );
 };
 
-const DownloadBanner = (): JSX.Element => {
+const DownloadBanner = (): JSX.Element | null => {
     const [isBannerVisible, setBannerVisibility] = useState(true);
     const [deferredPrompt, setDeferredPrompt] =
         useState<BeforeInstallPromptEvent | null>(null);
@@ -71,35 +72,35 @@ const DownloadBanner = (): JSX.Element => {
         }
     }, []);
 
+    if (!isBannerVisible) {
+        return null;
+    }
     return (
-        <>
-            {isBannerVisible && (
-                <div className="bg-lm-yellow-200 fixed left-0 top-0 z-50 flex h-24 w-full items-center justify-evenly rounded-b-lg p-4 text-center text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] lg:xl:hidden">
-                    <button
-                        onClick={closeBanner}
-                        className="text-lm-black-300 ml-1 mr-3 h-12 w-12 hover:text-white"
-                    >
-                        <img src={closeIcon} alt="Close icon" />
-                    </button>
-                    <Icon
-                        name={'logoIcon'}
-                        color={IconColor.PRIMARY}
-                        size={ComponentSize.EXTRA_LARGE}
-                    />
-                    <p className="text-bold mr-2">
-                        Install LIME for a better experience!
-                    </p>
-
-                    <Button
-                        size={ComponentSize.MEDIUM}
-                        variant={ButtonVariant.PRIMARY}
-                        label="Download App"
-                        className="w-[180px]"
-                        onClick={handleInstall}
-                    />
-                </div>
-            )}
-        </>
+        <div className="bg-lm-yellow-200 fixed left-0 top-0 z-50 flex h-24 w-full items-center justify-evenly rounded-b-lg p-4 text-center text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] lg:xl:hidden">
+            <button
+                onClick={closeBanner}
+                className="text-lm-black-300 ml-1 mr-3 h-12 w-12 hover:text-white"
+            >
+                <XMarkIcon className="mx-1 h-6 w-6" />
+            </button>
+            <Icon
+                name={'logoIcon'}
+                color={IconColor.PRIMARY}
+                size={ComponentSize.EXTRA_LARGE}
+                className="sm:h-16 sm:w-16 md:h-20 md:w-20"
+            />
+            <p className="text-bold md:text-normal mr-2 md:text-2xl">
+                Install LIME for a better experience!
+            </p>
+            <div className="w-[16rem]">
+                <Button
+                    size={ComponentSize.MEDIUM}
+                    variant={ButtonVariant.PRIMARY}
+                    label="Download App"
+                    onClick={handleInstall}
+                />
+            </div>
+        </div>
     );
 };
 
