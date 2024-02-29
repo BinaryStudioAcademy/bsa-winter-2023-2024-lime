@@ -11,6 +11,9 @@ type EnvironmentSchema = {
     SOCKET: {
         ORIGIN_URL: string;
     };
+    STRIPE: {
+        PUBLIC_KEY: string;
+    };
 };
 
 export { type EnvironmentSchema };

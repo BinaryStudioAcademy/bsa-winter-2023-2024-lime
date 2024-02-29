@@ -22,6 +22,11 @@ class BaseConfig implements Config {
                     'VITE_APP_SOCKET_ORIGIN_URL'
                 ] as string,
             },
+            STRIPE: {
+                PUBLIC_KEY: import.meta.env[
+                    'VITE_APP_STRIPE_PUBLIC_KEY'
+                ] as string,
+            },
         };
     }
 }
