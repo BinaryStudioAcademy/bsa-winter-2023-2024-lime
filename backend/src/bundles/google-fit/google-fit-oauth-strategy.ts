@@ -1,7 +1,23 @@
 import { google } from 'googleapis';
 
-import { type OAuthStateEntity,type OAuthStrategy  } from '~/bundles/oauth/oauth.js';
+import {
+    GOOGLE_FIT_API_URL,
+    READ_SCOPE,
+    WRITE_SCOPE,
+} from '~/bundles/google-fit/constants/constants.js';
+import {
+    type OAuthExchangeAuthCodeDto,
+    type OAuthStateEntity,
+    type OAuthStrategy,
+    ErrorMessage,
+    HttpCode,
+    HttpError,
+    OAuthEntity,
+} from '~/bundles/oauth/oauth.js';
+import { OAuthActionsPath, OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { type Config } from '~/common/config/config.js';
+
+import { ApiPath } from './enums/enums.js';
 
 class GoogleFitOAuthStrategy implements OAuthStrategy {
     private config: Config;
@@ -9,29 +25,92 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
     private baseUrl: string;
 
     private apiPath: string;
-
+    private OAuth2;
     public constructor(config: Config) {
         this.config = config;
         this.baseUrl = `http://${config.ENV.APP.HOST}:${config.ENV.APP.PORT}`;
         this.apiPath = '/api/v1';
+        this.OAuth2 = new google.auth.OAuth2(
+            this.config.ENV.GOOGLE_FIT.CLIENT_ID,
+            this.config.ENV.GOOGLE_FIT.CLIENT_SECRET,
+            `${this.baseUrl}${this.apiPath}${ApiPath.OAUTH}/${OAuthProvider.GOOGLE_FIT}${OAuthActionsPath.EXCHANGE_TOKEN}`,
+        );
     }
 
     public getAuthorizeRedirectUrl(oAuthStateEntity: OAuthStateEntity): URL {
-        const { userId } = oAuthStateEntity.toObject();
-        const OAuth2 = new google.auth.OAuth2(
-            this.config.ENV.GOOGLE_FIT.CLIENT_ID,
-            this.config.ENV.GOOGLE_FIT.CLIENT_SECRET,
-            'http://localhost:3001/api/v1/connections/'
-        );
-        const scopes = ['https://www.googleapis.com/auth/fitness.activity.read'];
-        const url = OAuth2.generateAuthUrl({
+        const { userId, uuid } = oAuthStateEntity.toObject();
+        const url = this.OAuth2.generateAuthUrl({
             access_type: 'offline',
-            scope: scopes,
-            state: JSON.stringify({ userId })
+            scope: [
+                `${GOOGLE_FIT_API_URL}${READ_SCOPE}`,
+                `${GOOGLE_FIT_API_URL}${WRITE_SCOPE}`,
+            ],
+            state: JSON.stringify({ userId, uuid }),
         });
-        console.log(url);
-        console.log(userId);
-        return url;
+        return new URL(url);
+    }
+
+    public async exchangeAuthCode(
+        payload: OAuthExchangeAuthCodeDto,
+    ): Promise<OAuthEntity> {
+        const { code, scope, userId } = payload;
+        const {
+            tokens: { access_token, refresh_token, token_type, expiry_date },
+        } = await this.OAuth2.getToken(code);
+
+        return OAuthEntity.initializeNew({
+            userId,
+            tokenType: token_type as string,
+            scope,
+            provider: OAuthProvider.GOOGLE_FIT,
+            accessToken: access_token as string,
+            expiresAt: expiry_date as number,
+            refreshToken: refresh_token as string,
+        });
+    }
+
+    public checkScope(scope: string): boolean {
+        return scope.includes(WRITE_SCOPE && READ_SCOPE);
+    }
+
+    public async exchangeRefreshToken(
+        oAuthEntity: OAuthEntity,
+    ): Promise<OAuthEntity> {
+        const { userId, refreshToken, scope } = oAuthEntity.toObject();
+        this.OAuth2.setCredentials({
+            refresh_token: refreshToken,
+        });
+
+        const {
+            credentials: {
+                refresh_token,
+                token_type,
+                expiry_date,
+                access_token,
+            },
+        } = await this.OAuth2.refreshAccessToken();
+
+        return OAuthEntity.initializeNew({
+            provider: OAuthProvider.GOOGLE_FIT,
+            expiresAt: expiry_date as number,
+            accessToken: access_token as string,
+            tokenType: token_type as string,
+            refreshToken: refresh_token as string,
+            scope,
+            userId,
+        });
+    }
+
+    public async deauthorize(oAuthEntity: OAuthEntity): Promise<void> {
+        const { refreshToken } = oAuthEntity.toObject();
+        const { data } = await this.OAuth2.revokeToken(refreshToken);
+
+        if (!data.success) {
+            throw new HttpError({
+                status: HttpCode.FORBIDDEN,
+                message: ErrorMessage.UNVERIFIED,
+            });
+        }
     }
 }
 
