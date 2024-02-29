@@ -78,7 +78,10 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
         });
     }
 
-    public checkScope(scope: string): boolean {
+    public checkScope(scope: string | null): boolean {
+        if (!scope) {
+            return false;
+        }
         return scope.includes(WRITE_SCOPE && READ_SCOPE);
     }
 
