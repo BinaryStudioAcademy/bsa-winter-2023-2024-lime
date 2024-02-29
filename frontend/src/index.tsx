@@ -41,7 +41,7 @@ const routes = [
             {
                 path: AppRoute.ROOT,
                 element: <BaseLayout />,
-                // isPrivate: true,
+                isPrivate: true,
                 children: [
                     {
                         path: AppRoute.ROOT,
