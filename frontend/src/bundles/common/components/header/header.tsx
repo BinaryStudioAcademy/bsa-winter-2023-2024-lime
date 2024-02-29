@@ -3,7 +3,7 @@ import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
 import { Theme } from '../../enums/theme.js';
 import { useAppSelector } from '../../hooks/hooks.js';
-import { Button,Icon, Layout, Link } from '../components.js';
+import { Button, Icon, Layout, Link } from '../components.js';
 import { IconColor } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';

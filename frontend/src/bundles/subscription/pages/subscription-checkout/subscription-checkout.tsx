@@ -1,5 +1,5 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { type StripeElementsOptions,loadStripe } from '@stripe/stripe-js';
+import { type StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 
 import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
 import { CheckoutForm } from '~/bundles/subscription/components/components.js';
