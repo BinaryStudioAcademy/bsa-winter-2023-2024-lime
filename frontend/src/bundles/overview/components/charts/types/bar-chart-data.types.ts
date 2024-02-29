@@ -8,12 +8,4 @@ type BarChartData = {
     }[];
 };
 
-type BarChartOptions = {
-    scales: {
-        y: {
-            beginAtZero: boolean;
-        };
-    };
-};
-
-export { type BarChartData, type BarChartOptions };
+export { type BarChartData };
