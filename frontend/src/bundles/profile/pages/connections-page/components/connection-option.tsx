@@ -24,11 +24,7 @@ const ConnectionOption = ({
     }, [isConnected]);
 
     return (
-        <div
-            className={
-                'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6'
-            }
-        >
+        <div className={'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6'}>
             <div
                 className={
                     'flex flex-col items-start justify-between gap-5 xl:flex-row xl:items-center'
@@ -90,16 +86,14 @@ const ConnectionOption = ({
                     variant={isConnected ? 'secondary' : 'primary'}
                     size={'md'}
                     label={isConnected ? 'Disconnect' : 'Connect'}
-                    className={
-                        'w-full max-w-full xl:w-[15rem] sm:h-10'
-                    }
+                    className={'w-full max-w-full sm:h-10 xl:w-[15rem]'}
                     onClick={handleClick}
                 />
             </div>
-            <p className='text-lm-grey-100 text-sm xl:text-base'   >
+            <p className="text-lm-grey-100 text-sm xl:text-base">
                 {description}
             </p>
-        </div >
+        </div>
     );
 };
 

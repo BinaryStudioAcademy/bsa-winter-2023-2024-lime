@@ -65,7 +65,11 @@ const SubscriptionPage = (): JSX.Element => {
     );
 
     if (dataStatus === DataStatus.PENDING) {
-        return <div className='m-auto'><Loader /></div>;
+        return (
+            <div className="m-auto">
+                <Loader />
+            </div>
+        );
     }
 
     return (
