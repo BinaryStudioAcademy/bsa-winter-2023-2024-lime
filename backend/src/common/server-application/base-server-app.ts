@@ -152,7 +152,10 @@ class BaseServerApp implements ServerApp {
             return <T, R = ReturnType<ValidationSchema['parse']>>(
                 data: T,
             ): R => {
-                return schema.parse(data) as R;
+                const result = schema.parse(data);
+                return {
+                    value: result,
+                } as R;
             };
         });
     }
