@@ -4,6 +4,7 @@ import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
 } from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -201,6 +202,7 @@ class GoalController extends BaseController {
         const { id } = options.params;
         const { id: userId } = options.user;
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.goalService.find({ id, userId }),
         };
@@ -242,6 +244,7 @@ class GoalController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { id: userId } = options.user;
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.goalService.findAll({
                 userId,
@@ -290,6 +293,7 @@ class GoalController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { id: userId } = options.user;
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
             payload: await this.goalService.create({
                 ...options.body,
@@ -345,6 +349,7 @@ class GoalController extends BaseController {
         const { id } = options.params;
         const { id: userId } = options.user;
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.goalService.update(
                 { id, userId },
@@ -393,6 +398,7 @@ class GoalController extends BaseController {
         const { id } = options.params;
         const { id: userId } = options.user;
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.goalService.delete({ id, userId }),
         };

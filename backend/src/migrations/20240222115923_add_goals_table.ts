@@ -48,6 +48,7 @@ async function up(knex: Knex): Promise<void> {
             .enum(ColumnName.ACTIVITY_TYPE, Object.values(ActivityType), {
                 useNative: true,
                 enumName: ACTIVITY_TYPE_ENUM,
+                existingType: true,
             })
             .notNullable();
         table.integer(ColumnName.FREQUENCY).unsigned().notNullable();
