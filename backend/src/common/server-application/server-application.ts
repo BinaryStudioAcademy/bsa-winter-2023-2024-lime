@@ -1,3 +1,4 @@
+import { achievementController } from '~/bundles/achievements/achievements.js';
 import { authController } from '~/bundles/auth/auth.js';
 import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
 import { userController } from '~/bundles/users/users.js';
@@ -14,6 +15,7 @@ const apiV1 = new BaseServerAppApi(
     ...authController.routes,
     ...userController.routes,
     ...passwordResetController.routes,
+    ...achievementController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

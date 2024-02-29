@@ -16,6 +16,8 @@ class UserModel extends AbstractModel {
 
     public 'userDetails': UserDetailsModel;
 
+    public 'userAchievements': UserAchievementModel;
+
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
     }
@@ -30,12 +32,12 @@ class UserModel extends AbstractModel {
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
-            userAchievement: {
+            userAchievements: {
                 relation: Model.HasOneRelation,
                 modelClass: UserAchievementModel,
                 join: {
-                    from: `${DatabaseTableName.USERS}.id`,
-                    to: `${DatabaseTableName.USER_ACHIEVEMENTS}.userId`,
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_ACHIEVEMENTS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
         };
