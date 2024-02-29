@@ -20,23 +20,6 @@ import {
 /**
  * @swagger
  * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
-
-/**
- * @swagger
- * components:
  *    schemas:
  *      Subscription:
  *        type: object

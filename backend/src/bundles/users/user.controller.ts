@@ -15,23 +15,6 @@ import { UsersApiPath } from './enums/enums.js';
 /**
  * @swagger
  * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
-
-/**
- * @swagger
- * components:
  *    schemas:
  *      User:
  *        type: object
