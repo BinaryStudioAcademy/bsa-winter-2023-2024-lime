@@ -27,7 +27,7 @@ async function up(knex: Knex): Promise<void> {
     await knex.schema.alterTable(TABLE_NAME, (table) => {
         table.text(ColumnName.AVATAR_URL).nullable();
         table.string(ColumnName.USERNAME).unique().nullable();
-        table.date(ColumnName.DATE_OF_BIRTH).nullable();
+        table.dateTime(ColumnName.DATE_OF_BIRTH).nullable();
         table.integer(ColumnName.WEIGHT).unsigned().nullable();
         table.integer(ColumnName.HEIGHT).unsigned().nullable();
     });
