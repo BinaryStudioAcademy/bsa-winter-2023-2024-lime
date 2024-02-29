@@ -14,6 +14,14 @@
     /* BACKGROUND */
     --background-primary: rgb(255 255 255); /* White */
     --background-secondary: rgb(243 243 243); /* #F3F3F3 */
+
+    /* BORDER */
+    --border-primary: rgb(28 34 39); /* lm-black-200 */
+    --border-inactive: rgb(255 255 255); /* lm-blue-500 */
+
+    /* RING */
+    --ring-primary: rgb(28 34 39); /* lm-black-200 */
+    --ring-inactive: rgb(255 255 255); /* #B2C0D3 */
 }
 
 .dark {
@@ -31,4 +39,12 @@
     /* BACKGROUND */
     --background-primary: rgb(28 34 39); /* lm-black-200 */
     --background-secondary: rgb(42 47 55); /* lm-black-100 */
+
+    /* BORDER */
+    --border-primary: rgb(255 255 255); /* White */
+    --border-inactive: rgb(30 30 44); /* lm-blue-500 */
+
+    /* RING */
+    --ring-primary: rgb(255 255 255); /* White */
+    --ring-inactive: rgb(30 30 44); /* lm-blue-500 */
 }

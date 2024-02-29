@@ -5,7 +5,7 @@ const ConnectionsPage = (): JSX.Element => {
     return (
         <div
             className={
-                'bg-lm-black-200 flex flex-col gap-4 px-5 py-10 sm:px-8 md:px-10'
+                'bg-primary flex flex-col gap-4 px-5 py-10 sm:px-8 md:px-10'
             }
         >
             {connectionOptionsData.map((option, id) => (

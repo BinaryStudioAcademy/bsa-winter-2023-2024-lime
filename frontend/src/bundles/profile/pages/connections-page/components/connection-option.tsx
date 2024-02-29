@@ -29,7 +29,7 @@ const ConnectionOption = ({
     return (
         <div
             className={
-                'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6 md:p-10'
+                'bg-secondary flex flex-col gap-5 rounded-2xl p-6 md:p-10'
             }
         >
             <div
@@ -44,7 +44,7 @@ const ConnectionOption = ({
                         <div className={'flex items-center gap-2'}>
                             <h2
                                 className={
-                                    'text-sm font-bold text-white sm:text-base md:text-xl'
+                                    'text-primary text-sm font-bold sm:text-base md:text-xl'
                                 }
                             >
                                 {title}
@@ -61,7 +61,7 @@ const ConnectionOption = ({
                         </div>
                         <p
                             className={
-                                'text-lm-grey-200 text-[0.75rem] sm:text-sm md:text-base'
+                                'text-secondary text-[0.75rem] sm:text-sm md:text-base'
                             }
                         >
                             {isConnected ? (
