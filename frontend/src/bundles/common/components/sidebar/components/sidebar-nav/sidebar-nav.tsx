@@ -1,7 +1,6 @@
 import {
     Button,
     ButtonVariant,
-    Link,
 } from '~/bundles/common/components/components.js';
 import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/helpers.js';
 import { type AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
@@ -38,20 +37,18 @@ const SidebarNav = ({
     });
 
     return (
-        <Link to={to} className="flex items-center justify-center">
-            <Button
-                type="button"
-                label={text}
-                className={getValidClassNames(
-                    isActive ? classes.active : classes.inactive,
-                )}
-                leftIcon={enhacedIcon}
-                variant={ButtonVariant.SIDEBAR}
-                onClick={handleNavigation}
-                isActive={isActive}
-                size={ComponentSize.MEDIUM}
-            />
-        </Link>
+        <Button
+            type="button"
+            label={text}
+            className={getValidClassNames(
+                isActive ? classes.active : classes.inactive,
+            )}
+            leftIcon={enhacedIcon}
+            variant={ButtonVariant.SIDEBAR}
+            onClick={handleNavigation}
+            isActive={isActive}
+            size={ComponentSize.MEDIUM}
+        />
     );
 };
 
