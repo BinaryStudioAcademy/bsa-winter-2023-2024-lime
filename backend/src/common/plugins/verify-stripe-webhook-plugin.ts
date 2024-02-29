@@ -1,10 +1,9 @@
 import { type FastifyRequest } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
-import { HttpCode, HttpHeader } from 'shared/src/framework/http/http.js';
 
 import { type Stripe } from '~/bundles/subscriptions/types/types.js';
 
-import { HttpError } from '../http/http.js';
+import { HttpCode, HttpError, HttpHeader } from '../http/http.js';
 import { type StripeService } from '../services/stripe/stripe.service.js';
 
 type Options = {
