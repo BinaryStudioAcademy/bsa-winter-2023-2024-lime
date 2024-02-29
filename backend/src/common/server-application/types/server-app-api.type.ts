@@ -4,6 +4,7 @@ interface ServerAppApi {
     version: string;
     routes: ServerAppRouteParameters[];
     generateDoc(): object;
+    buildFullPath(path: string): string;
 }
 
 export { type ServerAppApi };

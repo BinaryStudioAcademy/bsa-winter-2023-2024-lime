@@ -4,6 +4,8 @@ const AppRoute = {
     HELP: '/help',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
+    SUBSCRIPTION: '/subscriptions',
+    SUBSCRIPTION_CHECKOUT: '/subscriptions-checkout',
     PASSWORD_RESET: '/reset-password/:resetToken',
     OVERVIEW: '/overview',
     GOALS: '/goals',

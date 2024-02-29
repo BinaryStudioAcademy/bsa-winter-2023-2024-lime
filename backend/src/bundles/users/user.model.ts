@@ -14,6 +14,8 @@ import {
 } from '~/common/database/database.js';
 
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
+import { SubscriptionModel } from '../subscriptions/subscription.model.js';
+import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -21,6 +23,8 @@ class UserModel extends AbstractModel {
     public 'email': string;
 
     public 'passwordHash': string;
+
+    public 'stripeCustomerId': string;
 
     public 'userDetails': UserDetailsModel;
     public 'workouts': WorkoutModel;
@@ -41,6 +45,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            subscription: {
+                relation: Model.HasManyRelation,
+                modelClass: SubscriptionModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.SUBSCRIPTIONS}.${SubscriptionAttributes.USER_ID}`,
                 },
             },
             oAuthInfo: {
