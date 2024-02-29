@@ -1,4 +1,9 @@
-import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
+import {
+    useCallback,
+    useHandleClickOutside,
+    useRef,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
 
 import { NotificationList } from './notification-list.js';
 import { NotificationIcon } from './notifications-header.js';
@@ -35,8 +40,15 @@ const NotificationComponent = (): JSX.Element => {
         [notifications],
     );
 
+    const notificationListReference = useRef(null);
+
+    useHandleClickOutside({
+        ref: notificationListReference,
+        onClick: () => setShowList(false),
+    });
+
     return (
-        <div className="relative">
+        <div className="relative" ref={notificationListReference}>
             <NotificationIcon
                 count={notifications.length}
                 onClick={handleIconClick}
