@@ -9,13 +9,15 @@ const ColumnName = {
     UPDATED_AT: 'updated_at',
     TITLE: 'title',
     MESSAGE: 'message',
-    IS_READ: 'isRead',
+    IS_READ: 'is_read',
     TYPE: 'type',
 };
 
 const NotificationType = {
     DEFAULT: 'default',
 } as const;
+
+const NOTIFICATION_TYPE_ENUM = 'notification_type_enum';
 
 async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable(DatabaseTableName.NOTIFICATIONS, (table) => {
@@ -30,7 +32,12 @@ async function up(knex: Knex): Promise<void> {
         table.string(ColumnName.TITLE).nullable();
         table.string(ColumnName.MESSAGE).notNullable();
         table.boolean(ColumnName.IS_READ).defaultTo(false);
-        table.string(ColumnName.TYPE).defaultTo(NotificationType.DEFAULT);
+        table
+            .enu(ColumnName.TYPE, Object.values(NotificationType), {
+                enumName: NOTIFICATION_TYPE_ENUM,
+                useNative: true,
+            })
+            .defaultTo(NotificationType.DEFAULT);
         table
             .dateTime(ColumnName.CREATED_AT)
             .defaultTo(knex.fn.now())

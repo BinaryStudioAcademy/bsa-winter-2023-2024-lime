@@ -4,7 +4,7 @@ import { type Service } from '~/common/types/service.type.js';
 
 import { NotificationEntity } from './notification.entity.js';
 import { type NotificationRepository } from './notification.repository.js';
-import { type NotificationResponseDto } from './notifications.js';
+import { type NotificationResponseDto, type Paged } from './notifications.js';
 import { type CreateNotificationRequestDto } from './types/types.js';
 
 class NotificationService implements Service {
@@ -42,7 +42,7 @@ class NotificationService implements Service {
         userId: number;
         page: number;
         limit: number;
-    }): Promise<{ items: NotificationResponseDto[]; total: number }> {
+    }): Promise<Paged<NotificationResponseDto>> {
         const data = await this.notificationRepository.paginatedFind({
             userId,
             page,

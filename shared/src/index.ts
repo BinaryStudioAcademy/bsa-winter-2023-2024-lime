@@ -33,6 +33,7 @@ export {
     ApiPath,
     AppEnvironment,
     ContentType,
+    PaginationValidationMessage,
     ServerErrorType,
 } from './enums/enums.js';
 export { type Config } from './framework/config/config.js';
@@ -51,6 +52,7 @@ export {
 export { type Storage } from './framework/storage/storage.js';
 export { configureString } from './helpers/helpers.js';
 export {
+    type Paged,
     type PaginationParameters,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
@@ -59,3 +61,4 @@ export {
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';
+export { paginationValidationSchema } from './validation-shemas/validation-shemas.js';

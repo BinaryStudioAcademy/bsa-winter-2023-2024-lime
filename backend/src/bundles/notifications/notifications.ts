@@ -13,11 +13,15 @@ const notificationController = new NotificationController(
 );
 
 export { notificationController, notificationService };
+export { NotificationsApiPath, NotificationType } from './enums/enums.js';
 export {
+    type CreateNotificationRequestDto,
     type NotificationRequestDto,
     type NotificationResponseDto,
+    type Paged,
     type PaginationParameters,
-    NotificationsApiPath,
-    NotificationType,
+} from './types/types.js';
+export {
     notificationValidationSchema,
-} from 'shared';
+    paginationValidationSchema,
+} from './validation-shemas/validation-shemas.js';

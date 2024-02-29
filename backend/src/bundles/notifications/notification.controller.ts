@@ -1,10 +1,10 @@
-import { ApiPath, HttpCode } from 'shared';
-
 import { BaseController } from '~/common/controller/base-controller.package.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
 } from '~/common/controller/controller.js';
+import { ApiPath } from '~/common/enums/enums.js';
+import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import { type UserAuthResponseDto } from '../users/users.js';
@@ -14,6 +14,7 @@ import {
     type PaginationParameters,
     NotificationsApiPath,
     notificationValidationSchema,
+    paginationValidationSchema,
 } from './notifications.js';
 
 /**
@@ -70,6 +71,9 @@ class NotificationController extends BaseController {
             path: NotificationsApiPath.ROOT,
             method: 'GET',
             isProtected: true,
+            validation: {
+                query: paginationValidationSchema,
+            },
             handler: (options) =>
                 this.findAllNotifications(
                     options as ApiHandlerOptions<{

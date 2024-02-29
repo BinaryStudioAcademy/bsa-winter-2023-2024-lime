@@ -28,7 +28,7 @@ class NotificationRepository implements Repository {
             .query()
             .where('userId', userId)
             .orderBy('isRead', 'asc')
-            .orderBy('updated_at', 'desc')
+            .orderBy('updatedAt', 'desc')
             .execute();
 
         return notifications.map((notification) =>
