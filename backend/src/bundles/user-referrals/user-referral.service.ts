@@ -3,14 +3,16 @@ import { type Service } from '~/common/types/types.js';
 import { UserReferralEntity } from './user-referral.entity.js';
 import { type UserReferralRepository } from './user-referral.repository.js';
 
-type ReferralTransactionResponseItem = {
+type UserReferralResponseItem = {
     id: number;
     userId: number;
-    referralUserId: number | null;
     referralCode: string;
+    referralUserId: number | null;
+    balance: number;
+    referralsCount: number;
 };
 
-class ReferralTransactionService implements Service {
+class UserReferralService implements Service {
     private referralTransactionRepository: UserReferralRepository;
 
     public constructor(referralTransactionRepository: UserReferralRepository) {
@@ -24,7 +26,7 @@ class ReferralTransactionService implements Service {
     }
 
     public async findAll(): Promise<{
-        items: ReferralTransactionResponseItem[];
+        items: UserReferralResponseItem[];
     }> {
         const items = await this.referralTransactionRepository.findAll();
 
@@ -41,7 +43,7 @@ class ReferralTransactionService implements Service {
         userId: number;
         referralUserId: number | null;
         referralCode: string;
-    }): Promise<ReferralTransactionResponseItem> {
+    }): Promise<UserReferralResponseItem> {
         const referralTrnasaction =
             await this.referralTransactionRepository.create(
                 UserReferralEntity.initializeNew({
@@ -51,7 +53,7 @@ class ReferralTransactionService implements Service {
                 }),
             );
 
-        return referralTrnasaction.toObject() as ReferralTransactionResponseItem;
+        return referralTrnasaction.toObject() as UserReferralResponseItem;
     }
 
     public update(): ReturnType<Service['update']> {
@@ -63,4 +65,4 @@ class ReferralTransactionService implements Service {
     }
 }
 
-export { ReferralTransactionService };
+export { UserReferralService };

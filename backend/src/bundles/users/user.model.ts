@@ -12,8 +12,8 @@ import {
 } from '~/common/database/database.js';
 
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
-import { UserReferralAttributes } from '../user-referral/enums/user-referral.js';
-import { UserReferralModel } from '../user-referral/user-referral.model.js';
+import { UserReferralAttributes } from '../user-referrals/enums/user-referral.js';
+import { UserReferralModel } from '../user-referrals/user-referral.model.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -65,7 +65,7 @@ class UserModel extends AbstractModel {
                 modelClass: UserReferralModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.USER_REFERRAL}.${UserReferralAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_REFERRAL}.${UserReferralAttributes.USER_ID}`,
                 },
             },
             userAchievement: {

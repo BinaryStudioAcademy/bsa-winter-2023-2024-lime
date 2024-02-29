@@ -16,8 +16,12 @@ class UserReferralModel extends AbstractModel {
 
     public 'referralCode': string;
 
+    public 'balance': number;
+
+    public 'referralsCount': number;
+
     public static override get tableName(): string {
-        return DatabaseTableName.ACHIEVEMENTS;
+        return DatabaseTableName.USER_REFERRAL;
     }
 
     public static override get relationMappings(): RelationMappings {

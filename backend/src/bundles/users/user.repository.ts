@@ -40,7 +40,7 @@ class UserRepository implements Repository {
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('userDetails')
+            .withGraphFetched('[userDetails, userReferral]')
             .execute();
 
         return users.map((user) => {
@@ -91,7 +91,9 @@ class UserRepository implements Repository {
                 .insert({
                     referralCode: referralCodeToInsert,
                     referralUserId: referralUser?.userId ?? null,
-                });
+                })
+                .returning('*')
+                .execute();
 
             await trx.commit();
 

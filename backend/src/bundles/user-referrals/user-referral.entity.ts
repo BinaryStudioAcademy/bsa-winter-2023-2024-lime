@@ -5,25 +5,35 @@ class UserReferralEntity implements Entity {
 
     private 'userId': number;
 
+    private 'referralCode': string;
+
     private 'referralUserId': number | null;
 
-    private 'referralCode': string;
+    public 'balance': number | null;
+
+    public 'referralsCount': number | null;
 
     private constructor({
         id,
         userId,
         referralUserId,
         referralCode,
+        balance,
+        referralsCount,
     }: {
         id: number | null;
         userId: number;
-        referralUserId: number | null;
         referralCode: string;
+        referralUserId: number | null;
+        balance: number | null;
+        referralsCount: number | null;
     }) {
         this.id = id;
         this.userId = userId;
         this.referralUserId = referralUserId;
         this.referralCode = referralCode;
+        this.balance = balance;
+        this.referralsCount = referralsCount;
     }
 
     public static initialize({
@@ -31,17 +41,23 @@ class UserReferralEntity implements Entity {
         userId,
         referralUserId,
         referralCode,
+        balance,
+        referralsCount,
     }: {
         id: number;
         userId: number;
-        referralUserId: number | null;
         referralCode: string;
+        referralUserId: number | null;
+        balance: number | null;
+        referralsCount: number | null;
     }): UserReferralEntity {
         return new UserReferralEntity({
             id,
             userId,
             referralUserId,
             referralCode,
+            balance,
+            referralsCount,
         });
     }
 
@@ -59,20 +75,26 @@ class UserReferralEntity implements Entity {
             userId,
             referralUserId,
             referralCode,
+            balance: null,
+            referralsCount: null,
         });
     }
 
     public toObject(): {
         id: number;
         userId: number;
-        referralUserId: number | null;
+        referralUserId: number;
         referralCode: string;
+        balance: number;
+        referralsCount: number;
     } {
         return {
             id: this.id as number,
             userId: this.userId,
-            referralUserId: this.referralUserId,
+            referralUserId: this.referralUserId as number,
             referralCode: this.referralCode,
+            balance: this.balance as number,
+            referralsCount: this.referralsCount as number,
         };
     }
 
