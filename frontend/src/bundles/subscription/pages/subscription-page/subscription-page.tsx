@@ -9,6 +9,8 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { createSelector } from '~/bundles/common/redux/selectors/selectors.js';
+import { type RootState } from '~/bundles/common/types/redux-store-rootstate.js';
 
 import {
     SubscriptionPlan,
@@ -17,13 +19,21 @@ import {
 import { actions as subscriptionActions } from '../../store/subscriptions.js';
 import { type SubscribeRequestDto } from '../../types/types.js';
 
+const selectSubscriptions = (state:RootState): RootState['subscriptions'] => state.subscriptions;
+
 const SubscriptionPage = (): JSX.Element => {
-    const { dataStatus, subscriptionPlans, currentSubscription } =
-        useAppSelector(({ subscriptions }) => ({
+    
+    const selectSubscriptionData = createSelector(
+        [selectSubscriptions],
+        (subscriptions) => ({
             subscriptionPlans: subscriptions.subscriptionPlans,
             currentSubscription: subscriptions.currentSubscription,
             dataStatus: subscriptions.dataStatus,
-        }));
+        }),
+    );
+
+    const { dataStatus, subscriptionPlans, currentSubscription } =
+        useAppSelector(selectSubscriptionData);   
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

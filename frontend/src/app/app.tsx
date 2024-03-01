@@ -11,16 +11,25 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { createSelector } from '~/bundles/common/redux/selectors/selectors.js';
+import { type RootState } from '~/bundles/common/types/types.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
+
+const selectRedirectPath = (state: RootState): RootState['app'] => state.app;
 
 const App: React.FC = () => {
     const [isRefreshing, setIsRefreshing] = useState(true);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { redirectPath } = useAppSelector(({ app }) => ({
-        redirectPath: app.redirectPath,
-    }));
+    const selectAppRedirectPath = createSelector(
+        [selectRedirectPath],
+        (app) => ({
+            redirectPath: app.redirectPath,
+        }),
+    );
+
+    const { redirectPath } = useAppSelector(selectAppRedirectPath);
 
     useEffect(() => {
         if (redirectPath) {

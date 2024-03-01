@@ -14,6 +14,8 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { createSelector } from '~/bundles/common/redux/selectors/selectors.js';
+import { type RootState } from '~/bundles/common/types/redux-store-rootstate.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import { type PasswordForgotRequestDto } from '~/bundles/password-reset/types/types.js';
 import { type UserAuthRequestDto } from '~/bundles/users/users.js';
@@ -26,6 +28,13 @@ import {
 import { type UserSignUpForm } from '../components/sign-up-form/type.js';
 import { actions as authActions } from '../store/auth.js';
 
+const subscriptionDataStatus = (state: RootState): RootState['auth'] =>
+    state.auth;
+
+const subscriptionPassDataStatus = (
+    state: RootState,
+): RootState['passwordReset'] => state.passwordReset;
+
 const Auth: React.FC = () => {
     const dispatch = useAppDispatch();
 
@@ -36,14 +45,24 @@ const Auth: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
 
-    const { dataStatus } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-    }));
+    const selectAuthDataStatus = createSelector(
+        [subscriptionDataStatus],
+        (auth) => ({
+            dataStatus: auth.dataStatus,
+        }),
+    );
 
-    const { dataStatus: resetPasswordStatus } = useAppSelector(
-        ({ passwordReset }) => ({
+    const { dataStatus } = useAppSelector(selectAuthDataStatus);
+
+    const selectPasswordResetDataStatus = createSelector(
+        [subscriptionPassDataStatus],
+        (passwordReset) => ({
             dataStatus: passwordReset.dataStatus,
         }),
+    );
+
+    const { dataStatus: resetPasswordStatus } = useAppSelector(
+        selectPasswordResetDataStatus,
     );
 
     const isLoading = dataStatus === DataStatus.PENDING;
