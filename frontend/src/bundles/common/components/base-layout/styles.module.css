@@ -1,9 +1,9 @@
 .base-layout {
-    @apply grid grid-cols-2 grid-rows-2 transition-all duration-[0.5s] ease-[ease-in-out];
-
     grid-template:
-        "header header" 88px
-        "aside main" / 288px;
+        "header header"
+        "aside main";
+
+    @apply grid grid-rows-[88px,auto] overflow-hidden lg:grid-cols-[288px,auto] grid-cols-[256px,auto] transition-all duration-[0.5s] ease-[ease-in-out];
 }
 
 .content-container {
@@ -12,8 +12,12 @@
     grid-area: main;
 }
 
+.base-layout:not(.sidebar-closed) {
+    @apply overflow-hidden;
+}
+
 .base-layout.sidebar-closed {
     grid-template:
         "header header" 88px
-        "aside main" / 0%;
+        "aside main" /0;
 }
