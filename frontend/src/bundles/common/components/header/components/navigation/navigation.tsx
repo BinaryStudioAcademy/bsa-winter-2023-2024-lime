@@ -30,7 +30,6 @@ const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
                         alt="avatar"
                         className={styles['avatar']}
                     />
-
                 </li>
             </ul>
         </nav>
