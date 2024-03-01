@@ -3,7 +3,7 @@
         "header header"
         "aside main";
 
-    @apply grid grid-rows-[88px,auto] overflow-hidden lg:grid-cols-[288px,auto] grid-cols-[256px,auto] transition-all duration-[0.5s] ease-[ease-in-out];
+    @apply grid grid-cols-[256px,auto] grid-rows-[88px,auto] overflow-hidden transition-all duration-[0.5s] ease-[ease-in-out] lg:grid-cols-[288px,auto];
 }
 
 .content-container {
