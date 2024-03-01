@@ -1,18 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
-import {
-    type UserAuthResponseDto,
-    type ValueOf,
-} from '~/bundles/common/types/types.js';
 
+import { type AuthStateTypeSlice } from '../types/types.js';
 import { logout, refreshUser, signIn, signUp } from './actions.js';
 
-type State = {
-    dataStatus: ValueOf<typeof DataStatus>;
-    user: UserAuthResponseDto | null;
-    isRefreshing: boolean;
-};
+type State = AuthStateTypeSlice;
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
