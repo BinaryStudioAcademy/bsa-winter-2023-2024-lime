@@ -18,6 +18,7 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useState,
 } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserUpdateProfileRequestDto,
@@ -32,6 +33,7 @@ type Properties = {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+    const [valuesSet, setValuesSet] = useState(false);
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
@@ -45,7 +47,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         });
 
     useEffect(() => {
-        if (user) {
+        if (!valuesSet && user) {
             const { fullName, username, dateOfBirth, weight, height, gender } =
                 user;
 
@@ -55,8 +57,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             setValue('weight', weight || '');
             setValue('height', height || '');
             setValue('gender', gender || null);
+
+            // Mark values as set
+            setValuesSet(true);
         }
-    }, [user, setValue]);
+    }, [user, setValue, valuesSet]);
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -71,7 +76,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     username: (getValues().username || '').trim(),
                 };
                 onSubmit(payload);
-                reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
             }
         },
         [onSubmit, getValues, reset, errors],
