@@ -55,10 +55,10 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
             outDir: 'build',
         },
         plugins: [
-            reactPlugin() as PluginOption,
-            VitePWA(manifestForPlugin) as unknown as Plugin,
-            svgr() as Plugin,
-        ],
+            reactPlugin(),
+            VitePWA(manifestForPlugin),
+            svgr(),
+        ] as PluginOption[],
         server: {
             port: Number(VITE_APP_DEVELOPMENT_PORT),
             proxy: {

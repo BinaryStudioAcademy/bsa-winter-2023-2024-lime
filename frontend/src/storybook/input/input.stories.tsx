@@ -11,20 +11,12 @@ const meta: Meta<typeof InputStory> = {
 export default meta;
 type Story = StoryObj<typeof InputStory>;
 
-const Text: Story = {
+const Sandbox: Story = {
     args: {
         label: 'Text',
         placeholder: 'placeholder',
-        name: 'text',
         type: 'text',
     },
 };
-const Password: Story = {
-    args: {
-        label: 'Password',
-        name: 'password',
-        type: 'password',
-    },
-};
 
-export { Password, Text };
+export { Sandbox };

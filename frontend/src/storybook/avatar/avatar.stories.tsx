@@ -21,20 +21,10 @@ const meta: Meta<typeof Avatar> = {
 export default meta;
 type Story = StoryObj<typeof Avatar>;
 
-const Small: Story = {
+const Sandbox: Story = {
     args: {
         size: ComponentSize.SMALL,
     },
 };
-const Medium: Story = {
-    args: {
-        size: ComponentSize.MEDIUM,
-    },
-};
-const Large: Story = {
-    args: {
-        size: ComponentSize.LARGE,
-    },
-};
 
-export { Large, Medium, Small };
+export { Sandbox };

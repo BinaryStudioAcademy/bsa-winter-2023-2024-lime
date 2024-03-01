@@ -16,62 +16,11 @@ const meta: Meta<typeof Loader> = {
 export default meta;
 type Story = StoryObj<typeof Loader>;
 
-const LoaderSmallPrimary: Story = {
+const Sandbox: Story = {
     args: {
         color: IconColor.PRIMARY,
         size: ComponentSize.SMALL,
-    },
-};
-const LoaderMediumPrimary: Story = {
-    args: {
-        color: IconColor.PRIMARY,
-        size: ComponentSize.MEDIUM,
-    },
-};
-const LoaderLargePrimary: Story = {
-    args: {
-        color: IconColor.PRIMARY,
-        size: ComponentSize.LARGE,
-    },
-};
-const LoaderExtraLargePrimary: Story = {
-    args: {
-        color: IconColor.PRIMARY,
-        size: ComponentSize.EXTRA_LARGE,
-    },
-};
-const LoaderSmallSecondary: Story = {
-    args: {
-        color: IconColor.SECONDARY,
-        size: ComponentSize.SMALL,
-    },
-};
-const LoaderMediumSecondary: Story = {
-    args: {
-        color: IconColor.SECONDARY,
-        size: ComponentSize.MEDIUM,
-    },
-};
-const LoaderLargeSecondary: Story = {
-    args: {
-        color: IconColor.SECONDARY,
-        size: ComponentSize.LARGE,
-    },
-};
-const LoaderExtraLargeSecondary: Story = {
-    args: {
-        color: IconColor.SECONDARY,
-        size: ComponentSize.EXTRA_LARGE,
     },
 };
 
-export {
-    LoaderExtraLargePrimary,
-    LoaderExtraLargeSecondary,
-    LoaderLargePrimary,
-    LoaderLargeSecondary,
-    LoaderMediumPrimary,
-    LoaderMediumSecondary,
-    LoaderSmallPrimary,
-    LoaderSmallSecondary,
-};
+export { Sandbox };
