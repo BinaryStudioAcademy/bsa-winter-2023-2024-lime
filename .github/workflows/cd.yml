@@ -3,7 +3,7 @@ name: Continuous Delivery
 env:
     AWS_REGION: eu-north-1
     EBS_APP_NAME: lime-dev
-    ENVIRONMENT: lime-2
+    ENVIRONMENT: development
 
 on:
     push:
@@ -47,3 +47,4 @@ jobs:
                   version_label: ${{ github.sha }}
                   use_existing_version_if_available: true
                   deployment_package: ./build.zip
+                  wait_for_environment_recovery: 300
