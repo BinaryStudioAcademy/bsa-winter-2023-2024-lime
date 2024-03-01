@@ -162,7 +162,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.config.ENV.APP.BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 
@@ -206,7 +206,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.config.ENV.APP.BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 }

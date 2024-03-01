@@ -29,7 +29,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
         this.OAuth2 = new google.auth.OAuth2(
             this.config.ENV.GOOGLE_FIT.CLIENT_ID,
             this.config.ENV.GOOGLE_FIT.CLIENT_SECRET,
-            `${this.config.ENV.APP.BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.GOOGLE_FIT}${OAuthActionsPath.EXCHANGE_TOKEN}`,
+            `${this.config.ENV.APP.API_BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.GOOGLE_FIT}${OAuthActionsPath.EXCHANGE_TOKEN}`,
         );
     }
 

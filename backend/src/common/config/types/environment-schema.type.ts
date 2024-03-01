@@ -10,7 +10,7 @@ type EnvironmentSchema = {
         OPEN_AI_API_KEY: string;
         OPEN_AI_MODEL: string;
         TOKEN_EXPIRATION_TIME: string;
-        BASE_URL: string;
+        API_BASE_URL: string;
     };
     AWS: {
         S3_ACCESS_KEY: string;
