@@ -113,21 +113,16 @@ class UserRepository implements Repository {
 
     public async updateUserProfile(
         userId: number,
-        payload: Record<string, Partial<UserDetailsModel>>,
+        payload: Partial<UserDetailsModel>,
     ): Promise<UserEntity | null> {
         const trx = await this.userModel.startTransaction();
-        const updatedUserDetails = payload[
-            'userDetails'
-        ] as Partial<UserDetailsModel>;
         try {
             const user = await this.userModel.query(trx).findById(userId);
 
             if (!user) {
                 return null;
             }
-            await user
-                .$relatedQuery('userDetails', trx)
-                .patch(updatedUserDetails);
+            await user.$relatedQuery('userDetails', trx).patch(payload);
 
             const userDetails = await user.$relatedQuery('userDetails', trx);
 

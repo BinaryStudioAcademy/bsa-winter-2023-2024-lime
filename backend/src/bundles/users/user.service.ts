@@ -67,7 +67,7 @@ class UserService implements Service {
             }
             const updatedUser = await this.userRepository.updateUserProfile(
                 userId,
-                { userDetails: updatedUserDetails },
+                updatedUserDetails,
             );
             if (!updatedUser) {
                 throw new HttpError({
