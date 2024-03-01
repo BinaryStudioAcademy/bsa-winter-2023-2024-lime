@@ -13,6 +13,7 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
+import { Workout, WorkoutItem } from '~/bundles/workout/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
 const routes = [
@@ -31,7 +32,13 @@ const routes = [
             },
             {
                 path: AppRoute.WORKOUT,
-                element: <div>WORKOUT PAGE</div>,
+                element: <Workout />,
+                children: [
+                    {
+                        path: AppRoute.WORKOUT_$ID,
+                        element: <WorkoutItem />,
+                    },
+                ],
             },
             {
                 path: AppRoute.OVERVIEW,

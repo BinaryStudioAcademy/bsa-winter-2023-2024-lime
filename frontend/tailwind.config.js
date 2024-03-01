@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const ButtonColors = {
     TEXT: 'var(--button-text)',
@@ -17,6 +17,8 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
+            'lm-cyan': '#05CFCF',
+            'lm-light-blue': '#056ECF',
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -97,6 +99,7 @@ export default {
                 'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
+                'wave-grey': 'url("~/assets/img/wave-grey.svg")',
             },
             borderRadius: {
                 '30': '1.9rem',
