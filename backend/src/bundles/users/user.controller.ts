@@ -3,6 +3,7 @@ import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
     BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -117,7 +118,7 @@ class UserController extends BaseController {
      *                   items:
      *                     type: array
      *                     items:
-     *                       $ref: '#/components/schemas/User/'
+     *                       $ref: '#/components/schemas/User'
      *        401:
      *          description: Failed operation
      *          content:
@@ -128,6 +129,7 @@ class UserController extends BaseController {
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
         };
@@ -163,6 +165,7 @@ class UserController extends BaseController {
         const { user } = options;
 
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: user,
         };
