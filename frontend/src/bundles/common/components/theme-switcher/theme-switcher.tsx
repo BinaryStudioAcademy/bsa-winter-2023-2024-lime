@@ -1,3 +1,4 @@
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { actions as themeActions } from '~/bundles/common/store/theme.js';
 
 import {
@@ -8,7 +9,11 @@ import {
 } from '../../hooks/hooks.js';
 import { Switch } from './components/switch.js';
 
-function ThemeSwitcher(): JSX.Element {
+type Properties = {
+    className?: string;
+};
+
+function ThemeSwitcher({ className }: Properties): JSX.Element {
     const dispatch = useAppDispatch();
     const { theme } = useAppSelector((state) => state.theme);
 
@@ -25,7 +30,7 @@ function ThemeSwitcher(): JSX.Element {
 
     return (
         <>
-            <div className="absolute bottom-0 right-0">
+            <div className={getValidClassNames(className)}>
                 <Switch
                     checked={theme === 'dark' ? true : false}
                     onChange={toggleTheme}
