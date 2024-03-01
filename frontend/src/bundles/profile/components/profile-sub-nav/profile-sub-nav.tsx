@@ -16,7 +16,7 @@ const ProfileNavigation = (): JSX.Element => {
     ];
     return (
         <div>
-            <SubNavigation items={routes} className="w-[15rem] px-0" />
+            <SubNavigation items={routes} className="h-full w-[15rem]" />
         </div>
     );
 };

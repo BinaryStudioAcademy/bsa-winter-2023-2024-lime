@@ -108,6 +108,7 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
+                'sideBar': 'calc(100vh - 88px)',
             },
             spacing: {
                 '60': '3.75rem',
@@ -129,9 +130,15 @@ export default {
                 buttonTertiary: ButtonColors.TERTIARY,
             },
             borderColor: {
+                primary: 'var(--border-primary)',
+                inactive: 'var(--border-inactive)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
+            },
+            ringColor: {
+                primary: 'var(--ring-primary)',
+                inactive: 'var(--ring-inactive)',
             },
         },
     },

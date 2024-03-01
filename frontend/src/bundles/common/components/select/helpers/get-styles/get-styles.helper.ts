@@ -27,7 +27,7 @@ const getStyles = <
 
         placeholder: () => 'font-inherit text-lm-grey-200',
         valueContainer: () => 'm-0 p-0',
-        input: () => 'm-0 p-0 text-white',
+        input: () => 'm-0 p-0 text-primary',
         option: () =>
             getValidClassNames(
                 errorMessage ? 'hover:text-lm-red' : 'hover:text-action',
