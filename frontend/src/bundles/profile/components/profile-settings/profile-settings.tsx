@@ -33,7 +33,7 @@ type Properties = {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const [valuesSet, setValuesSet] = useState(false);
+    const [valuesDefault, setValuesDefault] = useState(false);
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
@@ -47,7 +47,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         });
 
     useEffect(() => {
-        if (!valuesSet && user) {
+        if (!valuesDefault && user) {
             const { fullName, username, dateOfBirth, weight, height, gender } =
                 user;
 
@@ -58,10 +58,9 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             setValue('height', height || '');
             setValue('gender', gender || null);
 
-            // Mark values as set
-            setValuesSet(true);
+            setValuesDefault(true);
         }
-    }, [user, setValue, valuesSet]);
+    }, [user, setValue, valuesDefault]);
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
