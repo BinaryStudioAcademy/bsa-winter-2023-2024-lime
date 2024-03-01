@@ -15,7 +15,7 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('userDetails')
+            .withGraphFetched('[userDetails]')
             .execute();
 
         if (!user) {
@@ -39,7 +39,7 @@ class UserRepository implements Repository {
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('userDetails')
+            .withGraphFetched('[userDetails]')
             .execute();
 
         return users.map((user) => {
@@ -59,7 +59,7 @@ class UserRepository implements Repository {
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordHash } = entity.toNewObject();
+        const { email, passwordHash, stripeCustomerId } = entity.toNewObject();
         const trx = await this.userModel.startTransaction();
 
         try {
@@ -68,6 +68,7 @@ class UserRepository implements Repository {
                 .insert({
                     email,
                     passwordHash,
+                    stripeCustomerId,
                 })
                 .returning('*')
                 .execute();
@@ -97,14 +98,16 @@ class UserRepository implements Repository {
     }
 
     public async update(
-        id: number,
-        changes: object,
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
     ): ReturnType<Repository['update']> {
         return await this.userModel
             .query()
-            .findById(id)
-            .update(changes)
-            .returning('*');
+            .patch(payload)
+            .where(query)
+            .returning('*')
+            .first()
+            .execute();
     }
 
     public delete(): ReturnType<Repository['delete']> {

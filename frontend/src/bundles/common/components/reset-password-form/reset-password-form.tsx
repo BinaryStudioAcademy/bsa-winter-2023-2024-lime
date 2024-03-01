@@ -20,7 +20,7 @@ const ResetPasswordForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const { control, errors, handleSubmit } = useAppForm<PasswordResetPayload>({
         defaultValues: DEFAULT_PASSWORD_RESET_PAYLOAD,
         validationSchema: passwordResetValidationSchema,
-        mode: 'onTouched',
+        mode: 'onSubmit',
     });
 
     const handleFormSubmit = useCallback(
@@ -32,43 +32,48 @@ const ResetPasswordForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <>
-            <form onSubmit={handleFormSubmit}>
-                <div className="mb-4">
-                    <Input
-                        type="password"
-                        label="New Password"
-                        name="password"
-                        control={control}
-                        errors={errors}
-                        isDisabled={isLoading}
-                        required
-                    />
-                </div>
+            <div>
+                <h1 className="text-primary mb-6 text-left text-[1.8rem] font-bold">
+                    Set Up Your New Password
+                </h1>
+                <form onSubmit={handleFormSubmit}>
+                    <div className="mb-4">
+                        <Input
+                            type="password"
+                            label="New Password"
+                            name="password"
+                            control={control}
+                            errors={errors}
+                            isDisabled={isLoading}
+                            required
+                        />
+                    </div>
 
-                <div className="mb-12">
-                    <Input
-                        type="password"
-                        label="Confirm New Password"
-                        name="passwordConfirm"
-                        control={control}
-                        errors={errors}
-                        isDisabled={isLoading}
-                        required
-                    />
-                </div>
+                    <div className="mb-12">
+                        <Input
+                            type="password"
+                            label="Confirm New Password"
+                            name="passwordConfirm"
+                            control={control}
+                            errors={errors}
+                            isDisabled={isLoading}
+                            required
+                        />
+                    </div>
 
-                <Button
-                    type="submit"
-                    label="Send"
-                    variant={ButtonVariant.PRIMARY}
-                    size={ComponentSize.MEDIUM}
-                    isDisabled={isLoading}
-                />
-            </form>
-            <p className="text-center text-sm">
-                Don`t whant to change password? Go to{' '}
+                    <Button
+                        type="submit"
+                        label="Send"
+                        variant={ButtonVariant.PRIMARY}
+                        size={ComponentSize.MEDIUM}
+                        isDisabled={isLoading}
+                    />
+                </form>
+            </div>
+            <p className="absolute bottom-60 left-1/2 -translate-x-1/2 transform text-center text-sm">
+                Don`t want to change the password? Go to{' '}
                 <Link to={AppRoute.SIGN_IN}>
-                    <span className="text-lm-yellow-100">Log in</span>
+                    <span className="text-action">Sign in</span>
                 </Link>
             </p>
         </>

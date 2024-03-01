@@ -23,7 +23,11 @@ class NotificationRepository implements Repository {
             : null;
     }
 
-    public async findAll(userId: number): Promise<NotificationEntity[]> {
+    public async findAll({
+        userId,
+    }: {
+        userId: number;
+    }): Promise<NotificationEntity[]> {
         const notifications = await this.notificationModel
             .query()
             .where('userId', userId)
@@ -80,8 +84,8 @@ class NotificationRepository implements Repository {
     }
 
     public async update(
-        notificationId: number,
         payload: Record<string, unknown>,
+        notificationId: number,
     ): Promise<NotificationEntity> {
         const notification = await this.notificationModel
             .query()

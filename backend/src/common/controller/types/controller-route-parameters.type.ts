@@ -11,6 +11,7 @@ type ControllerRouteParameters = {
     validation?: {
         body?: ValidationSchema;
         query?: ValidationSchema;
+        params?: ValidationSchema;
     };
 };
 

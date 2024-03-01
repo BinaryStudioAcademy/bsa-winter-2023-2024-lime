@@ -20,4 +20,5 @@ export {
 export {
     userAuthValidationSchema,
     userSignUpValidationSchema,
+    UserValidationMessage,
 } from './validation-schemas/validation-schemas.js';

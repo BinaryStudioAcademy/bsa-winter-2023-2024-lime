@@ -24,10 +24,12 @@ class NotificationService implements Service {
         return notification.toObject();
     }
 
-    public async findAll(
-        userId: number,
-    ): Promise<{ items: NotificationResponseDto[] }> {
-        const items = await this.notificationRepository.findAll(userId);
+    public async findAll({
+        userId,
+    }: {
+        userId: number;
+    }): Promise<{ items: NotificationResponseDto[] }> {
+        const items = await this.notificationRepository.findAll({ userId });
 
         return {
             items: items.map((it) => it.toObject()),
@@ -76,10 +78,10 @@ class NotificationService implements Service {
         }
 
         const updatedNotification = await this.notificationRepository.update(
-            notification.toObject().id,
             {
                 isRead: true,
             },
+            notification.toObject().id,
         );
 
         return updatedNotification.toObject();

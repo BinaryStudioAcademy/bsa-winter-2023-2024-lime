@@ -185,6 +185,7 @@ class NotificationController extends BaseController {
                 page: +page,
                 limit: +limit,
             }),
+            type: 'data',
         };
     }
 
@@ -221,9 +222,9 @@ class NotificationController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user } = options;
-        const allNotifications = await this.notificationService.findAll(
-            user.id,
-        );
+        const allNotifications = await this.notificationService.findAll({
+            userId: user.id,
+        });
         const unreadedNotificationsAmount = allNotifications.items.filter(
             (notification) => notification.isRead === false,
         ).length;
@@ -233,6 +234,7 @@ class NotificationController extends BaseController {
             payload: {
                 amount: unreadedNotificationsAmount,
             },
+            type: 'data',
         };
     }
 
@@ -283,6 +285,7 @@ class NotificationController extends BaseController {
                 ...body,
                 userId: user.id,
             }),
+            type: 'data',
         };
     }
 
@@ -329,6 +332,7 @@ class NotificationController extends BaseController {
                 params.notificationId,
                 user.id,
             ),
+            type: 'data',
         };
     }
 
@@ -374,6 +378,7 @@ class NotificationController extends BaseController {
                 id: params.notificationId,
                 userId: user.id,
             }),
+            type: 'data',
         };
     }
 }

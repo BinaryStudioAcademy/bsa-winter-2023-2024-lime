@@ -1,6 +1,6 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
-import { cryptService } from '~/common/services/services.js';
+import { cryptService, stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import {
@@ -35,11 +35,13 @@ class UserService implements Service {
     ): Promise<UserAuthResponseDto> {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);
+        const { stripeCustomerId } = await stripeService.createCustomer(email);
 
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
                 passwordHash: hash,
+                stripeCustomerId,
             }),
         );
 
@@ -47,10 +49,10 @@ class UserService implements Service {
     }
 
     public async update(
-        id: number,
-        changes: object,
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
     ): ReturnType<Service['update']> {
-        return await this.userRepository.update(id, changes);
+        return await this.userRepository.update(query, payload);
     }
 
     public delete(): ReturnType<Service['delete']> {
