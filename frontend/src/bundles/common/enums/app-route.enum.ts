@@ -10,6 +10,13 @@ const AppRoute = {
     WORKOUT: '/workout',
     WORKOUT_$ID: '/workout/:id',
     SCHEDULE: '/schedule',
+    PROFILE: '/profile',
+    PROFILE_INFORMATION: '/profile/information',
+    PROFILE_GOALS: '/profile/goals',
+    PROFILE_PREFERENCES: '/profile/preferences',
+    PROFILE_CONECTIONS: '/profile/conections',
+    PROFILE_SUBSCRIPTION: '/profile/subscriptions',
+    PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
     NOT_FOUND: '*',
 } as const;
 

@@ -1,0 +1,1 @@
+export { goalValidationSchema } from 'shared';

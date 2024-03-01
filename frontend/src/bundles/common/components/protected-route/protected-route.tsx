@@ -1,8 +1,7 @@
-import { type ReactNode } from 'react';
-
 import { Navigate } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
+import { type ReactNode } from '~/bundles/common/types/types.js';
 
 type ProtectedRouteProperties = {
     children: ReactNode;

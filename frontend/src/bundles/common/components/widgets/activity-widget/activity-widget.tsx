@@ -1,7 +1,5 @@
-import { type ReactNode } from 'react';
-
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
+import { type ReactNode, type ValueOf } from '~/bundles/common/types/types.js';
 
 type Properties = {
     label: string;
@@ -23,7 +21,7 @@ const ActivityWidget = ({
     icon,
 }: Properties): JSX.Element => {
     const classes = {
-        base: 'w-[15.625rem] h-[10.5rem] rounded-[0.5rem] text-white p-[1rem] flex gap-[1rem] bg-no-repeat bg-bottom',
+        base: 'h-[10.5rem] rounded-[0.5rem] text-white p-[1rem] flex gap-[1rem] bg-no-repeat bg-bottom',
         icon: 'h-[2.5rem] w-[2.5rem] rounded-[0.25rem] flex items-center justify-center',
     };
 
