@@ -26,7 +26,7 @@ const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
                 </li>
                 <li>
                     <img
-                        src={avatarUrl || defaultAvatar}
+                        src={avatarUrl ?? defaultAvatar}
                         alt="avatar"
                         className={styles['avatar']}
                     />
