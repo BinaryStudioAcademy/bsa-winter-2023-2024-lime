@@ -53,11 +53,11 @@ const SubscriptionUserPanel = ({
                         <p className="text-primary text-lg">
                             Your Subscription
                         </p>
-                        <p className="text-lm-yellow-100 text-3xl">
+                        <p className="text-action text-3xl">
                             {subscriptionPlanName.toUpperCase()}
                         </p>
                         <p className="text-primary text-lg">Status</p>
-                        <p className="text-lm-yellow-100 text-3xl">
+                        <p className="text-action text-3xl">
                             {status.toUpperCase()}
                         </p>
                         <div>
@@ -66,14 +66,14 @@ const SubscriptionUserPanel = ({
                             ) : (
                                 <span className="text-primary">Renews at</span>
                             )}
-                            <p className="text-lm-yellow-100 text-2xl">
+                            <p className="text-action text-2xl">
                                 {dateConverter(expiresAt)}
                             </p>
                         </div>
                         <div>
                             <p className="text-primary text-lg">Payment</p>
                             <p className="text-primary">
-                                <span className="text-lm-yellow-100 text-2xl">
+                                <span className="text-action text-2xl">
                                     ${subscriptionPlanPrice}
                                 </span>{' '}
                                 / month

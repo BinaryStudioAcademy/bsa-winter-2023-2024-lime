@@ -25,17 +25,13 @@ const SubscriptionPlan = ({
     }, [id, stripePriceId, onSubscribe]);
 
     return (
-        <div className="bg-secondary flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">
+        <div className="bg-primary flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">
             <div className="border-lm-grey-200 mb-4 flex w-full justify-between rounded-md border p-4 md:border-2">
                 <div className=" text-primary flex flex-col">
-                    <p className="text-lm-yellow-100 text-3xl">
-                        {name.toUpperCase()}
-                    </p>
-                    <p>
-                        <span className="text-lm-yellow-100 text-xl">
-                            ${price}
-                        </span>
-                        / month
+                    <p className="text-action text-3xl">{name.toUpperCase()}</p>
+                    <p className="text-primary">
+                        <span className="text-action text-xl">${price}</span>/
+                        month
                     </p>
                     <div className="mt-2.5">
                         <p className="text-lm-grey-100 text-xs sm:text-sm md:text-base">
