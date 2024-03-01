@@ -71,6 +71,12 @@ class BaseConfig implements Config {
                     env: 'OPEN_AI_MODEL',
                     default: null,
                 },
+                BASE_URL: {
+                    doc: 'Base url for our app',
+                    format: String,
+                    env: 'BASE_URL',
+                    default: null,
+                },
             },
             AWS: {
                 S3_ACCESS_KEY: {
