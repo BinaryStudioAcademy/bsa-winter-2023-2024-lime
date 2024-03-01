@@ -24,7 +24,7 @@ const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
                     </Link>
                 </li>
                 <li>
-                    <Link to={AppRoute.ROOT}>
+                    <Link to={AppRoute.PROFILE}>
                         <img
                             src={avatarUrl || defaultAvatar}
                             alt="avatar"
