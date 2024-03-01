@@ -72,7 +72,7 @@ class BaseConfig implements Config {
                     default: null,
                 },
                 API_BASE_URL: {
-                    doc: 'Base url for our app',
+                    doc: 'Base api url for our app',
                     format: String,
                     env: 'API_BASE_URL',
                     default: null,
