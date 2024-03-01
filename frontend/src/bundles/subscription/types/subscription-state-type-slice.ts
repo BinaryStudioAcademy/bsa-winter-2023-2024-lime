@@ -5,7 +5,7 @@ import {
     type SubscriptionPlansGetAllItemResponseDto,
 } from './types.js';
 
-type subscripcionsStateTypeSlice = {
+type SubscripcionsStateTypeSlice = {
     subscriptionPlans: SubscriptionPlansGetAllItemResponseDto[] | null;
     currentSubscription: SubscriptionGetItemResponseDto | null;
     clientSecret: string | null;
@@ -14,4 +14,4 @@ type subscripcionsStateTypeSlice = {
     confirmPaymentStatus: DataStatusType;
 };
 
-export { type subscripcionsStateTypeSlice };
+export { type SubscripcionsStateTypeSlice };

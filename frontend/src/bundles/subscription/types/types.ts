@@ -1,5 +1,5 @@
 export { type ConfirmPaymentPayload } from './confirm-payment-payload.js';
-export { type subscripcionsStateTypeSlice } from './subscription-state-type-slice.js';
+export { type SubscripcionsStateTypeSlice } from './subscription-state-type-slice.js';
 export {
     type CancelSubscriptionRequestDto,
     type CancelSubscriptionResponseDto,
