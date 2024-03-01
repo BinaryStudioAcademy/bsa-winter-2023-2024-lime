@@ -1,15 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
 
+import { type PasswordResetStateTypeSlice } from '../types/password-reset-state-type-slice.js';
 import { forgotPassword, resetPassword } from './actions.js';
 
-type State = {
-    dataStatus: ValueOf<typeof DataStatus>;
-};
-
-const initialState: State = {
+const initialState: PasswordResetStateTypeSlice = {
     dataStatus: DataStatus.IDLE,
 };
 
