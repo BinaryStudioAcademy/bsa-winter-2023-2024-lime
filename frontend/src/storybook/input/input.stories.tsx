@@ -15,6 +15,7 @@ const Sandbox: Story = {
     args: {
         label: 'Text',
         placeholder: 'placeholder',
+        name: 'text',
         type: 'text',
     },
 };
