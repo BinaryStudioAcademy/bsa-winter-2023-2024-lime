@@ -196,7 +196,10 @@ class UserController extends BaseController {
         const { user, body } = options;
         const { id } = user;
         try {
-            const updatedUser = await this.userService.update({ id }, body);
+            const updatedUser = await this.userService.updateUserProfile(
+                { id },
+                body,
+            );
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,

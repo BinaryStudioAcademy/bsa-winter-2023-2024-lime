@@ -109,7 +109,7 @@ class PasswordResetService {
         );
 
         try {
-            await this.userService.updatePassword(
+            await this.userService.update(
                 { userId: passwordResetRequestDto.id },
                 {
                     passwordHash: hash,

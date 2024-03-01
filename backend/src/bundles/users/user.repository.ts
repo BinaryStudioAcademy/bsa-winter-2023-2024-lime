@@ -98,7 +98,7 @@ class UserRepository implements Repository {
             throw error;
         }
     }
-    public async updatePassword(
+    public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
     ): ReturnType<Repository['update']> {
@@ -111,12 +111,11 @@ class UserRepository implements Repository {
             .execute();
     }
 
-    public async update(
-        query: Record<string, unknown>,
+    public async updateUserProfile(
+        userId: number,
         payload: Record<string, Partial<UserDetailsModel>>,
     ): Promise<UserEntity | null> {
         const trx = await this.userModel.startTransaction();
-        const userId = query['id'] as number;
         const updatedUserDetails = payload[
             'userDetails'
         ] as Partial<UserDetailsModel>;

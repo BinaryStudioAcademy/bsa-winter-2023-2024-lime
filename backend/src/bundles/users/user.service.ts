@@ -52,7 +52,7 @@ class UserService implements Service {
         return user.toObject() as UserAuthResponseDto;
     }
 
-    public async update(
+    public async updateUserProfile(
         query: Record<string, number>,
         payload: UserUpdateProfileRequestDto,
     ): Promise<UserAuthResponseDto | null> {
@@ -65,8 +65,8 @@ class UserService implements Service {
                 updatedUserDetails[property] = value || null;
                 updatedUserDetails.id = userId;
             }
-            const updatedUser = await this.userRepository.update(
-                { id: userId },
+            const updatedUser = await this.userRepository.updateUserProfile(
+                userId,
                 { userDetails: updatedUserDetails },
             );
             if (!updatedUser) {
@@ -80,11 +80,11 @@ class UserService implements Service {
             throw new Error(`Error occured ${error}`);
         }
     }
-    public async updatePassword(
+    public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
     ): ReturnType<Service['update']> {
-        return await this.userRepository.updatePassword(query, payload);
+        return await this.userRepository.update(query, payload);
     }
 
     public delete(): ReturnType<Service['delete']> {
