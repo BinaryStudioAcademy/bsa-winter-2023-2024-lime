@@ -92,7 +92,7 @@ const SubscriptionPage = (): JSX.Element => {
                         onChangeSubscription={handleChangeSubscription}
                     />
                 ) : (
-                    <span className="font-base text-xl text-white">
+                    <span className="font-base text-primary text-xl">
                         Looks like you dont have subscription yet. Choose from
                         below.
                     </span>

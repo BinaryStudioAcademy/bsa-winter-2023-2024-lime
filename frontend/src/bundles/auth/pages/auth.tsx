@@ -2,7 +2,6 @@ import authLogo from '~/assets/img/auth-logo.svg';
 import {
     ForgotPasswordForm,
     Modal,
-    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
@@ -164,7 +163,6 @@ const Auth: React.FC = () => {
                     />
                 )}
             </Modal>
-            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };

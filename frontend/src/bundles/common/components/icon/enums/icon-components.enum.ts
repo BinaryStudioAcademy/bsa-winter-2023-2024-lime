@@ -9,6 +9,8 @@ import NotFoundIcon from '~/assets/img/icons/not-found-icon.svg?react';
 import StepsIcon from '~/assets/img/icons/steps-icon.svg?react';
 import StravaIcon from '~/assets/img/icons/strava-icon.svg?react';
 import WorkoutIcon from '~/assets/img/icons/workout-icon.svg?react';
+import LogoHeader from '~/assets/img/logo-header.svg?react';
+import LogoHeaderLight from '~/assets/img/logo-header-light.svg?react';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type IconName } from './enums.js';
@@ -28,6 +30,8 @@ const IconComponent: Record<
     stepsIcon: StepsIcon,
     googleLogoIcon: GoogleLogoIcon,
     facebookIcon: FacebookIcon,
+    logoHeader: LogoHeader,
+    logoHeaderLight: LogoHeaderLight,
 } as const;
 
 export { IconComponent };
