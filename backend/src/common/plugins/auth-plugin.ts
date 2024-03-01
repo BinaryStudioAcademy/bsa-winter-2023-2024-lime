@@ -13,7 +13,7 @@ const authPlugin = fastifyPlugin(
     (fastify, { jwtService, protectedRoutes }: AuthPluginOptions, done) => {
         fastify.decorateRequest('user', null);
         fastify.addHook('preHandler', async (request) => {
-            const isServedPagePath = request.routerPath === SERVED_PAGE_PATH;
+            const isServedPagePath = request.routeOptions.url === SERVED_PAGE_PATH;
             if (isServedPagePath) {
                 return;
             }
