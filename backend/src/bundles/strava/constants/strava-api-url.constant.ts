@@ -1,4 +1,4 @@
-import { STRAVA_URL } from './strava-url.constants.js';
+import { STRAVA_URL } from './strava-url.constant.js';
 
 const STRAVA_API_URL = `${STRAVA_URL}/api/v3`;
 

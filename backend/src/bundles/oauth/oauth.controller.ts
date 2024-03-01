@@ -39,8 +39,6 @@ class OAuthController extends BaseController {
 
     private config: Config;
 
-    private baseUrl: string;
-
     public constructor(
         logger: Logger,
         oAuthService: OAuthService,
@@ -50,7 +48,6 @@ class OAuthController extends BaseController {
 
         this.oAuthService = oAuthService;
         this.config = config;
-        this.baseUrl = `http://${this.config.ENV.APP.HOST}:${this.config.ENV.APP.PORT}/api/v1`;
 
         this.addRoute({
             path: OAuthActionsPath.$PROVIDER_AUTHORIZE,
@@ -152,13 +149,20 @@ class OAuthController extends BaseController {
             params: OAuthProviderParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const query = options.query;
+        const isStateJSON = /{.*}/.test(query.state);
         const { provider } = options.params;
-        await this.oAuthService.exchangeAuthCode(provider, options.query);
+        const data = isStateJSON ? JSON.parse(query.state) : query;
+        const payload = { ...query, userId: data.userId, state: data.uuid };
+        await this.oAuthService.exchangeAuthCode(
+            provider,
+            isStateJSON ? payload : query,
+        );
 
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 
@@ -202,7 +206,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 }
