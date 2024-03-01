@@ -1,5 +1,7 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import { ResetPasswordForm } from '~/bundles/common/components/components.js';
+import {
+    ResetPasswordForm,
+} from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
@@ -64,7 +66,7 @@ const PasswordReset: React.FC = () => {
     }, [dataStatus]);
 
     useEffect(() => {
-        if (Date.now() > Number(exp)) {
+        if (Date.now() >= Number(exp) * 1000) {
             navigate(AppRoute.SIGN_IN);
             notificationManager.error(ERROR_MESSAGE_TEXT);
         }

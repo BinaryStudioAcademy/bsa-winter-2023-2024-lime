@@ -36,7 +36,7 @@ const ConnectionOption = ({
                         <div className={'flex items-center gap-2'}>
                             <h2
                                 className={
-                                    'text-primary text-sm font-bold sm:text-base md:text-xl'
+                                    'text-sm font-bold text-white sm:text-base md:text-xl'
                                 }
                             >
                                 {title}
@@ -53,7 +53,7 @@ const ConnectionOption = ({
                         </div>
                         <p
                             className={
-                                'text-secondary text-[0.75rem] sm:text-sm md:text-base'
+                                'text-lm-grey-200 text-[0.75rem] sm:text-sm md:text-base'
                             }
                         >
                             {isConnected ? (
