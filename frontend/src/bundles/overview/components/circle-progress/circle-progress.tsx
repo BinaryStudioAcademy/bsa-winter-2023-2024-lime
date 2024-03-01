@@ -69,7 +69,7 @@ const CircleProgress = ({
                     cy={radius}
                 />
             </svg>
-            <div className="text-primary absolute">
+            <div className="absolute text-white">
                 {goalType === GoalTypes.OVERVIEW && (
                     <>
                         <p
