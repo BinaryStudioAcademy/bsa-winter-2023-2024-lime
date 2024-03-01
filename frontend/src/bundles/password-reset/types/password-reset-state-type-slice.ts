@@ -1,8 +1,7 @@
 import { type DataStatusType } from '~/bundles/common/types/types.js';
 
 type PasswordResetStateTypeSlice = {
-    dataStatus: DataStatusType;    
+    dataStatus: DataStatusType;
 };
 
 export { type PasswordResetStateTypeSlice };
-

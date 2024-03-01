@@ -19,10 +19,10 @@ import {
 import { actions as subscriptionActions } from '../../store/subscriptions.js';
 import { type SubscribeRequestDto } from '../../types/types.js';
 
-const selectSubscriptions = (state:RootState): RootState['subscriptions'] => state.subscriptions;
+const selectSubscriptions = (state: RootState): RootState['subscriptions'] =>
+    state.subscriptions;
 
 const SubscriptionPage = (): JSX.Element => {
-    
     const selectSubscriptionData = createSelector(
         [selectSubscriptions],
         (subscriptions) => ({
@@ -33,7 +33,7 @@ const SubscriptionPage = (): JSX.Element => {
     );
 
     const { dataStatus, subscriptionPlans, currentSubscription } =
-        useAppSelector(selectSubscriptionData);   
+        useAppSelector(selectSubscriptionData);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
