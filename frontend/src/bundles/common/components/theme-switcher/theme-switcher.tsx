@@ -14,7 +14,7 @@ type Properties = {
     className?: string;
 };
 
-const defaultClassName = 'absolute bottom-4 right-4';
+const defaultClassName = 'fixed md:bottom-4 md:right-4 bottom-1 right-1';
 
 function ThemeSwitcher({
     className = defaultClassName,
