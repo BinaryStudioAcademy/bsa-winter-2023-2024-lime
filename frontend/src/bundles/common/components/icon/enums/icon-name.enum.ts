@@ -8,8 +8,6 @@ const IconName = {
     goalsIcon: 'goalsIcon',
     facebookIcon: 'facebookIcon',
     workoutIcon: 'workoutIcon',
-    logoHeader: 'logoHeader',
-    logoHeaderLight: 'logoHeaderLight',
     caloriesIcon: 'caloriesIcon',
     stepsIcon: 'stepsIcon',
 } as const;

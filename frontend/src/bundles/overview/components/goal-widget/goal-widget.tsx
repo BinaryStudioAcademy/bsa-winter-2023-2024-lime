@@ -28,7 +28,7 @@ const GoalWidget = ({
     return (
         <div
             className={getValidClassNames(
-                'bg-secondary bg-goalWidget flex h-full max-h-40 w-full items-center rounded-xl',
+                'bg-lm-black-100 bg-goalWidget flex h-full max-h-40 w-full items-center rounded-xl',
                 className,
             )}
         >
@@ -41,7 +41,7 @@ const GoalWidget = ({
                 )}
             </div>
             <div className="flex w-3/6 items-center justify-end p-4">
-                <div className="text-primary flex w-2/4 justify-end">
+                <div className="flex w-2/4 justify-end text-white">
                     {goalType === GoalTypes.OVERVIEW && (
                         <Icon name="workoutIcon" size="lg" />
                     )}

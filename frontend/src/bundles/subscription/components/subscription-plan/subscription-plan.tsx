@@ -25,9 +25,9 @@ const SubscriptionPlan = ({
     }, [id, stripePriceId, onSubscribe]);
 
     return (
-        <div className="bg-secondary flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">
+        <div className="bg-lm-black-100 flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">
             <div className="border-lm-grey-200 mb-4 flex w-full justify-between rounded-md border p-4 md:border-2">
-                <div className=" text-primary flex flex-col">
+                <div className=" flex flex-col text-white">
                     <p className="text-lm-yellow-100 text-3xl">
                         {name.toUpperCase()}
                     </p>
