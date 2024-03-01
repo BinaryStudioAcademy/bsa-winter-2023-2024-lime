@@ -1,8 +1,8 @@
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
 
-import logo from '~/assets/img/logo.svg';
-
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
+import { Theme } from '../../enums/theme.js';
+import { useAppSelector } from '../../hooks/hooks.js';
 import { Button, Icon, Layout, Link } from '../components.js';
 import { IconColor } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
@@ -13,12 +13,25 @@ type HeaderProperties = {
 };
 
 const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
+    const { theme } = useAppSelector((state) => state.theme);
     return (
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
                 <div className="hidden w-full max-w-[16rem]  md:flex">
                     <Link to={AppRoute.ROOT}>
-                        <img src={logo} alt="Logo" />
+                        {theme === Theme.DARK ? (
+                            <Icon
+                                name={'logoHeader'}
+                                color={IconColor.PRIMARY}
+                                size={ComponentSize.EXTRA_LARGE}
+                            />
+                        ) : (
+                            <Icon
+                                name={'logoHeaderLight'}
+                                color={IconColor.PRIMARY}
+                                size={ComponentSize.EXTRA_LARGE}
+                            />
+                        )}
                     </Link>
                 </div>
                 <div className="mr-5 md:hidden">

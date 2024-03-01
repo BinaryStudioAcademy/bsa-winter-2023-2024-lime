@@ -1,6 +1,7 @@
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { actions as themeActions } from '~/bundles/common/store/theme.js';
 
+import { Theme } from '../../enums/theme.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -13,7 +14,11 @@ type Properties = {
     className?: string;
 };
 
-function ThemeSwitcher({ className }: Properties): JSX.Element {
+const defaultClassName = 'fixed md:bottom-4 md:right-4 bottom-1 right-1';
+
+function ThemeSwitcher({
+    className = defaultClassName,
+}: Properties): JSX.Element {
     const dispatch = useAppDispatch();
     const { theme } = useAppSelector((state) => state.theme);
 
@@ -23,7 +28,7 @@ function ThemeSwitcher({ className }: Properties): JSX.Element {
 
     const toggleTheme = useCallback(() => {
         if (theme) {
-            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK;
             void dispatch(themeActions.toggleTheme(newTheme));
         }
     }, [dispatch, theme]);

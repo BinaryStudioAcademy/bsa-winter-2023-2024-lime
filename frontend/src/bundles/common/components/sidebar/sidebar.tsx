@@ -23,7 +23,7 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-lm-black-100 flex fixed top-0 bottom-0 pt-[88px] z-[-1] w-72 flex-col content-center items-center p-7 text-white',
+        'bg-primary h-sidebar flex w-72 flex-col content-center items-center p-7 text-primary',
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
