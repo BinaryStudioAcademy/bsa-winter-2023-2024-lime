@@ -71,6 +71,12 @@ class BaseConfig implements Config {
                     env: 'OPEN_AI_MODEL',
                     default: null,
                 },
+                API_BASE_URL: {
+                    doc: 'Base api url for our app',
+                    format: String,
+                    env: 'API_BASE_URL',
+                    default: null,
+                },
             },
             AWS: {
                 S3_ACCESS_KEY: {
@@ -187,6 +193,20 @@ class BaseConfig implements Config {
                     doc: 'Strava Client Secret',
                     format: String,
                     env: 'STRAVA_CLIENT_SECRET',
+                    default: null,
+                },
+            },
+            GOOGLE_FIT: {
+                CLIENT_ID: {
+                    doc: 'Google fit Client ID',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_ID',
+                    default: null,
+                },
+                CLIENT_SECRET: {
+                    doc: 'Google fit Client Secret',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_SECRET',
                     default: null,
                 },
             },

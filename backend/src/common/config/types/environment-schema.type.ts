@@ -10,6 +10,7 @@ type EnvironmentSchema = {
         OPEN_AI_API_KEY: string;
         OPEN_AI_MODEL: string;
         TOKEN_EXPIRATION_TIME: string;
+        API_BASE_URL: string;
     };
     AWS: {
         S3_ACCESS_KEY: string;
@@ -36,6 +37,10 @@ type EnvironmentSchema = {
         WEBHOOK_SECRET: string;
     };
     STRAVA: {
+        CLIENT_ID: string;
+        CLIENT_SECRET: string;
+    };
+    GOOGLE_FIT: {
         CLIENT_ID: string;
         CLIENT_SECRET: string;
     };
