@@ -10,6 +10,8 @@
     @apply bg-secondary;
 
     grid-area: main;
+
+    @apply p-[2rem];
 }
 
 .base-layout.sidebar-closed {
