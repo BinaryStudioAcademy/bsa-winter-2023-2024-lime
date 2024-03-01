@@ -2,18 +2,22 @@ import {
     Avatar,
     Button,
     ButtonVariant,
+    DatePicker,
     Input,
     Loader,
     Radio,
 } from '~/bundles/common/components/components.js';
-import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
-import { configureISOString } from '~/bundles/common/helpers/helpers.js';
+import {
+    configureDateString,
+    configureISOString,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppForm,
     useAppSelector,
     useCallback,
+    useEffect,
 } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserUpdateProfileRequestDto,
@@ -28,17 +32,31 @@ type Properties = {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const userId = useAppSelector((state) => state.auth.user?.id);
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
-    const { control, errors, reset, getValues } =
+
+    const { control, errors, reset, getValues, setValue } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
             mode: 'onTouched',
             shouldUnregister: false,
         });
+
+    useEffect(() => {
+        if (user) {
+            const { fullName, username, dateOfBirth, weight, height, gender } =
+                user;
+
+            setValue('fullName', fullName || '');
+            setValue('username', username || '');
+            setValue('dateOfBirth', configureDateString(dateOfBirth) || null);
+            setValue('weight', weight || '');
+            setValue('height', height || '');
+            setValue('gender', gender || null);
+        }
+    }, [user, setValue]);
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -56,7 +74,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
             }
         },
-        [onSubmit, getValues, userId, reset, errors],
+        [onSubmit, getValues, reset, errors],
     );
 
     const handleReset = useCallback((): void => {

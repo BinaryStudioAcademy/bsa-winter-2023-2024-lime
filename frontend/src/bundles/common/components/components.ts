@@ -1,5 +1,6 @@
 export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonVariant } from './button/button.js';
+export { DatePicker } from './date-picker/date-picker.js';
 export { ForgotPasswordForm } from './forgot-password-form/forgot-password-form.js';
 export { Header } from './header/header.js';
 export { Icon } from './icon/icon.js';
