@@ -1,5 +1,5 @@
 .base-layout {
-    @apply grid grid-cols-2 grid-rows-2;
+    @apply grid grow-[1] grid-cols-2 grid-rows-2;
 
     grid-template:
         "header header" 88px
