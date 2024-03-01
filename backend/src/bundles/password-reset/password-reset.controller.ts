@@ -48,13 +48,12 @@ class PasswordResetController extends BaseController {
             validation: {
                 body: passwordResetValidationSchema,
             },
-            handler: (options) => {
-                return this.resetPassword(
+            handler: (options) =>
+                this.resetPassword(
                     options as ApiHandlerOptions<{
                         body: PasswordResetRequestDto;
                     }>,
-                );
-            },
+                ),
         });
     }
 
