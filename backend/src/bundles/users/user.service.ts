@@ -62,9 +62,8 @@ class UserService implements Service {
             const updatedUserDetails: Partial<UserDetailsModel> = {};
             for (const property of Object.keys(payload)) {
                 const value = payload[property];
-                if (value) {
-                    updatedUserDetails[property] = payload[property];
-                }
+                updatedUserDetails[property] = value || null;
+                updatedUserDetails.id = userId;
             }
             const updatedUser = await this.userRepository.update(
                 { id: userId },

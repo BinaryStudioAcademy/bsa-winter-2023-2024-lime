@@ -59,7 +59,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         [onSubmit, getValues, userId, reset, errors],
     );
 
-    const handleCancel = useCallback((): void => {
+    const handleReset = useCallback((): void => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
     }, [reset]);
 
@@ -173,13 +173,13 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 <ul className="mt-14 flex lg:col-start-3 lg:col-end-5 lg:row-start-4 lg:mt-6">
                     <li className="mr-6 w-full">
                         <Button
-                            label={isLoading ? '' : 'Cancel'}
+                            label={isLoading ? '' : 'Reset'}
                             leftIcon={
                                 isLoading && (
                                     <Loader color={IconColor.SECONDARY} />
                                 )
                             }
-                            onClick={handleCancel}
+                            onClick={handleReset}
                             variant={ButtonVariant.SECONDARY}
                             size={ComponentSize.MEDIUM}
                         />

@@ -1,9 +1,7 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
-import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Repository } from '~/common/types/types.js';
 
-import { UserValidationMessage } from './enums/enums.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
 class UserRepository implements Repository {
@@ -116,7 +114,7 @@ class UserRepository implements Repository {
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, Partial<UserDetailsModel>>,
-    ): Promise<UserEntity> {
+    ): Promise<UserEntity | null> {
         const trx = await this.userModel.startTransaction();
         const userId = query['id'] as number;
         const updatedUserDetails = payload[
@@ -126,10 +124,7 @@ class UserRepository implements Repository {
             const user = await this.userModel.query(trx).findById(userId);
 
             if (!user) {
-                throw new HttpError({
-                    message: UserValidationMessage.USER_NOT_FOUND,
-                    status: HttpCode.NOT_FOUND,
-                });
+                return null;
             }
             await user
                 .$relatedQuery('userDetails', trx)
