@@ -1,12 +1,9 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import {
-    type SubscriptionGetItemResponseDto,
-    type SubscriptionPlansGetAllItemResponseDto,
-} from '../types/types.js';
+    type subscripcionsStateTypeSlice,    type SubscriptionGetItemResponseDto } from '../types/types.js';
 import {
     confirmPayment,
     createSubscription,
@@ -15,16 +12,7 @@ import {
     updateCancelSubscription,
 } from './actions.js';
 
-type State = {
-    subscriptionPlans: SubscriptionPlansGetAllItemResponseDto[] | null;
-    currentSubscription: SubscriptionGetItemResponseDto | null;
-    clientSecret: string | null;
-    subscriptionToken: string | null;
-    dataStatus: ValueOf<typeof DataStatus>;
-    confirmPaymentStatus: ValueOf<typeof DataStatus>;
-};
-
-const initialState: State = {
+const initialState: subscripcionsStateTypeSlice = {
     subscriptionPlans: [],
     currentSubscription: null,
     clientSecret: null,
