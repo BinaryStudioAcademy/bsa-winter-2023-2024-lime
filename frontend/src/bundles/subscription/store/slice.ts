@@ -3,7 +3,9 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 
 import {
-    type SubscripcionsStateTypeSlice,    type SubscriptionGetItemResponseDto } from '../types/types.js';
+    type SubscripcionsStateTypeSlice,
+    type SubscriptionGetItemResponseDto,
+} from '../types/types.js';
 import {
     confirmPayment,
     createSubscription,

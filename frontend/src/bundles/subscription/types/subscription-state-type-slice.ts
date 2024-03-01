@@ -1,4 +1,4 @@
-import { type DataStatusType  } from '~/bundles/common/types/types.js';
+import { type DataStatusType } from '~/bundles/common/types/types.js';
 
 import {
     type SubscriptionGetItemResponseDto,
