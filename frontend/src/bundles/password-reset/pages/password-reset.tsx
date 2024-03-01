@@ -1,7 +1,5 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import {
-    ResetPasswordForm,
-} from '~/bundles/common/components/components.js';
+import { ResetPasswordForm } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
