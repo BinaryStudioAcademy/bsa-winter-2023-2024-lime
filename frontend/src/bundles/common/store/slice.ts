@@ -2,19 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
     type PayloadAction,
-    type ValueOf,
+    type ThemeType,
 } from '~/bundles/common/types/types.js';
 
-import { type Theme } from '../enums/theme.js';
 import { fetchTheme, toggleTheme } from './actions.js';
 
 type State = {
-    theme: ValueOf<typeof Theme> | null;
-    loading: boolean;
+    theme: ThemeType | null;
 };
 
 const initialState = {
-    theme: null as ValueOf<typeof Theme> | null,
+    theme: null as ThemeType | null,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -26,14 +24,14 @@ const { reducer, actions, name } = createSlice({
 
             .addCase(
                 fetchTheme.fulfilled,
-                (state, action: PayloadAction<ValueOf<typeof Theme>>) => {
+                (state, action: PayloadAction<ThemeType>) => {
                     state.theme = action.payload;
                 },
             )
 
             .addCase(
                 toggleTheme.fulfilled,
-                (state, action: PayloadAction<ValueOf<typeof Theme>>) => {
+                (state, action: PayloadAction<ThemeType>) => {
                     state.theme = action.payload;
                 },
             );
