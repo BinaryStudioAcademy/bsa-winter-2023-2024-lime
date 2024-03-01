@@ -18,22 +18,15 @@ import { type StravaOAuthResponseDto } from './types/types.js';
 class StravaOAuthStrategy implements OAuthStrategy {
     private config: Config;
 
-    private baseUrl: string;
-
-    private apiPath: string;
-
     public constructor(config: Config) {
         this.config = config;
-        this.baseUrl = `http://${config.ENV.APP.HOST}:${config.ENV.APP.PORT}`;
-        this.apiPath = '/api/v1';
     }
 
     public getAuthorizeRedirectUrl(oAuthStateEntity: OAuthStateEntity): URL {
         const { userId, uuid } = oAuthStateEntity.toObject();
 
         const redirectUri = new URL(
-            `${this.apiPath}${ApiPath.OAUTH}/${OAuthProvider.STRAVA}${OAuthActionsPath.EXCHANGE_TOKEN}`,
-            this.baseUrl,
+            `${this.config.ENV.APP.API_BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.STRAVA}${OAuthActionsPath.EXCHANGE_TOKEN}`,
         );
         redirectUri.searchParams.set('userId', userId.toString());
 
