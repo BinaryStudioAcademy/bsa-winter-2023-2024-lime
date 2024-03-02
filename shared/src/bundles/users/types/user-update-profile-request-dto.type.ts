@@ -5,12 +5,12 @@ type UserUpdateProfileRequestDto = {
     id: number | null;
     fullName?: string | null;
     username?: string | null;
-    avatarUrl?: string | null;
+    avatarUrl?: File | undefined;
     dateOfBirth?: string | null;
     weight?: string | null;
     height?: string | null;
     gender?: ValueOf<typeof Gender>;
-    [key: string]: string | number | null;
+    [key: string]: File | string | number | null | undefined;
 };
 
 export { type UserUpdateProfileRequestDto };

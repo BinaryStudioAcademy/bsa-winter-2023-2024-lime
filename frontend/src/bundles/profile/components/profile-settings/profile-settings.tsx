@@ -8,12 +8,15 @@ import {
 } from '~/bundles/common/components/components.js';
 import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
+import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import { RadioType } from '~/bundles/common/enums/radio-type.enum.js';
 import {
     useAppForm,
     useAppSelector,
     useCallback,
+    useEffect,
+    useState,
 } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserUpdateProfileRequestDto,
@@ -21,9 +24,10 @@ import {
 } from '~/bundles/users/users.js';
 
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
+import { Cropper } from './cropper.js';
 
 type Properties = {
-    onSubmit: (payload: UserUpdateProfileRequestDto) => void;
+    onSubmit: (payload: FormData) => void;
     isLoading: boolean;
 };
 
@@ -32,10 +36,26 @@ const extractNumbers = (value: string | undefined | null): string => {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+    const [imgToCrop, setImgToCrop] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const [avatar, setAvatar] = useState('');
+    const [imgFile, setImgFile] = useState<File>();
+
     const userId = useAppSelector((state) => state.auth.user?.id);
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
+
+    useEffect(() => {
+        const dataUrlToFile = async (): Promise<void> => {
+            const response = await fetch(avatar);
+            const blob = await response.blob();
+            const file = new File([blob], 'image', { type: blob.type });
+            setImgFile(file);
+        };
+        avatar && void dataUrlToFile();
+    }, [avatar]);
+
     const { control, errors, reset, getValues } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
@@ -44,26 +64,51 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             shouldUnregister: false,
         });
 
+    const closeModal = useCallback((): void => {
+        setImgToCrop('');
+        setIsOpen(false);
+    }, []);
+
+    const uploadAvatar = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setImgToCrop('');
+            const pic = event.target.files;
+
+            if (pic) {
+                setImgToCrop(URL.createObjectURL(pic[0] as File));
+                setIsOpen(true);
+            }
+        },
+        [],
+    );
+
+    const getImgCropped = useCallback((img: string) => {
+        setAvatar(img);
+    }, []);
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             event_.preventDefault();
+            const form = new FormData();
+            form.append('gender', getValues().gender as string);
+            form.append('dateOfBirth', getValues().dateOfBirth as string);
+            form.append('avatar', imgFile as File);
+            form.append('fullName', getValues().fullName as string);
+            form.append('username', getValues().username as string);
+            form.append('weight', extractNumbers(getValues().weight));
+            form.append('height', extractNumbers(getValues().height));
+            form.append('id', userId?.toString() as string);
 
-            const payload: UserUpdateProfileRequestDto = {
-                ...getValues(),
-                weight: extractNumbers(getValues().weight),
-                height: extractNumbers(getValues().height),
-                fullName: (getValues().fullName || '').trim(),
-                username: (getValues().username || '').trim(),
-                id: userId ?? null,
-            };
-
-            onSubmit(payload);
+            onSubmit(form);
             reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
         },
-        [onSubmit, getValues, userId, reset],
+        [onSubmit, getValues, userId, reset, imgFile],
     );
 
     const handleCancel = useCallback((): void => {
+        setImgFile(undefined);
+        setAvatar('');
+        setImgToCrop('');
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
     }, [reset]);
 
@@ -73,22 +118,34 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 <Avatar
                     size="lg"
                     email={user ? user?.email : ''}
-                    avatarUrl={user ? user.avatarUrl : ''}
+                    avatarUrl={avatar ?? user?.avatarUrl}
                 />
 
                 <input
                     id="avatarInput"
                     type="file"
                     accept="image/jpeg, image/png"
+                    name="avatarUrl"
+                    onChange={uploadAvatar}
                     className="hidden"
                 />
-                <Button
-                    className="w-115 ml-3 h-[38px] rounded-[20px]"
-                    type="submit"
-                    label="Update file"
-                    variant={ButtonVariant.SECONDARY}
-                    size={ComponentSize.SMALL}
-                />
+                <label
+                    htmlFor="avatarInput"
+                    className="w-115 border-lm-yellow-100 text-lm-yellow-100 hover:border-lm-yellow-200 hover:text-lm-yellow-200 ml-3 flex h-[38px] cursor-pointer items-center justify-center rounded-[20px] border font-extrabold"
+                >
+                    Update file
+                </label>
+                <Modal
+                    isOpen={isOpen}
+                    title="Crop your avatar"
+                    onClose={closeModal}
+                >
+                    <Cropper
+                        image={imgToCrop}
+                        getImgCropped={getImgCropped}
+                        closeModal={setIsOpen}
+                    />
+                </Modal>
             </div>
             <form
                 className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4"

@@ -4,7 +4,6 @@ import {
     useAppSelector,
     useCallback,
 } from '~/bundles/common/hooks/hooks.js';
-import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 
 import { actions as authActions } from '../../auth/store/auth.js';
 import { ProfileSettings } from '../components/components.js';
@@ -16,7 +15,7 @@ const Profile: React.FC = () => {
     }));
     const isLoading = dataStatus === DataStatus.PENDING;
     const handleProfileUpdate = useCallback(
-        (payload: UserUpdateProfileRequestDto): void => {
+        (payload: FormData): void => {
             void dispatch(authActions.updateUser(payload));
         },
         [dispatch],
