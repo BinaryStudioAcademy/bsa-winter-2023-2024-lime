@@ -4,7 +4,7 @@ import { type Entity, type ValueOf } from '~/common/types/types.js';
 class WorkoutEntity implements Entity {
     private 'id': number | null;
     private 'userId': number;
-    private 'activity': ValueOf<typeof ActivityType>;
+    private 'activityType': ValueOf<typeof ActivityType>;
     private 'steps': number | undefined;
     private 'heartRate': number;
     private 'workoutStartedAt': Date;
@@ -16,7 +16,7 @@ class WorkoutEntity implements Entity {
     private constructor({
         id,
         userId,
-        activity,
+        activityType,
         heartRate,
         steps,
         workoutStartedAt,
@@ -27,7 +27,7 @@ class WorkoutEntity implements Entity {
     }: {
         id: number | null;
         userId: number;
-        activity: ValueOf<typeof ActivityType>;
+        activityType: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
@@ -38,14 +38,14 @@ class WorkoutEntity implements Entity {
     }) {
         this.id = id;
         this.userId = userId;
-        this.activity = activity;
+        this.activityType = activityType;
         this.heartRate = heartRate;
         this.workoutStartedAt = workoutStartedAt;
         this.workoutEndedAt = workoutEndedAt;
         this.distance = distance;
         this.speed = speed;
         this.kilocalories = kilocalories;
-        if (activity === ActivityType.WALKING) {
+        if (activityType === ActivityType.WALKING) {
             this.steps = steps ?? 0;
         }
     }
@@ -53,7 +53,7 @@ class WorkoutEntity implements Entity {
     public static initialize(payload: {
         id: number;
         userId: number;
-        activity: ValueOf<typeof ActivityType>;
+        activityType: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
@@ -68,7 +68,7 @@ class WorkoutEntity implements Entity {
     }
 
     public static initializeNew(payload: {
-        activity: ValueOf<typeof ActivityType>;
+        activityType: ValueOf<typeof ActivityType>;
         userId: number;
         heartRate: number;
         distance: number;
@@ -86,7 +86,7 @@ class WorkoutEntity implements Entity {
 
     public toObject(): {
         id: number;
-        activity: ValueOf<typeof ActivityType>;
+        activityType: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         duration: number;
@@ -98,7 +98,7 @@ class WorkoutEntity implements Entity {
     } {
         return {
             id: this.id as number,
-            activity: this.activity,
+            activityType: this.activityType,
             steps: this.steps as number,
             heartRate: this.heartRate,
             duration:
@@ -115,7 +115,7 @@ class WorkoutEntity implements Entity {
 
     public toNewObject(): {
         userId: number;
-        activity: ValueOf<typeof ActivityType>;
+        activityType: ValueOf<typeof ActivityType>;
         steps?: number;
         heartRate: number;
         workoutStartedAt: Date;
@@ -126,7 +126,7 @@ class WorkoutEntity implements Entity {
     } {
         return {
             userId: this.userId,
-            activity: this.activity,
+            activityType: this.activityType,
             steps: this.steps as number,
             heartRate: this.heartRate,
             workoutStartedAt: this.workoutStartedAt,

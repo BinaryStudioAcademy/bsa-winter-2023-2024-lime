@@ -3,8 +3,7 @@ import { type Service } from '~/common/types/types.js';
 
 import { WorkoutValidationMessage } from './enums/enums.js';
 import {
-    type CreateWorkoutRequestDto,
-    type UpdateWorkoutRequestDto,
+    type WorkoutRequestDto,
     type WorkoutResponseDto,
 } from './types/types.js';
 import { WorkoutEntity } from './workout.entity.js';
@@ -38,7 +37,7 @@ class WorkoutService implements Service {
     }
 
     public async create(
-        payload: CreateWorkoutRequestDto,
+        payload: WorkoutRequestDto,
     ): Promise<WorkoutResponseDto> {
         const workout = await this.workoutRepository.create(
             WorkoutEntity.initializeNew({
@@ -49,7 +48,7 @@ class WorkoutService implements Service {
     }
     public async update(
         query: Record<string, unknown>,
-        payload: UpdateWorkoutRequestDto,
+        payload: WorkoutRequestDto,
     ): Promise<WorkoutResponseDto> {
         const workout = await this.workoutRepository.update(
             query,

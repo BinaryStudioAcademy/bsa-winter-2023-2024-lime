@@ -12,9 +12,8 @@ import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import {
-    type CreateWorkoutRequestDto,
     type EntityIdParameterDto,
-    type UpdateWorkoutRequestDto,
+    type WorkoutRequestDto,
 } from './types/types.js';
 import {
     idParameterValidationSchema,
@@ -33,7 +32,7 @@ import { type WorkoutService } from './workout.service.js';
  *           type: number
  *           format: integer
  *           minimum: 1
- *         activity:
+ *         activityType:
  *           type: string
  *           enum:
  *             - cycling
@@ -81,7 +80,7 @@ import { type WorkoutService } from './workout.service.js';
  *           minimum: 0
  *       required:
  *         - id
- *         - activity
+ *         - activityType
  *         - heartRate
  *         - duration
  *         - workoutStartedAt
@@ -124,7 +123,7 @@ class WorkoutController extends BaseController {
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{
-                        body: CreateWorkoutRequestDto;
+                        body: WorkoutRequestDto;
                     }>,
                 ),
         });
@@ -138,7 +137,7 @@ class WorkoutController extends BaseController {
             handler: (options) =>
                 this.update(
                     options as ApiHandlerOptions<{
-                        body: UpdateWorkoutRequestDto;
+                        body: WorkoutRequestDto;
                         params: EntityIdParameterDto;
                     }>,
                 ),
@@ -180,7 +179,7 @@ class WorkoutController extends BaseController {
      *                  walkingResponse:
      *                    value:
      *                      id: 1
-     *                      activity: walking
+     *                      activityType: walking
      *                      steps: 3000
      *                      duration: 0
      *                      heartRate: 120
@@ -235,7 +234,7 @@ class WorkoutController extends BaseController {
      *                  walkingResponse:
      *                    value:
      *                      id: 1
-     *                      activity: walking
+     *                      activityType: walking
      *                      steps: 3000
      *                      heartRate: 120
      *                      duration: 0
@@ -282,7 +281,7 @@ class WorkoutController extends BaseController {
      *            schema:
      *              type: object
      *              properties:
-     *                  activity:
+     *                  activityType:
      *                      type: string
      *                      enum:
      *                          - cycling
@@ -336,7 +335,7 @@ class WorkoutController extends BaseController {
      *                  walkingResponse:
      *                    value:
      *                      id: 1
-     *                      activity: walking
+     *                      activityType: walking
      *                      steps: 3000
      *                      heartRate: 120
      *                      duration: 0
@@ -355,7 +354,7 @@ class WorkoutController extends BaseController {
      */
     private async create(
         options: ApiHandlerOptions<{
-            body: CreateWorkoutRequestDto;
+            body: WorkoutRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
@@ -388,11 +387,7 @@ class WorkoutController extends BaseController {
      *            schema:
      *              type: object
      *              properties:
-     *                  id:
-     *                      type: number
-     *                      format: integer
-     *                      minimum: 1
-     *                  activity:
+     *                  activityType:
      *                      type: string
      *                      enum:
      *                          - cycling
@@ -445,8 +440,7 @@ class WorkoutController extends BaseController {
      *              examples:
      *                  walkingResponse:
      *                    value:
-     *                      id: 1
-     *                      activity: walking
+     *                      activityType: walking
      *                      steps: 3000
      *                      heartRate: 120
      *                      duration: 0
@@ -465,7 +459,7 @@ class WorkoutController extends BaseController {
      */
     private async update(
         options: ApiHandlerOptions<{
-            body: UpdateWorkoutRequestDto;
+            body: WorkoutRequestDto;
             params: EntityIdParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {

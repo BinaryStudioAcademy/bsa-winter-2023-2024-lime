@@ -6,7 +6,7 @@ const USERS_TABLE_NAME = 'users';
 const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
-    ACTIVITY: 'activity',
+    ACTIVITY_TYPE: 'activity_type',
     STEPS: 'steps',
     HEART_RATE: 'heart_rate',
     WORKOUT_STARTED_AT: 'workout_started_at',
@@ -18,9 +18,9 @@ const ColumnName = {
     UPDATED_AT: 'updated_at',
 };
 
-const ACTIVITY_ENUM = `${ColumnName.ACTIVITY}_enum`;
+const ACTIVITY_ENUM = `${ColumnName.ACTIVITY_TYPE}_enum`;
 
-const Activity = {
+const ActivityType = {
     CYCLING: 'cycling',
     RUNNING: 'running',
     WALKING: 'walking',
@@ -46,9 +46,10 @@ async function up(knex: Knex): Promise<void> {
         table.dateTime(ColumnName.WORKOUT_ENDED_AT).notNullable();
         table.integer(ColumnName.DISTANCE).notNullable();
         table.integer(ColumnName.SPEED).notNullable();
-        table.enum(ColumnName.ACTIVITY, Object.values(Activity), {
+        table.enum(ColumnName.ACTIVITY_TYPE, Object.values(ActivityType), {
             useNative: true,
             enumName: ACTIVITY_ENUM,
+            existingType: true,
         });
         table
             .dateTime(ColumnName.CREATED_AT)

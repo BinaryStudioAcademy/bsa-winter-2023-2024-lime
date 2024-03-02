@@ -13,7 +13,7 @@ import { WorkoutAttributes } from './enums/enums.js';
 
 class WorkoutModel extends AbstractModel {
     public 'userId': number;
-    public 'activity': ValueOf<typeof ActivityType>;
+    public 'activityType': ValueOf<typeof ActivityType>;
     public 'steps': number;
     public 'heartRate': number;
     public 'workoutStartedAt': Date;
