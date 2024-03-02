@@ -1,26 +1,28 @@
 import {
+    useAppDispatch,
+    useAppSelector,
     useCallback,
+    useEffect,
     useHandleClickOutside,
     useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import {
+    dismissNotification,
+    fetchNotifications,
+} from '~/bundles/notifications/store/actions.js';
 
 import { NotificationList } from './components/notification-list.js';
 import { NotificationIcon } from './components/notifications-header.js';
 
 const NotificationComponent = (): JSX.Element => {
-    const [notifications, setNotifications] = useState([
-        {
-            id: '202404',
-            title: 'Notification 1',
-            description: 'This is a description of the notification 1',
-        },
-        {
-            id: '202401',
-            title: 'Notification 2',
-            description: 'This is a description of the notification 1',
-        },
-    ]);
+    const dispatch = useAppDispatch();
+    const { notifications } = useAppSelector((state) => state.notifications);
+
+    useEffect(() => {
+        void dispatch(fetchNotifications());
+    }, [dispatch]);
+
     const [showList, setShowList] = useState(false);
 
     const handleIconClick = useCallback(() => {
@@ -29,15 +31,11 @@ const NotificationComponent = (): JSX.Element => {
 
     const handleNotificationClick = useCallback(
         (id: number) => {
-            setNotifications(
-                notifications.filter(
-                    (notification) =>
-                        notification.id.toString() !== id.toString(),
-                ),
-            );
+            void dispatch(dismissNotification(id.toString()));
+
             setShowList(notifications.length > 1);
         },
-        [notifications],
+        [dispatch, notifications],
     );
 
     const notificationListReference = useRef(null);

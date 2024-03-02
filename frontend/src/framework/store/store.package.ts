@@ -10,7 +10,7 @@ import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
-import { reducer as notificationsReducer } from '~/bundles/notifications-/store/slice.js';
+import { reducer as notificationsReducer } from '~/bundles/notifications/store/slice.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';

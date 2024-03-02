@@ -3,7 +3,6 @@ import {
     deleteNotification,
     dismissNotification,
     fetchNotifications,
-    fetchUnreadNotificationsCount,
 } from './actions.js';
 import { actions } from './slice.js';
 
@@ -13,8 +12,7 @@ const allActions = {
     deleteNotification,
     dismissNotification,
     fetchNotifications,
-    fetchUnreadNotificationsCount,
 };
 
-export { reducer } from './slice.js';
 export { allActions as actions };
+export { reducer } from './slice.js';
