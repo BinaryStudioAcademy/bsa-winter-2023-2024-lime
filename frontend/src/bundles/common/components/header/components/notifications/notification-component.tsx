@@ -5,8 +5,8 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { NotificationList } from './notification-list.js';
-import { NotificationIcon } from './notifications-header.js';
+import { NotificationList } from './components/notification-list.js';
+import { NotificationIcon } from './components/notifications-header.js';
 
 const NotificationComponent = (): JSX.Element => {
     const [notifications, setNotifications] = useState([

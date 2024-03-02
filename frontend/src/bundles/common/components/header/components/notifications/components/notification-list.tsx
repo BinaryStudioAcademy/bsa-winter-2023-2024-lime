@@ -1,10 +1,10 @@
 import { Popover } from '~/bundles/common/components/components.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
-import { type NotificacitionType } from './types/notifications.types.js';
+import { type NotificationType } from '../types/notifications.types.js';
 
 type Properties = {
-    notifications: Array<NotificacitionType>;
+    notifications: Array<NotificationType>;
     onNotificationClick: (index: number) => void;
 };
 

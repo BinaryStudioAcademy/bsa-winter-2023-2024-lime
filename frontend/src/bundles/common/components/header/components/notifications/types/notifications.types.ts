@@ -1,7 +1,7 @@
-type NotificacitionType = {
+type NotificationType = {
     id: string;
     title: string;
     description: string;
 };
 
-export { type NotificacitionType };
+export { type NotificationType };

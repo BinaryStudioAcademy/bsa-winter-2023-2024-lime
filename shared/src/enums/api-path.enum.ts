@@ -5,6 +5,7 @@ const ApiPath = {
     SUBSCRIPTIONS: '/subscriptions',
     SUBSCRIPTIONS_PLANS: '/subscription-plans',
     CONNECTIONS: '/connections',
+    NOTIFICATIONS: '/notifications',
     OAUTH: '/oauth',
 } as const;
 
