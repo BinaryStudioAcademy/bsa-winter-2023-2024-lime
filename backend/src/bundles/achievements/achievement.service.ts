@@ -19,13 +19,26 @@ class AchievementService {
     }
 
     public async findById(id: number): Promise<AchievementEntity | null> {
-        return await this.achievementRepository.findById(id);
+        const achievement = await this.achievementRepository.findById(id);
+
+        if (!achievement) {
+            throw new Error('Achievement not found');
+        }
+
+        return achievement;
     }
 
     public async findByUserId(
         userId: number,
     ): Promise<AchievementEntity[] | null> {
-        return await this.achievementRepository.findByUserId(userId);
+        const userAchievements =
+            await this.achievementRepository.findByUserId(userId);
+
+        if (!userAchievements || userAchievements.length === 0) {
+            throw new Error('User achievements not found');
+        }
+
+        return userAchievements;
     }
 }
 

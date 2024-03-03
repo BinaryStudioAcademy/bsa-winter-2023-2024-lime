@@ -153,27 +153,14 @@ class AchievementController extends BaseController {
             params: UserGetAllItemResponseDto;
         }>,
     ): Promise<ApiHandlerResponse> {
-        try {
-            const { params } = options;
-            const achievement = await this.achievementService.findById(
-                params.id,
-            );
+        const { params } = options;
+        const achievement = await this.achievementService.findById(params.id);
 
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.OK,
-                payload: achievement,
-            };
-        } catch {
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.NOT_FOUND,
-                payload: {
-                    errorType: 'COMMON',
-                    message: 'Achievement not found',
-                },
-            };
-        }
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: achievement,
+        };
     }
 
     /**
@@ -212,25 +199,13 @@ class AchievementController extends BaseController {
      */
 
     private async findByUserId(id: number): Promise<ApiHandlerResponse> {
-        try {
-            const userAchievements =
-                await this.achievementService.findByUserId(id);
+        const userAchievements = await this.achievementService.findByUserId(id);
 
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.OK,
-                payload: userAchievements,
-            };
-        } catch {
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.NOT_FOUND,
-                payload: {
-                    errorType: 'COMMON',
-                    message: 'User achievements not found',
-                },
-            };
-        }
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: userAchievements,
+        };
     }
 
     private findUserParams(
