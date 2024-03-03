@@ -89,7 +89,7 @@ const Goals: React.FC = () => {
 
     const achievement = achievements.at(-1);
 
-    const activityToGoal: Record<
+    const toGoal: Record<
         ValueOf<typeof ActivityType>,
         ValueOf<typeof GoalTypes>
     > = {
@@ -121,9 +121,7 @@ const Goals: React.FC = () => {
                                 }
                                 goalType={
                                     achievement
-                                        ? activityToGoal[
-                                              achievement.activityType
-                                          ]
+                                        ? toGoal[achievement.activityType]
                                         : GoalTypes.STANDART
                                 }
                                 hasAchievement={achievement ? true : false}
