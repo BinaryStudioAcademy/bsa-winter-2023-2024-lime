@@ -13,18 +13,15 @@ type Constructor = {
 
 class AchievementsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
-        super({ path: ApiPath.AUTH, baseUrl, http, storage });
+        super({ path: ApiPath.ACHIEVEMENTS, baseUrl, http, storage });
     }
 
     public async getAchievements(): Promise<AchievementResponseDto[]> {
-        const response = await this.load(
-            this.getFullEndpoint(ApiPath.ACHIEVEMENTS, {}),
-            {
-                method: 'GET',
-                contentType: ContentType.JSON,
-                hasAuth: true,
-            },
-        );
+        const response = await this.load(this.getFullEndpoint('/', {}), {
+            method: 'GET',
+            contentType: ContentType.JSON,
+            hasAuth: true,
+        });
         return await response.json<AchievementResponseDto[]>();
     }
 }

@@ -3,8 +3,10 @@ import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
 type AchievementResponseDto = {
     id: number;
-    activity: ValueOf<typeof ActivityType>;
     name: string;
+    activityType: ValueOf<typeof ActivityType>;
+    requirement: number;
+    requirementMetric: string;
     createdAt: string;
 };
 

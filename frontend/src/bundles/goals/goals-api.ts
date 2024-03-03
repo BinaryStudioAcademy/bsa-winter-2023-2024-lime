@@ -25,7 +25,9 @@ class GoalsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<GoalResponseDto[]>();
+
+        const { items } = await response.json<{ items: GoalResponseDto[] }>();
+        return items;
     }
 
     public async createGoal(payload: GoalRequestDto): Promise<GoalResponseDto> {

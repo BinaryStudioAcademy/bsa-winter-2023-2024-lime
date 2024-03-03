@@ -95,7 +95,9 @@ const CircleProgress = ({
                         </p>
                     </>
                 )}
-                {goalType === GoalTypes.RUNNING && (
+                {(goalType === GoalTypes.RUNNING ||
+                    goalType === GoalTypes.CYCLING ||
+                    goalType === GoalTypes.WALKING) && (
                     <>
                         <p
                             className={getValidClassNames(
