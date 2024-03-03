@@ -1,5 +1,7 @@
 .header {
     @apply bg-primary flex w-full items-center;
+
+    grid-area: header;
 }
 
 .header-container {

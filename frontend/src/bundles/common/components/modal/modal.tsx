@@ -30,7 +30,7 @@ const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
                 onClick={onClose}
                 role="presentation"
             />
-            <div className="bg-lm-black-200 rounded-34 fixed left-1/2 top-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-start justify-center px-32 pb-24 pt-16 shadow-md transition-all ">
+            <div className={getValidClassNames(classes.contentClass)}>
                 <XMarkIcon
                     onClick={onClose}
                     className={getValidClassNames(classes.closeIconClass)}
