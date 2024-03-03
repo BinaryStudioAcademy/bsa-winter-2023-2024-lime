@@ -53,10 +53,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
             setValue('fullName', fullName || '');
             setValue('username', username || '');
-            setValue('dateOfBirth', configureDateString(dateOfBirth) || null);
-            setValue('weight', weight || null);
-            setValue('height', height || null);
-            setValue('gender', gender || null);
+            setValue('dateOfBirth', configureDateString(dateOfBirth) || '');
+            setValue('weight', weight || '');
+            setValue('height', height || '');
+            setValue('gender', gender || '');
 
             setValuesDefault(true);
         }
