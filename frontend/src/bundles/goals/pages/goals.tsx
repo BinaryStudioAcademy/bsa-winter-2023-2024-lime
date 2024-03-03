@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/16/solid';
 
 import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
+import { type AchievementResponseDto } from '~/bundles/achievements/types/types.js';
 import {
     AchievementCard,
     Button,
@@ -96,7 +97,7 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
-    const achievement = achievements.at(-1);
+    const achievement = achievements.at(-1) as AchievementResponseDto;
 
     return (
         <main className="bg-primary flex w-full flex-col gap-8 md:h-screen md:justify-between lg:flex-row lg:justify-normal">
@@ -107,8 +108,8 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem] md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
-                                value={achievement?.requirement as number}
-                                target={achievement?.requirement as number}
+                                value={achievement?.requirement}
+                                target={achievement?.requirement}
                                 title={
                                     achievement?.name
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
@@ -120,11 +121,7 @@ const Goals: React.FC = () => {
                                         : ''
                                 }
                                 goalType={
-                                    achievement
-                                        ? activityToGoal[
-                                        achievement.activityType
-                                        ]
-                                        : GoalTypes.STANDART
+                                    activityToGoal[achievement.activityType]
                                 }
                                 hasAchievement={achievement ? true : false}
                             />
