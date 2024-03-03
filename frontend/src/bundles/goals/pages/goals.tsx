@@ -31,6 +31,15 @@ import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
 import { GoalWidget } from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
 
+const activityToGoal: Record<
+    ValueOf<typeof ActivityType>,
+    ValueOf<typeof GoalTypes>
+> = {
+    [ActivityType.RUNNING]: GoalTypes.RUNNING,
+    [ActivityType.CYCLING]: GoalTypes.CYCLING,
+    [ActivityType.WALKING]: GoalTypes.WALKING,
+};
+
 const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
@@ -89,15 +98,6 @@ const Goals: React.FC = () => {
 
     const achievement = achievements.at(-1);
 
-    const toGoal: Record<
-        ValueOf<typeof ActivityType>,
-        ValueOf<typeof GoalTypes>
-    > = {
-        [ActivityType.RUNNING]: GoalTypes.RUNNING,
-        [ActivityType.CYCLING]: GoalTypes.CYCLING,
-        [ActivityType.WALKING]: GoalTypes.WALKING,
-    };
-
     return (
         <main className="bg-primary flex w-full flex-col gap-8 md:h-screen md:justify-between lg:flex-row lg:justify-normal">
             {isLoading ? (
@@ -121,7 +121,9 @@ const Goals: React.FC = () => {
                                 }
                                 goalType={
                                     achievement
-                                        ? toGoal[achievement.activityType]
+                                        ? activityToGoal[
+                                        achievement.activityType
+                                        ]
                                         : GoalTypes.STANDART
                                 }
                                 hasAchievement={achievement ? true : false}
