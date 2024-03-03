@@ -11,20 +11,9 @@ type State = {
     achievements: AchievementResponseDto[];
 };
 
-const achievements: AchievementResponseDto[] = [
-    {
-        id: 1,
-        activityType: 'cycling',
-        requirement: 3,
-        requirementMetric: 'km',
-        name: 'Running on track',
-        createdAt: '2004-10-19 10:23:54+02',
-    },
-];
-
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
-    achievements: achievements,
+    achievements: [],
 };
 
 const { reducer, actions, name } = createSlice({
