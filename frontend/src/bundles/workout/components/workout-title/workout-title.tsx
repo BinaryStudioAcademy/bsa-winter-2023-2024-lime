@@ -8,21 +8,21 @@ type Properties = {
 };
 
 const WorkoutTitle = ({ workout }: Properties): JSX.Element => {
-    const { activity } = workout;
+    const { activityType } = workout;
 
     const baseClass = '!p-3 !bg-lm-grey-500';
 
     return (
         <div className="flex items-center gap-[0.7rem]">
             <ActivityIcon
-                activity={activity}
+                activity={activityType}
                 size={ComponentSize.LARGE}
                 className={baseClass}
             />
             <h1 className="flex flex-col">
                 <span className="text-lm-grey-200 text-xs">Details of</span>
                 <span className="text-xl font-extrabold text-white">
-                    {capitalizeFirstLetter(activity)} activity
+                    {capitalizeFirstLetter(activityType)} activity
                 </span>
             </h1>
         </div>

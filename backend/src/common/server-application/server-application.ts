@@ -6,6 +6,7 @@ import { passwordResetController } from '~/bundles/password-reset/password-reset
 import { subscriptionPlanController } from '~/bundles/subscription-plans/subscription-plan.js';
 import { subscriptionController } from '~/bundles/subscriptions/subscriptions.js';
 import { userController } from '~/bundles/users/users.js';
+import { workoutController } from '~/bundles/workouts/workouts.js';
 import { config } from '~/common/config/config.js';
 import { database } from '~/common/database/database.js';
 import { logger } from '~/common/logger/logger.js';
@@ -21,6 +22,7 @@ const apiV1 = new BaseServerAppApi(
     ...goalController.routes,
     ...subscriptionController.routes,
     ...subscriptionPlanController.routes,
+    ...workoutController.routes,
     ...connectionController.routes,
     ...oAuthController.routes,
     ...passwordResetController.routes,

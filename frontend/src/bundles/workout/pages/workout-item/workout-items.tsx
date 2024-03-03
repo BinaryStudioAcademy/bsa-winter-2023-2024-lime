@@ -8,7 +8,7 @@ import { ActivityType } from '~/bundles/workout/enums/enums.js';
 const WorkoutItem = (): JSX.Element => {
     const workout = {
         id: 3,
-        activity: ActivityType.WALKING,
+        activityType: ActivityType.WALKING,
         workoutStartedAt: new Date(),
         workoutEndedAt: new Date(),
         speed: 13,

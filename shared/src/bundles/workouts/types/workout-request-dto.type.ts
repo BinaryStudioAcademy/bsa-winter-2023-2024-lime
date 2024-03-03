@@ -1,17 +1,15 @@
 import { type ActivityType } from '../../../enums/enums.js';
 import { type ValueOf } from '../../../types/types.js';
 
-type WorkoutResponseDto = {
-    id: number;
+type WorkoutRequestDto = {
     activityType: ValueOf<typeof ActivityType>;
     workoutStartedAt: Date;
-    workoutEndedAt: Date | null;
+    workoutEndedAt: Date;
     speed: number;
-    duration: number;
     distance: number;
     heartRate: number;
     steps?: number;
     kilocalories: number;
 };
 
-export { type WorkoutResponseDto };
+export { type WorkoutRequestDto };

@@ -14,7 +14,7 @@ import { ActivityType, AppRoute } from '~/bundles/workout/enums/enums.js';
 const items = [
     {
         id: 1,
-        activity: ActivityType.RUNNING,
+        activityType: ActivityType.RUNNING,
         workoutStartedAt: new Date(),
         workoutEndedAt: new Date(),
         speed: 100,
@@ -25,7 +25,7 @@ const items = [
     },
     {
         id: 2,
-        activity: ActivityType.CYCLING,
+        activityType: ActivityType.CYCLING,
         workoutStartedAt: new Date(),
         workoutEndedAt: new Date(),
         speed: 58,
@@ -36,7 +36,7 @@ const items = [
     },
     {
         id: 3,
-        activity: ActivityType.WALKING,
+        activityType: ActivityType.WALKING,
         workoutStartedAt: new Date(),
         workoutEndedAt: new Date(),
         speed: 13,
@@ -64,11 +64,11 @@ const Workout: React.FC = () => {
     const isLoading = false;
 
     const subNavigationItems = items.map((item) => {
-        const { id, activity } = item;
+        const { id, activityType } = item;
 
         return {
             id: String(id),
-            label: capitalizeFirstLetter(activity),
+            label: capitalizeFirstLetter(activityType),
             to: String(id),
         };
     });
