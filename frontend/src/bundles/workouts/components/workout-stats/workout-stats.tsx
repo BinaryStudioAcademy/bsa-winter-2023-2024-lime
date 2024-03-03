@@ -10,7 +10,7 @@ type Properties = {
 };
 
 const WorkoutStats = ({ workout }: Properties): JSX.Element => {
-    const { duration, distance, steps, kilocalories, heartRate } = workout;
+    const { duration, distance, steps, kilocalories, heartRate, id } = workout;
 
     const workoutDistance = steps ?? metersToKilometers(distance);
     const distanceUnit = steps ? 'Steps' : 'km';
@@ -18,12 +18,15 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
     const [hours, minutes, seconds] = convertSecondsToHMS(duration);
 
     const styles = {
-        metrics: 'text-sm text-white',
+        metrics: 'text-sm text-white animate-fade-in',
         units: 'text-sm text-lm-grey-200',
     };
 
     return (
-        <div className="bg-lm-black-100 bg-wave-grey mt-[1.25rem] h-[19.8rem] rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat">
+        <div
+            className="bg-lm-black-100 bg-wave-grey mt-[1.25rem] h-[19.8rem] rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat"
+            key={id}
+        >
             <div className="px-[1.875rem] py-[1.25rem]">
                 <p>
                     <span

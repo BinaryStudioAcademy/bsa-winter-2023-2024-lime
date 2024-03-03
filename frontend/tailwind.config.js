@@ -86,6 +86,19 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'fade-in': 'fade-in 600ms ease-out',
+            },
+            keyframes: {
+                'fade-in': {
+                    '0%': {
+                        transform: 'scale(0)',
+                        opacity: '0',
+                    },
+                    '100%': {
+                        transform: 'scale(1)',
+                        opacity: '1',
+                    },
+                },
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
