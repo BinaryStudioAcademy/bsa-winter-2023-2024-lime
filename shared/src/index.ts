@@ -53,6 +53,7 @@ export {
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
+    type WorkoutGetAllResponseDto,
     type WorkoutRequestDto,
     type WorkoutResponseDto,
     WorkoutsApiPath,

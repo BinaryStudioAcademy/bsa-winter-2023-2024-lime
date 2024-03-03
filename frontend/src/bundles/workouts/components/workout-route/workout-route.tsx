@@ -1,5 +1,5 @@
 import { formatDate } from '~/bundles/common/helpers/helpers.js';
-import { type WorkoutResponseDto } from '~/bundles/workout/types/types.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 type Properties = {
     workout: WorkoutResponseDto;

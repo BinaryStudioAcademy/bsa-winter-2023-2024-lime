@@ -1,7 +1,7 @@
 import { ActivityIcon } from '~/bundles/common/components/activity-icon/activity-icon.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
-import { ComponentSize } from '~/bundles/workout/enums/enums.js';
-import { type WorkoutResponseDto } from '~/bundles/workout/types/types.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 type Properties = {
     workout: WorkoutResponseDto;

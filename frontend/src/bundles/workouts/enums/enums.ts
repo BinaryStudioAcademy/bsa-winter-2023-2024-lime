@@ -1,0 +1,1 @@
+export { WorkoutsApiPath } from 'shared';
