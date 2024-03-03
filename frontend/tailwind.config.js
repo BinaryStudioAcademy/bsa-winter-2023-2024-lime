@@ -86,7 +86,7 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
-                'fade-in': 'fade-in 600ms ease-out',
+                'fade-in': 'fade-in 500ms ease-in',
             },
             keyframes: {
                 'fade-in': {
