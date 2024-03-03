@@ -17,6 +17,7 @@ import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js'
 import { store } from '~/framework/store/store.js';
 
 import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
+import { LogoutPage } from './bundles/common/pages/logout-page/logout-page.js';
 import { ProfileLayout } from './bundles/profile/layout/profile-layout.js';
 import { ConnectionsPage } from './bundles/profile/pages/connections-page/connections-page.js';
 import {
@@ -68,7 +69,7 @@ const routes = [
                     },
                     {
                         path: AppRoute.LOGOUT,
-                        element: <div>LOGOUT PAGE</div>,
+                        element: <LogoutPage />,
                     },
                     {
                         path: AppRoute.PROFILE,
