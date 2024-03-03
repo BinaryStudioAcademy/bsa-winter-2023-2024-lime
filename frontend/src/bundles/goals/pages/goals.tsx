@@ -87,9 +87,9 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
-    const lastAchievement = achievements.at(-1);
+    const achievement = achievements.at(-1);
 
-    const activityToGoalType: Record<
+    const activityToGoal: Record<
         ValueOf<typeof ActivityType>,
         ValueOf<typeof GoalTypes>
     > = {
@@ -107,26 +107,26 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem] md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
-                                value={lastAchievement?.requirement as number}
-                                target={lastAchievement?.requirement as number}
+                                value={achievement?.requirement as number}
+                                target={achievement?.requirement as number}
                                 title={
-                                    lastAchievement?.name
+                                    achievement?.name
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
                                         : GOALS_MESSAGES.NO_GOALS
                                 }
                                 subTitle={
-                                    lastAchievement?.name
+                                    achievement?.name
                                         ? GOALS_MESSAGES.GOAL_ENCOURAGE
                                         : ''
                                 }
                                 goalType={
-                                    lastAchievement
-                                        ? activityToGoalType[
-                                              lastAchievement.activityType
+                                    achievement
+                                        ? activityToGoal[
+                                              achievement.activityType
                                           ]
                                         : GoalTypes.STANDART
                                 }
-                                hasAchievement={lastAchievement ? true : false}
+                                hasAchievement={achievement ? true : false}
                             />
                         </section>
                         <section className="overflow-y-auto overflow-x-hidden">
