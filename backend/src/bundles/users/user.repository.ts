@@ -122,12 +122,18 @@ class UserRepository implements Repository {
             if (!user) {
                 return null;
             }
-            await user.$relatedQuery('userDetails', trx).patch(payload);
 
-            const userDetails = await user.$relatedQuery('userDetails', trx);
+            const userDetails = await user
+                .$relatedQuery('userDetails', trx)
+                .patch(payload)
+                .returning('*')
+                .first();
 
             await trx.commit();
 
+            if (!userDetails) {
+                return null;
+            }
             return UserEntity.initialize({
                 ...user,
                 fullName: userDetails.fullName,

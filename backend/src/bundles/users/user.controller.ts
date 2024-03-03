@@ -197,7 +197,7 @@ class UserController extends BaseController {
         const { id } = user;
         try {
             const updatedUser = await this.userService.updateUserProfile(
-                { id },
+                id,
                 body,
             );
             return {

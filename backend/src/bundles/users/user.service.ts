@@ -53,21 +53,13 @@ class UserService implements Service {
     }
 
     public async updateUserProfile(
-        query: Record<string, number>,
+        userId: number,
         payload: UserUpdateProfileRequestDto,
     ): Promise<UserAuthResponseDto | null> {
         try {
-            const userId = query['id'] as number;
-
-            const updatedUserDetails: Partial<UserDetailsModel> = {};
-            for (const property of Object.keys(payload)) {
-                const value = payload[property];
-                updatedUserDetails[property] = value || null;
-                updatedUserDetails.id = userId;
-            }
             const updatedUser = await this.userRepository.updateUserProfile(
                 userId,
-                updatedUserDetails,
+                payload as Partial<UserDetailsModel>,
             );
             if (!updatedUser) {
                 throw new HttpError({

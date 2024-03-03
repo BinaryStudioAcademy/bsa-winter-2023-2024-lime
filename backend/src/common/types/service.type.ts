@@ -5,7 +5,7 @@ type Service<T = unknown> = {
     }>;
     create(payload: unknown): Promise<T>;
     update(
-        query: Record<string, T>,
+        query: Record<string, unknown>,
         payload: Record<string, unknown>,
     ): Promise<T | null>;
     delete(payload: unknown): Promise<boolean>;

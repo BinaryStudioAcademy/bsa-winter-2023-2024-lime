@@ -54,8 +54,8 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             setValue('fullName', fullName || '');
             setValue('username', username || '');
             setValue('dateOfBirth', configureDateString(dateOfBirth) || null);
-            setValue('weight', weight || '');
-            setValue('height', height || '');
+            setValue('weight', weight || null);
+            setValue('height', height || null);
             setValue('gender', gender || null);
 
             setValuesDefault(true);
@@ -68,6 +68,8 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             if (Object.keys(errors).length === 0) {
                 const payload: UserUpdateProfileRequestDto = {
                     ...getValues(),
+                    weight: getValues().weight || null,
+                    height: getValues().height || null,
                     dateOfBirth: getValues().dateOfBirth
                         ? configureISOString(getValues().dateOfBirth || '')
                         : null,
