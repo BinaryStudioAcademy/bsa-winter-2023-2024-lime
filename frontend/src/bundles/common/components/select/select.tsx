@@ -92,9 +92,9 @@ const Select = <
     );
 
     return (
-        <div className="bg-primary">
+        <div className="bg-primary flex h-20 w-full flex-col">
             {label && (
-                <span className="text-primary text-base font-medium">
+                <span className="text-primary mb-[0.5rem] text-base font-medium">
                     {label}
                 </span>
             )}
