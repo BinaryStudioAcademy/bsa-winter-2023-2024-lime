@@ -89,7 +89,7 @@ const Goals: React.FC = () => {
 
     const lastAchievement = achievements.at(-1);
 
-    const activityTypeToGoalType: Record<
+    const activityToGoalType: Record<
         ValueOf<typeof ActivityType>,
         ValueOf<typeof GoalTypes>
     > = {
@@ -121,8 +121,8 @@ const Goals: React.FC = () => {
                                 }
                                 goalType={
                                     lastAchievement
-                                        ? activityTypeToGoalType[
-                                              lastAchievement?.activityType
+                                        ? activityToGoalType[
+                                              lastAchievement.activityType
                                           ]
                                         : GoalTypes.STANDART
                                 }
