@@ -23,7 +23,7 @@ const Switch = ({
             onClick={handleChange}
         >
             <span
-                className="slider text-action"
+                className="slider text-action flex items-center justify-center"
                 style={{ width: size, height: size }}
             >
                 {checked ? (

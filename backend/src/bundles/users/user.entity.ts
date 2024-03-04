@@ -10,6 +10,8 @@ class UserEntity implements Entity {
 
     private 'passwordHash': string;
 
+    private 'stripeCustomerId': string;
+
     private 'fullName': string | null;
 
     private 'avatarUrl': string | null;
@@ -30,6 +32,7 @@ class UserEntity implements Entity {
         id,
         email,
         passwordHash,
+        stripeCustomerId,
         fullName,
         avatarUrl,
         username,
@@ -42,6 +45,7 @@ class UserEntity implements Entity {
         id: number | null;
         email: string;
         passwordHash: string;
+        stripeCustomerId: string;
         fullName: string | null;
         avatarUrl: string | null;
         username: string | null;
@@ -54,6 +58,7 @@ class UserEntity implements Entity {
         this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.stripeCustomerId = stripeCustomerId;
         this.fullName = fullName;
         this.avatarUrl = avatarUrl;
         this.username = username;
@@ -72,6 +77,7 @@ class UserEntity implements Entity {
         id,
         email,
         passwordHash,
+        stripeCustomerId,
         fullName,
         avatarUrl,
         username,
@@ -84,6 +90,7 @@ class UserEntity implements Entity {
         id: number;
         email: string;
         passwordHash: string;
+        stripeCustomerId: string;
         fullName: string | null;
         avatarUrl: string | null;
         username: string | null;
@@ -97,6 +104,7 @@ class UserEntity implements Entity {
             id,
             email,
             passwordHash,
+            stripeCustomerId,
             fullName,
             avatarUrl,
             username,
@@ -111,14 +119,17 @@ class UserEntity implements Entity {
     public static initializeNew({
         email,
         passwordHash,
+        stripeCustomerId,
     }: {
         email: string;
         passwordHash: string;
+        stripeCustomerId: string;
     }): UserEntity {
         return new UserEntity({
             id: null,
             email,
             passwordHash,
+            stripeCustomerId,
             fullName: null,
             avatarUrl: null,
             username: null,
@@ -133,6 +144,7 @@ class UserEntity implements Entity {
     public toObject(): {
         id: number;
         email: string;
+        stripeCustomerId: string;
         fullName: string | null;
         avatarUrl: string | null;
         username: string | null;
@@ -145,6 +157,7 @@ class UserEntity implements Entity {
         return {
             id: this.id as number,
             email: this.email,
+            stripeCustomerId: this.stripeCustomerId,
             fullName: this.fullName,
             avatarUrl: this.avatarUrl,
             username: this.username,
@@ -160,11 +173,13 @@ class UserEntity implements Entity {
         email: string;
         passwordHash: string;
         referralCode: string | null;
+        stripeCustomerId: string;
     } {
         return {
             email: this.email,
             passwordHash: this.passwordHash,
             referralCode: this.referralCode,
+            stripeCustomerId: this.stripeCustomerId,
         };
     }
 }

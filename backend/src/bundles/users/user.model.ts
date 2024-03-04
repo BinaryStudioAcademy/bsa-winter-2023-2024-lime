@@ -12,8 +12,12 @@ import {
 } from '~/common/database/database.js';
 
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
-import { UserReferralAttributes } from '../user-bonuses/enums/user-referral.js';
-import { UserBonusModel } from '../user-bonuses/user-bonus.model.js';
+import { SubscriptionModel } from '../subscriptions/subscription.model.js';
+import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
+import {
+    UserBonusAttributes,
+    UserBonusModel,
+} from '../user-bonuses/user-bonus.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -21,6 +25,8 @@ class UserModel extends AbstractModel {
     public 'email': string;
 
     public 'passwordHash': string;
+
+    public 'stripeCustomerId': string;
 
     public 'userDetails': UserDetailsModel;
 
@@ -40,6 +46,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            subscription: {
+                relation: Model.HasManyRelation,
+                modelClass: SubscriptionModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.SUBSCRIPTIONS}.${SubscriptionAttributes.USER_ID}`,
                 },
             },
             oAuthInfo: {
@@ -63,7 +77,7 @@ class UserModel extends AbstractModel {
                 modelClass: UserBonusModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.USER_BONUSES}.${UserReferralAttributes.USER_ID}`,
+                    to: `${DatabaseTableName.USER_BONUSES}.${UserBonusAttributes.USER_ID}`,
                 },
             },
             userAchievement: {

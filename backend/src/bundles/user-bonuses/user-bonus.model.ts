@@ -7,7 +7,7 @@ import {
 
 import { UserAttributes } from '../users/enums/user-attributes.enum.js';
 import { UserModel } from '../users/user.model.js';
-import { UserReferralAttributes } from './enums/enums.js';
+import { UserBonusAttributes } from './enums/enums.js';
 
 class UserBonusModel extends AbstractModel {
     public 'userId': number;
@@ -26,7 +26,7 @@ class UserBonusModel extends AbstractModel {
                 relation: Model.BelongsToOneRelation,
                 modelClass: UserModel,
                 join: {
-                    from: `${DatabaseTableName.USER_BONUSES}.${UserReferralAttributes.USER_ID}`,
+                    from: `${DatabaseTableName.USER_BONUSES}.${UserBonusAttributes.USER_ID}`,
                     to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },

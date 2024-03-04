@@ -61,7 +61,7 @@ class UserRepository implements Repository {
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordHash } = entity.toNewObject();
+        const { email, passwordHash, stripeCustomerId } = entity.toNewObject();
         const trx = await this.userModel.startTransaction();
 
         try {
@@ -70,6 +70,7 @@ class UserRepository implements Repository {
                 .insert({
                     email,
                     passwordHash,
+                    stripeCustomerId,
                 })
                 .returning('*')
                 .execute();

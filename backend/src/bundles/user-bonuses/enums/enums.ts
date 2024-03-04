@@ -1,1 +1,1 @@
-export { UserReferralAttributes } from './user-referral.js';
+export { UserBonusAttributes } from './user-bonus-attributes.js';

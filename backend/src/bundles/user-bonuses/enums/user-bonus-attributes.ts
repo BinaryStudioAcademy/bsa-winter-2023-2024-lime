@@ -1,8 +1,8 @@
-const UserReferralAttributes = {
+const UserBonusAttributes = {
     ID: 'id',
     USER_ID: 'userId',
     ACTION: 'action',
     AMOUNT: 'amount',
 } as const;
 
-export { UserReferralAttributes };
+export { UserBonusAttributes };
