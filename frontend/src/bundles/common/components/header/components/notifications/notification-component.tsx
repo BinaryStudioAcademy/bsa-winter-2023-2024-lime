@@ -7,6 +7,8 @@ import {
     useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { createSelector } from '~/bundles/common/redux/selectors/selectors.js';
+import { type RootState } from '~/bundles/common/types/types.js';
 import {
     dismissNotification,
     fetchNotifications,
@@ -15,9 +17,18 @@ import {
 import { NotificationList } from './components/notification-list.js';
 import { NotificationIcon } from './components/notifications-header.js';
 
+const selectNotifications = (state: RootState): RootState['notifications'] =>
+    state.notifications;
+
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
-    const { notifications } = useAppSelector((state) => state.notifications);
+
+    const selectorNotifications = createSelector(
+        [selectNotifications],
+        (notifications) => ({ notifications }),
+    );
+
+    const { notifications } = useAppSelector(selectorNotifications);
 
     useEffect(() => {
         void dispatch(fetchNotifications());
