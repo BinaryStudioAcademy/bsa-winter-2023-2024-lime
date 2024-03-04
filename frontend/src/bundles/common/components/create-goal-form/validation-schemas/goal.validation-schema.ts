@@ -14,8 +14,8 @@ type GoalRequestValidation = {
 const goalValidationSchema = z.object<GoalRequestValidation>({
     activity: z.nativeEnum(ActivityType),
     frequency: z.nativeEnum(GoalFrequency),
-    distance: z.coerce.number().int().optional(),
-    duration: z.coerce.number().int().optional(),
+    distance: z.coerce.number().optional(),
+    duration: z.coerce.number().optional(),
 });
 
 export { goalValidationSchema };

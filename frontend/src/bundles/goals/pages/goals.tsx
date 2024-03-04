@@ -13,6 +13,7 @@ import { type CreateGoalRequest } from '~/bundles/common/components/create-goal-
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
+import { convertToMeters } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -87,7 +88,7 @@ const Goals: React.FC = () => {
                 activityType: payload.activity as ValueOf<typeof ActivityType>,
                 frequency: Number(frequency),
                 frequencyType: frequencyType as ValueOf<typeof FrequencyType>,
-                distance: Number(payload.distance) ?? null,
+                distance: convertToMeters(Number(payload.distance)) ?? null,
                 duration: Number(payload.duration) ?? null,
             };
             void dispatch(goalsActions.createGoal(createGoalPayload));
