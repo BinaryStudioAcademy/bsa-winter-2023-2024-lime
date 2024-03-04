@@ -46,17 +46,15 @@ const SubscriptionUserPanel = ({
     }, [dispatch, stripeSubscriptionId, currentCancelAtPeriodEnd]);
 
     return (
-        <div className="bg-secondary w-full max-w-[30rem] rounded-2xl p-4 md:max-w-full md:p-6">
+        <div className="bg-lm-black-100 w-full max-w-[30rem] rounded-2xl p-4 md:max-w-full md:p-6">
             <div className="flex flex-col gap-3">
                 <div>
                     <div className="border-lm-grey-200 rounded-md border-2 p-5">
-                        <p className="text-primary text-lg">
-                            Your Subscription
-                        </p>
+                        <p className="text-lg text-white">Your Subscription</p>
                         <p className="text-lm-yellow-100 text-3xl">
                             {subscriptionPlanName.toUpperCase()}
                         </p>
-                        <p className="text-primary text-lg">Status</p>
+                        <p className="text-lg text-white">Status</p>
                         <p className="text-lm-yellow-100 text-3xl">
                             {status.toUpperCase()}
                         </p>
@@ -64,15 +62,15 @@ const SubscriptionUserPanel = ({
                             {isCanceled ? (
                                 <span className="text-lm-red">Expires at</span>
                             ) : (
-                                <span className="text-primary">Renews at</span>
+                                <span className="text-white">Renews at</span>
                             )}
                             <p className="text-lm-yellow-100 text-2xl">
                                 {dateConverter(expiresAt)}
                             </p>
                         </div>
                         <div>
-                            <p className="text-primary text-lg">Payment</p>
-                            <p className="text-primary">
+                            <p className="text-lg text-white">Payment</p>
+                            <p className="text-white">
                                 <span className="text-lm-yellow-100 text-2xl">
                                     ${subscriptionPlanPrice}
                                 </span>{' '}

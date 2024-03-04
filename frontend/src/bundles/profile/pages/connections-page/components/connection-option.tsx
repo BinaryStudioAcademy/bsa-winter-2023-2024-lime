@@ -24,7 +24,7 @@ const ConnectionOption = ({
     }, [isConnected]);
 
     return (
-        <div className={'bg-primary flex flex-col gap-5 rounded-2xl p-6'}>
+        <div className={'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6'}>
             <div
                 className={
                     'flex flex-col items-start justify-between gap-5 xl:flex-row xl:items-center'

@@ -7,7 +7,7 @@
 }
 
 .content-container {
-    @apply bg-secondary p-8;
+    @apply bg-lm-black-200 p-8;
 
     grid-area: main;
 }

@@ -29,7 +29,7 @@ const SubNavigation = ({
 
     return (
         <div
-            className={`bg-secondary flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2rem] ${className}`}
+            className={`bg-primary flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2rem] ${className}`}
         >
             {title && (
                 <h1 className="text-primary text-xl font-bold">{title}</h1>
