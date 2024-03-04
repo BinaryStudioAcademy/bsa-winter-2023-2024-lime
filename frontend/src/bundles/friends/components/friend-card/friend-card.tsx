@@ -5,13 +5,15 @@ import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { validateImageUrl } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
+import { IconFriendCard } from '../../enums/icon-friend-card.enums.js';
+
 type FriendProperties = {
     id: number;
     name: string;
     avatarUrl: string;
     isActive: boolean;
     isFriend: boolean;
-    addFriend: (id: number) => void;
+    toggleFriend: (id: number, isFriend: boolean) => void;
     messageFriend: (id: number) => void;
 };
 
@@ -21,26 +23,16 @@ const FriendCard = ({
     avatarUrl,
     isActive,
     isFriend,
-    addFriend,
+    toggleFriend,
     messageFriend,
 }: FriendProperties): JSX.Element => {
-    const handleAddFriend = useCallback(() => {
-        addFriend(id);
-    }, [addFriend, id]);
+    const handletoggleFriend = useCallback(() => {
+        toggleFriend(id, isFriend);
+    }, [toggleFriend, isFriend, id]);
 
     const handleSendMessage = useCallback(() => {
         messageFriend(id);
     }, [messageFriend, id]);
-
-    const variantButton = isFriend ? 'secondary' : 'primary';
-    const classesButtonResponsive =
-        'lg:px-4 lg:py-2 lg:h-8  sm:text-[0.7rem] sm:h-6 sm:px-1 sm:py-1';
-    const labelsButton = {
-        add: 'Add friend',
-        remove: 'Remove friend',
-    };
-    const icon = 'messageIcon';
-    const size = 'sm';
 
     return (
         <div className="hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent sm:max-w-40 lg:max-w-64">
@@ -73,19 +65,19 @@ const FriendCard = ({
                     <div className="inline-flex w-3/4 items-center">
                         {isFriend ? (
                             <Button
-                                onClick={handleAddFriend}
-                                label={labelsButton.remove}
-                                className={classesButtonResponsive}
+                                onClick={handletoggleFriend}
+                                label={'Remove friend'}
+                                className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
-                                variant={variantButton}
+                                variant={isFriend ? 'secondary' : 'primary'}
                             />
                         ) : (
                             <Button
-                                onClick={handleAddFriend}
-                                label={labelsButton.add}
-                                className={classesButtonResponsive}
+                                onClick={handletoggleFriend}
+                                label={'Add friend'}
+                                className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
-                                variant={variantButton}
+                                variant={isFriend ? 'secondary' : 'primary'}
                             />
                         )}
                     </div>
@@ -93,8 +85,17 @@ const FriendCard = ({
                     <button
                         onClick={handleSendMessage}
                         className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10"
+                        disabled={!isFriend}
                     >
-                        <Icon name={icon} size={size} className="text-action" />
+                        <Icon
+                            name={IconFriendCard.ICON}
+                            size={IconFriendCard.SIZE}
+                            color={
+                                isFriend
+                                    ? IconFriendCard.COLOR_IS_FRIEND
+                                    : IconFriendCard.COLOR_NOT_FRIEND
+                            }
+                        />
                     </button>
                 </div>
             </div>
