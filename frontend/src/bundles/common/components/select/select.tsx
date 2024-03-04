@@ -92,9 +92,9 @@ const Select = <
     );
 
     return (
-        <div className="bg-transparent p-5">
+        <div className="flex h-20 flex-col bg-transparent">
             {label && (
-                <span className="text-primary mb-[0.5rem] text-base font-medium">
+                <span className="text-primary mb-[0.5rem] block text-base font-medium">
                     {label}
                 </span>
             )}
