@@ -52,8 +52,8 @@ const FriendCard = ({
                         className="aspect-square rounded-t-xl object-cover"
                     />
                 ) : (
-                    <div className="flex aspect-square items-center justify-center rounded-t-xl bg-lm-grey-100">
-                        <UserCircleIcon className="text-lm-grey-200 h-full w-full"  />
+                    <div className="bg-lm-grey-100 flex aspect-square items-center justify-center rounded-t-xl">
+                        <UserCircleIcon className="text-lm-grey-200 h-full w-full" />
                     </div>
                 )}
             </div>
