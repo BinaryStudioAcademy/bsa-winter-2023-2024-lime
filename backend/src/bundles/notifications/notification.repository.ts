@@ -87,8 +87,7 @@ class NotificationRepository implements Repository {
             .query()
             .patch(payload)
             .findById(notificationId)
-            .returning('*')
-            .execute();
+            .returning('*');
 
         if (!notification) {
             throw new HttpError({
