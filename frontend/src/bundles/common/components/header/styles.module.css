@@ -1,5 +1,5 @@
 .header {
-    @apply bg-lm-black-100 flex w-full items-center z-[2];
+    @apply bg-lm-black-100 z-[2] flex w-full items-center;
 
     grid-area: header;
 }
