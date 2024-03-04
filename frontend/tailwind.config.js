@@ -122,6 +122,7 @@ export default {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
                 action: 'var(--text-action)',
+                infoSection: 'var(--text-info-section)',
                 buttonText: ButtonColors.TEXT,
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
