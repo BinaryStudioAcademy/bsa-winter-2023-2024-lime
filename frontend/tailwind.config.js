@@ -123,6 +123,7 @@ export default {
                 secondary: 'var(--text-secondary)',
                 action: 'var(--text-action)',
                 infoSection: 'var(--text-info-section)',
+                card: 'var(--text-card)',
                 buttonText: ButtonColors.TEXT,
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
