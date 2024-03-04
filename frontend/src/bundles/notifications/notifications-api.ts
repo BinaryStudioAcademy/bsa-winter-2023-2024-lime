@@ -58,7 +58,6 @@ class NotificationsApi extends BaseHttpApi {
                 method: 'PATCH',
                 contentType: 'application/json',
                 hasAuth: true,
-                /* Body cannot be empty when content-type is set to 'application/json'*/
                 payload: JSON.stringify({}),
             },
         );
