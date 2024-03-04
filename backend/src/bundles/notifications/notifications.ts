@@ -25,3 +25,4 @@ export {
     notificationValidationSchema,
     paginationValidationSchema,
 } from './validation-shemas/validation-shemas.js';
+export { HttpCode, HttpError } from 'shared';

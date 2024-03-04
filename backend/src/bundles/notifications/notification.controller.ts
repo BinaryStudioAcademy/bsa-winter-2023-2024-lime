@@ -182,7 +182,7 @@ class NotificationController extends BaseController {
             status: HttpCode.OK,
             payload: await this.notificationService.paginatedFind({
                 userId: user.id,
-                page: +page,
+                page: +page - 1,
                 limit: +limit,
             }),
             type: 'data',

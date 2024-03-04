@@ -2,6 +2,7 @@ import { type Repository } from '~/common/types/repository.type.js';
 
 import { NotificationEntity } from './notification.entity.js';
 import { type NotificationModel } from './notification.model.js';
+import { HttpCode, HttpError } from './notifications.js';
 
 class NotificationRepository implements Repository {
     private notificationModel: typeof NotificationModel;
@@ -49,24 +50,19 @@ class NotificationRepository implements Repository {
         page: number;
         limit: number;
     }): Promise<{ items: NotificationEntity[]; total: number }> {
-        const allNotifications = await this.notificationModel
-            .query()
-            .where('userId', userId);
-
-        const notifications = await this.notificationModel
+        const { results: notifications, total } = await this.notificationModel
             .query()
             .where('userId', userId)
             .orderBy('isRead', 'asc')
             .orderBy('updated_at', 'desc')
-            .limit(limit)
-            .offset((page - 1) * limit)
+            .page(page, limit)
             .execute();
 
         const items = notifications.map((notification) =>
             NotificationEntity.initialize(notification),
         );
 
-        return { items, total: allNotifications.length };
+        return { items, total };
     }
 
     public async create(
@@ -89,8 +85,17 @@ class NotificationRepository implements Repository {
     ): Promise<NotificationEntity> {
         const notification = await this.notificationModel
             .query()
-            .patchAndFetchById(notificationId, payload)
-            .returning('*');
+            .patch(payload)
+            .findById(notificationId)
+            .returning('*')
+            .execute();
+
+        if (!notification) {
+            throw new HttpError({
+                status: HttpCode.NOT_FOUND,
+                message: 'Notification was not found',
+            });
+        }
 
         return NotificationEntity.initialize(notification);
     }
