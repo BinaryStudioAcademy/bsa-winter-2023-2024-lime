@@ -89,7 +89,7 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
                         </span>
                     </p>
                 </div>
-                <div className="bg-progress-line bg-tip relative ml-[-1.875rem] mr-[5.75rem] mt-[2.5rem] h-[6.8rem] w-5/6 bg-contain bg-no-repeat">
+                <div className="bg-progress-line bg-tip relative ml-[-1.875rem] mr-[5.75rem] mt-[2.5rem] h-[6.8rem] w-full bg-contain bg-no-repeat lg:w-5/6">
                     <span
                         className={getValidClassNames(
                             [styles.metrics],

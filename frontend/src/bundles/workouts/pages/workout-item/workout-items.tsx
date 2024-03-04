@@ -17,7 +17,11 @@ const WorkoutItem = (): JSX.Element => {
     );
 
     if (!currentWorkout) {
-        return <span>Not found</span>;
+        return (
+            <p className="text-md text-white">
+                You don&#39;t have such workout
+            </p>
+        );
     }
 
     return (
