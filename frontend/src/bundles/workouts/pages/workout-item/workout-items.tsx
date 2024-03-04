@@ -1,7 +1,4 @@
-import {
-    useAppSelector,
-    useParams,
-} from '~/bundles/common/hooks/hooks.js';
+import { useAppSelector, useParams } from '~/bundles/common/hooks/hooks.js';
 import {
     WorkoutRoute,
     WorkoutStats,
@@ -24,7 +21,7 @@ const WorkoutItem = (): JSX.Element => {
     }
 
     return (
-        <div className="w-full px-[1.5rem]">
+        <div className="w-full max-w-[50rem] px-[1.5rem]">
             <WorkoutTitle workout={currentWorkout} />
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />

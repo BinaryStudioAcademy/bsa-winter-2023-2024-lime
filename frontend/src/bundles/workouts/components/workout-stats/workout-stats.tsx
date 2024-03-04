@@ -11,8 +11,28 @@ type Properties = {
     workout: WorkoutResponseDto;
 };
 
+const getTimeFromDate = (date: Date | null): string => {
+    const dateTime = date ? new Date(date) : new Date();
+
+    const hours = dateTime.getHours();
+    const minutes = dateTime.getMinutes();
+
+    const hoursString = hours >= 10 ? String(hours) : `0${hours}`;
+    const minutesString = minutes >= 10 ? String(minutes) : `0${minutes}`;
+
+    return `${hoursString}:${minutesString}`;
+};
+
 const WorkoutStats = ({ workout }: Properties): JSX.Element => {
-    const { duration, distance, steps, kilocalories, heartRate, id } = workout;
+    const {
+        duration,
+        distance,
+        steps,
+        kilocalories,
+        heartRate,
+        id,
+        workoutEndedAt,
+    } = workout;
 
     const workoutDistance = steps ?? metersToKilometers(distance);
     const distanceUnit = steps
@@ -28,7 +48,7 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
 
     return (
         <div
-            className="bg-lm-black-100 bg-wave-grey mt-[1.25rem] h-[19.8rem] rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat"
+            className="bg-lm-black-100 bg-wave-grey mt-[1.25rem] h-[19.8rem] w-full rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat"
             key={id}
         >
             <div className="px-[1.875rem] py-[1.25rem]">
@@ -79,6 +99,16 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
                             {WorkoutUnit.BEATS_PER_MINUTE}
                         </span>
                     </p>
+                </div>
+                <div className="bg-progress-line bg-tip relative ml-[-1.875rem] mr-[5.75rem] mt-[2.5rem] h-[6.8rem] w-5/6 bg-contain bg-no-repeat">
+                    <span
+                        className={getValidClassNames(
+                            [styles.metrics],
+                            'absolute right-[-1rem] top-[-1.3rem]',
+                        )}
+                    >
+                        {getTimeFromDate(workoutEndedAt)}
+                    </span>
                 </div>
             </div>
         </div>

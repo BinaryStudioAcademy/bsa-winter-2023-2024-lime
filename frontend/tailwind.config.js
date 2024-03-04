@@ -113,6 +113,7 @@ export default {
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
                 'wave-grey': 'url("~/assets/img/wave-grey.svg")',
+                'progress-line': 'url("~/assets/img/progress-line.svg")',
             },
             borderRadius: {
                 '30': '1.9rem',
