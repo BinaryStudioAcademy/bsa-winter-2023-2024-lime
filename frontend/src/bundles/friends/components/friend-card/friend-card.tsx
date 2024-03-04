@@ -57,7 +57,7 @@ const FriendCard = ({
                     </div>
                 )}
             </div>
-            <div className="bg-secondary flex flex-col gap-2 rounded-b-xl p-4">
+            <div className="bg-primary flex flex-col gap-2 rounded-b-xl p-4">
                 <div className="flex items-center gap-2">
                     {isActive ? (
                         <div className="bg-buttonPrimary h-2 w-2 rounded-[50%]" />
