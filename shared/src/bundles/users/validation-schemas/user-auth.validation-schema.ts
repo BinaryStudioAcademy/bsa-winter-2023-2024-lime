@@ -114,6 +114,8 @@ const passwordReset = basicUserAuth
             .max(UserValidationRule.PASSWORD.MAX_LENGTH, {
                 message: UserValidationMessage.INVALID_PASSWORD,
             }),
+        id: z.number().optional(),
+        token: z.string().optional(),
     })
     .refine(
         (schema) => {
