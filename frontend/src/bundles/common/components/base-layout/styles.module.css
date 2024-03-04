@@ -7,7 +7,7 @@
 }
 
 .content-container {
-    @apply bg-lm-black-200 p-8;
+    @apply bg-lm-black-200 p-8 overflow-y-auto overflow-x-hidden max-h-90;
 
     grid-area: main;
 }
@@ -20,4 +20,20 @@
     grid-template:
         "header header" 88px
         "aside main" /0;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--button-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--button-secondary);
 }
