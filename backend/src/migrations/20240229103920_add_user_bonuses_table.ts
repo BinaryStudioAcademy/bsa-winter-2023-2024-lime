@@ -1,13 +1,13 @@
 import { type Knex } from 'knex';
 
-const TABLE_NAME = 'user_referral';
+const TABLE_NAME = 'user_bonuses';
 const USERS_TABLE_NAME = 'users';
 
 const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
-    REFERRAL_USER_ID: 'referral_user_id',
-    REFERRAL_CODE: 'referral_code',
+    ACTION: 'action',
+    AMOUNT: 'amount',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at',
 };
@@ -23,8 +23,8 @@ async function up(knex: Knex): Promise<void> {
             .inTable(USERS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
-        table.integer(ColumnName.REFERRAL_USER_ID).nullable();
-        table.string(ColumnName.REFERRAL_CODE).notNullable();
+        table.string(ColumnName.ACTION).notNullable();
+        table.integer(ColumnName.AMOUNT).notNullable();
         table
             .dateTime(ColumnName.CREATED_AT)
             .notNullable()

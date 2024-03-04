@@ -11,22 +11,22 @@ type UserBonusResponseItem = {
 };
 
 class UserBonusService implements Service {
-    private referralTransactionRepository: UserBonusRepository;
+    private userBonusRepository: UserBonusRepository;
 
-    public constructor(referralTransactionRepository: UserBonusRepository) {
-        this.referralTransactionRepository = referralTransactionRepository;
+    public constructor(userBonusRepository: UserBonusRepository) {
+        this.userBonusRepository = userBonusRepository;
     }
 
     public async find(
         query: Record<string, unknown>,
     ): Promise<UserBonusEntity | null> {
-        return await this.referralTransactionRepository.find(query);
+        return await this.userBonusRepository.find(query);
     }
 
     public async findAll(): Promise<{
         items: UserBonusResponseItem[];
     }> {
-        const items = await this.referralTransactionRepository.findAll();
+        const items = await this.userBonusRepository.findAll();
 
         return {
             items: items.map((it) => it.toObject()),
@@ -42,16 +42,15 @@ class UserBonusService implements Service {
         action: string;
         amount: number;
     }): Promise<UserBonusResponseItem> {
-        const referralTrnasaction =
-            await this.referralTransactionRepository.create(
-                UserBonusEntity.initializeNew({
-                    userId,
-                    action,
-                    amount,
-                }),
-            );
+        const bonusTrnasaction = await this.userBonusRepository.create(
+            UserBonusEntity.initializeNew({
+                userId,
+                action,
+                amount,
+            }),
+        );
 
-        return referralTrnasaction.toObject() as UserBonusResponseItem;
+        return bonusTrnasaction.toObject() as UserBonusResponseItem;
     }
 
     public update(): ReturnType<Service['update']> {
