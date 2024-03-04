@@ -1,5 +1,6 @@
 import { type Repository } from '~/common/types/types.js';
 
+import { MINIMUM_DELETED_ROWS } from './constants/constants.js';
 import { OAuthStateEntity } from './oauth-state.entity.js';
 import { type OAuthStateModel } from './oauth-state.model.js';
 
@@ -51,7 +52,7 @@ class OAuthStateRepository implements Repository {
             .where(query)
             .delete();
 
-        return deletedRows > 0;
+        return deletedRows > MINIMUM_DELETED_ROWS;
     }
 }
 
