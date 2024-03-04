@@ -1,7 +1,6 @@
 import { PlusIcon } from '@heroicons/react/16/solid';
 
 import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
-import { type AchievementResponseDto } from '~/bundles/achievements/types/types.js';
 import {
     AchievementCard,
     Button,
@@ -97,7 +96,7 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
-    const achievement = achievements.at(-1) as AchievementResponseDto;
+    const lastGoal = achievements.at(-1);
 
     return (
         <main className="bg-primary flex w-full flex-col gap-8 md:h-screen md:justify-between lg:flex-row lg:justify-normal">
@@ -108,22 +107,24 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem] md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
-                                value={achievement?.requirement}
-                                target={achievement?.requirement}
+                                value={lastGoal?.requirement as number}
+                                target={lastGoal?.requirement as number}
                                 title={
-                                    achievement?.name
+                                    lastGoal?.name
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
                                         : GOALS_MESSAGES.NO_GOALS
                                 }
                                 subTitle={
-                                    achievement?.name
+                                    lastGoal?.name
                                         ? GOALS_MESSAGES.GOAL_ENCOURAGE
                                         : ''
                                 }
                                 goalType={
-                                    activityToGoal[achievement.activityType]
+                                    lastGoal
+                                        ? activityToGoal[lastGoal.activityType]
+                                        : GoalTypes.STANDART
                                 }
-                                hasAchievement={achievement ? true : false}
+                                hasAchievement={lastGoal ? true : false}
                             />
                         </section>
                         <section className="overflow-y-auto overflow-x-hidden">
