@@ -41,6 +41,8 @@ const activityToGoal: Record<
     [ActivityType.WALKING]: GoalTypes.WALKING,
 };
 
+const ZERO_VALUE = 0;
+
 const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
@@ -125,7 +127,7 @@ const Goals: React.FC = () => {
                                         ? activityToGoal[lastGoal.activityType]
                                         : GoalTypes.STANDART
                                 }
-                                hasAchievement={lastGoal ? true : false}
+                                hasAchievement={Boolean(lastGoal)}
                             />
                         </section>
                         <section className="overflow-y-auto overflow-x-hidden">
@@ -133,13 +135,13 @@ const Goals: React.FC = () => {
                                 Goals
                             </h2>
                             <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
-                                {goals.length === 0 && (
+                                {goals.length === ZERO_VALUE && (
                                     <p className="mb-5 w-full text-xl font-extrabold text-white">
                                         No goals yet
                                     </p>
                                 )}
 
-                                {goals?.length > 0 &&
+                                {goals?.length &&
                                     goals.map(
                                         ({
                                             id,
@@ -178,7 +180,7 @@ const Goals: React.FC = () => {
                         </h2>
 
                         <div className="flex w-full flex-col gap-4 overflow-y-auto">
-                            {achievements?.length > 0 &&
+                            {achievements?.length &&
                                 achievements.map((achievement) => (
                                     <AchievementCard
                                         key={achievement.id}

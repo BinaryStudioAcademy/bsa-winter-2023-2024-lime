@@ -15,6 +15,7 @@ type Properties = {
 };
 
 const PLURAL = 's';
+const MAXIMUM_PROGRESS = 100;
 
 const GoalCard: React.FC<Properties> = ({
     activity,
@@ -31,17 +32,15 @@ const GoalCard: React.FC<Properties> = ({
                         {capitalizeString(activity)}
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
-                        {frequency}{' '}
-                        {frequency === 1
-                            ? frequencyType
-                            : frequencyType + PLURAL}
+                        {frequency} {frequencyType}
+                        {frequency > 1 && PLURAL}
                     </p>
                 </div>
             </div>
             <div>
                 <CircleProgress
                     value={progress}
-                    target={100}
+                    target={MAXIMUM_PROGRESS}
                     size={ComponentSize.SMALL}
                     color={CircularColors.primary}
                 />

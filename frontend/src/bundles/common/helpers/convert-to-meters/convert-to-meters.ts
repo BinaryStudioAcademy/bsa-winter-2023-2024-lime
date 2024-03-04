@@ -1,5 +1,7 @@
+const KILOMETERS_TO_METERS = 1000;
+
 const convertToMeters = (value: number): number => {
-    return value * 1000;
+    return value * KILOMETERS_TO_METERS;
 };
 
 export { convertToMeters };
