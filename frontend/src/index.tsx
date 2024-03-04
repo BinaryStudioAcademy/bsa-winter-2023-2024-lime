@@ -67,7 +67,6 @@ const routes = [
                         element: <div>HELP PAGE</div>,
                     },
                     {
-                        path: AppRoute.PROFILE,
                         element: <ProfileLayout />,
                         children: [
                             {
