@@ -19,10 +19,10 @@ const UserValidationMessage = {
     NICKNAME_WRONG:
         'Nickname should consist of letters, special characters, spaces, emoji',
     BIRTHDATE_FORMAT: 'Invalid date format. Use DD/MM/YYYY',
-    WEIGHT_LENGTH: 'Weight should have from 2 to 20 characters.',
+    WEIGHT_VALUE: 'Weight should be from 20 to 300 kg.',
     WEIGHT_WRONG: 'Weight should consist of digits.',
     HEIGHT_WRONG: 'Height should consist of digits.',
-    HEIGHT_LENGTH: 'Height should have from 2 to 20 characters.',
+    HEIGHT_VALUE: 'Height should be from 20 to 300 sm.',
     USER_NOT_FOUND: 'User not found',
 } as const;
 

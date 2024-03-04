@@ -12,6 +12,7 @@ import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
     configureISOString,
+    getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppForm,
@@ -38,7 +39,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         user: auth.user,
     }));
 
-    const { control, errors, reset, getValues, setValue } =
+    const { control, errors, reset, setValue, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
@@ -48,38 +49,40 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     useEffect(() => {
         if (!valuesDefault && user) {
-            const { fullName, username, dateOfBirth, weight, height, gender } =
-                user;
-
-            setValue('fullName', fullName || '');
-            setValue('username', username || '');
-            setValue('dateOfBirth', configureDateString(dateOfBirth) || '');
-            setValue('weight', weight || '');
-            setValue('height', height || '');
-            setValue('gender', gender || '');
-
+            for (const key of getObjectKeys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
+                if (key === 'dateOfBirth' && user.dateOfBirth) {
+                    setValue(key, configureDateString(user.dateOfBirth));
+                } else {
+                    if (user[key]) {
+                        setValue(key, user[key]);
+                    } else {
+                        setValue(key, DEFAULT_UPDATE_PROFILE_PAYLOAD[key]);
+                    }
+                }
+            }
             setValuesDefault(true);
         }
     }, [user, setValue, valuesDefault]);
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            event_.preventDefault();
-            if (Object.keys(errors).length === 0) {
-                const payload: UserUpdateProfileRequestDto = {
-                    ...getValues(),
-                    weight: getValues().weight || null,
-                    height: getValues().height || null,
-                    dateOfBirth: getValues().dateOfBirth
-                        ? configureISOString(getValues().dateOfBirth || '')
-                        : null,
-                    fullName: (getValues().fullName || '').trim(),
-                    username: (getValues().username || '').trim(),
-                };
-                onSubmit(payload);
-            }
+            void handleSubmit((data) => {
+                if (Object.keys(errors).length === 0) {
+                    const payload: UserUpdateProfileRequestDto = {
+                        ...data,
+                        weight: data.weight || null,
+                        height: data.height || null,
+                        dateOfBirth: data.dateOfBirth
+                            ? configureISOString(data.dateOfBirth || '')
+                            : null,
+                        fullName: (data.fullName || '').trim(),
+                        username: (data.username || '').trim(),
+                    };
+                    onSubmit(payload);
+                }
+            })(event_);
         },
-        [onSubmit, getValues, reset, errors],
+        [handleSubmit, onSubmit, errors],
     );
 
     const handleReset = useCallback((): void => {

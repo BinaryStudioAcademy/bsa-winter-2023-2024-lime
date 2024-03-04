@@ -48,40 +48,40 @@ const userUpdateProfile = z
             z.literal(''),
         ]),
         weight: z.union([
-            z
-                .string()
+            z.coerce
+                .number()
+                .nullable()
                 .refine(
-                    (value) => value === '' || !Number.isNaN(Number(value)),
-                    {
-                        message: UserValidationMessage.WEIGHT_WRONG,
+                    (value) => {
+                        if (!value) {
+                            return true;
+                        }
+                        return (
+                            value >= UserValidationRule.WEIGHT.MIN_VALUE &&
+                            value <= UserValidationRule.WEIGHT.MAX_VALUE
+                        );
                     },
-                )
-                .refine(
-                    (value) =>
-                        value.length <= UserValidationRule.WEIGHT.MAX_LENGTH ||
-                        value.length >= UserValidationRule.WEIGHT.MIN_LENGTH,
                     {
-                        message: UserValidationMessage.WEIGHT_LENGTH,
+                        message: UserValidationMessage.WEIGHT_VALUE,
                     },
-                )
-                .nullable(),
+                ),
             z.literal(''),
         ]),
         height: z.union([
-            z
-                .string()
+            z.coerce
+                .number()
                 .refine(
-                    (value) => value === '' || !Number.isNaN(Number(value)),
-                    {
-                        message: UserValidationMessage.HEIGHT_WRONG,
+                    (value) => {
+                        if (!value) {
+                            return true;
+                        }
+                        return (
+                            value >= UserValidationRule.HEIGHT.MIN_VALUE &&
+                            value <= UserValidationRule.HEIGHT.MAX_VALUE
+                        );
                     },
-                )
-                .refine(
-                    (value) =>
-                        value.length <= UserValidationRule.HEIGHT.MAX_LENGTH ||
-                        value.length >= UserValidationRule.HEIGHT.MIN_LENGTH,
                     {
-                        message: UserValidationMessage.HEIGHT_LENGTH,
+                        message: UserValidationMessage.HEIGHT_VALUE,
                     },
                 )
                 .nullable(),
