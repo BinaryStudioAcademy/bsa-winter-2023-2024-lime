@@ -15,14 +15,14 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('[userDetails, userReferral]')
+            .withGraphFetched('[userDetails]')
             .execute();
 
         if (!user) {
             return null;
         }
 
-        const { userDetails, userReferral, ...userInfo } = user;
+        const { userDetails, ...userInfo } = user;
 
         return UserEntity.initialize({
             ...userInfo,
@@ -33,7 +33,7 @@ class UserRepository implements Repository {
             weight: userDetails.weight,
             height: userDetails.height,
             gender: userDetails.gender,
-            referralCode: userReferral.referralCode,
+            referralCode: userDetails.referralCode,
         });
     }
 
@@ -44,7 +44,7 @@ class UserRepository implements Repository {
             .execute();
 
         return users.map((user) => {
-            const { userDetails, userReferral, ...userInfo } = user;
+            const { userDetails, ...userInfo } = user;
 
             return UserEntity.initialize({
                 ...userInfo,
@@ -55,13 +55,13 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                referralCode: userReferral.referralCode,
+                referralCode: userDetails.referralCode,
             });
         });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordHash, referralCode } = entity.toNewObject();
+        const { email, passwordHash } = entity.toNewObject();
         const trx = await this.userModel.startTransaction();
 
         try {
@@ -80,21 +80,6 @@ class UserRepository implements Repository {
                 .returning('*')
                 .execute();
 
-            const referralCodeToInsert = crypto.randomUUID();
-            const referralUser = await user
-                .$relatedQuery('userReferral', trx)
-                .findOne({ referralCode })
-                .execute();
-
-            const userReferral = await user
-                .$relatedQuery('userReferral', trx)
-                .insert({
-                    referralCode: referralCodeToInsert,
-                    referralUserId: referralUser?.userId ?? null,
-                })
-                .returning('*')
-                .execute();
-
             await trx.commit();
 
             return UserEntity.initialize({
@@ -106,7 +91,7 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
-                referralCode: userReferral.referralCode,
+                referralCode: userDetails.referralCode,
             });
         } catch (error) {
             await trx.rollback();

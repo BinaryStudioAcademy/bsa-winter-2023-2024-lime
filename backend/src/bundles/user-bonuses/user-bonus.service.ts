@@ -1,32 +1,30 @@
 import { type Service } from '~/common/types/types.js';
 
-import { UserReferralEntity } from './user-referral.entity.js';
-import { type UserReferralRepository } from './user-referral.repository.js';
+import { UserBonusEntity } from './user-bonus.entity.js';
+import { type UserBonusRepository } from './user-bonus.repository.js';
 
-type UserReferralResponseItem = {
+type UserBonusResponseItem = {
     id: number;
     userId: number;
-    referralCode: string;
-    referralUserId: number | null;
-    balance: number;
-    referralsCount: number;
+    action: string;
+    amount: number;
 };
 
-class UserReferralService implements Service {
-    private referralTransactionRepository: UserReferralRepository;
+class UserBonusService implements Service {
+    private referralTransactionRepository: UserBonusRepository;
 
-    public constructor(referralTransactionRepository: UserReferralRepository) {
+    public constructor(referralTransactionRepository: UserBonusRepository) {
         this.referralTransactionRepository = referralTransactionRepository;
     }
 
     public async find(
         query: Record<string, unknown>,
-    ): Promise<UserReferralEntity | null> {
+    ): Promise<UserBonusEntity | null> {
         return await this.referralTransactionRepository.find(query);
     }
 
     public async findAll(): Promise<{
-        items: UserReferralResponseItem[];
+        items: UserBonusResponseItem[];
     }> {
         const items = await this.referralTransactionRepository.findAll();
 
@@ -37,23 +35,23 @@ class UserReferralService implements Service {
 
     public async create({
         userId,
-        referralUserId,
-        referralCode,
+        action,
+        amount,
     }: {
         userId: number;
-        referralUserId: number | null;
-        referralCode: string;
-    }): Promise<UserReferralResponseItem> {
+        action: string;
+        amount: number;
+    }): Promise<UserBonusResponseItem> {
         const referralTrnasaction =
             await this.referralTransactionRepository.create(
-                UserReferralEntity.initializeNew({
+                UserBonusEntity.initializeNew({
                     userId,
-                    referralUserId,
-                    referralCode,
+                    action,
+                    amount,
                 }),
             );
 
-        return referralTrnasaction.toObject() as UserReferralResponseItem;
+        return referralTrnasaction.toObject() as UserBonusResponseItem;
     }
 
     public update(): ReturnType<Service['update']> {
@@ -65,4 +63,4 @@ class UserReferralService implements Service {
     }
 }
 
-export { UserReferralService };
+export { UserBonusService };

@@ -1,8 +1,8 @@
 const UserReferralAttributes = {
     ID: 'id',
     USER_ID: 'userId',
-    REFERRAL_USER_ID: 'referralUserId',
-    REFERRAL_CODE: 'referralCode',
+    ACTION: 'action',
+    AMOUNT: 'amount',
 } as const;
 
 export { UserReferralAttributes };

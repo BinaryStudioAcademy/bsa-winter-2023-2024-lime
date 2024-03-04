@@ -6,7 +6,7 @@ enum DatabaseTableName {
     OAUTH_STATE = 'oauth_state',
     ACHIEVEMENTS = 'achievements',
     USER_ACHIEVEMENTS = 'user_achievements',
-    USER_REFERRAL = 'user_referral',
+    USER_BONUSES = 'user_bonuses',
 }
 
 export { DatabaseTableName };

@@ -9,19 +9,15 @@ import { UserAttributes } from '../users/enums/user-attributes.enum.js';
 import { UserModel } from '../users/user.model.js';
 import { UserReferralAttributes } from './enums/enums.js';
 
-class UserReferralModel extends AbstractModel {
+class UserBonusModel extends AbstractModel {
     public 'userId': number;
 
-    public 'referralUserId': number | null;
+    public 'action': string;
 
-    public 'referralCode': string;
-
-    public 'balance': number;
-
-    public 'referralsCount': number;
+    public 'amount': number;
 
     public static override get tableName(): string {
-        return DatabaseTableName.USER_REFERRAL;
+        return DatabaseTableName.USER_BONUSES;
     }
 
     public static override get relationMappings(): RelationMappings {
@@ -30,7 +26,7 @@ class UserReferralModel extends AbstractModel {
                 relation: Model.BelongsToOneRelation,
                 modelClass: UserModel,
                 join: {
-                    from: `${DatabaseTableName.USER_REFERRAL}.${UserReferralAttributes.USER_ID}`,
+                    from: `${DatabaseTableName.USER_BONUSES}.${UserReferralAttributes.USER_ID}`,
                     to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },
@@ -38,4 +34,4 @@ class UserReferralModel extends AbstractModel {
     }
 }
 
-export { UserReferralModel };
+export { UserBonusModel };
