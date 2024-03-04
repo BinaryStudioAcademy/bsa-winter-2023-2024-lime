@@ -47,6 +47,7 @@ const Checkbox = <T extends FieldValues>({
                         name={name}
                         type="checkbox"
                         id="toggle-checkbox"
+                        aria-label="Toggle Checkbox"
                         className={getValidClassNames(
                             classes.baseCheckbox,
                             classes.Checkboxchecked,

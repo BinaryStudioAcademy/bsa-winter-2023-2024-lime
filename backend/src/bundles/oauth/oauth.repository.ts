@@ -1,5 +1,6 @@
 import { type Repository } from '~/common/types/types.js';
 
+import { RowsNumber } from './enums/enums.js';
 import { OAuthEntity } from './oauth.entity.js';
 import { type OAuthModel } from './oauth.model.js';
 
@@ -75,7 +76,7 @@ class OAuthRepository implements Repository {
     public async delete(query: Record<string, unknown>): Promise<boolean> {
         const deletedRows = await this.oAuthModel.query().where(query).delete();
 
-        return deletedRows > 0;
+        return deletedRows > RowsNumber.MINIMUM_DELETED;
     }
 }
 
