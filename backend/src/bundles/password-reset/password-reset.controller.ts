@@ -44,7 +44,7 @@ class PasswordResetController extends BaseController {
         });
         this.addRoute({
             path: PasswordResetApiPath.RESET_PASSWORD,
-            method: 'POST',
+            method: 'PUT',
             validation: {
                 body: passwordResetValidationSchema,
             },
