@@ -10,6 +10,7 @@ import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
+import { notificationApi } from '~/bundles/notifications/notifications.js';
 import { reducer as notificationsReducer } from '~/bundles/notifications/store/slice.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
@@ -40,6 +41,7 @@ type ExtraArguments = {
     subscriptionPlansApi: typeof subscriptionPlansApi;
     subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
+    notificationApi: typeof notificationApi;
 };
 
 class Store {
@@ -79,6 +81,7 @@ class Store {
             subscriptionApi,
             subscriptionPlansApi,
             passwordResetApi,
+            notificationApi,
         };
     }
 }
