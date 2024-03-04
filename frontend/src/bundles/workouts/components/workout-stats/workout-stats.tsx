@@ -1,8 +1,10 @@
 import {
+    capitalizeFirstLetter,
     convertSecondsToHMS,
     getValidClassNames,
     metersToKilometers,
 } from '~/bundles/common/helpers/helpers.js';
+import { WorkoutUnit } from '~/bundles/workouts/enums/enums.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 type Properties = {
@@ -13,7 +15,9 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
     const { duration, distance, steps, kilocalories, heartRate, id } = workout;
 
     const workoutDistance = steps ?? metersToKilometers(distance);
-    const distanceUnit = steps ? 'Steps' : 'km';
+    const distanceUnit = steps
+        ? capitalizeFirstLetter(WorkoutUnit.STEPS)
+        : WorkoutUnit.KILOMETERS;
 
     const [hours, minutes, seconds] = convertSecondsToHMS(duration);
 
@@ -49,21 +53,31 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
                 <div className="flex gap-8">
                     <p>
                         <span className={styles.metrics}>{hours}</span>
-                        <span className={styles.units}>h</span>{' '}
+                        <span className={styles.units}>
+                            {WorkoutUnit.HOURS}
+                        </span>{' '}
                         <span className={styles.metrics}>{minutes}</span>
-                        <span className={styles.units}>m</span>{' '}
+                        <span className={styles.units}>
+                            {WorkoutUnit.MINUTES}
+                        </span>{' '}
                         <span className={styles.metrics}>{seconds}</span>
-                        <span className={styles.units}>s</span>
+                        <span className={styles.units}>
+                            {WorkoutUnit.SECONDS}
+                        </span>
                     </p>
 
                     <p>
                         <span className={styles.metrics}>{kilocalories}</span>{' '}
-                        <span className={styles.units}>kcal</span>
+                        <span className={styles.units}>
+                            {WorkoutUnit.KILOCALORIES}
+                        </span>
                     </p>
 
                     <p>
                         <span className={styles.metrics}>{heartRate}</span>{' '}
-                        <span className={styles.units}>bpm</span>
+                        <span className={styles.units}>
+                            {WorkoutUnit.BEATS_PER_MINUTE}
+                        </span>
                     </p>
                 </div>
             </div>
