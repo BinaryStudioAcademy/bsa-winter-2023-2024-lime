@@ -5,7 +5,7 @@ const WorkoutUnit = {
     MINUTES: 'm',
     SECONDS: 's',
     KILOCALORIES: 'kcal',
-    BEATS_PER_MINUTE: 'bpm'
+    BEATS_PER_MINUTE: 'bpm',
 } as const;
 
 export { WorkoutUnit };

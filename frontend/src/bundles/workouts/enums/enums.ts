@@ -1,2 +1,2 @@
-export { WorkoutUnit } from './workout-unit.enam.js';
+export { WorkoutUnit } from './workout-unit.enum.js';
 export { WorkoutsApiPath } from 'shared';
