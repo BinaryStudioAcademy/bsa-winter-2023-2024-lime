@@ -67,7 +67,7 @@ const Workout: React.FC = () => {
                         {workouts.length > 0 ? (
                             <WorkoutItem />
                         ) : (
-                            <p className="text-md text-white">
+                            <p className="text-md text-center text-white">
                                 You don&#39;t have any workouts yet
                             </p>
                         )}
