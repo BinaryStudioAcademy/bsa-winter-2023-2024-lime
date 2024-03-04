@@ -67,19 +67,17 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit((data) => {
-                if (Object.keys(errors).length === 0) {
-                    const payload: UserUpdateProfileRequestDto = {
-                        ...data,
-                        weight: data.weight || null,
-                        height: data.height || null,
-                        dateOfBirth: data.dateOfBirth
-                            ? configureISOString(data.dateOfBirth || '')
-                            : null,
-                        fullName: (data.fullName || '').trim(),
-                        username: (data.username || '').trim(),
-                    };
-                    onSubmit(payload);
-                }
+                const payload: UserUpdateProfileRequestDto = {
+                    ...data,
+                    weight: data.weight || null,
+                    height: data.height || null,
+                    dateOfBirth: data.dateOfBirth
+                        ? configureISOString(data.dateOfBirth || '')
+                        : null,
+                    fullName: (data.fullName || '').trim(),
+                    username: (data.username || '').trim(),
+                };
+                onSubmit(payload);
             })(event_);
         },
         [handleSubmit, onSubmit, errors],

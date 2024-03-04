@@ -20,11 +20,11 @@ const UserValidationRule = {
         MAX_LENGTH: 30,
     },
     WEIGHT: {
-        MIN_VALUE: 0,
+        MIN_VALUE: 1,
         MAX_VALUE: 300,
     },
     HEIGHT: {
-        MIN_VALUE: 0,
+        MIN_VALUE: 1,
         MAX_VALUE: 300,
     },
 } as const;

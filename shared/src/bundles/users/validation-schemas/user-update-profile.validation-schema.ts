@@ -57,7 +57,7 @@ const userUpdateProfile = z
                             return true;
                         }
                         return (
-                            value > UserValidationRule.WEIGHT.MIN_VALUE &&
+                            value >= UserValidationRule.WEIGHT.MIN_VALUE &&
                             value <= UserValidationRule.WEIGHT.MAX_VALUE
                         );
                     },
@@ -76,7 +76,7 @@ const userUpdateProfile = z
                             return true;
                         }
                         return (
-                            value > UserValidationRule.HEIGHT.MIN_VALUE &&
+                            value >= UserValidationRule.HEIGHT.MIN_VALUE &&
                             value <= UserValidationRule.HEIGHT.MAX_VALUE
                         );
                     },
@@ -87,11 +87,7 @@ const userUpdateProfile = z
                 .nullable(),
             z.literal(''),
         ]),
-        gender: z.union([
-            z.literal('male'),
-            z.literal('female'),
-            z.literal('prefer not to say'),
-        ]),
+        gender: z.enum(['male', 'female', 'prefer not to say']),
     })
     .required();
 
