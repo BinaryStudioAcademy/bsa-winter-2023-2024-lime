@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 
 import reactPlugin from '@vitejs/plugin-react';
-import { type ConfigEnv, defineConfig, loadEnv, PluginOption } from 'vite';
+import { type ConfigEnv, type PluginOption, defineConfig, loadEnv } from 'vite';
 import { type VitePWAOptions, VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 
@@ -55,10 +55,10 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
             outDir: 'build',
         },
         plugins: [
-            reactPlugin() as PluginOption,
-            VitePWA(manifestForPlugin) as unknown as Plugin,
-            svgr() as Plugin,
-        ],
+            reactPlugin(),
+            VitePWA(manifestForPlugin),
+            svgr(),
+        ] as PluginOption[],
         server: {
             port: Number(VITE_APP_DEVELOPMENT_PORT),
             proxy: {
