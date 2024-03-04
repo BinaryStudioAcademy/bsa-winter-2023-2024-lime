@@ -33,7 +33,7 @@ const Workout: React.FC = () => {
     useEffect(() => {
         const firstWorkoutId = workouts[0]?.id;
 
-        if (!id) {
+        if (!id && firstWorkoutId) {
             navigate(`${AppRoute.WORKOUT}/${firstWorkoutId}`);
         }
     }, [id, navigate, workouts]);
