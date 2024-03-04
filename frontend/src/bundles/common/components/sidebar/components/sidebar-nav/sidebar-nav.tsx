@@ -6,7 +6,6 @@ import {
 import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/helpers.js';
 import { type AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 type SidebarNavProperties = {
@@ -22,11 +21,6 @@ const SidebarNav = ({
     icon,
     isActive = false,
 }: SidebarNavProperties): JSX.Element => {
-    const navigate = useNavigate();
-    const handleNavigation = useCallback((): void => {
-        navigate(to);
-    }, [navigate, to]);
-
     const classes = {
         active: 'text-lm-black-100 hover:text-lm-black-200',
         inactive: 'text-lm-grey-200 hover:text-lm-black-400',
@@ -47,7 +41,6 @@ const SidebarNav = ({
                 )}
                 leftIcon={enhacedIcon}
                 variant={ButtonVariant.SIDEBAR}
-                onClick={handleNavigation}
                 isActive={isActive}
                 size={ComponentSize.MEDIUM}
             />

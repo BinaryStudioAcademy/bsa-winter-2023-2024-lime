@@ -45,4 +45,6 @@ jobs:
                   application_name: ${{ env.EBS_APP_NAME }}
                   environment_name: ${{ env.ENVIRONMENT }}
                   version_label: ${{ github.sha }}
+                  use_existing_version_if_available: true
                   deployment_package: ./build.zip
+                  wait_for_environment_recovery: 300

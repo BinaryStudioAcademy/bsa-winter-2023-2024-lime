@@ -9,6 +9,8 @@ const IconName = {
     facebookIcon: 'facebookIcon',
     workoutIcon: 'workoutIcon',
     messageIcon: 'messageIcon',
+    caloriesIcon: 'caloriesIcon',
+    stepsIcon: 'stepsIcon',
 } as const;
 
 export { IconName };

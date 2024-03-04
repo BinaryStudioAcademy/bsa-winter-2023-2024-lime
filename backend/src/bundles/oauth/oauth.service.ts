@@ -169,8 +169,10 @@ class OAuthService {
         provider: ValueOf<typeof OAuthProvider>,
         userId: number,
     ): Promise<void> {
-        const oAuthEntity = await this.oAuthRepository.find({ userId });
-
+        const oAuthEntity = await this.oAuthRepository.find({
+            userId,
+            provider,
+        });
         if (!oAuthEntity) {
             throw new HttpError({
                 status: HttpCode.BAD_REQUEST,
@@ -179,10 +181,9 @@ class OAuthService {
         }
 
         const strategy = this.getStrategy(provider);
-
         await strategy.deauthorize(oAuthEntity);
 
-        await this.oAuthRepository.delete({ userId });
+        await this.oAuthRepository.delete({ userId, provider });
     }
 }
 
