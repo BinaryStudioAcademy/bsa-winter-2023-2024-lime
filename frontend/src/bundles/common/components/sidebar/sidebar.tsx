@@ -5,11 +5,14 @@ import {
     Squares2X2Icon as OverviewIcon,
 } from '@heroicons/react/24/outline';
 
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import { IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/add-size-hero-icons.js';
 import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
+    useAppDispatch,
+    useCallback,
     useEffect,
     useLocation,
     useState,
@@ -20,7 +23,6 @@ import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
 
 type Properties = {
     isOpen?: boolean;
-    openModal: () => void;
 };
 
 const styles = {
@@ -29,12 +31,18 @@ const styles = {
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({ isOpen = true, openModal }: Properties): JSX.Element => {
+const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute, setActiveRoute] = useState(pathname);
 
     const [sidebarStyle, setSidebarStyle] = useState({});
+
+    const dispatch = useAppDispatch();
+
+    const handleLogout = useCallback((): void => {
+        void dispatch(authActions.logout());
+    }, [dispatch]);
 
     useEffect(() => {
         setActiveRoute(pathname);
@@ -102,7 +110,7 @@ const Sidebar = ({ isOpen = true, openModal }: Properties): JSX.Element => {
                             })}
                             variant={ButtonVariant.SIDEBAR}
                             size={ComponentSize.MEDIUM}
-                            onClick={openModal}
+                            onClick={handleLogout}
                         />
                     </div>
                 </div>
