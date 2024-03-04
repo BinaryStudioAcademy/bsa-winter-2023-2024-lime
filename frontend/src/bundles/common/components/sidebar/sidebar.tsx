@@ -6,7 +6,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { IconName } from '~/bundles/common/components/icon/enums/enums.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/add-size-hero-icons.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useEffect,
@@ -14,11 +15,12 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { Icon } from '../components.js';
+import { Button, ButtonVariant, Icon } from '../components.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
 
 type Properties = {
     isOpen?: boolean;
+    openModal: () => void;
 };
 
 const styles = {
@@ -27,7 +29,7 @@ const styles = {
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
+const Sidebar = ({ isOpen = true, openModal }: Properties): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute, setActiveRoute] = useState(pathname);
@@ -89,11 +91,20 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         to={AppRoute.HELP}
                         isActive={activeRoute === AppRoute.HELP}
                     />
-                    <SidebarNav
-                        icon={<LogoutIcon />}
-                        text="Logout"
-                        to={AppRoute.LOGOUT}
-                    />
+
+                    <div className="flex items-center justify-center">
+                        <Button
+                            type="button"
+                            label={'Logout'}
+                            leftIcon={addSizePropertyHeroIcons({
+                                icon: <LogoutIcon />,
+                                size: ComponentSize.MEDIUM,
+                            })}
+                            variant={ButtonVariant.SIDEBAR}
+                            size={ComponentSize.MEDIUM}
+                            onClick={openModal}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
