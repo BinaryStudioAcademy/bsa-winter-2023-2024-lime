@@ -44,7 +44,7 @@ class PasswordResetApi extends BaseHttpApi {
         const response = await this.load(
             this.getFullEndpoint(PasswordResetApiPath.RESET_PASSWORD, {}),
             {
-                method: 'POST',
+                method: 'PUT',
                 contentType: ContentType.JSON,
                 payload: JSON.stringify(payload),
                 hasAuth: false,
