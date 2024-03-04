@@ -1,3 +1,4 @@
+import { AchievementsApiPath } from '~/bundles/achievements/enums/enums.js';
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
@@ -17,11 +18,14 @@ class AchievementsApi extends BaseHttpApi {
     }
 
     public async getAchievements(): Promise<AchievementResponseDto[]> {
-        const response = await this.load(this.getFullEndpoint('/', {}), {
-            method: 'GET',
-            contentType: ContentType.JSON,
-            hasAuth: true,
-        });
+        const response = await this.load(
+            this.getFullEndpoint(AchievementsApiPath.ROOT, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
         return await response.json<AchievementResponseDto[]>();
     }
 }
