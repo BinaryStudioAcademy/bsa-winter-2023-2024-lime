@@ -82,7 +82,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             </div>
 
             <div className="flex h-1/4 w-full">
-                <div className="flex w-full flex-col justify-center gap-3">
+                <div className="flex w-full flex-col justify-end gap-3">
                     <SidebarNav
                         icon={<HelpIcon />}
                         text="Help"

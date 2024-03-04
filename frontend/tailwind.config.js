@@ -112,6 +112,9 @@ export default {
             minHeight: {
                 '90': 'calc(100vh - 5.5rem)',
             },
+            maxHeight: {
+                '90': 'calc(100vh - 5.5rem)',
+            },
             spacing: {
                 '60': '3.75rem',
             },
