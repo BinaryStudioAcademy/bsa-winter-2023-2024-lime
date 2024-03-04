@@ -5,14 +5,15 @@ import {
     Select,
 } from '~/bundles/common/components/components.js';
 import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { ComponentSize, GoalFrequency } from '~/bundles/common/enums/enums.js';
 import { capitalizeString } from '~/bundles/common/helpers/helpers.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
+import {
+    type CreateGoalRequest,
+    type ValueOf,
+} from '~/bundles/common/types/types.js';
 import { ActivityType } from '~/bundles/goals/enums/enums.js';
 
-import { GoalFrequency } from './enums/enums.js';
-import { type CreateGoalRequest } from './types/types.js';
 import { goalValidationSchema } from './validation-schemas/goal.validation-schema.js';
 
 type Properties = {

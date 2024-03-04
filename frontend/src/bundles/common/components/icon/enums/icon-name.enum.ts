@@ -10,6 +10,9 @@ const IconName = {
     workoutIcon: 'workoutIcon',
     caloriesIcon: 'caloriesIcon',
     stepsIcon: 'stepsIcon',
+    cyclingIcon: 'cyclingIcon',
+    runningIcon: 'runningIcon',
+    walkingIcon: 'walkingIcon',
 } as const;
 
 export { IconName };

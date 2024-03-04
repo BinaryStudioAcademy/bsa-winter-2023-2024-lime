@@ -14,7 +14,7 @@ const AchievementCard: React.FC<Properties> = ({
         <div className="bg-lm-black-100 flex h-[4.125rem] items-center justify-between rounded-lg p-4 lg:w-80">
             <div className="flex gap-2">
                 <ActivityIcon
-                    activity={achievement.activityType}
+                    activityType={achievement.activityType}
                     size={ComponentSize.SMALL}
                 />
                 <div>

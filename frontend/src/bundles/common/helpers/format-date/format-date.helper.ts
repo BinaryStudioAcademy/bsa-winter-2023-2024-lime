@@ -1,6 +1,8 @@
 import { DateObject } from 'react-multi-date-picker';
 
-import { DateFormat } from '~/bundles/common/enums/enums.js';
+const DateFormat = {
+    FULL_DAY: 'dddd, MMMM DD | HH:mm A',
+} as const;
 
 const formatDate = (date: string): string => {
     const convertedDate = new DateObject(date);

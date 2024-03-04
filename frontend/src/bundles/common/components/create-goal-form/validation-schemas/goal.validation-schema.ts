@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
+import { GoalFrequency } from '~/bundles/common/enums/enums.js';
 import { ActivityType } from '~/bundles/goals/enums/enums.js';
-
-import { GoalFrequency } from '../enums/enums.js';
 
 type GoalRequestValidation = {
     activity: z.ZodNativeEnum<typeof ActivityType>;

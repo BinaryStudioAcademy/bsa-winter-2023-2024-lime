@@ -9,7 +9,6 @@ import {
     ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { CreateGoalForm } from '~/bundles/common/components/create-goal-form/create-goal-form.js';
-import { type CreateGoalRequest } from '~/bundles/common/components/create-goal-form/types/types.js';
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
@@ -21,7 +20,10 @@ import {
     useEffect,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
+import {
+    type CreateGoalRequest,
+    type ValueOf,
+} from '~/bundles/common/types/types.js';
 import { GoalCard } from '~/bundles/goals/components/components.js';
 import { GOALS_MESSAGES } from '~/bundles/goals/constants/goals-messages.js';
 import {
@@ -130,7 +132,7 @@ const Goals: React.FC = () => {
                                 hasAchievement={Boolean(lastGoal)}
                             />
                         </section>
-                        <section className="overflow-y-auto overflow-x-hidden">
+                        <section>
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                 Goals
                             </h2>
@@ -141,7 +143,7 @@ const Goals: React.FC = () => {
                                     </p>
                                 )}
 
-                                {goals?.length &&
+                                {goals?.length > ZERO_VALUE &&
                                     goals.map(
                                         ({
                                             id,
@@ -152,7 +154,7 @@ const Goals: React.FC = () => {
                                         }) => (
                                             <GoalCard
                                                 key={id}
-                                                activity={activityType}
+                                                activityType={activityType}
                                                 frequency={frequency}
                                                 frequencyType={frequencyType}
                                                 progress={progress}
@@ -174,13 +176,13 @@ const Goals: React.FC = () => {
                         </section>
                     </div>
 
-                    <section className="overflow-y-auto overflow-x-hidden">
+                    <section>
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                             Achievements
                         </h2>
 
-                        <div className="flex w-full flex-col gap-4 overflow-y-auto">
-                            {achievements?.length &&
+                        <div className="flex w-full flex-col gap-4">
+                            {achievements?.length > ZERO_VALUE &&
                                 achievements.map((achievement) => (
                                     <AchievementCard
                                         key={achievement.id}
