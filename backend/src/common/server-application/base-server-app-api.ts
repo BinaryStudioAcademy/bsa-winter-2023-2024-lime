@@ -42,7 +42,7 @@ class BaseServerAppApi implements ServerAppApi {
             definition: {
                 openapi: '3.0.0',
                 info: {
-                    title: 'Hello World',
+                    title: 'LIME API Documentation',
                     version: `${this.version}.0.0`,
                 },
                 components: {
@@ -50,7 +50,7 @@ class BaseServerAppApi implements ServerAppApi {
                         bearerAuth: {
                             bearerFormat: 'JWT',
                             scheme: 'bearer',
-                            type: 'http',
+                            type: 'https',
                         },
                     },
                 },

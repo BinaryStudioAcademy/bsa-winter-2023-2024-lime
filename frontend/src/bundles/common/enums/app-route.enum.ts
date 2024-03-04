@@ -9,7 +9,6 @@ const AppRoute = {
     GOALS: '/goals',
     WORKOUT: '/workout',
     SCHEDULE: '/schedule',
-    PROFILE: '/profile',
     PROFILE_INFORMATION: '/profile/information',
     PROFILE_GOALS: '/profile/goals',
     PROFILE_PREFERENCES: '/profile/preferences',
