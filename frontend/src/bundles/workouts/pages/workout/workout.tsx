@@ -63,7 +63,15 @@ const Workout: React.FC = () => {
                     />
                     <div className="border-lm-black-400 h-full border"></div>
 
-                    {workouts.length > 0 ? <WorkoutItem /> : 'No workouts'}
+                    <div className="w-full max-w-[50rem] px-[1.5rem]">
+                        {workouts.length > 0 ? (
+                            <WorkoutItem />
+                        ) : (
+                            <p className="text-md text-white">
+                                You don&#39;t have any workouts yet
+                            </p>
+                        )}
+                    </div>
                 </div>
             )}
         </section>

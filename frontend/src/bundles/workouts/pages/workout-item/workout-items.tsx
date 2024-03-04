@@ -21,11 +21,11 @@ const WorkoutItem = (): JSX.Element => {
     }
 
     return (
-        <div className="w-full max-w-[50rem] px-[1.5rem]">
+        <>
             <WorkoutTitle workout={currentWorkout} />
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
-        </div>
+        </>
     );
 };
 
