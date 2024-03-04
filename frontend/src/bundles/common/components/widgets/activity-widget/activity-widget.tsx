@@ -21,7 +21,7 @@ const ActivityWidget = ({
     icon,
 }: Properties): JSX.Element => {
     const classes = {
-        base: 'h-[10.5rem] rounded-[0.5rem] text-white p-[1rem] flex gap-[1rem] bg-no-repeat bg-bottom',
+        base: 'h-[10.5rem] rounded-[0.5rem] text-white p-[1rem] flex gap-[1rem] bg-no-repeat bg-contain bg-bottom min-w-[168px]',
         icon: 'h-[2.5rem] w-[2.5rem] rounded-[0.25rem] flex items-center justify-center',
     };
 
