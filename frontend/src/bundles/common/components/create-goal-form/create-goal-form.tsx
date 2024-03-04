@@ -4,58 +4,19 @@ import {
     Input,
     Select,
 } from '~/bundles/common/components/components.js';
-import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
-import { ComponentSize, GoalFrequency } from '~/bundles/common/enums/enums.js';
-import { capitalizeString } from '~/bundles/common/helpers/helpers.js';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import { DEFAULT_CREATE_GOAL_PAYLOAD } from '~/bundles/common/components/create-goal-form/constants/constants.js';
 import {
-    type CreateGoalRequest,
-    type ValueOf,
-} from '~/bundles/common/types/types.js';
-import { ActivityType } from '~/bundles/goals/enums/enums.js';
-
-import { goalValidationSchema } from './validation-schemas/goal.validation-schema.js';
+    setGoalActivityOptions,
+    setGoalFrequencyOpitons,
+} from '~/bundles/common/components/create-goal-form/helpers/helpers.js';
+import { goalValidationSchema } from '~/bundles/common/components/create-goal-form/validation-schemas/goal.validation-schema.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import { type CreateGoalRequest } from '~/bundles/common/types/types.js';
 
 type Properties = {
     onSubmit: (payload: CreateGoalRequest) => void;
     isLoading: boolean;
-};
-
-const goalActivityToLabel: Record<ValueOf<typeof ActivityType>, string> = {
-    [ActivityType.WALKING]: ActivityType.WALKING,
-    [ActivityType.RUNNING]: ActivityType.RUNNING,
-    [ActivityType.CYCLING]: ActivityType.CYCLING,
-};
-
-const goalActivityOptions: SelectOption[] = Object.entries(
-    goalActivityToLabel,
-).map(([value, label]) => ({
-    value,
-    label: capitalizeString(label),
-}));
-
-const goalFrequencyToLabel: Record<ValueOf<typeof GoalFrequency>, string> = {
-    [GoalFrequency.ONE_PER_DAY]: '1 time a day',
-    [GoalFrequency.TWO_PER_DAY]: '2 times a day',
-    [GoalFrequency.ONE_PER_WEEK]: '1 time per week',
-    [GoalFrequency.TWO_PER_WEEK]: '2 times per week',
-    [GoalFrequency.THREE_PER_WEEK]: '3 times per week',
-    [GoalFrequency.FIVE_PER_WEEK]: '5 times per week',
-    [GoalFrequency.SEVEN_PER_WEEK]: '7 times per week',
-};
-
-const goalFrequencyOpitons: SelectOption[] = Object.entries(
-    goalFrequencyToLabel,
-).map(([value, label]) => ({
-    value,
-    label,
-}));
-
-const DEFAULT_CREATE_GOAL_PAYLOAD = {
-    activity: goalActivityOptions[0]?.value as string,
-    frequency: goalFrequencyOpitons[0]?.value as string,
-    distance: '',
-    duration: '',
 };
 
 const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
@@ -83,7 +44,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     name="activity"
                     control={control}
                     errors={errors}
-                    options={goalActivityOptions}
+                    options={setGoalActivityOptions}
                     isDisabled={isLoading}
                     required
                 />
@@ -93,7 +54,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     name="frequency"
                     control={control}
                     errors={errors}
-                    options={goalFrequencyOpitons}
+                    options={setGoalFrequencyOpitons}
                     isDisabled={isLoading}
                     required
                 />
