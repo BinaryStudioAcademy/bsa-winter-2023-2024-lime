@@ -1,7 +1,6 @@
 export { ErrorMessage } from './error-message.enum.js';
 export { OAuthInfoAttributes } from './oauth-info-attributes.enum.js';
 export { OAuthStateAttributes } from './oauth-state-attributes.js';
-export { RowsNumber } from './rows-number.enum.js';
 export {
     ApiPath,
     ConnectionsPath,

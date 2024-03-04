@@ -33,7 +33,7 @@ function ThemeSwitcher({ className }: Properties): JSX.Element {
         <>
             <div className={getValidClassNames(className)}>
                 <Switch
-                    checked={theme === Theme.DARK ? true : false}
+                    checked={theme === Theme.DARK}
                     onChange={toggleTheme}
                     size={64}
                 />
