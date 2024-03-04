@@ -19,9 +19,9 @@ type CircularProgressProperties = {
 
 const classes = {
     svgBase:
-        'rounded-sm fill-transparent transition-all duration-1000 ease-in-out transform',
-    innerTextTop: 'inline-flex font-extrabold',
-    innerTextBottom: 'inline-flex font-normal',
+        'rounded-sm fill-transparent transition-all duration-1000 ease-in-out transform w-[7.5rem]',
+    innerTextTop: 'inline-flex font-extrabold text-[2.5rem] font-gilroyBold',
+    innerTextBottom: 'inline-flex font-normal text-[1.5rem] font-gilroyLight',
 };
 
 const CircleProgress = ({
@@ -33,16 +33,16 @@ const CircleProgress = ({
 }: CircularProgressProperties): JSX.Element => {
     const { radius, stroke, fontSize } = CircularProgressSizes[size];
     const { baseCircleClass, progressCircleClass } = color;
-    const innerRadius = radius - stroke * 2;
-    const circumference = innerRadius * 2 * Math.PI;
+    const outerRadius = radius + stroke;
+    const circumference = radius * 2 * Math.PI;
     const progressCircleOffset =
         circumference - (value / target) * circumference;
 
     return (
         <div className="relative flex items-center justify-center">
             <svg
-                height={radius * 2}
-                width={radius * 2}
+                height={outerRadius * 2}
+                width={outerRadius * 2}
                 style={{ transform: 'rotate(90deg)' }}
             >
                 <circle
@@ -51,9 +51,9 @@ const CircleProgress = ({
                         baseCircleClass,
                     )}
                     strokeWidth={stroke}
-                    r={innerRadius}
-                    cx={radius}
-                    cy={radius}
+                    r={radius}
+                    cx={radius + stroke}
+                    cy={radius + stroke}
                 />
                 <circle
                     className={getValidClassNames(
@@ -64,9 +64,9 @@ const CircleProgress = ({
                     strokeDasharray={circumference + ' ' + circumference}
                     style={{ strokeDashoffset: progressCircleOffset }}
                     strokeLinecap="round"
-                    r={innerRadius}
-                    cx={radius}
-                    cy={radius}
+                    r={radius}
+                    cx={radius + stroke}
+                    cy={radius + stroke}
                 />
             </svg>
             <div className="absolute text-white">
@@ -80,7 +80,7 @@ const CircleProgress = ({
                         >
                             {value}
                         </p>
-                        <p className="inline-flex font-normal">/{target}</p>
+                        <p className={classes.innerTextBottom}>/{target}</p>
                     </>
                 )}
                 {goalType === GoalTypes.STANDART && (

@@ -87,6 +87,8 @@ export default {
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+                gilroyLight: ['Gilroy-Light', ...defaultTheme.fontFamily.sans],
+                gilroyBold: ['Gilroy-Bold', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
