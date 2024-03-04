@@ -41,11 +41,11 @@ const GoalWidget = ({
                 )}
             </div>
             <div className="flex w-3/6 items-center justify-end p-4">
-                <div className="text-primary flex w-2/4 justify-end">
+                <div className="text-primary flex w-2/4 justify-end text-white">
                     {goalType === GoalTypes.OVERVIEW && (
                         <Icon name="workoutIcon" size="lg" />
                     )}
-                    <p className="text-md font-extrabold">{rightTitle}</p>
+                    <p className="text-md font-extrabold ">{rightTitle}</p>
                 </div>
                 <div className="flex w-2/4 items-center justify-center">
                     <CircleProgress

@@ -14,6 +14,7 @@
     /* BACKGROUND */
     --background-primary: rgb(255 255 255); /* White */
     --background-secondary: rgb(243 243 243); /* #F3F3F3 */
+    --background-schedule: rgb(241 255 202); /* lm-grey-500 */
 
     /* BORDER */
     --border-primary: rgb(28 34 39); /* lm-black-200 */
@@ -22,6 +23,16 @@
     /* RING */
     --ring-primary: rgb(28 34 39); /* lm-black-200 */
     --ring-inactive: rgb(255 255 255); /* #B2C0D3 */
+
+    /* GRADIENTS */
+    --gradient-goal-widget: linear-gradient(
+        89.83deg,
+        rgb(224 254 16) 24.5%,
+        rgb(178 202 13) 125.23%
+    );
+
+    /* STROKE */
+    --stroke-progress-base-bg: rgb(178 202 13);
 }
 
 .dark {
@@ -39,6 +50,7 @@
     /* BACKGROUND */
     --background-primary: rgb(42 47 55); /* lm-black-100 */
     --background-secondary: rgb(28 34 39); /* lm-black-200 */
+    --background-schedule: rgb(56 63 74); /* lm-grey-500 */
 
     /* BORDER */
     --border-primary: rgb(255 255 255); /* White */
@@ -47,4 +59,14 @@
     /* RING */
     --ring-primary: rgb(255 255 255); /* White */
     --ring-inactive: rgb(30 30 44); /* lm-blue-500 */
+
+    /* GRADIENTS */
+    --gradient-goal-widget: linear-gradient(
+        89.83deg,
+        rgb(224 254 16) 36.42%,
+        rgb(224 254 16 / 0%) 125.23%
+    );
+
+    /* STROKE */
+    --stroke-progress-base-bg: rgb(28 34 39); /* White */
 }

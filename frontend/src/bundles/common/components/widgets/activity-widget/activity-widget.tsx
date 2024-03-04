@@ -60,10 +60,12 @@ const ActivityWidget = ({
                     {icon}
                 </div>
                 <div>
-                    <h3 className="text-base font-extrabold leading-5">
+                    <h3 className="text-base font-extrabold leading-5 text-white">
                         {label}
                     </h3>
-                    <h4 className="leading-1 text-xs font-normal">{value}</h4>
+                    <h4 className="leading-1 text-xs font-normal text-white">
+                        {value}
+                    </h4>
                 </div>
             </div>
         </>

@@ -42,7 +42,7 @@ const Card: React.FC<Properties> = ({ title, imageSrc, name, data, chip }) => {
                     </div>
                 </div>
 
-                <div className="rounded-30 bg-lm-grey-500 text-action px-2 py-1 text-xs font-semibold leading-3">
+                <div className="rounded-30 bg-schedule text-action px-2 py-1 text-xs font-semibold leading-3">
                     {chip}
                 </div>
             </div>
