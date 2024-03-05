@@ -32,19 +32,19 @@ import {
  *          activity:
  *            type: string || null
  *            enum:
- *              - CYCLING
- *              - RUNNING
- *              - WALKING
+ *              - cycling
+ *              - running
+ *              - walking
  *          requirement:
  *            type: number
  *            format:
  *          requirementMetric:
  *            type: string || null
  *            enum:
- *              - KM
- *              - MINUTES
- *              - STEPS
- *              - KCAL
+ *              - km
+ *              - minutes
+ *              - steps
+ *              - kcal
  */
 
 class AchievementController extends BaseController {
