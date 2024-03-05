@@ -13,6 +13,7 @@ import {
     useEffect,
     useLocation,
     useNavigate,
+    useSearchParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
@@ -33,6 +34,8 @@ const Auth: React.FC = () => {
     const { pathname } = useLocation();
 
     const navigate = useNavigate();
+
+    const [searchParameters] = useSearchParams();
 
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
@@ -63,9 +66,10 @@ const Auth: React.FC = () => {
             const { email, password } = payload;
             const signUpDTO: UserAuthRequestDto = { email, password };
 
-            void dispatch(authActions.signUp(signUpDTO));
+            const referralCode = searchParameters.get('referralCode');
+            void dispatch(authActions.signUp({ referralCode, signUpDTO }));
         },
-        [dispatch],
+        [dispatch, searchParameters],
     );
 
     const handleForgotPassword = useCallback(

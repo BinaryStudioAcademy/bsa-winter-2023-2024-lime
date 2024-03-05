@@ -12,11 +12,12 @@ import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
     AuthResponseDto,
-    UserAuthRequestDto,
+    { referralCode: string | null; signUpDTO: UserAuthRequestDto },
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
     const { authApi } = extra;
-    const response = await authApi.signUp(registerPayload);
+    const { referralCode, signUpDTO } = registerPayload;
+    const response = await authApi.signUp(referralCode, signUpDTO);
     if (response.token) {
         await storage.set(StorageKey.TOKEN, response.token);
     }

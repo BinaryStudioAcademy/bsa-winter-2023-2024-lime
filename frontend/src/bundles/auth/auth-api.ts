@@ -18,7 +18,10 @@ class AuthApi extends BaseHttpApi {
         super({ path: ApiPath.AUTH, baseUrl, http, storage });
     }
 
-    public async signUp(payload: UserAuthRequestDto): Promise<AuthResponseDto> {
+    public async signUp(
+        referralCode: string | null,
+        payload: UserAuthRequestDto,
+    ): Promise<AuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.SIGN_UP, {}),
             {
@@ -26,6 +29,7 @@ class AuthApi extends BaseHttpApi {
                 contentType: ContentType.JSON,
                 payload: JSON.stringify(payload),
                 hasAuth: false,
+                query: { referralCode },
             },
         );
 
