@@ -1,5 +1,5 @@
-enum HeightBreakpoint {
-    small = 734,
-}
+const HeightBreakpoint = {
+    small: 734,
+} as const;
 
 export { HeightBreakpoint };
