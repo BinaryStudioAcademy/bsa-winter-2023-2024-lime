@@ -1,6 +1,6 @@
+import { MINIMUM_DELETED_ROWS } from '~/common/constants/constants.js';
 import { type Repository } from '~/common/types/types.js';
 
-import { MINIMUM_DELETED_ROWS } from './constants/constants.js';
 import { OAuthEntity } from './oauth.entity.js';
 import { type OAuthModel } from './oauth.model.js';
 
