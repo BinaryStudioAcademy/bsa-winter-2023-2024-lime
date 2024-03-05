@@ -1,23 +1,44 @@
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
-import { useCallback, useState } from 'react';
 
 import { Button } from '~/bundles/common/components/components.js';
 import { type IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
+import {
+    useAppSelector,
+    useCallback,
+    useEffect,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
+import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
 
 type Properties = {
     title: string;
     description: string;
     iconName: ValueOf<typeof IconName>;
+    provider: ValueOf<typeof OAuthProvider>;
 };
 
 const ConnectionOption = ({
     title,
     description,
     iconName,
+    provider,
 }: Properties): JSX.Element => {
+    const { connections } = useAppSelector(({ connections }) => ({
+        dataStatus: connections.dataStatus,
+        connections: connections.connections,
+    }));
+
     const [isConnected, setIsConnected] = useState(false);
+
+    useEffect(() => {
+        const providerIsConnected = connections.find(
+            (connection) => connection.provider === provider,
+        );
+
+        setIsConnected(!!providerIsConnected);
+    }, [connections, provider]);
 
     const handleClick = useCallback((): void => {
         setIsConnected(!isConnected);

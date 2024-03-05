@@ -12,6 +12,8 @@ import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
+import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
+import { reducer as connectionsReducer } from '~/bundles/profile/pages/connections-page/store/connections.js';
 import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';
 import {
     subscriptionApi,
@@ -30,6 +32,7 @@ type RootReducer = {
     users: ReturnType<typeof usersReducer>;
     subscriptions: ReturnType<typeof subscriptionsReducer>;
     theme: ReturnType<typeof themeReducer>;
+    connections: ReturnType<typeof connectionsReducer>;
 };
 
 type ExtraArguments = {
@@ -38,6 +41,7 @@ type ExtraArguments = {
     subscriptionPlansApi: typeof subscriptionPlansApi;
     subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
+    connectionApi: typeof connectionApi;
 };
 
 class Store {
@@ -59,6 +63,7 @@ class Store {
                 users: usersReducer,
                 subscriptions: subscriptionsReducer,
                 theme: themeReducer,
+                connections: connectionsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -76,6 +81,7 @@ class Store {
             subscriptionApi,
             subscriptionPlansApi,
             passwordResetApi,
+            connectionApi,
         };
     }
 }

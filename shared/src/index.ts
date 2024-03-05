@@ -1,6 +1,9 @@
 export { Metric } from './bundles/achievements/enums/enums.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
-export { ConnectionsPath } from './bundles/connections/connections.js';
+export {
+    type ConnectionGetAllItemResponseDto,
+    ConnectionsPath,
+} from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export {
     type GoalRequestDto,
