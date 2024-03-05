@@ -1,14 +1,19 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable import/no-duplicates */
-/* eslint-disable import/no-named-as-default */
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { useCallback, useRef, useState } from 'react';
-import type Crop from 'react-image-crop';
-import type PercentCrop from 'react-image-crop';
-import ReactCrop from 'react-image-crop';
-import makeAspectCrop from 'react-image-crop';
-import centerCrop from 'react-image-crop';
+// eslint-disable-next-line import/no-named-as-default
+import ReactCrop, {
+    //@ts-expect-error: it does not let me commit changes
+    type Crop,
+    //@ts-expect-error: it does not let me commit changes
+    type PercentCrop,
+    //@ts-expect-error: it does not let me commit changes
+    type PixelCrop,
+    //@ts-expect-error: it does not let me commit changes
+    centerCrop,
+    //@ts-expect-error: it does not let me commit changes
+    makeAspectCrop,
+} from 'react-image-crop';
 
 import { Button } from '~/bundles/common/components/components.js';
 
@@ -16,7 +21,7 @@ import { canvasPreview } from './canvas-preview.js';
 
 const DIMENSION = {
     aspectRatio: 1,
-    min: 25,
+    min: 900,
 };
 
 const Cropper = ({
@@ -33,27 +38,28 @@ const Cropper = ({
     const imgReference = useRef<HTMLImageElement>(null);
     const canvasReference = useRef<HTMLCanvasElement>(null);
 
-    const handleCrop = useCallback((crop: PercentCrop) => {
-        setCrop(crop);
-    }, []);
+    const handleCrop = useCallback(
+        (PixelCrop: PixelCrop, PercentCrop: PercentCrop) => {
+            setCrop(PercentCrop);
+        },
+        [],
+    );
 
     const onImageLoad = useCallback(
         (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
             const { width, height } = event.currentTarget;
-            const crop = centerCrop(
-                makeAspectCrop(
-                    {
-                        unit: '%',
-                        width: DIMENSION.min,
-                    },
-                    DIMENSION.aspectRatio,
-                    width,
-                    height,
-                ),
+            const crop: Crop = makeAspectCrop(
+                {
+                    unit: '%',
+                    width: DIMENSION.min,
+                },
+                DIMENSION.aspectRatio,
                 width,
                 height,
             );
-            setCrop(crop);
+
+            const center: Crop = centerCrop(crop, width, height);
+            setCrop(center);
         },
         [],
     );
@@ -83,6 +89,7 @@ const Cropper = ({
                 circularCrop
                 keepSelection
                 aspect={DIMENSION.aspectRatio}
+                minWidth={50}
             >
                 <img
                     ref={imgReference}
@@ -93,11 +100,13 @@ const Cropper = ({
                 />
             </ReactCrop>
             <div className="m-auto my-3 w-full">
-                <p className="text-center font-semibold text-white">Zoom</p>
+                <p className="text-center font-semibold text-white">
+                    Zoom In / Out
+                </p>
                 <input
                     type="range"
                     className="accent-lm-yellow-100 w-full"
-                    min={0.1}
+                    min={0.5}
                     max={4}
                     step={0.05}
                     value={scale}
