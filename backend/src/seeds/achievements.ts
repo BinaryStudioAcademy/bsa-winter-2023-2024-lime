@@ -4,6 +4,12 @@ import { ActivityType, Metric } from './enums/enums.js';
 
 const Achievements = [
     {
+        name: 'Joining Lime',
+        activityType: null,
+        requirement: 1,
+        requirementMetric: null,
+    },
+    {
         name: 'First 5 km cycling',
         activityType: ActivityType.CYCLING,
         requirement: 5,
@@ -152,12 +158,6 @@ const Achievements = [
         activityType: ActivityType.WALKING,
         requirement: 500,
         requirementMetric: Metric.KILOCALORIES,
-    },
-    {
-        name: 'Joining Lime',
-        activityType: null,
-        requirement: 1,
-        requirementMetric: null,
     },
 ];
 

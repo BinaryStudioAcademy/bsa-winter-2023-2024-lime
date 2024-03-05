@@ -10,8 +10,8 @@ type CircleProperties = {
 };
 
 const CircularSizes: Record<CircleSizes, CircleProperties> = {
-    [ComponentSize.SMALL]: { radius: 48, stroke: 5, fontSize: 'text-2xl' },
-    [ComponentSize.MEDIUM]: { radius: 80, stroke: 10, fontSize: 'text-4xl' },
+    [ComponentSize.SMALL]: { radius: 34, stroke: 5, fontSize: 'text-2xl' },
+    [ComponentSize.MEDIUM]: { radius: 60, stroke: 8, fontSize: 'text-4xl' },
     [ComponentSize.LARGE]: { radius: 120, stroke: 20, fontSize: 'text-4xl' },
     [ComponentSize.EXTRA_LARGE]: {
         radius: 160,

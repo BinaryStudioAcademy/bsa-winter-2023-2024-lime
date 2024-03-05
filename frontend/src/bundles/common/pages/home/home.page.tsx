@@ -10,7 +10,10 @@ import {
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { GoalWidget } from '~/bundles/overview/components/components.js';
+import {
+    ChartGoalProgress,
+    GoalWidget,
+} from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
 
 import styles from './styles.module.css';
@@ -95,8 +98,8 @@ const Home: React.FC = () => {
                         />
                     </li>
                 </ul>
-                <div className="mb-5">Diagram</div>
-                <div>Achievements</div>
+                <ChartGoalProgress />
+                <div className="mt-5">Achievements</div>
             </div>
             <div className="xl:basis-[30%]">
                 <InfoSection

@@ -76,10 +76,10 @@ const DownloadBanner = (): JSX.Element | null => {
         return null;
     }
     return (
-        <div className="bg-lm-yellow-200 fixed left-0 top-0 z-50 flex h-24 w-full items-center justify-evenly rounded-b-lg p-4 text-center text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] lg:xl:hidden">
+        <div className="bg-buttonSecondary fixed left-0 top-0 z-50 flex h-24 w-full items-center justify-evenly rounded-b-lg p-4 text-center text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] lg:xl:hidden">
             <button
                 onClick={closeBanner}
-                className="text-lm-black-300 ml-1 mr-3 h-12 w-12 hover:text-white"
+                className="text-lm-black-300 hover:text-primary ml-1 mr-3 h-12 w-12"
             >
                 <XMarkIcon className="mx-1 h-6 w-6" />
             </button>
@@ -89,7 +89,7 @@ const DownloadBanner = (): JSX.Element | null => {
                 size={ComponentSize.EXTRA_LARGE}
                 className="sm:h-16 sm:w-16 md:h-20 md:w-20"
             />
-            <p className="text-bold md:text-normal mr-2 md:text-2xl">
+            <p className="text-primary text-bold md:text-normal mr-2 md:text-2xl">
                 Install LIME for a better experience!
             </p>
             <div className="w-[16rem]">

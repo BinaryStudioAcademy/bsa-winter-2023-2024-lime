@@ -1,0 +1,3 @@
+const MINIMUM_DELETED_ROWS = 0;
+
+export { MINIMUM_DELETED_ROWS };
