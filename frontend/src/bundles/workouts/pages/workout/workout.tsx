@@ -4,7 +4,10 @@ import {
 } from '~/bundles/common/components/components.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
+import {
+    capitalizeFirstLetter,
+    configureString,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -34,7 +37,10 @@ const Workout: React.FC = () => {
         const firstWorkoutId = workouts[0]?.id;
 
         if (!id && firstWorkoutId) {
-            navigate(`${AppRoute.WORKOUT}/${firstWorkoutId}`);
+            const redirectPath = configureString(AppRoute.WORKOUT_$ID, {
+                id: String(firstWorkoutId),
+            });
+            navigate(redirectPath);
         }
     }, [id, navigate, workouts]);
 
