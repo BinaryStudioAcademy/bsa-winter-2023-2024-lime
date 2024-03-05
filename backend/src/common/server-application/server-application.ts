@@ -1,3 +1,4 @@
+import { achievementController } from '~/bundles/achievements/achievements.js';
 import { authController } from '~/bundles/auth/auth.js';
 import { connectionController } from '~/bundles/connections/connections.js';
 import { goalController } from '~/bundles/goals/goals.js';
@@ -26,6 +27,7 @@ const apiV1 = new BaseServerAppApi(
     ...connectionController.routes,
     ...oAuthController.routes,
     ...passwordResetController.routes,
+    ...achievementController.routes,
 );
 const serverApp = new BaseServerApp({
     config,
