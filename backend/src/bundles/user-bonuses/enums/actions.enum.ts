@@ -1,6 +1,6 @@
-const Action = {
+const ActionType = {
     REGISTERED: 'registered',
     INVITED: 'invited',
 } as const;
 
-export { Action };
+export { ActionType };

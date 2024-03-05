@@ -10,6 +10,16 @@ type UserBonusResponseItem = {
     amount: number;
 };
 
+type UserBonusResponseAllItems = {
+    items: UserBonusResponseItem[];
+};
+
+type UserBonusCreatePayload = {
+    userId: number;
+    action: string;
+    amount: number;
+};
+
 class UserBonusService implements Service {
     private userBonusRepository: UserBonusRepository;
 
@@ -23,9 +33,7 @@ class UserBonusService implements Service {
         return await this.userBonusRepository.find(query);
     }
 
-    public async findAll(): Promise<{
-        items: UserBonusResponseItem[];
-    }> {
+    public async findAll(): Promise<UserBonusResponseAllItems> {
         const items = await this.userBonusRepository.findAll();
 
         return {
@@ -33,24 +41,16 @@ class UserBonusService implements Service {
         };
     }
 
-    public async create({
-        userId,
-        action,
-        amount,
-    }: {
-        userId: number;
-        action: string;
-        amount: number;
-    }): Promise<UserBonusResponseItem> {
-        const bonusTrnasaction = await this.userBonusRepository.create(
-            UserBonusEntity.initializeNew({
-                userId,
-                action,
-                amount,
-            }),
+    public async create(
+        payload: UserBonusCreatePayload,
+    ): Promise<UserBonusResponseItem> {
+        const { userId, action, amount } = payload;
+
+        const userBonus = await this.userBonusRepository.create(
+            UserBonusEntity.initializeNew({ userId, action, amount }),
         );
 
-        return bonusTrnasaction.toObject() as UserBonusResponseItem;
+        return userBonus.toObject();
     }
 
     public update(): ReturnType<Service['update']> {
