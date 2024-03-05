@@ -92,7 +92,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             const form = new FormData();
             form.append('gender', getValues().gender as string);
             form.append('dateOfBirth', getValues().dateOfBirth as string);
-            form.append('avatar', imgFile as File);
+            form.append('avatarUrl', imgFile as File);
             form.append('fullName', getValues().fullName as string);
             form.append('username', getValues().username as string);
             form.append('weight', extractNumbers(getValues().weight));

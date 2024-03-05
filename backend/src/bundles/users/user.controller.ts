@@ -13,6 +13,7 @@ import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
+import { upload } from '~/common/middlewares/file.middleware.js';
 
 import { UsersApiPath } from './enums/enums.js';
 
@@ -105,11 +106,13 @@ class UserController extends BaseController {
             path: `${UsersApiPath.UPDATE_USER}/:userId`,
             method: 'PATCH',
             isProtected: true,
+            preHandler: upload.single('image'),
             handler: (options) =>
                 this.updateUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
+                        file: File;
                         params: { userId: string };
                     }>,
                 ),
@@ -191,6 +194,7 @@ class UserController extends BaseController {
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
             body: UserUpdateProfileRequestDto;
+            file: File;
             params: { userId: string };
         }>,
     ): Promise<ApiHandlerResponse> {
