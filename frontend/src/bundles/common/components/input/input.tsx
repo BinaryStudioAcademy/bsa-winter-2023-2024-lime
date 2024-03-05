@@ -54,7 +54,7 @@ const Input = <T extends FieldValues>({
     };
 
     return (
-        <label className={`${className} flex h-20 flex-col text-sm text-white`}>
+        <label className={`${className} flex h-20 flex-col text-sm`}>
             <span className="mb-[0.5rem] font-medium">
                 {label} {required && <span className="text-lm-red">*</span>}
             </span>
