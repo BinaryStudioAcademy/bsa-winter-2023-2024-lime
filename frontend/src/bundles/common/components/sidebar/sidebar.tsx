@@ -104,28 +104,29 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                     </div>
                 </div>
 
-            <div className="flex h-1/4 w-full">
-                <div className="flex w-full flex-col justify-end gap-3">
-                    <SidebarNav
-                        isOpen={isOpen}
-                        icon={<HelpIcon />}
-                        text="Help"
-                        to={AppRoute.HELP}
-                        isActive={activeRoute === AppRoute.HELP}
-                    />
-
-                    <div className="flex items-center justify-center">
-                        <Button
-                            type="button"
-                            label={'Logout'}
-                            leftIcon={addSizePropertyHeroIcons({
-                                icon: <LogoutIcon />,
-                                size: ComponentSize.MEDIUM,
-                            })}
-                            variant={ButtonVariant.SIDEBAR}
-                            size={ComponentSize.MEDIUM}
-                            onClick={handleLogout}
+                <div className="flex h-1/4 w-full">
+                    <div className="flex w-full flex-col justify-end gap-3">
+                        <SidebarNav
+                            isOpen={isOpen}
+                            icon={<HelpIcon />}
+                            text="Help"
+                            to={AppRoute.HELP}
+                            isActive={activeRoute === AppRoute.HELP}
                         />
+
+                        <div className="flex items-center justify-center">
+                            <Button
+                                type="button"
+                                label={'Logout'}
+                                leftIcon={addSizePropertyHeroIcons({
+                                    icon: <LogoutIcon />,
+                                    size: ComponentSize.MEDIUM,
+                                })}
+                                variant={ButtonVariant.SIDEBAR}
+                                size={ComponentSize.MEDIUM}
+                                onClick={handleLogout}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
