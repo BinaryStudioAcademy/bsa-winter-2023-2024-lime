@@ -4,7 +4,10 @@ import {
     type AsyncThunkConfig,
     type UserAuthResponseDto,
 } from '~/bundles/common/types/types.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthRequestDto,
+    type UserUpdateProfileRequestDto,
+} from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
 import { type AuthResponseDto } from '../auth.js';
@@ -53,4 +56,13 @@ const logout = createAsyncThunk<unknown, undefined, AsyncThunkConfig>(
     },
 );
 
-export { logout, refreshUser, signIn, signUp };
+const updateUser = createAsyncThunk<
+    UserAuthResponseDto,
+    UserUpdateProfileRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/update-user`, async (updateUserPayload, { extra }) => {
+    const { userApi } = extra;
+    return await userApi.updateUser(updateUserPayload);
+});
+
+export { logout, refreshUser, signIn, signUp, updateUser };

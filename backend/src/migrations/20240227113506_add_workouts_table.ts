@@ -38,7 +38,7 @@ async function up(knex: Knex): Promise<void> {
             .onDelete('CASCADE');
         table.integer(ColumnName.STEPS).nullable();
         table.integer(ColumnName.KILOCALORIES).notNullable();
-        table.integer(ColumnName.HEART_RATE).notNullable();
+        table.integer(ColumnName.HEART_RATE).nullable();
         table
             .dateTime(ColumnName.WORKOUT_STARTED_AT)
             .notNullable()

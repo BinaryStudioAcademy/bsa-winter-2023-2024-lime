@@ -14,6 +14,7 @@ import {
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { Home, NotFound } from '~/bundles/common/pages/pages.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
+import { Profile } from '~/bundles/profile/pages/profile.js';
 import { Workout, WorkoutItem } from '~/bundles/workouts/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
@@ -74,15 +75,11 @@ const routes = [
                         element: <div>HELP PAGE</div>,
                     },
                     {
-                        path: AppRoute.LOGOUT,
-                        element: <div>LOGOUT PAGE</div>,
-                    },
-                    {
                         element: <ProfileLayout />,
                         children: [
                             {
                                 path: AppRoute.PROFILE_INFORMATION,
-                                element: <div>PROFILE INFORMATION PAGE</div>,
+                                element: <Profile />,
                             },
                             {
                                 path: AppRoute.PROFILE_CONECTIONS,

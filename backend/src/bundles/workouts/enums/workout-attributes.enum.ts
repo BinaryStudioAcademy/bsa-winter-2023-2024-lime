@@ -1,7 +1,7 @@
 const WorkoutAttributes = {
     ID: 'id',
     USER_ID: 'userId',
-    ACTIVITY: 'activity',
+    ACTIVITY_TYPE: 'activityType',
     STEPS: 'steps',
     HEART_RATE: 'heartRate',
     DURATION: 'duration',

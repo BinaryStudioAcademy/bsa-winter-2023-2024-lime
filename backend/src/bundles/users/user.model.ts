@@ -29,6 +29,8 @@ class UserModel extends AbstractModel {
     public 'userDetails': UserDetailsModel;
     public 'workouts': WorkoutModel;
 
+    public 'userAchievements': UserAchievementModel;
+
     public 'userOAuthInfo': OAuthModel;
 
     public 'userOAuthState': OAuthStateModel;
@@ -71,12 +73,12 @@ class UserModel extends AbstractModel {
                     to: `${DatabaseTableName.OAUTH_STATE}.${OAuthStateAttributes.ID}`,
                 },
             },
-            userAchievement: {
+            userAchievements: {
                 relation: Model.HasOneRelation,
                 modelClass: UserAchievementModel,
                 join: {
-                    from: `${DatabaseTableName.USERS}.id`,
-                    to: `${DatabaseTableName.USER_ACHIEVEMENTS}.userId`,
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_ACHIEVEMENTS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
             workouts: {

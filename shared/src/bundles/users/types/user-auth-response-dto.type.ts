@@ -7,6 +7,7 @@ type UserAuthResponseDto = {
     stripeCustomerId: string;
     avatarUrl: string | null;
     username: string | null;
+    fullName: string | null;
     dateOfBirth: string | null;
     weight: number | null;
     height: number | null;

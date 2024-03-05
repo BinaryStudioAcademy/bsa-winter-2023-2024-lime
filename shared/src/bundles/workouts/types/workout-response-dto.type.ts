@@ -9,7 +9,7 @@ type WorkoutResponseDto = {
     speed: number;
     duration: number;
     distance: number;
-    heartRate: number;
+    heartRate: number | null;
     steps?: number;
     kilocalories: number;
 };
