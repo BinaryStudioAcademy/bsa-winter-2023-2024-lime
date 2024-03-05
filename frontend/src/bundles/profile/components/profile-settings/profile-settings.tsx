@@ -2,7 +2,9 @@ import {
     Avatar,
     Button,
     ButtonVariant,
+    CopyToClipboard,
     DatePicker,
+    Icon,
     Input,
     Loader,
     Radio,
@@ -26,6 +28,7 @@ import {
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
 
+import { constructReferralUrl } from '../../helpers/helpers.js';
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
@@ -89,31 +92,63 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <div className="bg-lm-black-200 pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
-            <div className="flex items-center pb-12">
-                <Avatar
-                    size="lg"
-                    email={user ? user?.email : ''}
-                    avatarUrl={user ? user.avatarUrl : ''}
-                />
+            <div className="mb-12 flex flex-col items-start justify-between  gap-5 xl:flex-row xl:items-center">
+                <div className="flex items-center ">
+                    <Avatar
+                        size="lg"
+                        email={user ? user?.email : ''}
+                        avatarUrl={user ? user.avatarUrl : ''}
+                    />
 
-                <input
-                    id="avatarInput"
-                    type="file"
-                    accept="image/jpeg, image/png"
-                    className="hidden"
-                />
-                <div className="h-[38px] w-[115px]">
+                    <input
+                        id="avatarInput"
+                        type="file"
+                        accept="image/jpeg, image/png"
+                        className="hidden"
+                    />
+                    <div>
+                        <Button
+                            className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
+                            type="submit"
+                            label="Update file"
+                            variant={ButtonVariant.SECONDARY}
+                            size={ComponentSize.SMALL}
+                        />
+                    </div>
+                </div>
+                <div className="bg-lm-black-100 flex h-[50%] flex-col justify-center gap-2 rounded-xl p-4">
+                    <div className="flex gap-2">
+                        <span className="text-lm-grey-200 text-xl">
+                            Your balance:
+                        </span>
+                        <span className="text-lm-yellow-200 text-xl font-bold">
+                            1,000
+                        </span>
+                        <Icon
+                            name="logoIcon"
+                            size="md"
+                            className="text-lm-yellow-200"
+                        />
+                    </div>
                     <Button
-                        className="ml-3 [border-radius:1.25rem]"
-                        type="submit"
-                        label="Update file"
-                        variant={ButtonVariant.SECONDARY}
+                        label={'Show history of transactions'}
+                        variant={ButtonVariant.PRIMARY}
                         size={ComponentSize.SMALL}
                     />
                 </div>
             </div>
+            <CopyToClipboard
+                label="Copy link with your referral code"
+                className="mb-10 w-[60%]"
+                textToCopy={
+                    user?.referralCode
+                        ? constructReferralUrl(user?.referralCode)
+                        : ''
+                }
+                textToDisplay={user?.referralCode ?? 'You dont have a code'}
+            />
             <form
-                className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4"
+                className="w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4"
                 onSubmit={handleFormSubmit}
             >
                 <Input

@@ -12,6 +12,8 @@ type UserAuthResponseDto = {
     weight: number | null;
     height: number | null;
     gender: ValueOf<typeof Gender> | null;
+    referralCode: string | null;
+    bonusBalance: number | null;
 };
 
 export { type UserAuthResponseDto };
