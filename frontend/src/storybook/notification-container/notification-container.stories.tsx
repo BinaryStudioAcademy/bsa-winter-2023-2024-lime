@@ -27,10 +27,10 @@ const meta: Meta<NotificationType> = {
 export default meta;
 type Story = StoryObj<NotificationType>;
 
-const NotificationStory: Story = {
+const Sandbox: Story = {
     args: {
         notification: 'Toastify!',
     },
 };
 
-export { NotificationStory };
+export { Sandbox };

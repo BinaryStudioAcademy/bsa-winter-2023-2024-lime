@@ -11,7 +11,7 @@ const meta: Meta<typeof Modal> = {
 export default meta;
 type Story = StoryObj<typeof Modal>;
 
-const ModalStory: Story = {
+const Sandbox: Story = {
     args: {
         isOpen: true,
         title: 'Modal',
@@ -19,4 +19,4 @@ const ModalStory: Story = {
     },
 };
 
-export { ModalStory };
+export { Sandbox };

@@ -22,11 +22,11 @@ const meta: Meta<typeof Link> = {
 export default meta;
 type Story = StoryObj<typeof Link>;
 
-const LinkStory: Story = {
+const Sandbox: Story = {
     args: {
         to: AppRoute.ROOT,
         children: ' ',
     },
 };
 
-export { LinkStory };
+export { Sandbox };

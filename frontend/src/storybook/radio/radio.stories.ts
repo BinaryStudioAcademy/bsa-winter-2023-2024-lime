@@ -11,11 +11,11 @@ const meta: Meta<typeof RadioStory> = {
 export default meta;
 type Story = StoryObj<typeof RadioStory>;
 
-const Radio: Story = {
+const Sandbox: Story = {
     args: {
         label: 'Radio',
         value: 'radio',
     },
 };
 
-export { Radio };
+export { Sandbox };

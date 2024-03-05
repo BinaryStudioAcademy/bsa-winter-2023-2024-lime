@@ -37,10 +37,10 @@ const meta: Meta<typeof RouterProvider> = {
 export default meta;
 type Story = StoryObj<typeof RouterProvider>;
 
-const RouterProviderStory: Story = {
+const Sandbox: Story = {
     args: {
         routes,
     },
 };
 
-export { RouterProviderStory };
+export { Sandbox };

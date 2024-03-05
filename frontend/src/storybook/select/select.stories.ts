@@ -20,7 +20,7 @@ const meta: Meta<typeof SelectStory> = {
 export default meta;
 type Story = StoryObj<typeof SelectStory>;
 
-const Select: Story = {
+const Sandbox: Story = {
     args: {
         label: 'Select',
         isSearchable: true,
@@ -30,4 +30,4 @@ const Select: Story = {
     },
 };
 
-export { Select };
+export { Sandbox };

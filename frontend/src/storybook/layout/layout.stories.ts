@@ -11,8 +11,8 @@ const meta: Meta<typeof Layout> = {
 export default meta;
 type Story = StoryObj<typeof Layout>;
 
-const LayoutStory: Story = {
+const Sandbox: Story = {
     args: { children: 'Hello World', className: 'text-lm-yellow-100' },
 };
 
-export { LayoutStory };
+export { Sandbox };

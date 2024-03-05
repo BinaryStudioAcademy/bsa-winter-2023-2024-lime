@@ -11,10 +11,10 @@ const meta: Meta<typeof CheckboxStory> = {
 export default meta;
 type Story = StoryObj<typeof CheckboxStory>;
 
-const Checkbox: Story = {
+const Sandbox: Story = {
     args: {
         label: 'Checkbox',
     },
 };
 
-export { Checkbox };
+export { Sandbox };

@@ -21,6 +21,6 @@ const meta: Meta<typeof Header> = {
 export default meta;
 type Story = StoryObj<typeof Header>;
 
-const HeaderStory: Story = {};
+const Sandbox: Story = {};
 
-export { HeaderStory };
+export { Sandbox };

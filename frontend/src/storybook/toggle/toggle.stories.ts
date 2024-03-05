@@ -11,10 +11,10 @@ const meta: Meta<typeof ToggleStory> = {
 export default meta;
 type Story = StoryObj<typeof ToggleStory>;
 
-const Toggle: Story = {
+const Sandbox: Story = {
     args: {
         label: 'Toggle',
     },
 };
 
-export { Toggle };
+export { Sandbox };

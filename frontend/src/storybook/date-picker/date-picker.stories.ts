@@ -11,7 +11,7 @@ const meta: Meta<typeof DatePickerStory> = {
 export default meta;
 type Story = StoryObj<typeof DatePickerStory>;
 
-const DateStory: Story = {
+const Sandbox: Story = {
     args: {
         label: 'Date',
         placeholder: 'Pick a date',
@@ -19,4 +19,4 @@ const DateStory: Story = {
     },
 };
 
-export { DateStory };
+export { Sandbox };

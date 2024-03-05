@@ -25,8 +25,8 @@ const meta: Meta<typeof ProtectedRoute> = {
 export default meta;
 type Story = StoryObj<typeof ProtectedRoute>;
 
-const ProtectedStory: Story = {
+const Sandbox: Story = {
     args: { children: 'Protected' },
 };
 
-export { ProtectedStory };
+export { Sandbox };

@@ -11,6 +11,6 @@ const meta: Meta<typeof GoogleAds> = {
 export default meta;
 type Story = StoryObj<typeof GoogleAds>;
 
-const AddsStory: Story = { args: { children: '' } };
+const Sandbox: Story = { args: { children: '' } };
 
-export { AddsStory };
+export { Sandbox };

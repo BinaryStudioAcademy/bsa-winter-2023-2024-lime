@@ -11,7 +11,7 @@ const meta: Meta<typeof Popover> = {
 export default meta;
 type Story = StoryObj<typeof Popover>;
 
-const PopoverStory: Story = {
+const Sandbox: Story = {
     args: {
         classNameContentWrapper: 'w-80 bg-lm-magenta p-5',
         children: 'Click me',
@@ -20,4 +20,4 @@ const PopoverStory: Story = {
     },
 };
 
-export { PopoverStory };
+export { Sandbox };
