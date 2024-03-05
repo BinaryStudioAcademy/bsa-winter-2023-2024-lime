@@ -68,10 +68,6 @@ const routes = [
                         element: <div>HELP PAGE</div>,
                     },
                     {
-                        path: AppRoute.LOGOUT,
-                        element: <div>LOGOUT PAGE</div>,
-                    },
-                    {
                         element: <ProfileLayout />,
                         children: [
                             {
