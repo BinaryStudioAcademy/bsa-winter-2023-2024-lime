@@ -13,6 +13,7 @@ type SidebarNavProperties = {
     icon: JSX.Element;
     to: ValueOf<typeof AppRoute>;
     isActive?: boolean;
+    isOpen?: boolean;
 };
 
 const SidebarNav = ({
@@ -20,6 +21,7 @@ const SidebarNav = ({
     to,
     icon,
     isActive = false,
+    isOpen = true,
 }: SidebarNavProperties): JSX.Element => {
     const classes = {
         active: 'text-lm-black-100 hover:text-lm-black-200',
@@ -33,17 +35,32 @@ const SidebarNav = ({
 
     return (
         <Link to={to} className="flex items-center justify-center">
-            <Button
-                type="button"
-                label={text}
-                className={getValidClassNames(
-                    isActive ? classes.active : classes.inactive,
-                )}
-                leftIcon={enhacedIcon}
-                variant={ButtonVariant.SIDEBAR}
-                isActive={isActive}
-                size={ComponentSize.MEDIUM}
-            />
+            {isOpen ? (
+                <Button
+                    type="button"
+                    label={text}
+                    className={getValidClassNames(
+                        isActive ? classes.active : classes.inactive,
+                    )}
+                    leftIcon={enhacedIcon}
+                    variant={ButtonVariant.SIDEBAR}
+                    isActive={isActive}
+                    size={ComponentSize.MEDIUM}
+                />
+            ) : (
+                <Button
+                    type="button"
+                    label={''}
+                    className={getValidClassNames(
+                        isActive ? classes.active : classes.inactive,
+                        'h-12 w-12 justify-end',
+                    )}
+                    leftIcon={enhacedIcon}
+                    variant={ButtonVariant.SIDEBAR}
+                    isActive={isActive}
+                    size={ComponentSize.MEDIUM}
+                />
+            )}
         </Link>
     );
 };

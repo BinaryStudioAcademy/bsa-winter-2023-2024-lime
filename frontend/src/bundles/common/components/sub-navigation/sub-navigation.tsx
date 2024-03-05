@@ -18,6 +18,7 @@ const SubNavigation = ({
     button,
     className,
 }: Properties): JSX.Element => {
+  
     const bgColors = [
         'bg-lm-yellow-100',
         'bg-lm-magenta-100',
@@ -29,7 +30,7 @@ const SubNavigation = ({
 
     return (
         <div
-            className={`bg-primary flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2rem] ${className}`}
+            className={`bg-primary flex h-full w-[20rem] md:flex-col gap-[1.75rem] overflow-auto p-4 mb-4 md:p-[2rem] ${className}`}
         >
             {title && (
                 <h1 className="text-primary text-xl font-bold">{title}</h1>

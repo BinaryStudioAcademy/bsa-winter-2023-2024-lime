@@ -23,7 +23,7 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-lm-black-100 flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
+        'bg-lm-black-100 flex min-h-90 lg:w-72 w-64 flex-col content-center items-center text-white z-10',
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
@@ -41,7 +41,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     useEffect(() => {
         isOpen
             ? setSidebarStyle({ transform: 'translateX(0)', gridArea: 'aside' })
-            : setSidebarStyle({ transform: 'translateX(-100%)' });
+            : setSidebarStyle({ transform: 'translateX(-75%)' });
     }, [isOpen]);
 
     return (
@@ -49,30 +49,35 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             className={getValidClassNames(
                 styles.baseStyle,
                 styles.animationStyle,
+                isOpen ? 'p-7' : 'p-0',
             )}
             style={sidebarStyle}
         >
             <div className="inner h-3/4 w-full border-gray-700 ">
                 <div className="flex flex-col gap-4">
                     <SidebarNav
+                        isOpen={isOpen}
                         icon={<OverviewIcon />}
                         text="Overview"
                         to={AppRoute.OVERVIEW}
                         isActive={activeRoute === AppRoute.OVERVIEW}
                     />
                     <SidebarNav
+                        isOpen={isOpen}
                         icon={<Icon name={IconName.workoutIcon} />}
                         text="Workout"
                         to={AppRoute.WORKOUT}
                         isActive={activeRoute === AppRoute.WORKOUT}
                     />
                     <SidebarNav
+                        isOpen={isOpen}
                         icon={<Icon name={IconName.goalsIcon} />}
                         text="Goals"
                         to={AppRoute.GOALS}
                         isActive={activeRoute === AppRoute.GOALS}
                     />
                     <SidebarNav
+                        isOpen={isOpen}
                         icon={<ScheduleIcon />}
                         text="My schedule"
                         to={AppRoute.SCHEDULE}
@@ -84,12 +89,14 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             <div className="flex h-1/4 w-full">
                 <div className="flex w-full flex-col justify-end gap-3">
                     <SidebarNav
+                        isOpen={isOpen}
                         icon={<HelpIcon />}
                         text="Help"
                         to={AppRoute.HELP}
                         isActive={activeRoute === AppRoute.HELP}
                     />
                     <SidebarNav
+                        isOpen={isOpen}
                         icon={<LogoutIcon />}
                         text="Logout"
                         to={AppRoute.LOGOUT}
