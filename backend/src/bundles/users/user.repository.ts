@@ -2,6 +2,8 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type Repository } from '~/common/types/types.js';
 
+import { type UserDetailsModel } from './user-details.model.js';
+
 class UserRepository implements Repository {
     private userModel: typeof UserModel;
 
@@ -102,7 +104,6 @@ class UserRepository implements Repository {
             throw error;
         }
     }
-
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
@@ -116,6 +117,44 @@ class UserRepository implements Repository {
             .execute();
     }
 
+    public async updateUserProfile(
+        userId: number,
+        payload: Partial<UserDetailsModel>,
+    ): Promise<UserEntity | null> {
+        const trx = await this.userModel.startTransaction();
+        try {
+            const user = await this.userModel.query(trx).findById(userId);
+
+            if (!user) {
+                return null;
+            }
+
+            const userDetails = await user
+                .$relatedQuery('userDetails', trx)
+                .patch(payload)
+                .returning('*')
+                .first();
+
+            await trx.commit();
+
+            if (!userDetails) {
+                return null;
+            }
+            return UserEntity.initialize({
+                ...user,
+                fullName: userDetails.fullName,
+                avatarUrl: userDetails.avatarUrl,
+                username: userDetails.username,
+                dateOfBirth: userDetails.dateOfBirth,
+                weight: userDetails.weight,
+                height: userDetails.height,
+                gender: userDetails.gender,
+            });
+        } catch (error) {
+            await trx.rollback();
+            throw new Error(`Error updating user details: ${error}`);
+        }
+    }
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
     }

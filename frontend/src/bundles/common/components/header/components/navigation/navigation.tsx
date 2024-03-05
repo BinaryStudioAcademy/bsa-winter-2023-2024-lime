@@ -20,18 +20,16 @@ const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
                     </Link>
                 </li>
                 <li>
-                    <Link to={AppRoute.ROOT}>
+                    <Link to={AppRoute.PROFILE_INFORMATION}>
                         <Cog6ToothIcon className={styles['icon']} />
                     </Link>
                 </li>
                 <li>
-                    <Link to={AppRoute.PROFILE}>
-                        <img
-                            src={avatarUrl || defaultAvatar}
-                            alt="avatar"
-                            className={styles['avatar']}
-                        />
-                    </Link>
+                    <img
+                        src={avatarUrl ?? defaultAvatar}
+                        alt="avatar"
+                        className={styles['avatar']}
+                    />
                 </li>
             </ul>
         </nav>
