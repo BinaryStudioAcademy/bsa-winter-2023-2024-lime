@@ -5,7 +5,7 @@ const StravaPath = {
     TOKEN: `${STRAVA_URL}/oauth/token`,
     REFRESH_TOKEN: `${STRAVA_API_URL}/oauth/token`,
     DEAUTHRORIZE: `${STRAVA_URL}/oauth/deauthorize`,
-    WEBHOOK: '/webhook'
+    WEBHOOK: '/webhook',
 } as const;
 
 export { StravaPath };

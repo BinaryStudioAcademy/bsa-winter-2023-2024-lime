@@ -27,7 +27,7 @@ const apiV1 = new BaseServerAppApi(
     ...connectionController.routes,
     ...oAuthController.routes,
     ...passwordResetController.routes,
-    ...stravaController.routes
+    ...stravaController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

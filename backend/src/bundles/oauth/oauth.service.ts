@@ -4,6 +4,7 @@ import {
     type OAuthEntity,
     type OAuthExchangeAuthCodeDto,
     type OAuthProvider,
+    type OAuthPublicResponseDto,
     type OAuthRepository,
     type OAuthResponseDto,
     type OAuthStateRepository,
@@ -43,12 +44,26 @@ class OAuthService {
 
     public async findMany(
         query: Record<string, unknown>,
-    ): Promise<{ items: OAuthResponseDto[] }> {
+    ): Promise<{ items: OAuthPublicResponseDto[] }> {
         const items = await this.oAuthRepository.findMany(query);
 
         return {
             items: items.map((it) => it.toPublicObject()),
         };
+    }
+    public async find(
+        query: Record<string, unknown>,
+    ): Promise<OAuthResponseDto> {
+        const item = await this.oAuthRepository.find(query);
+
+        if (!item) {
+            throw new HttpError({
+                message: ErrorMessage.NO_CONNECTION,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        return item.toObject();
     }
 
     public async getAuthorizeRedirectUrl(
