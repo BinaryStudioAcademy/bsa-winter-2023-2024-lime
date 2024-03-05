@@ -5,16 +5,20 @@ import {
     Squares2X2Icon as OverviewIcon,
 } from '@heroicons/react/24/outline';
 
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import { IconName } from '~/bundles/common/components/icon/enums/enums.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { addSizePropertyHeroIcons } from '~/bundles/common/components/icon/helpers/add-size-hero-icons.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
+    useAppDispatch,
+    useCallback,
     useEffect,
     useLocation,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { Icon } from '../components.js';
+import { Button, ButtonVariant, Icon } from '../components.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
 
 type Properties = {
@@ -23,7 +27,7 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-lm-black-100 flex h-[95vh] lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
+        'bg-lm-black-100 flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
@@ -33,6 +37,12 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     const [activeRoute, setActiveRoute] = useState(pathname);
 
     const [sidebarStyle, setSidebarStyle] = useState({});
+
+    const dispatch = useAppDispatch();
+
+    const handleLogout = useCallback((): void => {
+        void dispatch(authActions.logout());
+    }, [dispatch]);
 
     useEffect(() => {
         setActiveRoute(pathname);
@@ -82,18 +92,27 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
             </div>
 
             <div className="flex h-1/4 w-full">
-                <div className="flex w-full flex-col justify-center gap-3">
+                <div className="flex w-full flex-col justify-end gap-3">
                     <SidebarNav
                         icon={<HelpIcon />}
                         text="Help"
                         to={AppRoute.HELP}
                         isActive={activeRoute === AppRoute.HELP}
                     />
-                    <SidebarNav
-                        icon={<LogoutIcon />}
-                        text="Logout"
-                        to={AppRoute.LOGOUT}
-                    />
+
+                    <div className="flex items-center justify-center">
+                        <Button
+                            type="button"
+                            label={'Logout'}
+                            leftIcon={addSizePropertyHeroIcons({
+                                icon: <LogoutIcon />,
+                                size: ComponentSize.MEDIUM,
+                            })}
+                            variant={ButtonVariant.SIDEBAR}
+                            size={ComponentSize.MEDIUM}
+                            onClick={handleLogout}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

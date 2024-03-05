@@ -22,19 +22,14 @@ import { ApiPath } from './enums/enums.js';
 
 class GoogleFitOAuthStrategy implements OAuthStrategy {
     private config: Config;
-
-    private baseUrl: string;
-
-    private apiPath: string;
     private OAuth2;
+
     public constructor(config: Config) {
         this.config = config;
-        this.baseUrl = `http://${config.ENV.APP.HOST}:${config.ENV.APP.PORT}`;
-        this.apiPath = '/api/v1';
         this.OAuth2 = new google.auth.OAuth2(
             this.config.ENV.GOOGLE_FIT.CLIENT_ID,
             this.config.ENV.GOOGLE_FIT.CLIENT_SECRET,
-            `${this.baseUrl}${this.apiPath}${ApiPath.OAUTH}/${OAuthProvider.GOOGLE_FIT}${OAuthActionsPath.EXCHANGE_TOKEN}`,
+            `${this.config.ENV.APP.API_BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.GOOGLE_FIT}${OAuthActionsPath.EXCHANGE_TOKEN}`,
         );
     }
 

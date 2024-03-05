@@ -16,6 +16,7 @@ const SubscriptionCheckout = (): JSX.Element => {
     });
 
     const options: StripeElementsOptions = {
+        locale: 'en',
         clientSecret,
         appearance: {
             theme: 'night',

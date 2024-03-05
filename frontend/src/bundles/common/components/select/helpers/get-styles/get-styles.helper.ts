@@ -17,7 +17,7 @@ const getStyles = <
         control: (state) =>
             getValidClassNames(
                 state.isFocused ? `${borderColor}` : 'border-0',
-                `w-full p-2.5 min-h-11 bg-primary border
+                `w-full p-2.5 min-h-11 bg-secondary border
                 outline-none rounded-md text-inherit shadow-none hover:cursor-pointer`,
             ),
         dropdownIndicator: (state) => {
@@ -27,7 +27,7 @@ const getStyles = <
 
         placeholder: () => 'font-inherit text-lm-grey-200',
         valueContainer: () => 'm-0 p-0',
-        input: () => 'm-0 p-0 text-white',
+        input: () => 'm-0 p-0 text-primary',
         option: () =>
             getValidClassNames(
                 errorMessage ? 'hover:text-lm-red' : 'hover:text-action',

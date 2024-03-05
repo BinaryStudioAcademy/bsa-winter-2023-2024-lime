@@ -4,6 +4,7 @@ import {
     type DefaultValues,
     type FieldErrors,
     type FieldValues,
+    type Path,
     type UseFormHandleSubmit,
     type UseFormProps,
     type ValidationMode,
@@ -25,6 +26,16 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
     isDirty: boolean;
     isValid: boolean;
     handleSubmit: UseFormHandleSubmit<T>;
+    reset: (
+        values?: DefaultValues<T>,
+        options?: { keepValues?: boolean },
+    ) => void;
+    getValues: () => T;
+    setValue: (
+        name: Path<T>,
+        value: unknown,
+        options?: { shouldValidate?: boolean },
+    ) => void;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -50,7 +61,18 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         control,
         formState: { errors, isDirty, isValid },
         handleSubmit,
+        reset,
+        getValues,
+        setValue: setValueFromForm,
     } = useForm<T>(parameters);
+
+    const setValue = (
+        name: Path<T>,
+        value: unknown,
+        options?: { shouldValidate?: boolean },
+    ): void => {
+        setValueFromForm(name, value as T[keyof T], options);
+    };
 
     return {
         control,
@@ -58,6 +80,9 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         isDirty,
         isValid,
         handleSubmit,
+        reset,
+        getValues,
+        setValue,
     };
 };
 

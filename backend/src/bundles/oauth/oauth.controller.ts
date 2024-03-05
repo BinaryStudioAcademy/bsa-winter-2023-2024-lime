@@ -17,29 +17,10 @@ import {
 } from './types/types.js';
 import { oAuthProviderValidationSchema } from './validation-schemas/validation-schemas.js';
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
-
 class OAuthController extends BaseController {
     private oAuthService: OAuthService;
 
     private config: Config;
-
-    private baseUrl: string;
 
     public constructor(
         logger: Logger,
@@ -50,7 +31,6 @@ class OAuthController extends BaseController {
 
         this.oAuthService = oAuthService;
         this.config = config;
-        this.baseUrl = `http://${this.config.ENV.APP.HOST}:${this.config.ENV.APP.PORT}/api/v1`;
 
         this.addRoute({
             path: OAuthActionsPath.$PROVIDER_AUTHORIZE,
@@ -165,7 +145,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 
@@ -209,7 +189,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.baseUrl}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
         };
     }
 }

@@ -1,19 +1,39 @@
 .base-layout {
-    @apply grid grid-cols-2 grid-rows-2 transition-all duration-[0.5s] ease-[ease-in-out];
-
     grid-template:
-        "header header" 88px
-        "aside main" / 288px;
+        "header header"
+        "aside main";
+
+    @apply grid grid-cols-[256px,auto] grid-rows-[88px,auto] overflow-hidden transition-all duration-[0.5s] ease-[ease-in-out] lg:grid-cols-[288px,auto];
 }
 
 .content-container {
-    @apply bg-lm-black-200 p-8;
+    @apply bg-lm-black-200 max-h-90 min-w-[320px] overflow-y-auto overflow-x-hidden p-8;
 
     grid-area: main;
+}
+
+.base-layout:not(.sidebar-closed) {
+    @apply overflow-hidden;
 }
 
 .base-layout.sidebar-closed {
     grid-template:
         "header header" 88px
-        "aside main" / 0%;
+        "aside main" /0;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--button-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--button-secondary);
 }

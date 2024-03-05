@@ -13,7 +13,6 @@ import {
     useEffect,
     useLocation,
     useNavigate,
-    useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
@@ -38,8 +37,9 @@ const Auth: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
 
-    const { dataStatus } = useAppSelector(({ auth }) => ({
+    const { dataStatus, user } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
+        user: auth.user,
     }));
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
@@ -51,8 +51,6 @@ const Auth: React.FC = () => {
     const isLoading = dataStatus === DataStatus.PENDING;
 
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
-
-    const intervalReference = useRef(0);
 
     const handleSignInSubmit = useCallback(
         (payload: UserAuthRequestDto): void => {
@@ -84,30 +82,22 @@ const Auth: React.FC = () => {
 
     const handleCloseModal = useCallback((): void => {
         void setIsOpen(false);
-        void setIsPasswordForgot(false);
-        clearTimeout(intervalReference.current);
-    }, []);
+
+        if (isPasswordForgot) {
+            void setIsPasswordForgot(false);
+        }
+    }, [isPasswordForgot]);
 
     useEffect(() => {
-        if (dataStatus === DataStatus.FULFILLED) {
+        if (user) {
             navigate(AppRoute.ROOT);
         }
-    }, [dataStatus, navigate]);
+    }, [navigate, user]);
 
     useEffect(() => {
         if (resetPasswordStatus === DataStatus.FULFILLED) {
             setIsPasswordForgot(true);
-            const intervalId = window.setTimeout(() => {
-                setIsPasswordForgot(false);
-                setIsOpen(false);
-            }, 5000);
-
-            intervalReference.current = intervalId;
         }
-        return () => {
-            setIsPasswordForgot(false);
-            clearTimeout(intervalReference.current);
-        };
     }, [navigate, resetPasswordStatus]);
 
     const getScreen = (screen: string): React.ReactNode => {
