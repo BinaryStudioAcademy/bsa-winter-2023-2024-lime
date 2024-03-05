@@ -81,7 +81,6 @@ import { type WorkoutService } from './workout.service.js';
  *       required:
  *         - id
  *         - activityType
- *         - heartRate
  *         - duration
  *         - workoutStartedAt
  *         - workoutEndedAt

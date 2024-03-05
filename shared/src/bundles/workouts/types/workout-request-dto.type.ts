@@ -7,7 +7,7 @@ type WorkoutRequestDto = {
     workoutEndedAt: Date;
     speed: number;
     distance: number;
-    heartRate: number;
+    heartRate: number | null;
     steps?: number;
     kilocalories: number;
 };
