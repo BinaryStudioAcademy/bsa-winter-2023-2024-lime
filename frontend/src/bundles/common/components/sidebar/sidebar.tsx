@@ -101,7 +101,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         isActive={activeRoute === AppRoute.HELP}
                     />
 
-                    <div className="flex items-center justify-center">
+                    <div className="text-lm-grey-200 flex items-center justify-center">
                         <Button
                             type="button"
                             label={'Logout'}
