@@ -10,6 +10,7 @@ const CheckboxStory = ({ label }: { label: string }): JSX.Element => {
             control={control}
             errors={errors}
             label={label}
+            ariaLabel="Check it"
             name="checkbox"
         />
     );

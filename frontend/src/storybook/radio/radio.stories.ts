@@ -15,6 +15,7 @@ const Sandbox: Story = {
     args: {
         label: 'Radio',
         value: 'radio',
+        type: 'round',
     },
 };
 
