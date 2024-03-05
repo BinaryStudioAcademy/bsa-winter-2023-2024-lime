@@ -31,7 +31,7 @@ const RouterProvider: React.FC<Properties> = ({ routes }) => {
                     ...(children?.length && {
                         children: mapRoutes(
                             children,
-                            isAlreadyProtected ?? shouldProtect,
+                            isAlreadyProtected || shouldProtect,
                         ),
                     }),
                     path,
