@@ -7,7 +7,7 @@ const ProfileNavigation = (): JSX.Element => {
             label: 'Personal information',
             to: '/profile/information',
         },
-        { id: 'conections', label: 'Connections', to: '/profile/conections' },
+        { id: 'connections', label: 'Connections', to: '/profile/connections' },
         {
             id: 'subscription',
             label: 'Subscriptions',
