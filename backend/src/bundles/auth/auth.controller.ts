@@ -30,6 +30,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signUp(
                     options as ApiHandlerOptions<{
+                        query: { referralCode: string };
                         body: UserAuthRequestDto;
                     }>,
                 ),
@@ -147,13 +148,17 @@ class AuthController extends BaseController {
      */
     private async signUp(
         options: ApiHandlerOptions<{
+            query: { referralCode: string };
             body: UserAuthRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
-            payload: await this.authService.signUp(options.body),
+            payload: await this.authService.signUp(
+                options.query.referralCode,
+                options.body,
+            ),
         };
     }
 }
