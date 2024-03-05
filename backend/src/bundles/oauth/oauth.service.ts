@@ -161,7 +161,7 @@ class OAuthService {
                 await strategy.exchangeRefreshToken(oAuthEntity);
             const updatedOAuth = (await this.oAuthRepository.update(
                 { provider, userId },
-                refreshedOAuth.toObject(),
+                refreshedOAuth.toNewObject(),
             )) as OAuthEntity;
 
             const updatedOAuthObject = updatedOAuth.toObject();
@@ -173,7 +173,7 @@ class OAuthService {
         return oAuthObject.accessToken;
     }
 
-    private checkAccessToken(oAuthEntity: OAuthEntity): boolean {
+    public checkAccessToken(oAuthEntity: OAuthEntity): boolean {
         const oAuthObject = oAuthEntity.toObject();
         const secondsSinceEpoch = Math.round(Date.now() / 1000);
 
