@@ -1,12 +1,18 @@
+import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
+
 import logo from '~/assets/img/logo.svg';
 
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
-import { Icon, Layout, Link } from '../components.js';
+import { Button, Icon, Layout, Link } from '../components.js';
 import { IconColor } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';
 
-const Header = (): JSX.Element => {
+type HeaderProperties = {
+    toggleSidebar: () => void;
+};
+
+const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
     return (
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
@@ -16,11 +22,23 @@ const Header = (): JSX.Element => {
                     </Link>
                 </div>
                 <div className="mr-5 md:hidden">
-                    <Icon
-                        name={'logoIcon'}
-                        color={IconColor.PRIMARY}
-                        size={ComponentSize.LARGE}
+                    <Button
+                        label=""
+                        variant="secondary"
+                        onClick={toggleSidebar}
+                        leftIcon={<Bars3BottomLeftIcon className="h-4 w-4" />}
+                        size="sm"
+                        className="p-4 px-1 py-0"
                     />
+                </div>
+                <div className="mr-5 md:hidden">
+                    <Link to={AppRoute.ROOT}>
+                        <Icon
+                            name={'logoIcon'}
+                            color={IconColor.PRIMARY}
+                            size={ComponentSize.LARGE}
+                        />
+                    </Link>
                 </div>
                 <div className="flex w-full justify-between">
                     <Message />

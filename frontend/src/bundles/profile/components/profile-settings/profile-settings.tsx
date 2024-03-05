@@ -80,7 +80,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 onSubmit(payload);
             })(event_);
         },
-        [handleSubmit, onSubmit, errors],
+        [handleSubmit, onSubmit],
     );
 
     const handleReset = useCallback((): void => {

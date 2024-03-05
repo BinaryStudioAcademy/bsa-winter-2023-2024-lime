@@ -53,6 +53,12 @@ class BaseConfig implements Config {
                     env: 'JWT_SECRET',
                     default: null,
                 },
+                TOKEN_EXPIRATION_TIME: {
+                    doc: 'Token expiration time',
+                    format: String,
+                    env: 'TOKEN_EXPIRATION_TIME',
+                    default: null,
+                },
                 OPEN_AI_API_KEY: {
                     doc: 'Api key for working with AI',
                     format: String,
@@ -63,6 +69,12 @@ class BaseConfig implements Config {
                     doc: 'AI model',
                     format: String,
                     env: 'OPEN_AI_MODEL',
+                    default: null,
+                },
+                API_BASE_URL: {
+                    doc: 'Base api url for our app',
+                    format: String,
+                    env: 'API_BASE_URL',
                     default: null,
                 },
             },
@@ -181,6 +193,20 @@ class BaseConfig implements Config {
                     doc: 'Strava Client Secret',
                     format: String,
                     env: 'STRAVA_CLIENT_SECRET',
+                    default: null,
+                },
+            },
+            GOOGLE_FIT: {
+                CLIENT_ID: {
+                    doc: 'Google fit Client ID',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_ID',
+                    default: null,
+                },
+                CLIENT_SECRET: {
+                    doc: 'Google fit Client Secret',
+                    format: String,
+                    env: 'GOOGLE_FIT_CLIENT_SECRET',
                     default: null,
                 },
             },

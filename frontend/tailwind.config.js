@@ -108,6 +108,7 @@ export default {
                 '83': '5.1875',
                 '115': '115px',
                 '120': '120px',
+                '150': '9.375rem',
                 '874': '54.625',
             },
             height: {
@@ -119,6 +120,12 @@ export default {
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+            },
+            minHeight: {
+                '90': 'calc(100vh - 5.5rem)',
+            },
+            maxHeight: {
+                '90': 'calc(100vh - 5.5rem)',
             },
             spacing: {
                 '60': '3.75rem',

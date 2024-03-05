@@ -6,16 +6,20 @@ import { createRoot } from 'react-dom/client';
 import { App } from '~/app/app.js';
 import { Auth } from '~/bundles/auth/pages/auth.js';
 import {
+    DownloadBanner,
     NotificationContainer,
     RouterProvider,
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { NotFound } from '~/bundles/common/pages/pages.js';
+import { Home, NotFound } from '~/bundles/common/pages/pages.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
 import { store } from '~/framework/store/store.js';
 
+import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
+import { ProfileLayout } from './bundles/profile/layout/profile-layout.js';
+import { ConnectionsPage } from './bundles/profile/pages/connections-page/connections-page.js';
 import {
     SubscriptionCheckout,
     SubscriptionPage,
@@ -27,11 +31,6 @@ const routes = [
         element: <App />,
         children: [
             {
-                path: AppRoute.ROOT,
-                element: 'Root',
-                isPrivate: true,
-            },
-            {
                 path: AppRoute.SIGN_IN,
                 element: <Auth />,
             },
@@ -40,41 +39,60 @@ const routes = [
                 element: <Auth />,
             },
             {
-                path: AppRoute.PROFILE,
-                element: <Profile />,
+                path: AppRoute.ROOT,
+                element: <BaseLayout />,
                 isPrivate: true,
-            },
-            {
-                path: AppRoute.GOALS,
-                element: <div>GOALS PAGE</div>,
-            },
-            {
-                path: AppRoute.WORKOUT,
-                element: <div>WORKOUT PAGE</div>,
-            },
-            {
-                path: AppRoute.OVERVIEW,
-                element: <div>Overview</div>,
-            },
-            {
-                path: AppRoute.SCHEDULE,
-                element: <div>SCHEDULE PAGE</div>,
-            },
-            {
-                path: AppRoute.HELP,
-                element: <div>HELP PAGE</div>,
-            },
-            {
-                path: AppRoute.LOGOUT,
-                element: <div>LOGOUT PAGE</div>,
-            },
-            {
-                path: AppRoute.SUBSCRIPTION,
-                element: <SubscriptionPage />,
-            },
-            {
-                path: AppRoute.SUBSCRIPTION_CHECKOUT,
-                element: <SubscriptionCheckout />,
+                children: [
+                    {
+                        path: AppRoute.ROOT,
+                        element: <Home />,
+                    },
+                    {
+                        path: AppRoute.GOALS,
+                        element: <div>GOALS PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.WORKOUT,
+                        element: <div>WORKOUT PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.OVERVIEW,
+                        element: <div>Overview</div>,
+                    },
+                    {
+                        path: AppRoute.SCHEDULE,
+                        element: <div>SCHEDULE PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.HELP,
+                        element: <div>HELP PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.LOGOUT,
+                        element: <div>LOGOUT PAGE</div>,
+                    },
+                    {
+                        element: <ProfileLayout />,
+                        children: [
+                            {
+                                path: AppRoute.PROFILE_INFORMATION,
+                                element: <Profile />,
+                            },
+                            {
+                                path: AppRoute.PROFILE_CONECTIONS,
+                                element: <ConnectionsPage />,
+                            },
+                            {
+                                path: AppRoute.PROFILE_SUBSCRIPTION,
+                                element: <SubscriptionPage />,
+                            },
+                            {
+                                path: AppRoute.PROFILE_SUBSCRIPTION_CHECKOUT,
+                                element: <SubscriptionCheckout />,
+                            },
+                        ],
+                    },
+                ],
             },
         ],
     },
@@ -86,14 +104,6 @@ const routes = [
         path: AppRoute.NOT_FOUND,
         element: <NotFound />,
     },
-    {
-        path: AppRoute.SIGN_IN,
-        element: <Auth />,
-    },
-    {
-        path: AppRoute.SIGN_UP,
-        element: <Auth />,
-    },
 ];
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
@@ -101,6 +111,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
         <StoreProvider store={store.instance}>
             <RouterProvider routes={routes} />
             <NotificationContainer />
+            <DownloadBanner />
         </StoreProvider>
     </StrictMode>,
 );

@@ -1,9 +1,12 @@
 export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonVariant } from './button/button.js';
+export { Card } from './card/card.js';
 export { DatePicker } from './date-picker/date-picker.js';
+export { DownloadBanner } from './download-banner/download-banner.jsx';
 export { ForgotPasswordForm } from './forgot-password-form/forgot-password-form.js';
 export { Header } from './header/header.js';
 export { Icon } from './icon/icon.js';
+export { InfoSection } from './info-section/info-section.js';
 export { Input } from './input/input.js';
 export { Layout } from './layout/layout.js';
 export { Link } from './link/link.js';

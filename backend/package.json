@@ -45,6 +45,7 @@
         "fastify": "4.25.2",
         "fastify-multer": "2.0.3",
         "fastify-raw-body": "4.3.0",
+        "googleapis": "133.0.0",
         "jose": "5.2.2",
         "knex": "3.1.0",
         "objection": "3.1.3",

@@ -49,6 +49,13 @@ const refreshUser = createAsyncThunk<
     return userApi.refreshUser();
 });
 
+const logout = createAsyncThunk<unknown, undefined, AsyncThunkConfig>(
+    `${sliceName}/logout`,
+    async () => {
+        await storage.drop(StorageKey.TOKEN);
+    },
+);
+
 const updateUser = createAsyncThunk<
     UserAuthResponseDto,
     UserUpdateProfileRequestDto,
@@ -58,4 +65,4 @@ const updateUser = createAsyncThunk<
     return await userApi.updateUser(updateUserPayload);
 });
 
-export { refreshUser, signIn, signUp, updateUser };
+export { logout, refreshUser, signIn, signUp, updateUser };
