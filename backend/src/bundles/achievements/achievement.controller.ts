@@ -1,5 +1,4 @@
 import { type AchievementService } from '~/bundles/achievements/achievement.service.js';
-import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -11,7 +10,7 @@ import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import {
-    type UserGetAllItemResponseDto,
+    type AchievementGetItemResponseDto,
     AchievementsApiPath,
 } from './enums/enums.js';
 
@@ -69,7 +68,7 @@ class AchievementController extends BaseController {
             handler: (options) =>
                 this.findById(
                     options as ApiHandlerOptions<{
-                        params: UserAuthResponseDto;
+                        params: AchievementGetItemResponseDto;
                     }>,
                 ),
         });
@@ -81,7 +80,7 @@ class AchievementController extends BaseController {
             handler: (options) =>
                 this.findUserParams(
                     options as ApiHandlerOptions<{
-                        params: UserAuthResponseDto;
+                        params: AchievementGetItemResponseDto;
                     }>,
                 ),
         });
@@ -150,7 +149,7 @@ class AchievementController extends BaseController {
 
     private async findById(
         options: ApiHandlerOptions<{
-            params: UserGetAllItemResponseDto;
+            params: AchievementGetItemResponseDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { params } = options;
@@ -209,7 +208,7 @@ class AchievementController extends BaseController {
     }
 
     private findUserParams(
-        options: ApiHandlerOptions<{ params: UserAuthResponseDto }>,
+        options: ApiHandlerOptions<{ params: AchievementGetItemResponseDto }>,
     ): Promise<ApiHandlerResponse> {
         const { params } = options;
         return this.findByUserId(params.id);

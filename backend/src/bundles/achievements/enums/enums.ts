@@ -1,6 +1,6 @@
 export { type Entity } from '~/common/types/entity.type.js';
 export {
-    type UserGetAllItemResponseDto,
+    type AchievementGetItemResponseDto,
     type ValueOf,
     AchievementsApiPath,
     ActivityType,
