@@ -15,7 +15,7 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('[userDetails]')
+            .withGraphFetched('userDetails')
             .execute();
 
         if (!user) {
@@ -34,13 +34,14 @@ class UserRepository implements Repository {
             height: userDetails.height,
             gender: userDetails.gender,
             referralCode: userDetails.referralCode,
+            bonusBalance: userDetails.bonusBalance,
         });
     }
 
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('[userDetails, userReferral]')
+            .withGraphFetched('userDetails')
             .execute();
 
         return users.map((user) => {
@@ -56,12 +57,15 @@ class UserRepository implements Repository {
                 height: userDetails.height,
                 gender: userDetails.gender,
                 referralCode: userDetails.referralCode,
+                bonusBalance: userDetails.bonusBalance,
             });
         });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordHash, stripeCustomerId } = entity.toNewObject();
+        const { email, passwordHash, stripeCustomerId, referralCode } =
+            entity.toNewObject();
+
         const trx = await this.userModel.startTransaction();
 
         try {
@@ -77,7 +81,7 @@ class UserRepository implements Repository {
 
             const userDetails = await user
                 .$relatedQuery('userDetails', trx)
-                .insert({})
+                .insert({ referralCode })
                 .returning('*')
                 .execute();
 
@@ -93,6 +97,7 @@ class UserRepository implements Repository {
                 height: userDetails.height,
                 gender: userDetails.gender,
                 referralCode: userDetails.referralCode,
+                bonusBalance: userDetails.bonusBalance,
             });
         } catch (error) {
             await trx.rollback();
@@ -115,6 +120,23 @@ class UserRepository implements Repository {
 
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
+    }
+
+    public async findByReferralCode(
+        referralCode: string,
+    ): Promise<{ userId: number | null }> {
+        const user = await this.userModel
+            .query()
+            .joinRelated('userDetails')
+            .findOne({ referralCode })
+            .withGraphFetched('userDetails')
+            .execute();
+
+        if (!user) {
+            return { userId: null };
+        }
+
+        return { userId: user.id };
     }
 }
 

@@ -1,3 +1,5 @@
+import crypto from 'node:crypto';
+
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { cryptService, stripeService } from '~/common/services/services.js';
@@ -36,12 +38,14 @@ class UserService implements Service {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);
         const { stripeCustomerId } = await stripeService.createCustomer(email);
+        const generatedReferralCode = crypto.randomUUID();
 
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
                 passwordHash: hash,
                 stripeCustomerId,
+                referralCode: generatedReferralCode,
             }),
         );
 
@@ -57,6 +61,12 @@ class UserService implements Service {
 
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
+    }
+
+    public async findByReferralCode(
+        referralCode: string,
+    ): Promise<{ userId: number | null }> {
+        return await this.userRepository.findByReferralCode(referralCode);
     }
 }
 

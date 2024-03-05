@@ -17,7 +17,7 @@ import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
 import {
     UserBonusAttributes,
     UserBonusModel,
-} from '../user-bonuses/user-bonus.js';
+} from '../user-bonuses/user-bonuses.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
