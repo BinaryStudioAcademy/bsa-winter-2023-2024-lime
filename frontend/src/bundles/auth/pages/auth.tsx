@@ -53,7 +53,7 @@ const Auth: React.FC = () => {
             user: auth.user,
         }),
     );
-    const { dataStatus } = useAppSelector(selectAuthDataStatus);
+    const { dataStatus, user } = useAppSelector(selectAuthDataStatus);
 
     const selectPasswordResetDataStatus = createSelector(
         [subscriptionPassDataStatus],
