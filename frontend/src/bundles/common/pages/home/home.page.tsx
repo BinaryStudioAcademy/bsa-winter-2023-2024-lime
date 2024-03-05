@@ -64,7 +64,7 @@ const Home: React.FC = () => {
                     goalType={GoalTypes.OVERVIEW}
                     className="mb-6"
                 />
-                <ul className="mb-6 flex flex-col flex-wrap gap-4 sm:flex-row">
+                <ul className="mb-6 flex gap-4">
                     <li className="flex-1">
                         <ActivityWidget
                             label="Workout"
