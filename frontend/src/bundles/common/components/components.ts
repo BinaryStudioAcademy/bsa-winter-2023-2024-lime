@@ -13,6 +13,7 @@ export { Link } from './link/link.js';
 export { Loader } from './loader/loader.js';
 export { Modal } from './modal/modal.js';
 export { NotificationContainer } from './notification-container/notification-container.js';
+export { Popover } from './popover/popover.js';
 export { ProtectedRoute } from './protected-route/protected-route.js';
 export { Radio } from './radio/radio.js';
 export { ResetPasswordForm } from './reset-password-form/reset-password-form.js';
