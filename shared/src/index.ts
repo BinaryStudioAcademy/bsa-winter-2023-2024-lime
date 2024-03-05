@@ -1,6 +1,25 @@
-export { ActivityType, Metric } from './bundles/achievements/enums/enums.js';
+export {
+    type AchievementGetItemResponseDto,
+    AchievementsApiPath,
+    Metric,
+} from './bundles/achievements/achievements.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
+export {
+    type GoalRequestDto,
+    type GoalResponseDto,
+    FrequencyType,
+    GoalsApiPath,
+    goalValidationSchema,
+} from './bundles/goals/goals.js';
+export {
+    type OAuthProviderParameterDto,
+    type OAuthResponseDto,
+    OAuthActionsPath,
+    OAuthProvider,
+    oAuthProviderValidationSchema,
+} from './bundles/oauth/oauth.js';
 export {
     type PasswordForgotRequestDto,
     type PasswordForgotResponseDto,
@@ -10,19 +29,37 @@ export {
     PasswordResetValidationMessage,
 } from './bundles/password-reset/password-reset.js';
 export {
+    type SubscriptionPlansGetAllItemResponseDto,
+    type SubscriptionPlansGetAllResponseDto,
+    SubscriptionPlansApiPath,
+} from './bundles/subscription-plans/subscription-plans.js';
+export {
+    type CancelSubscriptionRequestDto,
+    type CancelSubscriptionResponseDto,
+    type SubscribeRequestDto,
+    type SubscribeResponseDto,
+    type SubscriptionGetItemResponseDto,
+    SubscriptionsApiPath,
+    SubscriptionStatus,
+    SubscriptionValidationMessage,
+} from './bundles/subscriptions/subscriptions.js';
+export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserUpdateProfileRequestDto,
     Gender,
     passwordForgotValidationSchema,
     passwordResetValidationSchema,
     userAuthValidationSchema,
     UsersApiPath,
     userSignUpValidationSchema,
+    userUpdateProfileValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
+    ActivityType,
     ApiPath,
     AppEnvironment,
     ContentType,
@@ -42,7 +79,11 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type Storage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export {
+    configureDateString,
+    configureISOString,
+    configureString,
+} from './helpers/helpers.js';
 export {
     type ServerCommonErrorResponse,
     type ServerErrorDetail,

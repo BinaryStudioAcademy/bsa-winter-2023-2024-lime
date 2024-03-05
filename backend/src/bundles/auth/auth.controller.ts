@@ -3,6 +3,7 @@ import { userAuthValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
     BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -97,6 +98,7 @@ class AuthController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.authService.signIn(options.body),
         };
@@ -149,6 +151,7 @@ class AuthController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
             payload: await this.authService.signUp(options.body),
         };

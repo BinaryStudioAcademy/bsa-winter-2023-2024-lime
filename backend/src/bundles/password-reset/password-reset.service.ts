@@ -59,9 +59,9 @@ class PasswordResetService {
     public async resetPassword(
         passwordResetRequestDto: PasswordResetRequestDto,
     ): Promise<PasswordResetResponseDto> {
-        const user = (await this.userService.find({
+        const user = await this.userService.find({
             id: passwordResetRequestDto.id,
-        })) as unknown as UserModel;
+        });
 
         if (!user) {
             throw new HttpError({
@@ -73,7 +73,7 @@ class PasswordResetService {
         try {
             await jwtService.verifyToken(
                 passwordResetRequestDto.token,
-                user.passwordHash,
+                user.getPasswordHash(),
             );
         } catch {
             throw new HttpError({
@@ -94,7 +94,7 @@ class PasswordResetService {
 
         const existPassword = cryptService.compareSyncPassword(
             passwordResetRequestDto.password,
-            user.passwordHash,
+            user.getPasswordHash(),
         );
 
         if (existPassword) {
@@ -109,12 +109,15 @@ class PasswordResetService {
         );
 
         try {
-            await this.userService.update(passwordResetRequestDto.id, {
-                passwordHash: hash,
-            });
+            await this.userService.update(
+                { id: passwordResetRequestDto.id },
+                {
+                    passwordHash: hash,
+                },
+            );
         } catch {
             throw new HttpError({
-                message: PasswordResetValidationMessage.USER_NOT_FOUND,
+                message: PasswordResetValidationMessage.PASSWORD_NOT_CHANGED,
                 status: HttpCode.INTERNAL_SERVER_ERROR,
             });
         }

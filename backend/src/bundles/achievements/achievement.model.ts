@@ -20,7 +20,7 @@ class AchievementModel extends AbstractModel {
 
     public static override get relationMappings(): RelationMappings {
         return {
-            userAchievement: {
+            userAchievements: {
                 relation: Model.HasOneRelation,
                 modelClass: UserAchievementModel,
                 join: {
