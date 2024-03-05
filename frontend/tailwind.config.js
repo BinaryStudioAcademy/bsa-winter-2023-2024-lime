@@ -1,16 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
+const ButtonColors = {
+    TEXT: 'var(--button-text)',
+    PRIMARY: 'var(--button-primary)',
+    SECONDARY: 'var(--button-secondary)',
+    TERTIARY: 'var(--button-tertiary)',
+};
+
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    darkMode: 'class',
     theme: {
         colors: {
             transparent: 'transparent',
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
-            'lm-purple': '#7306FF',
-            'lm-magenta': '#DC40CD',
+            'lm-purple': {
+                100: '#7E51FF',
+                200: '#7306FF',
+            },
+            'lm-magenta': {
+                100: '#FF5EB1',
+                200: '#DC40CD',
+            },
             'lm-yellow': {
                 100: '#E0FE10',
                 200: '#B2CA0D',
@@ -21,6 +35,10 @@ export default {
                 300: '#475569',
                 400: '#64748B',
                 500: '#383F4A',
+            },
+            'lm-blue': {
+                400: '#242636',
+                500: '#1E1E2C',
             },
             'lm-black': {
                 100: '#2A2F37',
@@ -44,6 +62,7 @@ export default {
             semibold: '500',
             bold: '600',
             extrabold: '700',
+            heavybold: '800',
         },
         lineHeight: {
             '1': '0.75rem',
@@ -68,14 +87,18 @@ export default {
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+                gilroyLight: ['Gilroy-Light', ...defaultTheme.fontFamily.sans],
+                gilroyBold: ['Gilroy-Bold', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
-                'auth': "linear-gradient(to right, #E0FE10, transparent), linear-gradient(to right, #2A2F37, transparent), url('./src/assets/img/auth-bg.png')",
-                'rectangle':
-                    'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
+                'goalWidget':
+                    'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%)',
+                'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
+                'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
+                'wave-purple': 'url("~/assets/img/wave-purple.svg")',
             },
             borderRadius: {
                 '30': '1.9rem',
@@ -87,6 +110,7 @@ export default {
                 '83': '5.1875',
                 '115': '115px',
                 '120': '120px',
+                '150': '9.375rem',
                 '874': '54.625',
             },
             height: {
@@ -98,6 +122,36 @@ export default {
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+            },
+            minHeight: {
+                '90': 'calc(100vh - 5.5rem)',
+            },
+            maxHeight: {
+                '90': 'calc(100vh - 5.5rem)',
+            },
+            spacing: {
+                '60': '3.75rem',
+            },
+            textColor: {
+                primary: 'var(--text-primary)',
+                secondary: 'var(--text-secondary)',
+                action: 'var(--text-action)',
+                buttonText: ButtonColors.TEXT,
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
+            },
+            backgroundColor: {
+                primary: 'var(--background-primary)',
+                secondary: 'var(--background-secondary)',
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
+            },
+            borderColor: {
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
             },
         },
     },

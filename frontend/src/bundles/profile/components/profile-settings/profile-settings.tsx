@@ -2,15 +2,19 @@ import {
     Avatar,
     Button,
     ButtonVariant,
+    DatePicker,
     Input,
     Loader,
     Radio,
 } from '~/bundles/common/components/components.js';
-import { DatePicker } from '~/bundles/common/components/date-picker/date-picker.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
-import { RadioType } from '~/bundles/common/enums/radio-type.enum.js';
+import {
+    configureDateString,
+    configureISOString,
+    getObjectKeys,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppForm,
     useAppSelector,
@@ -27,12 +31,8 @@ import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 import { Cropper } from './cropper.js';
 
 type Properties = {
-    onSubmit: (payload: FormData) => void;
+    onSubmit: (payload: UserUpdateProfileRequestDto) => void;
     isLoading: boolean;
-};
-
-const extractNumbers = (value: string | undefined | null): string => {
-    return (value ?? '').trim().replaceAll(/\D/g, '');
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
@@ -41,7 +41,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const [avatar, setAvatar] = useState('');
     const [imgFile, setImgFile] = useState<File>();
 
-    const userId = useAppSelector((state) => state.auth.user?.id);
+    const [valuesDefault, setValuesDefault] = useState(false);
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
@@ -56,7 +56,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         avatar && void dataUrlToFile();
     }, [avatar]);
 
-    const { control, errors, reset, getValues } =
+    const { control, errors, reset, setValue, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
@@ -86,30 +86,49 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         setAvatar(img);
     }, []);
 
+    useEffect(() => {
+        if (!valuesDefault && user) {
+            for (const key of getObjectKeys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
+                if (key === 'dateOfBirth' && user.dateOfBirth) {
+                    setValue(key, configureDateString(user.dateOfBirth));
+                } else {
+                    if (user[key]) {
+                        setValue(key, user[key]);
+                    } else {
+                        setValue(key, DEFAULT_UPDATE_PROFILE_PAYLOAD[key]);
+                    }
+                }
+            }
+            setValuesDefault(true);
+        }
+    }, [user, setValue, valuesDefault]);
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            event_.preventDefault();
-            const form = new FormData();
-            form.append('gender', getValues().gender as string);
-            form.append('dateOfBirth', getValues().dateOfBirth as string);
-            form.append('avatarUrl', imgFile as File);
-            form.append('fullName', getValues().fullName as string);
-            form.append('username', getValues().username as string);
-            form.append('weight', extractNumbers(getValues().weight));
-            form.append('height', extractNumbers(getValues().height));
-            form.append('id', userId?.toString() as string);
-
-            onSubmit(form);
-            reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
+            imgFile;
+            void handleSubmit((data) => {
+                const payload: UserUpdateProfileRequestDto = {
+                    ...data,
+                    weight: data.weight || null,
+                    height: data.height || null,
+                    dateOfBirth: data.dateOfBirth
+                        ? configureISOString(data.dateOfBirth || '')
+                        : null,
+                    fullName: (data.fullName || '').trim(),
+                    username: (data.username || '').trim(),
+                };
+                onSubmit(payload);
+            })(event_);
         },
-        [onSubmit, getValues, userId, reset, imgFile],
+        [handleSubmit, onSubmit, imgFile],
     );
 
-    const handleCancel = useCallback((): void => {
+    const handleReset = useCallback((): void => {
+        void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
+
         setImgFile(undefined);
         setAvatar('');
         setImgToCrop('');
-        void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
     }, [reset]);
 
     return (
@@ -207,7 +226,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Male"
                         value={Gender.MALE}
                         control={control}
-                        type={RadioType.CARD}
+                        type="card"
                         className="rounded-bl-5 lg:w-83 rounded-l-lg "
                     />
                     <Radio
@@ -216,7 +235,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Female"
                         value={Gender.FEMALE}
                         control={control}
-                        type={RadioType.CARD}
+                        type="card"
                         className="lg:w-83"
                     />
                     <Radio
@@ -225,20 +244,20 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Prefer not to say"
                         value={Gender.OTHER}
                         control={control}
-                        type={RadioType.CARD}
+                        type="card"
                         className="lg:w-50 rounded-r-lg"
                     />
                 </div>
                 <ul className="mt-14 flex lg:col-start-3 lg:col-end-5 lg:row-start-4 lg:mt-6">
                     <li className="mr-6 w-full">
                         <Button
-                            label={isLoading ? '' : 'Cancel'}
+                            label={isLoading ? '' : 'Reset'}
                             leftIcon={
                                 isLoading && (
                                     <Loader color={IconColor.SECONDARY} />
                                 )
                             }
-                            onClick={handleCancel}
+                            onClick={handleReset}
                             variant={ButtonVariant.SECONDARY}
                             size={ComponentSize.MEDIUM}
                         />

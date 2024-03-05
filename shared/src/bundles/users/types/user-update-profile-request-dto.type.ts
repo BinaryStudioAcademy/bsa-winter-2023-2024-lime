@@ -2,15 +2,12 @@ import { type ValueOf } from '../../../types/types.js';
 import { type Gender } from '../users.js';
 
 type UserUpdateProfileRequestDto = {
-    id: number | null;
-    fullName?: string | null;
-    username?: string | null;
-    avatarUrl?: File | undefined;
-    dateOfBirth?: string | null;
-    weight?: string | null;
-    height?: string | null;
-    gender?: ValueOf<typeof Gender>;
-    [key: string]: File | string | number | null | undefined;
+    fullName: string | null;
+    username: string | null;
+    dateOfBirth: string | null;
+    weight: number | null | '';
+    height: number | null | '';
+    gender: ValueOf<typeof Gender>;
 };
 
 export { type UserUpdateProfileRequestDto };

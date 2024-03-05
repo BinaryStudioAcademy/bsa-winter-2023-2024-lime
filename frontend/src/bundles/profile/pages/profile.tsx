@@ -1,3 +1,6 @@
+import { type UserUpdateProfileRequestDto } from 'shared';
+
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -5,7 +8,6 @@ import {
     useCallback,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { actions as authActions } from '../../auth/store/auth.js';
 import { ProfileSettings } from '../components/components.js';
 
 const Profile: React.FC = () => {
@@ -15,7 +17,7 @@ const Profile: React.FC = () => {
     }));
     const isLoading = dataStatus === DataStatus.PENDING;
     const handleProfileUpdate = useCallback(
-        (payload: FormData): void => {
+        (payload: UserUpdateProfileRequestDto): void => {
             void dispatch(authActions.updateUser(payload));
         },
         [dispatch],

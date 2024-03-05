@@ -1,13 +1,13 @@
-import { type ReactNode } from 'react';
-
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
+import { type ReactNode, type ValueOf } from '~/bundles/common/types/types.js';
 
 const ButtonVariant = {
     PRIMARY: 'primary',
     SECONDARY: 'secondary',
     TERTIARY: 'tertiary',
+    SIDEBAR: 'sidebar',
+    DANGER: 'danger',
 } as const;
 
 type ButtonSize = Exclude<
@@ -25,20 +25,28 @@ type ButtonProperties = {
     rightIcon?: ReactNode;
     type?: ButtonType;
     isDisabled?: boolean;
+    isActive?: boolean;
     className?: string;
     onClick?: () => void;
 };
 
 const baseClasses =
-    'w-full flex justify-center items-center transition ease-in-out duration-300';
+    'w-full flex items-center transition ease-in-out duration-300';
+
+const activeClasses =
+    'bg-lm-yellow-100 text-lm-black-200 hover:text-lm-black-400 hover:outline-2 hover:outline-lm-black-400 hover:outline';
 
 const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.PRIMARY]:
-        'rounded-lg bg-lm-yellow-100 text-lm-black-300 hover:bg-lm-yellow-200 disabled:text-lm-grey-200 disabled:bg-lm-grey-300',
+        'rounded-lg justify-center bg-buttonPrimary text-buttonText hover:bg-buttonSecondary  disabled:bg-buttonTertiary',
     [ButtonVariant.SECONDARY]:
-        'border border-lm-yellow-100 rounded-lg bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 hover:border-lm-yellow-200 disabled:text-lm-grey-300 disabled:border-lm-grey-300',
+        'border justify-center border-buttonPrimary rounded-lg bg-transparent text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary disabled:border-buttonTertiary',
     [ButtonVariant.TERTIARY]:
-        'bg-transparent text-lm-yellow-100 hover:text-lm-yellow-200 disabled:text-lm-grey-300',
+        'bg-transparent justify-center text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary',
+    [ButtonVariant.SIDEBAR]:
+        'text-lm-grey-200 align hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
+    [ButtonVariant.DANGER]:
+        'rounded-lg justify-center bg-lm-red text-white hover:opacity-80',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {
@@ -56,6 +64,7 @@ const Button: React.FC<ButtonProperties> = ({
     className,
     type = 'button',
     isDisabled = false,
+    isActive = false,
     ...properties
 }: ButtonProperties): JSX.Element => {
     return (
@@ -67,6 +76,7 @@ const Button: React.FC<ButtonProperties> = ({
                 buttonSizesToClasses[size],
                 buttonVariantToClasses[variant],
                 className,
+                isActive ? activeClasses : '',
             )}
             {...properties}
         >

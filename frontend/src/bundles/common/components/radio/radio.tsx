@@ -4,10 +4,14 @@ import {
     type FieldValues,
 } from 'react-hook-form';
 
-import { RadioType } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useFormController } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
+
+const RadioType = {
+    ROUND: 'round',
+    CARD: 'card',
+} as const;
 
 type Properties<T extends FieldValues> = {
     name: FieldPath<T>;

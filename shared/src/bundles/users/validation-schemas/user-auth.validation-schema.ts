@@ -97,4 +97,34 @@ const userAuthPWConfirm = basicUserAuth
         path: ['passwordConfirm'],
     });
 
-export { userAuth, userAuthPWConfirm };
+const passwordForgot = basicUserAuth.omit({ password: true });
+
+const passwordReset = basicUserAuth
+    .omit({ email: true })
+    .extend({
+        passwordConfirm: z
+            .string()
+            .trim()
+            .min(1, {
+                message: UserValidationMessage.REQUIRED,
+            })
+            .min(UserValidationRule.PASSWORD.MIN_LENGTH, {
+                message: UserValidationMessage.INVALID_PASSWORD,
+            })
+            .max(UserValidationRule.PASSWORD.MAX_LENGTH, {
+                message: UserValidationMessage.INVALID_PASSWORD,
+            }),
+        id: z.number().optional(),
+        token: z.string().optional(),
+    })
+    .refine(
+        (schema) => {
+            return schema.password === schema.passwordConfirm;
+        },
+        {
+            message: UserValidationMessage.PASSWORD_MISMATCH,
+            path: ['passwordConfirm'],
+        },
+    );
+
+export { passwordForgot, passwordReset, userAuth, userAuthPWConfirm };

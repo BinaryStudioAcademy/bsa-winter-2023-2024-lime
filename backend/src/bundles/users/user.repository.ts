@@ -2,7 +2,6 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type Repository } from '~/common/types/types.js';
 
-import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
 class UserRepository implements Repository {
@@ -18,7 +17,7 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('userDetails')
+            .withGraphFetched('[userDetails]')
             .execute();
 
         if (!user) {
@@ -42,7 +41,7 @@ class UserRepository implements Repository {
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('userDetails')
+            .withGraphFetched('[userDetails]')
             .execute();
 
         return users.map((user) => {
@@ -62,7 +61,7 @@ class UserRepository implements Repository {
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordHash } = entity.toNewObject();
+        const { email, passwordHash, stripeCustomerId } = entity.toNewObject();
         const trx = await this.userModel.startTransaction();
 
         try {
@@ -71,6 +70,7 @@ class UserRepository implements Repository {
                 .insert({
                     email,
                     passwordHash,
+                    stripeCustomerId,
                 })
                 .returning('*')
                 .execute();
@@ -78,6 +78,12 @@ class UserRepository implements Repository {
             const userDetails = await user
                 .$relatedQuery('userDetails', trx)
                 .insert({})
+                .returning('*')
+                .execute();
+
+            await user
+                .$relatedQuery('userAchievements', trx)
+                .insert({ achievementId: 1 })
                 .returning('*')
                 .execute();
 
@@ -98,30 +104,42 @@ class UserRepository implements Repository {
             throw error;
         }
     }
-
     public async update(
-        userId: number,
-        updatedUserDetails: Partial<UserDetailsModel>,
-    ): Promise<UserEntity> {
-        const trx = await this.userModel.startTransaction();
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): ReturnType<Repository['update']> {
+        return await this.userModel
+            .query()
+            .patch(payload)
+            .where(query)
+            .returning('*')
+            .first()
+            .execute();
+    }
 
+    public async updateUserProfile(
+        userId: number,
+        payload: Partial<UserDetailsModel>,
+    ): Promise<UserEntity | null> {
+        const trx = await this.userModel.startTransaction();
         try {
             const user = await this.userModel.query(trx).findById(userId);
 
             if (!user) {
-                throw new HttpError({
-                    message: UserValidationMessage.USER_NOT_FOUND,
-                    status: HttpCode.NOT_FOUND,
-                });
+                return null;
             }
-            await user
-                .$relatedQuery('userDetails', trx)
-                .patch(updatedUserDetails);
 
-            const userDetails = await user.$relatedQuery('userDetails', trx);
+            const userDetails = await user
+                .$relatedQuery('userDetails', trx)
+                .patch(payload)
+                .returning('*')
+                .first();
 
             await trx.commit();
 
+            if (!userDetails) {
+                return null;
+            }
             return UserEntity.initialize({
                 ...user,
                 fullName: userDetails.fullName,
@@ -137,7 +155,6 @@ class UserRepository implements Repository {
             throw new Error(`Error updating user details: ${error}`);
         }
     }
-
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
     }

@@ -1,9 +1,10 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
-import { cryptService } from '~/common/services/services.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
+import { cryptService, stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
-import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
+import { UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
@@ -38,60 +39,46 @@ class UserService implements Service {
     ): Promise<UserAuthResponseDto> {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);
+        const { stripeCustomerId } = await stripeService.createCustomer(email);
 
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
                 passwordHash: hash,
+                stripeCustomerId,
             }),
         );
 
         return user.toObject() as UserAuthResponseDto;
     }
 
-    public async update(
+    public async updateUserProfile(
         userId: number,
-        userRequest: UserUpdateProfileRequestDto,
+        payload: UserUpdateProfileRequestDto,
     ): Promise<UserAuthResponseDto | null> {
         try {
-            const existingUser = await this.userRepository.find({
-                id: userId,
-            });
-            if (existingUser) {
-                const updatedUserDetails: Partial<UserDetailsModel> = {};
-                for (const property of Object.keys(userRequest)) {
-                    const value = userRequest[property];
-                    if (this.shouldUpdateProperty(value)) {
-                        updatedUserDetails[property] =
-                            property === 'weight' || property === 'height'
-                                ? Number(userRequest[property])
-                                : userRequest[property];
-                    }
-                }
-                const updatedUser = await this.userRepository.update(
-                    userId,
-                    updatedUserDetails,
-                );
-                if (!updatedUser) {
-                    throw new HttpError({
-                        message: UserValidationMessage.USER_NOT_FOUND,
-                        status: HttpCode.NOT_FOUND,
-                    });
-                }
-                return updatedUser.toObject() as UserAuthResponseDto;
-            } else {
+            const updatedUser = await this.userRepository.updateUserProfile(
+                userId,
+                payload as Partial<UserDetailsModel>,
+            );
+            if (!updatedUser) {
                 throw new HttpError({
                     message: UserValidationMessage.USER_NOT_FOUND,
                     status: HttpCode.NOT_FOUND,
                 });
             }
+            return updatedUser.toObject() as UserAuthResponseDto;
         } catch (error) {
             throw new Error(`Error occured ${error}`);
         }
     }
-    private shouldUpdateProperty(value: unknown): boolean {
-        return value !== null && value !== '';
+    public async update(
+        query: Record<string, unknown>,
+        payload: Record<string, unknown>,
+    ): ReturnType<Service['update']> {
+        return await this.userRepository.update(query, payload);
     }
+
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
     }

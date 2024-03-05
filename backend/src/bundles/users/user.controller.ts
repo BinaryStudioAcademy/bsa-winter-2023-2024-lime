@@ -1,5 +1,3 @@
-import { UserValidationMessage } from 'shared';
-
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -8,6 +6,7 @@ import {
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
 } from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -16,23 +15,6 @@ import { type Logger } from '~/common/logger/logger.js';
 import { upload } from '~/common/middlewares/file.middleware.js';
 
 import { UsersApiPath } from './enums/enums.js';
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
 
 /**
  * @swagger
@@ -59,14 +41,14 @@ import { UsersApiPath } from './enums/enums.js';
  *            type: string
  *            nullable: true
  *          dateOfBirth:
+ *            type: date
+ *            format: DD/MM/YYYY
+ *            nullable: true
+ *          weight:
  *            type: string
  *            nullable: true
- *            format: date
- *          weight:
- *            type: number
- *            nullable: true
  *          height:
- *            type: number
+ *            type: string
  *            nullable: true
  *          gender:
  *            type: string
@@ -103,7 +85,7 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
-            path: `${UsersApiPath.UPDATE_USER}/:userId`,
+            path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
             preHandler: upload.single('image'),
@@ -112,8 +94,6 @@ class UserController extends BaseController {
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
-                        file: File;
-                        params: { userId: string };
                     }>,
                 ),
         });
@@ -139,7 +119,7 @@ class UserController extends BaseController {
      *                   items:
      *                     type: array
      *                     items:
-     *                       $ref: '#/components/schemas/User/'
+     *                       $ref: '#/components/schemas/User'
      *        401:
      *          description: Failed operation
      *          content:
@@ -150,6 +130,7 @@ class UserController extends BaseController {
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
         };
@@ -185,6 +166,7 @@ class UserController extends BaseController {
         const { user } = options;
 
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: user,
         };
@@ -194,39 +176,17 @@ class UserController extends BaseController {
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
             body: UserUpdateProfileRequestDto;
-            file: File;
-            params: { userId: string };
         }>,
     ): Promise<ApiHandlerResponse> {
-        const { user, body, params } = options;
-        const userId = params.userId;
-
+        const { user, body } = options;
+        const { id } = user;
         try {
-            if (Number(userId) !== Number(user.id)) {
-                throw new Error('Token mismatch');
-            }
-            const updatedUser = await this.userService.update(
-                Number(userId),
+            const updatedUser = await this.userService.updateUserProfile(
+                id,
                 body,
             );
-            if (updatedUser && body.dateOfBirth) {
-                const [day, month, year] = body.dateOfBirth.split('/');
-                const parsedDate = new Date(`${year}-${month}-${day}`);
-
-                if (Number.isNaN(parsedDate.getTime())) {
-                    throw new HttpError({
-                        message: UserValidationMessage.BIRTHDATE_FORMAT,
-                        status: HttpCode.BAD_REQUEST,
-                    });
-                } else {
-                    const formattedDate =
-                        parsedDate.toLocaleDateString('en-GB');
-
-                    updatedUser.dateOfBirth = formattedDate;
-                }
-            }
-
             return {
+                type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
                 payload: updatedUser,
             };

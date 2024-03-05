@@ -7,6 +7,8 @@ export {
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
 export {
+    passwordForgot as passwordForgotValidationSchema,
+    passwordReset as passwordResetValidationSchema,
     userAuth as userAuthValidationSchema,
     userAuthPWConfirm as userSignUpValidationSchema,
     userUpdateProfile as userUpdateProfileValidationSchema,

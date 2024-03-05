@@ -48,40 +48,46 @@ const userUpdateProfile = z
             z.literal(''),
         ]),
         weight: z.union([
-            z
-                .string()
-                .regex(UnicodePattern.WEIGHT_PATTERN, {
-                    message: UserValidationMessage.WEIGHT_WRONG,
-                })
-                .min(UserValidationRule.WEIGHT.MIN_LENGTH, {
-                    message: UserValidationMessage.WEIGHT_LENGTH,
-                })
-                .max(UserValidationRule.WEIGHT.MAX_LENGTH, {
-                    message: UserValidationMessage.WEIGHT_LENGTH,
-                })
-                .nullable(),
+            z.coerce
+                .number()
+                .nullable()
+                .refine(
+                    (value) => {
+                        if (!value) {
+                            return true;
+                        }
+                        return (
+                            value >= UserValidationRule.WEIGHT.MIN_VALUE &&
+                            value <= UserValidationRule.WEIGHT.MAX_VALUE
+                        );
+                    },
+                    {
+                        message: UserValidationMessage.WEIGHT_VALUE,
+                    },
+                ),
             z.literal(''),
         ]),
         height: z.union([
-            z
-                .string()
-                .regex(UnicodePattern.HEIGHT_PATTERN, {
-                    message: UserValidationMessage.HEIGHT_WRONG,
-                })
-                .min(UserValidationRule.HEIGHT.MIN_LENGTH, {
-                    message: UserValidationMessage.HEIGHT_LENGTH,
-                })
-                .max(UserValidationRule.HEIGHT.MAX_LENGTH, {
-                    message: UserValidationMessage.HEIGHT_LENGTH,
-                })
+            z.coerce
+                .number()
+                .refine(
+                    (value) => {
+                        if (!value) {
+                            return true;
+                        }
+                        return (
+                            value >= UserValidationRule.HEIGHT.MIN_VALUE &&
+                            value <= UserValidationRule.HEIGHT.MAX_VALUE
+                        );
+                    },
+                    {
+                        message: UserValidationMessage.HEIGHT_VALUE,
+                    },
+                )
                 .nullable(),
             z.literal(''),
         ]),
-        gender: z.union([
-            z.literal('male'),
-            z.literal('female'),
-            z.literal('prefer not to say'),
-        ]),
+        gender: z.enum(['male', 'female', 'prefer not to say']),
     })
     .required();
 

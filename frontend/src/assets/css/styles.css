@@ -1,36 +1,6 @@
-@import url("./date-picker.css");
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-    .h1 {
-        @apply text-4xl leading-9;
-    }
-
-    .h2 {
-        @apply text-3xl leading-8;
-    }
-
-    .h3 {
-        @apply text-2xl leading-7;
-    }
-
-    .h4 {
-        @apply text-xl leading-6;
-    }
-
-    .h5 {
-        @apply text-base leading-5;
-    }
-
-    .body {
-        @apply text-sm leading-4;
-    }
-
-    .body-sm {
-        @apply text-xs leading-3;
-    }
-}
+@import url("https://db.onlinewebfonts.com/c/0744a43ed7aac352ec78c1404c890d72?family=Gilroy-Light");
+@import url("https://db.onlinewebfonts.com/c/1064f0ad1cb65fdab43bb592ddd8aa91?family=Gilroy-Bold");
+@import url("./base-styles.css");
+@import url("./theme.css");
+@import url("./date-picker.css");
