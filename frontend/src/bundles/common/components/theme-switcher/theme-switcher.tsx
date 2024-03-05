@@ -1,7 +1,7 @@
+import { Theme } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { actions as themeActions } from '~/bundles/common/store/theme.js';
 
-import { Theme } from '../../enums/theme.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -37,7 +37,7 @@ function ThemeSwitcher({
         <>
             <div className={getValidClassNames(className)}>
                 <Switch
-                    checked={theme === 'dark' ? true : false}
+                    checked={theme === Theme.DARK}
                     onChange={toggleTheme}
                     size={64}
                 />

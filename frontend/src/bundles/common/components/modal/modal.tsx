@@ -13,7 +13,7 @@ type Properties = {
 
 const Modal: React.FC<Properties> = ({ isOpen, title, onClose, children }) => {
     const classes = {
-        modalClass: `relative transition ease-in-out duration-300 modal flex items-center justify-center ${isOpen ? 'visible opacity-100' : 'invisible opacity-0'}`,
+        modalClass: `relative transition ease-in-out duration-300 modal z-[2] flex items-center justify-center ${isOpen ? 'visible opacity-100' : 'invisible opacity-0'}`,
         overlayClass:
             'overlay bg-primary fixed inset-0 z-50 cursor-pointer opacity-90',
         contentClass:

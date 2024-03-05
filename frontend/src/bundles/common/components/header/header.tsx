@@ -45,11 +45,13 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
                     />
                 </div>
                 <div className="mr-5 md:hidden">
-                    <Icon
-                        name={'logoIcon'}
-                        color={IconColor.PRIMARY}
-                        size={ComponentSize.LARGE}
-                    />
+                    <Link to={AppRoute.ROOT}>
+                        <Icon
+                            name={'logoIcon'}
+                            color={IconColor.PRIMARY}
+                            size={ComponentSize.LARGE}
+                        />
+                    </Link>
                 </div>
                 <div className="flex w-full justify-between">
                     <Message />

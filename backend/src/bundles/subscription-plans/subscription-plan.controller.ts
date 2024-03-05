@@ -13,23 +13,6 @@ import { type SubscriptionPlanService } from './subscription-plan.service.js';
 /**
  * @swagger
  * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
-
-/**
- * @swagger
- * components:
  *    schemas:
  *      SubscriptionPlan:
  *        type: object

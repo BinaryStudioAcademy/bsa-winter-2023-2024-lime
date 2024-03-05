@@ -28,26 +28,26 @@ const GoalWidget = ({
     return (
         <div
             className={getValidClassNames(
-                'bg-secondary bg-goalWidget flex h-full max-h-40 w-full items-center rounded-xl',
+                'bg-goalWidget flex h-40 w-full items-center justify-between rounded-xl px-6',
                 className,
             )}
         >
-            <div className="w-4/6 bg-gray-200 p-6">
-                <p className="font-heavybold text-lm-black-100 line text-[24px] leading-7">
+            <div>
+                <p className="font-heavybold text-lm-black-200 hidden text-[1.5rem] leading-7 md:block">
                     {title}
                 </p>
                 {subTitle && (
-                    <p className="text-lm-black-100 text-[14px]">{subTitle}</p>
+                    <p className="text-lm-black-200 text-sm">{subTitle}</p>
                 )}
             </div>
-            <div className="flex w-3/6 items-center justify-end p-4">
-                <div className="text-primary flex w-2/4 justify-end text-white">
+            <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-2 text-white">
                     {goalType === GoalTypes.OVERVIEW && (
                         <Icon name="workoutIcon" size="lg" />
                     )}
-                    <p className="text-md font-extrabold ">{rightTitle}</p>
+                    <p className="text-base font-extrabold">{rightTitle}</p>
                 </div>
-                <div className="flex w-2/4 items-center justify-center">
+                <div className="flex items-center justify-center">
                     <CircleProgress
                         value={value}
                         target={target}

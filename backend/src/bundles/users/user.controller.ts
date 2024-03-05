@@ -1,33 +1,19 @@
 import { type UserService } from '~/bundles/users/user.service.js';
-import { type UserAuthResponseDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthResponseDto,
+    type UserUpdateProfileRequestDto,
+} from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
     ApiHandlerResponseType,
-    BaseController,
 } from '~/common/controller/controller.js';
+import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { HttpCode } from '~/common/http/http.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import { UsersApiPath } from './enums/enums.js';
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
 
 /**
  * @swagger
@@ -93,6 +79,19 @@ class UserController extends BaseController {
                 this.getCurrentUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.UPDATE_USER,
+            method: 'PATCH',
+            isProtected: true,
+            handler: (options) =>
+                this.updateUser(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        body: UserUpdateProfileRequestDto;
                     }>,
                 ),
         });
@@ -169,6 +168,32 @@ class UserController extends BaseController {
             status: HttpCode.OK,
             payload: user,
         };
+    }
+
+    private async updateUser(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            body: UserUpdateProfileRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user, body } = options;
+        const { id } = user;
+        try {
+            const updatedUser = await this.userService.updateUserProfile(
+                id,
+                body,
+            );
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.OK,
+                payload: updatedUser,
+            };
+        } catch (error) {
+            throw new HttpError({
+                message: `Something went wrong ${error}`,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
     }
 }
 
