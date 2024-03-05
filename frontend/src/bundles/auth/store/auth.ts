@@ -1,10 +1,11 @@
-import { logout, refreshUser, signIn, signUp } from './actions.js';
+import { logout, refreshUser, signIn, signUp, updateUser } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     signUp,
     signIn,
+    updateUser,
     refreshUser,
     logout,
 };

@@ -50,9 +50,9 @@ const Auth: React.FC = () => {
         [subscriptionDataStatus],
         (auth) => ({
             dataStatus: auth.dataStatus,
+            user: auth.user,
         }),
     );
-
     const { dataStatus } = useAppSelector(selectAuthDataStatus);
 
     const selectPasswordResetDataStatus = createSelector(
@@ -107,10 +107,10 @@ const Auth: React.FC = () => {
     }, [isPasswordForgot]);
 
     useEffect(() => {
-        if (dataStatus === DataStatus.FULFILLED) {
+        if (user) {
             navigate(AppRoute.ROOT);
         }
-    }, [dataStatus, navigate]);
+    }, [navigate, user]);
 
     useEffect(() => {
         if (resetPasswordStatus === DataStatus.FULFILLED) {

@@ -8,6 +8,7 @@ export { type ThemeType } from './theme-type.js';
 export { type PayloadAction } from '@reduxjs/toolkit';
 export { type ReactNode } from 'react';
 export { type RouteObject as LibraryRouteObject } from 'react-router-dom';
+export { type SingleValue } from 'react-select';
 export {
     type AuthResponseDto,
     type ServerErrorDetail,

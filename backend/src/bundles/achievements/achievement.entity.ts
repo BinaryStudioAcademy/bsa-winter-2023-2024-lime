@@ -16,24 +16,29 @@ class AchievementEntity implements Entity {
 
     private 'requirementMetric': ValueOf<typeof Metric> | null;
 
+    private 'createdAt': string | null;
+
     private constructor({
         id,
         name,
         activityType,
         requirement,
         requirementMetric,
+        createdAt,
     }: {
         id: number | null;
         name: string;
         activityType: ValueOf<typeof ActivityType> | null;
         requirement: number;
         requirementMetric: ValueOf<typeof Metric> | null;
+        createdAt: string | null;
     }) {
         this.id = id;
         this.name = name;
         this.activityType = activityType;
         this.requirement = requirement;
         this.requirementMetric = requirementMetric;
+        this.createdAt = createdAt;
     }
 
     public static initialize({
@@ -42,12 +47,14 @@ class AchievementEntity implements Entity {
         activityType,
         requirement,
         requirementMetric,
+        createdAt,
     }: {
         id: number;
         name: string;
         activityType: ValueOf<typeof ActivityType> | null;
         requirement: number;
         requirementMetric: ValueOf<typeof Metric> | null;
+        createdAt: string | null;
     }): AchievementEntity {
         return new AchievementEntity({
             id,
@@ -55,6 +62,7 @@ class AchievementEntity implements Entity {
             activityType,
             requirement,
             requirementMetric,
+            createdAt,
         });
     }
 
@@ -63,11 +71,13 @@ class AchievementEntity implements Entity {
         activityType,
         requirement,
         requirementMetric,
+        createdAt,
     }: {
         name: string;
         activityType: ValueOf<typeof ActivityType> | null;
         requirement: number;
         requirementMetric: ValueOf<typeof Metric> | null;
+        createdAt: string | null;
     }): AchievementEntity {
         return new AchievementEntity({
             id: null,
@@ -75,6 +85,7 @@ class AchievementEntity implements Entity {
             activityType,
             requirement,
             requirementMetric,
+            createdAt,
         });
     }
 
@@ -84,6 +95,7 @@ class AchievementEntity implements Entity {
         activityType: ValueOf<typeof ActivityType> | null;
         requirement: number;
         requirementMetric: ValueOf<typeof Metric> | null;
+        createdAt: string | null;
     } {
         return {
             id: this.id as number,
@@ -91,6 +103,7 @@ class AchievementEntity implements Entity {
             activityType: this.activityType,
             requirement: this.requirement,
             requirementMetric: this.requirementMetric,
+            createdAt: this.createdAt,
         };
     }
 
@@ -99,12 +112,14 @@ class AchievementEntity implements Entity {
         activityType: ValueOf<typeof ActivityType> | null;
         requirement: number;
         requirementMetric: ValueOf<typeof Metric> | null;
+        createdAt: string | null;
     } {
         return {
             name: this.name,
             activityType: this.activityType,
             requirement: this.requirement,
             requirementMetric: this.requirementMetric,
+            createdAt: this.createdAt,
         };
     }
 }

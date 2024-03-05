@@ -1,3 +1,4 @@
+import { Theme } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { actions as themeActions } from '~/bundles/common/store/theme.js';
 
@@ -23,7 +24,7 @@ function ThemeSwitcher({ className }: Properties): JSX.Element {
 
     const toggleTheme = useCallback(() => {
         if (theme) {
-            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK;
             void dispatch(themeActions.toggleTheme(newTheme));
         }
     }, [dispatch, theme]);
@@ -32,7 +33,7 @@ function ThemeSwitcher({ className }: Properties): JSX.Element {
         <>
             <div className={getValidClassNames(className)}>
                 <Switch
-                    checked={theme === 'dark' ? true : false}
+                    checked={theme === Theme.DARK}
                     onChange={toggleTheme}
                     size={64}
                 />
