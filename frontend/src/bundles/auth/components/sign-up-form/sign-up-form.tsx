@@ -16,7 +16,7 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { userSignUpValidationSchema } from '~/bundles/users/users.js';
 
-import { BREAKPOINTS } from '../constants/constants.js';
+import { HeightBreakpoint } from '../constants/height-breakpoint.js';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './constants/constants.js';
 import { type UserSignUpForm } from './type.js';
 
@@ -26,7 +26,7 @@ type Properties = {
 };
 
 const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const isHeight = useHeight(BREAKPOINTS.small);
+    const isHeight = useHeight(HeightBreakpoint.small);
 
     const { control, errors, handleSubmit } = useAppForm<UserSignUpForm>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,

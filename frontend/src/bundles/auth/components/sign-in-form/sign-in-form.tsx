@@ -19,7 +19,7 @@ import {
     userAuthValidationSchema,
 } from '~/bundles/users/users.js';
 
-import { BREAKPOINTS } from '../constants/constants.js';
+import { HeightBreakpoint } from '../constants/height-breakpoint.js';
 import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
@@ -33,7 +33,7 @@ const SignInForm: React.FC<Properties> = ({
     onModalOpen,
     isLoading,
 }) => {
-    const isHeight = useHeight(BREAKPOINTS.small);
+    const isHeight = useHeight(HeightBreakpoint.small);
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
         validationSchema: userAuthValidationSchema,
