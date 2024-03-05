@@ -35,18 +35,18 @@ const SidebarNav = ({
 
     return (
         <Link to={to} className="flex items-center justify-center">
-                <Button
-                    type="button"
-                    label={isOpen ? text : ''}
-                    className={getValidClassNames(
-                        isActive ? classes.active : classes.inactive,
-                        isOpen ? '' : 'h-12 w-12 justify-end'
-                    )}
-                    leftIcon={enhacedIcon}
-                    variant={ButtonVariant.SIDEBAR}
-                    isActive={isActive}
-                    size={ComponentSize.MEDIUM}
-                />
+            <Button
+                type="button"
+                label={isOpen ? text : ''}
+                className={getValidClassNames(
+                    isActive ? classes.active : classes.inactive,
+                    isOpen ? '' : 'h-12 w-12 justify-end',
+                )}
+                leftIcon={enhacedIcon}
+                variant={ButtonVariant.SIDEBAR}
+                isActive={isActive}
+                size={ComponentSize.MEDIUM}
+            />
         </Link>
     );
 };
