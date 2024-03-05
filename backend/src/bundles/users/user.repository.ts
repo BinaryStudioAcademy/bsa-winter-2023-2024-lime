@@ -81,6 +81,12 @@ class UserRepository implements Repository {
                 .returning('*')
                 .execute();
 
+            await user
+                .$relatedQuery('userAchievements', trx)
+                .insert({ achievementId: 1 })
+                .returning('*')
+                .execute();
+
             await trx.commit();
 
             return UserEntity.initialize({
