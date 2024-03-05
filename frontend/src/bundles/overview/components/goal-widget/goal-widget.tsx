@@ -44,7 +44,9 @@ const GoalWidget = ({
                     {title}
                 </p>
                 {subTitle && (
-                    <p className="text-lm-black-200 text-sm">{subTitle}</p>
+                    <p className="text-lm-black-200 hidden text-sm md:block">
+                        {subTitle}
+                    </p>
                 )}
             </div>
             {hasAchievement && (

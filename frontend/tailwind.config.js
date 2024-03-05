@@ -60,6 +60,7 @@ export default {
             '4xl': '2.625rem',
         },
         fontWeight: {
+            light: '300',
             normal: '400',
             semibold: '500',
             bold: '600',
@@ -89,8 +90,7 @@ export default {
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
-                gilroyLight: ['Gilroy-Light', ...defaultTheme.fontFamily.sans],
-                gilroyBold: ['Gilroy-Bold', ...defaultTheme.fontFamily.sans],
+                accent: ['Lato', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
@@ -124,15 +124,13 @@ export default {
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+                '60': '3.75rem',
             },
             minHeight: {
                 '90': 'calc(100vh - 5.5rem)',
             },
             maxHeight: {
                 '90': 'calc(100vh - 5.5rem)',
-            },
-            spacing: {
-                '60': '3.75rem',
             },
             textColor: {
                 primary: 'var(--text-primary)',
