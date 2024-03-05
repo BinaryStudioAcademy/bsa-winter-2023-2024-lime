@@ -1,13 +1,13 @@
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
-
-import { GoalTypes } from '../goal-widget/enums/goal-types.enums.js';
+import { DOUBLE_VALUE } from '~/bundles/overview/components/circle-progress/constants/constants.js';
 import {
     type CircleSizes,
     CircularProgressColors,
     CircularProgressSizes,
-} from './enums/enums.js';
+} from '~/bundles/overview/components/circle-progress/enums/enums.js';
+import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/enums.js';
 
 type CircularProgressProperties = {
     value: number;
@@ -34,15 +34,15 @@ const CircleProgress = ({
     const { radius, stroke, fontSize } = CircularProgressSizes[size];
     const { baseCircleClass, progressCircleClass } = color;
     const outerRadius = radius + stroke;
-    const circumference = radius * 2 * Math.PI;
+    const circumference = radius * DOUBLE_VALUE * Math.PI;
     const progressCircleOffset =
         circumference - (value / target) * circumference;
 
     return (
         <div className="relative flex items-center justify-center">
             <svg
-                height={outerRadius * 2}
-                width={outerRadius * 2}
+                height={outerRadius * DOUBLE_VALUE}
+                width={outerRadius * DOUBLE_VALUE}
                 style={{ transform: 'rotate(90deg)' }}
             >
                 <circle
@@ -52,8 +52,8 @@ const CircleProgress = ({
                     )}
                     strokeWidth={stroke}
                     r={radius}
-                    cx={radius + stroke}
-                    cy={radius + stroke}
+                    cx={outerRadius}
+                    cy={outerRadius}
                 />
                 <circle
                     className={getValidClassNames(
@@ -65,8 +65,8 @@ const CircleProgress = ({
                     style={{ strokeDashoffset: progressCircleOffset }}
                     strokeLinecap="round"
                     r={radius}
-                    cx={radius + stroke}
-                    cy={radius + stroke}
+                    cx={outerRadius}
+                    cy={outerRadius}
                 />
             </svg>
             <div className="absolute text-white">
@@ -95,7 +95,9 @@ const CircleProgress = ({
                         </p>
                     </>
                 )}
-                {goalType === GoalTypes.RUNNING && (
+                {(goalType === GoalTypes.RUNNING ||
+                    goalType === GoalTypes.CYCLING ||
+                    goalType === GoalTypes.WALKING) && (
                     <>
                         <p
                             className={getValidClassNames(
