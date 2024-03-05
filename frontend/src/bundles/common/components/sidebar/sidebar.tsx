@@ -18,6 +18,7 @@ import { Icon } from '../components.js';
 import { SidebarNav } from './components/sidebar-nav/sidebar-nav.js';
 
 type Properties = {
+    toggleSidebar: () => void;
     isOpen?: boolean;
 };
 
@@ -27,7 +28,7 @@ const styles = {
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
+const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute, setActiveRoute] = useState(pathname);
@@ -45,65 +46,73 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
     }, [isOpen]);
 
     return (
-        <div
-            className={getValidClassNames(
-                styles.baseStyle,
-                styles.animationStyle,
-                isOpen ? 'p-7' : 'p-0',
+        <>
+            {isOpen && (
+                <button
+                    onClick={toggleSidebar}
+                    className="bg-lm-black-100 fixed inset-0 top-[88px] z-10 opacity-50 md:hidden"
+                />
             )}
-            style={sidebarStyle}
-        >
-            <div className="inner h-3/4 w-full border-gray-700 ">
-                <div className="flex flex-col gap-4">
-                    <SidebarNav
-                        isOpen={isOpen}
-                        icon={<OverviewIcon />}
-                        text="Overview"
-                        to={AppRoute.OVERVIEW}
-                        isActive={activeRoute === AppRoute.OVERVIEW}
-                    />
-                    <SidebarNav
-                        isOpen={isOpen}
-                        icon={<Icon name={IconName.workoutIcon} />}
-                        text="Workout"
-                        to={AppRoute.WORKOUT}
-                        isActive={activeRoute === AppRoute.WORKOUT}
-                    />
-                    <SidebarNav
-                        isOpen={isOpen}
-                        icon={<Icon name={IconName.goalsIcon} />}
-                        text="Goals"
-                        to={AppRoute.GOALS}
-                        isActive={activeRoute === AppRoute.GOALS}
-                    />
-                    <SidebarNav
-                        isOpen={isOpen}
-                        icon={<ScheduleIcon />}
-                        text="My schedule"
-                        to={AppRoute.SCHEDULE}
-                        isActive={activeRoute === AppRoute.SCHEDULE}
-                    />
+            <div
+                className={getValidClassNames(
+                    styles.baseStyle,
+                    styles.animationStyle,
+                    isOpen ? 'p-7' : 'p-0',
+                )}
+                style={sidebarStyle}
+            >
+                <div className="inner h-3/4 w-full border-gray-700 ">
+                    <div className="flex flex-col gap-4">
+                        <SidebarNav
+                            isOpen={isOpen}
+                            icon={<OverviewIcon />}
+                            text="Overview"
+                            to={AppRoute.OVERVIEW}
+                            isActive={activeRoute === AppRoute.OVERVIEW}
+                        />
+                        <SidebarNav
+                            isOpen={isOpen}
+                            icon={<Icon name={IconName.workoutIcon} />}
+                            text="Workout"
+                            to={AppRoute.WORKOUT}
+                            isActive={activeRoute === AppRoute.WORKOUT}
+                        />
+                        <SidebarNav
+                            isOpen={isOpen}
+                            icon={<Icon name={IconName.goalsIcon} />}
+                            text="Goals"
+                            to={AppRoute.GOALS}
+                            isActive={activeRoute === AppRoute.GOALS}
+                        />
+                        <SidebarNav
+                            isOpen={isOpen}
+                            icon={<ScheduleIcon />}
+                            text="My schedule"
+                            to={AppRoute.SCHEDULE}
+                            isActive={activeRoute === AppRoute.SCHEDULE}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="flex h-1/4 w-full">
-                <div className="flex w-full flex-col justify-end gap-3">
-                    <SidebarNav
-                        isOpen={isOpen}
-                        icon={<HelpIcon />}
-                        text="Help"
-                        to={AppRoute.HELP}
-                        isActive={activeRoute === AppRoute.HELP}
-                    />
-                    <SidebarNav
-                        isOpen={isOpen}
-                        icon={<LogoutIcon />}
-                        text="Logout"
-                        to={AppRoute.LOGOUT}
-                    />
+                <div className="flex h-1/4 w-full">
+                    <div className="flex w-full flex-col justify-end gap-3">
+                        <SidebarNav
+                            isOpen={isOpen}
+                            icon={<HelpIcon />}
+                            text="Help"
+                            to={AppRoute.HELP}
+                            isActive={activeRoute === AppRoute.HELP}
+                        />
+                        <SidebarNav
+                            isOpen={isOpen}
+                            icon={<LogoutIcon />}
+                            text="Logout"
+                            to={AppRoute.LOGOUT}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
