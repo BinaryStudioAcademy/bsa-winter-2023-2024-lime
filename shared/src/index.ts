@@ -1,4 +1,8 @@
-export { Metric } from './bundles/achievements/enums/enums.js';
+export {
+    type AchievementGetItemResponseDto,
+    AchievementsApiPath,
+    Metric,
+} from './bundles/achievements/achievements.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
@@ -45,12 +49,14 @@ export {
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserUpdateProfileRequestDto,
     Gender,
     passwordForgotValidationSchema,
     passwordResetValidationSchema,
     userAuthValidationSchema,
     UsersApiPath,
     userSignUpValidationSchema,
+    userUpdateProfileValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
@@ -60,6 +66,7 @@ export {
     WorkoutValidationMessage,
     workoutValidationSchema,
 } from './bundles/workouts/workouts.js';
+export { MILLISECONDS_PER_SECOND } from './constants/constants.js';
 export {
     ActivityType,
     ApiPath,
@@ -81,7 +88,11 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type Storage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export {
+    configureDateString,
+    configureISOString,
+    configureString,
+} from './helpers/helpers.js';
 export {
     type EntityIdParameterDto,
     type ServerCommonErrorResponse,

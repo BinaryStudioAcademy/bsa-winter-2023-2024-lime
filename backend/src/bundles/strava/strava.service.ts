@@ -6,6 +6,7 @@ import {
 import { type WorkoutService } from '~/bundles/workouts/workout.service.js';
 
 import { STRAVA_ACTIVITIES_URL } from './constants/constants.js';
+import { formatStravaResponse } from './helpers/helpers.js';
 import { type StravaWebhookResponseDto } from './types/types.js';
 
 class StravaService {
@@ -16,15 +17,12 @@ class StravaService {
         this.oAuthRepository = oAuthRepository;
     }
 
-    public async setWebhookData({ object_id, owner_id, ...rest }: StravaWebhookResponseDto): Promise<void> {
-        console.log(object_id, owner_id, rest);
+    public async setWebhookData({ object_id, owner_id }: StravaWebhookResponseDto): Promise<void> {
         const authInfo = await this.oAuthRepository.find({ ownerId: owner_id });
         if (!authInfo) {
-            console.log('return AuthInfo', authInfo);
             return;
         }
         const isTokenInvalid = oAuthService.checkAccessToken(authInfo);
-        console.log('isTokenInvalid',isTokenInvalid);
         const { provider, userId ,accessToken } = authInfo.toObject();
         const token = isTokenInvalid ? await oAuthService.getAccessToken(provider, userId) : accessToken;
         if (!token) {
@@ -36,12 +34,15 @@ class StravaService {
             }
         });
         if (!response.ok) {
-            console.log('ret not ok');
             return;
         }
-        console.log('authInfo', authInfo);
         const activityInfo = await response.json();
-        console.log('activityInfo', activityInfo);
+        const formattedActivityInfo = formatStravaResponse(activityInfo);
+
+        if (!formattedActivityInfo) {
+            return;
+        }
+        await this.workoutService.create({ ...formattedActivityInfo, userId });
     }
 }
 

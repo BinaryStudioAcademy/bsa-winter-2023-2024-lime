@@ -7,6 +7,7 @@ const ApiPath = {
     SUBSCRIPTIONS_PLANS: '/subscription-plans',
     CONNECTIONS: '/connections',
     OAUTH: '/oauth',
+    ACHIEVEMENTS: '/achievements',
     STRAVA: '/strava',
 } as const;
 

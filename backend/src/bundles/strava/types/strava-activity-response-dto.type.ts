@@ -9,8 +9,9 @@ type StravaActivityResponseDto = {
     type: string;
     sport_type: string;
     id: number;
-    start_date: string;
-    start_date_local: string;
+    heartrate: number | undefined;
+    start_date: Date;
+    start_date_local: Date;
     timezone: string;
     utc_offset: number;
     location_city: string | null;
