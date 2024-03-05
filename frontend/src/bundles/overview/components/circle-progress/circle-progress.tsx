@@ -5,8 +5,9 @@ import { DOUBLE_VALUE } from '~/bundles/overview/components/circle-progress/cons
 import {
     type CircleSizes,
     CircularProgressColors,
+    CircularProgressSizes,
 } from '~/bundles/overview/components/circle-progress/enums/enums.js';
-import { ComponentSizeToCircularParameter } from '~/bundles/overview/components/circle-progress/helpers/helpers.js';
+import { CircleSizeToFontParameters } from '~/bundles/overview/components/circle-progress/helpers/helpers.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/enums.js';
 
 type CircularProgressProperties = {
@@ -32,8 +33,8 @@ const CircleProgress = ({
     color = CircularProgressColors.primary,
     goalType = GoalTypes.STANDART,
 }: CircularProgressProperties): JSX.Element => {
-    const { radius, stroke, fontSize, fontFamily } =
-        ComponentSizeToCircularParameter[size];
+    const { radius, stroke } = CircularProgressSizes[size];
+    const { fontSize, fontFamily } = CircleSizeToFontParameters[size];
     const { baseCircleClass, progressCircleClass } = color;
     const outerRadius = radius + stroke;
     const circumference = radius * DOUBLE_VALUE * Math.PI;

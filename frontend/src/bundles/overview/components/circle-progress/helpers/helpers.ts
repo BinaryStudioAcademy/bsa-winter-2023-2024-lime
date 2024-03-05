@@ -1,1 +1,1 @@
-export { ComponentSizeToCircularParameter } from './circle-progress-sizes.helper.js';
+export { CircleSizeToFontParameters } from './circle-size-to-font-parameters.helper.js';
