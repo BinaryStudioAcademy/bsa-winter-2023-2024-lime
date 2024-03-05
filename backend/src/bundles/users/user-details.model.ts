@@ -30,6 +30,8 @@ class UserDetailsModel extends AbstractModel {
     public static override get tableName(): string {
         return DatabaseTableName.USER_DETAILS;
     }
+
+    [key: string]: unknown;
 }
 
 export { UserDetailsModel };
