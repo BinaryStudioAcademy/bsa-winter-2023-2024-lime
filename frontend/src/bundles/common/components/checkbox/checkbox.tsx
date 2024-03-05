@@ -13,6 +13,7 @@ import { getValidClassNames } from '../../helpers/helpers.js';
 type CheckboxProperties<T extends FieldValues> = {
     name: FieldPath<T>;
     label: string;
+    ariaLabel: string;
     control: Control<T>;
     errors: FieldErrors<T>;
 };
@@ -32,6 +33,7 @@ const classes = {
 const Checkbox = <T extends FieldValues>({
     name,
     label,
+    ariaLabel,
     control,
     errors,
 }: CheckboxProperties<T>): JSX.Element => {
@@ -47,6 +49,7 @@ const Checkbox = <T extends FieldValues>({
                         name={name}
                         type="checkbox"
                         id="toggle-checkbox"
+                        aria-label={ariaLabel}
                         className={getValidClassNames(
                             classes.baseCheckbox,
                             classes.Checkboxchecked,
