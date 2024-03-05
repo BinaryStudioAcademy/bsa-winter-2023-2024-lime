@@ -54,7 +54,7 @@ class UserApi extends BaseHttpApi {
             this.getFullEndpoint(UsersApiPath.UPDATE_USER, `/${userId}`, {}),
             {
                 method: 'PATCH',
-                contentType: ContentType.FORM_DATA,
+                contentType: ContentType.JSON,
                 payload: payload,
                 hasAuth: true,
             },
