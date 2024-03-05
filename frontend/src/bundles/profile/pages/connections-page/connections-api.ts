@@ -1,9 +1,14 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
-import { ConnectionsPath } from './enums/enums.js';
+import {
+    type OAuthProvider,
+    ConnectionsPath,
+    OAuthActionsPath,
+} from './enums/enums.js';
 import { type ConnectionGetAllItemResponseDto } from './types/types.js';
 
 type Constructor = {
@@ -13,22 +18,52 @@ type Constructor = {
 };
 
 class ConnectionApi extends BaseHttpApi {
+    private connectionsPath: string;
+
+    private oAuthPath: string;
+
     public constructor({ baseUrl, http, storage }: Constructor) {
-        super({ path: ApiPath.CONNECTIONS, baseUrl, http, storage });
+        super({ path: '', baseUrl, http, storage });
+
+        this.connectionsPath = ApiPath.CONNECTIONS;
+        this.oAuthPath = ApiPath.OAUTH;
     }
 
     public async getAll(): Promise<ConnectionGetAllItemResponseDto> {
-        const response = await this.load(
-            this.getFullEndpoint(ConnectionsPath.ROOT, {}),
-            {
-                method: 'GET',
-                contentType: ContentType.JSON,
-                hasAuth: true,
-            },
-        );
+        const fullPath = `${this.connectionsPath}${ConnectionsPath.ROOT}`;
+
+        const response = await this.load(this.getFullEndpoint(fullPath, {}), {
+            method: 'GET',
+            contentType: ContentType.JSON,
+            hasAuth: true,
+        });
 
         return await response.json<ConnectionGetAllItemResponseDto>();
     }
+
+    public async authorize(
+        provider: ValueOf<typeof OAuthProvider>,
+    ): Promise<void> {
+        const fullPath = `${this.oAuthPath}/${provider}${OAuthActionsPath.AUTHORIZE}`;
+
+        await this.load(this.getFullEndpoint(fullPath, {}), {
+            method: 'GET',
+            contentType: ContentType.JSON,
+            hasAuth: true,
+        });
+    }
+
+    public async deauthorize(
+      provider: ValueOf<typeof OAuthProvider>,
+  ): Promise<void> {
+      const fullPath = `${this.oAuthPath}/${provider}${OAuthActionsPath.DEAUTHORIZE}`;
+
+      await this.load(this.getFullEndpoint(fullPath, {}), {
+          method: 'GET',
+          contentType: ContentType.JSON,
+          hasAuth: true,
+      });
+  }
 }
 
 export { ConnectionApi };

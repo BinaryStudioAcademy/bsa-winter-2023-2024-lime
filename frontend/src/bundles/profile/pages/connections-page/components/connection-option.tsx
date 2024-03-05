@@ -4,6 +4,7 @@ import { Button } from '~/bundles/common/components/components.js';
 import { type IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
 import {
+    useAppDispatch,
     useAppSelector,
     useCallback,
     useEffect,
@@ -11,6 +12,8 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
+
+import { actions } from '../store/connections.js';
 
 type Properties = {
     title: string;
@@ -25,6 +28,8 @@ const ConnectionOption = ({
     iconName,
     provider,
 }: Properties): JSX.Element => {
+    const dispatch = useAppDispatch();
+
     const { connections } = useAppSelector(({ connections }) => ({
         dataStatus: connections.dataStatus,
         connections: connections.connections,
@@ -41,8 +46,14 @@ const ConnectionOption = ({
     }, [connections, provider]);
 
     const handleClick = useCallback((): void => {
-        setIsConnected(!isConnected);
-    }, [isConnected]);
+        const providerIsConnected = connections.find(
+            (connection) => connection.provider === provider,
+        );
+
+        providerIsConnected
+            ? void dispatch(actions.deauthorize(provider))
+            : void dispatch(actions.authorize(provider));
+    }, [connections, dispatch, provider]);
 
     return (
         <div className={'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6'}>

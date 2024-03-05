@@ -1,6 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
+import {
+    type AsyncThunkConfig,
+    type ValueOf,
+} from '~/bundles/common/types/types.js';
+import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
 import { type ConnectionGetAllItemResponseDto } from '~/bundles/profile/pages/connections-page/types/types.js';
 
 import { name } from './slice.js';
@@ -9,10 +13,30 @@ const getAll = createAsyncThunk<
     ConnectionGetAllItemResponseDto,
     undefined,
     AsyncThunkConfig
->(`${name}/get-all-connections`, (_, { extra }) => {
+>(`${name}/get-all-connections`, async (_, { extra }) => {
     const { connectionApi } = extra;
 
-    return connectionApi.getAll();
+    return await connectionApi.getAll();
 });
 
-export { getAll };
+const authorize = createAsyncThunk<
+    unknown,
+    ValueOf<typeof OAuthProvider>,
+    AsyncThunkConfig
+>(`${name}/authorize`, async (provider, { extra }) => {
+    const { connectionApi } = extra;
+
+    await connectionApi.authorize(provider);
+});
+
+const deauthorize = createAsyncThunk<
+    unknown,
+    ValueOf<typeof OAuthProvider>,
+    AsyncThunkConfig
+>(`${name}/deauthorize`, async (provider, { extra }) => {
+    const { connectionApi } = extra;
+
+    await connectionApi.deauthorize(provider);
+});
+
+export { authorize, deauthorize, getAll };

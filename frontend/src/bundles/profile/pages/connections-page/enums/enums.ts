@@ -1,1 +1,1 @@
-export { ConnectionsPath, OAuthProvider } from 'shared';
+export { ConnectionsPath, OAuthActionsPath, OAuthProvider } from 'shared';
