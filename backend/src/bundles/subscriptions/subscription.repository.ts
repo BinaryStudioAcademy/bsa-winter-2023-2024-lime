@@ -1,3 +1,4 @@
+import { MINIMUM_DELETED_ROWS } from '~/common/constants/constants.js';
 import { type Repository } from '~/common/types/repository.type.js';
 
 import { SubscriptionAttributes, SubscriptionStatus } from './enums/enums.js';
@@ -116,7 +117,7 @@ class SubscriptionRepository
             .where(query)
             .delete();
 
-        return deletedRows > 0;
+        return deletedRows > MINIMUM_DELETED_ROWS;
     }
 }
 
