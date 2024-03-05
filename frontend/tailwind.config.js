@@ -128,7 +128,7 @@ export default {
             },
             maxHeight: {
                 '90': 'calc(100vh - 5.5rem)',
-            },            
+            },
             textColor: {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
