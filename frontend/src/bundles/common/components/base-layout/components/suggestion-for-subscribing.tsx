@@ -48,7 +48,7 @@ const SuggestionForSubscribing: React.FC = () => {
     return (
         <Modal
             isOpen={isModalOpen}
-            title={'Looks like you don\'t have subscription yet!'}
+            title={'Looks like you dont have subscription yet!'}
             onClose={handleCloseModal}
         >
             <div className="flex gap-2">
