@@ -43,7 +43,7 @@ class UserService implements Service {
         const { hash } = cryptService.encryptSync(password);
         const { stripeCustomerId } = await stripeService.createCustomer(email);
         const generatedReferralCode = crypto.randomUUID();
-
+        // const stripeCustomerId = 'asdasd3';
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,

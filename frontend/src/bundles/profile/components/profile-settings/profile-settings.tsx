@@ -122,7 +122,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                             Your balance:
                         </span>
                         <span className="text-lm-yellow-200 text-xl font-bold">
-                            1,000
+                            {user?.bonusBalance ?? 0}
                         </span>
                         <Icon
                             name="logoIcon"
