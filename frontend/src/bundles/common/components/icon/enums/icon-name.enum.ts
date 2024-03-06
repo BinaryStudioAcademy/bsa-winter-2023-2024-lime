@@ -10,6 +10,7 @@ const IconName = {
     workoutIcon: 'workoutIcon',
     caloriesIcon: 'caloriesIcon',
     stepsIcon: 'stepsIcon',
+    limeCoinIcon: 'limeCoinIcon',
 } as const;
 
 export { IconName };

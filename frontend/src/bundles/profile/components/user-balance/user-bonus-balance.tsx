@@ -7,6 +7,7 @@ import {
     Loader,
     Modal,
 } from '~/bundles/common/components/components.js';
+import { IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize, DataStatus } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
@@ -50,7 +51,7 @@ const UserBonusBalance = ({
                     'bg-lm-black-100 flex flex-col justify-center gap-2 rounded-xl p-4',
                 )}
             >
-                <div className="flex w-full justify-start gap-2">
+                <div className="flex w-full items-center justify-start gap-2">
                     <span className="text-lm-grey-200 text-xl">
                         Your balance:
                     </span>
@@ -58,8 +59,8 @@ const UserBonusBalance = ({
                         {bonusBalance}
                     </span>
                     <Icon
-                        name="logoIcon"
-                        size="md"
+                        name={IconName.limeCoinIcon}
+                        size={ComponentSize.MEDIUM}
                         className="text-lm-yellow-200"
                     />
                 </div>
@@ -87,9 +88,9 @@ const UserBonusBalance = ({
                                 amount={bonus.amount}
                                 actionMessage={
                                     UserBonusTransactionMessage[
-                                        bonus.actionType as ValueOf<
-                                            typeof UserBonusActionStatus
-                                        >
+                                    bonus.actionType as ValueOf<
+                                        typeof UserBonusActionStatus
+                                    >
                                     ]
                                 }
                                 date={bonus.createdAt}
