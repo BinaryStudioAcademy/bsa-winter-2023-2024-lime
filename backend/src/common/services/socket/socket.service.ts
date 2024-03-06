@@ -1,7 +1,6 @@
 import { type Server } from 'node:http';
 
-import { type Socket as TSocket } from 'socket.io';
-import { Server as SocketServer } from 'socket.io';
+import { type Socket as TSocket, Server as SocketServer } from 'socket.io';
 
 import { SocketEvent, SocketNamespace } from './enums/enums.js';
 

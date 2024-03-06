@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
 import fastifyPlugin from 'fastify-plugin';
 import { type Server as SocketServer } from 'socket.io';
 
@@ -11,6 +10,7 @@ type Options = {
 const socketInjectorPlugin = fastifyPlugin<Options>(
     (fastify, { io }, done) => {
         fastify.decorateRequest('io', null);
+        // eslint-disable-next-line @typescript-eslint/require-await
         fastify.addHook('preHandler', async (request) => {
             request.io = io;
         });

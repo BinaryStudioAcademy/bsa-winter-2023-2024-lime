@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-spread */
 import {
     type ThunkMiddleware,
     type Tuple,
@@ -71,7 +70,7 @@ class Store {
                     },
                 })
                     .prepend(errorMiddleware)
-                    .concat(chatSocketMiddleware),
+                    .concat(chatSocketMiddleware), // eslint-disable-line unicorn/prefer-spread
         });
     }
 
