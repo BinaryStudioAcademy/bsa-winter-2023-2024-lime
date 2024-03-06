@@ -10,6 +10,7 @@ import {
     ButtonVariant,
     Icon,
     Link,
+    Loader,
     ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import {
@@ -37,8 +38,9 @@ import {
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
 const Landing = (): JSX.Element => {
-    const { user } = useAppSelector(({ auth }) => ({
+    const { user, isRefreshing } = useAppSelector(({ auth }) => ({
         user: auth.user,
+        isRefreshing: auth.isRefreshing,
     }));
     const dispatch = useAppDispatch();
 
@@ -51,6 +53,10 @@ const Landing = (): JSX.Element => {
     const signUpHandler = useCallback((): void => {
         dispatch(appActions.navigate(AppRoute.SIGN_UP));
     }, [dispatch]);
+
+    if (isRefreshing) {
+        return <Loader isOverflow />;
+    }
 
     const styles = {
         section: 'flex flex-col min-h-screen shrink-0 snap-start snap-always',
