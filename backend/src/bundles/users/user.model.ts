@@ -6,6 +6,8 @@ import {
     OAuthStateAttributes,
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
+import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
+import { WorkoutModel } from '~/bundles/workouts/workouts.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -29,6 +31,7 @@ class UserModel extends AbstractModel {
     public 'stripeCustomerId': string;
 
     public 'userDetails': UserDetailsModel;
+    public 'workouts': WorkoutModel;
 
     public 'userAchievements': UserAchievementModel;
 
@@ -88,6 +91,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_ACHIEVEMENTS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            workouts: {
+                relation: Model.HasManyRelation,
+                modelClass: WorkoutModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
                 },
             },
         };
