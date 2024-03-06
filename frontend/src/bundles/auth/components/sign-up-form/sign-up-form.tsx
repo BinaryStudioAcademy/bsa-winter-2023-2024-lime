@@ -105,7 +105,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     </div>
                 </form>
             </div>
-            <p className="text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
+            <p className="mt-3 text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
                 Already have an Account? Go to{' '}
                 <Link to={AppRoute.SIGN_IN}>
                     <span className="text-action">Sign in</span>
