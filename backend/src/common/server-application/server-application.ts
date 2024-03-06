@@ -4,9 +4,11 @@ import { connectionController } from '~/bundles/connections/connections.js';
 import { goalController } from '~/bundles/goals/goals.js';
 import { oAuthController } from '~/bundles/oauth/oauth.js';
 import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
+import { stravaController } from '~/bundles/strava/strava.js';
 import { subscriptionPlanController } from '~/bundles/subscription-plans/subscription-plan.js';
 import { subscriptionController } from '~/bundles/subscriptions/subscriptions.js';
 import { userController } from '~/bundles/users/users.js';
+import { workoutController } from '~/bundles/workouts/workouts.js';
 import { config } from '~/common/config/config.js';
 import { database } from '~/common/database/database.js';
 import { logger } from '~/common/logger/logger.js';
@@ -22,10 +24,12 @@ const apiV1 = new BaseServerAppApi(
     ...goalController.routes,
     ...subscriptionController.routes,
     ...subscriptionPlanController.routes,
+    ...workoutController.routes,
     ...connectionController.routes,
     ...oAuthController.routes,
     ...passwordResetController.routes,
     ...achievementController.routes,
+    ...stravaController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

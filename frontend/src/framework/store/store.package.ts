@@ -21,6 +21,8 @@ import {
 } from '~/bundles/subscription/subscription.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
+import { reducer as workoutsReducer } from '~/bundles/workouts/store/workouts.js';
+import { workoutApi } from '~/bundles/workouts/workouts.js';
 import { type Config } from '~/framework/config/config.js';
 
 import { errorMiddleware } from './middlewares/error-middleware.js';
@@ -33,6 +35,7 @@ type RootReducer = {
     subscriptions: ReturnType<typeof subscriptionsReducer>;
     theme: ReturnType<typeof themeReducer>;
     notifications: ReturnType<typeof notificationsReducer>;
+    workouts: ReturnType<typeof workoutsReducer>;
 };
 
 type ExtraArguments = {
@@ -42,6 +45,7 @@ type ExtraArguments = {
     subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
     notificationApi: typeof notificationApi;
+    workoutApi: typeof workoutApi;
 };
 
 class Store {
@@ -64,6 +68,7 @@ class Store {
                 subscriptions: subscriptionsReducer,
                 theme: themeReducer,
                 notifications: notificationsReducer,
+                workouts: workoutsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -82,6 +87,7 @@ class Store {
             subscriptionPlansApi,
             passwordResetApi,
             notificationApi,
+            workoutApi,
         };
     }
 }
