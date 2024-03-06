@@ -16,11 +16,11 @@ const convertToTargetUnit = (
 
     const numericValue =
         typeof value === 'string' ? Number.parseFloat(value) : value;
-
+        
     return Number.isNaN(numericValue)
         ? null
         : Math.round(numericValue * conversionFactor * roundingFactor) /
-              roundingFactor;
+            roundingFactor;
 };
 
 const convertWeightToGrams = (
