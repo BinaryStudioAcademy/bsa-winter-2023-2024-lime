@@ -6,20 +6,21 @@ import {
 } from './constants/constants.js';
 
 const convertToTargetUnit = (
-    value: string | number | null,
+    stringValue: string | number | null,
     conversionFactor: number,
-    roundingFactor: number = 1,
+    roundFactor: number = 1,
 ): number | null => {
-    if (!value) {
+    if (!stringValue) {
         return null;
     }
 
-    const numericValue =
-        typeof value === 'string' ? Number.parseFloat(value) : value;
-    return Number.isNaN(numericValue)
+    const value =
+        typeof stringValue === 'string'
+            ? Number.parseFloat(stringValue)
+            : stringValue;
+    return Number.isNaN(value)
         ? null
-        : Math.round(numericValue * conversionFactor * roundingFactor) /
-                roundingFactor;
+        : Math.round(value * conversionFactor * roundFactor) / roundFactor;
 };
 
 const convertWeightToGrams = (
