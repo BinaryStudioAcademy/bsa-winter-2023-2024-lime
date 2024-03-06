@@ -102,9 +102,7 @@ const Goals: React.FC = () => {
     );
 
     const unfulfilledGoal = goals.filter((goal) => !goal.completedAt);
-    const lastFulfilledGoal = goals
-        .filter((goal) => goal.completedAt !== null)
-        .at(-1);
+    const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
         <main className="bg-primary flex w-full flex-col gap-8 md:h-screen md:justify-between lg:flex-row lg:justify-normal">
@@ -115,26 +113,24 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem] md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
-                                value={lastFulfilledGoal?.progress as number}
-                                target={lastFulfilledGoal?.progress as number}
+                                value={lastGoal?.progress as number}
+                                target={lastGoal?.progress as number}
                                 title={
-                                    lastFulfilledGoal
+                                    lastGoal
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
                                         : GOALS_MESSAGES.NO_GOALS
                                 }
                                 subTitle={
-                                    lastFulfilledGoal
+                                    lastGoal
                                         ? GOALS_MESSAGES.GOAL_ENCOURAGE
                                         : ''
                                 }
                                 goalType={
-                                    lastFulfilledGoal
-                                        ? activityToGoal[
-                                              lastFulfilledGoal.activityType
-                                          ]
+                                    lastGoal
+                                        ? activityToGoal[lastGoal.activityType]
                                         : GoalTypes.STANDART
                                 }
-                                hasAchievement={Boolean(lastFulfilledGoal)}
+                                hasAchievement={Boolean(lastGoal)}
                             />
                         </section>
                         <section>
