@@ -3,7 +3,7 @@
         "header header"
         "aside main";
 
-    @apply grid grid-cols-[64px,auto] grid-rows-[88px,auto] overflow-hidden transition-all duration-[0.5s] ease-[ease-in-out] md:grid-cols-[256px,auto] lg:grid-cols-[288px,auto];
+    @apply grid grid-cols-[0,auto] grid-rows-[88px,auto] overflow-hidden transition-all duration-[0.5s] ease-[ease-in-out] sm:grid-cols-[44px,auto] md:grid-cols-[44px,auto]  lg:grid-cols-[288px,auto];
 }
 
 .content-container {
@@ -19,7 +19,7 @@
 .base-layout.sidebar-closed {
     grid-template:
         "header header" 88px
-        "aside main" /64px;
+        "aside main" /44px;
 }
 
 ::-webkit-scrollbar {
@@ -37,4 +37,16 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--button-secondary);
+}
+
+@media (width <= 390px) {
+    .base-layout {
+        @apply sm:grid-cols-[0px,auto];
+    }
+    
+    .base-layout.sidebar-closed {
+        grid-template:
+            "header header" 88px
+            "aside main" /0;
+    }
 }

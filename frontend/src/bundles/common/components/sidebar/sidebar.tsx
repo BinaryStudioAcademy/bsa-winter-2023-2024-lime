@@ -47,13 +47,15 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
 
     useEffect(() => {
         setActiveRoute(pathname);
-    }, [pathname]);
 
-    useEffect(() => {
-        isOpen
-            ? setSidebarStyle({ transform: 'translateX(0)', gridArea: 'aside' })
-            : setSidebarStyle({ transform: 'translateX(-75%)' });
-    }, [isOpen]);
+        const transformValue = window.innerWidth <= 390 ? '-100%' : '-80%';
+        setSidebarStyle({
+            transform: isOpen
+                ? 'translateX(0)'
+                : `translateX(${transformValue})`,
+            gridArea: 'aside',
+        });
+    }, [pathname, isOpen]);
 
     return (
         <>
@@ -67,7 +69,6 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                 className={getValidClassNames(
                     styles.baseStyle,
                     styles.animationStyle,
-                    isOpen ? 'p-7' : 'p-0',
                 )}
                 style={sidebarStyle}
             >
@@ -117,11 +118,14 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                         <div className="flex items-center justify-center">
                             <Button
                                 type="button"
-                                label={'Logout'}
+                                label={isOpen ? 'Logout' : ''}
                                 leftIcon={addSizePropertyHeroIcons({
                                     icon: <LogoutIcon />,
                                     size: ComponentSize.MEDIUM,
                                 })}
+                                className={getValidClassNames(
+                                    isOpen ? '' : 'justify-end !px-3',
+                                )}
                                 variant={ButtonVariant.SIDEBAR}
                                 size={ComponentSize.MEDIUM}
                                 onClick={handleLogout}

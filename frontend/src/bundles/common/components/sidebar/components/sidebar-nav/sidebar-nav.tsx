@@ -40,7 +40,7 @@ const SidebarNav = ({
                 label={isOpen ? text : ''}
                 className={getValidClassNames(
                     isActive ? classes.active : classes.inactive,
-                    isOpen ? '' : 'h-12 w-12 justify-end',
+                    isOpen ? '' : 'relative left-2 justify-end',
                 )}
                 leftIcon={enhacedIcon}
                 variant={ButtonVariant.SIDEBAR}
