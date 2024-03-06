@@ -19,6 +19,7 @@ export default {
             'lm-red': '#F62D2D',
             'lm-cyan': '#05CFCF',
             'lm-light-blue': '#056ECF',
+            'lm-light-yellow': '#f1ffca',
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -144,6 +145,7 @@ export default {
             backgroundColor: {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
+                tertiary: 'var(--background-tertiary)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
@@ -152,6 +154,9 @@ export default {
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
+            },
+            stroke: {
+                primary: 'var(--circle-primary)',
             },
         },
     },

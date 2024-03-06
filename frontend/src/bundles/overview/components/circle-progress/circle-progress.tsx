@@ -34,7 +34,8 @@ const CircleProgress = ({
     goalType = GoalTypes.STANDART,
 }: CircularProgressProperties): JSX.Element => {
     const { radius, stroke } = CircularProgressSizes[size];
-    const { fontSize, fontFamily } = CircleSizeToFontParameters[size];
+    const { fontSize, fontFamily, fontColor } =
+        CircleSizeToFontParameters[size];
     const { baseCircleClass, progressCircleClass } = color;
     const outerRadius = radius + stroke;
     const circumference = radius * DOUBLE_VALUE * Math.PI;
@@ -80,6 +81,7 @@ const CircleProgress = ({
                                 classes.innerTextTop,
                                 fontSize,
                                 fontFamily,
+                                fontColor,
                             )}
                         >
                             {value}
@@ -94,6 +96,7 @@ const CircleProgress = ({
                                 classes.innerTextTop,
                                 fontSize,
                                 fontFamily,
+                                fontColor,
                             )}
                         >
                             {value}
@@ -109,6 +112,7 @@ const CircleProgress = ({
                                 classes.innerTextTop,
                                 fontSize,
                                 fontFamily,
+                                fontColor,
                             )}
                         >
                             {value}
