@@ -1,7 +1,17 @@
-import { ActivityType, MILLISECONDS_PER_SECOND, StravaRequiredActivity } from '../constants/constants.js';
-import { type StravaActivityResponseDto, type ValueOf,type WorkoutRequestDto } from '../types/types.js';
+import {
+    ActivityType,
+    MILLISECONDS_PER_SECOND,
+    StravaRequiredActivity,
+} from '../constants/constants.js';
+import {
+    type StravaActivityResponseDto,
+    type ValueOf,
+    type WorkoutRequestDto,
+} from '../types/types.js';
 
-const formatActivityName = (activityName: string): ValueOf<typeof ActivityType> | null => {
+const formatActivityName = (
+    activityName: string,
+): ValueOf<typeof ActivityType> | null => {
     let result;
     switch (activityName) {
         case StravaRequiredActivity.WALK: {
@@ -20,19 +30,19 @@ const formatActivityName = (activityName: string): ValueOf<typeof ActivityType> 
     return result ?? null;
 };
 
-const formatStravaResponse = (
-    {
-        average_speed,
-        start_date,
-        distance,
-        calories,
-        type,
-        heartrate,
-        elapsed_time
-    }: StravaActivityResponseDto
-): WorkoutRequestDto | null => {
+const formatStravaResponse = ({
+    average_speed,
+    start_date,
+    distance,
+    calories,
+    type,
+    heartrate,
+    elapsed_time,
+}: StravaActivityResponseDto): WorkoutRequestDto | null => {
     const startDate = new Date(start_date);
-    const endDate = new Date(startDate.getTime() + elapsed_time * MILLISECONDS_PER_SECOND);
+    const endDate = new Date(
+        startDate.getTime() + elapsed_time * MILLISECONDS_PER_SECOND,
+    );
     const activityType = formatActivityName(type);
 
     if (!activityType) {
@@ -46,7 +56,7 @@ const formatStravaResponse = (
         distance,
         kilocalories: calories,
         workoutEndedAt: endDate,
-        heartRate: heartrate ?? null
+        heartRate: heartrate ?? null,
     };
 };
 

@@ -1,7 +1,7 @@
 const StravaAspect = {
     CREATE: 'create',
     UPDATE: 'update',
-    DELETE: 'delete'
+    DELETE: 'delete',
 } as const;
 
 export { StravaAspect };

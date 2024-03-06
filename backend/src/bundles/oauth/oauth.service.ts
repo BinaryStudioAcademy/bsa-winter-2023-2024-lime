@@ -1,10 +1,10 @@
 import crypto from 'node:crypto';
 
+import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
 import {
     type OAuthEntity,
     type OAuthExchangeAuthCodeDto,
     type OAuthProvider,
-    type OAuthPublicResponseDto,
     type OAuthRepository,
     type OAuthResponseDto,
     type OAuthStateRepository,
@@ -44,26 +44,12 @@ class OAuthService {
 
     public async findMany(
         query: Record<string, unknown>,
-    ): Promise<{ items: OAuthPublicResponseDto[] }> {
+    ): Promise<{ items: OAuthResponseDto[] }> {
         const items = await this.oAuthRepository.findMany(query);
 
         return {
             items: items.map((it) => it.toPublicObject()),
         };
-    }
-    public async find(
-        query: Record<string, unknown>,
-    ): Promise<OAuthResponseDto> {
-        const item = await this.oAuthRepository.find(query);
-
-        if (!item) {
-            throw new HttpError({
-                message: ErrorMessage.NO_CONNECTION,
-                status: HttpCode.BAD_REQUEST,
-            });
-        }
-
-        return item.toObject();
     }
 
     public async getAuthorizeRedirectUrl(
@@ -175,7 +161,9 @@ class OAuthService {
 
     public checkAccessToken(oAuthEntity: OAuthEntity): boolean {
         const oAuthObject = oAuthEntity.toObject();
-        const secondsSinceEpoch = Math.round(Date.now() / 1000);
+        const secondsSinceEpoch = Math.round(
+            Date.now() / MILLISECONDS_PER_SECOND,
+        );
 
         return oAuthObject.expiresAt <= secondsSinceEpoch;
     }

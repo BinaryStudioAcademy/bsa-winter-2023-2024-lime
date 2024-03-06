@@ -15,7 +15,6 @@ export {
 } from './bundles/goals/goals.js';
 export {
     type OAuthProviderParameterDto,
-    type OAuthPublicResponseDto,
     type OAuthResponseDto,
     OAuthActionsPath,
     OAuthProvider,

@@ -1,5 +1,5 @@
 const StravaObjectType = {
-    ACTIVITY: 'activity'
+    ACTIVITY: 'activity',
 } as const;
 
 export { StravaObjectType };

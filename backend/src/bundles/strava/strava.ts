@@ -10,7 +10,7 @@ import { StravaOAuthStrategy } from './strava-oauth-strategy.js';
 
 const oAuthRepository = new OAuthRepository(OAuthModel);
 const stravaOAuthStrategy = new StravaOAuthStrategy(config);
-const stravaService = new StravaService(workoutService,oAuthRepository);
+const stravaService = new StravaService(workoutService, oAuthRepository);
 const stravaController = new StravaController(logger, stravaService);
 
 export { stravaController, stravaOAuthStrategy, stravaService };

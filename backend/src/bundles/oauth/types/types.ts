@@ -5,7 +5,6 @@ export { type OAuthStrategy } from './oauth-strategy.type.js';
 export { type ProviderOAuthPaths } from './provider-oauth-paths.type.js';
 export {
     type OAuthProviderParameterDto,
-    type OAuthPublicResponseDto,
     type OAuthResponseDto,
     type ValueOf,
 } from 'shared';
