@@ -1,6 +1,7 @@
 export {
     STRAVA_ACTIVITIES_URL,
     STRAVA_API_URL,
+    STRAVA_SUBSCRIPTION_URL,
 } from './strava-api-url.constant.js';
 export { StravaAspect } from './strava-aspect.constant.js';
 export { StravaObjectType } from './strava-object-type.constant.js';
