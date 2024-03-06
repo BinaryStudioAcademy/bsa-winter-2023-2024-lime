@@ -8,7 +8,7 @@ const convertHeightToMillimeters = (
     const heightInCm =
         typeof height === 'string' ? Number.parseFloat(height) : height;
 
-    return Number.isNaN(heightInCm) ? null : Math.round(heightInCm * 10) * 100;
+    return Number.isNaN(heightInCm) ? null : Math.round(heightInCm * 10);
 };
 
 export { convertHeightToMillimeters };

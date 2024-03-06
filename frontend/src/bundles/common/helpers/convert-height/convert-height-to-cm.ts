@@ -5,10 +5,12 @@ const convertHeightToCentimeters = (
         return null;
     }
 
-    const heightInCm =
+    const heightInMm =
         typeof height === 'string' ? Number.parseFloat(height) : height;
 
-    return Number.isNaN(heightInCm) ? null : Math.round(heightInCm * 10);
+    return Number.isNaN(heightInMm)
+        ? null
+        : Math.round((heightInMm / 10) * 10) / 10;
 };
 
 export { convertHeightToCentimeters };
