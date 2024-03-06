@@ -101,7 +101,10 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
-    const lastGoal = achievements.at(-1);
+    const unfulfilledGoal = goals.filter((goal) => !goal.completedAt);
+    const lastFulfilledGoal = goals
+        .filter((goal) => goal.completedAt !== null)
+        .at(-1);
 
     return (
         <main className="bg-primary flex w-full flex-col gap-8 md:h-screen md:justify-between lg:flex-row lg:justify-normal">
@@ -112,24 +115,26 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="pt-[3.125rem] md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
-                                value={lastGoal?.requirement as number}
-                                target={lastGoal?.requirement as number}
+                                value={lastFulfilledGoal?.progress as number}
+                                target={lastFulfilledGoal?.progress as number}
                                 title={
-                                    lastGoal?.name
+                                    lastFulfilledGoal
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
                                         : GOALS_MESSAGES.NO_GOALS
                                 }
                                 subTitle={
-                                    lastGoal?.name
+                                    lastFulfilledGoal
                                         ? GOALS_MESSAGES.GOAL_ENCOURAGE
                                         : ''
                                 }
                                 goalType={
-                                    lastGoal
-                                        ? activityToGoal[lastGoal.activityType]
+                                    lastFulfilledGoal
+                                        ? activityToGoal[
+                                              lastFulfilledGoal.activityType
+                                          ]
                                         : GoalTypes.STANDART
                                 }
-                                hasAchievement={Boolean(lastGoal)}
+                                hasAchievement={Boolean(lastFulfilledGoal)}
                             />
                         </section>
                         <section>
@@ -143,8 +148,8 @@ const Goals: React.FC = () => {
                                     </p>
                                 )}
 
-                                {goals?.length > ZERO_VALUE &&
-                                    goals.map(
+                                {unfulfilledGoal?.length > ZERO_VALUE &&
+                                    unfulfilledGoal.map(
                                         ({
                                             id,
                                             activityType,
