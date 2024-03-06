@@ -23,7 +23,7 @@ This is the repository responsible for LIME apps.
 -   [PostgreSQL](https://www.postgresql.org/) (15.2)
 -   run **`npx simple-git-hooks`** at the root of the project, before the start (it will set the [pre-commit hook](https://www.npmjs.com/package/simple-git-hooks) for any commits).
 
-### 💽 DB Schema
+## 💽 DB Schema
 
 ```mermaid
 erDiagram
