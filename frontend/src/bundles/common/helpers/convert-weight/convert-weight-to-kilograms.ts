@@ -1,4 +1,4 @@
-import { KG_TO_GRAMS_CONVERSION_FACTOR } from './constants/constants.js';
+import { KG_TO_GRAMS_CONVERSION_FACTOR } from '../convert-metrics/constants/constants.js';
 
 const convertWeightToKilograms = (grams: number | null): number | null => {
     if (grams) {

@@ -1,7 +1,9 @@
 export { applyThemeClassname } from './apply-theme-classname/apply-theme-classname.helper.js';
-export { convertHeightToCentimeters } from './convert-height/convert-height-to-cm.js';
-export { convertHeightToMillimeters } from './convert-height/convert-height-to-mm.js';
-export { convertWeightToGrams } from './convert-weight/convert-weight-to-grams.js';
+export {
+    convertHeightToCentimeters,
+    convertHeightToMillimeters,
+    convertWeightToGrams,
+} from './convert-metrics/convert-metrics.js';
 export { convertWeightToKilograms } from './convert-weight/convert-weight-to-kilograms.js';
 export { getObjectKeys } from './get-object-keys/get-object-keys.js';
 export { getUserId } from './get-user-id/get-user-id.js';
