@@ -50,7 +50,7 @@ const SignInForm: React.FC<Properties> = ({
     return (
         <>
             <div>
-                <h1 className="text-primary hsm:mb-2 hsm:text-[1.2rem] mb-6 text-center text-[1.8rem] font-bold">
+                <h1 className="text-primary hsm:mb-2 mb-6 text-center text-[1.8rem] font-bold">
                     Hi! Sign in to your Account
                 </h1>
                 <div className="flex flex-col gap-4">
