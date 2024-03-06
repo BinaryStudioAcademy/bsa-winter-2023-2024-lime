@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { type AchievementResponseDto } from '../types/types.js';
+import { type AchievementsGetAllResponseDto } from '../types/types.js';
 import { getAchievements } from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
-    achievements: AchievementResponseDto[];
+    achievements: AchievementsGetAllResponseDto[];
 };
 
 const initialState: State = {

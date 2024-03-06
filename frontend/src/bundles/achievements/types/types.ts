@@ -1,7 +1,7 @@
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
-type AchievementResponseDto = {
+type AchievementsGetAllResponseDto = {
     id: number;
     name: string;
     activityType: ValueOf<typeof ActivityType>;
@@ -10,4 +10,4 @@ type AchievementResponseDto = {
     createdAt: Date;
 };
 
-export { type AchievementResponseDto };
+export { type AchievementsGetAllResponseDto };

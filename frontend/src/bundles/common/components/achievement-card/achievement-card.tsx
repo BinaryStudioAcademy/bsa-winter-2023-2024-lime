@@ -1,8 +1,8 @@
-import { type AchievementResponseDto } from '~/bundles/achievements/types/types.js';
+import { type AchievementsGetAllResponseDto } from '~/bundles/achievements/types/types.js';
 import { formatDateString } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {
-    achievement: AchievementResponseDto;
+    achievement: AchievementsGetAllResponseDto;
 };
 
 const AchievementCard: React.FC<Properties> = ({
