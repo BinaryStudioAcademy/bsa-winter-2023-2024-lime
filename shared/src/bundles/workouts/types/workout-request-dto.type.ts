@@ -9,6 +9,7 @@ type WorkoutRequestDto = {
     distance: number;
     heartRate: number | null;
     steps?: number;
+    activityId?: number;
     kilocalories: number;
 };
 

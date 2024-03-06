@@ -8,6 +8,7 @@ class WorkoutEntity implements Entity {
     private 'userId': number;
     private 'activityType': ValueOf<typeof ActivityType>;
     private 'steps': number | undefined;
+    private 'activityId': number | undefined;
     private 'heartRate': number | null;
     private 'workoutStartedAt': Date;
     private 'workoutEndedAt': Date;
@@ -19,6 +20,7 @@ class WorkoutEntity implements Entity {
         id,
         userId,
         activityType,
+        activityId,
         heartRate,
         steps,
         workoutStartedAt,
@@ -31,6 +33,7 @@ class WorkoutEntity implements Entity {
         userId: number;
         activityType: ValueOf<typeof ActivityType>;
         steps?: number;
+        activityId?: number;
         heartRate: number | null;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -47,6 +50,7 @@ class WorkoutEntity implements Entity {
         this.distance = distance;
         this.speed = speed;
         this.kilocalories = kilocalories;
+        this.activityId = activityId;
         if (activityType === ActivityType.WALKING) {
             this.steps = steps;
         }
@@ -57,6 +61,7 @@ class WorkoutEntity implements Entity {
         userId: number;
         activityType: ValueOf<typeof ActivityType>;
         steps?: number;
+        activityId?: number;
         heartRate: number | null;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -76,6 +81,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         kilocalories: number;
         speed: number;
+        activityId?: number;
         steps?: number;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -119,6 +125,7 @@ class WorkoutEntity implements Entity {
         userId: number;
         activityType: ValueOf<typeof ActivityType>;
         steps?: number;
+        activityId?: number;
         heartRate: number | null;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -130,6 +137,7 @@ class WorkoutEntity implements Entity {
             userId: this.userId,
             activityType: this.activityType,
             steps: this.steps as number,
+            activityId: this.activityId as number,
             heartRate: this.heartRate,
             workoutStartedAt: this.workoutStartedAt,
             workoutEndedAt: this.workoutEndedAt,

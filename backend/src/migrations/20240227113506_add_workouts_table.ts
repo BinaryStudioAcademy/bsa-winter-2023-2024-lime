@@ -7,6 +7,7 @@ const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
     ACTIVITY_TYPE: 'activity_type',
+    ACTIVITY_ID: 'activity_id',
     STEPS: 'steps',
     HEART_RATE: 'heart_rate',
     WORKOUT_STARTED_AT: 'workout_started_at',
@@ -37,6 +38,7 @@ async function up(knex: Knex): Promise<void> {
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
         table.float(ColumnName.STEPS).nullable();
+        table.integer(ColumnName.ACTIVITY_ID).nullable();
         table.float(ColumnName.KILOCALORIES).notNullable();
         table.float(ColumnName.HEART_RATE).nullable();
         table
