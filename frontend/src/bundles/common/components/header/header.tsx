@@ -24,12 +24,14 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
                                 name={'logoHeader'}
                                 color={IconColor.PRIMARY}
                                 size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
                             />
                         ) : (
                             <Icon
                                 name={'logoHeaderLight'}
                                 color={IconColor.PRIMARY}
                                 size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
                             />
                         )}
                     </Link>
