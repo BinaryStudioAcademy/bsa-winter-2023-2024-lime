@@ -19,7 +19,7 @@ const convertToTargetUnit = (
     return Number.isNaN(numericValue)
         ? null
         : Math.round(numericValue * conversionFactor * roundingFactor) /
-              roundingFactor;
+                roundingFactor;
 };
 
 const convertWeightToGrams = (
