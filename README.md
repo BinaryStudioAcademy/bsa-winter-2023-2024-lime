@@ -217,4 +217,3 @@ erDiagram
 ## 📦 CI/CD
 
 CI/CD implemented using [GitHub Actions](https://docs.github.com/en/actions)
-
