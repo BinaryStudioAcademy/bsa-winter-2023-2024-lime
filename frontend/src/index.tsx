@@ -16,6 +16,7 @@ import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { Home, NotFound } from '~/bundles/common/pages/pages.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
+import { Workout, WorkoutItem } from '~/bundles/workouts/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
 import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
@@ -54,7 +55,13 @@ const routes = [
                     },
                     {
                         path: AppRoute.WORKOUT,
-                        element: <div>WORKOUT PAGE</div>,
+                        element: <Workout />,
+                        children: [
+                            {
+                                path: AppRoute.WORKOUT_$ID,
+                                element: <WorkoutItem />,
+                            },
+                        ],
                     },
                     {
                         path: AppRoute.OVERVIEW,

@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const ButtonColors = {
     TEXT: 'var(--button-text)',
@@ -17,6 +17,8 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
+            'lm-cyan': '#05CFCF',
+            'lm-light-blue': '#056ECF',
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -84,6 +86,19 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'fade-in': 'fade-in 500ms ease-in',
+            },
+            keyframes: {
+                'fade-in': {
+                    '0%': {
+                        transform: 'scale(0)',
+                        opacity: '0',
+                    },
+                    '100%': {
+                        transform: 'scale(1)',
+                        opacity: '1',
+                    },
+                },
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
@@ -98,6 +113,8 @@ export default {
                 'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
+                'wave-grey': 'url("~/assets/img/wave-grey.svg")',
+                'progress-line': 'url("~/assets/img/progress-line.svg")',
             },
             borderRadius: {
                 '30': '1.9rem',
