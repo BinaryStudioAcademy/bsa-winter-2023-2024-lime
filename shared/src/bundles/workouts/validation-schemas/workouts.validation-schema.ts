@@ -15,13 +15,13 @@ type WorkoutsRequestValidationDto = {
 
 const workout = z.object<WorkoutsRequestValidationDto>({
     activityType: z.nativeEnum(ActivityType),
-    steps: z.number().int().nonnegative().optional(),
-    heartRate: z.number().int().nonnegative().nullable(),
+    steps: z.number().nonnegative().optional(),
+    heartRate: z.number().nonnegative().nullable(),
     workoutStartedAt: z.string(),
     workoutEndedAt: z.string(),
-    distance: z.number().int().nonnegative(),
-    speed: z.number().int().nonnegative(),
-    kilocalories: z.number().int().nonnegative(),
+    distance: z.number().nonnegative(),
+    speed: z.number().nonnegative(),
+    kilocalories: z.number().nonnegative(),
 });
 
 export { workout };

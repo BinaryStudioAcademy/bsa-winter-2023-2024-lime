@@ -36,16 +36,16 @@ async function up(knex: Knex): Promise<void> {
             .inTable(USERS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
-        table.integer(ColumnName.STEPS).nullable();
-        table.integer(ColumnName.KILOCALORIES).notNullable();
-        table.integer(ColumnName.HEART_RATE).nullable();
+        table.float(ColumnName.STEPS).nullable();
+        table.float(ColumnName.KILOCALORIES).notNullable();
+        table.float(ColumnName.HEART_RATE).nullable();
         table
             .dateTime(ColumnName.WORKOUT_STARTED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
         table.dateTime(ColumnName.WORKOUT_ENDED_AT).notNullable();
-        table.integer(ColumnName.DISTANCE).notNullable();
-        table.integer(ColumnName.SPEED).notNullable();
+        table.float(ColumnName.DISTANCE).notNullable();
+        table.float(ColumnName.SPEED).notNullable();
         table.enum(ColumnName.ACTIVITY_TYPE, Object.values(ActivityType), {
             useNative: true,
             enumName: ACTIVITY_ENUM,
