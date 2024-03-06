@@ -5,7 +5,10 @@ import {
 } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
-import { ActionType, BonusAmount } from '../user-bonuses/enums/enums.js';
+import {
+    BonusAmount,
+    UserBonusActionStatus,
+} from '../user-bonuses/enums/enums.js';
 import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 import { type AuthResponseDto } from './types/types.js';
@@ -61,8 +64,8 @@ class AuthService {
     }
 
     public async signUp(
-        referralCode: string | undefined,
         userRequestDto: UserAuthRequestDto,
+        referralCode: string,
     ): Promise<AuthResponseDto> {
         const userByEmail = await this.userService.find({
             email: userRequestDto.email,
@@ -75,24 +78,33 @@ class AuthService {
             });
         }
 
+        const inviterUser =
+            await this.userService.findByReferralCode(referralCode);
+
+        const isReferralCodeValid = referralCode !== 'null';
+        if (isReferralCodeValid && !inviterUser) {
+            throw new HttpError({
+                message: UserValidationMessage.USER_WITH_REFERRAL_ID_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
         const user = await this.userService.create(userRequestDto);
-        if (referralCode) {
-            const { userId: inviterUserId } =
-                await this.userService.findByReferralCode(referralCode);
 
-            if (inviterUserId) {
-                await this.userBonusService.create({
-                    userId: user.id,
-                    action: ActionType.REGISTERED,
-                    amount: BonusAmount[ActionType.REGISTERED],
-                });
+        if (isReferralCodeValid && inviterUser) {
+            const { id: inviterId } = inviterUser.toObject();
 
-                await this.userBonusService.create({
-                    userId: inviterUserId,
-                    action: ActionType.INVITED,
-                    amount: BonusAmount[ActionType.INVITED],
-                });
-            }
+            await this.userBonusService.create({
+                userId: user.id,
+                actionType: UserBonusActionStatus.REGISTERED,
+                amount: BonusAmount[UserBonusActionStatus.REGISTERED],
+            });
+
+            await this.userBonusService.create({
+                userId: inviterId,
+                actionType: UserBonusActionStatus.INVITED,
+                amount: BonusAmount[UserBonusActionStatus.INVITED],
+            });
         }
 
         const token = await jwtService.createToken({ userId: user.id });

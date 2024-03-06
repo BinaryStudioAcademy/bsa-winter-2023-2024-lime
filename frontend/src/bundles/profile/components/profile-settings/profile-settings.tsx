@@ -1,10 +1,10 @@
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import {
     Avatar,
     Button,
     ButtonVariant,
     CopyToClipboard,
     DatePicker,
-    Icon,
     Input,
     Loader,
     Radio,
@@ -17,6 +17,7 @@ import {
     getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
+    useAppDispatch,
     useAppForm,
     useAppSelector,
     useCallback,
@@ -29,6 +30,7 @@ import {
 } from '~/bundles/users/users.js';
 
 import { constructReferralUrl } from '../../helpers/helpers.js';
+import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
@@ -37,10 +39,16 @@ type Properties = {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+    const dispatch = useAppDispatch();
+
     const [valuesDefault, setValuesDefault] = useState(false);
-    const { user } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-    }));
+    const { user, userBonusesTransactions, userBonusesStatus } = useAppSelector(
+        ({ auth }) => ({
+            user: auth.user,
+            userBonusesTransactions: auth.userBonusesTransactions,
+            userBonusesStatus: auth.userBonusesStatus,
+        }),
+    );
 
     const { control, errors, reset, setValue, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
@@ -90,6 +98,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
     }, [reset]);
 
+    const handleShowTransactions = useCallback((): void => {
+        void dispatch(authActions.loadAllUserBonusesTransactions());
+    }, [dispatch]);
+
     return (
         <div className="bg-lm-black-200 pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
             <div className="mb-12 flex flex-col items-start justify-between  gap-5 xl:flex-row xl:items-center">
@@ -116,26 +128,13 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         />
                     </div>
                 </div>
-                <div className="bg-lm-black-100 flex h-[50%] flex-col justify-center gap-2 rounded-xl p-4">
-                    <div className="flex gap-2">
-                        <span className="text-lm-grey-200 text-xl">
-                            Your balance:
-                        </span>
-                        <span className="text-lm-yellow-200 text-xl font-bold">
-                            {user?.bonusBalance ?? 0}
-                        </span>
-                        <Icon
-                            name="logoIcon"
-                            size="md"
-                            className="text-lm-yellow-200"
-                        />
-                    </div>
-                    <Button
-                        label={'Show history of transactions'}
-                        variant={ButtonVariant.PRIMARY}
-                        size={ComponentSize.SMALL}
-                    />
-                </div>
+                <UserBonusBalance
+                    userBonusesTransactions={userBonusesTransactions}
+                    userBonusesStatus={userBonusesStatus}
+                    className="h-[50%]"
+                    bonusBalance={user?.bonusBalance ?? 0}
+                    onShowTransactions={handleShowTransactions}
+                />
             </div>
             <CopyToClipboard
                 label="Copy link with your referral code"

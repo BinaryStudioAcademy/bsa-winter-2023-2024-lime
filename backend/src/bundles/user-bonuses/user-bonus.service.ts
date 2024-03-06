@@ -1,40 +1,22 @@
-import { type Service } from '~/common/types/types.js';
-
+import {
+    type UserBonusCreateRequestDto,
+    type UserBonusGetAllItemResponseDto,
+    type UserBonusGetAllResponseDto,
+} from './types/types.js';
 import { UserBonusEntity } from './user-bonus.entity.js';
 import { type UserBonusRepository } from './user-bonus.repository.js';
 
-type UserBonusResponseItem = {
-    id: number;
-    userId: number;
-    action: string;
-    amount: number;
-};
-
-type UserBonusResponseAllItems = {
-    items: UserBonusResponseItem[];
-};
-
-type UserBonusCreatePayload = {
-    userId: number;
-    action: string;
-    amount: number;
-};
-
-class UserBonusService implements Service {
+class UserBonusService {
     private userBonusRepository: UserBonusRepository;
 
     public constructor(userBonusRepository: UserBonusRepository) {
         this.userBonusRepository = userBonusRepository;
     }
 
-    public async find(
+    public async findAllByQuery(
         query: Record<string, unknown>,
-    ): Promise<UserBonusEntity | null> {
-        return await this.userBonusRepository.find(query);
-    }
-
-    public async findAll(): Promise<UserBonusResponseAllItems> {
-        const items = await this.userBonusRepository.findAll();
+    ): Promise<UserBonusGetAllResponseDto> {
+        const items = await this.userBonusRepository.findAllByQuery(query);
 
         return {
             items: items.map((it) => it.toObject()),
@@ -42,23 +24,13 @@ class UserBonusService implements Service {
     }
 
     public async create(
-        payload: UserBonusCreatePayload,
-    ): Promise<UserBonusResponseItem> {
-        const { userId, action, amount } = payload;
-
+        payload: UserBonusCreateRequestDto,
+    ): Promise<UserBonusGetAllItemResponseDto> {
         const userBonus = await this.userBonusRepository.create(
-            UserBonusEntity.initializeNew({ userId, action, amount }),
+            UserBonusEntity.initializeNew(payload),
         );
 
         return userBonus.toObject();
-    }
-
-    public update(): ReturnType<Service['update']> {
-        return Promise.resolve(true);
-    }
-
-    public delete(): ReturnType<Service['delete']> {
-        return Promise.resolve(true);
     }
 }
 

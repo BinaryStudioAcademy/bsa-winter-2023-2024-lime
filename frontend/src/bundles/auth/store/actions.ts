@@ -6,6 +6,7 @@ import {
 } from '~/bundles/common/types/types.js';
 import {
     type UserAuthRequestDto,
+    type UserBonusGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
@@ -66,4 +67,20 @@ const updateUser = createAsyncThunk<
     return await userApi.updateUser(updateUserPayload);
 });
 
-export { logout, refreshUser, signIn, signUp, updateUser };
+const loadAllUserBonusesTransactions = createAsyncThunk<
+    UserBonusGetAllResponseDto,
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/bonuses`, (_, { extra }) => {
+    const { userApi } = extra;
+    return userApi.getUserBonuses();
+});
+
+export {
+    loadAllUserBonusesTransactions,
+    logout,
+    refreshUser,
+    signIn,
+    signUp,
+    updateUser,
+};

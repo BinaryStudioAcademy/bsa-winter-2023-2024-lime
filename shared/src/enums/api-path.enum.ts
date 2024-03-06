@@ -7,6 +7,7 @@ const ApiPath = {
     CONNECTIONS: '/connections',
     OAUTH: '/oauth',
     ACHIEVEMENTS: '/achievements',
+    USER_BONUSES: '/user-bonuses',
 } as const;
 
 export { ApiPath };

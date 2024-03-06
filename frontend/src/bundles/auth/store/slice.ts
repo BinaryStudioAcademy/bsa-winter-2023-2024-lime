@@ -5,18 +5,30 @@ import {
     type UserAuthResponseDto,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
+import { type UserBonusGetAllItemResponseDto } from '~/bundles/users/users.js';
 
-import { logout, refreshUser, signIn, signUp, updateUser } from './actions.js';
+import {
+    loadAllUserBonusesTransactions,
+    logout,
+    refreshUser,
+    signIn,
+    signUp,
+    updateUser,
+} from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     user: UserAuthResponseDto | null;
+    userBonusesTransactions: UserBonusGetAllItemResponseDto[];
+    userBonusesStatus: ValueOf<typeof DataStatus>;
     isRefreshing: boolean;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
+    userBonusesStatus: DataStatus.IDLE,
     user: null,
+    userBonusesTransactions: [],
     isRefreshing: false,
 };
 
@@ -77,6 +89,19 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(updateUser.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(loadAllUserBonusesTransactions.pending, (state) => {
+            state.userBonusesStatus = DataStatus.PENDING;
+        });
+        builder.addCase(
+            loadAllUserBonusesTransactions.fulfilled,
+            (state, action) => {
+                state.userBonusesTransactions = action.payload.items;
+                state.userBonusesStatus = DataStatus.FULFILLED;
+            },
+        );
+        builder.addCase(loadAllUserBonusesTransactions.rejected, (state) => {
+            state.userBonusesStatus = DataStatus.REJECTED;
         });
     },
 });

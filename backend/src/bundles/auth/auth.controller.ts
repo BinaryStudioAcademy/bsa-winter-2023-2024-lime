@@ -156,8 +156,8 @@ class AuthController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
             payload: await this.authService.signUp(
-                options.query.referralCode,
                 options.body,
+                options.query.referralCode,
             ),
         };
     }

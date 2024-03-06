@@ -170,8 +170,8 @@ class UserRepository implements Repository {
     }
 
     public async findByReferralCode(
-        referralCode: string,
-    ): Promise<{ userId: number | null }> {
+        referralCode: string | null,
+    ): Promise<UserEntity | null> {
         const user = await this.userModel
             .query()
             .joinRelated('userDetails')
@@ -180,10 +180,23 @@ class UserRepository implements Repository {
             .execute();
 
         if (!user) {
-            return { userId: null };
+            return null;
         }
 
-        return { userId: user.id };
+        const { userDetails, ...userInfo } = user;
+
+        return UserEntity.initialize({
+            ...userInfo,
+            fullName: userDetails.fullName,
+            avatarUrl: userDetails.avatarUrl,
+            username: userDetails.username,
+            dateOfBirth: userDetails.dateOfBirth,
+            weight: userDetails.weight,
+            height: userDetails.height,
+            gender: userDetails.gender,
+            referralCode: userDetails.referralCode,
+            bonusBalance: userDetails.bonusBalance,
+        });
     }
 }
 

@@ -24,6 +24,7 @@ const UserValidationMessage = {
     HEIGHT_WRONG: 'Height should consist of digits.',
     HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MIN_VALUE} sm.`,
     USER_NOT_FOUND: 'User not found',
+    USER_WITH_REFERRAL_ID_NOT_FOUND: 'User with this referral id was not found',
 } as const;
 
 export { UserValidationMessage };

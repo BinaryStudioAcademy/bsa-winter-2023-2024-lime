@@ -6,6 +6,7 @@ import { type Storage } from '~/framework/storage/storage.js';
 import { UsersApiPath } from './enums/enums.js';
 import {
     type UserAuthResponseDto,
+    type UserBonusGetAllResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
@@ -60,6 +61,18 @@ class UserApi extends BaseHttpApi {
             },
         );
         return await response.json<UserAuthResponseDto>();
+    }
+
+    public async getUserBonuses(): Promise<UserBonusGetAllResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(UsersApiPath.BONUSES, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<UserBonusGetAllResponseDto>();
     }
 }
 

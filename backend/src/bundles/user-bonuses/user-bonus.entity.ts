@@ -1,89 +1,102 @@
-import { type Entity } from '~/common/types/types.js';
+import { type Entity, type ValueOf } from '~/common/types/types.js';
+
+import { type UserBonusActionStatus } from './enums/enums.js';
 
 class UserBonusEntity implements Entity {
     private 'id': number | null;
 
     private 'userId': number;
 
-    private 'action': string;
+    private 'actionType': ValueOf<typeof UserBonusActionStatus>;
 
     private 'amount': number;
+
+    private 'createdAt': string | null;
 
     private constructor({
         id,
         userId,
-        action,
+        actionType,
         amount,
+        createdAt,
     }: {
         id: number | null;
         userId: number;
-        action: string;
+        actionType: ValueOf<typeof UserBonusActionStatus>;
         amount: number;
+        createdAt: string | null;
     }) {
         this.id = id;
         this.userId = userId;
-        this.action = action;
+        this.actionType = actionType;
         this.amount = amount;
+        this.createdAt = createdAt;
     }
 
     public static initialize({
         id,
         userId,
-        action,
+        actionType,
         amount,
+        createdAt,
     }: {
         id: number;
         userId: number;
-        action: string;
+        actionType: ValueOf<typeof UserBonusActionStatus>;
         amount: number;
+        createdAt: string | null;
     }): UserBonusEntity {
         return new UserBonusEntity({
             id,
             userId,
-            action,
+            actionType,
             amount,
+            createdAt,
         });
     }
 
     public static initializeNew({
         userId,
-        action,
+        actionType,
         amount,
     }: {
         userId: number;
-        action: string;
+        actionType: ValueOf<typeof UserBonusActionStatus>;
         amount: number;
     }): UserBonusEntity {
         return new UserBonusEntity({
             id: null,
             userId,
-            action,
+            actionType,
             amount,
+            createdAt: null,
         });
     }
 
     public toObject(): {
         id: number;
         userId: number;
-        action: string;
+        actionType: ValueOf<typeof UserBonusActionStatus>;
         amount: number;
+        createdAt: string | null;
     } {
         return {
             id: this.id as number,
             userId: this.userId,
-            action: this.action,
+            actionType: this.actionType,
             amount: this.amount,
+            createdAt: this.createdAt,
         };
     }
 
     public toNewObject(): {
         userId: number;
-        action: string;
+        actionType: ValueOf<typeof UserBonusActionStatus>;
         amount: number;
     } {
         return {
             userId: this.userId,
-            action: this.action,
+            actionType: this.actionType,
             amount: this.amount,
         };
     }

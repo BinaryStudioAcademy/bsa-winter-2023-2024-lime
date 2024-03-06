@@ -44,6 +44,12 @@ export {
     SubscriptionValidationMessage,
 } from './bundles/subscriptions/subscriptions.js';
 export {
+    type UserBonusCreateRequestDto,
+    type UserBonusGetAllItemResponseDto,
+    type UserBonusGetAllResponseDto,
+    UserBonusActionStatus,
+} from './bundles/user-bonuses/user-bonuses.js';
+export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,

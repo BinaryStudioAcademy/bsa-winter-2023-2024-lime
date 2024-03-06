@@ -13,16 +13,16 @@ class UserBonusRepository implements Repository {
     public async find(
         query: Record<string, unknown>,
     ): Promise<UserBonusEntity | null> {
-        const referralTransaction = await this.userBonusModel
+        const bonus = await this.userBonusModel
             .query()
             .findOne(query)
             .execute();
 
-        if (!referralTransaction) {
+        if (!bonus) {
             return null;
         }
 
-        return UserBonusEntity.initialize(referralTransaction);
+        return UserBonusEntity.initialize(bonus);
     }
 
     public async findAll(): Promise<UserBonusEntity[]> {
@@ -33,16 +33,27 @@ class UserBonusRepository implements Repository {
         });
     }
 
-    public async create(entity: UserBonusEntity): Promise<UserBonusEntity> {
-        const { userId, action, amount } = entity.toNewObject();
-
-        const referralTransaction = await this.userBonusModel
+    public async findAllByQuery(
+        query: Record<string, unknown>,
+    ): Promise<UserBonusEntity[]> {
+        const bonuses = await this.userBonusModel
             .query()
-            .insert({ userId, action, amount })
+            .where(query)
+            .execute();
+
+        return bonuses.map((bonus) => {
+            return UserBonusEntity.initialize(bonus);
+        });
+    }
+
+    public async create(entity: UserBonusEntity): Promise<UserBonusEntity> {
+        const bonusTransaction = await this.userBonusModel
+            .query()
+            .insert(entity.toNewObject())
             .returning('*')
             .execute();
 
-        return UserBonusEntity.initialize(referralTransaction);
+        return UserBonusEntity.initialize(bonusTransaction);
     }
 
     public update(): ReturnType<Repository['update']> {

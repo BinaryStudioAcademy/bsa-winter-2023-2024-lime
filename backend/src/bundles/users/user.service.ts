@@ -43,7 +43,7 @@ class UserService implements Service {
         const { hash } = cryptService.encryptSync(password);
         const { stripeCustomerId } = await stripeService.createCustomer(email);
         const generatedReferralCode = crypto.randomUUID();
-        // const stripeCustomerId = 'asdasd3';
+        // const stripeCustomerId = crypto.randomUUID();
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
@@ -88,8 +88,8 @@ class UserService implements Service {
     }
 
     public async findByReferralCode(
-        referralCode: string,
-    ): Promise<{ userId: number | null }> {
+        referralCode: string | null,
+    ): Promise<UserEntity | null> {
         return await this.userRepository.findByReferralCode(referralCode);
     }
 }

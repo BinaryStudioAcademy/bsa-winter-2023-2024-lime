@@ -1,7 +1,7 @@
 const UserBonusAttributes = {
     ID: 'id',
     USER_ID: 'userId',
-    ACTION: 'action',
+    ACTION_TYPE: 'actionType',
     AMOUNT: 'amount',
 } as const;
 

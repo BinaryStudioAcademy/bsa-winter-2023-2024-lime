@@ -13,6 +13,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
+import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath } from './enums/enums.js';
 
 /**
@@ -58,11 +59,17 @@ import { UsersApiPath } from './enums/enums.js';
  */
 class UserController extends BaseController {
     private userService: UserService;
+    private userBonusService: UserBonusService;
 
-    public constructor(logger: Logger, userService: UserService) {
+    public constructor(
+        logger: Logger,
+        userService: UserService,
+        userBonusService: UserBonusService,
+    ) {
         super(logger, ApiPath.USERS);
 
         this.userService = userService;
+        this.userBonusService = userBonusService;
 
         this.addRoute({
             path: UsersApiPath.ROOT,
@@ -92,6 +99,18 @@ class UserController extends BaseController {
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.BONUSES,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.findBonusesByUserId(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
@@ -194,6 +213,19 @@ class UserController extends BaseController {
                 status: HttpCode.BAD_REQUEST,
             });
         }
+    }
+
+    private async findBonusesByUserId(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const userId = options.user.id;
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: await this.userBonusService.findAllByQuery({ userId }),
+        };
     }
 }
 

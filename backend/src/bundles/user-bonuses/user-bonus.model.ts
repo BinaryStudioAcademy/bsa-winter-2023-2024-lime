@@ -4,15 +4,19 @@ import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
+import { type ValueOf } from '~/common/types/types.js';
 
 import { UserAttributes } from '../users/enums/user-attributes.enum.js';
 import { UserModel } from '../users/user.model.js';
-import { UserBonusAttributes } from './enums/enums.js';
+import {
+    type UserBonusActionStatus,
+    UserBonusAttributes,
+} from './enums/enums.js';
 
 class UserBonusModel extends AbstractModel {
     public 'userId': number;
 
-    public 'action': string;
+    public 'actionType': ValueOf<typeof UserBonusActionStatus>;
 
     public 'amount': number;
 
