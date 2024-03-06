@@ -90,6 +90,7 @@ class AuthService {
         }
 
         const user = await this.userService.create(userRequestDto);
+        const token = await jwtService.createToken({ userId: user.id });
 
         if (isReferralCodeValid && inviterUser) {
             const { id: inviterId } = inviterUser.toObject();
@@ -105,9 +106,15 @@ class AuthService {
                 actionType: UserBonusActionStatus.INVITED,
                 amount: BonusAmount[UserBonusActionStatus.INVITED],
             });
-        }
 
-        const token = await jwtService.createToken({ userId: user.id });
+            return {
+                user: {
+                    ...user,
+                    bonusBalance: BonusAmount[UserBonusActionStatus.REGISTERED],
+                },
+                token,
+            };
+        }
 
         return { user, token };
     }
