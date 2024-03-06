@@ -17,23 +17,6 @@ import {
 } from './types/types.js';
 import { oAuthProviderValidationSchema } from './validation-schemas/validation-schemas.js';
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
-
 class OAuthController extends BaseController {
     private oAuthService: OAuthService;
 

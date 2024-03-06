@@ -13,6 +13,7 @@ type Properties = {
 
 const BaseLayout: React.FC<Properties> = () => {
     const { toggleSidebar, isOpen } = useSidebarToggle();
+
     return (
         <div
             className={getValidClassNames(

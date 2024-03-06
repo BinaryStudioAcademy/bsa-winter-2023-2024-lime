@@ -1,4 +1,8 @@
-export { Metric } from './bundles/achievements/enums/enums.js';
+export {
+    type AchievementGetItemResponseDto,
+    AchievementsApiPath,
+    Metric,
+} from './bundles/achievements/achievements.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export {
     type ConnectionGetAllItemResponseDto,
@@ -47,12 +51,14 @@ export {
     type UserAuthResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
+    type UserUpdateProfileRequestDto,
     Gender,
     passwordForgotValidationSchema,
     passwordResetValidationSchema,
     userAuthValidationSchema,
     UsersApiPath,
     userSignUpValidationSchema,
+    userUpdateProfileValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
@@ -77,7 +83,11 @@ export {
     HttpHeader,
 } from './framework/http/http.js';
 export { type Storage } from './framework/storage/storage.js';
-export { configureString } from './helpers/helpers.js';
+export {
+    configureDateString,
+    configureISOString,
+    configureString,
+} from './helpers/helpers.js';
 export {
     type ServerCommonErrorResponse,
     type ServerErrorDetail,

@@ -87,6 +87,8 @@ export default {
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+                gilroyLight: ['Gilroy-Light', ...defaultTheme.fontFamily.sans],
+                gilroyBold: ['Gilroy-Bold', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
@@ -104,10 +106,22 @@ export default {
             },
             width: {
                 '30': '7.5625rem',
+                '50': '12.5',
+                '83': '5.1875',
+                '115': '115px',
+                '120': '120px',
                 '150': '9.375rem',
+                '874': '54.625',
             },
             height: {
                 '30': '7.5625rem',
+                '37': '2.3125',
+                '38': '2.375',
+                '54': '54px',
+            },
+            spacing: {
+                '13': '3.25',
+                '18': '4.875',
             },
             minHeight: {
                 '90': 'calc(100vh - 5.5rem)',
