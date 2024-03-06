@@ -170,7 +170,7 @@ const Goals: React.FC = () => {
                                     variant={ButtonVariant.SECONDARY}
                                     size={ComponentSize.LARGE}
                                     leftIcon={<PlusIcon className="w-6" />}
-                                    className="h-[5rem] sm:text-sm md:h-[7.5rem] md:text-xl"
+                                    className="h-[5rem] sm:text-sm md:h-[7.5rem] md:w-[18rem] md:text-xl"
                                     onClick={handleOpenModal}
                                 />
                             </div>
