@@ -84,6 +84,7 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
@@ -152,6 +153,13 @@ export default {
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
+            },
+            keyframes: {
+                pulse: {
+                    '0%': { transform: 'scale(1)', opacity: 1 },
+                    '50%': { transform: 'scale(1.05)', opacity: 0.5 },
+                    '100%': { transform: 'scale(1)', opacity: 1 },
+                },
             },
         },
     },

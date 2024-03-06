@@ -9,10 +9,7 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { createSelector } from '~/bundles/common/redux/selectors/selectors.js';
 import { type RootState } from '~/bundles/common/types/types.js';
-import {
-    dismissNotification,
-    fetchNotifications,
-} from '~/bundles/notifications/store/actions.js';
+import { actions } from '~/bundles/notifications/store/notifications.js';
 
 import { NotificationList } from './components/notification-list.js';
 import { NotificationBell } from './components/notifications-bell.js';
@@ -31,7 +28,8 @@ const NotificationComponent = (): JSX.Element => {
     const { notifications } = useAppSelector(selectorNotifications);
 
     useEffect(() => {
-        void dispatch(fetchNotifications());
+        // void dispatch(fetchNotifications());
+        dispatch(actions.localFetchNotifications([]));
     }, [dispatch]);
 
     const [showList, setShowList] = useState(false);
@@ -40,16 +38,29 @@ const NotificationComponent = (): JSX.Element => {
         setShowList(!showList);
     }, [showList]);
 
-    const handleNotificationClick = useCallback(
+    const handleNotificationReadClick = useCallback(
         (id: number) => {
-            void dispatch(dismissNotification(id.toString()));
+            // void dispatch(dismissNotification(id.toString()));
+            void dispatch(actions.localDismissNotification(id.toString()));
+            setShowList(notifications.length > 1);
+        },
+        [dispatch, notifications],
+    );
 
+    const handleNotificationDeleteClick = useCallback(
+        (id: number) => {
+            // void dispatch(deleteNotification(id.toString()));
+            void dispatch(actions.localDeleteNotification(id.toString()));
             setShowList(notifications.length > 1);
         },
         [dispatch, notifications],
     );
 
     const notificationListReference = useRef(null);
+
+    const count = notifications.filter(
+        (notification) => !notification.isRead,
+    ).length;
 
     useHandleClickOutside({
         ref: notificationListReference,
@@ -59,14 +70,15 @@ const NotificationComponent = (): JSX.Element => {
     return (
         <div className="relative" ref={notificationListReference}>
             <NotificationBell
-                count={notifications.length}
+                count={count}
                 onClick={handleIconClick}
                 showList={showList}
             />
             {showList && (
                 <NotificationList
                     notifications={notifications}
-                    onNotificationClick={handleNotificationClick}
+                    onNotificationReadClick={handleNotificationReadClick}
+                    onNotificationDeleteClick={handleNotificationDeleteClick}
                 />
             )}
         </div>
