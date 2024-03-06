@@ -6,9 +6,8 @@ export { getObjectKeys } from './get-object-keys/get-object-keys.js';
 export { getTimeFromDate } from './get-time-from-date/get-time-from-date.helper.js';
 export { getUserId } from './get-user-id/get-user-id.js';
 export { getValidClassNames } from './get-valid-class-names/get-valid-class-names.helper.js';
-export { validateImageUrl } from './validate-image-url/validate-image-url.helper.js';
 export { metersToKilometers } from './meters-to-kilometers/meters-to-kilometers.helper.js';
-
+export { validateImageUrl } from './validate-image-url/validate-image-url.helper.js';
 export {
     configureDateString,
     configureISOString,
