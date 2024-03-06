@@ -21,7 +21,7 @@ const AchievementCard: React.FC<Properties> = ({
                 </div>
             </div>
             <div className="bg-tertiary items-center justify-center rounded-full px-2 py-1">
-                <span className="text-lm-yellow-100 flex items-center justify-center text-center text-xs font-semibold">
+                <span className="text-action flex items-center justify-center text-center text-xs font-semibold">
                     {achievement.requirement} {achievement.requirementMetric}
                 </span>
             </div>
