@@ -101,7 +101,7 @@ export default {
                         opacity: '1',
                     },
                 },
-               pulse: {
+                pulse: {
                     '0%': { transform: 'scale(1)', opacity: 1 },
                     '50%': { transform: 'scale(1.05)', opacity: 0.5 },
                     '100%': { transform: 'scale(1)', opacity: 1 },
@@ -153,7 +153,7 @@ export default {
             },
             maxHeight: {
                 '90': 'calc(100vh - 5.5rem)',
-            },          
+            },
             textColor: {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
@@ -174,7 +174,7 @@ export default {
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
-            },         
+            },
         },
     },
     plugins: [],
