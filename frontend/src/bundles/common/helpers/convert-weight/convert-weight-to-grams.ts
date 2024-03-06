@@ -6,7 +6,7 @@ import {
 const convertWeightToGrams = (
     weight: string | number | null,
 ): number | null => {
-    if (weight === null) {
+    if (!weight) {
         return null;
     }
 

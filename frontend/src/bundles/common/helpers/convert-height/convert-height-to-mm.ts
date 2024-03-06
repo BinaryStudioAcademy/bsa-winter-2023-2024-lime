@@ -3,7 +3,7 @@ import { MM_TO_CM_CONVERSION_FACTOR } from './constants/constants.js';
 const convertHeightToMillimeters = (
     height: string | number | null,
 ): number | null => {
-    if (height === null) {
+    if (!height) {
         return null;
     }
 
