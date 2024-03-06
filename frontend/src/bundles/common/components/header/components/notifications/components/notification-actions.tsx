@@ -3,23 +3,34 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type NotificationResponseDto } from '~/bundles/notifications/types/types.js';
 
-type NotificationItemProperties = {
+type NotificationActionsProperties = {
     notification: NotificationResponseDto;
     onRead: (id: number) => void;
     onDelete: (id: number) => void;
+    setIsOpened: (
+        value: number | ((previousValue: number | null) => number | null),
+    ) => void;
+    children: React.ReactNode;
 };
 
-const NotificationItem = ({
+const NotificationActions = ({
     notification,
     onRead,
     onDelete,
-}: NotificationItemProperties): JSX.Element => {
+    setIsOpened,
+    children,
+}: NotificationActionsProperties): JSX.Element => {
     const handleReadClick = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
             event.stopPropagation();
-            onRead(notification.id);
+            if (!notification.isRead) {
+                onRead(notification.id);
+            }
+            setIsOpened((previousValue) =>
+                previousValue === notification.id ? null : notification.id,
+            );
         },
-        [onRead, notification.id],
+        [onRead, notification, setIsOpened],
     );
 
     const handleDeleteClick = useCallback(
@@ -35,18 +46,7 @@ const NotificationItem = ({
             onClick={handleReadClick}
             className={`border-buttonTertiary bg-primary relative w-full rounded border  p-4 transition-all ${notification.isRead ? 'bg-secondary' : ''} `}
         >
-            <details className="w-full" open={notification.isRead}>
-                <summary
-                    className={
-                        'flex cursor-pointer items-center justify-center text-center text-sm transition-all '
-                    }
-                >
-                    {notification.title}
-                </summary>
-                <p className="p-1 text-justify text-sm">
-                    {notification.message}
-                </p>
-            </details>
+            {children}
             {notification.isRead && (
                 <button
                     data-index={notification.id}
@@ -61,4 +61,4 @@ const NotificationItem = ({
     );
 };
 
-export { NotificationItem };
+export { NotificationActions };

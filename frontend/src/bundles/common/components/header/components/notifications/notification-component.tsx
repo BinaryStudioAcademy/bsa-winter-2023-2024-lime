@@ -42,7 +42,9 @@ const NotificationComponent = (): JSX.Element => {
         (id: number) => {
             // void dispatch(dismissNotification(id.toString()));
             void dispatch(actions.localDismissNotification(id.toString()));
-            setShowList(notifications.length > 1);
+            if (notifications.length > 1) {
+                setShowList(true);
+            }
         },
         [dispatch, notifications],
     );
@@ -51,7 +53,9 @@ const NotificationComponent = (): JSX.Element => {
         (id: number) => {
             // void dispatch(deleteNotification(id.toString()));
             void dispatch(actions.localDeleteNotification(id.toString()));
-            setShowList(notifications.length > 1);
+            if (notifications.length > 1) {
+                setShowList(true);
+            }
         },
         [dispatch, notifications],
     );
