@@ -82,10 +82,12 @@ class StravaOAuthStrategy implements OAuthStrategy {
             access_token,
             expires_at,
             refresh_token,
+            athlete: { id },
         }: StravaOAuthResponseDto = await response.json();
 
         return OAuthEntity.initializeNew({
             userId,
+            ownerId: id,
             tokenType: token_type,
             accessToken: access_token,
             expiresAt: expires_at,
