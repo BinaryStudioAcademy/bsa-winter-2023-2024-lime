@@ -22,6 +22,11 @@ class StravaService {
             return;
         }
 
+        if (aspect_type === StravaAspect.DELETE) {
+            await this.workoutService.delete({ activityId: object_id });
+            return;
+        }
+
         const authInfo = await this.oAuthRepository.find({ ownerId: owner_id });
         if (!authInfo) {
             return;
@@ -47,25 +52,19 @@ class StravaService {
             return;
         }
         const workout = await this.workoutService.find(
-            { workoutStartedAt: formattedActivityInfo.workoutStartedAt }
+            { activityId: object_id }
         );
 
         switch (aspect_type) {
             case StravaAspect.CREATE: {
-
                 if (workout) {
                     break;
                 }
-
-                await this.workoutService.create({ ...formattedActivityInfo, userId });
+                await this.workoutService.create({ ...formattedActivityInfo, userId, activityId: object_id });
                 break;
             }
             case StravaAspect.UPDATE: {
-                await this.workoutService.update({ id: workout.id }, { ...formattedActivityInfo, userId });
-                break;
-            }
-            case StravaAspect.DELETE: {
-                await this.workoutService.delete({ id: workout.id });
+                await this.workoutService.update({ activityId: object_id }, { ...formattedActivityInfo, userId, activityId: object_id });
                 break;
             }
         }
