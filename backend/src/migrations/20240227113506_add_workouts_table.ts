@@ -38,7 +38,7 @@ async function up(knex: Knex): Promise<void> {
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
         table.float(ColumnName.STEPS).nullable();
-        table.integer(ColumnName.ACTIVITY_ID).nullable();
+        table.float(ColumnName.ACTIVITY_ID).nullable();
         table.float(ColumnName.KILOCALORIES).notNullable();
         table.float(ColumnName.HEART_RATE).nullable();
         table
