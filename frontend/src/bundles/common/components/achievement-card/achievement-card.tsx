@@ -1,5 +1,5 @@
 import { type AchievementResponseDto } from '~/bundles/achievements/types/types.js';
-import { formatDate } from '~/bundles/common/helpers/helpers.js';
+import { formatDateString } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {
     achievement: AchievementResponseDto;
@@ -16,7 +16,7 @@ const AchievementCard: React.FC<Properties> = ({
                         {achievement.name}
                     </p>
                     <p className="text-lm-grey-300 text-xs font-normal leading-3">
-                        {formatDate(achievement.createdAt)}
+                        {formatDateString(achievement.createdAt)}
                     </p>
                 </div>
             </div>

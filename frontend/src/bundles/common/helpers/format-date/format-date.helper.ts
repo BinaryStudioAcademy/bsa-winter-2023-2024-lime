@@ -1,13 +1,13 @@
-import { DateObject } from 'react-multi-date-picker';
+import { format, isToday, isYesterday } from 'date-fns';
 
-const DateFormat = {
-    FULL_DAY: 'dddd, MMMM DD | HH:mm A',
-} as const;
-
-const formatDate = (date: string): string => {
-    const convertedDate = new DateObject(date);
-
-    return convertedDate.format(DateFormat.FULL_DAY);
+const formatDate = (date: Date): string => {
+    if (isToday(date)) {
+        return 'Today';
+    } else if (isYesterday(date)) {
+        return 'Yesterday';
+    } else {
+        return format(date, 'MMMM dd, yyyy');
+    }
 };
 
 export { formatDate };

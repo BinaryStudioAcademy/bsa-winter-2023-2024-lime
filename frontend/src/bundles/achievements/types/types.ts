@@ -7,7 +7,7 @@ type AchievementResponseDto = {
     activityType: ValueOf<typeof ActivityType>;
     requirement: number;
     requirementMetric: string;
-    createdAt: string;
+    createdAt: Date;
 };
 
 export { type AchievementResponseDto };

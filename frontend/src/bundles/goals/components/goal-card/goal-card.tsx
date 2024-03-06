@@ -1,6 +1,6 @@
 import { ActivityIcon } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
-import { capitalizeString } from '~/bundles/common/helpers/helpers.js';
+import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 import { CircleProgress } from '~/bundles/overview/components/components.js';
@@ -32,7 +32,7 @@ const GoalCard: React.FC<Properties> = ({
                 />
                 <div className="flex flex-col">
                     <p className="text-primary text-sm font-extrabold leading-5 md:text-base">
-                        {capitalizeString(activityType)}
+                        {capitalizeFirstLetter(activityType)}
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
                         {frequency} {frequencyType}

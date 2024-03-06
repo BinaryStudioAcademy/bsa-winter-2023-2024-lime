@@ -1,6 +1,6 @@
 import { Icon } from '~/bundles/common/components/components.js';
 import {
-    capitalizeString,
+    capitalizeFirstLetter,
     getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
@@ -30,7 +30,7 @@ const GoalWidget = ({
     const rightTitle =
         goalType === GoalTypes.OVERVIEW
             ? 'Exercises'
-            : capitalizeString(goalType);
+            : capitalizeFirstLetter(goalType);
 
     return (
         <div
