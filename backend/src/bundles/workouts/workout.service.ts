@@ -17,15 +17,10 @@ class WorkoutService implements Service {
 
     public async find(
         query: Record<string, unknown>,
-    ): Promise<WorkoutResponseDto> {
+    ): Promise<WorkoutResponseDto | null> {
         const item = await this.workoutRepository.find(query);
-        if (!item) {
-            throw new HttpError({
-                status: HttpCode.BAD_REQUEST,
-                message: WorkoutValidationMessage.NOT_FOUND,
-            });
-        }
-        return item.toObject();
+
+        return item?.toObject() ?? null;
     }
     public async findAll(
         query: Record<string, unknown>,
