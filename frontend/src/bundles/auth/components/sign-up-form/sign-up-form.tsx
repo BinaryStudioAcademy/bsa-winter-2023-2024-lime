@@ -55,7 +55,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     />
                 </div>
 
-                <p className="text-lm-grey-100 mb-6 mt-10 text-center text-xs">
+                <p className="text-secondary mb-6 mt-10 text-center text-xs">
                     or Sign up with Email
                 </p>
                 <form onSubmit={handleFormSubmit}>
