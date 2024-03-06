@@ -8,47 +8,44 @@ import ReactCrop, {
     //@ts-expect-error: it does not let me commit changes
     type PercentCrop,
     //@ts-expect-error: it does not let me commit changes
-    type PixelCrop,
-    //@ts-expect-error: it does not let me commit changes
     centerCrop,
     //@ts-expect-error: it does not let me commit changes
     makeAspectCrop,
 } from 'react-image-crop';
 
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import { Button } from '~/bundles/common/components/components.js';
+import { useAppDispatch } from '~/bundles/common/hooks/hooks.js';
 
 import { canvasPreview } from './canvas-preview.js';
 
 const DIMENSION = {
     aspectRatio: 1,
-    min: 900,
+    min: 25,
 };
 
 const Cropper = ({
     closeModal,
     image,
-    getImgCropped,
 }: {
     closeModal: React.Dispatch<React.SetStateAction<boolean>>;
-    image: string;
-    getImgCropped: (img: string) => void;
+    image: string | null;
 }): JSX.Element => {
     const [crop, setCrop] = useState<Crop>();
     const [scale, setScale] = useState(1);
     const imgReference = useRef<HTMLImageElement>(null);
     const canvasReference = useRef<HTMLCanvasElement>(null);
 
-    const handleCrop = useCallback(
-        (PixelCrop: PixelCrop, PercentCrop: PercentCrop) => {
-            setCrop(PercentCrop);
-        },
-        [],
-    );
+    const dispatch = useAppDispatch();
+
+    const handleCrop = useCallback((PercentCrop: PercentCrop) => {
+        setCrop(PercentCrop);
+    }, []);
 
     const onImageLoad = useCallback(
         (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
             const { width, height } = event.currentTarget;
-            const crop: Crop = makeAspectCrop(
+            const imgCrop: Crop = makeAspectCrop(
                 {
                     unit: '%',
                     width: DIMENSION.min,
@@ -57,8 +54,7 @@ const Cropper = ({
                 width,
                 height,
             );
-
-            const center: Crop = centerCrop(crop, width, height);
+            const center: Crop = centerCrop(imgCrop, width, height);
             setCrop(center);
         },
         [],
@@ -77,9 +73,17 @@ const Cropper = ({
         });
 
         const imgUrl = canvasReference.current?.toDataURL() as string;
-        getImgCropped(imgUrl);
+
+        const stringToFile = async (): Promise<void> => {
+            const response = await fetch(imgUrl);
+            const blob = await response.blob();
+            const imgPayload = new File([blob], 'image', { type: blob.type });
+            void dispatch(authActions.upload(imgPayload));
+        };
+        void stringToFile();
+
         closeModal(false);
-    }, [crop, imgReference, canvasReference, scale, getImgCropped, closeModal]);
+    }, [crop, imgReference, canvasReference, scale, closeModal, dispatch]);
 
     return (
         <>
@@ -93,7 +97,7 @@ const Cropper = ({
             >
                 <img
                     ref={imgReference}
-                    src={image}
+                    src={image ?? ''}
                     alt="avatar"
                     onLoad={onImageLoad}
                     style={{ transform: `scale(${scale})` }}

@@ -65,4 +65,12 @@ const updateUser = createAsyncThunk<
     return await userApi.updateUser(updateUserPayload);
 });
 
-export { logout, refreshUser, signIn, signUp, updateUser };
+const upload = createAsyncThunk<string, File, AsyncThunkConfig>(
+    `${sliceName}/upload`,
+    async (imagePayload, { extra }) => {
+        const { userApi } = extra;
+        return await userApi.upload(imagePayload);
+    },
+);
+
+export { logout, refreshUser, signIn, signUp, updateUser, upload };

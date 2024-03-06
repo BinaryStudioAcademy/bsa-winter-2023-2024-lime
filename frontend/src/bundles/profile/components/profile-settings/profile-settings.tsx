@@ -39,22 +39,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const [imgToCrop, setImgToCrop] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [avatar, setAvatar] = useState('');
-    const [imgFile, setImgFile] = useState<File>();
 
     const [valuesDefault, setValuesDefault] = useState(false);
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
     }));
-
-    useEffect(() => {
-        const dataUrlToFile = async (): Promise<void> => {
-            const response = await fetch(avatar);
-            const blob = await response.blob();
-            const file = new File([blob], 'image', { type: blob.type });
-            setImgFile(file);
-        };
-        avatar && void dataUrlToFile();
-    }, [avatar]);
 
     const { control, errors, reset, setValue, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
@@ -69,7 +58,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         setIsOpen(false);
     }, []);
 
-    const uploadAvatar = useCallback(
+    const selectImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             setImgToCrop('');
             const pic = event.target.files;
@@ -81,10 +70,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         },
         [],
     );
-
-    const getImgCropped = useCallback((img: string) => {
-        setAvatar(img);
-    }, []);
 
     useEffect(() => {
         if (!valuesDefault && user) {
@@ -105,7 +90,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            imgFile;
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
@@ -120,13 +104,12 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 onSubmit(payload);
             })(event_);
         },
-        [handleSubmit, onSubmit, imgFile],
+        [handleSubmit, onSubmit],
     );
 
     const handleReset = useCallback((): void => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
 
-        setImgFile(undefined);
         setAvatar('');
         setImgToCrop('');
     }, [reset]);
@@ -145,7 +128,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     type="file"
                     accept="image/jpeg, image/png"
                     name="avatarUrl"
-                    onChange={uploadAvatar}
+                    onChange={selectImage}
                     className="hidden"
                 />
                 <label
@@ -159,11 +142,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     title="Crop your avatar"
                     onClose={closeModal}
                 >
-                    <Cropper
-                        image={imgToCrop}
-                        getImgCropped={getImgCropped}
-                        closeModal={setIsOpen}
-                    />
+                    <Cropper image={imgToCrop} closeModal={setIsOpen} />
                 </Modal>
             </div>
             <form

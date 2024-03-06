@@ -6,7 +6,14 @@ import {
     type ValueOf,
 } from '~/bundles/common/types/types.js';
 
-import { logout, refreshUser, signIn, signUp, updateUser } from './actions.js';
+import {
+    logout,
+    refreshUser,
+    signIn,
+    signUp,
+    updateUser,
+    upload,
+} from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
@@ -76,6 +83,16 @@ const { reducer, actions, name } = createSlice({
             state.user = action.payload;
         });
         builder.addCase(updateUser.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(upload.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(upload.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.user ? state.user.avatarUrl : action.payload;
+        });
+        builder.addCase(upload.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

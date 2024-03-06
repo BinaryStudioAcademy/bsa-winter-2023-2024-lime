@@ -1,10 +1,10 @@
 //@ts-expect-error: it does not let me commit changes
-import { type PixelCrop } from 'react-image-crop';
+import { type PercentCrop } from 'react-image-crop';
 
 type CanvasProperties = {
     image: HTMLImageElement;
     canvas: HTMLCanvasElement;
-    crop: PixelCrop;
+    crop: PercentCrop;
     scale: number;
 };
 
