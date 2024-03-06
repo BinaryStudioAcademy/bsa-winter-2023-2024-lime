@@ -1,4 +1,4 @@
-import { DateObject } from 'react-multi-date-picker';
+import { formatDate } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {
     amount: number;
@@ -25,7 +25,7 @@ const UserBonusTransacrionItem = ({
                 {actionMessage}
             </p>
             <p className="text-lm-grey-200 text-sm lg:text-base">
-                {new DateObject(date ?? '').format('DD.MM.YYYY')}
+                {formatDate(new Date(date ?? ''))}
             </p>
         </div>
     );
