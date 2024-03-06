@@ -11,7 +11,7 @@ const WorkoutRoute = ({ workout }: Properties): JSX.Element => {
     return (
         <div className="pt-[0.7rem]">
             <div className="flex justify-end gap-[2-rem] text-xs">
-                <p className="text-lm-yellow-100">
+                <p className="text-action">
                     {formatDate(workoutEndedAt ?? new Date())}
                 </p>
             </div>
