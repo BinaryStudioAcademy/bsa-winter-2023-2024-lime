@@ -10,7 +10,7 @@ import {
 import { ApiPath } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import { ConnectionsPath, HttpCode, OAuthActionsPath } from './enums/enums.js';
+import { AppRoute, HttpCode, OAuthActionsPath } from './enums/enums.js';
 import {
     type OAuthExchangeAuthCodeDto,
     type OAuthProviderParameterDto,
@@ -162,7 +162,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.CLIENT_BASE_URL}${AppRoute.PROFILE_CONNECTIONS}`,
         };
     }
 
@@ -206,7 +206,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.CLIENT_BASE_URL}${AppRoute.PROFILE_CONNECTIONS}`,
         };
     }
 }

@@ -54,16 +54,16 @@ class ConnectionApi extends BaseHttpApi {
     }
 
     public async deauthorize(
-      provider: ValueOf<typeof OAuthProvider>,
-  ): Promise<void> {
-      const fullPath = `${this.oAuthPath}/${provider}${OAuthActionsPath.DEAUTHORIZE}`;
+        provider: ValueOf<typeof OAuthProvider>,
+    ): Promise<void> {
+        const fullPath = `${this.oAuthPath}/${provider}${OAuthActionsPath.DEAUTHORIZE}`;
 
-      await this.load(this.getFullEndpoint(fullPath, {}), {
-          method: 'GET',
-          contentType: ContentType.JSON,
-          hasAuth: true,
-      });
-  }
+        await this.load(this.getFullEndpoint(fullPath, {}), {
+            method: 'GET',
+            contentType: ContentType.JSON,
+            hasAuth: true,
+        });
+    }
 }
 
 export { ConnectionApi };
