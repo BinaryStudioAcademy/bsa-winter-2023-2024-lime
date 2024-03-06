@@ -3,6 +3,7 @@ import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
 import logo from '~/assets/img/logo.svg';
 
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
+import { useAppSelector } from '../../hooks/hooks.js';
 import { Button, Icon, Layout, Link } from '../components.js';
 import { IconColor } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
@@ -13,6 +14,10 @@ type HeaderProperties = {
 };
 
 const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
+    const { email, avatarUrl } = useAppSelector(({ auth }) => ({
+        email: auth.user?.email,
+        avatarUrl: auth.user?.avatarUrl,
+    }));
     return (
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
@@ -42,7 +47,10 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
                 </div>
                 <div className="flex w-full justify-between">
                     <Message />
-                    <Navigation />
+                    <Navigation
+                        email={email || ''}
+                        avatarUrl={avatarUrl || ''}
+                    />
                 </div>
             </Layout>
         </header>
