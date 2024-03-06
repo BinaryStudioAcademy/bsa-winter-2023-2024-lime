@@ -7,6 +7,7 @@ const AppRoute = {
     OVERVIEW: '/overview',
     GOALS: '/goals',
     WORKOUT: '/workout',
+    WORKOUT_$ID: '/workout/:id',
     SCHEDULE: '/schedule',
     PROFILE_INFORMATION: '/profile/information',
     PROFILE_GOALS: '/profile/goals',
