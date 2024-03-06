@@ -92,8 +92,10 @@ const Goals: React.FC = () => {
                 activityType: payload.activity as ValueOf<typeof ActivityType>,
                 frequency: Number(frequency),
                 frequencyType: frequencyType as ValueOf<typeof FrequencyType>,
-                distance: convertToMeters(Number(payload.distance)) ?? null,
-                duration: Number(payload.duration) ?? null,
+                distance: payload.distance
+                    ? convertToMeters(Number(payload.distance))
+                    : null,
+                duration: payload.duration ? Number(payload.duration) : null,
             };
             void dispatch(goalsActions.createGoal(createGoalPayload));
             void setIsModalOpen(false);
