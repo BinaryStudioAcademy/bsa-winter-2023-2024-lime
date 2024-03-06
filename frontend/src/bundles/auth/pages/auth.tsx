@@ -136,7 +136,6 @@ const Auth: React.FC = () => {
         <main className={getValidClassNames(classes.main)}>
             <div className={getValidClassNames(classes.base, classes.form)}>
                 {getScreen(pathname)}
-                <ThemeSwitcher className="absolute bottom-0 right-3" />
             </div>
             <div className={getValidClassNames(classes.logoContainer)}>
                 <img src={authLogo} alt="LIME Logo" />
@@ -155,6 +154,7 @@ const Auth: React.FC = () => {
                     />
                 )}
             </Modal>
+            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };
