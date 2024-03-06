@@ -122,11 +122,13 @@ const Landing = (): JSX.Element => {
                                 />
                             </div>
                             <div>
-                                <Button
-                                    size={ComponentSize.MEDIUM}
-                                    label="Learn more"
-                                    variant={ButtonVariant.SECONDARY}
-                                />
+                                <a href="#how-it-works">
+                                    <Button
+                                        size={ComponentSize.MEDIUM}
+                                        label="Learn more"
+                                        variant={ButtonVariant.SECONDARY}
+                                    />
+                                </a>
                             </div>
                         </div>
                     </div>
