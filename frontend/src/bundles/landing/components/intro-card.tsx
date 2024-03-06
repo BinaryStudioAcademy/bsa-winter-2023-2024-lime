@@ -7,19 +7,6 @@ type Properties = {
 };
 
 const IntroCard = ({ number, title, description }: Properties): JSX.Element => {
-    // const styles = {
-    //     active: {
-    //         header: 'relative text-2xl font-bold leading-7 mb-[0.5rem]',
-    //         description: 'text-lm-grey-100 font-semibold leading-5',
-    //         base: 'ml-[7rem] max-w-[25rem] before:border-buttonPrimary before:items-baseline before:absolute before:size-[1.375rem] before:rounded-full before:border-[0.4rem] before:translate-y-1 before:-translate-x-16',
-    //     },
-    //     inactive: {
-    //         header: 'relative text-base font-normal leading-4 mb-[0.5rem]',
-    //         description: 'text-lm-grey-100 text-xs font-normal',
-    //         base: 'max-w-[18.75rem] opacity-30 before:border-buttonPrimary before:items-baseline before:absolute before:size-2 before:bg-lm-grey-100 before:rounded-full before:translate-y-1 before:-translate-x-8',
-    //     },
-    // };
-
     const styles = {
         default: {
             base: 'w-[18.5rem] opacity-30',
