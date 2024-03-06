@@ -13,7 +13,8 @@ const authPlugin = fastifyPlugin(
     (fastify, { jwtService, protectedRoutes }: AuthPluginOptions, done) => {
         fastify.decorateRequest('user', null);
         fastify.addHook('preHandler', async (request) => {
-            const isServedPagePath = request.routerPath === SERVED_PAGE_PATH;
+            const isServedPagePath =
+                request.routeOptions.url === SERVED_PAGE_PATH;
             if (isServedPagePath) {
                 return;
             }
@@ -27,6 +28,7 @@ const authPlugin = fastifyPlugin(
                         message: UserValidationMessage.TOKEN_REQUIRE,
                     });
                 }
+
                 try {
                     const { userId } = await jwtService.verifyToken(token);
                     const user = await userService.find({ id: userId });
