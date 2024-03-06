@@ -101,7 +101,7 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
-    const unfulfilledGoal = goals.filter((goal) => !goal.completedAt);
+    const unfulfilledGoals = goals.filter((goal) => !goal.completedAt);
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
@@ -144,8 +144,8 @@ const Goals: React.FC = () => {
                                     </p>
                                 )}
 
-                                {unfulfilledGoal?.length > ZERO_VALUE &&
-                                    unfulfilledGoal.map(
+                                {unfulfilledGoals?.length > ZERO_VALUE &&
+                                    unfulfilledGoals.map(
                                         ({
                                             id,
                                             activityType,
