@@ -12,6 +12,8 @@ import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
     configureISOString,
+    convertHeightToCentimeters,
+    convertHeightToMillimeters,
     convertWeightToGrams,
     convertWeightToKilograms,
     getObjectKeys,
@@ -66,6 +68,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         setValue(key, convertWeightToKilograms(user[key]));
                         break;
                     }
+                    case 'height': {
+                        setValue(key, convertHeightToCentimeters(user[key]));
+                        break;
+                    }
                     default: {
                         setValue(
                             key,
@@ -84,7 +90,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
                     weight: convertWeightToGrams(data.weight),
-                    height: data.height || null,
+                    height: convertHeightToMillimeters(data.height),
                     dateOfBirth: data.dateOfBirth
                         ? configureISOString(data.dateOfBirth || '')
                         : null,
