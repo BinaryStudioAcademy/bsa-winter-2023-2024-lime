@@ -12,7 +12,7 @@ import {
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { Home, NotFound } from '~/bundles/common/pages/pages.js';
+import { NotFound, Overview } from '~/bundles/common/pages/pages.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
 import { store } from '~/framework/store/store.js';
@@ -49,8 +49,8 @@ const routes = [
                 isPrivate: true,
                 children: [
                     {
-                        path: AppRoute.ROOT,
-                        element: <Home />,
+                        path: AppRoute.OVERVIEW,
+                        element: <Overview />,
                     },
                     {
                         path: AppRoute.GOALS,
@@ -59,10 +59,6 @@ const routes = [
                     {
                         path: AppRoute.WORKOUT,
                         element: <div>WORKOUT PAGE</div>,
-                    },
-                    {
-                        path: AppRoute.OVERVIEW,
-                        element: <div>Overview</div>,
                     },
                     {
                         path: AppRoute.SCHEDULE,

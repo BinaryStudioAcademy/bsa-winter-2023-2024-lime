@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 
+import { actions as appActions } from '~/app/store/app.js';
 import appPreview from '~/assets/img/landing/app-preview.svg';
 import authPreview from '~/assets/img/landing/auth-preview.svg';
 import featureBg from '~/assets/img/landing/feature-bg.png';
@@ -18,7 +19,12 @@ import {
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
+import {
+    useAppDispatch,
+    useAppSelector,
+    useCallback,
+    useEffect,
+} from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import {
@@ -31,11 +37,20 @@ import {
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
 const Landing = (): JSX.Element => {
-    const navigate = useNavigate();
+    const { user } = useAppSelector(({ auth }) => ({
+        user: auth.user,
+    }));
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (user) {
+            dispatch(appActions.navigate(AppRoute.OVERVIEW));
+        }
+    }, [dispatch, user]);
 
     const signUpHandler = useCallback((): void => {
-        navigate(AppRoute.SIGN_UP);
-    }, [navigate]);
+        dispatch(appActions.navigate(AppRoute.SIGN_UP));
+    }, [dispatch]);
 
     const styles = {
         section: 'flex flex-col min-h-screen shrink-0 snap-start snap-always',

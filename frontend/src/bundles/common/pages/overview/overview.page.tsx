@@ -57,7 +57,7 @@ const goalsData = [
     },
 ];
 
-const Home: React.FC = () => {
+const Overview: React.FC = () => {
     return (
         <div className="ml-auto mr-auto max-w-[1136px] xl:flex xl:gap-8">
             <div className="xl:basis-[70%]">
@@ -150,4 +150,4 @@ const Home: React.FC = () => {
     );
 };
 
-export { Home };
+export { Overview };

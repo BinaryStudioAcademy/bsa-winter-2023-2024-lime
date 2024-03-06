@@ -90,7 +90,7 @@ const Auth: React.FC = () => {
 
     useEffect(() => {
         if (user) {
-            navigate(AppRoute.ROOT);
+            navigate(AppRoute.OVERVIEW);
         }
     }, [navigate, user]);
 
