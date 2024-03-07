@@ -71,7 +71,6 @@ class UserApi extends BaseHttpApi {
             this.getFullEndpoint(UsersApiPath.UPLOAD_AVATAR, {}),
             {
                 method: 'POST',
-                contentType: ContentType.FORM_DATA,
                 payload: imageData,
                 hasAuth: true,
             },

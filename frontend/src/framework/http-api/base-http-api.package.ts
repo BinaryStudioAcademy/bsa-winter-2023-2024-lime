@@ -73,12 +73,13 @@ class BaseHttpApi implements HttpApi {
     }
 
     private async getHeaders(
-        contentType: ValueOf<typeof ContentType>,
+        contentType: ValueOf<typeof ContentType> | undefined,
         hasAuth: boolean,
     ): Promise<Headers> {
         const headers = new Headers();
-
-        headers.append(HttpHeader.CONTENT_TYPE, contentType);
+        if (contentType) {
+            headers.append(HttpHeader.CONTENT_TYPE, contentType);
+        }
 
         if (hasAuth) {
             const token = await this.storage.get<string>(StorageKey.TOKEN);

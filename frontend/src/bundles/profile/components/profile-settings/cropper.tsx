@@ -49,6 +49,7 @@ const Cropper = ({
         const imgPayload = new File([blob], 'image', {
             type: 'image/webp',
         });
+
         void dispatch(authActions.upload(imgPayload));
     }, [dispatch]);
 
