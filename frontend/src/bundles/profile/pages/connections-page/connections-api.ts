@@ -12,6 +12,7 @@ import {
 import {
     type ConnectionGetAllItemResponseDto,
     type OAuthAuthorizeResponseDto,
+    type OAuthDeauthorizeResponseDto,
 } from './types/types.js';
 
 type Constructor = {
@@ -63,14 +64,16 @@ class ConnectionApi extends BaseHttpApi {
 
     public async deauthorize(
         provider: ValueOf<typeof OAuthProvider>,
-    ): Promise<void> {
+    ): Promise<OAuthDeauthorizeResponseDto> {
         const fullPath = `${this.oAuthPath}/${provider}${OAuthActionsPath.DEAUTHORIZE}`;
 
-        await this.load(this.getFullEndpoint(fullPath, {}), {
+        const response = await this.load(this.getFullEndpoint(fullPath, {}), {
             method: 'GET',
             contentType: ContentType.JSON,
             hasAuth: true,
         });
+
+        return await response.json<OAuthDeauthorizeResponseDto>();
     }
 }
 

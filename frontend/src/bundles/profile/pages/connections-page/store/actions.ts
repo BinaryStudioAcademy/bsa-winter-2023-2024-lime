@@ -5,7 +5,10 @@ import {
     type ValueOf,
 } from '~/bundles/common/types/types.js';
 import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
-import { type ConnectionGetAllItemResponseDto } from '~/bundles/profile/pages/connections-page/types/types.js';
+import {
+    type ConnectionGetAllItemResponseDto,
+    type OAuthDeauthorizeResponseDto,
+} from '~/bundles/profile/pages/connections-page/types/types.js';
 
 import { name } from './slice.js';
 
@@ -30,13 +33,13 @@ const authorize = createAsyncThunk<
 });
 
 const deauthorize = createAsyncThunk<
-    unknown,
+    OAuthDeauthorizeResponseDto,
     ValueOf<typeof OAuthProvider>,
     AsyncThunkConfig
 >(`${name}/deauthorize`, async (provider, { extra }) => {
     const { connectionApi } = extra;
 
-    await connectionApi.deauthorize(provider);
+    return await connectionApi.deauthorize(provider);
 });
 
 export { authorize, deauthorize, getAll };

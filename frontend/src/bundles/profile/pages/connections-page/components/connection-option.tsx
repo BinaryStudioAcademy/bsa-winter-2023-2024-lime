@@ -31,6 +31,7 @@ const ConnectionOption = ({
     const dispatch = useAppDispatch();
 
     const { connections } = useAppSelector(({ connections }) => ({
+        dataStatus: connections.dataStatus,
         connections: connections.connections,
     }));
 
