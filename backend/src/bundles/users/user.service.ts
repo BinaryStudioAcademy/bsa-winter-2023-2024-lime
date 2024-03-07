@@ -1,7 +1,14 @@
+import { type S3 } from 'aws-sdk';
+
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
+import { type FileUploaded } from '~/common/controller/types/file-request.type.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
-import { cryptService, stripeService } from '~/common/services/services.js';
+import {
+    cryptService,
+    fileService,
+    stripeService,
+} from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import { UserValidationMessage } from './enums/enums.js';
@@ -69,9 +76,20 @@ class UserService implements Service {
             }
             return updatedUser.toObject() as UserAuthResponseDto;
         } catch (error) {
-            throw new Error(`Error occured ${error}`);
+            throw new Error(`Error occurred ${error}`);
         }
     }
+
+    public async upload(
+        payload: FileUploaded,
+    ): Promise<S3.ManagedUpload.SendData> {
+        try {
+            return await fileService.uploadFile(payload);
+        } catch (error) {
+            throw new Error(`Error occurred ${error}`);
+        }
+    }
+
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,

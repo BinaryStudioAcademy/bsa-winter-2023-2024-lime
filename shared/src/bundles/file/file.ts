@@ -1,1 +1,1 @@
-export { FileApiPath, FileValidationMessage } from './enums/enums.js';
+export { FileValidationMessage } from './enums/enums.js';

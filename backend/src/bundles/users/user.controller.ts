@@ -9,6 +9,7 @@ import {
     ApiHandlerResponseType,
 } from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
+import { type FileUploaded } from '~/common/controller/types/file-request.type.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
@@ -88,13 +89,23 @@ class UserController extends BaseController {
             path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
-            preHandler: upload.single('image'),
             handler: (options) =>
                 this.updateUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
                     }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.UPLOAD_AVATAR,
+            method: 'POST',
+            isProtected: true,
+            preHandler: upload.single('image'),
+            handler: (options) =>
+                this.uploadAvatar(
+                    options as ApiHandlerOptions<{ file: FileUploaded }>,
                 ),
         });
     }
@@ -194,6 +205,26 @@ class UserController extends BaseController {
             throw new HttpError({
                 message: `Something went wrong ${error}`,
                 status: HttpCode.BAD_REQUEST,
+            });
+        }
+    }
+
+    private async uploadAvatar(
+        options: ApiHandlerOptions<{ file: FileUploaded }>,
+    ): Promise<ApiHandlerResponse> {
+        const { file } = options;
+        try {
+            const avatarUrl = await this.userService.upload(file);
+
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.CREATED,
+                payload: avatarUrl,
+            };
+        } catch (error) {
+            throw new HttpError({
+                message: `Something went wrong ${error}`,
+                status: HttpCode.CONFLICT,
             });
         }
     }

@@ -3,7 +3,7 @@ import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
-import { FileApiPath, UsersApiPath } from './enums/enums.js';
+import { UsersApiPath } from './enums/enums.js';
 import {
     type UserAuthResponseDto,
     type UserGetAllResponseDto,
@@ -66,8 +66,9 @@ class UserApi extends BaseHttpApi {
     public async upload(payload: File): Promise<string> {
         const imageData = new FormData();
         imageData.append('image', payload);
+
         const response = await this.load(
-            this.getFullEndpoint(FileApiPath.UPLOAD, {}),
+            this.getFullEndpoint(UsersApiPath.UPLOAD_AVATAR, {}),
             {
                 method: 'POST',
                 contentType: ContentType.FORM_DATA,

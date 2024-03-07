@@ -1,1 +1,1 @@
-export { FileApiPath, UsersApiPath } from 'shared';
+export { UsersApiPath } from 'shared';
