@@ -56,11 +56,11 @@ const UserBonusBalance = ({
                         Your balance:
                     </span>
                     <span className="text-lm-yellow-200 text-xl font-bold">
-                        {bonusBalance}
+                        {bonusBalance.toLocaleString()}
                     </span>
                     <Icon
                         name={IconName.limeCoinIcon}
-                        size={ComponentSize.MEDIUM}
+                        size={ComponentSize.SMALL}
                         className="text-lm-yellow-200"
                     />
                 </div>
@@ -88,9 +88,9 @@ const UserBonusBalance = ({
                                 amount={bonus.amount}
                                 actionMessage={
                                     UserBonusTransactionMessage[
-                                        bonus.actionType as ValueOf<
-                                            typeof UserBonusActionStatus
-                                        >
+                                    bonus.actionType as ValueOf<
+                                        typeof UserBonusActionStatus
+                                    >
                                     ]
                                 }
                                 date={bonus.createdAt}
