@@ -85,12 +85,12 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(updateUser.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
-        builder.addCase(upload.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
-        });
+        builder.addCase(upload.pending, () => {});
         builder.addCase(upload.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.user ? state.user.avatarUrl : action.payload;
+            if (state.user && state.user.avatarUrl) {
+                state.user.avatarUrl = action.payload.avatarUrl;
+            }
         });
         builder.addCase(upload.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;

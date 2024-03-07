@@ -9,7 +9,7 @@ type AvatarSize = Exclude<
 type Properties = {
     size: AvatarSize;
     email: string;
-    avatarUrl: string | null;
+    avatarUrl: string | null | undefined;
 };
 
 const sizeToClass: Record<AvatarSize, string> = {

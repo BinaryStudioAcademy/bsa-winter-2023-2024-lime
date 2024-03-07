@@ -37,8 +37,8 @@ type Properties = {
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const [imgToCrop, setImgToCrop] = useState('');
+    const [avatar, setAvatar] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [avatar, setAvatar] = useState('');
 
     const [valuesDefault, setValuesDefault] = useState(false);
     const { user } = useAppSelector(({ auth }) => ({
@@ -53,11 +53,6 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             shouldUnregister: false,
         });
 
-    const closeModal = useCallback((): void => {
-        setImgToCrop('');
-        setIsOpen(false);
-    }, []);
-
     const selectImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             setImgToCrop('');
@@ -70,6 +65,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         },
         [],
     );
+
+    const setUnsavedAvatar = useCallback((image: string | undefined) => {
+        image && setAvatar(image);
+    }, []);
 
     useEffect(() => {
         if (!valuesDefault && user) {
@@ -93,6 +92,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
+                    avatarUrl: user ? user?.avatarUrl : null,
                     weight: data.weight || null,
                     height: data.height || null,
                     dateOfBirth: data.dateOfBirth
@@ -104,15 +104,28 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 onSubmit(payload);
             })(event_);
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, user],
     );
+
+    const closeModal = useCallback((): void => {
+        setImgToCrop('');
+        setIsOpen(false);
+    }, []);
 
     const handleReset = useCallback((): void => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
-
-        setAvatar('');
+        setAvatar(null);
         setImgToCrop('');
     }, [reset]);
+
+    const renderAvatar = useCallback(() => {
+        if (avatar) {
+            return avatar;
+        }
+        if (user) {
+            return user.avatarUrl;
+        }
+    }, [avatar, user]);
 
     return (
         <div className="bg-lm-black-200 pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
@@ -120,7 +133,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 <Avatar
                     size="lg"
                     email={user ? user?.email : ''}
-                    avatarUrl={avatar ?? user?.avatarUrl}
+                    avatarUrl={renderAvatar()}
                 />
 
                 <input
@@ -142,7 +155,11 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     title="Crop your avatar"
                     onClose={closeModal}
                 >
-                    <Cropper image={imgToCrop} closeModal={setIsOpen} />
+                    <Cropper
+                        image={imgToCrop}
+                        closeModal={setIsOpen}
+                        render={setUnsavedAvatar}
+                    />
                 </Modal>
             </div>
             <form

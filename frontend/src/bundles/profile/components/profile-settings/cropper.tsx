@@ -1,15 +1,14 @@
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { useCallback, useRef, useState } from 'react';
-// eslint-disable-next-line import/no-named-as-default
 import ReactCrop, {
     //@ts-expect-error: it does not let me commit changes
     type Crop,
-    //@ts-expect-error: it does not let me commit changes
+    //@ts-expect-error: ...
     type PercentCrop,
-    //@ts-expect-error: it does not let me commit changes
+    //@ts-expect-error: ...
     centerCrop,
-    //@ts-expect-error: it does not let me commit changes
+    //@ts-expect-error: ...
     makeAspectCrop,
 } from 'react-image-crop';
 
@@ -32,9 +31,11 @@ const DIMENSION = {
 
 const Cropper = ({
     closeModal,
+    render,
     image,
 }: {
     closeModal: React.Dispatch<React.SetStateAction<boolean>>;
+    render: (img: string | undefined) => void;
     image: string | null;
 }): JSX.Element => {
     const [crop, setCrop] = useState<Crop>();
@@ -88,9 +89,19 @@ const Cropper = ({
         });
 
         void toFile();
+        const temporaryAvatar = canvasReference.current?.toDataURL();
+        render(temporaryAvatar);
 
         closeModal(false);
-    }, [crop, imgReference, canvasReference, scale, closeModal, toFile]);
+    }, [
+        crop,
+        imgReference,
+        canvasReference,
+        scale,
+        closeModal,
+        toFile,
+        render,
+    ]);
 
     return (
         <>

@@ -6,6 +6,7 @@ import {
 } from '~/bundles/common/types/types.js';
 import {
     type UserAuthRequestDto,
+    type UserAvatarResponseDto,
     type UserUpdateProfileRequestDto,
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
@@ -65,7 +66,7 @@ const updateUser = createAsyncThunk<
     return await userApi.updateUser(updateUserPayload);
 });
 
-const upload = createAsyncThunk<string, File, AsyncThunkConfig>(
+const upload = createAsyncThunk<UserAvatarResponseDto, File, AsyncThunkConfig>(
     `${sliceName}/upload`,
     async (imagePayload, { extra }) => {
         const { userApi } = extra;

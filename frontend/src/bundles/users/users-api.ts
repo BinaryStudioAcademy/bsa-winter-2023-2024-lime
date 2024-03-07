@@ -6,6 +6,7 @@ import { type Storage } from '~/framework/storage/storage.js';
 import { UsersApiPath } from './enums/enums.js';
 import {
     type UserAuthResponseDto,
+    type UserAvatarResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
@@ -63,7 +64,7 @@ class UserApi extends BaseHttpApi {
         return await response.json<UserAuthResponseDto>();
     }
 
-    public async upload(payload: File): Promise<string> {
+    public async upload(payload: File): Promise<UserAvatarResponseDto> {
         const imageData = new FormData();
         imageData.append('image', payload);
 
@@ -76,7 +77,7 @@ class UserApi extends BaseHttpApi {
             },
         );
 
-        return response.json<string>();
+        return response.json<UserAvatarResponseDto>();
     }
 }
 
