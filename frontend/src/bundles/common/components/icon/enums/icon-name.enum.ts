@@ -9,8 +9,15 @@ const IconName = {
     facebookIcon: 'facebookIcon',
     workoutIcon: 'workoutIcon',
     messageIcon: 'messageIcon',
+    logoHeader: 'logoHeader',
+    logoHeaderLight: 'logoHeaderLight',
     caloriesIcon: 'caloriesIcon',
     stepsIcon: 'stepsIcon',
+    bellIcon: 'bellIcon',
+    communityIcon: 'communityIcon',
+    feedIcon: 'feedIcon',
+    goalIcon: 'goalIcon',
+    starIcon: 'starIcon',
 } as const;
 
 export { IconName };

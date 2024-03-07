@@ -7,7 +7,6 @@ const PROVIDER_ENUM_NAME = 'oauth_provider_enum';
 const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
-    OWNER_ID: 'owner_id',
     TOKEN_TYPE: 'token_type',
     EXPIRES_AT: 'expires_at',
     ACCESS_TOKEN: 'access_token',
@@ -31,7 +30,6 @@ async function up(knex: Knex): Promise<void> {
             .inTable(USERS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
-        table.integer(ColumnName.OWNER_ID).nullable();
         table.string(ColumnName.TOKEN_TYPE).notNullable();
         table.bigInteger(ColumnName.EXPIRES_AT).unsigned().notNullable();
         table.text(ColumnName.ACCESS_TOKEN).notNullable();
