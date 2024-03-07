@@ -44,6 +44,14 @@ const Cropper = ({
 
     const dispatch = useAppDispatch();
 
+    const toFile = useCallback(async (): Promise<void> => {
+        const blob = (await toBlob(canvasReference.current)) as Blob;
+        const imgPayload = new File([blob], 'image', {
+            type: 'image/webp',
+        });
+        void dispatch(authActions.upload(imgPayload));
+    }, [dispatch]);
+
     const handleCrop = useCallback((PercentCrop: PercentCrop) => {
         setCrop(PercentCrop);
     }, []);
@@ -78,17 +86,10 @@ const Cropper = ({
             image: imgReference.current as HTMLImageElement,
         });
 
-        const toFile = async (): Promise<void> => {
-            const blob = (await toBlob(canvasReference.current)) as Blob;
-            const imgPayload = new File([blob], 'image', {
-                type: 'image/webp',
-            });
-            void dispatch(authActions.upload(imgPayload));
-        };
         void toFile();
 
         closeModal(false);
-    }, [crop, imgReference, canvasReference, scale, closeModal, dispatch]);
+    }, [crop, imgReference, canvasReference, scale, closeModal, toFile]);
 
     return (
         <>
