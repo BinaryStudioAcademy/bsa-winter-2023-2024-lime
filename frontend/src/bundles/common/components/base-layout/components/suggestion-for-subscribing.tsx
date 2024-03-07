@@ -72,7 +72,7 @@ const SuggestionForSubscribing: React.FC = () => {
                     variant={ButtonVariant.PRIMARY}
                     label="Subscribe"
                     onClick={handleNavigateToSubscriptionPage}
-                    className={'w-[150px] mx-auto'}
+                    className={'mx-auto w-[150px]'}
                 />
             </div>
         </Modal>
