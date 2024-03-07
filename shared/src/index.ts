@@ -6,6 +6,7 @@ export {
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
+export { type UserAvatarResponseDto } from './bundles/file/types/types.js';
 export {
     type GoalRequestDto,
     type GoalResponseDto,
