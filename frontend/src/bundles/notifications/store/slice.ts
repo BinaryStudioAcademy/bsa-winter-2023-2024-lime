@@ -57,13 +57,9 @@ const { reducer, actions, name } = createSlice({
         localFetchNotifications: (state, action) => {
             return {
                 ...state,
-                notifications: [
-                    ...state.notifications,
-                    ...action.payload,
-                ],
+                notifications: [...state.notifications, ...action.payload],
             };
-            }
-        ,       
+        },
         localDismissNotification: (state, action) => {
             return {
                 ...state,
@@ -77,12 +73,13 @@ const { reducer, actions, name } = createSlice({
                     return notification;
                 }),
             };
-            },        
+        },
         localDeleteNotification: (state, action) => {
             return {
                 ...state,
                 notifications: state.notifications.filter(
-                    (notification) => notification.id.toString() !== action.payload,
+                    (notification) =>
+                        notification.id.toString() !== action.payload,
                 ),
             };
         },
@@ -115,7 +112,7 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(dismissNotification.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;
-        });        
+        });
         builder.addCase(dismissNotification.fulfilled, (state, action) => {
             return {
                 ...state,
@@ -140,7 +137,8 @@ const { reducer, actions, name } = createSlice({
             return {
                 ...state,
                 notifications: state.notifications.filter(
-                    (notification) => notification.id.toString() !== action.payload,
+                    (notification) =>
+                        notification.id.toString() !== action.payload,
                 ),
             };
         });
