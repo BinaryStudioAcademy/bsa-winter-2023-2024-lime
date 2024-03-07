@@ -4,7 +4,6 @@ import { actions as appActions } from '~/app/store/app.js';
 import appPreview from '~/assets/img/landing/app-preview.svg';
 import authPreview from '~/assets/img/landing/auth-preview.svg';
 import featureBg from '~/assets/img/landing/feature-bg.png';
-import logo from '~/assets/img/logo.svg';
 import {
     Button,
     ButtonVariant,
@@ -19,6 +18,7 @@ import {
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { Theme } from '~/bundles/common/enums/theme.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -38,6 +38,7 @@ import {
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
 const Landing = (): JSX.Element => {
+    const { theme } = useAppSelector((state) => state.theme);
     const { user, isRefreshing } = useAppSelector(({ auth }) => ({
         user: auth.user,
         isRefreshing: auth.isRefreshing,
@@ -79,7 +80,21 @@ const Landing = (): JSX.Element => {
                 <header className="container mx-auto my-6 flex flex-row items-center justify-between">
                     <div>
                         <Link to={AppRoute.ROOT}>
-                            <img src={logo} alt="Logo" />
+                            {theme === Theme.DARK ? (
+                                <Icon
+                                    name="logoHeader"
+                                    color={IconColor.PRIMARY}
+                                    size={ComponentSize.EXTRA_LARGE}
+                                    className="aspect-video max-h-12"
+                                />
+                            ) : (
+                                <Icon
+                                    name="logoHeaderLight"
+                                    color={IconColor.PRIMARY}
+                                    size={ComponentSize.EXTRA_LARGE}
+                                    className="aspect-video max-h-12"
+                                />
+                            )}
                         </Link>
                     </div>
                     <nav className="hidden gap-6 md:flex">
@@ -376,7 +391,21 @@ const Landing = (): JSX.Element => {
                 </div>
                 <footer className="container mx-auto flex h-[40rem] flex-col-reverse items-center justify-evenly sm:h-[20rem] md:flex-row md:items-start md:pt-60">
                     <div>
-                        <img src={logo} alt="Logo" />
+                        {theme === Theme.DARK ? (
+                            <Icon
+                                name="logoHeader"
+                                color={IconColor.PRIMARY}
+                                size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
+                            />
+                        ) : (
+                            <Icon
+                                name="logoHeaderLight"
+                                color={IconColor.PRIMARY}
+                                size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
+                            />
+                        )}
                     </div>
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
                         <div>
