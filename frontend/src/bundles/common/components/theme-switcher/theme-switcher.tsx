@@ -14,7 +14,8 @@ type Properties = {
     className?: string;
 };
 
-const defaultClassName = 'fixed bg-primary rounded-full md:bottom-4 md:right-4 bottom-4 right-4';
+const defaultClassName =
+    'fixed bg-primary rounded-full md:bottom-4 md:right-4 bottom-4 right-4';
 
 function ThemeSwitcher({
     className = defaultClassName,
