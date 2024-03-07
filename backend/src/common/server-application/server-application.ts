@@ -2,6 +2,7 @@ import { achievementController } from '~/bundles/achievements/achievements.js';
 import { authController } from '~/bundles/auth/auth.js';
 import { connectionController } from '~/bundles/connections/connections.js';
 import { goalController } from '~/bundles/goals/goals.js';
+import { notificationController } from '~/bundles/notifications/notifications.js';
 import { oAuthController } from '~/bundles/oauth/oauth.js';
 import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
 import { stravaController } from '~/bundles/strava/strava.js';
@@ -21,6 +22,7 @@ const apiV1 = new BaseServerAppApi(
     config,
     ...authController.routes,
     ...userController.routes,
+    ...notificationController.routes,
     ...goalController.routes,
     ...subscriptionController.routes,
     ...subscriptionPlanController.routes,

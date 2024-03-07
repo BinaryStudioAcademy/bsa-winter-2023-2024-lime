@@ -18,7 +18,7 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
                 <div className="hidden w-full max-w-[16rem]  md:flex">
-                    <Link to={AppRoute.ROOT}>
+                    <Link to={AppRoute.OVERVIEW}>
                         {theme === Theme.DARK ? (
                             <Icon
                                 name={'logoHeader'}
@@ -47,7 +47,7 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
                     />
                 </div>
                 <div className="mr-5 md:hidden">
-                    <Link to={AppRoute.ROOT}>
+                    <Link to={AppRoute.OVERVIEW}>
                         <Icon
                             name={'logoIcon'}
                             color={IconColor.PRIMARY}
