@@ -41,6 +41,11 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
             },
         ],
     },
+    workbox: {
+        navigateFallbackDenylist: [
+            new RegExp('/v1/documentation/static/index.html'),
+        ],
+    },
 };
 
 const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
