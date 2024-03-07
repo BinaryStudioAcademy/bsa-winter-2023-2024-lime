@@ -88,9 +88,9 @@ const UserBonusBalance = ({
                                 amount={bonus.amount}
                                 actionMessage={
                                     UserBonusTransactionMessage[
-                                    bonus.actionType as ValueOf<
-                                        typeof UserBonusActionStatus
-                                    >
+                                        bonus.actionType as ValueOf<
+                                            typeof UserBonusActionStatus
+                                        >
                                     ]
                                 }
                                 date={bonus.createdAt}
