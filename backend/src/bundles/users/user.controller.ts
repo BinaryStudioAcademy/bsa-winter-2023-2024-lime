@@ -189,16 +189,23 @@ class UserController extends BaseController {
      *             properties:
      *                fullName:
      *                  type: string
+     *                  nullable: true
      *                username:
      *                  type: string
+     *                  nullable: true
      *                dateOfBirth:
      *                  type: string
+     *                  format: DD/MM/YYYY
+     *                  nullable: true
      *                weight:
      *                  type: number
+     *                  nullable: true
      *                height:
      *                  type: number
+     *                  nullable: true
      *                gender:
      *                  type: string
+     *                  nullable: true
      *                  enum:
      *                    - male
      *                    - female
