@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { getTimestampNDaysAgo } from '~/bundles/common/components/base-layout/helpers/helpers.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { type SubscriptionGetItemResponseDto } from '~/bundles/common/enums/enums.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
+import {
+    useEffect,
+    useNavigate,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
 
 import { useAppSelector, useCallback } from '../../../hooks/hooks.js';
 import { Button, ButtonVariant, Modal } from '../../components.js';
@@ -24,7 +28,7 @@ const SuggestionForSubscribing: React.FC = () => {
         const lastSuggestionTime = lastSuggestionTimeString
             ? Number.parseInt(lastSuggestionTimeString, 10)
             : null;
-        const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        const oneWeekAgo = getTimestampNDaysAgo({ days: 7 });
 
         if (
             !currentSubscription &&
@@ -41,14 +45,14 @@ const SuggestionForSubscribing: React.FC = () => {
 
     const handleNavigateToSubscriptionPage = useCallback((): void => {
         localStorage.setItem('lastSuggestionTime', String(Date.now()));
-        navigate('/profile/subscriptions');
+        navigate(AppRoute.PROFILE_SUBSCRIPTION);
         setIsModalOpen(false);
     }, [navigate, setIsModalOpen]);
 
     return (
         <Modal
             isOpen={isModalOpen}
-            title={'Looks like you dont have subscription yet!'}
+            title={'Looks like you do not have subscription yet!'}
             onClose={handleCloseModal}
         >
             <div className="flex gap-2">
