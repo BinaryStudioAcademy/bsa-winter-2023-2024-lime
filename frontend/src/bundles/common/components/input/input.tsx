@@ -13,6 +13,8 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
+import { ErrorMessageWithHint } from './components/error-message-with-hint.js';
+
 type Properties<T extends FieldValues> = {
     className?: string;
     control: Control<T, null>;
@@ -84,9 +86,7 @@ const Input = <T extends FieldValues>({
                 )}
             </div>
             {hasError && (
-                <span className="text-lm-red bg-primary dark:text-lm-red rounded-lg px-3 text-sm dark:rounded-lg dark:bg-transparent dark:font-normal">
-                    {error as string}
-                </span>
+                <ErrorMessageWithHint errorMessage={error as string} />
             )}
         </label>
     );
