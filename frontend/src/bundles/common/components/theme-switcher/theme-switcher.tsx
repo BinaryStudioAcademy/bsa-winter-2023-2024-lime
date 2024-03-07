@@ -14,13 +14,14 @@ type Properties = {
     className?: string;
 };
 
-const defaultClassName = 'fixed md:bottom-4 md:right-4 bottom-1 right-1';
+const defaultClassName = 'fixed bg-primary rounded-full md:bottom-4 md:right-4 bottom-4 right-4';
 
 function ThemeSwitcher({
     className = defaultClassName,
 }: Properties): JSX.Element {
     const dispatch = useAppDispatch();
     const { theme } = useAppSelector((state) => state.theme);
+    const size = window.innerWidth < 768 ? 48 : 64;
 
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());
@@ -39,7 +40,7 @@ function ThemeSwitcher({
                 <Switch
                     checked={theme === Theme.DARK}
                     onChange={toggleTheme}
-                    size={64}
+                    size={size}
                 />
             </div>
         </>
