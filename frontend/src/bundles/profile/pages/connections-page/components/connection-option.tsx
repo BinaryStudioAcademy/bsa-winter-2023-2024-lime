@@ -38,19 +38,19 @@ const ConnectionOption = ({
     const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
-        const providerIsConnected = connections.find(
+        const existingConnection = connections.find(
             (connection) => connection.provider === provider,
         );
 
-        setIsConnected(!!providerIsConnected);
+        setIsConnected(Boolean(existingConnection));
     }, [connections, provider]);
 
     const handleClick = useCallback((): void => {
-        const providerIsConnected = connections.find(
+        const existingConnection = connections.find(
             (connection) => connection.provider === provider,
         );
 
-        providerIsConnected
+        existingConnection
             ? void dispatch(actions.deauthorize(provider))
             : void dispatch(actions.authorize(provider));
     }, [connections, dispatch, provider]);

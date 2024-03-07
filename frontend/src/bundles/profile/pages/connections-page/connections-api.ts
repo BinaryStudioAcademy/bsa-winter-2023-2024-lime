@@ -34,13 +34,18 @@ class ConnectionApi extends BaseHttpApi {
     }
 
     public async getAll(): Promise<ConnectionGetAllItemResponseDto> {
-        const fullPath = `${this.connectionsPath}${ConnectionsPath.ROOT}`;
-
-        const response = await this.load(this.getFullEndpoint(fullPath, {}), {
-            method: 'GET',
-            contentType: ContentType.JSON,
-            hasAuth: true,
-        });
+        const response = await this.load(
+            this.getFullEndpoint(
+                this.connectionsPath,
+                ConnectionsPath.ROOT,
+                {},
+            ),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
 
         return await response.json<ConnectionGetAllItemResponseDto>();
     }
@@ -48,13 +53,18 @@ class ConnectionApi extends BaseHttpApi {
     public async authorize(
         provider: ValueOf<typeof OAuthProvider>,
     ): Promise<void> {
-        const fullPath = `${this.oAuthPath}/${provider}${OAuthActionsPath.AUTHORIZE}`;
-
-        const response = await this.load(this.getFullEndpoint(fullPath, {}), {
-            method: 'GET',
-            contentType: ContentType.JSON,
-            hasAuth: true,
-        });
+        const response = await this.load(
+            this.getFullEndpoint(
+                this.oAuthPath,
+                OAuthActionsPath.$PROVIDER_AUTHORIZE,
+                { provider },
+            ),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
 
         const { redirectUrl } =
             await response.json<OAuthAuthorizeResponseDto>();
