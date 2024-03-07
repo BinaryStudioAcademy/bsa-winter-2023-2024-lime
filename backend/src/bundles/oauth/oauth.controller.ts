@@ -120,9 +120,9 @@ class OAuthController extends BaseController {
         );
 
         return {
-            type: ApiHandlerResponseType.REDIRECT,
-            status: HttpCode.FOUND,
-            redirectUrl: redirectUrl.href,
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: { redirectUrl: redirectUrl.href },
         };
     }
 

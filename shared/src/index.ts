@@ -17,6 +17,7 @@ export {
     goalValidationSchema,
 } from './bundles/goals/goals.js';
 export {
+    type OAuthAuthorizeResponseDto,
     type OAuthProviderParameterDto,
     type OAuthResponseDto,
     OAuthActionsPath,

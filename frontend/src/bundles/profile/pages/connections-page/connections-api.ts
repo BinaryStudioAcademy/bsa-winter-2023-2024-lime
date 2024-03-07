@@ -9,7 +9,10 @@ import {
     ConnectionsPath,
     OAuthActionsPath,
 } from './enums/enums.js';
-import { type ConnectionGetAllItemResponseDto } from './types/types.js';
+import {
+    type ConnectionGetAllItemResponseDto,
+    type OAuthAuthorizeResponseDto,
+} from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -46,11 +49,16 @@ class ConnectionApi extends BaseHttpApi {
     ): Promise<void> {
         const fullPath = `${this.oAuthPath}/${provider}${OAuthActionsPath.AUTHORIZE}`;
 
-        await this.load(this.getFullEndpoint(fullPath, {}), {
+        const response = await this.load(this.getFullEndpoint(fullPath, {}), {
             method: 'GET',
             contentType: ContentType.JSON,
             hasAuth: true,
         });
+
+        const { redirectUrl } =
+            await response.json<OAuthAuthorizeResponseDto>();
+
+        window.location.href = redirectUrl;
     }
 
     public async deauthorize(

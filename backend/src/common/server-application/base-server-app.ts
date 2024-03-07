@@ -1,7 +1,6 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import swagger, { type StaticDocumentSpec } from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
@@ -146,12 +145,6 @@ class BaseServerApp implements ServerApp {
         });
 
         await this.app.register(multer.contentParser);
-
-        await this.app.register(cors, {
-            origin: true,
-            methods: '*',
-            credentials: true,
-        });
     }
 
     private initValidationCompiler(): void {
