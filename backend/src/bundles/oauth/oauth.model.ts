@@ -9,6 +9,8 @@ import { type ValueOf } from './types/types.js';
 class OAuthModel extends AbstractModel {
     public 'userId': number;
 
+    public 'ownerId': number;
+
     public 'tokenType': string;
 
     public 'expiresAt': number;
