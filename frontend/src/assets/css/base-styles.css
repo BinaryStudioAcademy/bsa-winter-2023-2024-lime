@@ -31,3 +31,7 @@
         @apply text-xs leading-3;
     }
 }
+
+body {
+    background-color: var(--background-primary);
+}

@@ -10,7 +10,6 @@ import {
     Icon,
     Link,
     Loader,
-    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import {
     type IconName,
@@ -444,7 +443,6 @@ const Landing = (): JSX.Element => {
                     </div>
                 </footer>
             </section>
-            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };
