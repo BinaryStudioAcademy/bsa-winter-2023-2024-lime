@@ -84,6 +84,18 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
+            path: UsersApiPath.GET_BY_ID,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getUserById(
+                    options as ApiHandlerOptions<{
+                        params: { id: number };
+                    }>,
+                ),
+        });
+
+        this.addRoute({
             path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
@@ -169,7 +181,20 @@ class UserController extends BaseController {
             payload: user,
         };
     }
+    private async getUserById(
+        options: ApiHandlerOptions<{
+            params: { id: number };
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { params } = options;
+        const achievement = await this.userService.find({ id: params.id });
 
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: achievement,
+        };
+    }
     private async updateUser(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;

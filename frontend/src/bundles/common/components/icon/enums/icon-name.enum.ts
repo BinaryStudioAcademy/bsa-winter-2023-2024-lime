@@ -7,6 +7,7 @@ const IconName = {
     googleLogoIcon: 'googleLogoIcon',
     goalsIcon: 'goalsIcon',
     facebookIcon: 'facebookIcon',
+    messageIcon: 'messageIcon',
     workoutIcon: 'workoutIcon',
     logoHeader: 'logoHeader',
     logoHeaderLight: 'logoHeaderLight',

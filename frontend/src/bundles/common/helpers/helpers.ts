@@ -1,4 +1,5 @@
 export { applyThemeClassname } from './apply-theme-classname/apply-theme-classname.helper.js';
+export { calculateAge } from './calculate-age/calculate-age.js';
 export { capitalizeFirstLetter } from './capitalize-first-letter/capitalize-first-letter.helper.js';
 export { convertSecondsToHMS } from './convert-seconds-to-hms/convert-seconds-to-hms.helper.js';
 export { formatDate } from './format-date/format-date.helper.js';

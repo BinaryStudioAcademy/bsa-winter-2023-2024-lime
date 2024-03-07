@@ -22,6 +22,7 @@ import { BaseLayout } from './bundles/common/components/base-layout/base-layout.
 import { Landing } from './bundles/landing/landing.js';
 import { ProfileLayout } from './bundles/profile/layout/profile-layout.js';
 import { ConnectionsPage } from './bundles/profile/pages/connections-page/connections-page.js';
+import { PublicProfile } from './bundles/profile/pages/public-profile-page/public-profile-page.js';
 import {
     SubscriptionCheckout,
     SubscriptionPage,
@@ -95,6 +96,10 @@ const routes = [
                                 element: <SubscriptionCheckout />,
                             },
                         ],
+                    },
+                    {
+                        path: AppRoute.PROFILE_PUBLIC,
+                        element: <PublicProfile id={1} />,
                     },
                 ],
             },

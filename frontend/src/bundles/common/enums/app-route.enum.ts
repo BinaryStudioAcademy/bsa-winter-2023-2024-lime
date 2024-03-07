@@ -15,8 +15,8 @@ const AppRoute = {
     PROFILE_CONECTIONS: '/profile/conections',
     PROFILE_SUBSCRIPTION: '/profile/subscriptions',
     PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
+    PROFILE_PUBLIC: '/profile/public',
     NOT_FOUND: '*',
-    PROFILE: '/profile/settings',
 } as const;
 
 export { AppRoute };
