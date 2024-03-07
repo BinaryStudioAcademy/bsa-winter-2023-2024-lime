@@ -19,6 +19,12 @@ import { useAppDispatch } from '~/bundles/common/hooks/hooks.js';
 
 import { canvasPreview } from './canvas-preview.js';
 
+function toBlob(canvas: HTMLCanvasElement | null): Promise<Blob | null> {
+    return new Promise((resolve) => {
+        canvas && canvas.toBlob(resolve);
+    });
+}
+
 const DIMENSION = {
     aspectRatio: 1,
     min: 25,
@@ -72,15 +78,14 @@ const Cropper = ({
             image: imgReference.current as HTMLImageElement,
         });
 
-        const imgUrl = canvasReference.current?.toDataURL() as string;
-
-        const stringToFile = async (): Promise<void> => {
-            const response = await fetch(imgUrl);
-            const blob = await response.blob();
-            const imgPayload = new File([blob], 'image', { type: blob.type });
+        const toFile = async (): Promise<void> => {
+            const blob = (await toBlob(canvasReference.current)) as Blob;
+            const imgPayload = new File([blob], 'image', {
+                type: 'image/webp',
+            });
             void dispatch(authActions.upload(imgPayload));
         };
-        void stringToFile();
+        void toFile();
 
         closeModal(false);
     }, [crop, imgReference, canvasReference, scale, closeModal, dispatch]);
