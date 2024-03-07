@@ -1,8 +1,8 @@
 import { type S3 } from 'aws-sdk';
+import { type File } from 'fastify-multer/lib/interfaces.js';
 
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
-import { type FileUploaded } from '~/common/controller/types/file-request.type.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import {
     cryptService,
@@ -80,9 +80,7 @@ class UserService implements Service {
         }
     }
 
-    public async upload(
-        payload: FileUploaded,
-    ): Promise<S3.ManagedUpload.SendData> {
+    public async upload(payload: File): Promise<S3.ManagedUpload.SendData> {
         try {
             return await fileService.uploadFile(payload);
         } catch (error) {

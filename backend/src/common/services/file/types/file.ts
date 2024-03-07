@@ -1,7 +1,7 @@
-import { type FileUploaded } from '~/common/controller/types/file-request.type.js';
+import { type File } from 'fastify-multer/lib/interfaces.js';
 
 declare module 'fastify' {
     interface FastifyRequest {
-        file: FileUploaded | null;
+        file: File | null;
     }
 }

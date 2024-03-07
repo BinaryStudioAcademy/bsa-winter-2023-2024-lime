@@ -1,3 +1,5 @@
+import { type File } from 'fastify-multer/lib/interfaces.js';
+
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -9,7 +11,6 @@ import {
     ApiHandlerResponseType,
 } from '~/common/controller/controller.js';
 import { BaseController } from '~/common/controller/controller.js';
-import { type FileUploaded } from '~/common/controller/types/file-request.type.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
@@ -104,9 +105,7 @@ class UserController extends BaseController {
             isProtected: true,
             preHandler: upload.single('image'),
             handler: (options) =>
-                this.uploadAvatar(
-                    options as ApiHandlerOptions<{ file: FileUploaded }>,
-                ),
+                this.uploadAvatar(options as ApiHandlerOptions<{ file: File }>),
         });
     }
 
@@ -210,7 +209,7 @@ class UserController extends BaseController {
     }
 
     private async uploadAvatar(
-        options: ApiHandlerOptions<{ file: FileUploaded }>,
+        options: ApiHandlerOptions<{ file: File }>,
     ): Promise<ApiHandlerResponse> {
         const { file } = options;
         try {
