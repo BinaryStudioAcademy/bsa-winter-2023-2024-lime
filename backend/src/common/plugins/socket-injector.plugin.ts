@@ -10,9 +10,9 @@ type Options = {
 const socketInjectorPlugin = fastifyPlugin<Options>(
     (fastify, { io }, done) => {
         fastify.decorateRequest('io', null);
-        // eslint-disable-next-line @typescript-eslint/require-await
-        fastify.addHook('preHandler', async (request) => {
+        fastify.addHook('preHandler', (request, _reply, done) => {
             request.io = io;
+            done();
         });
         done();
     },
