@@ -1,4 +1,5 @@
-import { getTimestampNDaysAgo } from '~/bundles/common/components/base-layout/helpers/helpers.js';
+import { differenceInDays } from 'date-fns';
+
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { type SubscriptionGetItemResponseDto } from '~/bundles/common/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -50,11 +51,13 @@ const SuggestionForSubscribing: React.FC = () => {
         const lastSuggestionTime = lastSuggestionTimeString
             ? Number.parseInt(lastSuggestionTimeString, 10)
             : null;
-        const oneWeekAgo = getTimestampNDaysAgo({ days: 7 });
+        const numberOfDaysAgo = lastSuggestionTime
+            ? differenceInDays(new Date(), lastSuggestionTime)
+            : 0;
 
         if (
             !currentSubscription &&
-            (!lastSuggestionTime || lastSuggestionTime < oneWeekAgo)
+            (!lastSuggestionTime || numberOfDaysAgo >= 7)
         ) {
             setIsModalOpen(true);
         }
