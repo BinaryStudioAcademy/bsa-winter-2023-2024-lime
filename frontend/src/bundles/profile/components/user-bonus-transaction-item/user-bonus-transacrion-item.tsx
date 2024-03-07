@@ -14,10 +14,7 @@ const UserBonusTransacrionItem = ({
     return (
         <div className="bg-secondary flex items-center justify-center gap-5 rounded-xl p-4">
             {amount > 0 ? (
-                <p className="text-action text-sm lg:text-xl">
-                    {' '}
-                    +{amount}
-                </p>
+                <p className="text-action text-sm lg:text-xl"> +{amount}</p>
             ) : (
                 <p className="text-lm-red text-sm lg:text-xl">{amount}</p>
             )}
