@@ -8,6 +8,8 @@ class OAuthEntity implements Entity {
 
     private 'userId': number;
 
+    private 'ownerId': number | undefined;
+
     private 'tokenType': string;
 
     private 'expiresAt': number;
@@ -23,6 +25,7 @@ class OAuthEntity implements Entity {
     private constructor({
         id,
         userId,
+        ownerId,
         tokenType,
         expiresAt,
         accessToken,
@@ -32,6 +35,7 @@ class OAuthEntity implements Entity {
     }: {
         id: number | null;
         userId: number;
+        ownerId?: number;
         tokenType: string;
         expiresAt: number;
         accessToken: string;
@@ -40,6 +44,7 @@ class OAuthEntity implements Entity {
         provider: ValueOf<typeof OAuthProvider>;
     }) {
         this.id = id;
+        this.ownerId = ownerId;
         this.userId = userId;
         this.tokenType = tokenType;
         this.expiresAt = expiresAt;
@@ -49,18 +54,10 @@ class OAuthEntity implements Entity {
         this.provider = provider;
     }
 
-    public static initialize({
-        id,
-        userId,
-        tokenType,
-        expiresAt,
-        accessToken,
-        refreshToken,
-        scope,
-        provider,
-    }: {
+    public static initialize(payload: {
         id: number;
         userId: number;
+        ownerId?: number;
         tokenType: string;
         expiresAt: number;
         accessToken: string;
@@ -69,27 +66,13 @@ class OAuthEntity implements Entity {
         provider: ValueOf<typeof OAuthProvider>;
     }): OAuthEntity {
         return new OAuthEntity({
-            id,
-            userId,
-            tokenType,
-            expiresAt,
-            accessToken,
-            refreshToken,
-            scope,
-            provider,
+            ...payload,
         });
     }
 
-    public static initializeNew({
-        userId,
-        tokenType,
-        expiresAt,
-        accessToken,
-        refreshToken,
-        scope,
-        provider,
-    }: {
+    public static initializeNew(payload: {
         userId: number;
+        ownerId?: number;
         tokenType: string;
         expiresAt: number;
         accessToken: string;
@@ -99,19 +82,14 @@ class OAuthEntity implements Entity {
     }): OAuthEntity {
         return new OAuthEntity({
             id: null,
-            userId,
-            tokenType,
-            expiresAt,
-            accessToken,
-            refreshToken,
-            scope,
-            provider,
+            ...payload,
         });
     }
 
     public toObject(): {
         id: number;
         userId: number;
+        ownerId?: number;
         tokenType: string;
         expiresAt: number;
         accessToken: string;
@@ -122,6 +100,7 @@ class OAuthEntity implements Entity {
         return {
             id: this.id as number,
             userId: this.userId,
+            ownerId: this.ownerId as number,
             tokenType: this.tokenType,
             expiresAt: this.expiresAt,
             accessToken: this.accessToken,
@@ -133,6 +112,7 @@ class OAuthEntity implements Entity {
 
     public toNewObject(): {
         userId: number;
+        ownerId?: number;
         tokenType: string;
         expiresAt: number;
         accessToken: string;
@@ -142,6 +122,7 @@ class OAuthEntity implements Entity {
     } {
         return {
             userId: this.userId,
+            ownerId: this.ownerId as number,
             tokenType: this.tokenType,
             expiresAt: this.expiresAt,
             accessToken: this.accessToken,

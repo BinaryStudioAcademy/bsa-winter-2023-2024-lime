@@ -66,6 +66,15 @@ export {
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
+    type WorkoutGetAllResponseDto,
+    type WorkoutRequestDto,
+    type WorkoutResponseDto,
+    WorkoutsApiPath,
+    WorkoutValidationMessage,
+    workoutValidationSchema,
+} from './bundles/workouts/workouts.js';
+export { MILLISECONDS_PER_SECOND } from './constants/constants.js';
+export {
     ActivityType,
     ApiPath,
     AppEnvironment,
@@ -93,6 +102,7 @@ export {
     configureString,
 } from './helpers/helpers.js';
 export {
+    type EntityIdParameterDto,
     type Paged,
     type PaginationParameters,
     type ServerCommonErrorResponse,
@@ -102,4 +112,5 @@ export {
     type ValidationSchema,
     type ValueOf,
 } from './types/types.js';
+export { idParameterSchema as idParameterValidationSchema } from './validation-schemas/validation-schemas.js';
 export { paginationValidationSchema } from './validation-shemas/validation-shemas.js';
