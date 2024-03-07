@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { actions as appActions } from '~/app/store/app.js';
 import appPreview from '~/assets/img/landing/app-preview.svg';
 import authPreview from '~/assets/img/landing/auth-preview.svg';
-import featureBg from '~/assets/img/landing/feature-bg.png';
+import featureBg from '~/assets/img/landing/feature-bg.svg';
 import {
     Button,
     ButtonVariant,
@@ -233,7 +233,7 @@ const Landing = (): JSX.Element => {
                             <img
                                 src={featureBg}
                                 alt="Feature background"
-                                className="-translate-y-24 translate-x-12 scale-x-[-1.5] scale-y-[1.5] grayscale"
+                                className="-translate-y-24 translate-x-12 scale-x-[1.5] scale-y-[1.5] grayscale"
                             />
                         </Fade>
 

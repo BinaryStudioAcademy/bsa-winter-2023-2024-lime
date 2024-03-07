@@ -1,10 +1,10 @@
-import memoji1 from '~/assets/img/landing/memoji-1.png';
-import memoji2 from '~/assets/img/landing/memoji-2.png';
-import memoji3 from '~/assets/img/landing/memoji-3.png';
-import memoji4 from '~/assets/img/landing/memoji-4.png';
-import memoji5 from '~/assets/img/landing/memoji-5.png';
-import memoji6 from '~/assets/img/landing/memoji-6.png';
-import memoji7 from '~/assets/img/landing/memoji-7.png';
+import memoji1 from '~/assets/img/landing/memoji-1.svg';
+import memoji2 from '~/assets/img/landing/memoji-2.svg';
+import memoji3 from '~/assets/img/landing/memoji-3.svg';
+import memoji4 from '~/assets/img/landing/memoji-4.svg';
+import memoji5 from '~/assets/img/landing/memoji-5.svg';
+import memoji6 from '~/assets/img/landing/memoji-6.svg';
+import memoji7 from '~/assets/img/landing/memoji-7.svg';
 
 const TESTIMONIALS = [
     {

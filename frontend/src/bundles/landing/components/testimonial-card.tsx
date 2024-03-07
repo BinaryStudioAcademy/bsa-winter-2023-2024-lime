@@ -41,7 +41,7 @@ const TestimonialCard = ({
                         <img
                             src={avatarImage}
                             alt="Avatar"
-                            className="object-scale-down"
+                            className="rounded-full"
                         />
                     </div>
                     <p className="text-sm font-extrabold">{name}</p>
