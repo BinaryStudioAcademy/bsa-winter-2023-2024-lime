@@ -1,5 +1,9 @@
 import { Theme } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import {
+    createSelector,
+    selectTheme,
+} from '~/bundles/common/redux/selectors/selectors.js';
 import { actions as themeActions } from '~/bundles/common/store/theme.js';
 
 import {
@@ -7,16 +11,25 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useMemo,
 } from '../../hooks/hooks.js';
 import { Switch } from './components/switch.js';
 
 type Properties = {
     className?: string;
 };
-
 function ThemeSwitcher({ className }: Properties): JSX.Element {
     const dispatch = useAppDispatch();
-    const { theme } = useAppSelector((state) => state.theme);
+
+    const selectThemeData = useMemo(
+        () =>
+            createSelector([selectTheme], (theme) => ({
+                theme: theme.theme,
+            })),
+        [],
+    );
+
+    const { theme } = useAppSelector(selectThemeData);
 
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());

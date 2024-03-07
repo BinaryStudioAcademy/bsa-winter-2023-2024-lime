@@ -4,16 +4,29 @@ import {
     useAppDispatch,
     useAppSelector,
     useCallback,
+    useMemo,
 } from '~/bundles/common/hooks/hooks.js';
+import {
+    createSelector,
+    selectAuth,
+} from '~/bundles/common/redux/selectors/selectors.js';
 import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 
 import { ProfileSettings } from '../components/components.js';
 
 const Profile: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { dataStatus } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-    }));
+
+    const selectAuthDataStatus = useMemo(
+        () =>
+            createSelector([selectAuth], (auth) => ({
+                dataStatus: auth.dataStatus,
+            })),
+        [],
+    );
+
+    const { dataStatus } = useAppSelector(selectAuthDataStatus);
+
     const isLoading = dataStatus === DataStatus.PENDING;
     const handleProfileUpdate = useCallback(
         (payload: UserUpdateProfileRequestDto): void => {

@@ -12,9 +12,14 @@ import {
     useAppDispatch,
     useAppSelector,
     useEffect,
+    useMemo,
     useNavigate,
     useParams,
 } from '~/bundles/common/hooks/hooks.js';
+import {
+    createSelector,
+    selectWorkouts,
+} from '~/bundles/common/redux/selectors/selectors.js';
 import { WorkoutItem } from '~/bundles/workouts/components/components.js';
 import { actions } from '~/bundles/workouts/store/workouts.js';
 
@@ -24,10 +29,16 @@ const Workout: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const { dataStatus, workouts } = useAppSelector(({ workouts }) => ({
-        dataStatus: workouts.dataStatus,
-        workouts: workouts.workouts,
-    }));
+    const selectWorkoutsData = useMemo(
+        () =>
+            createSelector([selectWorkouts], (workouts) => ({
+                dataStatus: workouts.dataStatus,
+                workouts: workouts.workouts,
+            })),
+        [],
+    );
+
+    const { dataStatus, workouts } = useAppSelector(selectWorkoutsData);
 
     useEffect(() => {
         void dispatch(actions.getWorkouts());

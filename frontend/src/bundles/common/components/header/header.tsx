@@ -1,11 +1,13 @@
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
 
-import { createSelector } from '~/bundles/common/redux/selectors/selectors.js';
+import {
+    createSelector,
+    selectTheme,
+} from '~/bundles/common/redux/selectors/selectors.js';
 
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
 import { Theme } from '../../enums/theme.js';
-import { useAppSelector } from '../../hooks/hooks.js';
-import { type RootState } from '../../types/redux-store-rootstate.js';
+import { useAppSelector, useMemo } from '../../hooks/hooks.js';
 import { Button, Icon, Layout, Link } from '../components.js';
 import { IconColor } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
@@ -15,12 +17,14 @@ type HeaderProperties = {
     toggleSidebar: () => void;
 };
 
-const selectTheme = (state: RootState): RootState['theme'] => state.theme;
-
 const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
-    const selectThemeState = createSelector([selectTheme], (theme) => ({
-        theme: theme.theme,
-    }));
+    const selectThemeState = useMemo(
+        () =>
+            createSelector([selectTheme], (theme) => ({
+                theme: theme.theme,
+            })),
+        [],
+    );
 
     const { theme } = useAppSelector(selectThemeState);
 

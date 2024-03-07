@@ -13,10 +13,15 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useMemo,
     useNavigate,
     useParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import {
+    createSelector,
+    selectPasswordReset,
+} from '~/bundles/common/redux/selectors/selectors.js';
 import { PasswordResetSuccessMessage } from '~/bundles/password-reset/components/components.js';
 import { ERROR_MESSAGE_TEXT } from '~/bundles/password-reset/constants/constants.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
@@ -34,9 +39,15 @@ const PasswordReset: React.FC = () => {
 
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
-    const { dataStatus } = useAppSelector(({ passwordReset }) => ({
-        dataStatus: passwordReset.dataStatus,
-    }));
+    const selectPasswordResetDataStatus = useMemo(
+        () =>
+            createSelector([selectPasswordReset], (passwordReset) => ({
+                dataStatus: passwordReset.dataStatus,
+            })),
+        [],
+    );
+
+    const { dataStatus } = useAppSelector(selectPasswordResetDataStatus);
 
     const isLoading = dataStatus === DataStatus.PENDING;
 

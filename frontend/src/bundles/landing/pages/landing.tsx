@@ -25,7 +25,13 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useMemo,
 } from '~/bundles/common/hooks/hooks.js';
+import {
+    createSelector,
+    selectAuth,
+    selectTheme,
+} from '~/bundles/common/redux/selectors/selectors.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import {
@@ -38,11 +44,24 @@ import {
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
 const Landing = (): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.theme);
-    const { user, isRefreshing } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-        isRefreshing: auth.isRefreshing,
-    }));
+    const selectThemeData = useMemo(
+        () =>
+            createSelector([selectTheme], (theme) => ({
+                theme: theme.theme,
+            })),
+        [],
+    );
+    const { theme } = useAppSelector(selectThemeData);
+
+    const selectAuthData = useMemo(
+        () =>
+            createSelector([selectAuth], (auth) => ({
+                user: auth.user,
+                isRefreshing: auth.isRefreshing,
+            })),
+        [],
+    );
+    const { user, isRefreshing } = useAppSelector(selectAuthData);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

@@ -19,8 +19,13 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useMemo,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import {
+    createSelector,
+    selectAuth,
+} from '~/bundles/common/redux/selectors/selectors.js';
 import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
@@ -35,10 +40,16 @@ type Properties = {
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const [valuesDefault, setValuesDefault] = useState(false);
-    const { user } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-    }));
 
+    const selectAuthData = useMemo(
+        () =>
+            createSelector([selectAuth], (auth) => ({
+                user: auth.user,
+            })),
+        [],
+    );
+
+    const { user } = useAppSelector(selectAuthData);
     const { control, errors, reset, setValue, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,

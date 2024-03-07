@@ -2,18 +2,26 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { type StripeElementsOptions } from '@stripe/stripe-js';
 
-import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
+import { useAppSelector, useMemo } from '~/bundles/common/hooks/hooks.js';
+import {
+    createSelector,
+    selectSubscriptions,
+} from '~/bundles/common/redux/selectors/selectors.js';
 import { CheckoutForm } from '~/bundles/subscription/components/components.js';
 import { config } from '~/framework/config/config.js';
 
 const stripe = loadStripe(config.ENV.STRIPE.PUBLIC_KEY);
 
 const SubscriptionCheckout = (): JSX.Element => {
-    const { clientSecret } = useAppSelector(({ subscriptions }) => {
-        return {
-            clientSecret: subscriptions?.clientSecret as string,
-        };
-    });
+    const selectSubscriptionData = useMemo(
+        () =>
+            createSelector([selectSubscriptions], (subscriptions) => ({
+                clientSecret: subscriptions?.clientSecret as string,
+            })),
+        [],
+    );
+
+    const { clientSecret } = useAppSelector(selectSubscriptionData);
 
     const options: StripeElementsOptions = {
         locale: 'en',

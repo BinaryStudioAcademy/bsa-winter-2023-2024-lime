@@ -1,17 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { DataStatus } from '~/bundles/common/enums/enums.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
-import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
+import { type WorkoutStateTypeSlice } from '~/bundles/workouts/types/types.js';
 
 import { getWorkouts } from './actions.js';
 
-type State = {
-    dataStatus: ValueOf<typeof DataStatus>;
-    workouts: WorkoutResponseDto[];
-};
-
-const initialState: State = {
+const initialState: WorkoutStateTypeSlice = {
     dataStatus: DataStatus.IDLE,
     workouts: [],
 };
@@ -34,4 +28,4 @@ const { reducer, actions, name } = createSlice({
     },
 });
 
-export { type State, actions, name, reducer };
+export { type initialState as State, actions, name, reducer };
