@@ -13,7 +13,7 @@ const ProfileLayout = ({ className }: Properties): JSX.Element => (
     <div
         className={getValidClassNames(
             className,
-            'mx-auto my-0 flex w-full flex-col md:flex-row ',
+            'mx-auto my-0 flex w-full flex-col md:flex-row',
         )}
     >
         <ProfileNavigation />

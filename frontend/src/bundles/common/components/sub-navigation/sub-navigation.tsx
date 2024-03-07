@@ -16,7 +16,7 @@ const SubNavigation = ({
     items,
     title,
     button,
-    className,
+    className = '',
 }: Properties): JSX.Element => {
     const bgColors = [
         'bg-lm-yellow-100',
@@ -29,21 +29,27 @@ const SubNavigation = ({
 
     return (
         <div
-            className={`bg-primary mb-4 flex h-full w-full gap-[1.75rem] overflow-auto p-4 md:w-[20rem] md:flex-col md:p-[2rem] ${className}`}
+            className={
+                'bg-primary mb-4 flex h-full w-full flex-row gap-[1.75rem] p-4 sm:flex-col md:w-[20rem] md:p-[2rem] '
+            }
         >
             {title && (
                 <h1 className="text-primary text-xl font-bold">{title}</h1>
             )}
-            {items.map((item, index) => (
-                <SubNavItem
-                    key={item.id}
-                    label={item.label}
-                    to={item.to}
-                    bgColor={
-                        bgColors[index % bgColors.length] ?? 'bg-lm-purple'
-                    }
-                />
-            ))}
+            <div
+                className={`flex h-full w-full justify-start gap-[1.75rem] overflow-auto sm:items-center md:flex-col md:items-start ${className}`}
+            >
+                {items.map((item, index) => (
+                    <SubNavItem
+                        key={item.id}
+                        label={item.label}
+                        to={item.to}
+                        bgColor={
+                            bgColors[index % bgColors.length] ?? 'bg-lm-purple'
+                        }
+                    />
+                ))}
+            </div>
             {button && (
                 <Button
                     label={button.label}

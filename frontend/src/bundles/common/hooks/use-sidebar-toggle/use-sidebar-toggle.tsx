@@ -6,14 +6,14 @@ import {
 
 const useSidebarToggle = (): { isOpen: boolean; toggleSidebar: () => void } => {
     const [width, setWidth] = useState(window.innerWidth);
-    const [isOpen, setIsOpen] = useState(width > 768);
+    const [isOpen, setIsOpen] = useState(width > 1024);
     const toggleSidebar = useCallback(() => {
         setIsOpen(!isOpen);
     }, [isOpen, setIsOpen]);
 
     const handleResize = useCallback((): void => {
         setWidth(window.innerWidth);
-        if (width > 768) {
+        if (width > 1024) {
             setIsOpen(true);
         } else {
             setIsOpen(false);
