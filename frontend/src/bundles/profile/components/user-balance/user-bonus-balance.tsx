@@ -48,11 +48,11 @@ const UserBonusBalance = ({
             <div
                 className={getValidClassNames(
                     className,
-                    'bg-lm-black-100 flex flex-col justify-center gap-2 rounded-xl p-4',
+                    ' bg-secondary flex flex-col justify-center gap-2 rounded-xl p-4',
                 )}
             >
                 <div className="flex w-full items-center justify-start gap-2">
-                    <span className="text-lm-grey-200 text-xl">
+                    <span className="text-secondary text-xl">
                         Your balance:
                     </span>
                     <span className="text-lm-yellow-200 text-xl font-bold">
@@ -88,14 +88,15 @@ const UserBonusBalance = ({
                                 amount={bonus.amount}
                                 actionMessage={
                                     UserBonusTransactionMessage[
-                                        bonus.actionType as ValueOf<
-                                            typeof UserBonusActionStatus
-                                        >
+                                    bonus.actionType as ValueOf<
+                                        typeof UserBonusActionStatus
+                                    >
                                     ]
                                 }
                                 date={bonus.createdAt}
                             />
                         ))}
+
                     </div>
                 )}
             </Modal>
