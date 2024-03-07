@@ -67,7 +67,9 @@ const NotificationComponent = (): JSX.Element => {
 
     const notificationListReference = useRef(null);
 
-    const count = notifications.filter((notification) => !notification.isRead).length;
+    const count = notifications.filter(
+        (notification) => !notification.isRead,
+    ).length;
 
     useHandleClickOutside({
         ref: notificationListReference,
