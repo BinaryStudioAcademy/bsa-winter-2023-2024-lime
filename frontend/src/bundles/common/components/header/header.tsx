@@ -18,7 +18,6 @@ type HeaderProperties = {
 const selectTheme = (state: RootState): RootState['theme'] => state.theme;
 
 const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
-
     const selectThemeState = createSelector([selectTheme], (theme) => ({
         theme: theme.theme,
     }));
@@ -29,7 +28,6 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
                 <div className="hidden w-full max-w-[16rem]  md:flex">
-
                     <Link to={AppRoute.OVERVIEW}>
                         {theme === Theme.DARK ? (
                             <Icon
