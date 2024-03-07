@@ -55,6 +55,7 @@ import { UsersApiPath } from './enums/enums.js';
  *            enum:
  *              - male
  *              - female
+ *              - prefer not to say
  */
 class UserController extends BaseController {
     private userService: UserService;
@@ -139,7 +140,7 @@ class UserController extends BaseController {
      * /api/v1/users/current:
      *    get:
      *      tags:
-     *       - Current user
+     *       - Users
      *      description: Returns current user
      *      security:
      *        - bearerAuth: []
@@ -170,6 +171,58 @@ class UserController extends BaseController {
         };
     }
 
+    /**
+     * @swagger
+     * /api/v1/users/update:
+     *   patch:
+     *     tags:
+     *       - Users
+     *     description: This endpoint updates a user
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *                fullName:
+     *                  type: string
+     *                username:
+     *                  type: string
+     *                dateOfBirth:
+     *                  type: string
+     *                weight:
+     *                  type: number
+     *                height:
+     *                  type: number
+     *                gender:
+     *                  type: string
+     *                  enum:
+     *                    - male
+     *                    - female
+     *                    - prefer not to say
+     *     responses:
+     *       200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *       400:
+     *         description: Bad Request
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     *       404:
+     *         description: Not found a user
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
     private async updateUser(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
