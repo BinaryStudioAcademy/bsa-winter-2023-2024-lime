@@ -2,7 +2,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 
 import { useCallback, useRef, useState } from 'react';
 import ReactCrop, {
-    //@ts-expect-error: it does not let me commit changes
+    //@ts-expect-error: unexpected error
     type Crop,
     //@ts-expect-error: ...
     type PercentCrop,

@@ -1,4 +1,4 @@
-//@ts-expect-error: it does not let me commit changes
+//@ts-expect-error: unexpected error
 import { type PercentCrop } from 'react-image-crop';
 
 type CanvasProperties = {
