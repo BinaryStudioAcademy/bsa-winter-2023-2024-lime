@@ -4,6 +4,7 @@ import {
     useCallback,
     useEffect,
     useHandleClickOutside,
+    useMemo,
     useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
@@ -20,12 +21,16 @@ const selectNotifications = (state: RootState): RootState['notifications'] =>
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
 
-    const selectorNotifications = createSelector(
-        [selectNotifications],
-        (notifications) => ({ notifications }),
+    const selectorNotifications = useMemo(
+        () =>
+            createSelector([selectNotifications], (notifications) => ({
+                notifications: notifications.notifications,
+                loading: notifications.isRefreshing,
+            })),
+        [],
     );
 
-    const { notifications } = useAppSelector(selectorNotifications);
+    const { notifications, loading } = useAppSelector(selectorNotifications);
 
     useEffect(() => {
         // void dispatch(fetchNotifications());
@@ -62,9 +67,7 @@ const NotificationComponent = (): JSX.Element => {
 
     const notificationListReference = useRef(null);
 
-    const count = notifications.filter(
-        (notification) => !notification.isRead,
-    ).length;
+    const count = notifications.filter((notification) => !notification.isRead).length;
 
     useHandleClickOutside({
         ref: notificationListReference,
@@ -78,7 +81,7 @@ const NotificationComponent = (): JSX.Element => {
                 onClick={handleIconClick}
                 showList={showList}
             />
-            {showList && (
+            {showList && !loading && (
                 <NotificationList
                     notifications={notifications}
                     onNotificationReadClick={handleNotificationReadClick}
