@@ -1,6 +1,7 @@
 const ApiPath = {
     USERS: '/users',
     AUTH: '/auth',
+    NOTIFICATIONS: '/notifications',
     WORKOUTS: '/workouts',
     GOALS: '/goals',
     SUBSCRIPTIONS: '/subscriptions',

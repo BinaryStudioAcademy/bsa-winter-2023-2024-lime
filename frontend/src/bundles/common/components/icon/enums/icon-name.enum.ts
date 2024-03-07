@@ -8,9 +8,16 @@ const IconName = {
     goalsIcon: 'goalsIcon',
     facebookIcon: 'facebookIcon',
     workoutIcon: 'workoutIcon',
+    logoHeader: 'logoHeader',
+    logoHeaderLight: 'logoHeaderLight',
     caloriesIcon: 'caloriesIcon',
     stepsIcon: 'stepsIcon',
     limeCoinIcon: 'limeCoinIcon',
+    bellIcon: 'bellIcon',
+    communityIcon: 'communityIcon',
+    feedIcon: 'feedIcon',
+    goalIcon: 'goalIcon',
+    starIcon: 'starIcon',
 } as const;
 
 export { IconName };
