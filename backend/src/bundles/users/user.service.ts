@@ -1,4 +1,3 @@
-import { type S3 } from 'aws-sdk';
 import { type File } from 'fastify-multer/lib/interfaces.js';
 
 import { UserEntity } from '~/bundles/users/user.entity.js';
@@ -15,6 +14,7 @@ import { UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAvatarResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
@@ -80,9 +80,12 @@ class UserService implements Service {
         }
     }
 
-    public async upload(payload: File): Promise<S3.ManagedUpload.SendData> {
+    public async upload(payload: File): Promise<UserAvatarResponseDto> {
         try {
-            return await fileService.uploadFile(payload);
+            const { Location } = await fileService.uploadFile(payload);
+            return {
+                avatarUrl: Location,
+            };
         } catch (error) {
             throw new Error(`Error occurred ${error}`);
         }
