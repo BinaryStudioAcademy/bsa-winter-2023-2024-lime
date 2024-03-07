@@ -1,7 +1,10 @@
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 
 import { Button, Icon } from '~/bundles/common/components/components.js';
-import { IconColor , IconName } from '~/bundles/common/components/icon/enums/enums.js';
+import {
+    IconColor,
+    IconName,
+} from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { validateImageUrl } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
