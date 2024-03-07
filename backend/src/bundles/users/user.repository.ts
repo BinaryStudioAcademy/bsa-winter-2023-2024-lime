@@ -40,6 +40,36 @@ class UserRepository implements Repository {
         });
     }
 
+    public async findWithUserDetailsJoined(
+        query: Record<string, unknown>,
+    ): Promise<UserEntity | null> {
+        const user = await this.userModel
+            .query()
+            .joinRelated('userDetails')
+            .findOne(query)
+            .withGraphFetched('userDetails')
+            .execute();
+
+        if (!user) {
+            return null;
+        }
+
+        const { userDetails, ...userInfo } = user;
+
+        return UserEntity.initialize({
+            ...userInfo,
+            fullName: userDetails.fullName,
+            avatarUrl: userDetails.avatarUrl,
+            username: userDetails.username,
+            dateOfBirth: userDetails.dateOfBirth,
+            weight: userDetails.weight,
+            height: userDetails.height,
+            gender: userDetails.gender,
+            referralCode: userDetails.referralCode,
+            bonusBalance: userDetails.bonusBalance,
+        });
+    }
+
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
@@ -167,36 +197,6 @@ class UserRepository implements Repository {
     }
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
-    }
-
-    public async findByReferralCode(
-        referralCode: string | null,
-    ): Promise<UserEntity | null> {
-        const user = await this.userModel
-            .query()
-            .joinRelated('userDetails')
-            .findOne({ referralCode })
-            .withGraphFetched('userDetails')
-            .execute();
-
-        if (!user) {
-            return null;
-        }
-
-        const { userDetails, ...userInfo } = user;
-
-        return UserEntity.initialize({
-            ...userInfo,
-            fullName: userDetails.fullName,
-            avatarUrl: userDetails.avatarUrl,
-            username: userDetails.username,
-            dateOfBirth: userDetails.dateOfBirth,
-            weight: userDetails.weight,
-            height: userDetails.height,
-            gender: userDetails.gender,
-            referralCode: userDetails.referralCode,
-            bonusBalance: userDetails.bonusBalance,
-        });
     }
 }
 

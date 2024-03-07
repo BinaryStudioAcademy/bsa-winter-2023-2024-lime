@@ -12,6 +12,7 @@ import { type Logger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
 import { AuthApiPath } from './enums/enums.js';
+import { type AuthSignUpRequestDto } from './types/types.js';
 
 class AuthController extends BaseController {
     private authService: AuthService;
@@ -30,7 +31,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signUp(
                     options as ApiHandlerOptions<{
-                        query: { referralCode: string };
+                        query: AuthSignUpRequestDto;
                         body: UserAuthRequestDto;
                     }>,
                 ),
@@ -112,6 +113,13 @@ class AuthController extends BaseController {
      *      tags:
      *         - Auth
      *      description: Sign up user into the application
+     *      parameters:
+     *        - in: query
+     *          name: referralCode
+     *          schema:
+     *            type: string
+     *          required: false
+     *          description: Optional referral code to invite other users
      *      requestBody:
      *        description: User auth data
      *        required: true
@@ -148,7 +156,7 @@ class AuthController extends BaseController {
      */
     private async signUp(
         options: ApiHandlerOptions<{
-            query: { referralCode: string };
+            query: AuthSignUpRequestDto;
             body: UserAuthRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {

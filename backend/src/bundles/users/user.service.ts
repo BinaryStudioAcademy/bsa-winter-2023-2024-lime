@@ -28,6 +28,12 @@ class UserService implements Service {
         return await this.userRepository.find(query);
     }
 
+    public async findWithUserDetailsJoined(
+        query: Record<string, unknown>,
+    ): Promise<UserEntity | null> {
+        return await this.userRepository.findWithUserDetailsJoined(query);
+    }
+
     public async findAll(): Promise<UserGetAllResponseDto> {
         const items = await this.userRepository.findAll();
 
@@ -76,6 +82,7 @@ class UserService implements Service {
             throw new Error(`Error occured ${error}`);
         }
     }
+
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
@@ -85,12 +92,6 @@ class UserService implements Service {
 
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
-    }
-
-    public async findByReferralCode(
-        referralCode: string | null,
-    ): Promise<UserEntity | null> {
-        return await this.userRepository.findByReferralCode(referralCode);
     }
 }
 

@@ -3,7 +3,11 @@ export {
     AchievementsApiPath,
     Metric,
 } from './bundles/achievements/achievements.js';
-export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export {
+    type AuthResponseDto,
+    type AuthSignUpRequestDto,
+    AuthApiPath,
+} from './bundles/auth/auth.js';
 export { ConnectionsPath } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export {

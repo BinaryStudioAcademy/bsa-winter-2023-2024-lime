@@ -6,10 +6,10 @@ import {
 import { cryptService, jwtService } from '~/common/services/services.js';
 
 import {
+    type UserBonusService,
     BonusAmount,
     UserBonusActionStatus,
-} from '../user-bonuses/enums/enums.js';
-import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
+} from '../user-bonuses/user-bonuses.js';
 import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 import { type AuthResponseDto } from './types/types.js';
 
@@ -78,8 +78,9 @@ class AuthService {
             });
         }
 
-        const inviterUser =
-            await this.userService.findByReferralCode(referralCode);
+        const inviterUser = await this.userService.findWithUserDetailsJoined({
+            referralCode,
+        });
 
         const isReferralCodeValid = referralCode !== 'null';
         if (isReferralCodeValid && !inviterUser) {
