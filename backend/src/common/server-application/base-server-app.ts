@@ -23,6 +23,7 @@ import {
     type ServerValidationErrorResponse,
     type ValidationSchema,
 } from '~/common/types/types.js';
+import { initStravaWebhook } from '~/common/webhooks/webhooks.js';
 
 import {
     type ServerApp,
@@ -66,6 +67,7 @@ class BaseServerApp implements ServerApp {
             handler,
             schema: {
                 body: validation?.body,
+                querystring: validation?.query,
                 params: validation?.params,
             },
         });
@@ -160,6 +162,10 @@ class BaseServerApp implements ServerApp {
         });
     }
 
+    private async initWebhooks(): Promise<void> {
+        await initStravaWebhook();
+    }
+
     private initErrorHandler(): void {
         this.app.setErrorHandler(
             (error: FastifyError | ValidationError, _request, replay) => {
@@ -243,6 +249,8 @@ class BaseServerApp implements ServerApp {
                     stack: error.stack,
                 });
             });
+
+        await this.initWebhooks();
 
         this.logger.info(
             `Application is listening on PORT – ${this.config.ENV.APP.PORT.toString()}, on ENVIRONMENT – ${

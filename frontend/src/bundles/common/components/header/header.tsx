@@ -18,27 +18,32 @@ type HeaderProperties = {
 const selectTheme = (state: RootState): RootState['theme'] => state.theme;
 
 const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
+
     const selectThemeState = createSelector([selectTheme], (theme) => ({
         theme: theme.theme,
     }));
 
     const { theme } = useAppSelector(selectThemeState);
+
     return (
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
                 <div className="hidden w-full max-w-[16rem]  md:flex">
-                    <Link to={AppRoute.ROOT}>
+
+                    <Link to={AppRoute.OVERVIEW}>
                         {theme === Theme.DARK ? (
                             <Icon
                                 name={'logoHeader'}
                                 color={IconColor.PRIMARY}
                                 size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
                             />
                         ) : (
                             <Icon
                                 name={'logoHeaderLight'}
                                 color={IconColor.PRIMARY}
                                 size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
                             />
                         )}
                     </Link>
@@ -54,7 +59,7 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
                     />
                 </div>
                 <div className="mr-5 md:hidden">
-                    <Link to={AppRoute.ROOT}>
+                    <Link to={AppRoute.OVERVIEW}>
                         <Icon
                             name={'logoIcon'}
                             color={IconColor.PRIMARY}
