@@ -134,23 +134,20 @@ const Landing = (): JSX.Element => {
                             app.
                         </p>
                         <div className="flex flex-row gap-3">
-                            <div>
+                            <Button
+                                size={ComponentSize.MEDIUM}
+                                label="Get Fit Now"
+                                variant={ButtonVariant.PRIMARY}
+                                onClick={signUpHandler}
+                                className="max-w-[13rem]"
+                            />
+                            <a href="#how-it-works">
                                 <Button
                                     size={ComponentSize.MEDIUM}
-                                    label="Download Now and Get Fit"
-                                    variant={ButtonVariant.PRIMARY}
-                                    onClick={signUpHandler}
+                                    label="Learn more"
+                                    variant={ButtonVariant.SECONDARY}
                                 />
-                            </div>
-                            <div>
-                                <a href="#how-it-works">
-                                    <Button
-                                        size={ComponentSize.MEDIUM}
-                                        label="Learn more"
-                                        variant={ButtonVariant.SECONDARY}
-                                    />
-                                </a>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div className="relative">
@@ -293,9 +290,9 @@ const Landing = (): JSX.Element => {
                 </div>
                 <Button
                     size={ComponentSize.MEDIUM}
-                    label="Get The App Now"
+                    label="Start Your Journey Now"
                     variant={ButtonVariant.PRIMARY}
-                    className="max-w-[15.625rem]"
+                    className="max-w-[15rem]"
                     onClick={signUpHandler}
                 />
             </section>
@@ -383,9 +380,9 @@ const Landing = (): JSX.Element => {
                     </div>
                     <Button
                         size={ComponentSize.MEDIUM}
-                        label="Download Now and Get Fit"
+                        label="Get Fit Now"
                         variant={ButtonVariant.PRIMARY}
-                        className="max-w-[15.5rem]"
+                        className="max-w-[15rem]"
                         onClick={signUpHandler}
                     />
                 </div>
@@ -417,9 +414,7 @@ const Landing = (): JSX.Element => {
                                 <a href="#features">Features</a>
                                 <a href="#how-it-works">How it works</a>
                                 <a href="#testimonials">Testimonials</a>
-                                <Link to={AppRoute.SIGN_IN}>
-                                    Download The App
-                                </Link>
+                                <Link to={AppRoute.SIGN_UP}>Sign Up</Link>
                             </ul>
                         </div>
                         <div>
