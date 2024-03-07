@@ -65,7 +65,7 @@ class UserApi extends BaseHttpApi {
 
     public async getUserBonuses(): Promise<UserBonusGetAllResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.BONUSES, {}),
+            this.getFullEndpoint(UsersApiPath.CURRENT_BONUSES, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,

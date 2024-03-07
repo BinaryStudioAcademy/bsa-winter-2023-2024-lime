@@ -56,6 +56,27 @@ import { UsersApiPath } from './enums/enums.js';
  *            enum:
  *              - male
  *              - female
+ *      UserBonus:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          userId:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          amount:
+ *            type: number
+ *          actionType:
+ *            type: string
+ *            enum:
+ *              - registered
+ *              - invited
+ *          createdAt:
+ *            type: string
+ *            nullable: true
  */
 class UserController extends BaseController {
     private userService: UserService;
@@ -104,7 +125,7 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
-            path: UsersApiPath.BONUSES,
+            path: UsersApiPath.CURRENT_BONUSES,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
@@ -215,6 +236,35 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+     * @swagger
+     * /api/v1/users/current-bonuses:
+     *    get:
+     *      tags:
+     *       - Users
+     *      description: Returns an array of users bonuses transactions
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 properties:
+     *                   items:
+     *                     type: array
+     *                     items:
+     *                       $ref: '#/components/schemas/UserBonus'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async findBonusesByUserId(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
@@ -224,7 +274,7 @@ class UserController extends BaseController {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.userBonusService.findAllByQuery({ userId }),
+            payload: await this.userBonusService.findMany({ userId }),
         };
     }
 }

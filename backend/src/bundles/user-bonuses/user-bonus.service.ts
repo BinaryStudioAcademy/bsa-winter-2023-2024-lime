@@ -13,7 +13,7 @@ class UserBonusService {
         this.userBonusRepository = userBonusRepository;
     }
 
-    public async findAllByQuery(
+    public async findMany(
         query: Record<string, unknown>,
     ): Promise<UserBonusGetAllResponseDto> {
         const items = await this.userBonusRepository.findAllByQuery(query);
