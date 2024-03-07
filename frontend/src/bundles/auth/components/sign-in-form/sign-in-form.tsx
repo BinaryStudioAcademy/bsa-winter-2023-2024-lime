@@ -113,7 +113,7 @@ const SignInForm: React.FC<Properties> = ({
                     />
                 </form>
             </div>
-            <p className="text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
+            <p className="mt-3 text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
                 No Account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
                     <span className="text-action">Create an Account</span>
