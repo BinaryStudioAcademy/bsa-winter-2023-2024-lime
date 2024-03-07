@@ -22,7 +22,7 @@ const UserValidationMessage = {
     WEIGHT_VALUE: `Weight should be from ${WEIGHT.MIN_VALUE} to ${WEIGHT.MAX_VALUE} kg.`,
     WEIGHT_WRONG: 'Weight should only contain numbers and a decimal point.',
     HEIGHT_WRONG: 'Height should only contain numbers and a decimal point.',
-    HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MIN_VALUE} sm.`,
+    HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MAX_VALUE} cm.`,
     USER_NOT_FOUND: 'User not found',
 } as const;
 

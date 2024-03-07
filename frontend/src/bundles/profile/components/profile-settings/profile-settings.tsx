@@ -179,7 +179,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     className="lg:col-start-4 lg:col-end-5 "
                     type="text"
                     label="Height"
-                    placeholder="0 sm"
+                    placeholder="0 cm"
                     name="height"
                     control={control}
                     errors={errors}
