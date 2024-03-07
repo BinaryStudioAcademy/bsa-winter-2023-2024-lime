@@ -51,7 +51,7 @@ const Landing = (): JSX.Element => {
         }
     }, [dispatch, user]);
 
-    const signInHandler = useCallback((): void => {
+    const handleSignIn = useCallback((): void => {
         dispatch(appActions.navigate(AppRoute.SIGN_IN));
     }, [dispatch]);
 
@@ -108,7 +108,7 @@ const Landing = (): JSX.Element => {
                         label="Sign In"
                         variant={ButtonVariant.PRIMARY}
                         className="basis-40"
-                        onClick={signInHandler}
+                        onClick={handleSignIn}
                     />
                 </header>
                 <div className="flex flex-1 flex-col items-center justify-evenly gap-28 md:gap-0 lg:flex-row lg:justify-between">
@@ -138,7 +138,7 @@ const Landing = (): JSX.Element => {
                                 size={ComponentSize.MEDIUM}
                                 label="Get Fit Now"
                                 variant={ButtonVariant.PRIMARY}
-                                onClick={signInHandler}
+                                onClick={handleSignIn}
                                 className="max-w-[13rem]"
                             />
                             <a href="#how-it-works">
@@ -293,7 +293,7 @@ const Landing = (): JSX.Element => {
                     label="Start Your Journey Now"
                     variant={ButtonVariant.PRIMARY}
                     className="max-w-[15rem]"
-                    onClick={signInHandler}
+                    onClick={handleSignIn}
                 />
             </section>
             <section
@@ -383,7 +383,7 @@ const Landing = (): JSX.Element => {
                         label="Get Fit Now"
                         variant={ButtonVariant.PRIMARY}
                         className="max-w-[15rem]"
-                        onClick={signInHandler}
+                        onClick={handleSignIn}
                     />
                 </div>
                 <footer className="container mx-auto flex h-[40rem] flex-col-reverse items-center justify-evenly sm:h-[20rem] md:flex-row md:items-start md:pt-60">
