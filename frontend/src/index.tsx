@@ -12,7 +12,7 @@ import {
     StoreProvider,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { Home, NotFound } from '~/bundles/common/pages/pages.js';
+import { NotFound, Overview } from '~/bundles/common/pages/pages.js';
 import { Goals as GoalsPage } from '~/bundles/goals/pages/goals.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
@@ -20,6 +20,7 @@ import { Workout, WorkoutItem } from '~/bundles/workouts/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
 import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
+import { Landing } from './bundles/landing/landing.js';
 import { ProfileLayout } from './bundles/profile/layout/profile-layout.js';
 import { ConnectionsPage } from './bundles/profile/pages/connections-page/connections-page.js';
 import {
@@ -32,6 +33,10 @@ const routes = [
         path: AppRoute.ROOT,
         element: <App />,
         children: [
+            {
+                path: AppRoute.ROOT,
+                element: <Landing />,
+            },
             {
                 path: AppRoute.SIGN_IN,
                 element: <Auth />,
@@ -46,8 +51,8 @@ const routes = [
                 isPrivate: true,
                 children: [
                     {
-                        path: AppRoute.ROOT,
-                        element: <Home />,
+                        path: AppRoute.OVERVIEW,
+                        element: <Overview />,
                     },
                     {
                         path: AppRoute.GOALS,
@@ -62,10 +67,6 @@ const routes = [
                                 element: <WorkoutItem />,
                             },
                         ],
-                    },
-                    {
-                        path: AppRoute.OVERVIEW,
-                        element: <div>Overview</div>,
                     },
                     {
                         path: AppRoute.SCHEDULE,
