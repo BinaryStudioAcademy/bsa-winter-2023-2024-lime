@@ -14,6 +14,13 @@ export {
     goalValidationSchema,
 } from './bundles/goals/goals.js';
 export {
+    type NotificationRequestDto,
+    type NotificationResponseDto,
+    NotificationsApiPath,
+    NotificationType,
+    notificationValidationSchema,
+} from './bundles/notifications/notifications.js';
+export {
     type OAuthProviderParameterDto,
     type OAuthResponseDto,
     OAuthActionsPath,
@@ -72,6 +79,7 @@ export {
     ApiPath,
     AppEnvironment,
     ContentType,
+    PaginationValidationMessage,
     ServerErrorType,
 } from './enums/enums.js';
 export { type Config } from './framework/config/config.js';
@@ -95,6 +103,8 @@ export {
 } from './helpers/helpers.js';
 export {
     type EntityIdParameterDto,
+    type Paged,
+    type PaginationParameters,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,
@@ -103,3 +113,4 @@ export {
     type ValueOf,
 } from './types/types.js';
 export { idParameterSchema as idParameterValidationSchema } from './validation-schemas/validation-schemas.js';
+export { paginationValidationSchema } from './validation-shemas/validation-shemas.js';
