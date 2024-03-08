@@ -53,6 +53,7 @@ export default {
         fontSize: {
             xs: '0.75rem',
             sm: '0.875rem',
+            prebase: '0.9375rem',
             base: '1rem',
             md: '1.125rem',
             xl: '1.25rem',
@@ -133,9 +134,9 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
-                '37': '2.3125',
-                '38': '2.375',
-                '54': '54px',
+                '37': '2.3125rem',
+                '38': '2.375rem',
+                '54': '3.375rem;'
             },
             spacing: {
                 '13': '3.25',
