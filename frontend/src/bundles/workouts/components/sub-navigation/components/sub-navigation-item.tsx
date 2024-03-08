@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { type WorkoutResponseDto } from 'shared';
 
-import { ActivityIcon } from '~/bundles/common/components/activity-icon/activity-icon.js';
-import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
+import { ActivityIcon } from '~/bundles/common/components/components.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
 
 type SubNavigationItemWorkoutProperties = {
@@ -12,14 +12,7 @@ type SubNavigationItemWorkoutProperties = {
 const SubNavigationItemWorkout = ({
     item,
 }: SubNavigationItemWorkoutProperties): JSX.Element => {
-    const {
-        activityType,
-        id,
-        workoutStartedAt,
-        duration,
-        kilocalories,
-        distance,
-    } = item;
+    const { activityType, id, workoutStartedAt, provider } = item;
     const isActive =
         id.toString() === window.location.pathname.split('/').pop();
     return (
@@ -34,19 +27,17 @@ const SubNavigationItemWorkout = ({
                         size={ComponentSize.LARGE}
                         className={` ${isActive ? '' : '!bg-lm-grey-500'} !p-3`}
                     />
-                    <div className="flex-grow">
-                        <div className="flex justify-between">
+                    <div className="flex flex-grow flex-col items-start">
+                        <div className="flex w-full items-center justify-between">
                             <h3 className="text-primary">
                                 {capitalizeFirstLetter(activityType)}
                             </h3>
-                            <p className="text-secondary text-[0.7rem] sm:hidden md:block">
-                                {workoutStartedAt.toDateString()}
+                            <p className="text-secondary text-right text-[0.7rem] md:text-[0.6rem]">
+                                {workoutStartedAt.toISOString().split('T')[0]}
                             </p>
                         </div>
-                        <p className="text-primary flex justify-around text-[0.8rem]">
-                            <span>{duration} min</span>
-                            <span>{distance} km</span>
-                            <span>{kilocalories} kcal</span>
+                        <p className="text-secondary flex justify-between text-[0.8rem]">
+                            <span>{capitalizeFirstLetter(provider)}</span>
                         </p>
                     </div>
                 </div>

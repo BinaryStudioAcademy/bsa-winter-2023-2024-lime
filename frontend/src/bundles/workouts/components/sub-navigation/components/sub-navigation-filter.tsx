@@ -2,14 +2,16 @@ import { type SingleValue } from 'react-select';
 import { type WorkoutResponseDto } from 'shared';
 
 import { Select } from '~/bundles/common/components/components.js';
-import { type SelectOption } from '~/bundles/common/components/select/types/select.type.js';
+import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
 import {
     useAppForm,
     useCallback,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-import { mapWorkoutActivitySelect } from '~/bundles/workouts/helpers/map-workout-activity-select.helper.js';
-import { mapWorkoutYearSelect } from '~/bundles/workouts/helpers/map-workout-years-select.helper.js';
+import {
+    mapWorkoutActivitySelect,
+    mapWorkoutYearSelect,
+} from '~/bundles/workouts/helpers/helpers.js';
 
 type SubNavigationFilterProperties = {
     items: WorkoutResponseDto[];
@@ -20,10 +22,12 @@ const SubNavigationFilter = ({
     items,
     setItems,
 }: SubNavigationFilterProperties): JSX.Element => {
-    const [innerData] = useState(items);
+    const [innerData, setInnerData] = useState(items);
 
     const yearsOptions = mapWorkoutYearSelect(innerData);
-    const activitiesOptions = mapWorkoutActivitySelect(innerData);
+    const activitiesOptionsMap = mapWorkoutActivitySelect(innerData);
+    const [activitiesOptions, setActivitiesOptions] =
+        useState<SelectOption[]>(activitiesOptionsMap);
 
     const [selectedYear, setSelectedYear] = useState<SelectOption>(
         yearsOptions[0] as SelectOption,
@@ -50,6 +54,10 @@ const SubNavigationFilter = ({
                     );
                 });
                 setItems(filteredItems);
+                const updatedActivityOptions =
+                    mapWorkoutActivitySelect(filteredItems);
+                setSelectedActivity(updatedActivityOptions[0] as SelectOption);
+                setActivitiesOptions(updatedActivityOptions);
             } else {
                 setItems(innerData);
             }
@@ -61,7 +69,7 @@ const SubNavigationFilter = ({
         (newValue: SingleValue<SelectOption>) => {
             if (newValue && newValue.value !== '') {
                 setSelectedActivity(newValue);
-                const filteredItems = innerData.filter((item) => {
+                const filteredItems = items.filter((item) => {
                     return item.activityType === newValue.value;
                 });
 
@@ -70,26 +78,28 @@ const SubNavigationFilter = ({
                 setItems(innerData);
             }
         },
-        [setItems, innerData],
+        [setItems, items, innerData],
     );
 
     const handleReset = useCallback(() => {
         const items = innerData;
         setItems(items);
+        setInnerData(items);
         setSelectedActivity(activitiesOptions[0] as SelectOption);
         setSelectedYear(yearsOptions[0] as SelectOption);
     }, [setItems, innerData, activitiesOptions, yearsOptions]);
 
     return (
-        <div className="flex w-full flex-row flex-wrap items-center justify-center">
+        <div className="flex w-full flex-row flex-wrap items-center justify-center gap-2">
             <Select
                 options={yearsOptions}
                 value={selectedYear}
                 onChange={filterByYear}
                 control={control}
+                label="Year"
                 name="selectYear"
                 errors={errors}
-                className="w-full min-w-20 flex-grow"
+                className="!h-10 w-full min-w-20 flex-grow"
             />
             <Select
                 options={activitiesOptions}
@@ -97,8 +107,9 @@ const SubNavigationFilter = ({
                 onChange={filterByActivity}
                 control={control}
                 name="selectActivity"
+                label="Activity"
                 errors={errors}
-                className="w-28"
+                className="!h-10 w-28"
             />
             <button
                 onClick={handleReset}
