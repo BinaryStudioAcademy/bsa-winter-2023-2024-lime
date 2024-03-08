@@ -1,6 +1,6 @@
 import SuccessIcon from '~/assets/img/success-icon.svg?react';
 import { Link } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
 
 const PasswordResetSuccessMessage: React.FC = () => {
     return (

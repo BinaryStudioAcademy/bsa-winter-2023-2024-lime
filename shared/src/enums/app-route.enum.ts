@@ -12,7 +12,7 @@ const AppRoute = {
     PROFILE_INFORMATION: '/profile/information',
     PROFILE_GOALS: '/profile/goals',
     PROFILE_PREFERENCES: '/profile/preferences',
-    PROFILE_CONECTIONS: '/profile/conections',
+    PROFILE_CONNECTIONS: '/profile/connections',
     PROFILE_SUBSCRIPTION: '/profile/subscriptions',
     PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
     PROFILE_PUBLIC: '/profile/public',

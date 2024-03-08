@@ -1,3 +1,6 @@
+import CyclingIcon from '~/assets/img/icons/activities/cycling.svg?react';
+import RunningIcon from '~/assets/img/icons/activities/running.svg?react';
+import WalkingIcon from '~/assets/img/icons/activities/walking.svg?react';
 import ArrowDownIcon from '~/assets/img/icons/arrow-down-icon.svg?react';
 import BellIcon from '~/assets/img/icons/bell-icon.svg?react';
 import CaloriesIcon from '~/assets/img/icons/calories-icon.svg?react';
@@ -36,6 +39,9 @@ const IconComponent: Record<
     stepsIcon: StepsIcon,
     googleLogoIcon: GoogleLogoIcon,
     facebookIcon: FacebookIcon,
+    cyclingIcon: CyclingIcon,
+    walkingIcon: WalkingIcon,
+    runningIcon: RunningIcon,
     messageIcon: MessageIcon,
     logoHeader: LogoHeader,
     logoHeaderLight: LogoHeaderLight,
