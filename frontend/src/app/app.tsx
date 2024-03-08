@@ -18,9 +18,7 @@ const App: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { redirectPath } = useAppSelector(({ app }) => ({
-        redirectPath: app.redirectPath,
-    }));
+    const redirectPath = useAppSelector(({ app }) => app.redirectPath);
 
     useEffect(() => {
         if (redirectPath) {

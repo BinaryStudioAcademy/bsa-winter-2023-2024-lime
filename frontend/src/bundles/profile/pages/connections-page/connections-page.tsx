@@ -13,9 +13,9 @@ import { actions } from './store/connections.js';
 const ConnectionsPage = (): JSX.Element => {
     const dispatch = useAppDispatch();
 
-    const { dataStatus } = useAppSelector(({ connections }) => ({
-        dataStatus: connections.dataStatus,
-    }));
+    const dataStatus = useAppSelector(
+        ({ connections }) => connections.dataStatus,
+    );
 
     const isLoading = dataStatus === DataStatus.PENDING;
 

@@ -11,9 +11,7 @@ import { ProfileSettings } from '../components/components.js';
 
 const Profile: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { dataStatus } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-    }));
+    const dataStatus = useAppSelector(({ auth }) => auth.dataStatus);
     const isLoading = dataStatus === DataStatus.PENDING;
     const handleProfileUpdate = useCallback(
         (payload: UserUpdateProfileRequestDto): void => {

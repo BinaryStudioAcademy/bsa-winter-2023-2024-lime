@@ -37,12 +37,10 @@ import {
 } from '../components/components.js';
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
-const Landing = (): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.theme);
-    const { user, isRefreshing } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-        isRefreshing: auth.isRefreshing,
-    }));
+const Landing = (): JSX.Element => {    
+    const theme = useAppSelector(({ theme }) => theme.theme);
+    const user = useAppSelector(({ auth }) => auth.user);
+    const isRefreshing = useAppSelector(({ auth }) => auth.isRefreshing);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

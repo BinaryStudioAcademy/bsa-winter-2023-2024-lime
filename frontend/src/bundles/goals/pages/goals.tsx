@@ -48,18 +48,14 @@ const ZERO_VALUE = 0;
 const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const { dataStatus: dataStatusGoals, goals } = useAppSelector(
-        ({ goals }) => ({
-            dataStatus: goals.dataStatus,
-            goals: goals.goals,
-        }),
-    );
+    const dataStatusGoals = useAppSelector(({ goals }) => goals.dataStatus);
+    const goals = useAppSelector(({ goals }) => goals.goals);
 
-    const { dataStatus: dataStatusAchievements, achievements } = useAppSelector(
-        ({ achievements }) => ({
-            dataStatus: achievements.dataStatus,
-            achievements: achievements.achievements,
-        }),
+       const dataStatusAchievements = useAppSelector(
+        ({ achievements }) => achievements.dataStatus,
+    );
+    const achievements = useAppSelector(
+        ({ achievements }) => achievements.achievements,
     );
 
     const isLoading =

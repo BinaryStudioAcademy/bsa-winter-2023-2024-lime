@@ -24,10 +24,8 @@ const Workout: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const { dataStatus, workouts } = useAppSelector(({ workouts }) => ({
-        dataStatus: workouts.dataStatus,
-        workouts: workouts.workouts,
-    }));
+    const dataStatus = useAppSelector(({ workouts }) => workouts.dataStatus);
+    const workouts = useAppSelector(({ workouts }) => workouts.workouts);
 
     useEffect(() => {
         void dispatch(actions.getWorkouts());

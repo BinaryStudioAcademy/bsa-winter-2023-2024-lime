@@ -35,9 +35,7 @@ type Properties = {
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const [valuesDefault, setValuesDefault] = useState(false);
-    const { user } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-    }));
+    const user = useAppSelector(({ auth }) => auth.user);
 
     const { control, errors, reset, setValue, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({

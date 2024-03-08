@@ -8,12 +8,10 @@ import { config } from '~/framework/config/config.js';
 
 const stripe = loadStripe(config.ENV.STRIPE.PUBLIC_KEY);
 
-const SubscriptionCheckout = (): JSX.Element => {
-    const { clientSecret } = useAppSelector(({ subscriptions }) => {
-        return {
-            clientSecret: subscriptions?.clientSecret as string,
-        };
-    });
+const SubscriptionCheckout = (): JSX.Element => {    
+    const clientSecret = useAppSelector(
+        ({ subscriptions }) => subscriptions?.clientSecret as string,
+    );
 
     const options: StripeElementsOptions = {
         locale: 'en',

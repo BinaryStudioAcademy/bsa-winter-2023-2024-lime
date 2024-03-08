@@ -16,7 +16,7 @@ type Properties = {
 
 function ThemeSwitcher({ className }: Properties): JSX.Element {
     const dispatch = useAppDispatch();
-    const { theme } = useAppSelector((state) => state.theme);
+    const theme = useAppSelector(({ theme }) => theme.theme);
 
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());

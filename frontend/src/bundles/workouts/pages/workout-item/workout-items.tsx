@@ -8,9 +8,7 @@ import {
 const WorkoutItem = (): JSX.Element => {
     const { id } = useParams();
 
-    const { workouts } = useAppSelector(({ workouts }) => ({
-        workouts: workouts.workouts,
-    }));
+    const workouts = useAppSelector(({ workouts }) => workouts.workouts);
 
     const currentWorkout = workouts.find(
         (workout) => workout.id === Number(id),
