@@ -1,17 +1,22 @@
 import { SubNavigation } from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
 
 const ProfileNavigation = (): JSX.Element => {
     const routes = [
         {
             id: 'profile',
             label: 'Personal information',
-            to: '/profile/information',
+            to: AppRoute.PROFILE_INFORMATION,
         },
-        { id: 'conections', label: 'Connections', to: '/profile/conections' },
+        {
+            id: 'connections',
+            label: 'Connections',
+            to: AppRoute.PROFILE_CONECTIONS,
+        },
         {
             id: 'subscription',
             label: 'Subscriptions',
-            to: '/profile/subscriptions',
+            to: AppRoute.PROFILE_SUBSCRIPTION,
         },
     ];
     return (
