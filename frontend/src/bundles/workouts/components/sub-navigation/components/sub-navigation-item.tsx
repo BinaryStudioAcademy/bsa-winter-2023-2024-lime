@@ -26,7 +26,7 @@ const SubNavigationItemWorkout = ({
         <li>
             <Link
                 to={`/workout/${id}`}
-                className="flex w-full max-w-72 items-center justify-between gap-4"
+                className="flex w-5/6 min-w-60 max-w-72 items-center justify-between gap-4"
             >
                 <div className="flex w-full items-center gap-4">
                     <ActivityIcon
@@ -39,11 +39,11 @@ const SubNavigationItemWorkout = ({
                             <h3 className="text-primary">
                                 {capitalizeFirstLetter(activityType)}
                             </h3>
-                            <p className="text-secondary text-[0.7rem]">
+                            <p className="text-secondary text-[0.7rem] sm:hidden md:block">
                                 {workoutStartedAt.toDateString()}
                             </p>
                         </div>
-                        <p className="text-primary flex justify-around">
+                        <p className="text-primary flex justify-around text-[0.8rem]">
                             <span>{duration} min</span>
                             <span>{distance} km</span>
                             <span>{kilocalories} kcal</span>

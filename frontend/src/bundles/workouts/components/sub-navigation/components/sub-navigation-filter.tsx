@@ -81,7 +81,7 @@ const SubNavigationFilter = ({
     }, [setItems, innerData, activitiesOptions, yearsOptions]);
 
     return (
-        <div className="flex w-full flex-row flex-wrap">
+        <div className="flex w-full flex-row flex-wrap items-center justify-center">
             <Select
                 options={yearsOptions}
                 value={selectedYear}

@@ -13,7 +13,7 @@ const useSidebarToggle = (): { isOpen: boolean; toggleSidebar: () => void } => {
 
     const handleResize = useCallback((): void => {
         setWidth(window.innerWidth);
-        if (width > 1024) {
+        if (width > 1224) {
             setIsOpen(true);
         } else {
             setIsOpen(false);
