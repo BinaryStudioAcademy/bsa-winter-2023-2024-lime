@@ -17,12 +17,7 @@ import { Button } from '~/bundles/common/components/components.js';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks.js';
 
 import { canvasPreview } from './canvas-preview.js';
-
-function toBlob(canvas: HTMLCanvasElement | null): Promise<Blob | null> {
-    return new Promise((resolve) => {
-        canvas && canvas.toBlob(resolve);
-    });
-}
+import { toFile } from './helpers/helpers.js';
 
 const DIMENSION = {
     aspectRatio: 1,
@@ -44,16 +39,6 @@ const Cropper = ({
     const canvasReference = useRef<HTMLCanvasElement>(null);
 
     const dispatch = useAppDispatch();
-
-    const toFile = useCallback(async (): Promise<void> => {
-        const blob = (await toBlob(canvasReference.current)) as Blob;
-        const imgPayload = new File([blob], 'image', {
-            type: 'image/webp',
-        });
-
-        void dispatch(authActions.upload(imgPayload));
-    }, [dispatch]);
-
     const handleCrop = useCallback((PercentCrop: PercentCrop) => {
         setCrop(PercentCrop);
     }, []);
@@ -80,6 +65,11 @@ const Cropper = ({
         setScale(Number.parseFloat(event.target.value));
     }, []);
 
+    const canvasToFile = useCallback(async (): Promise<void> => {
+        const imgPayload = await toFile(canvasReference);
+        void dispatch(authActions.upload(imgPayload));
+    }, [dispatch]);
+
     const setCanvasPreview = useCallback(() => {
         canvasPreview({
             crop,
@@ -88,7 +78,7 @@ const Cropper = ({
             image: imgReference.current as HTMLImageElement,
         });
 
-        void toFile();
+        void canvasToFile();
         const temporaryAvatar = canvasReference.current?.toDataURL();
         render(temporaryAvatar);
 
@@ -99,7 +89,7 @@ const Cropper = ({
         canvasReference,
         scale,
         closeModal,
-        toFile,
+        canvasToFile,
         render,
     ]);
 
