@@ -25,7 +25,7 @@ const SubscriptionPage = (): JSX.Element => {
     );
     const currentSubscription = useAppSelector(
         ({ subscriptions }) => subscriptions.currentSubscription,
-    );    
+    );
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

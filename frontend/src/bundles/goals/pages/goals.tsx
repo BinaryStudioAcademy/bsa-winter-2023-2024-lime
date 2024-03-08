@@ -51,7 +51,7 @@ const Goals: React.FC = () => {
     const dataStatusGoals = useAppSelector(({ goals }) => goals.dataStatus);
     const goals = useAppSelector(({ goals }) => goals.goals);
 
-       const dataStatusAchievements = useAppSelector(
+    const dataStatusAchievements = useAppSelector(
         ({ achievements }) => achievements.dataStatus,
     );
     const achievements = useAppSelector(

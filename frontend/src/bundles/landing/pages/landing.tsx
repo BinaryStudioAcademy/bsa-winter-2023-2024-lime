@@ -37,7 +37,7 @@ import {
 } from '../components/components.js';
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
-const Landing = (): JSX.Element => {    
+const Landing = (): JSX.Element => {
     const theme = useAppSelector(({ theme }) => theme.theme);
     const user = useAppSelector(({ auth }) => auth.user);
     const isRefreshing = useAppSelector(({ auth }) => auth.isRefreshing);
