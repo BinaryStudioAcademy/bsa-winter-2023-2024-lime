@@ -99,8 +99,8 @@ const routes = [
                         ],
                     },
                     {
-                        path: AppRoute.PROFILE_PUBLIC,
-                        element: <PublicProfile id={3} />,
+                        path: AppRoute.PROFILE_PUBLIC_$ID,
+                        element: <PublicProfile />,
                     },
                 ],
             },

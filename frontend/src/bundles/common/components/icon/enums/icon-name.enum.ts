@@ -13,6 +13,7 @@ const IconName = {
     logoHeaderLight: 'logoHeaderLight',
     caloriesIcon: 'caloriesIcon',
     stepsIcon: 'stepsIcon',
+    durationIcon: 'durationIcon',
     cyclingIcon: 'cyclingIcon',
     runningIcon: 'runningIcon',
     walkingIcon: 'walkingIcon',

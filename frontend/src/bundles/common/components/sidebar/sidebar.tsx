@@ -88,12 +88,6 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
                     />
-                    <SidebarNav
-                        icon={<ScheduleIcon />}
-                        text="My Profile"
-                        to={AppRoute.PROFILE_PUBLIC}
-                        isActive={activeRoute === AppRoute.PROFILE_PUBLIC}
-                    />
                 </div>
             </div>
 
