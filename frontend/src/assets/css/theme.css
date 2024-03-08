@@ -36,7 +36,7 @@
 
     /* STROKE */
     --stroke-progress-base-bg: rgb(178 202 13);
-  
+
     /* CIRCLE PROGRESS BAR */
     --circle-primary: #b2ca0d; /* lm-yellow-200 */
 }
@@ -78,8 +78,7 @@
 
     /* STROKE */
     --stroke-progress-base-bg: rgb(28 34 39); /* White */
-  
-  /* CIRCLE PROGRESS BAR */
-    --circle-primary: #1c2227; /* lm-black-200 */
 
+    /* CIRCLE PROGRESS BAR */
+    --circle-primary: #1c2227; /* lm-black-200 */
 }
