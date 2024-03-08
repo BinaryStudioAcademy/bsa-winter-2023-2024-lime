@@ -1,3 +1,9 @@
+import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
+import {
+    AchievementCard,
+    Loader,
+} from '~/bundles/common/components/components.js';
+import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -12,24 +18,45 @@ import { PersonalDetails } from '../../components/personal-details/personal-deta
 type PublicProfileProperties = {
     id: number;
 };
+const ZERO_VALUE = 0;
 const PublicProfile: React.FC<PublicProfileProperties> = ({ id }) => {
     const dispatch = useAppDispatch();
     const [isFriend, setIsFriend] = useState(false);
+
+    useEffect(() => {
+        void dispatch(userActions.getById(id));
+    }, [dispatch, id]);
+
+    const { dataStatus: dataStatusUser, user } = useAppSelector(
+        ({ users }) => ({
+            dataStatus: users.dataStatus,
+            user: users.user,
+        }),
+    );
+
+    const { dataStatus: dataStatusAchievements, achievements } = useAppSelector(
+        ({ achievements }) => ({
+            dataStatus: achievements.dataStatus,
+            achievements: achievements.achievements,
+        }),
+    );
+
+    const isLoading =
+        dataStatusUser === DataStatus.PENDING ||
+        dataStatusAchievements === DataStatus.PENDING;
+
+    useEffect(() => {
+        void dispatch(achievementsActions.getAchievementsByUserId(id));
+    }, [dispatch, id]);
 
     const handleToggleFriend = useCallback(() => {
         setIsFriend((previousIsFriend) => !previousIsFriend);
     }, []);
 
     const handleMessageFriend = useCallback(() => {}, []);
-
-    useEffect(() => {
-        void dispatch(userActions.getById(id));
-    }, [dispatch, id]);
-
-    const { user } = useAppSelector(({ users }) => ({
-        user: users.user,
-    }));
-
+    if (isLoading) {
+        return <Loader />;
+    }
     if (user) {
         return (
             <div className="flex h-full w-full flex-row-reverse">
@@ -57,7 +84,21 @@ const PublicProfile: React.FC<PublicProfileProperties> = ({ id }) => {
                         of workouts <br /> -Total distance (in km or steps)
                         <br /> -Total calories concumed
                     </div>
-                    <div className="text-primary"> Achievements section</div>
+                    <section>
+                        <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
+                            Achievements
+                        </h2>
+
+                        <div className="flex w-full flex-wrap gap-4">
+                            {achievements?.length > ZERO_VALUE &&
+                                achievements.map((achievement) => (
+                                    <AchievementCard
+                                        key={achievement.id}
+                                        achievement={achievement}
+                                    />
+                                ))}
+                        </div>
+                    </section>
                 </div>
             </div>
         );

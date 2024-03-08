@@ -100,7 +100,7 @@ const routes = [
                     },
                     {
                         path: AppRoute.PROFILE_PUBLIC,
-                        element: <PublicProfile id={1} />,
+                        element: <PublicProfile id={3} />,
                     },
                 ],
             },
