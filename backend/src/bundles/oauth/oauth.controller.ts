@@ -10,7 +10,7 @@ import {
 import { ApiPath } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import { ConnectionsPath, HttpCode, OAuthActionsPath } from './enums/enums.js';
+import { AppRoute, HttpCode, OAuthActionsPath } from './enums/enums.js';
 import {
     type OAuthExchangeAuthCodeDto,
     type OAuthProviderParameterDto,
@@ -90,13 +90,16 @@ class OAuthController extends BaseController {
      *      security:
      *        - bearerAuth: []
      *      responses:
-     *        302:
-     *          description: Found
-     *          headers:
-     *            Location:
-     *              description: The URL to Third-Party authorization prompt
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
      *              schema:
-     *                type: string
+     *                 type: object
+     *                 properties:
+     *                   redirectUrl:
+     *                     type: string
+     *                     description: OAuth prompt redirect URL
      *        400:
      *          description: Failed operation
      *          content:
@@ -120,9 +123,9 @@ class OAuthController extends BaseController {
         );
 
         return {
-            type: ApiHandlerResponseType.REDIRECT,
-            status: HttpCode.FOUND,
-            redirectUrl: redirectUrl.href,
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: { redirectUrl: redirectUrl.href },
         };
     }
 
@@ -145,7 +148,7 @@ class OAuthController extends BaseController {
         return {
             type: ApiHandlerResponseType.REDIRECT,
             status: HttpCode.FOUND,
-            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            redirectUrl: `${this.config.ENV.APP.CLIENT_BASE_URL}${AppRoute.PROFILE_CONNECTIONS}`,
         };
     }
 
@@ -159,13 +162,19 @@ class OAuthController extends BaseController {
      *      security:
      *        - bearerAuth: []
      *      responses:
-     *        302:
-     *          description: Found
-     *          headers:
-     *            Location:
-     *              description: The URL endpoint with user connections
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
      *              schema:
-     *                type: string
+     *                 type: object
+     *                 properties:
+     *                   provider:
+     *                     type: string
+     *                     enum:
+     *                       - strava
+     *                       - google-fit
+     *                     description: Disconnected provider
      *        400:
      *          description: Failed operation
      *          content:
@@ -187,9 +196,9 @@ class OAuthController extends BaseController {
         await this.oAuthService.deauthorize(provider, id);
 
         return {
-            type: ApiHandlerResponseType.REDIRECT,
-            status: HttpCode.FOUND,
-            redirectUrl: `${this.config.ENV.APP.API_BASE_URL}${ApiPath.CONNECTIONS}${ConnectionsPath.ROOT}`,
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: { provider },
         };
     }
 }
