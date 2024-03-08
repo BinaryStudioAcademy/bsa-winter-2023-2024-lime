@@ -95,7 +95,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         ? configureISOString(data.dateOfBirth || '')
                         : null,
                     fullName: (data.fullName || '').trim(),
-                    username: (data.username || '').trim(),
+                    username: data.username ? data.username.trim() : null,
                 };
                 onSubmit(payload);
             })(event_);
