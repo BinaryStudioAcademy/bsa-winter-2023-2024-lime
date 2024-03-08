@@ -19,6 +19,7 @@ export default {
             'lm-red': '#F62D2D',
             'lm-cyan': '#05CFCF',
             'lm-light-blue': '#056ECF',
+            'lm-light-yellow': '#f1ffca',
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -52,6 +53,7 @@ export default {
         fontSize: {
             xs: '0.75rem',
             sm: '0.875rem',
+            prebase: '0.9375rem',
             base: '1rem',
             md: '1.125rem',
             xl: '1.25rem',
@@ -60,6 +62,7 @@ export default {
             '4xl': '2.625rem',
         },
         fontWeight: {
+            light: '300',
             normal: '400',
             semibold: '500',
             bold: '600',
@@ -102,8 +105,7 @@ export default {
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
-                gilroyLight: ['Gilroy-Light', ...defaultTheme.fontFamily.sans],
-                gilroyBold: ['Gilroy-Bold', ...defaultTheme.fontFamily.sans],
+                accent: ['Lato', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
@@ -132,22 +134,20 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
-                '37': '2.3125',
-                '38': '2.375',
-                '54': '54px',
+                '37': '2.3125rem',
+                '38': '2.375rem',
+                '54': '3.375rem;'
             },
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+                '60': '3.75rem',
             },
             minHeight: {
                 '90': 'calc(100vh - 5.5rem)',
             },
             maxHeight: {
                 '90': 'calc(100vh - 5.5rem)',
-            },
-            spacing: {
-                '60': '3.75rem',
             },
             textColor: {
                 primary: 'var(--text-primary)',
@@ -161,6 +161,7 @@ export default {
             backgroundColor: {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
+                tertiary: 'var(--background-tertiary)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
@@ -169,6 +170,9 @@ export default {
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
+            },
+            stroke: {
+                primary: 'var(--circle-primary)',
             },
         },
     },

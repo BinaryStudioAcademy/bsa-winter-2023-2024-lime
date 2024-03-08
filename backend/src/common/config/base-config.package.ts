@@ -77,6 +77,12 @@ class BaseConfig implements Config {
                     env: 'API_BASE_URL',
                     default: null,
                 },
+                CLIENT_BASE_URL: {
+                    doc: 'Base client url for our app',
+                    format: String,
+                    env: 'CLIENT_BASE_URL',
+                    default: null,
+                },
             },
             AWS: {
                 S3_ACCESS_KEY: {

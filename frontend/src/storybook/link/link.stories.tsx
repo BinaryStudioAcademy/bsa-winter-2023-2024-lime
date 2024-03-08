@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Link } from '~/bundles/common/components/link/link.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
 
 const meta: Meta<typeof Link> = {
     component: Link,
