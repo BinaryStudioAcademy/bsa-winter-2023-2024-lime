@@ -113,7 +113,7 @@ const Goals: React.FC = () => {
             ) : (
                 <>
                     <div className="flex flex-col gap-8 ">
-                        <section className="pt-[3.125rem] md:w-full lg:w-[37rem] xl:w-[49rem]">
+                        <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
                                 value={lastGoal?.progress as number}
                                 target={lastGoal?.progress as number}
