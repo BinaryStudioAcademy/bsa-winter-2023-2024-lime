@@ -9,14 +9,17 @@ import { type ValueOf } from '~/common/types/types.js';
 import { UserAttributes } from '../users/enums/user-attributes.enum.js';
 import { UserModel } from '../users/user.model.js';
 import {
-    type UserBonusActionStatus,
+    type UserBonusActionType,
+    type UserBonusTransactionType,
     UserBonusAttributes,
 } from './enums/enums.js';
 
 class UserBonusModel extends AbstractModel {
     public 'userId': number;
 
-    public 'actionType': ValueOf<typeof UserBonusActionStatus>;
+    public 'actionType': ValueOf<typeof UserBonusActionType>;
+
+    public 'transactionType': ValueOf<typeof UserBonusTransactionType>;
 
     public 'amount': number;
 

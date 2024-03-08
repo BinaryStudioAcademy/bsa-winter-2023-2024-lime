@@ -63,7 +63,9 @@ export {
     type UserBonusCreateRequestDto,
     type UserBonusGetAllItemResponseDto,
     type UserBonusGetAllResponseDto,
-    UserBonusActionStatus,
+    UserBonusActionType,
+    UserBonusesApiPath,
+    UserBonusTransactionType,
 } from './bundles/user-bonuses/user-bonuses.js';
 export {
     type UserAuthRequestDto,

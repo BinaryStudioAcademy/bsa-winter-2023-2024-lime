@@ -1,10 +1,14 @@
 import { type ValueOf } from '../../../types/types.js';
-import { type UserBonusActionStatus } from '../enums/enums.js';
+import {
+    type UserBonusActionType,
+    type UserBonusTransactionType,
+} from '../enums/enums.js';
 
 type UserBonusGetAllItemResponseDto = {
     id: number;
     userId: number;
-    actionType: ValueOf<typeof UserBonusActionStatus>;
+    actionType: ValueOf<typeof UserBonusActionType>;
+    transactionType: ValueOf<typeof UserBonusTransactionType>;
     amount: number;
     createdAt: string | null;
 };

@@ -13,7 +13,7 @@ import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { type UserBonusActionStatus } from '../../enums/enums.js';
+import { type UserBonusActionType } from '../../enums/enums.js';
 import { UserBonusTransactionMessage } from '../../enums/enums.js';
 import { UserBonusTransacrionItem } from '../user-bonus-transaction-item/user-bonus-transacrion-item.js';
 
@@ -89,10 +89,11 @@ const UserBonusBalance = ({
                                 actionMessage={
                                     UserBonusTransactionMessage[
                                         bonus.actionType as ValueOf<
-                                            typeof UserBonusActionStatus
+                                            typeof UserBonusActionType
                                         >
                                     ]
                                 }
+                                transactionType={bonus.transactionType}
                                 date={bonus.createdAt}
                             />
                         ))}

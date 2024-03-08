@@ -155,7 +155,7 @@ class UserRepository implements Repository {
             .execute();
     }
 
-    public async updateUserProfile(
+    public async updateUserDetails(
         userId: number,
         payload: Partial<UserDetailsModel>,
     ): Promise<UserEntity | null> {

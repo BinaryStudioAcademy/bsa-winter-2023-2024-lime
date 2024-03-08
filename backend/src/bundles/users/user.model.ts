@@ -31,6 +31,7 @@ class UserModel extends AbstractModel {
     public 'stripeCustomerId': string;
 
     public 'userDetails': UserDetailsModel;
+
     public 'workouts': WorkoutModel;
 
     public 'userAchievements': UserAchievementModel;

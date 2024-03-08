@@ -8,6 +8,7 @@ import { passwordResetController } from '~/bundles/password-reset/password-reset
 import { stravaController } from '~/bundles/strava/strava.js';
 import { subscriptionPlanController } from '~/bundles/subscription-plans/subscription-plan.js';
 import { subscriptionController } from '~/bundles/subscriptions/subscriptions.js';
+import { userBonusController } from '~/bundles/user-bonuses/user-bonuses.js';
 import { userController } from '~/bundles/users/users.js';
 import { workoutController } from '~/bundles/workouts/workouts.js';
 import { config } from '~/common/config/config.js';
@@ -32,6 +33,7 @@ const apiV1 = new BaseServerAppApi(
     ...passwordResetController.routes,
     ...achievementController.routes,
     ...stravaController.routes,
+    ...userBonusController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

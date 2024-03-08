@@ -1,10 +1,10 @@
 import { type ValueOf } from '~/common/types/types.js';
 
-import { UserBonusActionStatus } from './enums.js';
+import { UserBonusActionType } from './enums.js';
 
-const BonusAmount: Record<ValueOf<typeof UserBonusActionStatus>, number> = {
-    [UserBonusActionStatus.REGISTERED]: 50,
-    [UserBonusActionStatus.INVITED]: 20,
+const BonusAmount: Record<ValueOf<typeof UserBonusActionType>, number> = {
+    [UserBonusActionType.REGISTERED]: 50,
+    [UserBonusActionType.INVITED]: 20,
 } as const;
 
 export { BonusAmount };

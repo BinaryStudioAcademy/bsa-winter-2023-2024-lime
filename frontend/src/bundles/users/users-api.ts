@@ -62,6 +62,12 @@ class UserApi extends BaseHttpApi {
         );
         return await response.json<UserAuthResponseDto>();
     }
+}
+
+class UserBonusApi extends BaseHttpApi {
+    public constructor({ baseUrl, http, storage }: Constructor) {
+        super({ path: ApiPath.USER_BONUSES, baseUrl, http, storage });
+    }
 
     public async getUserBonuses(): Promise<UserBonusGetAllResponseDto> {
         const response = await this.load(
@@ -76,4 +82,4 @@ class UserApi extends BaseHttpApi {
     }
 }
 
-export { UserApi };
+export { UserApi, UserBonusApi };

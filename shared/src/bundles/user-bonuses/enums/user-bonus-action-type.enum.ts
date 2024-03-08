@@ -1,6 +1,6 @@
-const UserBonusActionStatus = {
+const UserBonusActionType = {
     INVITED: 'invited',
     REGISTERED: 'registered',
 } as const;
 
-export { UserBonusActionStatus };
+export { UserBonusActionType };

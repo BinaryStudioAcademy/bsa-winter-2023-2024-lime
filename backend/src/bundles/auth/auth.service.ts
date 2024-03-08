@@ -8,7 +8,8 @@ import { cryptService, jwtService } from '~/common/services/services.js';
 import {
     type UserBonusService,
     BonusAmount,
-    UserBonusActionStatus,
+    UserBonusActionType,
+    UserBonusTransactionType,
 } from '../user-bonuses/user-bonuses.js';
 import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 import { type AuthResponseDto } from './types/types.js';
@@ -98,20 +99,22 @@ class AuthService {
 
             await this.userBonusService.create({
                 userId: user.id,
-                actionType: UserBonusActionStatus.REGISTERED,
-                amount: BonusAmount[UserBonusActionStatus.REGISTERED],
+                actionType: UserBonusActionType.REGISTERED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.REGISTERED],
             });
 
             await this.userBonusService.create({
                 userId: inviterId,
-                actionType: UserBonusActionStatus.INVITED,
-                amount: BonusAmount[UserBonusActionStatus.INVITED],
+                actionType: UserBonusActionType.INVITED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.INVITED],
             });
 
             return {
                 user: {
                     ...user,
-                    bonusBalance: BonusAmount[UserBonusActionStatus.REGISTERED],
+                    bonusBalance: BonusAmount[UserBonusActionType.REGISTERED],
                 },
                 token,
             };

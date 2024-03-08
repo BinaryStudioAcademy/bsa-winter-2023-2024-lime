@@ -67,7 +67,7 @@ class UserService implements Service {
         payload: UserUpdateProfileRequestDto,
     ): Promise<UserAuthResponseDto | null> {
         try {
-            const updatedUser = await this.userRepository.updateUserProfile(
+            const updatedUser = await this.userRepository.updateUserDetails(
                 userId,
                 payload as Partial<UserDetailsModel>,
             );

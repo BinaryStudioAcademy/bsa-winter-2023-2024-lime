@@ -1,13 +1,18 @@
 import { type Entity, type ValueOf } from '~/common/types/types.js';
 
-import { type UserBonusActionStatus } from './enums/enums.js';
+import {
+    type UserBonusActionType,
+    type UserBonusTransactionType,
+} from './enums/enums.js';
 
 class UserBonusEntity implements Entity {
     private 'id': number | null;
 
     private 'userId': number;
 
-    private 'actionType': ValueOf<typeof UserBonusActionStatus>;
+    private 'actionType': ValueOf<typeof UserBonusActionType>;
+
+    private 'transactionType': ValueOf<typeof UserBonusTransactionType>;
 
     private 'amount': number;
 
@@ -17,18 +22,21 @@ class UserBonusEntity implements Entity {
         id,
         userId,
         actionType,
+        transactionType,
         amount,
         createdAt,
     }: {
         id: number | null;
         userId: number;
-        actionType: ValueOf<typeof UserBonusActionStatus>;
+        actionType: ValueOf<typeof UserBonusActionType>;
+        transactionType: ValueOf<typeof UserBonusTransactionType>;
         amount: number;
         createdAt: string | null;
     }) {
         this.id = id;
         this.userId = userId;
         this.actionType = actionType;
+        this.transactionType = transactionType;
         this.amount = amount;
         this.createdAt = createdAt;
     }
@@ -37,12 +45,14 @@ class UserBonusEntity implements Entity {
         id,
         userId,
         actionType,
+        transactionType,
         amount,
         createdAt,
     }: {
         id: number;
         userId: number;
-        actionType: ValueOf<typeof UserBonusActionStatus>;
+        actionType: ValueOf<typeof UserBonusActionType>;
+        transactionType: ValueOf<typeof UserBonusTransactionType>;
         amount: number;
         createdAt: string | null;
     }): UserBonusEntity {
@@ -50,6 +60,7 @@ class UserBonusEntity implements Entity {
             id,
             userId,
             actionType,
+            transactionType,
             amount,
             createdAt,
         });
@@ -58,16 +69,19 @@ class UserBonusEntity implements Entity {
     public static initializeNew({
         userId,
         actionType,
+        transactionType,
         amount,
     }: {
         userId: number;
-        actionType: ValueOf<typeof UserBonusActionStatus>;
+        actionType: ValueOf<typeof UserBonusActionType>;
+        transactionType: ValueOf<typeof UserBonusTransactionType>;
         amount: number;
     }): UserBonusEntity {
         return new UserBonusEntity({
             id: null,
             userId,
             actionType,
+            transactionType,
             amount,
             createdAt: null,
         });
@@ -76,7 +90,8 @@ class UserBonusEntity implements Entity {
     public toObject(): {
         id: number;
         userId: number;
-        actionType: ValueOf<typeof UserBonusActionStatus>;
+        actionType: ValueOf<typeof UserBonusActionType>;
+        transactionType: ValueOf<typeof UserBonusTransactionType>;
         amount: number;
         createdAt: string | null;
     } {
@@ -84,6 +99,7 @@ class UserBonusEntity implements Entity {
             id: this.id as number,
             userId: this.userId,
             actionType: this.actionType,
+            transactionType: this.transactionType,
             amount: this.amount,
             createdAt: this.createdAt,
         };
@@ -91,12 +107,14 @@ class UserBonusEntity implements Entity {
 
     public toNewObject(): {
         userId: number;
-        actionType: ValueOf<typeof UserBonusActionStatus>;
+        actionType: ValueOf<typeof UserBonusActionType>;
+        transactionType: ValueOf<typeof UserBonusTransactionType>;
         amount: number;
     } {
         return {
             userId: this.userId,
             actionType: this.actionType,
+            transactionType: this.transactionType,
             amount: this.amount,
         };
     }

@@ -71,9 +71,9 @@ const loadAllUserBonusesTransactions = createAsyncThunk<
     UserBonusGetAllResponseDto,
     undefined,
     AsyncThunkConfig
->(`${sliceName}/bonuses`, (_, { extra }) => {
-    const { userApi } = extra;
-    return userApi.getUserBonuses();
+>(`${sliceName}/current-bonuses`, (_, { extra }) => {
+    const { userBonusApi } = extra;
+    return userBonusApi.getUserBonuses();
 });
 
 export {
