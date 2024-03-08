@@ -1,6 +1,7 @@
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
 
 import logo from '~/assets/img/logo.svg';
+import { type UserAuthResponseDto } from '~/bundles/common/types/types.js';
 
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
 import { useAppSelector } from '../../hooks/hooks.js';
@@ -14,10 +15,12 @@ type HeaderProperties = {
 };
 
 const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
-    const { email, avatarUrl } = useAppSelector(({ auth }) => ({
-        email: auth.user?.email,
-        avatarUrl: auth.user?.avatarUrl,
+    const { user } = useAppSelector(({ auth }) => ({
+        user: auth.user as UserAuthResponseDto,
     }));
+
+    const { email, avatarUrl } = user || {};
+
     return (
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
@@ -47,10 +50,7 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
                 </div>
                 <div className="flex w-full justify-between">
                     <Message />
-                    <Navigation
-                        email={email || ''}
-                        avatarUrl={avatarUrl || ''}
-                    />
+                    <Navigation email={email} avatarUrl={avatarUrl || ''} />
                 </div>
             </Layout>
         </header>
