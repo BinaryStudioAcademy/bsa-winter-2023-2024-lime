@@ -55,6 +55,10 @@ const Landing = (): JSX.Element => {
         dispatch(appActions.navigate(AppRoute.SIGN_IN));
     }, [dispatch]);
 
+    const handleSignUp = useCallback((): void => {
+        dispatch(appActions.navigate(AppRoute.SIGN_UP));
+    }, [dispatch]);
+
     if (isRefreshing) {
         return <Loader isOverflow />;
     }
@@ -138,7 +142,7 @@ const Landing = (): JSX.Element => {
                                 size={ComponentSize.MEDIUM}
                                 label="Get Fit Now"
                                 variant={ButtonVariant.PRIMARY}
-                                onClick={handleSignIn}
+                                onClick={handleSignUp}
                                 className="max-w-[13rem]"
                             />
                             <a href="#how-it-works">
@@ -293,7 +297,7 @@ const Landing = (): JSX.Element => {
                     label="Start Your Journey Now"
                     variant={ButtonVariant.PRIMARY}
                     className="max-w-[15rem]"
-                    onClick={handleSignIn}
+                    onClick={handleSignUp}
                 />
             </section>
             <section
@@ -383,7 +387,7 @@ const Landing = (): JSX.Element => {
                         label="Get Fit Now"
                         variant={ButtonVariant.PRIMARY}
                         className="max-w-[15rem]"
-                        onClick={handleSignIn}
+                        onClick={handleSignUp}
                     />
                 </div>
                 <footer className="container mx-auto flex h-[40rem] flex-col-reverse items-center justify-evenly sm:h-[20rem] md:flex-row md:items-start md:pt-60">
