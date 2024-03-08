@@ -4,6 +4,7 @@ const { PASSWORD, FULLNAME, NICKNAME, WEIGHT, HEIGHT } = UserValidationRule;
 
 const UserValidationMessage = {
     REQUIRED: 'Please fill out this field',
+    INVALID: 'Please enter a valid value',
     INVALID_EMAIL: 'Please enter a valid email',
     INVALID_PASSWORD: `Password must have from ${PASSWORD.MIN_LENGTH} to ${PASSWORD.MAX_LENGTH} characters`,
     PASSWORD_MISMATCH: 'Passwords must be identical. Please try again',
@@ -19,6 +20,7 @@ const UserValidationMessage = {
     NICKNAME_WRONG:
         'Nickname should consist of letters, special characters, spaces, emoji',
     BIRTHDATE_FORMAT: 'Invalid date format. Use DD/MM/YYYY',
+    BIRTHDATE_IN_FUTURE: 'Date of birth can not be in the future',
     WEIGHT_VALUE: `Weight should be from ${WEIGHT.MIN_VALUE} to ${WEIGHT.MAX_VALUE} kg.`,
     WEIGHT_WRONG: 'Weight should only contain numbers and a decimal point.',
     HEIGHT_WRONG: 'Height should only contain numbers and a decimal point.',

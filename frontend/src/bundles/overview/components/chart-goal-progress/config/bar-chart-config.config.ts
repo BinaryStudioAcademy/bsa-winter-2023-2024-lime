@@ -3,6 +3,7 @@ const optionsBarChart = {
         y: {
             beginAtZero: true,
             ticks: {
+                color: '#798392',
                 min: 0,
                 max: 100,
                 stepSize: 20,
@@ -19,11 +20,16 @@ const optionsBarChart = {
                 display: false,
                 drawBorder: false,
             },
+            ticks: {
+                color: '#798392',
+            },
         },
     },
+    color: '#798392',
     barThickness: 'flex',
     borderRadius: 20,
-    barPercentage: 0.2,
+    barPercentage: 0.4,
+    categoryPercentage: 0.4,
     responsive: true,
     maintainAspectRatio: false,
     plugins: {

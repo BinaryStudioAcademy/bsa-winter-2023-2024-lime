@@ -7,8 +7,7 @@ import {
     Loader,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { userSignUpValidationSchema } from '~/bundles/users/users.js';
 
@@ -105,7 +104,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     </div>
                 </form>
             </div>
-            <p className="text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
+            <p className="mt-3 text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
                 Already have an Account? Go to{' '}
                 <Link to={AppRoute.SIGN_IN}>
                     <span className="text-action">Sign in</span>

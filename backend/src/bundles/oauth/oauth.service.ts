@@ -172,6 +172,8 @@ class OAuthService {
         provider: ValueOf<typeof OAuthProvider>,
         userId: number,
     ): Promise<void> {
+        await this.getAccessToken(provider, userId);
+
         const oAuthEntity = await this.oAuthRepository.find({
             userId,
             provider,
