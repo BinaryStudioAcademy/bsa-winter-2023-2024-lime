@@ -16,7 +16,10 @@ const ProfileNavigation = (): JSX.Element => {
     ];
     return (
         <div>
-            <SubNavigation items={routes} className="w-[15rem] px-0 py-4 sm:justify-start" />
+            <SubNavigation
+                items={routes}
+                className="w-[15rem] px-0 py-4 sm:justify-start"
+            />
         </div>
     );
 };
