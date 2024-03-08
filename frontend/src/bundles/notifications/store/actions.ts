@@ -1,33 +1,44 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { notificationApi } from '../notifications.js';
-import { type NotificationRequestDto } from '../types/types.js';
+import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
-const fetchNotifications = createAsyncThunk(
-    'notifications/fetchNotifications',
-    async () => {
-        return await notificationApi.fetchNotifications();
-    },
-);
+import {
+    type NotificationRequestDto,
+    type NotificationResponseDto,
+} from '../types/types.js';
+import { name } from './slice.js';
 
-const createNotification = createAsyncThunk(
-    'notifications/createNotification',
-    async (notification: NotificationRequestDto) => {
-        return await notificationApi.createNotification(notification);
-    },
-);
+const fetchNotifications = createAsyncThunk<
+    NotificationResponseDto[],
+    undefined,
+    AsyncThunkConfig
+>(`${name}/fetchNotifications`, async (_, { extra }) => {
+    const { notificationApi } = extra;
+    return await notificationApi.fetchNotifications();
+});
 
-const dismissNotification = createAsyncThunk(
-    'notifications/dismissNotification',
-    async (notificationId: string) => {
+const createNotification = createAsyncThunk<
+    NotificationResponseDto,
+    NotificationRequestDto,
+    AsyncThunkConfig
+>(`${name}/createNotification`, async (notification, { extra }) => {
+    const { notificationApi } = extra;
+    return await notificationApi.createNotification(notification);
+});
+
+const dismissNotification = createAsyncThunk<string, string, AsyncThunkConfig>(
+    `${name}/dismissNotification`,
+    async (notificationId, { extra }) => {
+        const { notificationApi } = extra;
         await notificationApi.dismissNotification(notificationId);
         return notificationId;
     },
 );
 
-const deleteNotification = createAsyncThunk(
-    'notifications/deleteNotification',
-    async (notificationId: string) => {
+const deleteNotification = createAsyncThunk<string, string, AsyncThunkConfig>(
+    `${name}/deleteNotification`,
+    async (notificationId, { extra }) => {
+        const { notificationApi } = extra;
         await notificationApi.deleteNotification(notificationId);
         return notificationId;
     },

@@ -1,1 +1,1 @@
-export { NotificationsApiPath } from '../temp-types/types.js';
+export { NotificationsApiPath } from 'shared';

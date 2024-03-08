@@ -1,40 +1,35 @@
+import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
     useCallback,
     useEffect,
     useHandleClickOutside,
-    useMemo,
     useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-import { createSelector } from '~/bundles/common/redux/selectors/selectors.js';
-import { type RootState } from '~/bundles/common/types/types.js';
-import { actions } from '~/bundles/notifications/store/notifications.js';
+import {
+    deleteNotification,
+    dismissNotification,
+    fetchNotifications,
+} from '~/bundles/notifications/store/actions.js';
 
 import { NotificationList } from './components/notification-list.js';
 import { NotificationBell } from './components/notifications-bell.js';
 
-const selectNotifications = (state: RootState): RootState['notifications'] =>
-    state.notifications;
-
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
-
-    const selectorNotifications = useMemo(
-        () =>
-            createSelector([selectNotifications], (notifications) => ({
-                notifications: notifications.notifications,
-                loading: notifications.isRefreshing,
-            })),
-        [],
+    const notifications = useAppSelector(
+        ({ notifications }) => notifications.notifications,
+    );
+    const dataStatus = useAppSelector(
+        ({ notifications }) => notifications.dataStatus,
     );
 
-    const { notifications, loading } = useAppSelector(selectorNotifications);
+    const isLoading = dataStatus === DataStatus.PENDING;
 
     useEffect(() => {
-        // void dispatch(fetchNotifications());
-        dispatch(actions.localFetchNotifications([]));
+        void dispatch(fetchNotifications());
     }, [dispatch]);
 
     const [showList, setShowList] = useState(false);
@@ -45,24 +40,16 @@ const NotificationComponent = (): JSX.Element => {
 
     const handleNotificationReadClick = useCallback(
         (id: number) => {
-            // void dispatch(dismissNotification(id.toString()));
-            void dispatch(actions.localDismissNotification(id.toString()));
-            if (notifications.length > 1) {
-                setShowList(true);
-            }
+            void dispatch(dismissNotification(id.toString()));
         },
-        [dispatch, notifications],
+        [dispatch],
     );
 
     const handleNotificationDeleteClick = useCallback(
         (id: number) => {
-            // void dispatch(deleteNotification(id.toString()));
-            void dispatch(actions.localDeleteNotification(id.toString()));
-            if (notifications.length > 1) {
-                setShowList(true);
-            }
+            void dispatch(deleteNotification(id.toString()));
         },
-        [dispatch, notifications],
+        [dispatch],
     );
 
     const notificationListReference = useRef(null);
@@ -83,7 +70,7 @@ const NotificationComponent = (): JSX.Element => {
                 onClick={handleIconClick}
                 showList={showList}
             />
-            {showList && !loading && (
+            {showList && !isLoading && (
                 <NotificationList
                     notifications={notifications}
                     onNotificationReadClick={handleNotificationReadClick}
