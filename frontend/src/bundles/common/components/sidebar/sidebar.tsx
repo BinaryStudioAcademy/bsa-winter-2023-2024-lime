@@ -48,7 +48,7 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
     useEffect(() => {
         setActiveRoute(pathname);
 
-        const transformValue = window.innerWidth <= 390 ? '-100%' : '-80%';
+        const transformValue = window.innerWidth <= 490 ? '-100%' : '-80%';
         setSidebarStyle({
             transform: isOpen
                 ? 'translateX(0)'
