@@ -70,7 +70,7 @@ const Landing = (): JSX.Element => {
     };
 
     return (
-        <main className="text-primary flex h-screen snap-y snap-mandatory flex-col gap-40 overflow-y-auto overflow-x-hidden scroll-smooth">
+        <main className="text-primary flex h-screen snap-y snap-mandatory flex-col gap-40 overflow-y-auto overflow-x-hidden">
             <section
                 className={getValidClassNames(styles.section, styles.container)}
             >
