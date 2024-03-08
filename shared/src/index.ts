@@ -79,6 +79,7 @@ export {
     workoutValidationSchema,
 } from './bundles/workouts/workouts.js';
 export { MILLISECONDS_PER_SECOND } from './constants/constants.js';
+export { ProviderName } from './enums/enums.js';
 export {
     ActivityType,
     ApiPath,

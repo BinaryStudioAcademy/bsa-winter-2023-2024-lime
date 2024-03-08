@@ -1,4 +1,5 @@
 import { type RelationMappings, Model } from 'objection';
+import { type ProviderName } from 'shared';
 
 import { UserAttributes } from '~/bundles/users/enums/enums.js';
 import { UserModel } from '~/bundles/users/users.js';
@@ -22,6 +23,7 @@ class WorkoutModel extends AbstractModel {
     public 'distance': number;
     public 'speed': number;
     public 'kilocalories': number;
+    public 'provider': ValueOf<typeof ProviderName>;
 
     public static override get tableName(): string {
         return DatabaseTableName.WORKOUTS;

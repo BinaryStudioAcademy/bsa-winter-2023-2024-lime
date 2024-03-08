@@ -1,3 +1,5 @@
+import { type ProviderName } from 'shared';
+
 import { ActivityType } from '~/common/enums/enums.js';
 import { type Entity, type ValueOf } from '~/common/types/types.js';
 
@@ -15,7 +17,7 @@ class WorkoutEntity implements Entity {
     private 'distance': number;
     private 'speed': number;
     private 'kilocalories': number;
-
+    private 'provider': ValueOf<typeof ProviderName>;
     private constructor({
         id,
         userId,
@@ -28,6 +30,7 @@ class WorkoutEntity implements Entity {
         distance,
         speed,
         kilocalories,
+        provider,
     }: {
         id: number | null;
         userId: number;
@@ -40,6 +43,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof ProviderName>;
     }) {
         this.id = id;
         this.userId = userId;
@@ -51,6 +55,7 @@ class WorkoutEntity implements Entity {
         this.speed = speed;
         this.kilocalories = kilocalories;
         this.activityId = activityId;
+        this.provider = provider;
         if (activityType === ActivityType.WALKING) {
             this.steps = steps;
         }
@@ -68,6 +73,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof ProviderName>;
     }): WorkoutEntity {
         return new WorkoutEntity({
             ...payload,
@@ -85,6 +91,7 @@ class WorkoutEntity implements Entity {
         steps?: number;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
+        provider: ValueOf<typeof ProviderName>;
     }): WorkoutEntity {
         return new WorkoutEntity({
             id: null,
@@ -103,6 +110,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof ProviderName>;
     } {
         return {
             id: this.id as number,
@@ -118,6 +126,7 @@ class WorkoutEntity implements Entity {
             distance: this.distance,
             speed: this.speed,
             kilocalories: this.kilocalories,
+            provider: this.provider,
         };
     }
 
@@ -132,6 +141,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof ProviderName>;
     } {
         return {
             userId: this.userId,
@@ -144,6 +154,7 @@ class WorkoutEntity implements Entity {
             distance: this.distance,
             speed: this.speed,
             kilocalories: this.kilocalories,
+            provider: this.provider,
         };
     }
 }

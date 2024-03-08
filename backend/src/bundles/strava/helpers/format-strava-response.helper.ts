@@ -1,3 +1,5 @@
+import { ProviderName } from 'shared';
+
 import {
     ActivityType,
     MILLISECONDS_PER_SECOND,
@@ -57,6 +59,7 @@ const formatStravaResponse = ({
         kilocalories: calories,
         workoutEndedAt: endDate,
         heartRate: heartrate ?? null,
+        provider: ProviderName.STRAVA,
     };
 };
 
