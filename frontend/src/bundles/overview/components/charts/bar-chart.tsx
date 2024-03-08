@@ -23,7 +23,6 @@ const BarChart = ({
                     className="h-full w-full"
                     height={200}
                     width={600}
-                    color="#000"
                 />
             </div>
         </div>
