@@ -18,7 +18,7 @@ const SubNavigationWorkoutsList = ({
         }
     }, [items]);
     return (
-        <div className="h-full w-full overflow-y-scroll sm:h-fit sm:max-h-72 md:h-fit lg:h-fit lg:max-h-[30rem]">
+        <div className="h-full w-full overflow-y-scroll sm:h-fit sm:max-h-40 md:max-h-72 lg:h-fit lg:max-h-[30rem]">
             <ul
                 className="flex h-full w-full flex-col overflow-x-hidden sm:gap-2 md:gap-3"
                 ref={reference}
