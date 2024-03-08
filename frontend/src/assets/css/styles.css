@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
-@import url("https://db.onlinewebfonts.com/c/0744a43ed7aac352ec78c1404c890d72?family=Gilroy-Light");
-@import url("https://db.onlinewebfonts.com/c/1064f0ad1cb65fdab43bb592ddd8aa91?family=Gilroy-Bold");
 @import url("./base-styles.css");
+@import url("./fonts.css");
 @import url("./theme.css");
 @import url("./date-picker.css");
