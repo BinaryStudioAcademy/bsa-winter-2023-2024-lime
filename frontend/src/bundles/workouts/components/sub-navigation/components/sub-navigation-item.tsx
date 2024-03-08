@@ -12,7 +12,7 @@ type SubNavigationItemWorkoutProperties = {
 const SubNavigationItemWorkout = ({
     item,
 }: SubNavigationItemWorkoutProperties): JSX.Element => {
-    const { activityType, id, workoutStartedAt, provider } = item;
+    const { activityType, id, workoutStartedAt } = item;
     const isActive =
         id.toString() === window.location.pathname.split('/').pop();
     return (
@@ -37,7 +37,7 @@ const SubNavigationItemWorkout = ({
                             </p>
                         </div>
                         <p className="text-secondary flex justify-between text-[0.8rem]">
-                            <span>{capitalizeFirstLetter(provider)}</span>
+                            <span>{capitalizeFirstLetter('strava')}</span>
                         </p>
                     </div>
                 </div>
