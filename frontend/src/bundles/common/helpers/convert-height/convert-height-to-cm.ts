@@ -11,10 +11,7 @@ const convertHeightToCentimeters = (
 
     return Number.isNaN(heightInMm)
         ? null
-        : Math.round(
-              (heightInMm / MM_TO_CM_CONVERSION_FACTOR) *
-                  MM_TO_CM_CONVERSION_FACTOR,
-          ) / MM_TO_CM_CONVERSION_FACTOR;
+        : Math.round((heightInMm / MM_TO_CM_CONVERSION_FACTOR) * MM_TO_CM_CONVERSION_FACTOR) / MM_TO_CM_CONVERSION_FACTOR;
 };
 
 export { convertHeightToCentimeters };
