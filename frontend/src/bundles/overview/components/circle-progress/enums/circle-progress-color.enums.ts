@@ -13,7 +13,7 @@ const CircularColors: Record<
     { baseCircleClass: string; progressCircleClass: string }
 > = {
     [CircularColorEnum.PRIMARY]: {
-        baseCircleClass: 'stroke-progressBase',
+        baseCircleClass: 'stroke-primary',
         progressCircleClass: 'stroke-lm-yellow-100',
     },
     [CircularColorEnum.SECONDARY]: {

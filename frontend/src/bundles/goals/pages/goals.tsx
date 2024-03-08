@@ -107,7 +107,7 @@ const Goals: React.FC = () => {
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
-        <main className="bg-primary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
+        <main className="bg-secondary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
             {isLoading ? (
                 <Loader />
             ) : (
@@ -141,7 +141,7 @@ const Goals: React.FC = () => {
                             </h2>
                             <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
                                 {goals.length === ZERO_VALUE && (
-                                    <p className="mb-5 w-full text-xl font-extrabold text-white">
+                                    <p className="mb-5 w-full text-xl font-extrabold text-primary">
                                         No goals yet
                                     </p>
                                 )}
@@ -189,9 +189,27 @@ const Goals: React.FC = () => {
                                 achievements.map((achievement) => (
                                     <AchievementCard
                                         key={achievement.id}
-                                        achievement={achievement}
+                                        achievement={{
+                                            id: 123,
+                                            name: 'Test',
+                                            activityType: ActivityType.RUNNING,
+                                            requirement: 10,
+                                            requirementMetric: 'km',
+                                            createdAt: new Date(), }
+                                        }
                                     />
                                 ))}
+                                <AchievementCard
+                                        key={'123'}
+                                        achievement={{
+                                            id: 123,
+                                            name: 'Test',
+                                            activityType: ActivityType.RUNNING,
+                                            requirement: 10,
+                                            requirementMetric: 'km',
+                                            createdAt: new Date(), }
+                                        }
+                                    />
                         </div>
                     </section>
 
