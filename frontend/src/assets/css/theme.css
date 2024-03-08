@@ -16,6 +16,7 @@
     /* BACKGROUND */
     --background-primary: rgb(255 255 255); /* White */
     --background-secondary: rgb(243 243 243); /* #F3F3F3 */
+    --background-tertiary: #f1ffca; /* lm-light-yellow */
     --background-schedule: rgb(241 255 202); /* lm-grey-500 */
 
     /* BORDER */
@@ -35,6 +36,9 @@
 
     /* STROKE */
     --stroke-progress-base-bg: rgb(178 202 13);
+  
+    /* CIRCLE PROGRESS BAR */
+    --circle-primary: #b2ca0d; /* lm-yellow-200 */
 }
 
 .dark {
@@ -54,6 +58,7 @@
     /* BACKGROUND */
     --background-primary: rgb(42 47 55); /* lm-black-100 */
     --background-secondary: rgb(28 34 39); /* lm-black-200 */
+    --background-tertiary: #383f4a; /* lm-black-500 */
     --background-schedule: rgb(56 63 74); /* lm-grey-500 */
 
     /* BORDER */
@@ -73,4 +78,8 @@
 
     /* STROKE */
     --stroke-progress-base-bg: rgb(28 34 39); /* White */
+  
+  /* CIRCLE PROGRESS BAR */
+    --circle-primary: #1c2227; /* lm-black-200 */
+
 }

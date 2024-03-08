@@ -1,6 +1,5 @@
 import { Loader } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
-import { DataStatus } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,

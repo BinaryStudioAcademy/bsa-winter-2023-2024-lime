@@ -7,6 +7,7 @@ import {
     CircularProgressColors,
     CircularProgressSizes,
 } from '~/bundles/overview/components/circle-progress/enums/enums.js';
+import { CircleSizeToFontParameters } from '~/bundles/overview/components/circle-progress/helpers/helpers.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/enums.js';
 
 type CircularProgressProperties = {
@@ -20,8 +21,9 @@ type CircularProgressProperties = {
 const classes = {
     svgBase:
         'rounded-sm fill-transparent transition-all duration-1000 ease-in-out transform w-[7.5rem]',
-    innerTextTop: 'inline-flex font-extrabold text-[2.5rem] font-gilroyBold',
-    innerTextBottom: 'inline-flex font-normal text-[1.5rem] font-gilroyLight',
+    innerTextTop: 'inline-flex font-extrabold font-extrabold',
+    innerTextBottom:
+        'inline-flex font-normal text-[1.5rem] font-accent font-light',
 };
 
 const CircleProgress = ({
@@ -31,7 +33,9 @@ const CircleProgress = ({
     color = CircularProgressColors.primary,
     goalType = GoalTypes.STANDART,
 }: CircularProgressProperties): JSX.Element => {
-    const { radius, stroke, fontSize } = CircularProgressSizes[size];
+    const { radius, stroke } = CircularProgressSizes[size];
+    const { fontSize, fontFamily, fontColor } =
+        CircleSizeToFontParameters[size];
     const { baseCircleClass, progressCircleClass } = color;
     const outerRadius = radius + stroke;
     const circumference = radius * DOUBLE_VALUE * Math.PI;
@@ -69,13 +73,15 @@ const CircleProgress = ({
                     cy={outerRadius}
                 />
             </svg>
-            <div className="text-buttonText absolute">
+            <div className="absolute flex items-baseline gap-1 text-white">
                 {goalType === GoalTypes.OVERVIEW && (
                     <>
                         <p
                             className={getValidClassNames(
                                 classes.innerTextTop,
                                 fontSize,
+                                fontFamily,
+                                fontColor,
                             )}
                         >
                             {value}
@@ -89,6 +95,8 @@ const CircleProgress = ({
                             className={getValidClassNames(
                                 classes.innerTextTop,
                                 fontSize,
+                                fontFamily,
+                                fontColor,
                             )}
                         >
                             {value}
@@ -103,6 +111,8 @@ const CircleProgress = ({
                             className={getValidClassNames(
                                 classes.innerTextTop,
                                 fontSize,
+                                fontFamily,
+                                fontColor,
                             )}
                         >
                             {value}

@@ -15,7 +15,7 @@ const WorkoutTitle = ({ workout }: Properties): JSX.Element => {
     return (
         <div className="flex items-center gap-[0.7rem]">
             <ActivityIcon
-                activity={activityType}
+                activityType={activityType}
                 size={ComponentSize.LARGE}
                 className={baseClass}
             />

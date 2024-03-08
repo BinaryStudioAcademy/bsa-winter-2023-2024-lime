@@ -1,27 +1,59 @@
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
-import { useCallback, useState } from 'react';
 
 import { Button } from '~/bundles/common/components/components.js';
 import { type IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
+import {
+    useAppDispatch,
+    useAppSelector,
+    useCallback,
+    useEffect,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
+import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
+
+import { actions } from '../store/connections.js';
 
 type Properties = {
     title: string;
     description: string;
     iconName: ValueOf<typeof IconName>;
+    provider: ValueOf<typeof OAuthProvider>;
 };
 
 const ConnectionOption = ({
     title,
     description,
     iconName,
+    provider,
 }: Properties): JSX.Element => {
+    const dispatch = useAppDispatch();
+
+    const { connections } = useAppSelector(({ connections }) => ({
+        dataStatus: connections.dataStatus,
+        connections: connections.connections,
+    }));
+
     const [isConnected, setIsConnected] = useState(false);
 
+    useEffect(() => {
+        const existingConnection = connections.find(
+            (connection) => connection.provider === provider,
+        );
+
+        setIsConnected(Boolean(existingConnection));
+    }, [connections, provider]);
+
     const handleClick = useCallback((): void => {
-        setIsConnected(!isConnected);
-    }, [isConnected]);
+        const existingConnection = connections.find(
+            (connection) => connection.provider === provider,
+        );
+
+        existingConnection
+            ? void dispatch(actions.deauthorize(provider))
+            : void dispatch(actions.authorize(provider));
+    }, [connections, dispatch, provider]);
 
     return (
         <div className={'bg-primary flex flex-col gap-5 rounded-2xl p-6'}>

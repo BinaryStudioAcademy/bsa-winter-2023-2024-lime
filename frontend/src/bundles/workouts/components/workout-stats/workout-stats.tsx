@@ -75,19 +75,25 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
                         </span>
                     </p>
 
-                    <p>
-                        <span className={styles.metrics}>{kilocalories}</span>{' '}
-                        <span className={styles.units}>
-                            {WorkoutUnit.KILOCALORIES}
-                        </span>
-                    </p>
+                    {Boolean(kilocalories) && (
+                        <p>
+                            <span className={styles.metrics}>
+                                {kilocalories}
+                            </span>{' '}
+                            <span className={styles.units}>
+                                {WorkoutUnit.KILOCALORIES}
+                            </span>
+                        </p>
+                    )}
 
-                    <p>
-                        <span className={styles.metrics}>{heartRate}</span>{' '}
-                        <span className={styles.units}>
-                            {WorkoutUnit.BEATS_PER_MINUTE}
-                        </span>
-                    </p>
+                    {Boolean(heartRate) && (
+                        <p>
+                            <span className={styles.metrics}>{heartRate}</span>{' '}
+                            <span className={styles.units}>
+                                {WorkoutUnit.BEATS_PER_MINUTE}
+                            </span>
+                        </p>
+                    )}
                 </div>
                 <div className="bg-progress-line bg-tip relative ml-[-1.875rem] mr-[5.75rem] mt-[2.5rem] h-[6.8rem] w-full bg-contain bg-no-repeat lg:w-5/6">
                     <span
