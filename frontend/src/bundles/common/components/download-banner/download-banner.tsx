@@ -40,6 +40,7 @@ const DownloadBanner = (): JSX.Element | null => {
                     event as BeforeInstallPromptEvent;
                 beforeInstallPromptEvent.preventDefault();
                 setDeferredPrompt(beforeInstallPromptEvent);
+                setBannerVisibility(true);
             }
         };
 
@@ -59,6 +60,13 @@ const DownloadBanner = (): JSX.Element | null => {
     const handleInstall = useCallback((): void => {
         if (deferredPrompt && !isAppInstalled()) {
             void deferredPrompt.prompt();
+            deferredPrompt.userChoice
+                .then((choice) => {
+                    if (choice.outcome === 'accepted') {
+                        setBannerVisibility(false);
+                    }
+                })
+                .catch(() => {});
         }
     }, [deferredPrompt]);
 
@@ -72,7 +80,7 @@ const DownloadBanner = (): JSX.Element | null => {
         }
     }, []);
 
-    if (!isBannerVisible) {
+    if (!isBannerVisible || !deferredPrompt) {
         return null;
     }
     return (

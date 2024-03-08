@@ -4,7 +4,10 @@ export {
     Metric,
 } from './bundles/achievements/achievements.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
-export { ConnectionsPath } from './bundles/connections/connections.js';
+export {
+    type ConnectionGetAllItemResponseDto,
+    ConnectionsPath,
+} from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export { type UserAvatarResponseDto } from './bundles/file/types/types.js';
 export {
@@ -22,6 +25,8 @@ export {
     notificationValidationSchema,
 } from './bundles/notifications/notifications.js';
 export {
+    type OAuthAuthorizeResponseDto,
+    type OAuthDeauthorizeResponseDto,
     type OAuthProviderParameterDto,
     type OAuthResponseDto,
     OAuthActionsPath,
@@ -79,6 +84,7 @@ export {
     ActivityType,
     ApiPath,
     AppEnvironment,
+    AppRoute,
     ContentType,
     PaginationValidationMessage,
     ServerErrorType,
