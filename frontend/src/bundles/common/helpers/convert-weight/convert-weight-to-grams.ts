@@ -15,8 +15,8 @@ const convertWeightToGrams = (
     return Number.isNaN(weightInKg)
         ? null
         : Math.round(
-            weightInKg * KG_TO_GRAMS_CONVERSION_FACTOR * ROUNDING_FACTOR,
-        ) / ROUNDING_FACTOR;
+              weightInKg * KG_TO_GRAMS_CONVERSION_FACTOR * ROUNDING_FACTOR,
+          ) / ROUNDING_FACTOR;
 };
 
 export { convertWeightToGrams };
