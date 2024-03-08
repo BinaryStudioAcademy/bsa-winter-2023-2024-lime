@@ -169,8 +169,7 @@ const Landing = (): JSX.Element => {
                 className={getValidClassNames(
                     styles.section,
                     styles.container,
-                    styles.secondSection.gradient,
-                    'relative',
+                    'flex justify-center',
                 )}
             >
                 <h1 className="font-heavybold text-center text-[2.5rem] md:text-[3.5rem]">
@@ -181,10 +180,11 @@ const Landing = (): JSX.Element => {
                     step of the way. From personalized workout plans to
                     nutrition tracking, we’ve got you covered!
                 </p>
-
                 <div
                     className={getValidClassNames(
-                        'flex flex-row justify-center gap-12 xl:justify-start',
+                        'relative flex flex-row justify-center gap-12 xl:justify-start',
+
+                        styles.secondSection.gradient,
                     )}
                 >
                     <motion.div
