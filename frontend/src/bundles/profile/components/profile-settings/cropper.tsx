@@ -17,12 +17,8 @@ import { Button } from '~/bundles/common/components/components.js';
 import { useAppDispatch } from '~/bundles/common/hooks/hooks.js';
 
 import { canvasPreview } from './canvas-preview.js';
+import { DIMENSION } from './enums/enums.js';
 import { toFile } from './helpers/helpers.js';
-
-const DIMENSION = {
-    aspectRatio: 1,
-    min: 25,
-};
 
 const Cropper = ({
     closeModal,
