@@ -1,9 +1,9 @@
 import { Bars3BottomLeftIcon } from '@heroicons/react/24/solid';
 
-import logo from '~/assets/img/logo.svg';
 import { type UserAuthResponseDto } from '~/bundles/common/types/types.js';
 
 import { AppRoute, ComponentSize } from '../../enums/enums.js';
+import { Theme } from '../../enums/theme.js';
 import { useAppSelector } from '../../hooks/hooks.js';
 import { Button, Icon, Layout, Link } from '../components.js';
 import { IconColor } from '../icon/enums/enums.js';
@@ -15,6 +15,7 @@ type HeaderProperties = {
 };
 
 const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
+    const { theme } = useAppSelector((state) => state.theme);
     const { user } = useAppSelector(({ auth }) => ({
         user: auth.user as UserAuthResponseDto,
     }));
@@ -25,8 +26,22 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
                 <div className="hidden w-full max-w-[16rem]  md:flex">
-                    <Link to={AppRoute.ROOT}>
-                        <img src={logo} alt="Logo" />
+                    <Link to={AppRoute.OVERVIEW}>
+                        {theme === Theme.DARK ? (
+                            <Icon
+                                name={'logoHeader'}
+                                color={IconColor.PRIMARY}
+                                size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
+                            />
+                        ) : (
+                            <Icon
+                                name={'logoHeaderLight'}
+                                color={IconColor.PRIMARY}
+                                size={ComponentSize.EXTRA_LARGE}
+                                className="aspect-video max-h-12"
+                            />
+                        )}
                     </Link>
                 </div>
                 <div className="mr-5 md:hidden">
@@ -40,7 +55,7 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
                     />
                 </div>
                 <div className="mr-5 md:hidden">
-                    <Link to={AppRoute.ROOT}>
+                    <Link to={AppRoute.OVERVIEW}>
                         <Icon
                             name={'logoIcon'}
                             color={IconColor.PRIMARY}

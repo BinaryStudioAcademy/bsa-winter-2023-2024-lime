@@ -14,7 +14,12 @@ type Properties = {
     className?: string;
 };
 
-const Icon = ({ name, color, size, className }: Properties): JSX.Element => {
+const Icon: React.FC<Properties> = ({
+    name,
+    color,
+    size,
+    className,
+}): JSX.Element => {
     const SvgIconComponent = IconComponent[name];
 
     return (
