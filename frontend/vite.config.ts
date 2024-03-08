@@ -44,6 +44,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     workbox: {
         navigateFallbackDenylist: [
             new RegExp('/v1/documentation/static/index.html'),
+            new RegExp('/v1/oauth/.*'),
         ],
     },
 };
