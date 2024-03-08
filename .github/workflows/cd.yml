@@ -21,7 +21,7 @@ jobs:
         runs-on: ubuntu-latest
         environment:
             name: development
-            url: http://lime.eu-north-1.elasticbeanstalk.com
+            url: https://live-in-motion-everyday.com
 
         steps:
             - name: Code Checkout
