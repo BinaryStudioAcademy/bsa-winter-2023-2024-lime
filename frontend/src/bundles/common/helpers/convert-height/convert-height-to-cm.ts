@@ -1,4 +1,4 @@
-import { MM_TO_CM_FACTOR } from './constants/constants.js';
+import { MM_TO_CM } from './constants/constants.js';
 
 const convertHeightToCentimeters = (
     height: string | number | null,
@@ -11,8 +11,7 @@ const convertHeightToCentimeters = (
 
     return Number.isNaN(heightInMm)
         ? null
-        : Math.round((heightInMm / MM_TO_CM_FACTOR) * MM_TO_CM_FACTOR) /
-            MM_TO_CM_FACTOR;
+        : Math.round((heightInMm / MM_TO_CM) * MM_TO_CM) / MM_TO_CM;
 };
 
 export { convertHeightToCentimeters };
