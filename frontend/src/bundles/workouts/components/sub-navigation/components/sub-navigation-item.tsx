@@ -30,7 +30,7 @@ const SubNavigationItemWorkout = ({
             >
                 <div className="flex w-full items-center gap-4">
                     <ActivityIcon
-                        activity={activityType}
+                        activityType={activityType}
                         size={ComponentSize.LARGE}
                         className={` ${isActive ? '' : '!bg-lm-grey-500'} !p-3`}
                     />
