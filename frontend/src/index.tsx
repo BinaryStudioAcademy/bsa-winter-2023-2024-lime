@@ -84,7 +84,7 @@ const routes = [
                                 element: <Profile />,
                             },
                             {
-                                path: AppRoute.PROFILE_CONECTIONS,
+                                path: AppRoute.PROFILE_CONNECTIONS,
                                 element: <ConnectionsPage />,
                             },
                             {

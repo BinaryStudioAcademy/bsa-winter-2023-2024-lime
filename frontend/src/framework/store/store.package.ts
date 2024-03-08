@@ -16,6 +16,8 @@ import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
+import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
+import { reducer as connectionsReducer } from '~/bundles/profile/pages/connections-page/store/connections.js';
 import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';
 import {
     subscriptionApi,
@@ -38,6 +40,7 @@ type RootReducer = {
     achievements: ReturnType<typeof achievementsReducer>;
     subscriptions: ReturnType<typeof subscriptionsReducer>;
     theme: ReturnType<typeof themeReducer>;
+    connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
 };
 
@@ -49,6 +52,7 @@ type ExtraArguments = {
     subscriptionPlansApi: typeof subscriptionPlansApi;
     subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
+    connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
 };
 
@@ -73,6 +77,7 @@ class Store {
                 achievements: achievementsReducer,
                 subscriptions: subscriptionsReducer,
                 theme: themeReducer,
+                connections: connectionsReducer,
                 workouts: workoutsReducer,
             },
             middleware: (getDefaultMiddleware) =>
@@ -93,6 +98,7 @@ class Store {
             subscriptionApi,
             subscriptionPlansApi,
             passwordResetApi,
+            connectionApi,
             workoutApi,
         };
     }
