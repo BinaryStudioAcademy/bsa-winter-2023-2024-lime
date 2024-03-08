@@ -27,6 +27,9 @@ const UserValidationMessage = {
     HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MIN_VALUE} sm.`,
     USER_NOT_FOUND: 'User not found',
     USER_WITH_REFERRAL_ID_NOT_FOUND: 'User with this referral id was not found',
+    BONUS_OPERATION_LACK_OF_FUNDS:
+        'Operation can not be finished due to lack of funds.',
+    BONUS_OPERATION_NOT_SUCCESSFUL: 'Operation was not sucessfull.',
 } as const;
 
 export { UserValidationMessage };

@@ -1,6 +1,5 @@
 export {
     UserBonusActionType,
-    UserBonusesApiPath,
     UserBonusTransactionType,
 } from './enums/enums.js';
 export {

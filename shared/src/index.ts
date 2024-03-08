@@ -64,7 +64,6 @@ export {
     type UserBonusGetAllItemResponseDto,
     type UserBonusGetAllResponseDto,
     UserBonusActionType,
-    UserBonusesApiPath,
     UserBonusTransactionType,
 } from './bundles/user-bonuses/user-bonuses.js';
 export {

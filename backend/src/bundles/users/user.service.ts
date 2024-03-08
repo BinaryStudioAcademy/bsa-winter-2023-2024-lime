@@ -6,6 +6,12 @@ import { HttpCode, HttpError } from '~/common/http/http.js';
 import { cryptService, stripeService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
+import {
+    type UserBonusCreateRequestDto,
+    type UserBonusGetAllItemResponseDto,
+    UserBonusEntity,
+    UserBonusTransactionType,
+} from '../user-bonuses/user-bonuses.js';
 import { UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthRequestDto,
@@ -81,6 +87,56 @@ class UserService implements Service {
         } catch (error) {
             throw new Error(`Error occured ${error}`);
         }
+    }
+
+    public async createUserBonusTransaction(
+        payload: UserBonusCreateRequestDto,
+    ): Promise<UserBonusGetAllItemResponseDto> {
+        const { userId, actionType, transactionType, amount } = payload;
+
+        const userToUpdate = await this.userRepository.find({ id: userId });
+        if (!userToUpdate) {
+            throw new HttpError({
+                message: UserValidationMessage.USER_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
+        const { bonusBalance } = userToUpdate.toObject();
+        const updatedBalance =
+            transactionType === UserBonusTransactionType.EXSPENSE
+                ? Number(bonusBalance) - amount
+                : Number(bonusBalance) + amount;
+
+        if (updatedBalance < 0) {
+            throw new HttpError({
+                message: UserValidationMessage.BONUS_OPERATION_LACK_OF_FUNDS,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        const userBonus = await this.userRepository.createUserBonusTransaction(
+            UserBonusEntity.initializeNew({
+                userId,
+                actionType,
+                transactionType,
+                amount,
+            }),
+        );
+
+        const updatedUser = await this.userRepository.updateUserDetails(
+            userId,
+            { bonusBalance: updatedBalance },
+        );
+
+        if (!userBonus || !updatedUser) {
+            throw new HttpError({
+                message: UserValidationMessage.BONUS_OPERATION_NOT_SUCCESSFUL,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        return userBonus;
     }
 
     public async update(

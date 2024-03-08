@@ -1,11 +1,10 @@
 import { userService } from '~/bundles/users/users.js';
 import { logger } from '~/common/logger/logger.js';
 
-import { userBonusService } from '../user-bonuses/user-bonuses.js';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 
-const authService = new AuthService(userService, userBonusService);
+const authService = new AuthService(userService);
 
 const authController = new AuthController(logger, authService);
 

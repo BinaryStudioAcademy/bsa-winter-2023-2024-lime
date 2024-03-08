@@ -6,7 +6,6 @@ import {
 import { cryptService, jwtService } from '~/common/services/services.js';
 
 import {
-    type UserBonusService,
     BonusAmount,
     UserBonusActionType,
     UserBonusTransactionType,
@@ -16,14 +15,9 @@ import { type AuthResponseDto } from './types/types.js';
 
 class AuthService {
     private userService: UserService;
-    private userBonusService: UserBonusService;
 
-    public constructor(
-        userService: UserService,
-        userBonusService: UserBonusService,
-    ) {
+    public constructor(userService: UserService) {
         this.userService = userService;
-        this.userBonusService = userBonusService;
     }
 
     private async verifyLoginCredentials(
@@ -97,14 +91,14 @@ class AuthService {
         if (isReferralCodeValid && inviterUser) {
             const { id: inviterId } = inviterUser.toObject();
 
-            await this.userBonusService.create({
+            await this.userService.createUserBonusTransaction({
                 userId: user.id,
                 actionType: UserBonusActionType.REGISTERED,
                 transactionType: UserBonusTransactionType.INCOME,
                 amount: BonusAmount[UserBonusActionType.REGISTERED],
             });
 
-            await this.userBonusService.create({
+            await this.userService.createUserBonusTransaction({
                 userId: inviterId,
                 actionType: UserBonusActionType.INVITED,
                 transactionType: UserBonusTransactionType.INCOME,

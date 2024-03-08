@@ -46,14 +46,8 @@ class UserBonusRepository implements Repository {
         });
     }
 
-    public async create(entity: UserBonusEntity): Promise<UserBonusEntity> {
-        const bonusTransaction = await this.userBonusModel
-            .query()
-            .insert(entity.toNewObject())
-            .returning('*')
-            .execute();
-
-        return UserBonusEntity.initialize(bonusTransaction);
+    public create(): ReturnType<Repository['create']> {
+        return Promise.resolve(true);
     }
 
     public update(): ReturnType<Repository['update']> {

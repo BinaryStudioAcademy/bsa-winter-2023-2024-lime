@@ -40,6 +40,8 @@ class UserModel extends AbstractModel {
 
     public 'userOAuthState': OAuthStateModel;
 
+    public 'userBonus': UserBonusModel;
+
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
     }

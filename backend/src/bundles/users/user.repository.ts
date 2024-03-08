@@ -2,6 +2,10 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type Repository } from '~/common/types/types.js';
 
+import {
+    type UserBonusEntity,
+    type UserBonusGetAllItemResponseDto,
+} from '../user-bonuses/user-bonuses.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
 class UserRepository implements Repository {
@@ -142,6 +146,7 @@ class UserRepository implements Repository {
             throw error;
         }
     }
+
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
@@ -195,6 +200,46 @@ class UserRepository implements Repository {
             throw new Error(`Error updating user details: ${error}`);
         }
     }
+
+    public async createUserBonusTransaction(
+        entity: UserBonusEntity,
+    ): Promise<UserBonusGetAllItemResponseDto | null> {
+        const { userId, actionType, transactionType, amount } =
+            entity.toNewObject();
+        const trx = await this.userModel.startTransaction();
+
+        try {
+            const user = await this.userModel.query(trx).findById(userId);
+
+            if (!user) {
+                return null;
+            }
+
+            const userBonusTransaction = await user
+                .$relatedQuery('userBonus', trx)
+                .insert({ userId, actionType, transactionType, amount })
+                .returning('*')
+                .first();
+
+            await trx.commit();
+
+            if (!userBonusTransaction) {
+                return null;
+            }
+            return {
+                id: userBonusTransaction.id,
+                userId: userBonusTransaction.userId,
+                actionType: userBonusTransaction.actionType,
+                transactionType: userBonusTransaction.transactionType,
+                amount: userBonusTransaction.amount,
+                createdAt: userBonusTransaction.createdAt,
+            };
+        } catch (error) {
+            await trx.rollback();
+            throw error;
+        }
+    }
+
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
     }

@@ -24,7 +24,7 @@ import {
     subscriptionPlansApi,
 } from '~/bundles/subscription/subscription.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
-import { userApi, userBonusApi } from '~/bundles/users/users.js';
+import { userApi } from '~/bundles/users/users.js';
 import { reducer as workoutsReducer } from '~/bundles/workouts/store/workouts.js';
 import { workoutApi } from '~/bundles/workouts/workouts.js';
 import { type Config } from '~/framework/config/config.js';
@@ -54,7 +54,6 @@ type ExtraArguments = {
     passwordResetApi: typeof passwordResetApi;
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
-    userBonusApi: typeof userBonusApi;
 };
 
 class Store {
@@ -101,7 +100,6 @@ class Store {
             passwordResetApi,
             connectionApi,
             workoutApi,
-            userBonusApi,
         };
     }
 }
