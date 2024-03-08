@@ -1,3 +1,4 @@
+import StavaButtonIcon from '~/assets/img/button-strava.svg?react';
 import CyclingIcon from '~/assets/img/icons/activities/cycling.svg?react';
 import RunningIcon from '~/assets/img/icons/activities/running.svg?react';
 import WalkingIcon from '~/assets/img/icons/activities/walking.svg?react';
@@ -48,6 +49,7 @@ const IconComponent: Record<
     feedIcon: FeedIcon,
     goalIcon: GoalIcon,
     starIcon: StarIcon,
+    stavaButtonIcon: StavaButtonIcon,
 } as const;
 
 export { IconComponent };

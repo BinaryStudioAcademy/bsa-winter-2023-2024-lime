@@ -1,7 +1,6 @@
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 
 import { Button } from '~/bundles/common/components/components.js';
-import { type IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
 import {
     useAppDispatch,
@@ -10,24 +9,18 @@ import {
     useEffect,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
-import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
 
 import { actions } from '../store/connections.js';
-
-type Properties = {
-    title: string;
-    description: string;
-    iconName: ValueOf<typeof IconName>;
-    provider: ValueOf<typeof OAuthProvider>;
-};
+import { type ConnectionOption as TConnectionOption } from '../types/types.js';
 
 const ConnectionOption = ({
     title,
     description,
-    iconName,
+    logoIcon,
     provider,
-}: Properties): JSX.Element => {
+    buttonIcon,
+    brandColor = '',
+}: TConnectionOption): JSX.Element => {
     const dispatch = useAppDispatch();
 
     const { connections } = useAppSelector(({ connections }) => ({
@@ -63,7 +56,7 @@ const ConnectionOption = ({
                 }
             >
                 <div className={'flex w-full gap-4'}>
-                    <Icon name={iconName} className={'w-10 sm:w-14 md:w-14'} />
+                    <Icon name={logoIcon} className={'w-10 sm:w-14 md:w-14'} />
                     <div className={'flex flex-col gap-1'}>
                         <div className={'flex items-center gap-2'}>
                             <h2
@@ -114,13 +107,29 @@ const ConnectionOption = ({
                         </p>
                     </div>
                 </div>
-                <Button
-                    variant={isConnected ? 'secondary' : 'primary'}
-                    size={'md'}
-                    label={isConnected ? 'Disconnect' : 'Connect'}
-                    className={'w-full max-w-full sm:h-10 xl:w-[15rem]'}
-                    onClick={handleClick}
-                />
+
+                <div className="flex w-full justify-end">
+                    {buttonIcon ? (
+                        <Button
+                            variant={'primary'}
+                            size={'md'}
+                            leftIcon={
+                                !isConnected && <Icon name={buttonIcon} />
+                            }
+                            label={isConnected ? 'Disconnect' : ''}
+                            className={`w-full max-w-full text-white sm:h-12 xl:w-[15rem] bg-[${brandColor}] hover:bg-[${brandColor}]`}
+                            onClick={handleClick}
+                        />
+                    ) : (
+                        <Button
+                            variant={isConnected ? 'secondary' : 'primary'}
+                            size={'md'}
+                            label={isConnected ? 'Disconnect' : 'Connect'}
+                            className={'w-full max-w-full sm:h-12 xl:w-[15rem]'}
+                            onClick={handleClick}
+                        />
+                    )}
+                </div>
             </div>
             <p className="text-lm-grey-100 text-sm xl:text-base">
                 {description}

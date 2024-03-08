@@ -20,6 +20,7 @@ const IconName = {
     feedIcon: 'feedIcon',
     goalIcon: 'goalIcon',
     starIcon: 'starIcon',
+    stavaButtonIcon: 'stavaButtonIcon',
 } as const;
 
 export { IconName };
