@@ -12,5 +12,5 @@ build
 .env
 .idea
 
-#dev-dist
+# PWA
 dev-dist

@@ -7,8 +7,7 @@ import {
     Loader,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserAuthRequestDto,
