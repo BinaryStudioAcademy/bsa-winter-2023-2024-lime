@@ -4,6 +4,7 @@ const { PASSWORD, FULLNAME, NICKNAME, WEIGHT, HEIGHT } = UserValidationRule;
 
 const UserValidationMessage = {
     REQUIRED: 'Please fill out this field',
+    INVALID: 'Please enter a valid value',
     INVALID_EMAIL: 'Please enter a valid email',
     INVALID_PASSWORD: `Password must have from ${PASSWORD.MIN_LENGTH} to ${PASSWORD.MAX_LENGTH} characters`,
     PASSWORD_MISMATCH: 'Passwords must be identical. Please try again',

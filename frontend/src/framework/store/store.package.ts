@@ -6,10 +6,14 @@ import {
 import { configureStore } from '@reduxjs/toolkit';
 
 import { reducer as appReducer } from '~/app/store/app.js';
+import { achievementsApi } from '~/bundles/achievements/achievements.js';
+import { reducer as achievementsReducer } from '~/bundles/achievements/store/achievements.js';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
+import { goalsApi } from '~/bundles/goals/goals.js';
+import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';
@@ -30,6 +34,8 @@ type RootReducer = {
     auth: ReturnType<typeof authReducer>;
     passwordReset: ReturnType<typeof passwordResetReducer>;
     users: ReturnType<typeof usersReducer>;
+    goals: ReturnType<typeof goalsReducer>;
+    achievements: ReturnType<typeof achievementsReducer>;
     subscriptions: ReturnType<typeof subscriptionsReducer>;
     theme: ReturnType<typeof themeReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
@@ -38,6 +44,8 @@ type RootReducer = {
 type ExtraArguments = {
     authApi: typeof authApi;
     userApi: typeof userApi;
+    goalsApi: typeof goalsApi;
+    achievementsApi: typeof achievementsApi;
     subscriptionPlansApi: typeof subscriptionPlansApi;
     subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
@@ -61,6 +69,8 @@ class Store {
                 auth: authReducer,
                 passwordReset: passwordResetReducer,
                 users: usersReducer,
+                goals: goalsReducer,
+                achievements: achievementsReducer,
                 subscriptions: subscriptionsReducer,
                 theme: themeReducer,
                 workouts: workoutsReducer,
@@ -78,6 +88,8 @@ class Store {
         return {
             authApi,
             userApi,
+            goalsApi,
+            achievementsApi,
             subscriptionApi,
             subscriptionPlansApi,
             passwordResetApi,
