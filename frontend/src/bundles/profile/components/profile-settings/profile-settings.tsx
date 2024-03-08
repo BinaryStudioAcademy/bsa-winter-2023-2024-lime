@@ -122,9 +122,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         if (avatar) {
             return avatar;
         }
-        if (user) {
-            return user.avatarUrl;
-        }
+        return user ? user.avatarUrl : null;
     }, [avatar, user]);
 
     return (
