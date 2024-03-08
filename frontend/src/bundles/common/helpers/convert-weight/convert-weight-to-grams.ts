@@ -1,7 +1,4 @@
-import {
-    KG_TO_GRAMS_CONVERSION_FACTOR,
-    ROUNDING_FACTOR,
-} from './constants/constants.js';
+import { KG_TO_GRAMS_FACTOR, ROUNDING_FACTOR } from './constants/constants.js';
 
 const convertWeightToGrams = (
     weight: string | number | null,
@@ -14,9 +11,8 @@ const convertWeightToGrams = (
 
     return Number.isNaN(weightInKg)
         ? null
-        : Math.round(
-              weightInKg * KG_TO_GRAMS_CONVERSION_FACTOR * ROUNDING_FACTOR,
-          ) / ROUNDING_FACTOR;
+        : Math.round(weightInKg * KG_TO_GRAMS_FACTOR * ROUNDING_FACTOR) /
+              ROUNDING_FACTOR;
 };
 
 export { convertWeightToGrams };

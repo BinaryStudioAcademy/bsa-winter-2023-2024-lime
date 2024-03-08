@@ -1,3 +1,3 @@
-const MM_TO_CM_CONVERSION_FACTOR = 10;
+const MM_TO_CM_FACTOR = 10;
 
-export { MM_TO_CM_CONVERSION_FACTOR };
+export { MM_TO_CM_FACTOR };
