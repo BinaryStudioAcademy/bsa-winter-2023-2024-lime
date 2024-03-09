@@ -1,13 +1,7 @@
-import {
-    Loader,
-    SubNavigation,
-} from '~/bundles/common/components/components.js';
+import { Loader } from '~/bundles/common/components/components.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import {
-    capitalizeFirstLetter,
-    configureString,
-} from '~/bundles/common/helpers/helpers.js';
+import { configureString } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -17,6 +11,8 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { WorkoutItem } from '~/bundles/workouts/components/components.js';
 import { actions } from '~/bundles/workouts/store/workouts.js';
+
+import { SubNavigationWorkout } from '../../components/sub-navigation/sub-navigation-workout.js';
 
 const Workout: React.FC = () => {
     const navigate = useNavigate();
@@ -45,15 +41,6 @@ const Workout: React.FC = () => {
     }, [id, navigate, workouts]);
 
     const subNavigationTitle = 'Workout tracking';
-    const subNavigationItems = workouts.map((workout) => {
-        const { id, activityType } = workout;
-
-        return {
-            id: String(id),
-            label: capitalizeFirstLetter(activityType),
-            to: String(id),
-        };
-    });
 
     const isLoading = dataStatus === DataStatus.PENDING;
 
@@ -63,10 +50,7 @@ const Workout: React.FC = () => {
                 <Loader isOverflow />
             ) : (
                 <div className="flex w-full">
-                    <SubNavigation
-                        title={subNavigationTitle}
-                        items={subNavigationItems}
-                    />
+                    <SubNavigationWorkout title={subNavigationTitle} />
                     <div className="border-lm-black-400 h-full border"></div>
 
                     <div className="w-full max-w-[50rem] px-[1.5rem]">

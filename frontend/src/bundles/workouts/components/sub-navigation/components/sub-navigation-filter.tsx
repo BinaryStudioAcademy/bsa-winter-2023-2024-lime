@@ -1,4 +1,4 @@
-import { type WorkoutResponseDto, AppRoute } from 'shared';
+import { type WorkoutResponseDto, AppRoute, configureString } from 'shared';
 
 import { Select } from '~/bundles/common/components/components.js';
 import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
@@ -48,8 +48,11 @@ const SubNavigationFilter = ({
 
     const goToFirstWorkout = useCallback(
         (data: WorkoutResponseDto[]) => {
-            const firstWorkout = data[0];
-            firstWorkout && navigate(AppRoute.WORKOUT + '/' + firstWorkout.id);
+            const firstWorkout = data[0]?.id;
+            const redirectPath = configureString(AppRoute.WORKOUT_$ID, {
+                id: String(firstWorkout),
+            });
+            firstWorkout && navigate(redirectPath);
         },
         [navigate],
     );

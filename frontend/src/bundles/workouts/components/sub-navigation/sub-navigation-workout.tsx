@@ -1,6 +1,4 @@
-import { type WorkoutResponseDto } from 'shared';
-
-import { useState } from '~/bundles/common/hooks/hooks.js';
+import { useAppSelector, useState } from '~/bundles/common/hooks/hooks.js';
 import {
     mapWorkoutActivitySelect,
     mapWorkoutYearSelect,
@@ -10,16 +8,14 @@ import { SubNavigationFilter } from './components/sub-navigation-filter.js';
 import { SubNavigationWorkoutsList } from './components/sub-navigation-list.js';
 
 type SubNavigationProperties = {
-    items: WorkoutResponseDto[];
     title?: string;
-    className?: string;
 };
 
 const SubNavigationWorkout = ({
-    items,
     title,
 }: SubNavigationProperties): JSX.Element => {
-    const [localItems, setItems] = useState(items);
+    const workouts = useAppSelector(({ workouts }) => workouts.workouts);
+    const [localItems, setItems] = useState({ ...workouts });
     const sortedItems = localItems.toSorted((a, b) => {
         return b.workoutStartedAt.getTime() - a.workoutStartedAt.getTime();
     });

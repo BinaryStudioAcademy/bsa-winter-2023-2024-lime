@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { type WorkoutResponseDto } from 'shared';
 
 import { ActivityIcon } from '~/bundles/common/components/components.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
+import {
+    capitalizeFirstLetter,
+    configureString,
+} from '~/bundles/common/helpers/helpers.js';
 
 type SubNavigationItemWorkoutProperties = {
     item: WorkoutResponseDto;
@@ -19,6 +22,10 @@ const SubNavigationItemWorkout = ({
 
     const reference = useRef(null as unknown as HTMLLIElement);
 
+    const redirectPath = configureString(AppRoute.WORKOUT_$ID, {
+        id: String(id),
+    });
+
     useEffect(() => {
         if (isActive && reference.current) {
             reference.current.scrollIntoView({
@@ -30,7 +37,7 @@ const SubNavigationItemWorkout = ({
     return (
         <li ref={reference}>
             <Link
-                to={`/workout/${id}`}
+                to={redirectPath}
                 className="flex w-5/6 min-w-60 max-w-72 items-center justify-between gap-4"
             >
                 <div className="flex w-full items-center gap-4">
