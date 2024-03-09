@@ -15,7 +15,7 @@ const SubNavigationWorkout = ({
     title,
 }: SubNavigationProperties): JSX.Element => {
     const workouts = useAppSelector(({ workouts }) => workouts.workouts);
-    const [localItems, setItems] = useState([ ...workouts ]);
+    const [localItems, setItems] = useState([...workouts]);
     const sortedItems = localItems.toSorted((a, b) => {
         return b.workoutStartedAt.getTime() - a.workoutStartedAt.getTime();
     });
