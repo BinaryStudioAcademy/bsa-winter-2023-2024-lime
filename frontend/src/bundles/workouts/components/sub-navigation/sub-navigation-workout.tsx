@@ -1,6 +1,10 @@
 import { type WorkoutResponseDto } from 'shared';
 
 import { useState } from '~/bundles/common/hooks/hooks.js';
+import {
+    mapWorkoutActivitySelect,
+    mapWorkoutYearSelect,
+} from '~/bundles/workouts/helpers/helpers.js';
 
 import { SubNavigationFilter } from './components/sub-navigation-filter.js';
 import { SubNavigationWorkoutsList } from './components/sub-navigation-list.js';
@@ -16,7 +20,7 @@ const SubNavigationWorkout = ({
     title,
 }: SubNavigationProperties): JSX.Element => {
     const [localItems, setItems] = useState(items);
-    const sortedItems = localItems.sort((a, b) => {
+    const sortedItems = localItems.toSorted((a, b) => {
         return b.workoutStartedAt.getTime() - a.workoutStartedAt.getTime();
     });
 
@@ -31,7 +35,12 @@ const SubNavigationWorkout = ({
                     {title}
                 </h1>
             )}
-            <SubNavigationFilter items={sortedItems} setItems={setItems} />
+            <SubNavigationFilter
+                items={sortedItems}
+                setItems={setItems}
+                mapWorkoutActivitySelect={mapWorkoutActivitySelect}
+                mapWorkoutYearSelect={mapWorkoutYearSelect}
+            />
             <SubNavigationWorkoutsList items={sortedItems} />
         </div>
     );

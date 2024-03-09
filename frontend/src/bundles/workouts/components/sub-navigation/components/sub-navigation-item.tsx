@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { type WorkoutResponseDto } from 'shared';
 
@@ -15,8 +16,19 @@ const SubNavigationItemWorkout = ({
     const { activityType, id, workoutStartedAt } = item;
     const isActive =
         id.toString() === window.location.pathname.split('/').pop();
+
+    const reference = useRef(null as unknown as HTMLLIElement);
+
+    useEffect(() => {
+        if (isActive && reference.current) {
+            reference.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            });
+        }
+    }, [isActive]);
     return (
-        <li>
+        <li ref={reference}>
             <Link
                 to={`/workout/${id}`}
                 className="flex w-5/6 min-w-60 max-w-72 items-center justify-between gap-4"
