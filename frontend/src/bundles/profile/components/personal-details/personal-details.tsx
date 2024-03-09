@@ -45,7 +45,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         messageFriend(id);
     }, [messageFriend, id]);
     return (
-        <div className="bg-lm-black-100 flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl">
+        <div className="bg-lm-black-100 flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full">
             <Avatar size="lg" email={email} avatarUrl={avatarUrl} />
 
             <h2 className="text-primary mt-5 text-3xl font-bold">{fullName}</h2>
@@ -86,12 +86,12 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
             </div>
             <p className="text-primary mt-6">Preferences:</p>
 
-            <div className="mt-auto flex h-14 w-full items-center justify-between">
-                <div className="inline-flex w-2/3 items-center">
+            <div className=" mt-auto flex h-14 w-full items-center justify-between">
+                <div className="inline-flex w-2/3 items-center sm:w-3/5">
                     <Button
                         onClick={handleToggleFriend}
                         label={isFriend ? 'Remove friend' : 'Add Friend'}
-                        className="sm:h-6 sm:px-1 sm:py-1 sm:text-[0.7rem] lg:h-11 lg:px-4 lg:py-2"
+                        className=" sm:h-10 sm:px-1 sm:py-1 sm:text-[0.7rem] lg:h-11 lg:px-4 lg:py-2"
                         size={ComponentSize.LARGE}
                         variant={isFriend ? 'secondary' : 'primary'}
                     />
@@ -99,7 +99,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
 
                 <button
                     onClick={handleSendMessage}
-                    className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-11 lg:w-11"
+                    className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11"
                     disabled={!isFriend}
                 >
                     <Icon

@@ -492,11 +492,14 @@ class WorkoutController extends BaseController {
         options: ApiHandlerOptions<{ params: { userId: number } }>,
     ): Promise<ApiHandlerResponse> {
         const { userId } = options.params;
-        const userWorkouts = await this.workoutService.findAll({ userId });
+
+        const result =
+            await this.workoutService.findAllByUserIdAndCurrentMonth(userId);
+
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: userWorkouts,
+            payload: result,
         };
     }
     /**
