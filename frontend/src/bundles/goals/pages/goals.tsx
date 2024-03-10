@@ -12,7 +12,10 @@ import { CreateGoalForm } from '~/bundles/common/components/create-goal-form/cre
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
-import { convertToMeters } from '~/bundles/common/helpers/helpers.js';
+import {
+    convertMetersToKilometers,
+    convertToMeters,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -115,8 +118,16 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
-                                value={lastGoal?.progress as number}
-                                target={lastGoal?.progress as number}
+                                value={
+                                    convertMetersToKilometers(
+                                        lastGoal?.distance as number,
+                                    ) ?? (lastGoal?.duration as number)
+                                }
+                                target={
+                                    convertMetersToKilometers(
+                                        lastGoal?.distance as number,
+                                    ) || (lastGoal?.duration as number)
+                                }
                                 title={
                                     lastGoal
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
@@ -151,6 +162,8 @@ const Goals: React.FC = () => {
                                         ({
                                             id,
                                             activityType,
+                                            distance,
+                                            duration,
                                             frequency,
                                             frequencyType,
                                             progress,
@@ -161,6 +174,8 @@ const Goals: React.FC = () => {
                                                 frequency={frequency}
                                                 frequencyType={frequencyType}
                                                 progress={progress}
+                                                distance={distance}
+                                                duration={duration}
                                             />
                                         ),
                                     )}

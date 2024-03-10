@@ -1,6 +1,9 @@
 import { ActivityIcon } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
-import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
+import {
+    capitalizeFirstLetter,
+    convertMetersToKilometers,
+} from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 import { CircleProgress } from '~/bundles/overview/components/components.js';
@@ -12,6 +15,8 @@ type Properties = {
     frequency: number;
     progress: number;
     frequencyType: ValueOf<typeof FrequencyType>;
+    distance?: number | null;
+    duration?: number | null;
 };
 
 const PLURAL = 's';
@@ -22,6 +27,8 @@ const GoalCard: React.FC<Properties> = ({
     frequency,
     progress,
     frequencyType,
+    distance,
+    duration,
 }): JSX.Element => {
     return (
         <div className="bg-secondary flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:p-5 lg:pl-8 xl:w-96">
@@ -32,7 +39,9 @@ const GoalCard: React.FC<Properties> = ({
                 />
                 <div className="flex flex-col">
                     <p className="text-primary text-sm font-extrabold leading-5 md:text-base">
-                        {capitalizeFirstLetter(activityType)}
+                        {capitalizeFirstLetter(activityType)}{' '}
+                        {distance && convertMetersToKilometers(distance)} km
+                        {!distance && duration}
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
                         {frequency} {frequencyType}
