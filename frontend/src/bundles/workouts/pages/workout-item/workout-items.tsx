@@ -1,3 +1,5 @@
+import { Link } from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { useAppSelector, useParams } from '~/bundles/common/hooks/hooks.js';
 import {
     WorkoutRoute,
@@ -29,6 +31,12 @@ const WorkoutItem = (): JSX.Element => {
             <WorkoutTitle workout={currentWorkout} />
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
+            <Link
+                to={AppRoute.STRAVA}
+                className="text-strava-brand mt-[0.5rem] text-right"
+            >
+                View on Strava
+            </Link>
         </>
     );
 };

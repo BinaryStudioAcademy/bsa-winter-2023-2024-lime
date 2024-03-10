@@ -69,7 +69,7 @@ const Workout: React.FC = () => {
                     />
                     <div className="border-lm-black-400 h-full border"></div>
 
-                    <div className="w-full max-w-[50rem] px-[1.5rem]">
+                    <div className="flex w-full max-w-[50rem] flex-col px-[1.5rem]">
                         {workouts.length > 0 ? (
                             <WorkoutItem />
                         ) : (
