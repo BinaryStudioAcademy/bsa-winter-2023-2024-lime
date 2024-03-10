@@ -115,6 +115,18 @@ class GoalController extends BaseController {
         });
 
         this.addRoute({
+            path: GoalsApiPath.USER_ID,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.findByUserId(
+                    options as ApiHandlerOptions<{
+                        params: { userId: number };
+                    }>,
+                ),
+        });
+
+        this.addRoute({
             path: GoalsApiPath.ROOT,
             method: 'POST',
             validation: {
@@ -252,6 +264,19 @@ class GoalController extends BaseController {
         };
     }
 
+    private async findByUserId(
+        options: ApiHandlerOptions<{ params: { userId: number } }>,
+    ): Promise<ApiHandlerResponse> {
+        const { userId } = options.params;
+
+        const result = await this.goalService.findAll({ userId });
+
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: result,
+        };
+    }
     /**
      * @swagger
      * /api/v1/goals/:

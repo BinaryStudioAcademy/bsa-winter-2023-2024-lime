@@ -17,6 +17,16 @@ const getGoals = createAsyncThunk<
     return await goalsApi.getGoals();
 });
 
+const getGoalsByUserId = createAsyncThunk<
+    GoalResponseDto[],
+    number,
+    AsyncThunkConfig
+>(`${sliceName}/get-by-user-id`, async (id, { extra }) => {
+    const { goalsApi } = extra;
+    const idString = String(id);
+    return goalsApi.getGoalsByUserId(idString);
+});
+
 const createGoal = createAsyncThunk<
     GoalResponseDto,
     GoalRequestDto,
@@ -26,4 +36,4 @@ const createGoal = createAsyncThunk<
     return await goalsApi.createGoal(createGoalPayload);
 });
 
-export { createGoal, getGoals };
+export { createGoal, getGoals, getGoalsByUserId };

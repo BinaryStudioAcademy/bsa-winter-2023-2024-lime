@@ -23,6 +23,7 @@ import {
     useParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
 import {
     PersonalDetails,
     ProfileWorkoutItem,
@@ -50,6 +51,10 @@ const PublicProfile: React.FC = () => {
         void dispatch(workoutsActions.getLastWorkoutsByUserId(NumericId));
     }, [dispatch, NumericId]);
 
+    useEffect(() => {
+        void dispatch(goalsActions.getGoalsByUserId(NumericId));
+    }, [dispatch, NumericId]);
+
     const { dataStatus: dataStatusUser, user } = useAppSelector(
         ({ users }) => ({
             dataStatus: users.dataStatus,
@@ -71,10 +76,18 @@ const PublicProfile: React.FC = () => {
         }),
     );
 
+    const { dataStatus: dataStatusGoals, goals } = useAppSelector(
+        ({ goals }) => ({
+            dataStatus: goals.dataStatus,
+            goals: goals.goals,
+        }),
+    );
+
     const isLoading =
         dataStatusUser === DataStatus.PENDING ||
         dataStatusAchievements === DataStatus.PENDING ||
-        dataStatusWorkouts === DataStatus.PENDING;
+        dataStatusWorkouts === DataStatus.PENDING ||
+        dataStatusGoals === DataStatus.PENDING;
 
     const totalDuration = calculateTotal(workouts, 'duration');
     const totalDistance = calculateTotal(workouts, 'distance');
@@ -95,18 +108,19 @@ const PublicProfile: React.FC = () => {
 
     if (user) {
         return (
-            <div className="flex h-full w-full sm:w-full sm:flex-col md:flex-row-reverse">
-                <div className="sm:mb-8">
+            <main className="flex h-full w-full sm:w-full sm:flex-col md:flex-row-reverse">
+                <div className="h-full sm:mb-8">
                     <PersonalDetails
                         id={NumericId}
                         user={user}
+                        goals={goals}
                         isFriend={isFriend}
                         toggleFriend={handleToggleFriend}
                         messageFriend={handleMessageFriend}
                     />
                 </div>
                 <div className="w-full">
-                    <section className="text-primary w-full px-[1.5rem]">
+                    <section className="text-primary w-full px-[1.5rem] pb-8">
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                             Last Workout data
                         </h2>
@@ -183,7 +197,7 @@ const PublicProfile: React.FC = () => {
                         </div>
                     </section>
                 </div>
-            </div>
+            </main>
         );
     }
 };
