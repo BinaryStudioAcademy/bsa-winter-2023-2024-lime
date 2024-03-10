@@ -2,6 +2,7 @@ import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 
 import { Button } from '~/bundles/common/components/components.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -9,9 +10,10 @@ import {
     useEffect,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-
-import { actions } from '../store/connections.js';
-import { type ConnectionOption as TConnectionOption } from '../types/types.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
+import { OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
+import { actions } from '~/bundles/profile/pages/connections-page/store/connections.js';
+import { type ConnectionOption as TConnectionOption } from '~/bundles/profile/pages/connections-page/types/types.js';
 
 const ConnectionOption = ({
     title,
@@ -19,7 +21,6 @@ const ConnectionOption = ({
     logoIcon,
     provider,
     buttonIcon,
-    brandColor = '',
 }: TConnectionOption): JSX.Element => {
     const dispatch = useAppDispatch();
 
@@ -47,6 +48,14 @@ const ConnectionOption = ({
             ? void dispatch(actions.deauthorize(provider))
             : void dispatch(actions.authorize(provider));
     }, [connections, dispatch, provider]);
+
+    const providerBrandToStyles: Record<
+        ValueOf<typeof OAuthProvider>,
+        string
+    > = {
+        [OAuthProvider.STRAVA]: 'bg-strava-brand hover:bg-strava-brand',
+        [OAuthProvider.GOOGLE_FIT]: '',
+    };
 
     return (
         <div className={'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6'}>
@@ -117,7 +126,10 @@ const ConnectionOption = ({
                                 !isConnected && <Icon name={buttonIcon} />
                             }
                             label={isConnected ? 'Disconnect' : ''}
-                            className={`w-full max-w-full text-white sm:h-12 xl:w-[15rem] bg-[${brandColor}] hover:bg-[${brandColor}]`}
+                            className={getValidClassNames(
+                                'w-full max-w-full text-white sm:h-12 xl:w-[15rem]',
+                                providerBrandToStyles[provider],
+                            )}
                             onClick={handleClick}
                         />
                     ) : (

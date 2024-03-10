@@ -9,7 +9,6 @@ type ConnectionOption = {
     logoIcon: ValueOf<typeof IconName>;
     provider: ValueOf<typeof OAuthProvider>;
     buttonIcon?: ValueOf<typeof IconName> | null;
-    brandColor?: string | null;
 };
 
 export { type ConnectionOption };

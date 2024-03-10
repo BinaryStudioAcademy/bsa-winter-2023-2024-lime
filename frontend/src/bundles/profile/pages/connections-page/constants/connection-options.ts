@@ -11,7 +11,6 @@ const connectionOptionsData: ConnectionOption[] = [
         logoIcon: IconName.stravaIcon,
         provider: OAuthProvider.STRAVA,
         buttonIcon: 'stavaButtonIcon',
-        brandColor: '#fc4c02',
     },
     {
         title: 'Google Fit',

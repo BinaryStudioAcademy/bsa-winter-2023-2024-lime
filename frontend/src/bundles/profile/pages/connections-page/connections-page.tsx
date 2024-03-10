@@ -36,7 +36,6 @@ const ConnectionsPage = (): JSX.Element => {
                         logoIcon={option.logoIcon}
                         provider={option.provider}
                         buttonIcon={option.buttonIcon ?? null}
-                        brandColor={option.brandColor ?? null}
                     />
                 ))
             )}
