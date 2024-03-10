@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { ActivityType } from '../../../enums/enums.js';
+import { OAuthProvider } from '../../oauth/oauth.js';
 
 type WorkoutsRequestValidationDto = {
     activityType: z.ZodNativeEnum<typeof ActivityType>;
@@ -12,6 +13,7 @@ type WorkoutsRequestValidationDto = {
     distance: z.ZodNumber;
     speed: z.ZodNumber;
     kilocalories: z.ZodNumber;
+    provider: z.ZodNativeEnum<typeof OAuthProvider>;
 };
 
 const workout = z.object<WorkoutsRequestValidationDto>({
@@ -24,6 +26,7 @@ const workout = z.object<WorkoutsRequestValidationDto>({
     distance: z.number().nonnegative(),
     speed: z.number().nonnegative(),
     kilocalories: z.number().nonnegative(),
+    provider: z.nativeEnum(OAuthProvider),
 });
 
 export { workout };

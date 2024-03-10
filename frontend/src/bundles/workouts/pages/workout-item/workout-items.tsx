@@ -6,6 +6,7 @@ import {
     WorkoutStats,
     WorkoutTitle,
 } from '~/bundles/workouts/components/components.js';
+import { OAuthProvider } from '~/bundles/workouts/enums/enums.js';
 
 const WorkoutItem = (): JSX.Element => {
     const { id } = useParams();
@@ -31,12 +32,14 @@ const WorkoutItem = (): JSX.Element => {
             <WorkoutTitle workout={currentWorkout} />
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
-            <Link
-                to={AppRoute.STRAVA}
-                className="text-strava-brand mt-[0.5rem] text-right"
-            >
-                View on Strava
-            </Link>
+            {currentWorkout.provider === OAuthProvider.STRAVA && (
+                <Link
+                    to={AppRoute.STRAVA}
+                    className="text-strava-brand mt-[0.5rem] text-right"
+                >
+                    View on Strava
+                </Link>
+            )}
         </>
     );
 };
