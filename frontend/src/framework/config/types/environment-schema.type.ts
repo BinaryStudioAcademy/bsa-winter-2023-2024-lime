@@ -8,6 +8,9 @@ type EnvironmentSchema = {
     API: {
         ORIGIN_URL: string;
     };
+    STRIPE: {
+        PUBLIC_KEY: string;
+    };
 };
 
 export { type EnvironmentSchema };

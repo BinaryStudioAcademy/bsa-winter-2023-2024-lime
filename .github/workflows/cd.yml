@@ -21,7 +21,7 @@ jobs:
         runs-on: ubuntu-latest
         environment:
             name: development
-            url: http://lime.eu-north-1.elasticbeanstalk.com
+            url: https://live-in-motion-everyday.com
 
         steps:
             - name: Code Checkout
@@ -45,4 +45,6 @@ jobs:
                   application_name: ${{ env.EBS_APP_NAME }}
                   environment_name: ${{ env.ENVIRONMENT }}
                   version_label: ${{ github.sha }}
+                  use_existing_version_if_available: true
                   deployment_package: ./build.zip
+                  wait_for_environment_recovery: 300

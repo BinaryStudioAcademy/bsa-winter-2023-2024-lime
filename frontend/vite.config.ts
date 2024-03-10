@@ -6,7 +6,11 @@ import { type VitePWAOptions, VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
-    registerType: 'prompt',
+    devOptions: {
+        enabled: true,
+    },
+    registerType: 'autoUpdate',
+    outDir: 'build',
     includeAssets: ['apple-touch-icon.png', 'masked-icon.svg'],
     manifest: {
         name: 'LIME',
@@ -36,10 +40,11 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
                 purpose: 'any maskable',
             },
         ],
-        display: 'standalone',
-        scope: '/',
-        start_url: '/',
-        orientation: 'portrait',
+    },
+    workbox: {
+        navigateFallbackDenylist: [
+            new RegExp('/v1/documentation/static/index.html'),
+        ],
     },
 };
 

@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const ButtonColors = {
     TEXT: 'var(--button-text)',
@@ -17,6 +17,9 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
+            'lm-cyan': '#05CFCF',
+            'lm-light-blue': '#056ECF',
+            'lm-light-yellow': '#f1ffca',
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -50,6 +53,7 @@ export default {
         fontSize: {
             xs: '0.75rem',
             sm: '0.875rem',
+            prebase: '0.9375rem',
             base: '1rem',
             md: '1.125rem',
             xl: '1.25rem',
@@ -58,6 +62,7 @@ export default {
             '4xl': '2.625rem',
         },
         fontWeight: {
+            light: '300',
             normal: '400',
             semibold: '500',
             bold: '600',
@@ -84,9 +89,23 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'fade-in': 'fade-in 500ms ease-in',
+            },
+            keyframes: {
+                'fade-in': {
+                    '0%': {
+                        transform: 'scale(0)',
+                        opacity: '0',
+                    },
+                    '100%': {
+                        transform: 'scale(1)',
+                        opacity: '1',
+                    },
+                },
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+                accent: ['Lato', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
@@ -97,6 +116,8 @@ export default {
                 'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
+                'wave-grey': 'url("~/assets/img/wave-grey.svg")',
+                'progress-line': 'url("~/assets/img/progress-line.svg")',
             },
             borderRadius: {
                 '30': '1.9rem',
@@ -104,9 +125,29 @@ export default {
             },
             width: {
                 '30': '7.5625rem',
+                '50': '12.5',
+                '83': '5.1875',
+                '115': '115px',
+                '120': '120px',
+                '150': '9.375rem',
+                '874': '54.625',
             },
             height: {
                 '30': '7.5625rem',
+                '37': '2.3125rem',
+                '38': '2.375rem',
+                '54': '3.375rem;'
+            },
+            spacing: {
+                '13': '3.25',
+                '18': '4.875',
+                '60': '3.75rem',
+            },
+            minHeight: {
+                '90': 'calc(100vh - 5.5rem)',
+            },
+            maxHeight: {
+                '90': 'calc(100vh - 5.5rem)',
             },
             textColor: {
                 primary: 'var(--text-primary)',
@@ -120,6 +161,7 @@ export default {
             backgroundColor: {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
+                tertiary: 'var(--background-tertiary)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
@@ -128,6 +170,9 @@ export default {
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
+            },
+            stroke: {
+                primary: 'var(--circle-primary)',
             },
         },
     },

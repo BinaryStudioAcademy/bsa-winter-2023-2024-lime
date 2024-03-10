@@ -9,6 +9,7 @@ import {
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
+    ApiHandlerResponseType,
     BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
@@ -43,7 +44,7 @@ class PasswordResetController extends BaseController {
         });
         this.addRoute({
             path: PasswordResetApiPath.RESET_PASSWORD,
-            method: 'POST',
+            method: 'PUT',
             validation: {
                 body: passwordResetValidationSchema,
             },
@@ -100,6 +101,7 @@ class PasswordResetController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.passwordResetService.forgotPassword(
                 options.body,
@@ -157,6 +159,7 @@ class PasswordResetController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.passwordResetService.resetPassword(
                 options.body,

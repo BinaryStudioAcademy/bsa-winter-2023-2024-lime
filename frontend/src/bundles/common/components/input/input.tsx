@@ -13,7 +13,10 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
+import { ErrorMessageWithHint } from './components/error-message-with-hint.js';
+
 type Properties<T extends FieldValues> = {
+    className?: string;
     control: Control<T, null>;
     errors: FieldErrors<T>;
     label: string;
@@ -26,6 +29,7 @@ type Properties<T extends FieldValues> = {
 };
 
 const Input = <T extends FieldValues>({
+    className = '',
     control,
     errors,
     label,
@@ -52,7 +56,7 @@ const Input = <T extends FieldValues>({
     };
 
     return (
-        <label className="flex h-20 w-full flex-col text-sm">
+        <label className={`${className} flex h-20 flex-col text-sm text-white`}>
             <span className="mb-[0.5rem] font-medium">
                 {label} {required && <span className="text-lm-red">*</span>}
             </span>
@@ -82,9 +86,7 @@ const Input = <T extends FieldValues>({
                 )}
             </div>
             {hasError && (
-                <span className="text-lm-red bg-primary dark:text-lm-red rounded-lg px-3 text-sm dark:rounded-lg dark:bg-transparent dark:font-normal">
-                    {error as string}
-                </span>
+                <ErrorMessageWithHint errorMessage={error as string} />
             )}
         </label>
     );

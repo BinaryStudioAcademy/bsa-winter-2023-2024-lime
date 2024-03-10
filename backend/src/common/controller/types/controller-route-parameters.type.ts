@@ -10,6 +10,8 @@ type ControllerRouteParameters = {
     isProtected?: boolean;
     validation?: {
         body?: ValidationSchema;
+        query?: ValidationSchema;
+        params?: ValidationSchema;
     };
 };
 

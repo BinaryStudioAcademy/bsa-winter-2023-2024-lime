@@ -13,7 +13,6 @@ import {
     useEffect,
     useLocation,
     useNavigate,
-    useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
@@ -38,8 +37,9 @@ const Auth: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
 
-    const { dataStatus } = useAppSelector(({ auth }) => ({
+    const { dataStatus, user } = useAppSelector(({ auth }) => ({
         dataStatus: auth.dataStatus,
+        user: auth.user,
     }));
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
@@ -51,8 +51,6 @@ const Auth: React.FC = () => {
     const isLoading = dataStatus === DataStatus.PENDING;
 
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
-
-    const intervalReference = useRef(0);
 
     const handleSignInSubmit = useCallback(
         (payload: UserAuthRequestDto): void => {
@@ -84,30 +82,22 @@ const Auth: React.FC = () => {
 
     const handleCloseModal = useCallback((): void => {
         void setIsOpen(false);
-        void setIsPasswordForgot(false);
-        clearTimeout(intervalReference.current);
-    }, []);
+
+        if (isPasswordForgot) {
+            void setIsPasswordForgot(false);
+        }
+    }, [isPasswordForgot]);
 
     useEffect(() => {
-        if (dataStatus === DataStatus.FULFILLED) {
-            navigate(AppRoute.ROOT);
+        if (user) {
+            navigate(AppRoute.OVERVIEW);
         }
-    }, [dataStatus, navigate]);
+    }, [navigate, user]);
 
     useEffect(() => {
         if (resetPasswordStatus === DataStatus.FULFILLED) {
             setIsPasswordForgot(true);
-            const intervalId = window.setTimeout(() => {
-                setIsPasswordForgot(false);
-                setIsOpen(false);
-            }, 5000);
-
-            intervalReference.current = intervalId;
         }
-        return () => {
-            setIsPasswordForgot(false);
-            clearTimeout(intervalReference.current);
-        };
     }, [navigate, resetPasswordStatus]);
 
     const getScreen = (screen: string): React.ReactNode => {
@@ -135,9 +125,9 @@ const Auth: React.FC = () => {
     };
 
     const classes = {
-        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] lg:flex-none lg:w-[45rem] bg-primary',
-        form: 'justify-between text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem]',
-        main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
+        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-primary lg:flex-none lg:w-[45rem]',
+        form: 'justify-between text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem] lg:justify-center lg:pt-0 lg:pb-0',
+        main: 'bg-auth overflow-y-auto flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
         logoContainer:
             'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
     };
@@ -164,7 +154,7 @@ const Auth: React.FC = () => {
                     />
                 )}
             </Modal>
-            <ThemeSwitcher />
+            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };

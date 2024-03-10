@@ -1,13 +1,13 @@
 import {
     Button,
     ButtonVariant,
+    Icon,
     Input,
     Link,
     Loader,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
     type UserAuthRequestDto,
@@ -43,21 +43,21 @@ const SignInForm: React.FC<Properties> = ({
     return (
         <>
             <div>
-                <h1 className="text-primary mb-6 text-left text-[1.875rem] font-bold">
-                    Hi! Login to your Account
+                <h1 className="text-primary mb-6 text-left text-[1.8rem] font-bold">
+                    Hi! Sign in to your Account
                 </h1>
                 <div className="flex flex-col gap-4">
                     <Button
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="G"
+                        rightIcon={<Icon name="googleLogoIcon" />}
                     />
                     <Button
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
-                        rightIcon="f"
+                        rightIcon={<Icon name="facebookIcon" />}
                     />
                 </div>
 
@@ -101,7 +101,7 @@ const SignInForm: React.FC<Properties> = ({
                     </div>
 
                     <Button
-                        label={isLoading ? '' : 'Log In'}
+                        label={isLoading ? '' : 'Sign In'}
                         leftIcon={
                             isLoading && <Loader color={IconColor.SECONDARY} />
                         }
@@ -112,10 +112,10 @@ const SignInForm: React.FC<Properties> = ({
                     />
                 </form>
             </div>
-            <p className="text-center text-sm">
-                No account? Go to{' '}
+            <p className="mt-3 text-center text-sm lg:absolute lg:bottom-60 lg:left-1/2 lg:-translate-x-1/2 lg:transform">
+                No Account? Go to{' '}
                 <Link to={AppRoute.SIGN_UP}>
-                    <span className="text-action">Create an account</span>
+                    <span className="text-action">Create an Account</span>
                 </Link>
             </p>
         </>

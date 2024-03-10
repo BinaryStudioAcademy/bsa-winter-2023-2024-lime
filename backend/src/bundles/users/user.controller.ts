@@ -1,32 +1,19 @@
 import { type UserService } from '~/bundles/users/user.service.js';
-import { type UserAuthResponseDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthResponseDto,
+    type UserUpdateProfileRequestDto,
+} from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
-    BaseController,
+    ApiHandlerResponseType,
 } from '~/common/controller/controller.js';
+import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { HttpCode } from '~/common/http/http.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import { UsersApiPath } from './enums/enums.js';
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     Error:
- *       type: object
- *       properties:
- *         errorType:
- *           type: string
- *           enum:
- *              - COMMON
- *              - VALIDATION
- *         message:
- *           type: string
- *
- */
 
 /**
  * @swagger
@@ -68,6 +55,7 @@ import { UsersApiPath } from './enums/enums.js';
  *            enum:
  *              - male
  *              - female
+ *              - prefer not to say
  */
 class UserController extends BaseController {
     private userService: UserService;
@@ -95,6 +83,19 @@ class UserController extends BaseController {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: UsersApiPath.UPDATE_USER,
+            method: 'PATCH',
+            isProtected: true,
+            handler: (options) =>
+                this.updateUser(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        body: UserUpdateProfileRequestDto;
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -117,7 +118,7 @@ class UserController extends BaseController {
      *                   items:
      *                     type: array
      *                     items:
-     *                       $ref: '#/components/schemas/User/'
+     *                       $ref: '#/components/schemas/User'
      *        401:
      *          description: Failed operation
      *          content:
@@ -128,6 +129,7 @@ class UserController extends BaseController {
      */
     private async findAll(): Promise<ApiHandlerResponse> {
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.userService.findAll(),
         };
@@ -138,7 +140,7 @@ class UserController extends BaseController {
      * /api/v1/users/current:
      *    get:
      *      tags:
-     *       - Current user
+     *       - Users
      *      description: Returns current user
      *      security:
      *        - bearerAuth: []
@@ -163,9 +165,95 @@ class UserController extends BaseController {
         const { user } = options;
 
         return {
+            type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: user,
         };
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/update:
+     *   patch:
+     *     tags:
+     *       - Users
+     *     description: This endpoint updates a user
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *                fullName:
+     *                  type: string
+     *                  nullable: true
+     *                username:
+     *                  type: string
+     *                  nullable: true
+     *                dateOfBirth:
+     *                  type: string
+     *                  format: DD/MM/YYYY
+     *                  nullable: true
+     *                weight:
+     *                  type: number
+     *                  nullable: true
+     *                height:
+     *                  type: number
+     *                  nullable: true
+     *                gender:
+     *                  type: string
+     *                  nullable: true
+     *                  enum:
+     *                    - male
+     *                    - female
+     *                    - prefer not to say
+     *     responses:
+     *       200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *       400:
+     *         description: Bad Request
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     *       404:
+     *         description: Not found a user
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
+    private async updateUser(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            body: UserUpdateProfileRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user, body } = options;
+        const { id } = user;
+        try {
+            const updatedUser = await this.userService.updateUserProfile(
+                id,
+                body,
+            );
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.OK,
+                payload: updatedUser,
+            };
+        } catch (error) {
+            throw new HttpError({
+                message: `Something went wrong ${error}`,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
     }
 }
 

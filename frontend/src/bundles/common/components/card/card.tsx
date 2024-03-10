@@ -8,7 +8,7 @@ type Properties = {
 
 const Card: React.FC<Properties> = ({ title, imageSrc, name, data, chip }) => {
     return (
-        <div className="schedule-card bg-lm-black-100 w-full rounded-lg border p-4 ">
+        <div className="schedule-card bg-lm-black-100 w-full rounded-lg p-4 ">
             {title && (
                 <div className="text-md mb-4 font-semibold leading-3 text-white">
                     {title}
