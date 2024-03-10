@@ -3,6 +3,7 @@ const IconName = {
     logoIcon: 'logoIcon',
     notFoundIcon: 'notFoundIcon',
     stravaIcon: 'stravaIcon',
+    poweredByStravaIcon: 'poweredByStravaIcon',
     googleFitIcon: 'googleFitIcon',
     googleLogoIcon: 'googleLogoIcon',
     goalsIcon: 'goalsIcon',

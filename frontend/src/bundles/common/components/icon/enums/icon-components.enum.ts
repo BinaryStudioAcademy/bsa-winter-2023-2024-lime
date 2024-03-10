@@ -20,6 +20,7 @@ import StravaIcon from '~/assets/img/icons/strava-icon.svg?react';
 import WorkoutIcon from '~/assets/img/icons/workout-icon.svg?react';
 import LogoHeader from '~/assets/img/logo-header.svg?react';
 import LogoHeaderLight from '~/assets/img/logo-header-light.svg?react';
+import PoweredByStravaIcon from '~/assets/img/powered-by-strava.svg?react';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type IconName } from './enums.js';
@@ -34,6 +35,7 @@ const IconComponent: Record<
     goalsIcon: GoalsIcon,
     workoutIcon: WorkoutIcon,
     stravaIcon: StravaIcon,
+    poweredByStravaIcon: PoweredByStravaIcon,
     googleFitIcon: GoogleFitIcon,
     caloriesIcon: CaloriesIcon,
     stepsIcon: StepsIcon,

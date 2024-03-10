@@ -113,6 +113,10 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                             onClick={handleLogout}
                         />
                     </div>
+
+                    <div className="flex items-center justify-center px-6 py-4">
+                        <Icon name={IconName.poweredByStravaIcon} />
+                    </div>
                 </div>
             </div>
         </div>
