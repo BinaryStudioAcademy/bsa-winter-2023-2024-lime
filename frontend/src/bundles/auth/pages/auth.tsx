@@ -2,6 +2,7 @@ import authLogo from '~/assets/img/auth-logo.svg';
 import {
     ForgotPasswordForm,
     Modal,
+    Navigate,
     ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
@@ -89,12 +90,6 @@ const Auth: React.FC = () => {
     }, [isPasswordForgot]);
 
     useEffect(() => {
-        if (user) {
-            navigate(AppRoute.OVERVIEW);
-        }
-    }, [navigate, user]);
-
-    useEffect(() => {
         if (resetPasswordStatus === DataStatus.FULFILLED) {
             setIsPasswordForgot(true);
         }
@@ -131,6 +126,10 @@ const Auth: React.FC = () => {
         logoContainer:
             'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
     };
+
+    if (user) {
+        return <Navigate to={AppRoute.OVERVIEW} />;
+    }
 
     return (
         <main className={getValidClassNames(classes.main)}>

@@ -9,7 +9,7 @@ import {
     ButtonVariant,
     Icon,
     Link,
-    Loader,
+    Navigate,
     ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import {
@@ -24,7 +24,6 @@ import {
     useAppDispatch,
     useAppSelector,
     useCallback,
-    useEffect,
 } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
@@ -39,25 +38,14 @@ import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
 const Landing = (): JSX.Element => {
     const { theme } = useAppSelector((state) => state.theme);
-    const { user, isRefreshing } = useAppSelector(({ auth }) => ({
+    const { user } = useAppSelector(({ auth }) => ({
         user: auth.user,
-        isRefreshing: auth.isRefreshing,
     }));
     const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        if (user) {
-            dispatch(appActions.navigate(AppRoute.OVERVIEW));
-        }
-    }, [dispatch, user]);
 
     const signUpHandler = useCallback((): void => {
         dispatch(appActions.navigate(AppRoute.SIGN_UP));
     }, [dispatch]);
-
-    if (isRefreshing) {
-        return <Loader isOverflow />;
-    }
 
     const styles = {
         section: 'flex flex-col min-h-screen shrink-0 snap-start snap-always',
@@ -71,6 +59,10 @@ const Landing = (): JSX.Element => {
                 'after:absolute after:bottom-0 after:left-0 after:-translate-x-1/4 after:translate-y-1/3 after:size-[22rem] after:z-[-1] after:rounded-full after:bg-gradient-to-b after:from-[#E6E345] after:to-[#A1EE7D] after:blur-[140px]',
         },
     };
+
+    if (user) {
+        return <Navigate to={AppRoute.OVERVIEW} />;
+    }
 
     return (
         <main className="text-primary flex h-screen snap-y snap-mandatory flex-col gap-40 overflow-y-auto overflow-x-hidden scroll-smooth">
