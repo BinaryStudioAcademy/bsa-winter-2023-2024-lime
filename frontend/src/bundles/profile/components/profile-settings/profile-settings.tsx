@@ -1,3 +1,5 @@
+import ReactRouterPrompt from 'react-router-prompt';
+
 import {
     Avatar,
     Button,
@@ -5,6 +7,7 @@ import {
     DatePicker,
     Input,
     Loader,
+    Modal,
     Radio,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
@@ -39,7 +42,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         user: auth.user,
     }));
 
-    const { control, errors, reset, setValue, handleSubmit } =
+    const { control, errors, reset, setValue, handleSubmit, isDirty } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
@@ -78,9 +81,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     username: (data.username || '').trim(),
                 };
                 onSubmit(payload);
+                reset({}, { keepValues: true });
             })(event_);
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, reset],
     );
 
     const handleReset = useCallback((): void => {
@@ -222,6 +226,40 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         />
                     </li>
                 </ul>
+
+                <ReactRouterPrompt when={isDirty}>
+                    {({ isActive, onConfirm, onCancel }) => (
+                        <Modal
+                            isOpen={isActive}
+                            title={
+                                'Do you want to save changes before leaving?'
+                            }
+                            onClose={onCancel}
+                        >
+                            <div className={'flex gap-4'}>
+                                <Button
+                                    label={isLoading ? '' : 'Save'}
+                                    leftIcon={
+                                        isLoading && (
+                                            <Loader
+                                                color={IconColor.SECONDARY}
+                                            />
+                                        )
+                                    }
+                                    type="submit"
+                                    variant={ButtonVariant.PRIMARY}
+                                    size={ComponentSize.MEDIUM}
+                                />
+                                <Button
+                                    label="Discard changes"
+                                    variant={ButtonVariant.SECONDARY}
+                                    size={ComponentSize.MEDIUM}
+                                    onClick={onConfirm}
+                                />
+                            </div>
+                        </Modal>
+                    )}
+                </ReactRouterPrompt>
             </form>
         </div>
     );

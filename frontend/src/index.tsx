@@ -1,6 +1,5 @@
 import '~/assets/css/styles.css';
 
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from '~/app/app.js';
@@ -112,11 +111,9 @@ const routes = [
 ];
 
 createRoot(document.querySelector('#root') as HTMLElement).render(
-    <StrictMode>
-        <StoreProvider store={store.instance}>
-            <RouterProvider routes={routes} />
-            <NotificationContainer />
-            <DownloadBanner />
-        </StoreProvider>
-    </StrictMode>,
+    <StoreProvider store={store.instance}>
+        <RouterProvider routes={routes} />
+        <NotificationContainer />
+        <DownloadBanner />
+    </StoreProvider>,
 );
