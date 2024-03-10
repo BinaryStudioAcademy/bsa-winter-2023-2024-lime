@@ -40,6 +40,8 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
             scope: [
                 `${GOOGLE_FIT_API_URL}${READ_SCOPE}`,
                 `${GOOGLE_FIT_API_URL}${WRITE_SCOPE}`,
+                'https://www.googleapis.com/auth/fitness.heart_rate.read',
+                'https://www.googleapis.com/auth/fitness.location.read'
             ],
             state: JSON.stringify({ userId, uuid }),
         });

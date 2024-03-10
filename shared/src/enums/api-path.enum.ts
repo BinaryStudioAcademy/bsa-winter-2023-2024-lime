@@ -9,6 +9,7 @@ const ApiPath = {
     OAUTH: '/oauth',
     ACHIEVEMENTS: '/achievements',
     STRAVA: '/strava',
+    GOOGLE_FIT: '/google-fit',
 } as const;
 
 export { ApiPath };
