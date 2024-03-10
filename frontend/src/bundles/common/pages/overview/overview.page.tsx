@@ -57,17 +57,17 @@ const goalsData = [
     },
 ];
 
-const Home: React.FC = () => {
+const Overview: React.FC = () => {
     return (
         <div className="ml-auto mr-auto max-w-[1136px] xl:flex xl:gap-8">
-            <div className="xl:basis-[70%]">
+            <div className="xl:basis-[68%]">
                 <GoalWidget
                     value={4}
                     target={10}
                     goalType={GoalTypes.OVERVIEW}
                     className="mb-6"
                 />
-                <ul className="mb-6 flex gap-4">
+                <ul className="mb-6 flex flex-col gap-4 min-[600px]:flex-row md:flex-col min-[840px]:flex-row">
                     <li className="flex-1">
                         <ActivityWidget
                             label="Workout"
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
                 <ChartGoalProgress />
                 <div className="mt-5">Achievements</div>
             </div>
-            <div className="xl:basis-[30%]">
+            <div className="xl:basis-[32%]">
                 <InfoSection
                     title="My Schedule"
                     viewAllLink={AppRoute.SCHEDULE}
@@ -150,4 +150,4 @@ const Home: React.FC = () => {
     );
 };
 
-export { Home };
+export { Overview };
