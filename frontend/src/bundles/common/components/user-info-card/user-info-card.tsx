@@ -6,13 +6,13 @@ import {
     Button,
     ButtonVariant,
 } from '~/bundles/common/components/components.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
+import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 
 type Properties = {
     name: string;
     image: string;
     isActive?: boolean;
-    onClick: () => void;
     achievements?: AchievementsGetAllResponseDto[];
 };
 
@@ -21,8 +21,13 @@ const UserInfoCard: React.FC<Properties> = ({
     image,
     isActive = true,
     achievements = [],
-    onClick,
 }) => {
+    const navigate = useNavigate();
+
+    const onViewAllClick = useCallback((): void => {
+        void navigate(AppRoute.GOALS);
+    }, [navigate]);
+
     return (
         <div className="bg-primary flex h-screen w-[22.375rem] flex-col gap-11 p-5">
             <div className="flex flex-col items-center justify-center gap-2">
@@ -58,7 +63,7 @@ const UserInfoCard: React.FC<Properties> = ({
                         size={ComponentSize.SMALL}
                         variant={ButtonVariant.TERTIARY}
                         rightIcon={<ChevronRightIcon width="18" />}
-                        onClick={onClick}
+                        onClick={onViewAllClick}
                     />
                 </div>
             </div>
