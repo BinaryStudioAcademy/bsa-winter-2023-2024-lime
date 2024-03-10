@@ -114,7 +114,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         />
                     </div>
 
-                    <div className="flex items-center justify-center px-6 py-4">
+                    <div className="flex w-[10rem] items-center justify-center px-6 py-4">
                         <Icon name={IconName.poweredByStravaIcon} />
                     </div>
                 </div>
