@@ -4,7 +4,7 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
-import { getLastWorkoutsByUserId,getWorkouts } from './actions.js';
+import { getLastWorkoutsByUserId, getWorkouts } from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;

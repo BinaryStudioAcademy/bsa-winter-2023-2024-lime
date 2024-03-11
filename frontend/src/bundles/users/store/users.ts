@@ -1,4 +1,4 @@
-import { getById,loadAll } from './actions.js';
+import { getById, loadAll } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
