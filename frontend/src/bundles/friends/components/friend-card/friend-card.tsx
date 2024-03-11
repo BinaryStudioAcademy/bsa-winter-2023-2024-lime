@@ -71,7 +71,7 @@ const FriendCard = ({
                                 label={'Unfollow'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
-                                variant='secondary'
+                                variant="secondary"
                             />
                         ) : (
                             <Button
@@ -79,7 +79,7 @@ const FriendCard = ({
                                 label={'Follow'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
-                                variant='primary'
+                                variant="primary"
                             />
                         )}
                     </div>
