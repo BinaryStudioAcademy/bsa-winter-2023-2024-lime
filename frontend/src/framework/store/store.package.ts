@@ -29,7 +29,10 @@ import { reducer as workoutsReducer } from '~/bundles/workouts/store/workouts.js
 import { workoutApi } from '~/bundles/workouts/workouts.js';
 import { type Config } from '~/framework/config/config.js';
 
-import { errorMiddleware } from './middlewares/error-middleware.js';
+import {
+    chatSocketMiddleware,
+    errorMiddleware,
+} from './middlewares/middlewares.js';
 
 type RootReducer = {
     app: ReturnType<typeof appReducer>;
@@ -85,7 +88,9 @@ class Store {
                     thunk: {
                         extraArgument: this.extraArguments,
                     },
-                }).prepend(errorMiddleware),
+                })
+                    .prepend(errorMiddleware)
+                    .concat(chatSocketMiddleware), // eslint-disable-line unicorn/prefer-spread
         });
     }
 
