@@ -21,27 +21,27 @@ const SubscriptionCheckout = (): JSX.Element => {
         locale: 'en',
         clientSecret,
         appearance: {
-          theme: theme === Theme.DARK ? 'night' : 'flat',
-          variables: {
-            colorPrimary: '#E0FE10',
-          },
-          rules:
-            theme === Theme.LIGHT
-              ? {
-                  '.Input': {
-                    backgroundColor: 'white',
-                  },
-                  '.Select': {
-                    backgroundColor: 'white',
-                  },
-                  '.Tab': {
-                    boxShadow:
-                      '0px 1px 1px rgba(5, 6, 7, 0.1), 0px 3px 6px rgba(18, 42, 66, 0.12)',
-                  },
-                }
-              : {},
+            theme: theme === Theme.DARK ? 'night' : 'flat',
+            variables: {
+                colorPrimary: '#E0FE10',
+            },
+            rules:
+                theme === Theme.LIGHT
+                    ? {
+                          '.Input': {
+                              backgroundColor: 'white',
+                          },
+                          '.Select': {
+                              backgroundColor: 'white',
+                          },
+                          '.Tab': {
+                              boxShadow:
+                                  '0px 1px 1px rgba(5, 6, 7, 0.1), 0px 3px 6px rgba(18, 42, 66, 0.12)',
+                          },
+                      }
+                    : {},
         },
-      };
+    };
 
     return (
         <section className="bg-secondary m-auto w-full max-w-[80rem] rounded-xl p-6">
