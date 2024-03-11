@@ -46,7 +46,7 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(dismissNotification.fulfilled, (state, action) => {
             state.notifications = state.notifications.map((notification) => {
-                if (notification.id.toString() === action.payload) {
+                if (notification.id === action.payload) {
                     return {
                         ...notification,
                         isRead: true,
@@ -64,7 +64,7 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(deleteNotification.fulfilled, (state, action) => {
             state.notifications = state.notifications.filter(
-                (notification) => notification.id.toString() !== action.payload,
+                (notification) => notification.id !== action.payload,
             );
             state.dataStatus = DataStatus.FULFILLED;
         });

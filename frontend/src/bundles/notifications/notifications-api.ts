@@ -52,10 +52,9 @@ class NotificationsApi extends BaseHttpApi {
 
     public async dismissNotification(notificationId: string): Promise<void> {
         await this.load(
-            this.getFullEndpoint(
-                `${NotificationsApiPath.DISMISS.replace(':notificationId', notificationId)}`,
-                {},
-            ),
+            this.getFullEndpoint(NotificationsApiPath.DISMISS, {
+                notificationId,
+            }),
             {
                 method: 'PATCH',
                 contentType: 'application/json',
@@ -67,10 +66,9 @@ class NotificationsApi extends BaseHttpApi {
 
     public async deleteNotification(notificationId: string): Promise<void> {
         await this.load(
-            this.getFullEndpoint(
-                `${NotificationsApiPath.DELETE.replace(':notificationId', notificationId)}`,
-                {},
-            ),
+            this.getFullEndpoint(NotificationsApiPath.DELETE, {
+                notificationId,
+            }),
             {
                 method: 'DELETE',
                 contentType: 'application/json',

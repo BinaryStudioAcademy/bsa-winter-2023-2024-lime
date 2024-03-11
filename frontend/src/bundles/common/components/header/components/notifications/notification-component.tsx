@@ -37,14 +37,14 @@ const NotificationComponent = (): JSX.Element => {
 
     const handleNotificationReadClick = useCallback(
         (id: number) => {
-            void dispatch(dismissNotification(id.toString()));
+            void dispatch(dismissNotification(id));
         },
         [dispatch],
     );
 
     const handleNotificationDeleteClick = useCallback(
         (id: number) => {
-            void dispatch(deleteNotification(id.toString()));
+            void dispatch(deleteNotification(id));
         },
         [dispatch],
     );
