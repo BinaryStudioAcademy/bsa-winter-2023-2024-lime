@@ -160,7 +160,7 @@ const PublicProfile: React.FC = () => {
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                             Achievements
                         </h2>
-                        <div className="flex w-full flex-wrap gap-4">
+                        <div className="flex w-full flex-wrap gap-4 sm:flex-col lg:flex-row">
                             {achievements &&
                             achievements.length > ZERO_VALUE ? (
                                 achievements.map((achievement) => (
