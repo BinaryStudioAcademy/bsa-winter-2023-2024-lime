@@ -3,6 +3,8 @@ const AppRoute = {
     HELP: '/help',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
+    OAUTH: '/oauth',
+    OAUTH_$TOKEN: '/oauth/:token',
     PASSWORD_RESET: '/reset-password/:resetToken',
     OVERVIEW: '/overview',
     GOALS: '/goals',

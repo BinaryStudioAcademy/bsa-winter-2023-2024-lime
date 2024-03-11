@@ -9,6 +9,7 @@ import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserGetAllResponseDto,
+    type UserOAuthRequestDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
 import { type UserDetailsModel } from './user-details.model.js';
@@ -46,6 +47,40 @@ class UserService implements Service {
                 email,
                 passwordHash: hash,
                 stripeCustomerId,
+            }),
+        );
+
+        return user.toObject() as UserAuthResponseDto;
+    }
+
+    public async findOrCreateOAuthUser(
+        payload: UserOAuthRequestDto,
+    ): Promise<UserAuthResponseDto> {
+        const { email, fullName, avatarUrl } = payload;
+
+        const userByEmail = await this.userRepository.find({
+            email,
+        });
+
+        if (userByEmail) {
+            const user = userByEmail.toObject();
+            const updatedUser = (await this.userRepository.updateUserProfile(
+                user.id,
+                {
+                    fullName,
+                    avatarUrl,
+                },
+            )) as UserEntity;
+            return updatedUser.toObject() as UserAuthResponseDto;
+        }
+
+        const { stripeCustomerId } = await stripeService.createCustomer(email);
+        const user = await this.userRepository.create(
+            UserEntity.initializeNew({
+                email,
+                stripeCustomerId,
+                fullName,
+                avatarUrl,
             }),
         );
 

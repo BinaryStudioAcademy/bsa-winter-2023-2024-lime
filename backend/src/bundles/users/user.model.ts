@@ -22,7 +22,7 @@ import { UserDetailsModel } from './user-details.model.js';
 class UserModel extends AbstractModel {
     public 'email': string;
 
-    public 'passwordHash': string;
+    public 'passwordHash': string | null;
 
     public 'stripeCustomerId': string;
 

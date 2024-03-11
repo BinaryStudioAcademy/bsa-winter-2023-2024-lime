@@ -20,12 +20,14 @@ type Properties = {
     onSubmit: (payload: UserAuthRequestDto) => void;
     onModalOpen: () => void;
     isLoading: boolean;
+    handleOAuth: () => void;
 };
 
 const SignInForm: React.FC<Properties> = ({
     onSubmit,
     onModalOpen,
     isLoading,
+    handleOAuth,
 }) => {
     const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
         defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
@@ -52,13 +54,14 @@ const SignInForm: React.FC<Properties> = ({
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
                         rightIcon={<Icon name="googleLogoIcon" />}
+                        onClick={handleOAuth}
                     />
-                    <Button
+                    {/* <Button
                         size={ComponentSize.MEDIUM}
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
                         rightIcon={<Icon name="facebookIcon" />}
-                    />
+                    /> */}
                 </div>
 
                 <p className="text-secondary mb-6 mt-10 text-center text-xs">

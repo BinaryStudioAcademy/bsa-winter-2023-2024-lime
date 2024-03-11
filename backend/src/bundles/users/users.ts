@@ -13,6 +13,7 @@ export { userController, userService };
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserOAuthRequestDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
 export { UserEntity } from './user.entity.js';

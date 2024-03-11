@@ -23,12 +23,17 @@ class StravaOAuthStrategy implements OAuthStrategy {
     }
 
     public getAuthorizeRedirectUrl(oAuthStateEntity: OAuthStateEntity): URL {
-        const { userId, uuid } = oAuthStateEntity.toObject();
+        const { userId, uuid, type } = oAuthStateEntity.toObject();
 
         const redirectUri = new URL(
             `${this.config.ENV.APP.API_BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.STRAVA}${OAuthActionsPath.EXCHANGE_TOKEN}`,
         );
-        redirectUri.searchParams.set('userId', userId.toString());
+        if (!userId) {
+            throw new HttpError({
+                message: ErrorMessage.INVALID_PARAMS,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
 
         const url = new URL(StravaPath.AUTHORIZE);
 
@@ -38,7 +43,7 @@ class StravaOAuthStrategy implements OAuthStrategy {
             redirect_uri: redirectUri.toString(),
             approval_prompt: 'force',
             scope: 'read,activity:read,activity:read_all,activity:write',
-            state: uuid,
+            state: JSON.stringify({ userId, uuid, type }),
         });
 
         url.search = searchParameters.toString();
@@ -53,7 +58,7 @@ class StravaOAuthStrategy implements OAuthStrategy {
     public async exchangeAuthCode(
         payload: OAuthExchangeAuthCodeDto,
     ): Promise<OAuthEntity> {
-        const { code, scope, userId } = payload;
+        const { code, scope, userId, type } = payload;
 
         const url = new URL(StravaPath.TOKEN);
 
@@ -94,13 +99,14 @@ class StravaOAuthStrategy implements OAuthStrategy {
             refreshToken: refresh_token,
             scope,
             provider: OAuthProvider.STRAVA,
+            type,
         });
     }
 
     public async exchangeRefreshToken(
         oAuthEntity: OAuthEntity,
     ): Promise<OAuthEntity> {
-        const { userId, refreshToken, scope } = oAuthEntity.toObject();
+        const { userId, refreshToken, scope, type } = oAuthEntity.toObject();
 
         const url = new URL(StravaPath.REFRESH_TOKEN);
 
@@ -139,6 +145,7 @@ class StravaOAuthStrategy implements OAuthStrategy {
             refreshToken: refresh_token,
             scope,
             provider: OAuthProvider.STRAVA,
+            type,
         });
     }
 

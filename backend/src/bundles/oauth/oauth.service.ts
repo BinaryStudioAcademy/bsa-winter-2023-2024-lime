@@ -1,6 +1,9 @@
 import crypto from 'node:crypto';
 
+import { jwtService } from '~/common/services/services.js';
+
 import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
+import { OAuthType } from './enums/enums.js';
 import {
     type OAuthEntity,
     type OAuthExchangeAuthCodeDto,
@@ -54,19 +57,24 @@ class OAuthService {
 
     public async getAuthorizeRedirectUrl(
         provider: ValueOf<typeof OAuthProvider>,
-        userId: number,
+        type: ValueOf<typeof OAuthType>,
+        userId: number | null,
     ): Promise<URL> {
-        const oAuthStateEntity = await this.createOAuthState(userId);
+        const oAuthStateEntity = await this.createOAuthState(type, userId);
         const strategy = this.getStrategy(provider);
 
         return strategy.getAuthorizeRedirectUrl(oAuthStateEntity);
     }
 
-    private async createOAuthState(userId: number): Promise<OAuthStateEntity> {
+    private async createOAuthState(
+        type: ValueOf<typeof OAuthType>,
+        userId: number | null,
+    ): Promise<OAuthStateEntity> {
         const uuid = crypto.randomUUID();
         const oAuthStateEntity = OAuthStateEntity.initializeNew({
             userId,
             uuid,
+            type,
         });
 
         return await this.oAuthStateRepository.create(oAuthStateEntity);
@@ -75,18 +83,7 @@ class OAuthService {
     public async exchangeAuthCode(
         provider: ValueOf<typeof OAuthProvider>,
         payload: OAuthExchangeAuthCodeDto,
-    ): Promise<void> {
-        const connectionExists = await this.oAuthRepository.find({
-            userId: payload.userId,
-            provider,
-        });
-        if (connectionExists) {
-            throw new HttpError({
-                message: ErrorMessage.CONNECTION_EXISTS,
-                status: HttpCode.BAD_REQUEST,
-            });
-        }
-
+    ): Promise<OAuthEntity> {
         const strategy = this.getStrategy(provider);
         const isValid = strategy.checkScope(payload.scope);
         if (!isValid) {
@@ -96,8 +93,12 @@ class OAuthService {
             });
         }
 
-        const { userId, state: uuid } = payload;
-        const isStateValid = await this.verifyOAuthState({ userId, uuid });
+        const { userId, state: uuid, type } = payload;
+        const isStateValid = await this.verifyOAuthState({
+            userId,
+            uuid,
+            type,
+        });
         if (!isStateValid) {
             throw new HttpError({
                 status: HttpCode.FORBIDDEN,
@@ -105,7 +106,58 @@ class OAuthService {
             });
         }
 
-        const oAuthEntity = await strategy.exchangeAuthCode(payload);
+        return await strategy.exchangeAuthCode(payload);
+    }
+
+    public async exchangeAuthCodeForIdentity(
+        provider: ValueOf<typeof OAuthProvider>,
+        payload: OAuthExchangeAuthCodeDto,
+    ): Promise<string> {
+        const oAuthEntity = await this.exchangeAuthCode(provider, payload);
+        const oAuthObject = oAuthEntity.toNewObject();
+        const item = await this.oAuthRepository.find({
+            userId: oAuthObject.userId,
+            provider: oAuthObject.provider,
+            type: oAuthObject.type,
+        });
+
+        if (!item) {
+            const createdOAuthEntity =
+                await this.oAuthRepository.create(oAuthEntity);
+            const createdOAuth = createdOAuthEntity.toObject();
+            return await jwtService.createToken({
+                userId: createdOAuth.userId,
+            });
+        }
+        const updatedOAuthEntity = (await this.oAuthRepository.update(
+            {
+                userId: oAuthObject.userId,
+                provider: oAuthObject.provider,
+                type: oAuthObject.type,
+            },
+            oAuthObject,
+        )) as OAuthEntity;
+        const updatedOAuth = updatedOAuthEntity.toObject();
+        return await jwtService.createToken({ userId: updatedOAuth.userId });
+    }
+
+    public async exchangeAuthCodeForConnection(
+        provider: ValueOf<typeof OAuthProvider>,
+        payload: OAuthExchangeAuthCodeDto,
+    ): Promise<void> {
+        const connectionExists = await this.oAuthRepository.find({
+            userId: payload.userId,
+            provider,
+            type: OAuthType.CONNECTION,
+        });
+        if (connectionExists) {
+            throw new HttpError({
+                message: ErrorMessage.CONNECTION_EXISTS,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        const oAuthEntity = await this.exchangeAuthCode(provider, payload);
         await this.oAuthRepository.create(oAuthEntity);
     }
 
@@ -118,8 +170,13 @@ class OAuthService {
     private async verifyOAuthState({
         userId,
         uuid,
+        type,
     }: OAuthState): Promise<boolean> {
-        const state = await this.oAuthStateRepository.find({ uuid, userId });
+        const state = await this.oAuthStateRepository.find({
+            uuid,
+            userId,
+            type,
+        });
 
         return Boolean(state);
     }

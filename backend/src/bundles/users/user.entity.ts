@@ -8,7 +8,7 @@ class UserEntity implements Entity {
 
     private 'email': string;
 
-    private 'passwordHash': string;
+    private 'passwordHash': string | null;
 
     private 'stripeCustomerId': string;
 
@@ -41,7 +41,7 @@ class UserEntity implements Entity {
     }: {
         id: number | null;
         email: string;
-        passwordHash: string;
+        passwordHash: string | null;
         stripeCustomerId: string;
         fullName: string | null;
         avatarUrl: string | null;
@@ -64,7 +64,7 @@ class UserEntity implements Entity {
         this.gender = gender;
     }
 
-    public getPasswordHash(): string {
+    public getPasswordHash(): string | null {
         return this.passwordHash;
     }
 
@@ -83,7 +83,7 @@ class UserEntity implements Entity {
     }: {
         id: number;
         email: string;
-        passwordHash: string;
+        passwordHash: string | null;
         stripeCustomerId: string;
         fullName: string | null;
         avatarUrl: string | null;
@@ -112,18 +112,22 @@ class UserEntity implements Entity {
         email,
         passwordHash,
         stripeCustomerId,
+        fullName,
+        avatarUrl,
     }: {
         email: string;
-        passwordHash: string;
         stripeCustomerId: string;
+        passwordHash?: string;
+        fullName?: string;
+        avatarUrl?: string;
     }): UserEntity {
         return new UserEntity({
             id: null,
             email,
-            passwordHash,
+            passwordHash: passwordHash ?? null,
             stripeCustomerId,
-            fullName: null,
-            avatarUrl: null,
+            fullName: fullName ?? null,
+            avatarUrl: avatarUrl ?? null,
             username: null,
             dateOfBirth: null,
             weight: null,
@@ -160,13 +164,17 @@ class UserEntity implements Entity {
 
     public toNewObject(): {
         email: string;
-        passwordHash: string;
+        passwordHash: string | null;
         stripeCustomerId: string;
+        fullName: string | null;
+        avatarUrl: string | null;
     } {
         return {
             email: this.email,
             passwordHash: this.passwordHash,
             stripeCustomerId: this.stripeCustomerId,
+            fullName: this.fullName,
+            avatarUrl: this.avatarUrl,
         };
     }
 }

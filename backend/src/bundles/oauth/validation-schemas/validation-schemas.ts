@@ -1,1 +1,5 @@
-export { oAuthProviderValidationSchema } from 'shared';
+export {
+    oAuthConnectionProviderValidationSchema,
+    oAuthIdentityProviderValidationSchema,
+    oAuthProviderValidationSchema,
+} from 'shared';

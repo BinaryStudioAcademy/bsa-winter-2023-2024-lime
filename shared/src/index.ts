@@ -3,7 +3,11 @@ export {
     AchievementsApiPath,
     Metric,
 } from './bundles/achievements/achievements.js';
-export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export {
+    type AuthResponseDto,
+    type AuthTokenRequestDto,
+    AuthApiPath,
+} from './bundles/auth/auth.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
@@ -29,8 +33,11 @@ export {
     type OAuthProviderParameterDto,
     type OAuthResponseDto,
     OAuthActionsPath,
+    oAuthConnectionProviderValidationSchema,
+    oAuthIdentityProviderValidationSchema,
     OAuthProvider,
     oAuthProviderValidationSchema,
+    OAuthType,
 } from './bundles/oauth/oauth.js';
 export {
     type PasswordForgotRequestDto,

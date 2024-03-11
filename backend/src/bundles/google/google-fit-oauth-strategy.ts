@@ -1,11 +1,11 @@
 import { google } from 'googleapis';
 
 import {
-    GOOGLE_FIT_ACCESS_TYPE,
-    GOOGLE_FIT_API_URL,
-    READ_SCOPE,
-    WRITE_SCOPE,
-} from '~/bundles/google-fit/constants/constants.js';
+    GOOGLE_ACCESS_TYPE,
+    GOOGLE_API_URL,
+    GOOGLE_FIT_READ_SCOPE,
+    GOOGLE_FIT_WRITE_SCOPE,
+} from '~/bundles/google/constants/constants.js';
 import {
     type OAuthExchangeAuthCodeDto,
     type OAuthStateEntity,
@@ -27,21 +27,21 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
     public constructor(config: Config) {
         this.config = config;
         this.OAuth2 = new google.auth.OAuth2(
-            this.config.ENV.GOOGLE_FIT.CLIENT_ID,
-            this.config.ENV.GOOGLE_FIT.CLIENT_SECRET,
+            this.config.ENV.GOOGLE.CLIENT_ID,
+            this.config.ENV.GOOGLE.CLIENT_SECRET,
             `${this.config.ENV.APP.API_BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.GOOGLE_FIT}${OAuthActionsPath.EXCHANGE_TOKEN}`,
         );
     }
 
     public getAuthorizeRedirectUrl(oAuthStateEntity: OAuthStateEntity): URL {
-        const { userId, uuid } = oAuthStateEntity.toObject();
+        const { userId, uuid, type } = oAuthStateEntity.toObject();
         const url = this.OAuth2.generateAuthUrl({
-            access_type: GOOGLE_FIT_ACCESS_TYPE,
+            access_type: GOOGLE_ACCESS_TYPE,
             scope: [
-                `${GOOGLE_FIT_API_URL}${READ_SCOPE}`,
-                `${GOOGLE_FIT_API_URL}${WRITE_SCOPE}`,
+                `${GOOGLE_API_URL}${GOOGLE_FIT_READ_SCOPE}`,
+                `${GOOGLE_API_URL}${GOOGLE_FIT_WRITE_SCOPE}`,
             ],
-            state: JSON.stringify({ userId, uuid }),
+            state: JSON.stringify({ userId, uuid, type }),
         });
         return new URL(url);
     }
@@ -49,7 +49,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
     public async exchangeAuthCode(
         payload: OAuthExchangeAuthCodeDto,
     ): Promise<OAuthEntity> {
-        const { code, scope, userId } = payload;
+        const { code, scope, userId, type } = payload;
         const {
             res,
             tokens: { access_token, refresh_token, token_type, expiry_date },
@@ -70,6 +70,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
             accessToken: access_token as string,
             expiresAt: expiry_date as number,
             refreshToken: refresh_token as string,
+            type,
         });
     }
 
@@ -77,13 +78,13 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
         if (!scope) {
             return false;
         }
-        return scope.includes(WRITE_SCOPE && READ_SCOPE);
+        return scope.includes(GOOGLE_FIT_READ_SCOPE && GOOGLE_FIT_WRITE_SCOPE);
     }
 
     public async exchangeRefreshToken(
         oAuthEntity: OAuthEntity,
     ): Promise<OAuthEntity> {
-        const { userId, refreshToken, scope } = oAuthEntity.toObject();
+        const { userId, refreshToken, scope, type } = oAuthEntity.toObject();
         this.OAuth2.setCredentials({
             refresh_token: refreshToken,
         });
@@ -113,6 +114,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
             refreshToken: refresh_token as string,
             scope,
             userId,
+            type,
         });
     }
 

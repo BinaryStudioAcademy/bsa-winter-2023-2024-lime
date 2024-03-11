@@ -26,6 +26,7 @@ const UserValidationMessage = {
     HEIGHT_WRONG: 'Height should consist of digits.',
     HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MIN_VALUE} sm.`,
     USER_NOT_FOUND: 'User not found',
+    USER_OAUTH: 'Use OAuth to sign in',
 } as const;
 
 export { UserValidationMessage };

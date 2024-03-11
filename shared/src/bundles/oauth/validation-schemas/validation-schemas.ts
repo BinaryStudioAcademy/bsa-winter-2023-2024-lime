@@ -1,1 +1,5 @@
-export { oAuthProviderValidationSchema } from './oauth-provider.validation-schema.js';
+export {
+    oAuthConnectionProviderValidationSchema,
+    oAuthIdentityProviderValidationSchema,
+    oAuthProviderValidationSchema,
+} from './oauth-provider.validation-schema.js';

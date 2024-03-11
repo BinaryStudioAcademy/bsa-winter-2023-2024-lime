@@ -1,4 +1,5 @@
 import authLogo from '~/assets/img/auth-logo.svg';
+import { OAuthProvider } from '~/bundles/auth/enums/enums.js';
 import {
     ForgotPasswordForm,
     Modal,
@@ -51,6 +52,10 @@ const Auth: React.FC = () => {
     const isLoading = dataStatus === DataStatus.PENDING;
 
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
+
+    const handleGoogleOAuth = useCallback((): void => {
+        void dispatch(authActions.authorizeIdentity(OAuthProvider.GOOGLE));
+    }, [dispatch]);
 
     const handleSignInSubmit = useCallback(
         (payload: UserAuthRequestDto): void => {
@@ -108,6 +113,7 @@ const Auth: React.FC = () => {
                         onSubmit={handleSignInSubmit}
                         onModalOpen={handleOpenModal}
                         isLoading={isLoading}
+                        handleOAuth={handleGoogleOAuth}
                     />
                 );
             }
@@ -116,6 +122,7 @@ const Auth: React.FC = () => {
                     <SignUpForm
                         onSubmit={handleSignUpSubmit}
                         isLoading={isLoading}
+                        handleOAuth={handleGoogleOAuth}
                     />
                 );
             }

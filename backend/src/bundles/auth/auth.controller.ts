@@ -12,6 +12,7 @@ import { type Logger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
 import { AuthApiPath } from './enums/enums.js';
+import { type AuthTokenRequestDto } from './types/types.js';
 
 class AuthController extends BaseController {
     private authService: AuthService;
@@ -46,6 +47,15 @@ class AuthController extends BaseController {
                     options as ApiHandlerOptions<{
                         body: UserAuthRequestDto;
                     }>,
+                ),
+        });
+
+        this.addRoute({
+            path: AuthApiPath.OAUTH,
+            method: 'POST',
+            handler: (options) =>
+                this.authOAuthUser(
+                    options as ApiHandlerOptions<{ body: AuthTokenRequestDto }>,
                 ),
         });
     }
@@ -154,6 +164,18 @@ class AuthController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
             payload: await this.authService.signUp(options.body),
+        };
+    }
+
+    private async authOAuthUser(
+        options: ApiHandlerOptions<{
+            body: AuthTokenRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: await this.authService.authOAuthUser(options.body),
         };
     }
 }

@@ -1,1 +1,1 @@
-export { type AuthResponseDto } from 'shared';
+export { type AuthResponseDto, type AuthTokenRequestDto } from 'shared';
