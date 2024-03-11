@@ -488,6 +488,39 @@ class WorkoutController extends BaseController {
             ),
         };
     }
+    /**
+     * @swagger
+     * /api/v1/workouts/user/{userId}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: userId
+     *        required: true
+     *        description: The ID of the user whose workouts should be retrieved
+     *        schema:
+     *          type: integer
+     *      tags:
+     *       - Workouts
+     *      description: Returns workouts by user ID for the current month
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/schemas/Workout'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async findByUserId(
         options: ApiHandlerOptions<{ params: { userId: number } }>,
     ): Promise<ApiHandlerResponse> {

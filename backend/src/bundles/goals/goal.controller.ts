@@ -263,7 +263,38 @@ class GoalController extends BaseController {
             }),
         };
     }
-
+    /**
+     * @swagger
+     * /api/v1/goals/user/{userId}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: userId
+     *        required: true
+     *        description: The ID of the user whose goals should be retrieved
+     *        schema:
+     *          type: integer
+     *      tags:
+     *       - Goals
+     *      description: Returns goals by user ID
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/GoalResponseDto'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
     private async findByUserId(
         options: ApiHandlerOptions<{ params: { userId: number } }>,
     ): Promise<ApiHandlerResponse> {
