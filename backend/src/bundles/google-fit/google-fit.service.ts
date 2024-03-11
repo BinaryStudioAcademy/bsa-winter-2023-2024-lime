@@ -8,7 +8,10 @@ import {
     OAuthActionsPath,
     OAuthProvider,
 } from '~/bundles/oauth/oauth.js';
-import { type WorkoutRepository, workoutService } from '~/bundles/workouts/workouts.js';
+import {
+    type WorkoutRepository,
+    workoutService,
+} from '~/bundles/workouts/workouts.js';
 import { type Config } from '~/common/config/config.js';
 
 import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
@@ -22,7 +25,11 @@ class GoogleFitService {
     private workoutRepository: WorkoutRepository;
 
     private OAuth2;
-    public constructor(config: Config, oAuthRepository: OAuthRepository, workoutRepository: WorkoutRepository) {
+    public constructor(
+        config: Config,
+        oAuthRepository: OAuthRepository,
+        workoutRepository: WorkoutRepository,
+    ) {
         this.config = config;
         this.oAuthRepository = oAuthRepository;
         this.workoutRepository = workoutRepository;
@@ -46,7 +53,7 @@ class GoogleFitService {
                 message: ErrorMessage.NO_CONNECTION,
             });
         }
-        const { accessToken, refreshToken , userId } = oAuthEntity.toObject();
+        const { accessToken, refreshToken, userId } = oAuthEntity.toObject();
 
         this.OAuth2.setCredentials({
             access_token: accessToken,
@@ -73,29 +80,39 @@ class GoogleFitService {
         });
 
         const sessions = sessionsResponse.data.session ?? [];
-        const formattedResponse =  await formatGoogleFitResponse(sessions, this.fitness);
-        const workoutEntities = await this.workoutRepository.findAll({ userId });
-        const workouts = workoutEntities.map(workout => workout.toNewObject());
+        const formattedResponse = await formatGoogleFitResponse(
+            sessions,
+            this.fitness,
+        );
+        const workoutEntities = await this.workoutRepository.findAll({
+            userId,
+        });
+        const workouts = workoutEntities.map((workout) =>
+            workout.toNewObject(),
+        );
         const preparedActions = prepareActions(workouts, formattedResponse);
 
-        console.log('preparedActions', preparedActions);
-
-        // for (const { action, data } of preparedActions) {
-        //     switch (action) {
-        //         case Action.CREATE: {
-        //             await workoutService.create({ ...data, userId });
-        //             break;
-        //         }
-        //         case Action.UPDATE: {
-        //             console.log('update', data);
-        //             break;
-        //         }
-        //         case Action.DELETE: {
-        //             await workoutService.delete({ id: data.activityId });
-        //             break;
-        //         }
-        //     }
-        // }
+        for (const { action, data } of preparedActions) {
+            switch (action) {
+                case Action.CREATE: {
+                    await workoutService.create({ ...data, userId });
+                    break;
+                }
+                case Action.UPDATE: {
+                    await workoutService.update(
+                        { activityId: data.activityId },
+                        { ...data, userId },
+                    );
+                    break;
+                }
+                case Action.DELETE: {
+                    await workoutService.delete({
+                        activityId: data.activityId,
+                    });
+                    break;
+                }
+            }
+        }
     }
 }
 

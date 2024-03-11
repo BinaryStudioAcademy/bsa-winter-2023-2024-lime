@@ -1,7 +1,7 @@
 const Action = {
     CREATE: 'create',
     UPDATE: 'update',
-    DELETE: 'delete'
+    DELETE: 'delete',
 } as const;
 
 export { Action };

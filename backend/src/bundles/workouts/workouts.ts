@@ -1,3 +1,4 @@
+import { OAuthModel, OAuthRepository } from '~/bundles/oauth/oauth.js';
 import { logger } from '~/common/logger/logger.js';
 
 import { WorkoutController } from './workout.controller.js';
@@ -6,7 +7,8 @@ import { WorkoutRepository } from './workout.repository.js';
 import { WorkoutService } from './workout.service.js';
 
 const workoutRepository = new WorkoutRepository(WorkoutModel);
-const workoutService = new WorkoutService(workoutRepository);
+const oAuthRepository = new OAuthRepository(OAuthModel);
+const workoutService = new WorkoutService(workoutRepository, oAuthRepository);
 const workoutController = new WorkoutController(logger, workoutService);
 
 export { workoutController, workoutService };

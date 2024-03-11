@@ -1,3 +1,5 @@
+import { googleFitService } from '~/bundles/google-fit/google-fit.js';
+import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Service } from '~/common/types/types.js';
 
@@ -11,8 +13,13 @@ import { type WorkoutRepository } from './workout.repository.js';
 
 class WorkoutService implements Service {
     private workoutRepository: WorkoutRepository;
-    public constructor(workoutRepository: WorkoutRepository) {
+    private oAuthRepository: OAuthRepository;
+    public constructor(
+        workoutRepository: WorkoutRepository,
+        oAuthRepository: OAuthRepository,
+    ) {
         this.workoutRepository = workoutRepository;
+        this.oAuthRepository = oAuthRepository;
     }
 
     public async find(
@@ -25,6 +32,16 @@ class WorkoutService implements Service {
     public async findAll(
         query: Record<string, unknown>,
     ): Promise<{ items: WorkoutResponseDto[] }> {
+        const userId = query['userId'] ?? null;
+
+        if (userId) {
+            const oAuthEntity = await this.oAuthRepository.find({ userId });
+            const data = oAuthEntity?.toObject();
+            if (data?.provider === OAuthProvider.GOOGLE_FIT) {
+                await googleFitService.handleData(userId as number);
+            }
+        }
+
         const items = await this.workoutRepository.findAll(query);
         return {
             items: items.map((it) => it.toObject()),
