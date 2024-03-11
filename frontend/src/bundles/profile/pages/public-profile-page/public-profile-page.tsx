@@ -8,7 +8,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
 import { IconName } from '~/bundles/common/components/icon/enums/icon-name.enum.js';
-import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
+import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     calculateTotal,
     convertSecondsToHMS,
@@ -41,46 +41,22 @@ const PublicProfile: React.FC = () => {
 
     useEffect(() => {
         void dispatch(userActions.getById(NumericId));
-    }, [dispatch, NumericId]);
-
-    useEffect(() => {
         void dispatch(achievementsActions.getAchievementsByUserId(NumericId));
-    }, [dispatch, NumericId]);
-
-    useEffect(() => {
         void dispatch(workoutsActions.getLastWorkoutsByUserId(NumericId));
-    }, [dispatch, NumericId]);
-
-    useEffect(() => {
         void dispatch(goalsActions.getGoalsByUserId(NumericId));
     }, [dispatch, NumericId]);
 
     const { dataStatus: dataStatusUser, user } = useAppSelector(
-        ({ users }) => ({
-            dataStatus: users.dataStatus,
-            user: users.user,
-        }),
+        ({ users }) => users,
     );
-
     const { dataStatus: dataStatusAchievements, achievements } = useAppSelector(
-        ({ achievements }) => ({
-            dataStatus: achievements.dataStatus,
-            achievements: achievements.achievements,
-        }),
+        ({ achievements }) => achievements,
     );
-
     const { dataStatus: dataStatusWorkouts, workouts } = useAppSelector(
-        ({ workouts }) => ({
-            dataStatus: workouts.dataStatus,
-            workouts: workouts.workouts,
-        }),
+        ({ workouts }) => workouts,
     );
-
     const { dataStatus: dataStatusGoals, goals } = useAppSelector(
-        ({ goals }) => ({
-            dataStatus: goals.dataStatus,
-            goals: goals.goals,
-        }),
+        ({ goals }) => goals,
     );
 
     const isLoading =
@@ -124,11 +100,15 @@ const PublicProfile: React.FC = () => {
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                             Last Workout data
                         </h2>
-                        <div className="flex w-full flex-wrap gap-8">
-                            {workouts?.length > ZERO_VALUE && (
+                        <div className="flex w-full max-w-[50rem] flex-wrap gap-8">
+                            {workouts.length > ZERO_VALUE ? (
                                 <ProfileWorkoutItem
                                     workout={getLastWorkout(workouts)}
                                 />
+                            ) : (
+                                <p className="text-md text-white">
+                                    User don&#39;t have workouts yet
+                                </p>
                             )}
                         </div>
                     </section>
@@ -139,7 +119,7 @@ const PublicProfile: React.FC = () => {
                         <ul className="mb-6 flex flex-col gap-4 md:flex-col xl:flex-row">
                             <li className="flex-1">
                                 <ActivityWidget
-                                    label="Total number of workouts"
+                                    label="Total workouts"
                                     value={`${workouts.length} workouts`}
                                     color={ActivityWidgetColor.YELLOW}
                                     icon={
@@ -160,7 +140,7 @@ const PublicProfile: React.FC = () => {
                             </li>
                             <li className="flex-1">
                                 <ActivityWidget
-                                    label="Total duration of workouts"
+                                    label="Total duration"
                                     value={`${hours} hrs ${minutes} min ${seconds}`}
                                     color={ActivityWidgetColor.YELLOW}
                                     icon={<Icon name={IconName.durationIcon} />}
@@ -190,7 +170,7 @@ const PublicProfile: React.FC = () => {
                                     />
                                 ))
                             ) : (
-                                <p className="text-md text-center text-white">
+                                <p className="text-md text-white">
                                     User don&#39;t have achievements yet
                                 </p>
                             )}

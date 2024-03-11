@@ -25,6 +25,7 @@ interface PersonalDetailsProperties {
     messageFriend: (id: number) => void;
 }
 const PLURAL = 's';
+const ZERO_VALUE = 0;
 const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     id,
     user,
@@ -52,7 +53,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         messageFriend(id);
     }, [messageFriend, id]);
     return (
-        <div className="bg-lm-black-100 flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full lg:w-[25rem]">
+        <div className="bg-lm-black-100 flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full  xl:w-[25rem]">
             <Avatar size="lg" email={email} avatarUrl={avatarUrl} />
 
             <h2 className="text-primary mt-5 text-3xl font-bold">{fullName}</h2>
@@ -93,12 +94,12 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
             </div>
             <div className="my-6 w-full overflow-hidden">
                 <h2 className="text-primary">Preferences</h2>
-                <ul className="mt-2 flex w-full flex-row flex-wrap gap-2">
-                    {goals && goals.length > 0 ? (
+                <ul className="mt-2 w-full gap-2 md:grid lg:grid-cols-2">
+                    {goals && goals.length > ZERO_VALUE ? (
                         goals.map((goal) => (
                             <li
                                 key={goal.id}
-                                className="text-primary bg-primary mt-2 rounded-lg p-2"
+                                className="text-primary bg-primary mt-2 w-full rounded-lg p-2 sm:flex sm:items-center sm:justify-between lg:flex lg:w-full lg:flex-col lg:items-center xl:flex-row"
                             >
                                 <ActivityIcon
                                     activityType={goal.activityType}
@@ -121,12 +122,12 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                 </ul>
             </div>
 
-            <div className=" mt-auto flex h-14 w-full items-center justify-between">
+            <div className=" mt-8 flex h-14 w-full items-center justify-between">
                 <div className="inline-flex w-2/3 items-center sm:w-3/5">
                     <Button
                         onClick={handleToggleFriend}
-                        label={isFriend ? 'Remove friend' : 'Add Friend'}
-                        className=" sm:h-10 sm:px-1 sm:py-1 sm:text-[0.7rem] lg:h-11 lg:px-4 lg:py-2"
+                        label={isFriend ? 'Unfollow' : 'Follow'}
+                        className="sm:h-10 sm:px-1 sm:py-1 sm:text-[0.7rem] lg:h-11 lg:px-4 lg:py-2"
                         size={ComponentSize.LARGE}
                         variant={isFriend ? 'secondary' : 'primary'}
                     />
