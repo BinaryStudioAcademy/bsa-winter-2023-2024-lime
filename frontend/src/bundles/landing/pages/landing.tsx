@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 
 import { actions as appActions } from '~/app/store/app.js';
-import appPreview from '~/assets/img/landing/app-preview.svg';
-import authPreview from '~/assets/img/landing/auth-preview.svg';
-import featureBg from '~/assets/img/landing/feature-bg.svg';
+import AppPreview from '~/assets/img/landing/app-preview.svg?react';
+import AuthPreview from '~/assets/img/landing/auth-preview.svg?react';
+import FeatureBg from '~/assets/img/landing/feature-bg.svg?react';
 import {
     Button,
     ButtonVariant,
@@ -38,11 +38,8 @@ import {
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
 const Landing = (): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.theme);
-    const { user, isRefreshing } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-        isRefreshing: auth.isRefreshing,
-    }));
+    const { theme } = useAppSelector(({ theme }) => theme);
+    const { user, isRefreshing } = useAppSelector(({ auth }) => auth);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -73,7 +70,7 @@ const Landing = (): JSX.Element => {
     };
 
     return (
-        <main className="text-primary flex h-screen snap-y snap-mandatory flex-col gap-40 overflow-y-auto overflow-x-hidden scroll-smooth">
+        <main className="text-primary flex h-screen snap-y snap-mandatory flex-col gap-40 overflow-y-auto overflow-x-hidden">
             <section
                 className={getValidClassNames(styles.section, styles.container)}
             >
@@ -157,9 +154,7 @@ const Landing = (): JSX.Element => {
                                 x={75}
                             />
                         </div>
-                        <div className="w-[22rem] md:w-[30rem]">
-                            <img src={appPreview} alt="App preview" />
-                        </div>
+                        <AppPreview className="w-[22rem] md:w-[30rem]" />
                         <div className="absolute bottom-0 left-0 z-[-1] -translate-x-1/2 translate-y-1/2">
                             <Fade
                                 className="bg-buttonPrimary size-[18.5rem] rounded-full"
@@ -174,8 +169,7 @@ const Landing = (): JSX.Element => {
                 className={getValidClassNames(
                     styles.section,
                     styles.container,
-                    styles.secondSection.gradient,
-                    'relative',
+                    'flex justify-center',
                 )}
             >
                 <h1 className="font-heavybold text-center text-[2.5rem] md:text-[3.5rem]">
@@ -186,10 +180,11 @@ const Landing = (): JSX.Element => {
                     step of the way. From personalized workout plans to
                     nutrition tracking, we’ve got you covered!
                 </p>
-
                 <div
                     className={getValidClassNames(
-                        'flex flex-row justify-center gap-12 xl:justify-start',
+                        'relative flex flex-row justify-center gap-12 xl:justify-start',
+
+                        styles.secondSection.gradient,
                     )}
                 >
                     <motion.div
@@ -227,17 +222,12 @@ const Landing = (): JSX.Element => {
                     </motion.div>
                     <div className="relative z-[-1] hidden items-center justify-center xl:flex">
                         <Fade
-                            className="bg-buttonPrimary rounded-full xl:size-[31.25rem]"
+                            className="bg-buttonPrimary relative rounded-full xl:size-[31.25rem]"
                             x={100}
                         >
-                            <img
-                                src={featureBg}
-                                alt="Feature background"
-                                className="-translate-y-24 translate-x-12 scale-x-[1.5] scale-y-[1.5] grayscale"
-                            />
+                            <FeatureBg className="absolute -translate-x-20 -translate-y-72 grayscale" />
                         </Fade>
-
-                        <Zoom className="absolute size-[46rem] rounded-full border-[1px] border-[#A1A2A180] bg-transparent outline outline-1 outline-offset-[10rem] outline-[#A1A2A180]" />
+                        <Zoom className="absolute z-[-1] size-[46rem] rounded-full border-[1px] border-[#A1A2A180] bg-transparent outline outline-1 outline-offset-[10rem] outline-[#A1A2A180]" />
                     </div>
                 </div>
             </section>
@@ -261,14 +251,12 @@ const Landing = (): JSX.Element => {
                 </div>
                 <div className="flex w-full min-w-[40rem] flex-col items-center justify-between gap-y-12 lg:flex-row">
                     <Fade x={-30}>
-                        <div
+                        <AuthPreview
                             className={getValidClassNames(
-                                'relative w-[22rem] flex-1 md:w-[35.375rem]',
+                                'relative flex w-[22rem] md:w-[35.375rem]',
                                 styles.thirdSection.gradient,
                             )}
-                        >
-                            <img src={authPreview} alt="App preview" />
-                        </div>
+                        />
                     </Fade>
                     <div className="flex h-full w-full flex-1 flex-col gap-16">
                         <IntroCard
