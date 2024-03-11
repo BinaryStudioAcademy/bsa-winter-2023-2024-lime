@@ -33,7 +33,7 @@ const getStyles = <
                 errorMessage ? 'hover:text-lm-red' : 'hover:text-action',
                 'bg-secondary text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
             ),
-        singleValue: () => 'text-lm-grey-200',
+        singleValue: () => 'text-primary',
         multiValue: () =>
             'bg-lm-grey-500 rounded-lg items-center py-1 pl-2 pr-1 ml-1 gap-2 ',
         multiValueLabel: () => `${textColor} `,
