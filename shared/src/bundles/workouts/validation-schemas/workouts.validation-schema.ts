@@ -13,7 +13,9 @@ type WorkoutsRequestValidationDto = {
     distance: z.ZodNumber;
     speed: z.ZodNumber;
     kilocalories: z.ZodNumber;
-    provider: z.ZodNativeEnum<typeof OAuthProvider>;
+    provider: z.ZodOptional<
+        z.ZodNullable<z.ZodNativeEnum<typeof OAuthProvider>>
+    >;
 };
 
 const workout = z.object<WorkoutsRequestValidationDto>({
@@ -26,7 +28,7 @@ const workout = z.object<WorkoutsRequestValidationDto>({
     distance: z.number().nonnegative(),
     speed: z.number().nonnegative(),
     kilocalories: z.number().nonnegative(),
-    provider: z.nativeEnum(OAuthProvider),
+    provider: z.nativeEnum(OAuthProvider).nullish(),
 });
 
 export { workout };
