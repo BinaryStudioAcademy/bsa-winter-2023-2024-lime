@@ -35,7 +35,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <form
-            className="w-full text-sm text-white md:w-[22.375rem]"
+            className="text-primary w-full text-sm md:w-[22.375rem]"
             onSubmit={handleFormSubmit}
         >
             <div className="mb-10 flex flex-col gap-6">
