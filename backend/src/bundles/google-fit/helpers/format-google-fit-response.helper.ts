@@ -65,8 +65,8 @@ const getFitnessData = async (
 const formatGoogleFitResponse = async (
     sessions: fitness_v1.Schema$Session[],
     fitness: fitness_v1.Fitness,
-): Promise<(WorkoutRequestDto | null)[]> => {
-    return await Promise.all(
+): Promise<(WorkoutRequestDto)[]> => {
+    const result = await Promise.all(
         sessions.map(async (session): Promise<WorkoutRequestDto | null> => {
             const MILLIS_TO_NANOS = 1_000_000;
             const startTimeMillis = session.startTimeMillis as string;
@@ -111,6 +111,8 @@ const formatGoogleFitResponse = async (
                     ),
                 ]);
 
+            console.log(steps);
+
             return {
                 activityId: session.id as string,
                 distance,
@@ -124,6 +126,8 @@ const formatGoogleFitResponse = async (
             };
         }),
     );
+
+    return result.filter(Boolean) as WorkoutRequestDto[];
 };
 
 export { formatGoogleFitResponse };

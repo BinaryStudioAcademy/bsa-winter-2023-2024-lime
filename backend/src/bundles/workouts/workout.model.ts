@@ -15,7 +15,7 @@ class WorkoutModel extends AbstractModel {
     public 'userId': number;
     public 'activityType': ValueOf<typeof ActivityType>;
     public 'steps': number;
-    public 'activityId': number;
+    public 'activityId': string;
     public 'heartRate': number | null;
     public 'workoutStartedAt': Date;
     public 'workoutEndedAt': Date;
