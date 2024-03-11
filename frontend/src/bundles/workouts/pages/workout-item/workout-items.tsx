@@ -18,18 +18,18 @@ const WorkoutItem = (): JSX.Element => {
 
     if (!currentWorkout) {
         return (
-            <p className="font-base text-primary text-center text-xl">
+            <p className="font-base text-primary w-full text-center text-xl">
                 You don&#39;t have such workout
             </p>
         );
     }
 
     return (
-        <>
+        <div className="max-w-[50rem]">
             <WorkoutTitle workout={currentWorkout} />
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
-        </>
+        </div>
     );
 };
 

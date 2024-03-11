@@ -75,11 +75,11 @@ const Workout: React.FC = () => {
                     <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
 
                     {workouts.length > 0 ? (
-                        <div className="w-full max-w-[50rem] px-[1.5rem]">
+                        <div className="w-full  px-[1.5rem]">
                             <WorkoutItem />
                         </div>
                     ) : (
-                        <div className="font-base text-primary flex w-full flex-col items-center gap-2 p-[2rem] text-center text-xl">
+                        <div className="font-base text-primary flex w-full flex-col items-center gap-2 px-[2rem] text-center text-xl">
                             <p>You don&#39;t have any workouts yet</p>
                             <Icon name={IconName.workoutIcon} />
                             <p>When you add some they will appear here</p>
