@@ -102,7 +102,11 @@ class StravaService {
             case StravaAspect.UPDATE: {
                 await this.workoutService.update(
                     { activityId: object_id },
-                    { ...formattedActivityInfo, userId, activityId: object_id.toString() },
+                    {
+                        ...formattedActivityInfo,
+                        userId,
+                        activityId: object_id.toString(),
+                    },
                 );
                 break;
             }

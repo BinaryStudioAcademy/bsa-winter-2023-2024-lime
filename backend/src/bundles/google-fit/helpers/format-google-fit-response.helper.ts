@@ -1,7 +1,14 @@
 import { type fitness_v1 } from 'googleapis';
 
-import { GoogleFitRequiredActivity } from '../constants/constants.js';
-import { type ValueOf,type WorkoutRequestDto, ActivityType } from '../types/types.js';
+import {
+    GoogleFitDataSourceId,
+    GoogleFitRequiredActivity,
+} from '../enums/enums.js';
+import {
+    type ValueOf,
+    type WorkoutRequestDto,
+    ActivityType,
+} from '../types/types.js';
 
 const formatActivityName = (
     activityType: number | null,
@@ -24,62 +31,99 @@ const formatActivityName = (
     return result ?? null;
 };
 
-const getFitnessData = async (fitness: fitness_v1.Fitness, dataSourceId: string, datasetId: string): Promise<number> => {
+const getFitnessData = async (
+    fitness: fitness_v1.Fitness,
+    dataSourceId: string,
+    datasetId: string,
+): Promise<number> => {
     const response = await fitness.users.dataSources.datasets.get({
         userId: 'me',
         dataSourceId,
-        datasetId
+        datasetId,
     });
 
     const INITIAL_VALUE = 0;
+    const DECIMAL_PLACES = 2;
 
-    return response.data.point?.map(p => {
-        if (!p.value) {
-            return INITIAL_VALUE;
-        }
-        const [value] = p.value;
-        if (value?.intVal) {
-            return value?.intVal ?? INITIAL_VALUE;
-        }
-        return value?.fpVal ?? INITIAL_VALUE;
-    })
-        .reduce((a, b) => a + b, INITIAL_VALUE) ?? INITIAL_VALUE;
+    const result =
+        response.data.point
+            ?.map((p) => {
+                if (!p.value) {
+                    return INITIAL_VALUE;
+                }
+                const [value] = p.value;
+                if (value?.intVal) {
+                    return value?.intVal ?? INITIAL_VALUE;
+                }
+                return value?.fpVal ?? INITIAL_VALUE;
+            })
+            .reduce((a, b) => a + b, INITIAL_VALUE) ?? INITIAL_VALUE;
+
+    return Number.parseFloat(result.toFixed(DECIMAL_PLACES));
 };
 
-const formatGoogleFitResponse = async (sessions: fitness_v1.Schema$Session[], fitness: fitness_v1.Fitness): Promise<WorkoutRequestDto[]> => {
-    return await Promise.all(sessions.map(async (session): Promise<WorkoutRequestDto> => {
-        const MILLIS_TO_NANOS = 1_000_000;
-        const startTimeMillis  = session.startTimeMillis as string;
-        const endTimeMillis = session.endTimeMillis as string;
-        const startTimeNanos = (+startTimeMillis * MILLIS_TO_NANOS);
-        const endTimeNanos = (+endTimeMillis * MILLIS_TO_NANOS);
-        const datasetId = `${startTimeNanos}-${endTimeNanos}`;
-        const activityType = formatActivityName(session.activityType ?? null);
+const formatGoogleFitResponse = async (
+    sessions: fitness_v1.Schema$Session[],
+    fitness: fitness_v1.Fitness,
+): Promise<(WorkoutRequestDto | null)[]> => {
+    return await Promise.all(
+        sessions.map(async (session): Promise<WorkoutRequestDto | null> => {
+            const MILLIS_TO_NANOS = 1_000_000;
+            const startTimeMillis = session.startTimeMillis as string;
+            const endTimeMillis = session.endTimeMillis as string;
+            const startTimeNanos = +startTimeMillis * MILLIS_TO_NANOS;
+            const endTimeNanos = +endTimeMillis * MILLIS_TO_NANOS;
+            const datasetId = `${startTimeNanos}-${endTimeNanos}`;
+            const activityType = formatActivityName(
+                session.activityType ?? null,
+            );
 
-        if (!activityType) {
-            return null;
-        }
+            if (!activityType) {
+                return null;
+            }
 
-        const [steps, calories, heartRate, distance, speed] = await Promise.all([
-            getFitnessData(fitness, 'derived:com.google.step_count.delta:com.google.android.gms:estimated_steps', datasetId),
-            getFitnessData(fitness, 'derived:com.google.calories.expended:com.google.android.gms:merge_calories_expended', datasetId),
-            getFitnessData(fitness, 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm', datasetId),
-            getFitnessData(fitness, 'derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta', datasetId),
-            getFitnessData(fitness, 'derived:com.google.speed:com.google.android.gms:merge_speed', datasetId)
-        ]);
+            const [steps, calories, heartRate, distance, speed] =
+                await Promise.all([
+                    getFitnessData(
+                        fitness,
+                        GoogleFitDataSourceId.STEPS,
+                        datasetId,
+                    ),
+                    getFitnessData(
+                        fitness,
+                        GoogleFitDataSourceId.CALORIES,
+                        datasetId,
+                    ),
+                    getFitnessData(
+                        fitness,
+                        GoogleFitDataSourceId.HEART_RATE,
+                        datasetId,
+                    ),
+                    getFitnessData(
+                        fitness,
+                        GoogleFitDataSourceId.DISTANCE,
+                        datasetId,
+                    ),
+                    getFitnessData(
+                        fitness,
+                        GoogleFitDataSourceId.SPEED,
+                        datasetId,
+                    ),
+                ]);
 
-        return {
-            activityId: session.id as string,
-            distance,
-            speed,
-            heartRate,
-            activityType,
-            steps,
-            kilocalories: calories,
-            workoutStartedAt: new Date(startTimeMillis),
-            workoutEndedAt: new Date(endTimeMillis)
-        };
-    }));
+            return {
+                activityId: session.id as string,
+                distance,
+                speed,
+                heartRate,
+                activityType,
+                steps,
+                kilocalories: calories,
+                workoutStartedAt: new Date(+startTimeMillis),
+                workoutEndedAt: new Date(+endTimeMillis),
+            };
+        }),
+    );
 };
 
 export { formatGoogleFitResponse };
