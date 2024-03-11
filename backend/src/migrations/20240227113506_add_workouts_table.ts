@@ -66,7 +66,7 @@ async function up(knex: Knex): Promise<void> {
 
 async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists(TABLE_NAME);
-    // await knex.schema.raw(`DROP TYPE IF EXISTS ${ACTIVITY_ENUM}`);
+    await knex.schema.raw(`DROP TYPE IF EXISTS ${ACTIVITY_ENUM}`);
 }
 
 export { down, up };
