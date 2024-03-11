@@ -24,7 +24,7 @@ const UserInfoCard: React.FC<Properties> = ({
 }) => {
     const navigate = useNavigate();
 
-    const onViewAllClick = useCallback((): void => {
+    const handleViewAllClick = useCallback((): void => {
         void navigate(AppRoute.GOALS);
     }, [navigate]);
 
@@ -63,7 +63,7 @@ const UserInfoCard: React.FC<Properties> = ({
                         size={ComponentSize.SMALL}
                         variant={ButtonVariant.TERTIARY}
                         rightIcon={<ChevronRightIcon width="18" />}
-                        onClick={onViewAllClick}
+                        onClick={handleViewAllClick}
                     />
                 </div>
             </div>
