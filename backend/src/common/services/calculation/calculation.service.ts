@@ -18,40 +18,13 @@ class CalculationService {
         this.goalService = goalService;
     }
 
-    public async changeGoal(
-        userId: number,
-        // workout: WorkoutResponseDto,
-    ): Promise<void> {
+    public async changeGoal(userId: number): Promise<void> {
         await this.updateGoalProgress(userId);
     }
 
-    private async updateGoalProgress(
-        userId: number,
-        // workout: WorkoutResponseDto,
-    ): Promise<void> {
+    private async updateGoalProgress(userId: number): Promise<void> {
         const { items: goals } = await this.goalService.findAll({ userId });
         const { items: workouts } = await workoutService.findAll({ userId });
-
-        // for (const goal of goals) {
-        //     if (
-        //         goal.activityType === workout.activityType &&
-        //         goal.progress < COMPLETED_GOAL_VALUE
-        //     ) {
-        //         await this.goalService.update(
-        //             { id: goal.id },
-        //             {
-        //                 ...goal,
-        //                 userId,
-        //                 progress: calculateGoalProgress(goal, workout),
-        //                 completedAt:
-        //                     calculateGoalProgress(goal, workout) ===
-        //                     COMPLETED_GOAL_VALUE
-        //                         ? new Date().toISOString()
-        //                         : null,
-        //             },
-        //         );
-        //     }
-        // }
 
         for (const goal of goals) {
             const filteredWorkouts = workouts.filter(
