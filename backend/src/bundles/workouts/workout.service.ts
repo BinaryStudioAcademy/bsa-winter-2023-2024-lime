@@ -32,7 +32,7 @@ class WorkoutService implements Service {
     public async findAll(
         query: Record<string, unknown>,
     ): Promise<{ items: WorkoutResponseDto[] }> {
-        const userId = query['userId'] ?? null;
+        const userId = query['userId'];
 
         if (userId) {
             const oAuthEntity = await this.oAuthRepository.find({ userId });

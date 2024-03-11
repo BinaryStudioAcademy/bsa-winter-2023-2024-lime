@@ -5,9 +5,7 @@ import {
     WorkoutRepository,
 } from '~/bundles/workouts/workouts.js';
 import { config } from '~/common/config/config.js';
-import { logger } from '~/common/logger/logger.js';
 
-import { GoogleFitController } from './google-fit.controller.js';
 import { GoogleFitService } from './google-fit.service.js';
 import { GoogleFitOAuthStrategy } from './google-fit-oauth-strategy.js';
 
@@ -18,7 +16,6 @@ const googleFitService = new GoogleFitService(
     oAuthRepository,
     workoutRepository,
 );
-const googleFitController = new GoogleFitController(logger, googleFitService);
 const googleFitOAuthStrategy = new GoogleFitOAuthStrategy(config);
 
-export { googleFitController, googleFitOAuthStrategy, googleFitService };
+export { googleFitOAuthStrategy, googleFitService };
