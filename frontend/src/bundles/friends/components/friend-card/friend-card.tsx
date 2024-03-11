@@ -14,9 +14,9 @@ type FriendProperties = {
     name: string;
     avatarUrl: string;
     isActive: boolean;
-    isFriend: boolean;
-    toggleFriend: (id: number, isFriend: boolean) => void;
-    messageFriend: (id: number) => void;
+    isFollow: boolean;
+    toggleFollow: (id: number, isFollow: boolean) => void;
+    message: (id: number) => void;
 };
 
 const FriendCard = ({
@@ -24,17 +24,17 @@ const FriendCard = ({
     name,
     avatarUrl,
     isActive,
-    isFriend,
-    toggleFriend,
-    messageFriend,
+    isFollow,
+    toggleFollow,
+    message,
 }: FriendProperties): JSX.Element => {
-    const handletoggleFriend = useCallback(() => {
-        toggleFriend(id, isFriend);
-    }, [toggleFriend, isFriend, id]);
+    const handletoggleFollow = useCallback(() => {
+        toggleFollow(id, isFollow);
+    }, [toggleFollow, isFollow, id]);
 
     const handleSendMessage = useCallback(() => {
-        messageFriend(id);
-    }, [messageFriend, id]);
+        message(id);
+    }, [message, id]);
 
     return (
         <div className="hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent sm:max-w-40 lg:max-w-64">
@@ -65,21 +65,21 @@ const FriendCard = ({
                 </div>
                 <div className="flex w-full items-center justify-between">
                     <div className="inline-flex w-3/4 items-center">
-                        {isFriend ? (
+                        {isFollow ? (
                             <Button
-                                onClick={handletoggleFriend}
-                                label={'Remove friend'}
+                                onClick={handletoggleFollow}
+                                label={'Unfollow'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
-                                variant={isFriend ? 'secondary' : 'primary'}
+                                variant='secondary'
                             />
                         ) : (
                             <Button
-                                onClick={handletoggleFriend}
-                                label={'Add friend'}
+                                onClick={handletoggleFollow}
+                                label={'Follow'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
-                                variant={isFriend ? 'secondary' : 'primary'}
+                                variant='primary'
                             />
                         )}
                     </div>
@@ -87,13 +87,13 @@ const FriendCard = ({
                     <button
                         onClick={handleSendMessage}
                         className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10"
-                        disabled={!isFriend}
+                        disabled={!isFollow}
                     >
                         <Icon
                             name={IconName.messageIcon}
                             size={ComponentSize.MEDIUM}
                             color={
-                                isFriend
+                                isFollow
                                     ? IconColor.PRIMARY
                                     : IconColor.SECONDARY
                             }
