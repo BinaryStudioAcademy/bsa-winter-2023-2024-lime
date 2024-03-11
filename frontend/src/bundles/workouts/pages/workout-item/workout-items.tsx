@@ -34,7 +34,7 @@ const WorkoutItem = (): JSX.Element => {
             <WorkoutStats workout={currentWorkout} />
             {currentWorkout.provider === OAuthProvider.STRAVA && (
                 <Link
-                    to={AppRoute.STRAVA}
+                    to={AppRoute.STRAVA_ATHLETE_TRAINING}
                     className="text-strava-brand mt-[0.5rem] text-right"
                 >
                     View on Strava
