@@ -45,7 +45,7 @@ const ChartGoalProgress = (): JSX.Element => {
     }, []);
 
     return (
-        <div className="bg-secondary rounded-30 relative p-8">
+        <div className="bg-primary rounded-30 relative p-8">
             <div className="mb-4 flex h-10 items-center justify-between">
                 <h1 className="text-secondary">Goal Progress</h1>
                 <div className="w-[100px]">

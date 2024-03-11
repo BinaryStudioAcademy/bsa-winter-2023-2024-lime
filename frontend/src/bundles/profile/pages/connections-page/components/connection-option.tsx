@@ -56,7 +56,7 @@ const ConnectionOption = ({
     }, [connections, dispatch, provider]);
 
     return (
-        <div className={'bg-lm-black-100 flex flex-col gap-5 rounded-2xl p-6'}>
+        <div className={'bg-primary flex flex-col gap-5 rounded-2xl p-6'}>
             <div
                 className={
                     'flex flex-col items-start justify-between gap-5 xl:flex-row xl:items-center'
@@ -68,14 +68,14 @@ const ConnectionOption = ({
                         <div className={'flex items-center gap-2'}>
                             <h2
                                 className={
-                                    'text-sm font-bold text-white sm:text-base md:text-xl'
+                                    'text-primary text-sm font-bold sm:text-base md:text-xl'
                                 }
                             >
                                 {title}
                             </h2>
                             {isConnected ? (
                                 <CheckCircleIcon
-                                    className={'text-lm-yellow-100 w-4 md:w-5'}
+                                    className={'text-action w-4 md:w-5'}
                                 />
                             ) : (
                                 <XCircleIcon

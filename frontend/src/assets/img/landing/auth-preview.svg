@@ -1,7 +1,7 @@
 <svg width="566" height="404" viewBox="0 0 566 404" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g clip-path="url(#clip0_2276_28688)">
 <rect y="0.733398" width="566" height="402.489" rx="15.3864" fill="#1C2227"/>
-<rect x="94.7263" y="0.733398" width="602.583" height="402.489" fill="url(#pattern0)"/>
+<rect x="94.7263" y="0.733398" width="602.583" height="402.489" fill="url(#5WYWIV)"/>
 <g style="mix-blend-mode:color">
 <rect x="96.6918" y="0.733398" width="507.435" height="402.489" fill="#1C2227"/>
 </g>
@@ -54,7 +54,7 @@
 </g>
 </g>
 <defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+<pattern id="5WYWIV" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_2276_28688" transform="matrix(0.00164113 0 0 0.002457 -0.00136448 0)"/>
 </pattern>
 <linearGradient id="paint0_linear_2276_28688" x1="0" y1="201.978" x2="627.57" y2="201.978" gradientUnits="userSpaceOnUse">
