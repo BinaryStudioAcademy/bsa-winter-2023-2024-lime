@@ -76,8 +76,9 @@ const FriendCard = ({
 
                     <button
                         onClick={handleSendMessage}
-                        className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10"
+                        className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10`}
                         disabled={!isFollowed}
+                        title={isFollowed ? 'Send message' : 'Follow to send message'}
                     >
                         <Icon
                             name={IconName.messageIcon}
