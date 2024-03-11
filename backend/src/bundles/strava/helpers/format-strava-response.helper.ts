@@ -58,7 +58,7 @@ const formatStravaResponse = ({
         kilocalories: calories,
         workoutEndedAt: endDate,
         heartRate: heartrate ?? null,
-        provider: OAuthProvider.STRAVA ?? null,
+        provider: OAuthProvider.STRAVA,
     };
 };
 
