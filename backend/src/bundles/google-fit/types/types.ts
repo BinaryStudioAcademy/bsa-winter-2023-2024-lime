@@ -1,1 +1,1 @@
-export { type UserAuthResponseDto, type WorkoutRequestDto } from 'shared';
+export { type UserAuthResponseDto, type ValueOf, type WorkoutRequestDto, ActivityType } from 'shared';

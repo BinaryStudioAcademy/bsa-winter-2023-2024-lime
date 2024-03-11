@@ -54,7 +54,7 @@ class GoogleFitService {
 
         const sessions = sessionsResponse.data.session ?? [];
 
-        await formatGoogleFitResponse(sessions, this.fitness);
+        console.log(await formatGoogleFitResponse(sessions, this.fitness));
 
         // return await Promise.all(sessionsResponse.data.session.map(async (session) => {
         //

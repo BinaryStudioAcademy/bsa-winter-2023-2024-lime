@@ -95,14 +95,14 @@ class StravaService {
                 await this.workoutService.create({
                     ...formattedActivityInfo,
                     userId,
-                    activityId: object_id,
+                    activityId: object_id.toString(),
                 });
                 break;
             }
             case StravaAspect.UPDATE: {
                 await this.workoutService.update(
                     { activityId: object_id },
-                    { ...formattedActivityInfo, userId, activityId: object_id },
+                    { ...formattedActivityInfo, userId, activityId: object_id.toString() },
                 );
                 break;
             }
