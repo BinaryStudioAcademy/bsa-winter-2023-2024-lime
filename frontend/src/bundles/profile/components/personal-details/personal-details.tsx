@@ -20,9 +20,9 @@ interface PersonalDetailsProperties {
     id: number;
     user: UserAuthResponseDto;
     goals: GoalResponseDto[];
-    isFriend: boolean;
-    toggleFriend: (id: number, isFriend: boolean) => void;
-    messageFriend: (id: number) => void;
+    isFollowed: boolean;
+    onFollowToggle: (id: number, isFollowed: boolean) => void;
+    message: (id: number) => void;
 }
 const PLURAL = 's';
 const ZERO_VALUE = 0;
@@ -30,9 +30,9 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     id,
     user,
     goals,
-    isFriend,
-    toggleFriend,
-    messageFriend,
+    isFollowed,
+    onFollowToggle,
+    message,
 }) => {
     const {
         email,
@@ -46,19 +46,19 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     } = user;
 
     const handleToggleFriend = useCallback(() => {
-        toggleFriend(id, isFriend);
-    }, [toggleFriend, isFriend, id]);
+        onFollowToggle(id, isFollowed);
+    }, [onFollowToggle, isFollowed, id]);
 
     const handleSendMessage = useCallback(() => {
-        messageFriend(id);
-    }, [messageFriend, id]);
+        message(id);
+    }, [message, id]);
     return (
-        <div className="bg-lm-black-100 flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full  xl:w-[25rem]">
+        <div className="bg-primary flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full  xl:w-[25rem]">
             <Avatar size="lg" email={email} avatarUrl={avatarUrl} />
 
             <h2 className="text-primary mt-5 text-3xl font-bold">{fullName}</h2>
             {username && <p className="text-primary mb-4">@{username}</p>}
-            <div className="bg-primary w-full rounded-lg p-4 shadow-xl">
+            <div className="bg-secondary w-full rounded-lg p-4 shadow-xl">
                 <ul className="flex w-full flex-wrap justify-evenly">
                     <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
                         Weight
@@ -99,7 +99,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                         goals.map((goal) => (
                             <li
                                 key={goal.id}
-                                className="text-primary bg-primary mt-2 w-full rounded-lg p-2 sm:flex sm:items-center sm:justify-between lg:flex lg:w-full lg:flex-col lg:items-center xl:flex-row"
+                                className="text-primary bg-secondary mt-2 w-full rounded-lg p-2 sm:flex sm:items-center sm:justify-between lg:flex lg:w-full lg:flex-col lg:items-center xl:flex-row"
                             >
                                 <ActivityIcon
                                     activityType={goal.activityType}
@@ -126,25 +126,26 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                 <div className="inline-flex w-2/3 items-center sm:w-3/5">
                     <Button
                         onClick={handleToggleFriend}
-                        label={isFriend ? 'Unfollow' : 'Follow'}
+                        label={isFollowed ? 'Unfollow' : 'Follow'}
                         className="sm:h-10 sm:px-1 sm:py-1 sm:text-[0.7rem] lg:h-11 lg:px-4 lg:py-2"
                         size={ComponentSize.LARGE}
-                        variant={isFriend ? 'secondary' : 'primary'}
+                        variant={isFollowed ? 'secondary' : 'primary'}
                     />
                 </div>
-
                 <button
                     onClick={handleSendMessage}
-                    className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11"
-                    disabled={!isFriend}
+                    className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11`}
+                    disabled={!isFollowed}
+                    title={
+                        isFollowed ? 'Send message' : 'Follow to send message'
+                    }
                 >
                     <Icon
                         name={IconName.messageIcon}
                         size={ComponentSize.MEDIUM}
                         color={
-                            isFriend ? IconColor.PRIMARY : IconColor.SECONDARY
+                            isFollowed ? IconColor.PRIMARY : IconColor.SECONDARY
                         }
-                        className="cursor-pointer"
                     />
                 </button>
             </div>

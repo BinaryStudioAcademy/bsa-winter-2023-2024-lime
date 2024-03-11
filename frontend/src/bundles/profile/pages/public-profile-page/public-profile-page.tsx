@@ -36,7 +36,7 @@ const PublicProfile: React.FC = () => {
     const { id } = useParams();
 
     const dispatch = useAppDispatch();
-    const [isFriend, setIsFriend] = useState(false);
+    const [isFollowed, setIsFollowed] = useState(false);
     const NumericId = Number(id);
 
     useEffect(() => {
@@ -70,8 +70,8 @@ const PublicProfile: React.FC = () => {
     const totalCalories = calculateTotal(workouts, 'kilocalories');
     const [hours, minutes, seconds] = convertSecondsToHMS(totalDuration);
 
-    const handleToggleFriend = useCallback(() => {
-        setIsFriend((previousIsFriend) => !previousIsFriend);
+    const handleToggleFollow = useCallback(() => {
+        setIsFollowed((previousIsFollowed) => !previousIsFollowed);
     }, []);
 
     const handleMessageFriend = useCallback(() => {
@@ -90,9 +90,9 @@ const PublicProfile: React.FC = () => {
                         id={NumericId}
                         user={user}
                         goals={goals}
-                        isFriend={isFriend}
-                        toggleFriend={handleToggleFriend}
-                        messageFriend={handleMessageFriend}
+                        isFollowed={isFollowed}
+                        onFollowToggle={handleToggleFollow}
+                        message={handleMessageFriend}
                     />
                 </div>
                 <div className="w-full">
@@ -106,7 +106,7 @@ const PublicProfile: React.FC = () => {
                                     workout={getLastWorkout(workouts)}
                                 />
                             ) : (
-                                <p className="text-md text-white">
+                                <p className="text-md text-primary">
                                     User don&#39;t have workouts yet
                                 </p>
                             )}
@@ -170,7 +170,7 @@ const PublicProfile: React.FC = () => {
                                     />
                                 ))
                             ) : (
-                                <p className="text-md text-white">
+                                <p className="text-md text-primary">
                                     User don&#39;t have achievements yet
                                 </p>
                             )}
