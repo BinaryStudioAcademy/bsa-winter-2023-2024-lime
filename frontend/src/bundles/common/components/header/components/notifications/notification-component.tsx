@@ -19,11 +19,8 @@ import { NotificationBell } from './components/notifications-bell.js';
 
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
-    const notifications = useAppSelector(
-        ({ notifications }) => notifications.notifications,
-    );
-    const dataStatus = useAppSelector(
-        ({ notifications }) => notifications.dataStatus,
+    const { notifications, dataStatus } = useAppSelector(
+        ({ notifications }) => notifications,
     );
 
     const isLoading = dataStatus === DataStatus.PENDING;
