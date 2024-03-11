@@ -10,6 +10,7 @@ import {
     NotificationContainer,
     RouterProvider,
     StoreProvider,
+    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound, Overview } from '~/bundles/common/pages/pages.js';
@@ -19,6 +20,7 @@ import { Profile } from '~/bundles/profile/pages/profile.js';
 import { Workout, WorkoutItem } from '~/bundles/workouts/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
+import { Chat } from './bundles/chats/components/chat/chat.js';
 import { Chats } from './bundles/chats/pages/chats.js';
 import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
 import { Landing } from './bundles/landing/landing.js';
@@ -78,8 +80,14 @@ const routes = [
                         element: <div>HELP PAGE</div>,
                     },
                     {
-                        path: '/chats',
+                        path: AppRoute.CHATS,
                         element: <Chats />,
+                        children: [
+                            {
+                                path: AppRoute.CHATS_$ID,
+                                element: <Chat />,
+                            },
+                        ],
                     },
                     {
                         element: <ProfileLayout />,
@@ -122,6 +130,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
             <RouterProvider routes={routes} />
             <NotificationContainer />
             <DownloadBanner />
+            <ThemeSwitcher />
         </StoreProvider>
     </StrictMode>,
 );

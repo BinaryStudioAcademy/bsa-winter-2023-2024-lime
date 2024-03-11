@@ -11,14 +11,19 @@ const ChatSearchBar = (): JSX.Element => {
 
     const handleSearchChats = useCallback((): void => {}, []);
 
-    const handleFormChange = useCallback((event_: React.BaseSyntheticEvent): void => {
-        void handleSubmit(handleSearchChats)(event_);
-    }, [handleSearchChats, handleSubmit]);
+    const handleFormChange = useCallback(
+        (event_: React.BaseSyntheticEvent): void => {
+            void handleSubmit(handleSearchChats)(event_);
+        },
+        [handleSearchChats, handleSubmit],
+    );
 
     const handleFormSubmit = useCallback(
         (event_: FormEvent<HTMLFormElement>): void => {
             event_.preventDefault();
-        }, []);
+        },
+        [],
+    );
 
     return (
         <form onChange={handleFormChange} onSubmit={handleFormSubmit}>

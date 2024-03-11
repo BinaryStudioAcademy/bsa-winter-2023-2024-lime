@@ -21,6 +21,7 @@ const IconName = {
     goalIcon: 'goalIcon',
     starIcon: 'starIcon',
     searchIcon: 'searchIcon',
+    aiAssistantIcon: 'aiAssistantIcon',
 } as const;
 
 export { IconName };

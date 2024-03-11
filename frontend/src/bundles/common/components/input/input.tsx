@@ -13,6 +13,7 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
+import { getValidClassNames } from '../../helpers/helpers.js';
 import { ErrorMessageWithHint } from './components/error-message-with-hint.js';
 
 type Properties<T extends FieldValues> = {
@@ -26,6 +27,8 @@ type Properties<T extends FieldValues> = {
     placeholder?: string;
     onFocus?: FocusEventHandler<HTMLInputElement>;
     required?: boolean;
+    hasVisuallyHiddenLabel?: boolean;
+    rows?: number;
 };
 
 const Input = <T extends FieldValues>({
@@ -39,6 +42,8 @@ const Input = <T extends FieldValues>({
     placeholder = '',
     onFocus,
     required = false,
+    hasVisuallyHiddenLabel,
+    rows,
 }: Properties<T>): JSX.Element => {
     const [isMasked, setIsMasked] = useState(false);
     const { field } = useFormController({ name, control });
@@ -46,6 +51,8 @@ const Input = <T extends FieldValues>({
     const error = errors[name]?.message;
     const hasError = Boolean(error);
     const isPassword = type === 'password';
+
+    const isTextArea = Boolean(rows);
 
     const onMaskPassword = useCallback((): void => {
         setIsMasked((isMasked) => !isMasked);
@@ -55,21 +62,41 @@ const Input = <T extends FieldValues>({
         return isPassword ? '\u2022'.repeat(6) : placeholder;
     };
 
+    const inputStyles = `bg-secondary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`;
+    const textAreaStyles =
+        'bg-secondary text-primary placeholder:text-lm-grey-200 disabled:text-lm-grey-300 h-15 w-full rounded-lg p-4 focus:border focus:border-buttonPrimary focus:outline-none overflow-hidden resize-none';
+
     return (
-        <label className={`${className} flex h-20 flex-col text-sm text-white`}>
-            <span className="mb-[0.5rem] font-medium">
+        <label
+            className={`${className} flex max-h-20 flex-col text-sm text-white`}
+        >
+            <span
+                className={getValidClassNames(
+                    'mb-[0.5rem] font-medium',
+                    hasVisuallyHiddenLabel && 'visually-hidden',
+                )}
+            >
                 {label} {required && <span className="text-lm-red">*</span>}
             </span>
             <div className="relative">
-                <input
-                    {...field}
-                    type={isMasked ? 'text' : type}
-                    placeholder={placeholderGenerator()}
-                    autoComplete="off"
-                    disabled={isDisabled}
-                    className={`bg-secondary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`}
-                    onFocus={onFocus}
-                />
+                {isTextArea ? (
+                    <textarea
+                        className={textAreaStyles}
+                        {...field}
+                        placeholder={placeholder}
+                        rows={rows}
+                    />
+                ) : (
+                    <input
+                        {...field}
+                        type={isMasked ? 'text' : type}
+                        placeholder={placeholderGenerator()}
+                        autoComplete="off"
+                        disabled={isDisabled}
+                        className={inputStyles}
+                        onFocus={onFocus}
+                    />
+                )}
                 {isPassword && (
                     <div
                         onClick={onMaskPassword}

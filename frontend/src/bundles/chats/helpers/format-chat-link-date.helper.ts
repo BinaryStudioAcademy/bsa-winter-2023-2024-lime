@@ -1,4 +1,4 @@
-import { format, isThisWeek,isThisYear, isToday } from 'date-fns';
+import { format, isThisWeek, isThisYear, isToday } from 'date-fns';
 
 const formatChatLinkDate = (date: Date): string => {
     if (isToday(date)) {

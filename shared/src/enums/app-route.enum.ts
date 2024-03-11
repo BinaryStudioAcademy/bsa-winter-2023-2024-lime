@@ -18,7 +18,8 @@ const AppRoute = {
     NOT_FOUND: '*',
     PROFILE: '/profile/settings',
     CHATS: '/chats',
-    CHATS_ROOM: '/chats/:id',
+    CHATS_$ID: '/chats/:id',
+    CHATS_AI_ASSISTANT: '/chats/ai-assistant',
 } as const;
 
 export { AppRoute };

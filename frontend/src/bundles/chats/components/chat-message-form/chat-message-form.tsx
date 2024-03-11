@@ -1,3 +1,5 @@
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+
 import { Button, Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
@@ -21,7 +23,7 @@ const ChatMessageForm = ({ onSubmit }: Properties): JSX.Element => {
     return (
         <form
             autoComplete="off"
-            className="flex gap-2"
+            className="flex h-full items-center gap-2"
             onSubmit={handleFormSubmit}
         >
             <Input
@@ -29,13 +31,20 @@ const ChatMessageForm = ({ onSubmit }: Properties): JSX.Element => {
                 errors={errors}
                 name="message"
                 placeholder="Send message"
+                label="Send message"
+                hasVisuallyHiddenLabel
+                rows={1}
+                className="w-full rounded-xl"
             />
             <Button
                 type="submit"
                 size="sm"
                 variant="primary"
-                label="Send"
-                className="w-10"
+                label=""
+                leftIcon={
+                    <PaperAirplaneIcon className="text-lm-black-100 w-6" />
+                }
+                className="h-[90%] w-full max-w-[3rem]"
             />
         </form>
     );

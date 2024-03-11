@@ -1,42 +1,43 @@
 import { Button } from '~/bundles/common/components/components.js';
 
+import { AiChatLink } from '../ai-chat-link/ai-chat-link.js';
 import { ChatRoomLink } from '../chat-room-link/chat-room-link.js';
 import { ChatSearchBar } from '../chat-search-bar/chat-search-bar.js';
 
-const chats = [
-    'asd1',
-    'asd2',
-    'asd3',
-    'asd4',
-    'asd5',
-    'asd6',
-    'asd7',
-    'asd8',
-    'asd9',
-    'asd10',
-    'asd1',
-    'asd2',
-    'asd3',
-    'asd4',
-    'asd5',
-    'asd6',
-    'asd7',
-    'asd8',
-    'asd9',
-    'asd10',
-];
+type Properties = {
+    chats: {
+        status: string;
+        lastMessage: string;
+        username: string;
+    }[];
+    aiChat: {
+        lastMessage: string;
+    };
+};
 
-const ChatSidebar = (): JSX.Element => {
+const ChatSidebar = ({ chats, aiChat }: Properties): JSX.Element => {
     const hasChat = true;
     return (
-        <div className="bg-lm-black-200 flex max-h-full flex-col overflow-hidden px-2">
-            <ChatSearchBar />
-            <Button label="Add new chat" size="sm" variant="primary" />
-            <ul className="my-4 flex h-full flex-1 list-none flex-col gap-4 overflow-y-auto">
+        <div className="flex max-h-full flex-col overflow-hidden px-3">
+            <div className="mb-4">
+                <ChatSearchBar />
+                <Button label="Add new chat" size="sm" variant="primary" />
+            </div>
+            <div className="mb-4">
+                <span className="text-secondary mb-1">AI</span>
+                <AiChatLink lastMessage={aiChat.lastMessage} />
+            </div>
+            <span className="text-secondary">Friends</span>
+            <ul className="mb-4 flex h-full flex-1 list-none flex-col gap-5 overflow-y-auto">
                 {hasChat &&
                     chats.map((item, id) => (
                         <li key={id}>
-                            <ChatRoomLink />
+                            <ChatRoomLink
+                                id={id}
+                                status={item.status}
+                                username={item.username}
+                                lastMessage={item.lastMessage}
+                            />
                         </li>
                     ))}
             </ul>
