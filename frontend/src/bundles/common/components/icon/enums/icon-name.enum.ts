@@ -20,6 +20,7 @@ const IconName = {
     feedIcon: 'feedIcon',
     goalIcon: 'goalIcon',
     starIcon: 'starIcon',
+    searchIcon: 'searchIcon',
 } as const;
 
 export { IconName };
