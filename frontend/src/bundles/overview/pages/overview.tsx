@@ -59,7 +59,7 @@ const goalsData = [
 
 const Overview: React.FC = () => {
     return (
-        <div className="ml-auto mr-auto max-w-[1136px] xl:flex xl:gap-8">
+        <div className="mx-auto max-w-[71rem] xl:flex xl:gap-8">
             <div className="xl:basis-[68%]">
                 <GoalWidget
                     value={4}

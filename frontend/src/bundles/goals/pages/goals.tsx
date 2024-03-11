@@ -107,7 +107,7 @@ const Goals: React.FC = () => {
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
-        <main className="bg-secondary ml-auto mr-auto flex w-full max-w-[1136px] flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal xl:flex xl:gap-8">
+        <main className="bg-secondary mx-auto flex w-full max-w-[71rem] flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal xl:flex xl:gap-8">
             {isLoading ? (
                 <Loader />
             ) : (
