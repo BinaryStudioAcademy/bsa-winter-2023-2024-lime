@@ -118,8 +118,7 @@ export default {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
-                'goalWidget':
-                    'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%)',
+                'goalWidget': 'var(--gradient-goal-widget)',
                 'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
@@ -160,6 +159,8 @@ export default {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
                 action: 'var(--text-action)',
+                infoSection: 'var(--text-info-section)',
+                card: 'var(--text-card)',
                 buttonText: ButtonColors.TEXT,
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
@@ -172,13 +173,21 @@ export default {
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
+                schedule: 'var(--background-schedule)',
             },
             borderColor: {
+                primary: 'var(--border-primary)',
+                inactive: 'var(--border-inactive)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
             },
+            ringColor: {
+                primary: 'var(--ring-primary)',
+                inactive: 'var(--ring-inactive)',
+            },
             stroke: {
+                progressBase: 'var(--stroke-progress-base-bg)',
                 primary: 'var(--circle-primary)',
             },
         },
