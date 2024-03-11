@@ -12,6 +12,10 @@ import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
     configureISOString,
+    convertHeightToCentimeters,
+    convertHeightToMillimeters,
+    convertWeightToGrams,
+    convertWeightToKilograms,
     getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -50,13 +54,29 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     useEffect(() => {
         if (!valuesDefault && user) {
             for (const key of getObjectKeys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
-                if (key === 'dateOfBirth' && user.dateOfBirth) {
-                    setValue(key, configureDateString(user.dateOfBirth));
-                } else {
-                    if (user[key]) {
-                        setValue(key, user[key]);
-                    } else {
-                        setValue(key, DEFAULT_UPDATE_PROFILE_PAYLOAD[key]);
+                switch (key) {
+                    case 'dateOfBirth': {
+                        setValue(
+                            key,
+                            user.dateOfBirth
+                                ? configureDateString(user.dateOfBirth)
+                                : '',
+                        );
+                        break;
+                    }
+                    case 'weight': {
+                        setValue(key, convertWeightToKilograms(user[key]));
+                        break;
+                    }
+                    case 'height': {
+                        setValue(key, convertHeightToCentimeters(user[key]));
+                        break;
+                    }
+                    default: {
+                        setValue(
+                            key,
+                            user[key] || DEFAULT_UPDATE_PROFILE_PAYLOAD[key],
+                        );
                     }
                 }
             }
@@ -69,13 +89,13 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
-                    weight: data.weight || null,
-                    height: data.height || null,
+                    weight: convertWeightToGrams(data.weight),
+                    height: convertHeightToMillimeters(data.height),
                     dateOfBirth: data.dateOfBirth
                         ? configureISOString(data.dateOfBirth || '')
                         : null,
                     fullName: (data.fullName || '').trim(),
-                    username: (data.username || '').trim(),
+                    username: data.username ? data.username.trim() : null,
                 };
                 onSubmit(payload);
             })(event_);
