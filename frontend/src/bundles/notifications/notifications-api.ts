@@ -1,3 +1,5 @@
+import { ApiPath } from 'shared';
+
 import { type Http } from '~/framework/http/types/types.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
@@ -16,7 +18,7 @@ type Constructor = {
 
 class NotificationsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
-        super({ path: NotificationsApiPath.ROOT, baseUrl, http, storage });
+        super({ path: ApiPath.NOTIFICATIONS, baseUrl, http, storage });
     }
 
     public async fetchNotifications(): Promise<Array<NotificationResponseDto>> {
