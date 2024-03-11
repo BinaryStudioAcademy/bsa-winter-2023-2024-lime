@@ -21,6 +21,7 @@ const IconName = {
     feedIcon: 'feedIcon',
     goalIcon: 'goalIcon',
     starIcon: 'starIcon',
+    friendsIcon: 'friendsIcon',
 } as const;
 
 export { IconName };

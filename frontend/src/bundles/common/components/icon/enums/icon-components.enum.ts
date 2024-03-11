@@ -7,6 +7,7 @@ import CaloriesIcon from '~/assets/img/icons/calories-icon.svg?react';
 import CommunityIcon from '~/assets/img/icons/community-icon.svg?react';
 import FacebookIcon from '~/assets/img/icons/facebook.svg?react';
 import FeedIcon from '~/assets/img/icons/feed-icon.svg?react';
+import FriendsIcon from '~/assets/img/icons/friends-icon.svg?react';
 import GoalIcon from '~/assets/img/icons/goal-icon.svg?react';
 import GoalsIcon from '~/assets/img/icons/goals-icon.svg?react';
 import GoogleFitIcon from '~/assets/img/icons/google-fit-icon.svg?react';
@@ -50,6 +51,7 @@ const IconComponent: Record<
     feedIcon: FeedIcon,
     goalIcon: GoalIcon,
     starIcon: StarIcon,
+    friendsIcon: FriendsIcon,
 } as const;
 
 export { IconComponent };

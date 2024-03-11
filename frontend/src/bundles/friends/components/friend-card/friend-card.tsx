@@ -15,8 +15,10 @@ type FriendProperties = {
     avatarUrl: string;
     isActive: boolean;
     isFriend: boolean;
-    toggleFriend: (id: number, isFriend: boolean) => void;
-    messageFriend: (id: number) => void;
+    isSelected: boolean;
+    handleSelectCard: (id: number) => void;
+    // toggleFriend: (id: number, isFriend: boolean) => void;
+    // messageFriend: (id: number) => void;
 };
 
 const FriendCard = ({
@@ -25,33 +27,43 @@ const FriendCard = ({
     avatarUrl,
     isActive,
     isFriend,
-    toggleFriend,
-    messageFriend,
+    isSelected,
+    handleSelectCard,
+    // toggleFriend,
+    // messageFriend,
 }: FriendProperties): JSX.Element => {
-    const handletoggleFriend = useCallback(() => {
-        toggleFriend(id, isFriend);
-    }, [toggleFriend, isFriend, id]);
+    // const handletoggleFriend = useCallback(() => {
+    //     toggleFriend(id, isFriend);
+    // }, [toggleFriend, isFriend, id]);
+    //
+    // const handleSendMessage = useCallback(() => {
+    //     messageFriend(id);
+    // }, [messageFriend, id]);
 
-    const handleSendMessage = useCallback(() => {
-        messageFriend(id);
-    }, [messageFriend, id]);
+    const handleClick = useCallback((): void => {
+        handleSelectCard(id);
+    }, [handleSelectCard, id]);
 
     return (
-        <div className="hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent sm:max-w-40 lg:max-w-64">
-            <div className="h-3/4 w-full">
+        <div
+            className={`hover:border-buttonPrimary flex h-[330px] w-[235px] flex-col overflow-hidden rounded-xl border ${isSelected ? 'border-buttonPrimary' : 'border-transparent'}`}
+            onClick={handleClick}
+            role="presentation"
+        >
+            <div className="h-[227px] w-full object-cover">
                 {validateImageUrl(avatarUrl) ? (
                     <img
                         src={avatarUrl}
                         alt={name}
-                        className="aspect-square rounded-t-xl object-cover"
+                        className="aspect-square rounded-t-xl object-cover "
                     />
                 ) : (
-                    <div className="bg-lm-grey-100 flex aspect-square items-center justify-center rounded-t-xl">
+                    <div className="bg-lm-grey-100 flex aspect-square h-[227px] items-center justify-center rounded-t-xl">
                         <UserCircleIcon className="text-lm-grey-200 h-full w-full" />
                     </div>
                 )}
             </div>
-            <div className="bg-primary flex flex-col gap-2 rounded-b-xl p-4">
+            <div className="bg-secondary flex h-full flex-col gap-2 rounded-b-xl p-4">
                 <div className="flex items-center gap-2">
                     {isActive ? (
                         <div className="bg-buttonPrimary h-2 w-2 rounded-[50%]" />
@@ -67,7 +79,7 @@ const FriendCard = ({
                     <div className="inline-flex w-3/4 items-center">
                         {isFriend ? (
                             <Button
-                                onClick={handletoggleFriend}
+                                // onClick={handletoggleFriend}
                                 label={'Remove friend'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
@@ -75,7 +87,7 @@ const FriendCard = ({
                             />
                         ) : (
                             <Button
-                                onClick={handletoggleFriend}
+                                // onClick={handletoggleFriend}
                                 label={'Add friend'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
@@ -85,7 +97,7 @@ const FriendCard = ({
                     </div>
 
                     <button
-                        onClick={handleSendMessage}
+                        // onClick={handleSendMessage}
                         className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10"
                         disabled={!isFriend}
                     >
