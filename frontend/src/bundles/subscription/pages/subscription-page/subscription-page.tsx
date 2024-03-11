@@ -17,15 +17,8 @@ import { actions as subscriptionActions } from '../../store/subscriptions.js';
 import { type SubscribeRequestDto } from '../../types/types.js';
 
 const SubscriptionPage = (): JSX.Element => {
-    const dataStatus = useAppSelector(
-        ({ subscriptions }) => subscriptions.dataStatus,
-    );
-    const subscriptionPlans = useAppSelector(
-        ({ subscriptions }) => subscriptions.subscriptionPlans,
-    );
-    const currentSubscription = useAppSelector(
-        ({ subscriptions }) => subscriptions.currentSubscription,
-    );
+    const { dataStatus, subscriptionPlans, currentSubscription } =
+        useAppSelector(({ subscriptions }) => subscriptions);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
