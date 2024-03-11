@@ -5,6 +5,7 @@ import { CryptService } from './crypt/crypt.service.js';
 import { EmailService } from './email/email.service.js';
 import { FileService } from './file/file.service.js';
 import { OpenAIService } from './open-ai/open-ai.service.js';
+import { SocketService } from './socket/socket.service.js';
 import { StripeService } from './stripe/stripe.service.js';
 
 const { API_KEY, FROM } = config.ENV.EMAIL;
@@ -28,6 +29,7 @@ const fileService = new FileService({
     region: S3_REGION,
     bucketName: S3_BUCKET_NAME,
 });
+const socketService = new SocketService();
 
 export {
     cryptService,
@@ -35,5 +37,6 @@ export {
     fileService,
     jwtService,
     openAIService,
+    socketService,
     stripeService,
 };

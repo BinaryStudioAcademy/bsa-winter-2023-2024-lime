@@ -28,7 +28,7 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-lm-black-100 flex min-h-90 lg:w-72 w-64 flex-col content-center items-center text-white z-10',
+        'bg-primary flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
@@ -105,14 +105,27 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                     </div>
                 </div>
 
-                <div className="flex h-1/4 w-full">
-                    <div className="flex w-full flex-col justify-end gap-3">
-                        <SidebarNav
-                            isOpen={isOpen}
-                            icon={<HelpIcon />}
-                            text="Help"
-                            to={AppRoute.HELP}
-                            isActive={activeRoute === AppRoute.HELP}
+            <div className="flex h-1/4 w-full">
+                <div className="flex w-full flex-col justify-end gap-3">
+                    <SidebarNav
+                        isOpen={isOpen}
+                        icon={<HelpIcon />}
+                        text="Help"
+                        to={AppRoute.HELP}
+                        isActive={activeRoute === AppRoute.HELP}
+                    />
+
+                    <div className="text-lm-grey-200 flex items-center justify-center">
+                        <Button
+                            type="button"
+                            label={'Logout'}
+                            leftIcon={addSizePropertyHeroIcons({
+                                icon: <LogoutIcon />,
+                                size: ComponentSize.MEDIUM,
+                            })}
+                            variant={ButtonVariant.SIDEBAR}
+                            size={ComponentSize.MEDIUM}
+                            onClick={handleLogout}
                         />
 
                         <div className="flex items-center justify-center">
