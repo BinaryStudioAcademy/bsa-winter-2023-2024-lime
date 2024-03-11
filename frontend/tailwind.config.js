@@ -85,6 +85,7 @@ export default {
             'md': '768px',
             'lg': '1024px',
             'xl': '1280px',
+            '2xl': '1940px',
         },
         extend: {
             animation: {
@@ -136,7 +137,7 @@ export default {
                 '30': '7.5625rem',
                 '37': '2.3125rem',
                 '38': '2.375rem',
-                '54': '3.375rem;'
+                '54': '3.375rem;',
             },
             spacing: {
                 '13': '3.25',

@@ -1,5 +1,6 @@
 export { AchievementCard } from './achievement-card/achievement-card.js';
 export { ActivityIcon } from './activity-icon/activity-icon.js';
+export { AdvertisementBanner } from './advertisement-banner/advertisement-banner.js';
 export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonVariant } from './button/button.js';
 export { Card } from './card/card.js';
