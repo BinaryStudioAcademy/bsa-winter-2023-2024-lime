@@ -107,13 +107,13 @@ const Goals: React.FC = () => {
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
-        <main className="bg-primary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
+        <main className="bg-secondary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
             {isLoading ? (
                 <Loader />
             ) : (
                 <>
                     <div className="flex flex-col gap-8 ">
-                        <section className="pt-[3.125rem] md:w-full lg:w-[37rem] xl:w-[49rem]">
+                        <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
                                 value={lastGoal?.progress as number}
                                 target={lastGoal?.progress as number}
@@ -141,7 +141,7 @@ const Goals: React.FC = () => {
                             </h2>
                             <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
                                 {goals.length === ZERO_VALUE && (
-                                    <p className="mb-5 w-full text-xl font-extrabold text-white">
+                                    <p className="text-primary mb-5 w-full text-xl font-extrabold">
                                         No goals yet
                                     </p>
                                 )}

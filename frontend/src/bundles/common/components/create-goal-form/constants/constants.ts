@@ -10,4 +10,9 @@ const DEFAULT_CREATE_GOAL_PAYLOAD = {
     duration: '',
 };
 
-export { DEFAULT_CREATE_GOAL_PAYLOAD };
+const CUSTON_ERROR_MESSAGE = {
+    NOT_FLOAT_MESSAGE: 'Should contain only numbers or decimal numbers.',
+    NOT_INTEGER_MESSAGE: 'Should contain only numbers.',
+};
+
+export { CUSTON_ERROR_MESSAGE, DEFAULT_CREATE_GOAL_PAYLOAD };

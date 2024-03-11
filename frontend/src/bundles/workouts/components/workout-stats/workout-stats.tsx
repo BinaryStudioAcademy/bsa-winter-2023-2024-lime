@@ -31,13 +31,13 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
     const [hours, minutes, seconds] = convertSecondsToHMS(duration);
 
     const styles = {
-        metrics: 'text-sm text-white animate-fade-in',
+        metrics: 'text-sm text-primary animate-fade-in',
         units: 'text-sm text-lm-grey-200',
     };
 
     return (
         <div
-            className="bg-lm-black-100 bg-wave-grey mt-[1.25rem] h-[19.8rem] w-full rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat"
+            className="bg-primary bg-wave-grey mt-[1.25rem] h-[19.8rem] w-full rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat"
             key={id}
         >
             <div className="px-[1.875rem] py-[1.25rem]">
@@ -75,19 +75,25 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
                         </span>
                     </p>
 
-                    <p>
-                        <span className={styles.metrics}>{kilocalories}</span>{' '}
-                        <span className={styles.units}>
-                            {WorkoutUnit.KILOCALORIES}
-                        </span>
-                    </p>
+                    {Boolean(kilocalories) && (
+                        <p>
+                            <span className={styles.metrics}>
+                                {kilocalories}
+                            </span>{' '}
+                            <span className={styles.units}>
+                                {WorkoutUnit.KILOCALORIES}
+                            </span>
+                        </p>
+                    )}
 
-                    <p>
-                        <span className={styles.metrics}>{heartRate}</span>{' '}
-                        <span className={styles.units}>
-                            {WorkoutUnit.BEATS_PER_MINUTE}
-                        </span>
-                    </p>
+                    {Boolean(heartRate) && (
+                        <p>
+                            <span className={styles.metrics}>{heartRate}</span>{' '}
+                            <span className={styles.units}>
+                                {WorkoutUnit.BEATS_PER_MINUTE}
+                            </span>
+                        </p>
+                    )}
                 </div>
                 <div className="bg-progress-line bg-tip relative ml-[-1.875rem] mr-[5.75rem] mt-[2.5rem] h-[6.8rem] w-full bg-contain bg-no-repeat lg:w-5/6">
                     <span
