@@ -109,7 +109,7 @@ const Goals: React.FC = () => {
     return (
         <main className="bg-secondary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
             {isLoading ? (
-                <Loader />
+                <Loader isOverflow />
             ) : (
                 <>
                     <div className="flex flex-col gap-8 ">
