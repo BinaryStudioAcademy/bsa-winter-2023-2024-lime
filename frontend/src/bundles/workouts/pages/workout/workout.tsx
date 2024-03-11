@@ -1,7 +1,9 @@
 import {
+    Icon,
     Loader,
     SubNavigation,
 } from '~/bundles/common/components/components.js';
+import { IconName } from '~/bundles/common/components/icon/enums/icon-name.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
@@ -69,15 +71,17 @@ const Workout: React.FC = () => {
                     />
                     <div className="border-lm-black-400 h-full border"></div>
 
-                    <div className="w-full max-w-[50rem] px-[1.5rem]">
-                        {workouts.length > 0 ? (
+                    {workouts.length > 0 ? (
+                        <div className="w-full max-w-[50rem] px-[1.5rem]">
                             <WorkoutItem />
-                        ) : (
-                            <p className="text-md text-primary text-center">
-                                You don&#39;t have any workouts yet
-                            </p>
-                        )}
-                    </div>
+                        </div>
+                    ) : (
+                        <div className="font-base text-primary flex w-full flex-col items-center gap-2 p-[2rem] text-center text-xl">
+                            <p>You don&#39;t have any workouts yet</p>
+                            <Icon name={IconName.workoutIcon} />
+                            <p>When you add some they will appear here</p>
+                        </div>
+                    )}
                 </div>
             )}
         </section>
