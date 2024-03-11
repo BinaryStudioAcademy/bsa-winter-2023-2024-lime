@@ -1,0 +1,4 @@
+const KG_TO_GRAMS = 1000;
+const ROUND_FACTOR = 100;
+
+export { KG_TO_GRAMS, ROUND_FACTOR };
