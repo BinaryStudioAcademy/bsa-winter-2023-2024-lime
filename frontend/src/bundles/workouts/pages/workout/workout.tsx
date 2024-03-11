@@ -65,11 +65,14 @@ const Workout: React.FC = () => {
                 <Loader isOverflow />
             ) : (
                 <div className="flex w-full">
-                    <SubNavigation
-                        title={subNavigationTitle}
-                        items={subNavigationItems}
-                    />
-                    <div className="border-lm-black-400 h-full border"></div>
+                    <div className="my-[-2rem] ml-[-2rem]">
+                        <SubNavigation
+                            title={subNavigationTitle}
+                            items={subNavigationItems}
+                        />
+                    </div>
+
+                    <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
 
                     {workouts.length > 0 ? (
                         <div className="w-full max-w-[50rem] px-[1.5rem]">
