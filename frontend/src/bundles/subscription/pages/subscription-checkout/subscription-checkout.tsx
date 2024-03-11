@@ -17,6 +17,19 @@ const SubscriptionCheckout = (): JSX.Element => {
         };
     });
 
+    const customRules = theme === Theme.LIGHT && {
+        '.Input': {
+            backgroundColor: 'white',
+        },
+        '.Select': {
+            backgroundColor: 'white',
+        },
+        '.Tab': {
+            boxShadow:
+                '0px 1px 1px rgba(5, 6, 7, 0.1), 0px 3px 6px rgba(18, 42, 66, 0.12)',
+        },
+    };
+
     const options: StripeElementsOptions = {
         locale: 'en',
         clientSecret,
@@ -25,21 +38,7 @@ const SubscriptionCheckout = (): JSX.Element => {
             variables: {
                 colorPrimary: '#E0FE10',
             },
-            rules:
-                theme === Theme.LIGHT
-                    ? {
-                          '.Input': {
-                              backgroundColor: 'white',
-                          },
-                          '.Select': {
-                              backgroundColor: 'white',
-                          },
-                          '.Tab': {
-                              boxShadow:
-                                  '0px 1px 1px rgba(5, 6, 7, 0.1), 0px 3px 6px rgba(18, 42, 66, 0.12)',
-                          },
-                      }
-                    : {},
+            rules: customRules || {},
         },
     };
 
