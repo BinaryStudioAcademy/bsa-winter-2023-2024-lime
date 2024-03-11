@@ -11,9 +11,10 @@ import {
     NotificationContainer,
     RouterProvider,
     StoreProvider,
+    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { NotFound, Overview } from '~/bundles/common/pages/pages.js';
+import { NotFound } from '~/bundles/common/pages/pages.js';
 import { Goals as GoalsPage } from '~/bundles/goals/pages/goals.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
@@ -21,7 +22,8 @@ import { Workout, WorkoutItem } from '~/bundles/workouts/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
 import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
-import { Landing } from './bundles/landing/landing.js';
+import { Landing } from './bundles/landing/pages/landing.js';
+import { Overview } from './bundles/overview/pages/overview.js';
 import { ProfileLayout } from './bundles/profile/layout/profile-layout.js';
 import { ConnectionsPage } from './bundles/profile/pages/connections-page/connections-page.js';
 import {
@@ -122,6 +124,7 @@ createRoot(document.querySelector('#root') as HTMLElement).render(
             <RouterProvider routes={routes} />
             <NotificationContainer />
             <DownloadBanner />
+            <ThemeSwitcher />
         </StoreProvider>
     </StrictMode>,
 );

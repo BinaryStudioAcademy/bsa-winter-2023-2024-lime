@@ -54,6 +54,7 @@
         "pino": "8.17.2",
         "pino-pretty": "10.3.1",
         "shared": "*",
+        "socket.io": "4.7.4",
         "stripe": "14.17.0",
         "swagger-jsdoc": "6.2.8"
     }
