@@ -2,6 +2,7 @@ export { applyThemeClassname } from './apply-theme-classname/apply-theme-classna
 export { capitalizeFirstLetter } from './capitalize-first-letter/capitalize-first-letter.helper.js';
 export { convertHeightToCentimeters } from './convert-height/convert-height-to-cm.js';
 export { convertHeightToMillimeters } from './convert-height/convert-height-to-mm.js';
+export { convertMetersToKilometers } from './convert-meters-to-kilometers/convert-meters-to-kilometers.helper.js';
 export { convertSecondsToHMS } from './convert-seconds-to-hms/convert-seconds-to-hms.helper.js';
 export { convertToMeters } from './convert-to-meters/convert-to-meters.helper.js';
 export { convertWeightToGrams } from './convert-weight/convert-weight-to-grams.js';
