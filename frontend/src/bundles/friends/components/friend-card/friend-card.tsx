@@ -11,8 +11,8 @@ import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
 type FriendProperties = {
     id: number;
-    name: string;
-    avatarUrl: string;
+    name: string | null;
+    avatarUrl: string | null;
     isActive: boolean;
     isFriend: boolean;
     isSelected: boolean;
@@ -51,18 +51,19 @@ const FriendCard = ({
             role="presentation"
         >
             <div className="h-[227px] w-full object-cover">
-                {validateImageUrl(avatarUrl) ? (
+                {avatarUrl && validateImageUrl(avatarUrl) ? (
                     <img
                         src={avatarUrl}
-                        alt={name}
+                        alt={name || 'avatar'}
                         className="aspect-square rounded-t-xl object-cover "
                     />
                 ) : (
-                    <div className="bg-lm-grey-100 flex aspect-square h-[227px] items-center justify-center rounded-t-xl">
+                    <div className="bg-lm-grey-100 flex aspect-square h-[227px] w-full items-center justify-center rounded-t-xl">
                         <UserCircleIcon className="text-lm-grey-200 h-full w-full" />
                     </div>
                 )}
             </div>
+
             <div className="bg-secondary flex h-full flex-col gap-2 rounded-b-xl p-4">
                 <div className="flex items-center gap-2">
                     {isActive ? (

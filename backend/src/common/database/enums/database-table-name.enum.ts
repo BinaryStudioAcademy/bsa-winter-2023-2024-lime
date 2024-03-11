@@ -11,6 +11,7 @@ const DatabaseTableName = {
     ACHIEVEMENTS: 'achievements',
     USER_ACHIEVEMENTS: 'user_achievements',
     WORKOUTS: 'workouts',
+    USER_FRIENDS: 'user_friends',
 } as const;
 
 export { DatabaseTableName };

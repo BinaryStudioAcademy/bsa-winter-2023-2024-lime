@@ -72,6 +72,13 @@ class UserService implements Service {
             throw new Error(`Error occured ${error}`);
         }
     }
+
+    // public async addFriend(
+    //     userRequestDto: UserAuthResponseDto,
+    // ): Promise<UserAuthResponseDto> {
+    //     return userRequestDto;
+    // }
+
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,

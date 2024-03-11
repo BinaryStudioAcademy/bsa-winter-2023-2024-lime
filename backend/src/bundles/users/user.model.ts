@@ -6,6 +6,7 @@ import {
     OAuthStateAttributes,
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
+import { UserFriendsModel } from '~/bundles/users/user-friends.model.js';
 import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
 import { WorkoutModel } from '~/bundles/workouts/workouts.js';
 import {
@@ -79,6 +80,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_ACHIEVEMENTS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            userFriends: {
+                relation: Model.HasOneRelation,
+                modelClass: UserFriendsModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_FRIENDS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
             workouts: {

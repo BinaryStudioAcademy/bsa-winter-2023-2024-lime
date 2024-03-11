@@ -9,7 +9,7 @@ import {
     FriendCard,
     FriendDetails,
 } from '~/bundles/friends/components/components.js';
-import { type UserGetAllItemResponseDto } from '~/bundles/friends/types/types.js';
+import { type UserAuthResponseDto } from '~/bundles/friends/types/types.js';
 import { actions as usersActions } from '~/bundles/users/store/users.js';
 
 const Friends: React.FC = () => {
@@ -17,11 +17,13 @@ const Friends: React.FC = () => {
         null,
     );
     const [selectedFriend, setSelectedFriend] =
-        useState<UserGetAllItemResponseDto | null>(null);
-    const [isTabActive, setIsTabActive] = useState(true);
+        useState<UserAuthResponseDto | null>(null);
+    const [isTabActive, setIsTabActive] = useState<boolean>(true);
 
     const dispatch = useAppDispatch();
-    const { users } = useAppSelector((state) => state.users);
+    const { users: allUsers } = useAppSelector((state) => state.users);
+    const currentUser = useAppSelector((state) => state.auth.user);
+    const [users, setUsers] = useState<UserAuthResponseDto[]>([]);
 
     const handleSelectCard = useCallback((id: number): void => {
         setSelectedFriendId(id);
@@ -36,9 +38,14 @@ const Friends: React.FC = () => {
     }, [setIsTabActive]);
 
     useEffect(() => {
-        setSelectedFriend(
-            users.find((user) => user.id === selectedFriendId) || null,
-        );
+        setUsers(allUsers.filter((user) => user.id !== currentUser?.id));
+    }, [setUsers, allUsers, currentUser]);
+
+    useEffect(() => {
+        users &&
+            setSelectedFriend(
+                users.find((user) => user.id === selectedFriendId) || null,
+            );
     }, [selectedFriendId, setSelectedFriend, users]);
 
     useEffect(() => {
@@ -75,21 +82,26 @@ const Friends: React.FC = () => {
             <div
                 className={`flex flex-wrap items-start gap-5 ${selectedFriendId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
             >
-                {users.map((user) => (
-                    <div key={user.id} className={'cursor-pointer'}>
-                        <FriendCard
-                            name={user.email}
-                            id={user.id}
-                            isFriend={false}
-                            isActive={true}
-                            isSelected={selectedFriendId === user.id}
-                            handleSelectCard={handleSelectCard}
-                            avatarUrl={
-                                'https://cdn.galleries.smcloud.net/t/galleries/gf-pgjw-nacx-mdJT_joga-cwiczenia-efekty-i-odmiany-jogi-co-daje-joga-664x442.jpg'
-                            }
-                        />
+                {isTabActive ? (
+                    users &&
+                    users.map((user) => (
+                        <div key={user.id} className={'cursor-pointer'}>
+                            <FriendCard
+                                name={user.fullName}
+                                id={user.id}
+                                isFriend={false}
+                                isActive={true}
+                                isSelected={selectedFriendId === user.id}
+                                handleSelectCard={handleSelectCard}
+                                avatarUrl={user?.avatarUrl}
+                            />
+                        </div>
+                    ))
+                ) : (
+                    <div className={'text-secondary'}>
+                        You do not have any friends yet
                     </div>
-                ))}
+                )}
             </div>
 
             {selectedFriend && (
@@ -97,10 +109,8 @@ const Friends: React.FC = () => {
                     <FriendDetails
                         id={selectedFriend.id}
                         isActive={true}
-                        name={selectedFriend.email}
-                        avatarUrl={
-                            'https://cdn.galleries.smcloud.net/t/galleries/gf-pgjw-nacx-mdJT_joga-cwiczenia-efekty-i-odmiany-jogi-co-daje-joga-664x442.jpg'
-                        }
+                        name={selectedFriend.fullName}
+                        avatarUrl={selectedFriend.avatarUrl}
                     />
                 </aside>
             )}

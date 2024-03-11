@@ -96,6 +96,18 @@ class UserController extends BaseController {
                     }>,
                 ),
         });
+
+        // this.addRoute({
+        //     path: UsersApiPath.FRIENDS,
+        //     method: 'POST',
+        //     isProtected: true,
+        //     handler: (options) =>
+        //         this.addFriend(
+        //             options as ApiHandlerOptions<{
+        //                 body: UserAuthResponseDto;
+        //             }>,
+        //         ),
+        // });
     }
 
     /**
@@ -255,6 +267,43 @@ class UserController extends BaseController {
             });
         }
     }
+
+    /**
+     * @swagger
+     * /api/v1/users/friends:
+     *    post:
+     *      tags:
+     *       - Friends
+     *      description: Add friend
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+
+    // private async addFriend(
+    //     options: ApiHandlerOptions<{
+    //         body: UserAuthResponseDto;
+    //     }>,
+    // ): Promise<ApiHandlerResponse> {
+    //     return {
+    //         type: ApiHandlerResponseType.DATA,
+    //         status: HttpCode.OK,
+    //         payload: await this.userService.addFriend(options.body),
+    //     };
+    // }
 }
 
 export { UserController };

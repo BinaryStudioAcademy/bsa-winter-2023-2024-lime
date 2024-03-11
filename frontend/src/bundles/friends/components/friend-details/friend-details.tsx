@@ -1,8 +1,11 @@
+import { UserCircleIcon } from '@heroicons/react/24/solid';
+
 import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
 import { Avatar, Card } from '~/bundles/common/components/components.js';
 import { ViewAllButton } from '~/bundles/common/components/info-section/components/view-all-button/view-all-button.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { formatDateString } from '~/bundles/common/helpers/format-date-string/format-date-string.helper.js';
+import { validateImageUrl } from '~/bundles/common/helpers/validate-image-url/validate-image-url.helper.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -11,7 +14,7 @@ import {
 
 type Properties = {
     id: number;
-    name: string;
+    name: string | null;
     isActive: boolean;
     avatarUrl: string | null;
 };
@@ -41,17 +44,23 @@ const FriendDetails = ({
                     <div className="bg-buttonTertiary h-2 w-2 rounded-[50%]" />
                 )}
 
-                <h3 className="text-primary font-heading font-extrabold font-semibold sm:text-xs lg:text-[1rem]">
+                <h3 className="text-primary font-heading font-semibold sm:text-xs lg:text-[1rem]">
                     {name}
                 </h3>
             </div>
 
             <div className={'mb-44'}>
-                <Avatar
-                    size="xl"
-                    email={name || ''}
-                    avatarUrl={avatarUrl || ''}
-                />
+                {avatarUrl && validateImageUrl(avatarUrl) ? (
+                    <Avatar
+                        size="xl"
+                        email={name || ''}
+                        avatarUrl={avatarUrl}
+                    />
+                ) : (
+                    <div className="bg-lm-grey-100 h-176 w-176 flex aspect-square items-center justify-center rounded-[50%]">
+                        <UserCircleIcon className="text-lm-grey-200 h-full w-full" />
+                    </div>
+                )}
             </div>
 
             <div className="mb-4 flex w-full items-center justify-between">
