@@ -108,7 +108,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     }, [reset]);
 
     return (
-        <div className="bg-lm-black-200 pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
+        <div className="bg-secondary pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
             <div className="flex items-center pb-12">
                 <Avatar
                     size="lg"
