@@ -9,7 +9,7 @@ const AchievementCard: React.FC<Properties> = ({
     achievement,
 }): JSX.Element => {
     return (
-        <div className="bg-secondary flex min-h-[4.125rem] items-center justify-between rounded-lg p-4 lg:w-[48.8%] xl:w-80">
+        <div className="bg-primary flex min-h-[4.125rem] items-center justify-between rounded-lg p-4 lg:w-[48.8%] xl:w-80">
             <div className="flex items-center gap-2">
                 <div>
                     <p className="text-lm-grey-200 mb-2 text-sm font-bold  leading-3">

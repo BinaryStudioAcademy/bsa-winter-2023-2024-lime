@@ -107,7 +107,7 @@ const Goals: React.FC = () => {
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
-        <main className="bg-primary ml-auto mr-auto flex w-full max-w-[71rem] flex-col gap-8 xl:flex-row xl:justify-normal">
+        <main className="bg-secondary ml-auto mr-auto flex w-full max-w-[71rem] flex-col gap-8 xl:flex-row xl:justify-normal">
             {isLoading ? (
                 <Loader />
             ) : (
@@ -141,7 +141,7 @@ const Goals: React.FC = () => {
                             </h2>
                             <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:flex-wrap">
                                 {goals.length === ZERO_VALUE && (
-                                    <p className="mb-5 w-full text-xl font-extrabold text-white">
+                                    <p className="text-primary mb-5 w-full text-xl font-extrabold">
                                         No goals yet
                                     </p>
                                 )}
