@@ -29,7 +29,7 @@ class AuthApi extends BaseHttpApi {
                 contentType: ContentType.JSON,
                 payload: JSON.stringify(payload),
                 hasAuth: false,
-                query: { referralCode },
+                query: { referralCode: referralCode ?? '' },
             },
         );
 

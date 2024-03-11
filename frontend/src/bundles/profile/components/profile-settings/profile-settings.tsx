@@ -43,11 +43,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     const [valuesDefault, setValuesDefault] = useState(false);
     const { user, userBonusesTransactions, userBonusesStatus } = useAppSelector(
-        ({ auth }) => ({
-            user: auth.user,
-            userBonusesTransactions: auth.userBonusesTransactions,
-            userBonusesStatus: auth.userBonusesStatus,
-        }),
+        ({ auth }) => auth,
     );
 
     const { control, errors, reset, setValue, handleSubmit } =

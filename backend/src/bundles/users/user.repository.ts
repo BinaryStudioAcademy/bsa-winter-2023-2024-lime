@@ -206,38 +206,27 @@ class UserRepository implements Repository {
     ): Promise<UserBonusGetAllItemResponseDto | null> {
         const { userId, actionType, transactionType, amount } =
             entity.toNewObject();
-        const trx = await this.userModel.startTransaction();
 
-        try {
-            const user = await this.userModel.query(trx).findById(userId);
+        const user = await this.userModel.query().findById(userId);
 
-            if (!user) {
-                return null;
-            }
-
-            const userBonusTransaction = await user
-                .$relatedQuery('userBonus', trx)
-                .insert({ userId, actionType, transactionType, amount })
-                .returning('*')
-                .first();
-
-            await trx.commit();
-
-            if (!userBonusTransaction) {
-                return null;
-            }
-            return {
-                id: userBonusTransaction.id,
-                userId: userBonusTransaction.userId,
-                actionType: userBonusTransaction.actionType,
-                transactionType: userBonusTransaction.transactionType,
-                amount: userBonusTransaction.amount,
-                createdAt: userBonusTransaction.createdAt,
-            };
-        } catch (error) {
-            await trx.rollback();
-            throw error;
+        if (!user) {
+            return null;
         }
+
+        const userBonusTransaction = await user
+            .$relatedQuery('userBonus')
+            .insert({ userId, actionType, transactionType, amount })
+            .returning('*')
+            .first();
+
+        return {
+            id: userBonusTransaction.id,
+            userId: userBonusTransaction.userId,
+            actionType: userBonusTransaction.actionType,
+            transactionType: userBonusTransaction.transactionType,
+            amount: userBonusTransaction.amount,
+            createdAt: userBonusTransaction.createdAt,
+        };
     }
 
     public delete(): ReturnType<Repository['delete']> {

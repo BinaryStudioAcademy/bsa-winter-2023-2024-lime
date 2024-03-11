@@ -73,12 +73,12 @@ class AuthService {
             });
         }
 
+        const isReferralProvided = referralCode.length > 0;
         const inviterUser = await this.userService.findWithUserDetailsJoined({
             referralCode,
         });
 
-        const isReferralCodeValid = referralCode !== 'null';
-        if (isReferralCodeValid && !inviterUser) {
+        if (isReferralProvided && !inviterUser) {
             throw new HttpError({
                 message: UserValidationMessage.USER_WITH_REFERRAL_ID_NOT_FOUND,
                 status: HttpCode.NOT_FOUND,
@@ -88,7 +88,7 @@ class AuthService {
         const user = await this.userService.create(userRequestDto);
         const token = await jwtService.createToken({ userId: user.id });
 
-        if (isReferralCodeValid && inviterUser) {
+        if (isReferralProvided && inviterUser) {
             const { id: inviterId } = inviterUser.toObject();
 
             await this.userService.createUserBonusTransaction({

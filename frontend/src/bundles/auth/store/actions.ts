@@ -21,6 +21,7 @@ const signUp = createAsyncThunk<
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
     const { authApi } = extra;
     const { referralCode, signUpDTO } = registerPayload;
+
     const response = await authApi.signUp(referralCode, signUpDTO);
     if (response.token) {
         await storage.set(StorageKey.TOKEN, response.token);
