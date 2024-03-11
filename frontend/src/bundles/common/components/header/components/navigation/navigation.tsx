@@ -7,7 +7,7 @@ import styles from './styles.module.css';
 
 type Properties = {
     email: string;
-    avatarUrl?: string;
+    avatarUrl?: string | null;
 };
 
 const Navigation = ({ email, avatarUrl }: Properties): JSX.Element => {
@@ -28,7 +28,7 @@ const Navigation = ({ email, avatarUrl }: Properties): JSX.Element => {
                     <Avatar
                         size="sm"
                         email={email}
-                        avatarUrl={avatarUrl || ''}
+                        avatarUrl={avatarUrl || null}
                     />
                 </li>
             </ul>
