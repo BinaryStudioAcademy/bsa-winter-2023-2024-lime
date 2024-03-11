@@ -61,7 +61,11 @@ const userUpdateProfile = z
         ]),
         weight: z.union([
             z.coerce
-                .number()
+                .number({
+                    errorMap: () => ({
+                        message: UserValidationMessage.WEIGHT_WRONG,
+                    }),
+                })
                 .nullable()
                 .refine(
                     (value) => {
@@ -81,7 +85,11 @@ const userUpdateProfile = z
         ]),
         height: z.union([
             z.coerce
-                .number()
+                .number({
+                    errorMap: () => ({
+                        message: UserValidationMessage.HEIGHT_WRONG,
+                    }),
+                })
                 .refine(
                     (value) => {
                         if (!value) {

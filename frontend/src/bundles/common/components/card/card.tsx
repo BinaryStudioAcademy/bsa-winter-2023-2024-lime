@@ -8,9 +8,9 @@ type Properties = {
 
 const Card: React.FC<Properties> = ({ title, imageSrc, name, data, chip }) => {
     return (
-        <div className="schedule-card bg-lm-black-100 w-full rounded-lg p-4 ">
+        <div className="schedule-card bg-primary w-full rounded-lg p-4 ">
             {title && (
-                <div className="text-md mb-4 font-semibold leading-3 text-white">
+                <div className="text-md text-card mb-4 font-semibold leading-3">
                     {title}
                 </div>
             )}
@@ -42,7 +42,7 @@ const Card: React.FC<Properties> = ({ title, imageSrc, name, data, chip }) => {
                     </div>
                 </div>
 
-                <div className="rounded-30 bg-lm-grey-500 text-lm-yellow-100 px-2 py-1 text-xs font-semibold leading-3">
+                <div className="rounded-30 bg-schedule text-action px-2 py-1 text-xs font-semibold leading-3">
                     {chip}
                 </div>
             </div>

@@ -2,7 +2,6 @@ import {
     Button,
     ButtonVariant,
     Icon,
-    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
@@ -35,7 +34,6 @@ const NotFound: React.FC = () => {
                     onClick={redirectToHomepage}
                 />
             </div>
-            <ThemeSwitcher />
         </div>
     );
 };
