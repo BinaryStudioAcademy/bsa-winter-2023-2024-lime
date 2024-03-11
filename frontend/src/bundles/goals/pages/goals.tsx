@@ -107,13 +107,13 @@ const Goals: React.FC = () => {
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
-        <main className="bg-primary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
+        <main className="bg-primary ml-auto mr-auto flex w-full max-w-[71rem] flex-col gap-8 xl:flex-row xl:justify-normal">
             {isLoading ? (
                 <Loader />
             ) : (
                 <>
-                    <div className="flex flex-col gap-8 ">
-                        <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
+                    <div className="flex w-full flex-col gap-8 xl:w-[70%]">
+                        <section>
                             <GoalWidget
                                 value={lastGoal?.progress as number}
                                 target={lastGoal?.progress as number}
@@ -139,7 +139,7 @@ const Goals: React.FC = () => {
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                 Goals
                             </h2>
-                            <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
+                            <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:flex-wrap">
                                 {goals.length === ZERO_VALUE && (
                                     <p className="mb-5 w-full text-xl font-extrabold text-white">
                                         No goals yet
@@ -165,14 +165,14 @@ const Goals: React.FC = () => {
                                         ),
                                     )}
                             </div>
-                            <div className="md:w-full xl:w-96">
+                            <div className="md:w-full lg:w-[48.8%]">
                                 <Button
                                     type="button"
                                     label="Set the new goal"
                                     variant={ButtonVariant.SECONDARY}
                                     size={ComponentSize.LARGE}
                                     leftIcon={<PlusIcon className="w-6" />}
-                                    className="h-[5rem] sm:text-sm md:h-[7.5rem] md:text-xl"
+                                    className="h-[7.5rem] sm:text-sm md:text-xl"
                                     onClick={handleOpenModal}
                                 />
                             </div>
@@ -184,7 +184,7 @@ const Goals: React.FC = () => {
                             Achievements
                         </h2>
 
-                        <div className="flex w-full flex-col gap-4">
+                        <div className="flex w-full flex-col gap-4 lg:flex-row lg:flex-wrap xl:flex-col">
                             {achievements?.length > ZERO_VALUE &&
                                 achievements.map((achievement) => (
                                     <AchievementCard
