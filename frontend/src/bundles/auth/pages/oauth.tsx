@@ -36,11 +36,7 @@ const OAuth = (): JSX.Element => {
         }
     }, [dispatch, dataStatus]);
 
-    return (
-        <div className="flex flex-1 flex-col items-center justify-center">
-            <Loader />
-        </div>
-    );
+    return <Loader isOverflow />;
 };
 
 export { OAuth };
