@@ -55,9 +55,11 @@ const SubNavigationItemWorkout = ({
                                 {workoutStartedAt.toISOString().split('T')[0]}
                             </p>
                         </div>
-                       {provider && <p className="text-secondary flex justify-between text-[0.8rem]">
-                            <span>{capitalizeFirstLetter(provider)}</span>
-                        </p>}
+                        {provider && (
+                            <p className="text-secondary flex justify-between text-[0.8rem]">
+                                <span>{capitalizeFirstLetter(provider)}</span>
+                            </p>
+                        )}
                     </div>
                 </div>
             </Link>
