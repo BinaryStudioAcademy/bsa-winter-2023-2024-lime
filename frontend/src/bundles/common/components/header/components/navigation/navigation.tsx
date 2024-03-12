@@ -1,16 +1,16 @@
 import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
-import defaultAvatar from '~/assets/img/default-avatar.svg';
-import { Link } from '~/bundles/common/components/components.js';
+import { Avatar, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 
 import styles from './styles.module.css';
 
 type Properties = {
-    avatarUrl?: string;
+    email: string;
+    avatarUrl?: string | null;
 };
 
-const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
+const Navigation = ({ email, avatarUrl }: Properties): JSX.Element => {
     return (
         <nav className={styles['navigation']}>
             <ul className={styles['menu-list']}>
@@ -25,10 +25,10 @@ const Navigation = ({ avatarUrl }: Properties): JSX.Element => {
                     </Link>
                 </li>
                 <li>
-                    <img
-                        src={avatarUrl ?? defaultAvatar}
-                        alt="avatar"
-                        className={styles['avatar']}
+                    <Avatar
+                        size="sm"
+                        email={email}
+                        avatarUrl={avatarUrl || null}
                     />
                 </li>
             </ul>
