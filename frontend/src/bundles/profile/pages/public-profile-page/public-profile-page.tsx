@@ -142,7 +142,7 @@ const PublicProfile: React.FC = () => {
                                 <ActivityWidget
                                     label="Total duration"
                                     value={`${hours} hrs ${minutes} min ${seconds}`}
-                                    color={ActivityWidgetColor.YELLOW}
+                                    color={ActivityWidgetColor.GREEN}
                                     icon={<Icon name={IconName.durationIcon} />}
                                 />
                             </li>
