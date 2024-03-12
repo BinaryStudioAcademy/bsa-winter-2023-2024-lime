@@ -89,6 +89,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
+                    location: data.location ? data.location.trim() : null,
                     weight: convertWeightToGrams(data.weight),
                     height: convertHeightToMillimeters(data.height),
                     dateOfBirth: data.dateOfBirth
@@ -133,7 +134,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 </div>
             </div>
             <form onSubmit={handleFormSubmit}>
-                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4">
+                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 lg:grid-cols-4">
                     <Input
                         className="border-0 lg:col-start-1 lg:col-end-3"
                         type="text"
@@ -179,6 +180,16 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         label="Height"
                         placeholder="0 sm"
                         name="height"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                    />
+                    <Input
+                        className="border-0 lg:col-start-1 lg:col-end-5"
+                        type="text"
+                        label="Location"
+                        placeholder="Kyiv, Ukraine"
+                        name="location"
                         control={control}
                         errors={errors}
                         isDisabled={isLoading}

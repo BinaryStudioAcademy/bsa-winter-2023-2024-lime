@@ -21,6 +21,8 @@ class UserDetailsModel extends AbstractModel {
 
     public 'height': number | null;
 
+    public 'location': string | null;
+
     public 'gender': ValueOf<typeof Gender> | null;
 
     public static override get tableName(): string {
