@@ -33,7 +33,7 @@ const GoalCard: React.FC<Properties> = ({
     duration = null,
 }): JSX.Element => {
     return (
-        <div className="bg-secondary flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:p-5 lg:pl-8 xl:w-96">
+        <div className="bg-primary flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:w-[48.5%] lg:p-5 lg:pl-8">
             <div className="flex items-center gap-4">
                 <ActivityIcon
                     activityType={activityType}
