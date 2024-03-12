@@ -22,14 +22,16 @@ const WorkoutItem = (): JSX.Element => {
 
     if (!currentWorkout) {
         return (
-            <p className="text-md text-primary text-center">
-                You don&#39;t have such workout
-            </p>
+            <div className="flex h-full w-full items-center justify-center">
+                <p className="font-base text-primary text-xl">
+                    You don&#39;t have such workout
+                </p>
+            </div>
         );
     }
 
     return (
-        <>
+        <div className="max-w-[50rem]">
             <WorkoutTitle workout={currentWorkout} />
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
@@ -42,7 +44,7 @@ const WorkoutItem = (): JSX.Element => {
                     View on Strava
                 </NavLink>
             )}
-        </>
+        </div>
     );
 };
 
