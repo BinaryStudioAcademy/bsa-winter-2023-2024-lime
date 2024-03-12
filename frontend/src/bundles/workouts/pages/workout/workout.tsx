@@ -49,7 +49,7 @@ const Workout: React.FC = () => {
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
-                <div className="flex w-full">
+                <div className="flex w-full flex-col md:flex-row">
                     <SubNavigationWorkout title={subNavigationTitle} />
                     <div className="border-lm-black-400 h-full border"></div>
 

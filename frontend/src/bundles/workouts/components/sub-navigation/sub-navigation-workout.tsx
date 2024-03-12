@@ -23,7 +23,7 @@ const SubNavigationWorkout = ({
     return (
         <div
             className={
-                'md:full mb-20 flex w-full flex-row gap-[1.75rem] sm:flex-col sm:gap-1 md:gap-4 lg:w-[20rem] '
+                'md:full mb-20 flex w-full flex-col gap-[1.75rem] sm:flex-col sm:gap-1 md:gap-4 lg:w-[20rem] '
             }
         >
             {title && (
