@@ -10,7 +10,6 @@ const ApiPath = {
     CONNECTIONS: '/connections',
     OAUTH: '/oauth',
     STRAVA: '/strava',
-    GOOGLE_FIT: '/google-fit',
 } as const;
 
 export { ApiPath };

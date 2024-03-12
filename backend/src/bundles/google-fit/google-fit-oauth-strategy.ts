@@ -18,7 +18,7 @@ import {
     READ_ACTIVITY_SCOPE,
     READ_HEART_RATE_SCOPE,
     READ_LOCATION_SCOPE,
-    WRITE_SCOPE,
+    WRITE_ACTIVITY_SCOPE,
 } from './constants/constants.js';
 import { ApiPath } from './enums/enums.js';
 
@@ -41,7 +41,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
             access_type: GOOGLE_FIT_ACCESS_TYPE,
             scope: [
                 `${GOOGLE_FIT_API_URL}${READ_ACTIVITY_SCOPE}`,
-                `${GOOGLE_FIT_API_URL}${WRITE_SCOPE}`,
+                `${GOOGLE_FIT_API_URL}${WRITE_ACTIVITY_SCOPE}`,
                 `${GOOGLE_FIT_API_URL}${READ_LOCATION_SCOPE}`,
                 `${GOOGLE_FIT_API_URL}${READ_HEART_RATE_SCOPE}`,
             ],
@@ -82,7 +82,7 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
             return false;
         }
         return scope.includes(
-            WRITE_SCOPE &&
+            WRITE_ACTIVITY_SCOPE &&
                 READ_ACTIVITY_SCOPE &&
                 READ_HEART_RATE_SCOPE &&
                 READ_LOCATION_SCOPE,

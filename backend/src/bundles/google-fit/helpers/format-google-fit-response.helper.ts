@@ -52,8 +52,8 @@ const getFitnessData = async (
                     return INITIAL_VALUE;
                 }
                 const [value] = p.value;
-                if (value?.intVal) {
-                    return value?.intVal ?? INITIAL_VALUE;
+                if (value && value.intVal) {
+                    return value.intVal ?? INITIAL_VALUE;
                 }
                 return value?.fpVal ?? INITIAL_VALUE;
             })
