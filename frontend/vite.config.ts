@@ -44,6 +44,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     workbox: {
         navigateFallbackDenylist: [
             new RegExp('/v1/documentation/static/index.html'),
+            new RegExp('/v1/oauth/[^/]+/exchange-token\\?.*'),
         ],
     },
 };
@@ -52,6 +53,7 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
     const {
         VITE_APP_DEVELOPMENT_PORT,
         VITE_APP_API_ORIGIN_URL,
+        VITE_APP_SOCKET_ORIGIN_URL,
         VITE_APP_PROXY_SERVER_URL,
     } = loadEnv(mode, process.cwd());
 
@@ -70,6 +72,11 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
                 [VITE_APP_API_ORIGIN_URL as string]: {
                     target: VITE_APP_PROXY_SERVER_URL,
                     changeOrigin: true,
+                },
+                [VITE_APP_SOCKET_ORIGIN_URL as string]: {
+                    target: VITE_APP_PROXY_SERVER_URL,
+                    changeOrigin: true,
+                    ws: true,
                 },
             },
         },
