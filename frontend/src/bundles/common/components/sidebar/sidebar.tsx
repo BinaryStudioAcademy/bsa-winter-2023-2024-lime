@@ -81,7 +81,7 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                             icon={<Icon name={IconName.workoutIcon} />}
                             text="Workout"
                             to={AppRoute.WORKOUT}
-                            isActive={activeRoute === AppRoute.WORKOUT}
+                            isActive={activeRoute.includes(AppRoute.WORKOUT)}
                         />
                         <SidebarNav
                             icon={<Icon name={IconName.goalsIcon} />}
@@ -95,10 +95,6 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                             to={AppRoute.SCHEDULE}
                             isActive={activeRoute === AppRoute.SCHEDULE}
                         />
-                    </div>
-
-                    <div className="flex w-[10rem] items-center justify-center px-6 py-4">
-                        <Icon name={IconName.poweredByStravaIcon} />
                     </div>
                 </div>
 
@@ -123,6 +119,9 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                                 size={ComponentSize.MEDIUM}
                                 onClick={handleLogout}
                             />
+                        </div>
+                        <div className="flex w-[10rem] items-center justify-center px-6 py-4">
+                            <Icon name={IconName.poweredByStravaIcon} />
                         </div>
                     </div>
                 </div>
