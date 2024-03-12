@@ -1,5 +1,4 @@
-import { ApiPath } from 'shared';
-
+import { ApiPath } from '~/bundles/common/enums/enums.js';
 import { type Http } from '~/framework/http/types/types.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
