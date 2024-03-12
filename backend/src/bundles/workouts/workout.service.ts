@@ -1,5 +1,5 @@
 import { HttpCode, HttpError } from '~/common/http/http.js';
-import { calculationService } from '~/common/services/services.js';
+import { calculationProgressService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import { WorkoutValidationMessage } from './enums/enums.js';
@@ -40,7 +40,7 @@ class WorkoutService implements Service {
                 ...payload,
             }),
         );
-        await calculationService.changeGoal(payload.userId);
+        await calculationProgressService.calculateProgress(payload.userId);
         return workout.toObject() as WorkoutResponseDto;
     }
     public async update(

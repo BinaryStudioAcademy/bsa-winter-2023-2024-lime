@@ -16,11 +16,11 @@ function calculateProgress(
     goal: GoalResponseDto,
     workouts: WorkoutResponseDto[],
 ): number {
-    const workoutSlice = workouts.slice(ZERO_VALUE, goal.frequency);
+    const workoutsByFrequency = workouts.slice(ZERO_VALUE, goal.frequency);
 
     if (goal.distance) {
         return Math.round(
-            (workoutSlice.reduce(
+            (workoutsByFrequency.reduce(
                 (accumulator, workout) => accumulator + workout.distance,
                 ZERO_VALUE,
             ) /
@@ -29,7 +29,7 @@ function calculateProgress(
         );
     } else if (goal.duration) {
         return Math.round(
-            (workoutSlice.reduce(
+            (workoutsByFrequency.reduce(
                 (accumulator, workout) => accumulator + workout.duration,
                 ZERO_VALUE,
             ) /
