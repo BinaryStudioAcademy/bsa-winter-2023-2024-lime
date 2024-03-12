@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { type WorkoutResponseDto } from 'shared';
 
@@ -8,6 +7,7 @@ import {
     capitalizeFirstLetter,
     configureString,
 } from '~/bundles/common/helpers/helpers.js';
+import { useLocation } from '~/bundles/common/hooks/hooks.js';
 
 type SubNavigationItemWorkoutProperties = {
     item: WorkoutResponseDto;
@@ -17,25 +17,15 @@ const SubNavigationItemWorkout = ({
     item,
 }: SubNavigationItemWorkoutProperties): JSX.Element => {
     const { activityType, id, workoutStartedAt, provider } = item;
-    const isActive =
-        id.toString() === window.location.pathname.split('/').pop();
-
-    const reference = useRef(null as unknown as HTMLLIElement);
+    const { pathname } = useLocation();
+    const isActive = id.toString() === pathname.split('/').pop();
 
     const redirectPath = configureString(AppRoute.WORKOUT_$ID, {
         id: String(id),
     });
 
-    useEffect(() => {
-        if (isActive && reference.current) {
-            reference.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-            });
-        }
-    }, [isActive]);
     return (
-        <li ref={reference}>
+        <li>
             <Link
                 to={redirectPath}
                 className="flex w-5/6 min-w-60 max-w-72 items-center justify-between gap-4"
