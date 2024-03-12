@@ -1,6 +1,7 @@
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
+    type UserFriendsRequestDto,
     type UserUpdateProfileRequestDto,
 } from '~/bundles/users/users.js';
 import {
@@ -13,7 +14,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import { UsersApiPath } from './enums/enums.js';
+import { UsersApiPath, UserValidationMessage } from './enums/enums.js';
 
 /**
  * @swagger
@@ -97,17 +98,43 @@ class UserController extends BaseController {
                 ),
         });
 
-        // this.addRoute({
-        //     path: UsersApiPath.FRIENDS,
-        //     method: 'POST',
-        //     isProtected: true,
-        //     handler: (options) =>
-        //         this.addFriend(
-        //             options as ApiHandlerOptions<{
-        //                 body: UserAuthResponseDto;
-        //             }>,
-        //         ),
-        // });
+        this.addRoute({
+            path: UsersApiPath.FRIENDS,
+            method: 'POST',
+            isProtected: true,
+            handler: (options) =>
+                this.addFriend(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        body: UserFriendsRequestDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.FRIENDS,
+            method: 'DELETE',
+            isProtected: true,
+            handler: (options) =>
+                this.removeFriend(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        body: UserFriendsRequestDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.FRIENDS,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getAllFriends(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -293,17 +320,131 @@ class UserController extends BaseController {
      *                      $ref: '#/components/schemas/Error'
      */
 
-    // private async addFriend(
-    //     options: ApiHandlerOptions<{
-    //         body: UserAuthResponseDto;
-    //     }>,
-    // ): Promise<ApiHandlerResponse> {
-    //     return {
-    //         type: ApiHandlerResponseType.DATA,
-    //         status: HttpCode.OK,
-    //         payload: await this.userService.addFriend(options.body),
-    //     };
-    // }
+    private async addFriend(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            body: UserFriendsRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user, body } = options;
+        const { friendId } = body;
+        const { id } = user;
+        try {
+            const addedFriend = await this.userService.addFriend(id, friendId);
+            if (!addedFriend) {
+                throw new HttpError({
+                    message: UserValidationMessage.USER_NOT_FOUND,
+                    status: HttpCode.NOT_FOUND,
+                });
+            }
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.OK,
+                payload: addedFriend,
+            };
+        } catch (error) {
+            throw new Error(`Error occurred ${error}`);
+        }
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/friends:
+     *    delete:
+     *      tags:
+     *       - Friends
+     *      description: Remove friend
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+
+    private async removeFriend(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            body: UserFriendsRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user, body } = options;
+        const { friendId } = body;
+        const { id } = user;
+        try {
+            const friendRemoved = await this.userService.removeFriend(
+                id,
+                friendId,
+            );
+            if (!friendRemoved) {
+                throw new HttpError({
+                    message: UserValidationMessage.FRIEND_NOT_FOUND,
+                    status: HttpCode.NOT_FOUND,
+                });
+            }
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.OK,
+                payload: { message: 'Friend removed successfully' },
+            };
+        } catch (error) {
+            throw new Error(`Error occurred while removing friend: ${error}`);
+        }
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/friends:
+     *    get:
+     *      tags:
+     *       - Friends
+     *      description: Get all friends
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+
+    private async getAllFriends(
+        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user } = options;
+        try {
+            const friends = await this.userService.getAllFriends(user.id);
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.OK,
+                payload: friends,
+            };
+        } catch (error) {
+            throw new HttpError({
+                message: `Error fetching user's friends: ${error}`,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
 }
 
 export { UserController };

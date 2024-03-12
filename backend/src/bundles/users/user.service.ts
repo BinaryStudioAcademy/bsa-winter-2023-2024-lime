@@ -8,6 +8,7 @@ import { UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserFriendsResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
@@ -73,12 +74,6 @@ class UserService implements Service {
         }
     }
 
-    // public async addFriend(
-    //     userRequestDto: UserAuthResponseDto,
-    // ): Promise<UserAuthResponseDto> {
-    //     return userRequestDto;
-    // }
-
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
@@ -88,6 +83,42 @@ class UserService implements Service {
 
     public delete(): ReturnType<Service['delete']> {
         return Promise.resolve(true);
+    }
+
+    public async addFriend(id: number, friendId: number): Promise<boolean> {
+        try {
+            const addedFriend = await this.userRepository.addFriend(
+                id,
+                friendId,
+            );
+            if (!addedFriend) {
+                throw new HttpError({
+                    message: UserValidationMessage.USER_NOT_FOUND,
+                    status: HttpCode.NOT_FOUND,
+                });
+            }
+            return addedFriend;
+        } catch (error) {
+            throw new Error(`Error occurred ${error}`);
+        }
+    }
+
+    public async removeFriend(id: number, friendId: number): Promise<boolean> {
+        try {
+            return await this.userRepository.removeFriend(id, friendId);
+        } catch (error) {
+            throw new Error(`Error occurred while removing friend: ${error}`);
+        }
+    }
+
+    public async getAllFriends(
+        userId: number,
+    ): Promise<UserFriendsResponseDto[] | null> {
+        try {
+            return await this.userRepository.getAllFriends(userId);
+        } catch (error) {
+            throw new Error(`Error occurred while fetching friends: ${error}`);
+        }
     }
 }
 

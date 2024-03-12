@@ -6,7 +6,6 @@ import {
     OAuthStateAttributes,
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
-import { UserFriendsModel } from '~/bundles/users/user-friends.model.js';
 import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
 import { WorkoutModel } from '~/bundles/workouts/workouts.js';
 import {
@@ -19,6 +18,7 @@ import { SubscriptionModel } from '../subscriptions/subscription.model.js';
 import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
+import { UserFriendsModel } from './user-friends.model.js';
 
 class UserModel extends AbstractModel {
     public 'email': string;
@@ -35,6 +35,8 @@ class UserModel extends AbstractModel {
     public 'userOAuthInfo': OAuthModel;
 
     public 'userOAuthState': OAuthStateModel;
+
+    public 'userFriends': UserFriendsModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;

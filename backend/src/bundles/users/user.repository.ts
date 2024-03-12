@@ -1,5 +1,7 @@
+import { type UserFriendsResponseDto } from '~/bundles/users/types/types.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
+import { DatabaseTableName } from '~/common/database/database.js';
 import { type Repository } from '~/common/types/types.js';
 
 import { type UserDetailsModel } from './user-details.model.js';
@@ -157,6 +159,80 @@ class UserRepository implements Repository {
     }
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
+    }
+
+    public async addFriend(id: number, friendId: number): Promise<boolean> {
+        const trx = await this.userModel.startTransaction();
+        try {
+            const user = await this.userModel.query(trx).findById(id);
+            if (!user) {
+                return false;
+            }
+            const userFriends = await user
+                .$relatedQuery('userFriends', trx)
+                .insert({ friendId })
+                .returning('*')
+                .first();
+
+            await trx.commit();
+
+            return !!userFriends;
+        } catch (error) {
+            await trx.rollback();
+            throw new Error(`Error adding user friends: ${error}`);
+        }
+    }
+
+    public async removeFriend(id: number, friendId: number): Promise<boolean> {
+        const trx = await this.userModel.startTransaction();
+        try {
+            const user = await this.userModel.query(trx).findById(id);
+            if (!user) {
+                return false;
+            }
+            const removedFriend = await user
+                .$relatedQuery('userFriends', trx)
+                .delete()
+                .where('friend_id', friendId);
+
+            await trx.commit();
+
+            return !!removedFriend;
+        } catch (error) {
+            await trx.rollback();
+            throw new Error(`Error removing user friend: ${error}`);
+        }
+    }
+
+    public async getAllFriends(
+        userId: number,
+    ): Promise<UserFriendsResponseDto[] | null> {
+        try {
+            const friends = await this.userModel
+                .query()
+                .select(
+                    'ud.id',
+                    'ud.user_id',
+                    'ud.full_name',
+                    'ud.avatar_url',
+                    'ud.username',
+                    'ud.date_of_birth',
+                    'ud.weight',
+                    'ud.height',
+                    'ud.gender',
+                )
+                .from(`${DatabaseTableName.USER_FRIENDS} as uf`)
+                .join(`${DatabaseTableName.USERS} as u`, 'uf.friend_id', 'u.id')
+                .leftJoin(
+                    `${DatabaseTableName.USER_DETAILS} as ud`,
+                    'u.id',
+                    'ud.user_id',
+                )
+                .where('uf.user_id', userId);
+            return friends as unknown as UserFriendsResponseDto[];
+        } catch (error) {
+            throw new Error(`Error fetching friends: ${error}`);
+        }
     }
 }
 
