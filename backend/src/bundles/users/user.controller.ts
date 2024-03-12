@@ -395,7 +395,7 @@ class UserController extends BaseController {
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
-                payload: { message: 'Friend removed successfully' },
+                payload: friendId,
             };
         } catch (error) {
             throw new Error(`Error occurred while removing friend: ${error}`);

@@ -17,7 +17,7 @@ type FriendProperties = {
     isFriend: boolean;
     isSelected: boolean;
     handleSelectCard: (id: number) => void;
-    // toggleFriend: (id: number, isFriend: boolean) => void;
+    toggleFriend: (id: number) => void;
     // messageFriend: (id: number) => void;
 };
 
@@ -29,13 +29,13 @@ const FriendCard = ({
     isFriend,
     isSelected,
     handleSelectCard,
-    // toggleFriend,
+    toggleFriend,
     // messageFriend,
 }: FriendProperties): JSX.Element => {
-    // const handletoggleFriend = useCallback(() => {
-    //     toggleFriend(id, isFriend);
-    // }, [toggleFriend, isFriend, id]);
-    //
+    const handletoggleFriend = useCallback(() => {
+        toggleFriend(id);
+    }, [toggleFriend, id]);
+
     // const handleSendMessage = useCallback(() => {
     //     messageFriend(id);
     // }, [messageFriend, id]);
@@ -47,10 +47,12 @@ const FriendCard = ({
     return (
         <div
             className={`hover:border-buttonPrimary flex h-[330px] w-[235px] flex-col overflow-hidden rounded-xl border ${isSelected ? 'border-buttonPrimary' : 'border-transparent'}`}
-            onClick={handleClick}
-            role="presentation"
         >
-            <div className="h-[227px] w-full object-cover">
+            <div
+                className="h-[227px] w-full cursor-pointer object-cover"
+                onClick={handleClick}
+                role="presentation"
+            >
                 {avatarUrl && validateImageUrl(avatarUrl) ? (
                     <img
                         src={avatarUrl}
@@ -80,16 +82,16 @@ const FriendCard = ({
                     <div className="inline-flex w-3/4 items-center">
                         {isFriend ? (
                             <Button
-                                // onClick={handletoggleFriend}
-                                label={'Remove friend'}
+                                onClick={handletoggleFriend}
+                                label={'Unfollow'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
                                 variant={isFriend ? 'secondary' : 'primary'}
                             />
                         ) : (
                             <Button
-                                // onClick={handletoggleFriend}
-                                label={'Add friend'}
+                                onClick={handletoggleFriend}
+                                label={'Follow'}
                                 className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
                                 size={ComponentSize.SMALL}
                                 variant={isFriend ? 'secondary' : 'primary'}

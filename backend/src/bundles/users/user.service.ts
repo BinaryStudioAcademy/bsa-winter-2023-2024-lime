@@ -85,7 +85,10 @@ class UserService implements Service {
         return Promise.resolve(true);
     }
 
-    public async addFriend(id: number, friendId: number): Promise<boolean> {
+    public async addFriend(
+        id: number,
+        friendId: number,
+    ): Promise<UserFriendsResponseDto | null> {
         try {
             const addedFriend = await this.userRepository.addFriend(
                 id,
@@ -103,7 +106,7 @@ class UserService implements Service {
         }
     }
 
-    public async removeFriend(id: number, friendId: number): Promise<boolean> {
+    public async removeFriend(id: number, friendId: number): Promise<number> {
         try {
             return await this.userRepository.removeFriend(id, friendId);
         } catch (error) {

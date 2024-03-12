@@ -12,6 +12,8 @@ import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
+import { friendsApi } from '~/bundles/friends/friends.js';
+import { reducer as friendsReducer } from '~/bundles/friends/store/friends.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
@@ -42,6 +44,7 @@ type RootReducer = {
     theme: ReturnType<typeof themeReducer>;
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
+    friends: ReturnType<typeof friendsReducer>;
 };
 
 type ExtraArguments = {
@@ -54,6 +57,7 @@ type ExtraArguments = {
     passwordResetApi: typeof passwordResetApi;
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
+    friendsApi: typeof friendsApi;
 };
 
 class Store {
@@ -79,6 +83,7 @@ class Store {
                 theme: themeReducer,
                 connections: connectionsReducer,
                 workouts: workoutsReducer,
+                friends: friendsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -100,6 +105,7 @@ class Store {
             passwordResetApi,
             connectionApi,
             workoutApi,
+            friendsApi,
         };
     }
 }

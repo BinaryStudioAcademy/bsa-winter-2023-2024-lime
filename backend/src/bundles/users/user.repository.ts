@@ -6,6 +6,19 @@ import { type Repository } from '~/common/types/types.js';
 
 import { type UserDetailsModel } from './user-details.model.js';
 
+const USER_ID = 'user_id';
+const USER_DETAILS_SELECT_FIELDS = [
+    'ud.id',
+    `ud.${USER_ID}`,
+    'ud.full_name',
+    'ud.avatar_url',
+    'ud.username',
+    'ud.date_of_birth',
+    'ud.weight',
+    'ud.height',
+    'ud.gender',
+];
+
 class UserRepository implements Repository {
     private userModel: typeof UserModel;
 
@@ -161,43 +174,51 @@ class UserRepository implements Repository {
         return Promise.resolve(true);
     }
 
-    public async addFriend(id: number, friendId: number): Promise<boolean> {
+    public async addFriend(
+        id: number,
+        friendId: number,
+    ): Promise<UserFriendsResponseDto | null> {
         const trx = await this.userModel.startTransaction();
         try {
             const user = await this.userModel.query(trx).findById(id);
             if (!user) {
-                return false;
+                return null;
             }
-            const userFriends = await user
+            await user
                 .$relatedQuery('userFriends', trx)
                 .insert({ friendId })
                 .returning('*')
                 .first();
 
+            const userDetails = await this.userModel
+                .query(trx)
+                .findById(friendId)
+                .select(...USER_DETAILS_SELECT_FIELDS)
+                .leftJoin('user_details as ud', `ud.${USER_ID}`, 'users.id');
+
             await trx.commit();
 
-            return !!userFriends;
+            return userDetails as unknown as UserFriendsResponseDto;
         } catch (error) {
             await trx.rollback();
-            throw new Error(`Error adding user friends: ${error}`);
+            throw new Error(`Error adding user friend: ${error}`);
         }
     }
 
-    public async removeFriend(id: number, friendId: number): Promise<boolean> {
+    public async removeFriend(id: number, friendId: number): Promise<number> {
         const trx = await this.userModel.startTransaction();
         try {
             const user = await this.userModel.query(trx).findById(id);
             if (!user) {
-                return false;
+                return 0;
             }
-            const removedFriend = await user
+            await user
                 .$relatedQuery('userFriends', trx)
                 .delete()
                 .where('friend_id', friendId);
-
             await trx.commit();
 
-            return !!removedFriend;
+            return friendId;
         } catch (error) {
             await trx.rollback();
             throw new Error(`Error removing user friend: ${error}`);
@@ -210,25 +231,15 @@ class UserRepository implements Repository {
         try {
             const friends = await this.userModel
                 .query()
-                .select(
-                    'ud.id',
-                    'ud.user_id',
-                    'ud.full_name',
-                    'ud.avatar_url',
-                    'ud.username',
-                    'ud.date_of_birth',
-                    'ud.weight',
-                    'ud.height',
-                    'ud.gender',
-                )
+                .select(...USER_DETAILS_SELECT_FIELDS)
                 .from(`${DatabaseTableName.USER_FRIENDS} as uf`)
                 .join(`${DatabaseTableName.USERS} as u`, 'uf.friend_id', 'u.id')
                 .leftJoin(
                     `${DatabaseTableName.USER_DETAILS} as ud`,
                     'u.id',
-                    'ud.user_id',
+                    `ud.${USER_ID}`,
                 )
-                .where('uf.user_id', userId);
+                .where(`uf.${USER_ID}`, userId);
             return friends as unknown as UserFriendsResponseDto[];
         } catch (error) {
             throw new Error(`Error fetching friends: ${error}`);
