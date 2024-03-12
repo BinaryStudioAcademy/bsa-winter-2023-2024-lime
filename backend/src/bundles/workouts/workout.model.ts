@@ -9,7 +9,7 @@ import {
 import { type ActivityType } from '~/common/enums/enums.js';
 import { type ValueOf } from '~/common/types/types.js';
 
-import { WorkoutAttributes } from './enums/enums.js';
+import { type OAuthProvider, WorkoutAttributes } from './enums/enums.js';
 
 class WorkoutModel extends AbstractModel {
     public 'userId': number;
@@ -22,6 +22,7 @@ class WorkoutModel extends AbstractModel {
     public 'distance': number;
     public 'speed': number;
     public 'kilocalories': number;
+    public 'provider': ValueOf<typeof OAuthProvider> | null;
 
     public static override get tableName(): string {
         return DatabaseTableName.WORKOUTS;

@@ -31,13 +31,13 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
     const [hours, minutes, seconds] = convertSecondsToHMS(duration);
 
     const styles = {
-        metrics: 'text-sm text-white animate-fade-in',
+        metrics: 'text-sm text-primary animate-fade-in',
         units: 'text-sm text-lm-grey-200',
     };
 
     return (
         <div
-            className="bg-lm-black-100 bg-wave-grey mt-[1.25rem] h-[19.8rem] w-full rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat"
+            className="bg-primary bg-wave-grey mt-[1.25rem] h-[15rem] w-full rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat lg:h-[19.8rem]"
             key={id}
         >
             <div className="px-[1.875rem] py-[1.25rem]">

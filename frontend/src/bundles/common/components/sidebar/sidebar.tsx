@@ -27,7 +27,8 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-lm-black-100 flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
+        'bg-primary flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
+
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
@@ -100,7 +101,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         isActive={activeRoute === AppRoute.HELP}
                     />
 
-                    <div className="flex items-center justify-center">
+                    <div className="text-lm-grey-200 flex items-center justify-center">
                         <Button
                             type="button"
                             label={'Logout'}
@@ -112,6 +113,10 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                             size={ComponentSize.MEDIUM}
                             onClick={handleLogout}
                         />
+                    </div>
+
+                    <div className="flex w-[10rem] items-center justify-center px-6 py-4">
+                        <Icon name={IconName.poweredByStravaIcon} />
                     </div>
                 </div>
             </div>
