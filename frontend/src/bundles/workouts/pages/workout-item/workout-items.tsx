@@ -1,12 +1,12 @@
-import { Link } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { NavLink } from 'react-router-dom';
+
 import { useAppSelector, useParams } from '~/bundles/common/hooks/hooks.js';
 import {
     WorkoutRoute,
     WorkoutStats,
     WorkoutTitle,
 } from '~/bundles/workouts/components/components.js';
-import { OAuthProvider } from '~/bundles/workouts/enums/enums.js';
+import { OAuthProvider, ProviderLink } from '~/bundles/workouts/enums/enums.js';
 
 const WorkoutItem = (): JSX.Element => {
     const { id } = useParams();
@@ -33,12 +33,13 @@ const WorkoutItem = (): JSX.Element => {
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
             {currentWorkout.provider === OAuthProvider.STRAVA && (
-                <Link
-                    to={AppRoute.STRAVA_ATHLETE_TRAINING}
+                <NavLink
+                    to={ProviderLink.STRAVA_ATHLETE_TRAINING}
                     className="text-strava-brand mt-[0.5rem] text-right"
+                    reloadDocument
                 >
                     View on Strava
-                </Link>
+                </NavLink>
             )}
         </>
     );

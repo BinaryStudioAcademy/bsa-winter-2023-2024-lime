@@ -17,7 +17,6 @@ const AppRoute = {
     PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
     NOT_FOUND: '*',
     PROFILE: '/profile/settings',
-    STRAVA_ATHLETE_TRAINING: 'https://www.strava.com/athlete/training',
 } as const;
 
 export { AppRoute };
