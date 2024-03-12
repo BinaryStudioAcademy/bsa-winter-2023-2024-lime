@@ -1,7 +1,4 @@
-import {
-    Icon,
-    Loader,
-} from '~/bundles/common/components/components.js';
+import { Icon, Loader } from '~/bundles/common/components/components.js';
 import { IconName } from '~/bundles/common/components/icon/enums/icon-name.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -53,14 +50,16 @@ const Workout: React.FC = () => {
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
-                <div className="flex w-full">
+                <div className="flex w-full flex-col md:flex-row">
                     {workouts.length > 0 ? (
                         <>
-                            <div className="my-[-2rem] ml-[-2rem]">
-                                <SubNavigationWorkout title={subNavigationTitle} />
+                            <div className="my-[-1rem] ml-[-1rem]">
+                                <SubNavigationWorkout
+                                    title={subNavigationTitle}
+                                />
                             </div>
 
-                            <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
+                            <div className="border-lm-black-400 border sm:my-[1rem] sm:h-0 md:my-[-2rem] md:h-[calc(100%+4rem)]"></div>
 
                             <div className="w-full px-[1.5rem]">
                                 <WorkoutItem />
