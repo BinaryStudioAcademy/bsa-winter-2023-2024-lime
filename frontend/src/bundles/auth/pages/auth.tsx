@@ -1,6 +1,7 @@
 import authLogo from '~/assets/img/auth-logo.svg';
 import {
     ForgotPasswordForm,
+    Loader,
     Modal,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
@@ -36,10 +37,9 @@ const Auth: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
 
-    const { dataStatus, user } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-        user: auth.user,
-    }));
+    const { dataStatus, user, isRefreshing } = useAppSelector(
+        ({ auth }) => auth,
+    );
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
         ({ passwordReset }) => ({
@@ -130,6 +130,10 @@ const Auth: React.FC = () => {
         logoContainer:
             'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
     };
+
+    if (isRefreshing || user) {
+        return <Loader isOverflow />;
+    }
 
     return (
         <main className={getValidClassNames(classes.main)}>
