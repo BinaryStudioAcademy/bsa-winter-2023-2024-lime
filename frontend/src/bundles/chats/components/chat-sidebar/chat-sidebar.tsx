@@ -27,7 +27,7 @@ const ChatSidebar = ({ chats, aiChat }: Properties): JSX.Element => {
                 <span className="text-secondary mb-1">AI</span>
                 <AiChatLink lastMessage={aiChat.lastMessage} />
             </div>
-            <span className="text-secondary">Friends</span>
+            <span className="text-secondary mb-1">Friends</span>
             <ul className="mb-4 flex h-full flex-1 list-none flex-col gap-5 overflow-y-auto">
                 {hasChat &&
                     chats.map((item, id) => (

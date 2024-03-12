@@ -44,7 +44,7 @@ const ChatMessageForm = ({ onSubmit }: Properties): JSX.Element => {
                 leftIcon={
                     <PaperAirplaneIcon className="text-lm-black-100 w-6" />
                 }
-                className="h-[90%] w-full max-w-[3rem]"
+                className="h-[90%] max-w-[3rem]"
             />
         </form>
     );

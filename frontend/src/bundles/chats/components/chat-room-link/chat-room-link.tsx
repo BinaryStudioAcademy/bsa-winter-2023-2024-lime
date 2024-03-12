@@ -24,7 +24,7 @@ const ChatRoomLink = ({
     lastMessage,
     username,
 }: Properties): JSX.Element => {
-    const { id: parameterId } = useParams<{ id: string }>();
+    const { id: parameterId } = useParams();
     const isActive = String(id) === parameterId;
 
     const chatRouteById = configureString(AppRoute.CHATS_$ID, {

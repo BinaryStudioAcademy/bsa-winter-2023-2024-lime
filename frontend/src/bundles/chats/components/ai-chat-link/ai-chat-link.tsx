@@ -9,7 +9,7 @@ type Properties = {
 };
 
 const AiChatLink = ({ lastMessage }: Properties): JSX.Element => {
-    const { id: parameterId } = useParams<{ id: string }>();
+    const { id: parameterId } = useParams();
     const isActive = parameterId === 'ai-assistant';
 
     return (

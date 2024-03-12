@@ -2,6 +2,7 @@ import CyclingIcon from '~/assets/img/icons/activities/cycling.svg?react';
 import RunningIcon from '~/assets/img/icons/activities/running.svg?react';
 import WalkingIcon from '~/assets/img/icons/activities/walking.svg?react';
 import AiAssistantIconfrom from '~/assets/img/icons/ai-assistant-icon.svg?react';
+import AiPoweredIcon from '~/assets/img/icons/ai-powered-icon.svg?react';
 import ArrowDownIcon from '~/assets/img/icons/arrow-down-icon.svg?react';
 import BellIcon from '~/assets/img/icons/bell-icon.svg?react';
 import CaloriesIcon from '~/assets/img/icons/calories-icon.svg?react';
@@ -52,6 +53,7 @@ const IconComponent: Record<
     starIcon: StarIcon,
     searchIcon: SearchIcon,
     aiAssistantIcon: AiAssistantIconfrom,
+    aiPoweredIcon: AiPoweredIcon,
 } as const;
 
 export { IconComponent };
