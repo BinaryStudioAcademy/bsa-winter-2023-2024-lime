@@ -28,7 +28,7 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-primary flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
+        'bg-primary flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 z-10 text-white',
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
@@ -48,11 +48,8 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
     useEffect(() => {
         setActiveRoute(pathname);
 
-        const transformValue = window.innerWidth <= 490 ? '-100%' : '-80%';
         setSidebarStyle({
-            transform: isOpen
-                ? 'translateX(0)'
-                : `translateX(${transformValue})`,
+            transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
             gridArea: 'aside',
         });
     }, [pathname, isOpen]);
@@ -62,7 +59,7 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
             {isOpen && (
                 <button
                     onClick={toggleSidebar}
-                    className="bg-lm-black-100 fixed inset-0 top-[88px] z-10 opacity-50 md:hidden"
+                    className="bg-lm-black-100 fixed inset-0 top-[88px] z-10 opacity-50 xl:hidden "
                 />
             )}
             <div
@@ -75,28 +72,24 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                 <div className="inner h-3/4 w-full border-gray-700 ">
                     <div className="flex flex-col gap-4">
                         <SidebarNav
-                            isOpen={isOpen}
                             icon={<OverviewIcon />}
                             text="Overview"
                             to={AppRoute.OVERVIEW}
                             isActive={activeRoute === AppRoute.OVERVIEW}
                         />
                         <SidebarNav
-                            isOpen={isOpen}
                             icon={<Icon name={IconName.workoutIcon} />}
                             text="Workout"
                             to={AppRoute.WORKOUT}
                             isActive={activeRoute === AppRoute.WORKOUT}
                         />
                         <SidebarNav
-                            isOpen={isOpen}
                             icon={<Icon name={IconName.goalsIcon} />}
                             text="Goals"
                             to={AppRoute.GOALS}
                             isActive={activeRoute === AppRoute.GOALS}
                         />
                         <SidebarNav
-                            isOpen={isOpen}
                             icon={<ScheduleIcon />}
                             text="My schedule"
                             to={AppRoute.SCHEDULE}
@@ -108,7 +101,6 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                 <div className="flex h-1/4 w-full">
                     <div className="flex w-full flex-col justify-end gap-3">
                         <SidebarNav
-                            isOpen={isOpen}
                             icon={<HelpIcon />}
                             text="Help"
                             to={AppRoute.HELP}
@@ -127,23 +119,6 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                                 size={ComponentSize.MEDIUM}
                                 onClick={handleLogout}
                             />
-
-                            <div className="flex items-center justify-center">
-                                <Button
-                                    type="button"
-                                    label={isOpen ? 'Logout' : ''}
-                                    leftIcon={addSizePropertyHeroIcons({
-                                        icon: <LogoutIcon />,
-                                        size: ComponentSize.MEDIUM,
-                                    })}
-                                    className={getValidClassNames(
-                                        isOpen ? '' : 'justify-end !px-3',
-                                    )}
-                                    variant={ButtonVariant.SIDEBAR}
-                                    size={ComponentSize.MEDIUM}
-                                    onClick={handleLogout}
-                                />
-                            </div>
                         </div>
                     </div>
                 </div>
