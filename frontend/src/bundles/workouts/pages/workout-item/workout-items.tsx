@@ -6,7 +6,8 @@ import {
     WorkoutStats,
     WorkoutTitle,
 } from '~/bundles/workouts/components/components.js';
-import { OAuthProvider, ProviderLink } from '~/bundles/workouts/enums/enums.js';
+import { STRAVA_ATHLETE_TRAINING_URL } from '~/bundles/workouts/constants/constants.js';
+import { OAuthProvider } from '~/bundles/workouts/enums/enums.js';
 
 const WorkoutItem = (): JSX.Element => {
     const { id } = useParams();
@@ -34,7 +35,7 @@ const WorkoutItem = (): JSX.Element => {
             <WorkoutStats workout={currentWorkout} />
             {currentWorkout.provider === OAuthProvider.STRAVA && (
                 <NavLink
-                    to={ProviderLink.STRAVA_ATHLETE_TRAINING}
+                    to={STRAVA_ATHLETE_TRAINING_URL}
                     className="text-strava-brand mt-[0.5rem] text-right"
                     reloadDocument
                 >
