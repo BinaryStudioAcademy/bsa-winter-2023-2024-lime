@@ -1,7 +1,11 @@
 import { NavLink } from 'react-router-dom';
 
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { useCallback } from '~/bundles/common/hooks/hooks.js';
+import {
+    useEffect,
+    useLocation,
+    useRef,
+} from '~/bundles/common/hooks/hooks.js';
 
 type Properties = {
     label: string;
@@ -10,6 +14,9 @@ type Properties = {
 };
 
 const SubNavItem = ({ label, to, bgColor }: Properties): JSX.Element => {
+    const { pathname } = useLocation();
+    const navItemReference = useRef<HTMLAnchorElement>(null);
+
     const labelStyles = {
         base: 'text-sm text-left font-bold truncate leading-6 select-none ml-[2.25rem]',
         color: {
@@ -18,16 +25,18 @@ const SubNavItem = ({ label, to, bgColor }: Properties): JSX.Element => {
         },
     };
 
-    const handleClick = useCallback(
-        (event: React.MouseEvent<HTMLAnchorElement>) => {
-            event.currentTarget.scrollIntoView({
+    useEffect(() => {
+        if (
+            navItemReference.current &&
+            navItemReference.current.pathname === pathname
+        ) {
+            navItemReference.current.scrollIntoView({
                 behavior: 'smooth',
                 block: 'nearest',
                 inline: 'center',
             });
-        },
-        [],
-    );
+        }
+    }, [pathname]);
 
     const circleStyles = {
         base: 'outline-lm-blue-400 absolute left-[0.875rem] top-1/2 h-[1.25rem] w-[1.25rem] rounded-full [transform:translate(-50%,-50%)]',
@@ -39,7 +48,7 @@ const SubNavItem = ({ label, to, bgColor }: Properties): JSX.Element => {
     };
 
     return (
-        <NavLink to={to} className="relative" onClick={handleClick}>
+        <NavLink to={to} className="relative" ref={navItemReference}>
             {({ isActive }) => (
                 <>
                     <span
