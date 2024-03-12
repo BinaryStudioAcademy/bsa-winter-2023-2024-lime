@@ -59,7 +59,7 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
             {isOpen && (
                 <button
                     onClick={toggleSidebar}
-                    className="bg-lm-black-100 fixed inset-0 top-[88px] z-10 opacity-50 xl:hidden "
+                    className="bg-lm-black-100 fixed inset-0 top-[88px] z-10 opacity-50 lg:hidden "
                 />
             )}
             <div

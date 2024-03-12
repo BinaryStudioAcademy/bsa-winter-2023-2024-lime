@@ -17,7 +17,7 @@ const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
     return (
         <header className={styles['header']}>
             <Layout className={`${styles['header-container']}`}>
-                <div className="mr-5 xl:hidden">
+                <div className="mr-5 lg:hidden">
                     <Button
                         label=""
                         variant="secondary"
