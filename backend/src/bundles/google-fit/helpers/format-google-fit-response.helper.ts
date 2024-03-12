@@ -3,7 +3,8 @@ import { type fitness_v1 } from 'googleapis';
 import {
     GoogleFitDataSourceId,
     GoogleFitRequiredActivity,
- OAuthProvider } from '../enums/enums.js';
+    OAuthProvider,
+} from '../enums/enums.js';
 import {
     type ValueOf,
     type WorkoutRequestDto,
