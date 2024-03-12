@@ -1,2 +1,2 @@
 export { StravaPath } from './strava-path.enum.js';
-export { ApiPath } from 'shared';
+export { ApiPath, OAuthProvider } from 'shared';
