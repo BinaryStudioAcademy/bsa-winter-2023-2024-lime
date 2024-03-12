@@ -96,6 +96,10 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                             isActive={activeRoute === AppRoute.SCHEDULE}
                         />
                     </div>
+
+                    <div className="flex w-[10rem] items-center justify-center px-6 py-4">
+                        <Icon name={IconName.poweredByStravaIcon} />
+                    </div>
                 </div>
 
                 <div className="flex h-1/4 w-full">
