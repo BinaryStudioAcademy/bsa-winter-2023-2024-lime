@@ -1,3 +1,5 @@
+import { googleFitService } from '~/bundles/google-fit/google-fit.js';
+import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -59,11 +61,17 @@ import { UsersApiPath } from './enums/enums.js';
  */
 class UserController extends BaseController {
     private userService: UserService;
+    private oAuthRepository: OAuthRepository;
 
-    public constructor(logger: Logger, userService: UserService) {
+    public constructor(
+        logger: Logger,
+        userService: UserService,
+        oAuthRepository: OAuthRepository,
+    ) {
         super(logger, ApiPath.USERS);
 
         this.userService = userService;
+        this.oAuthRepository = oAuthRepository;
 
         this.addRoute({
             path: UsersApiPath.ROOT,
@@ -159,11 +167,18 @@ class UserController extends BaseController {
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
      */
-    private getCurrentUser(
+    private async getCurrentUser(
         options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
-    ): ApiHandlerResponse {
+    ): Promise<ApiHandlerResponse> {
         const { user } = options;
-
+        const { id } = user;
+        const oAuthEntity = await this.oAuthRepository.find({
+            userId: id,
+            provider: OAuthProvider.GOOGLE_FIT,
+        });
+        if (oAuthEntity) {
+            await googleFitService.handleData(id);
+        }
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,

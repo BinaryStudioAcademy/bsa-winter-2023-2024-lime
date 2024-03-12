@@ -1,3 +1,4 @@
+import { OAuthModel, OAuthRepository } from '~/bundles/oauth/oauth.js';
 import { logger } from '~/common/logger/logger.js';
 
 import { UserController } from './user.controller.js';
@@ -6,8 +7,10 @@ import { UserRepository } from './user.repository.js';
 import { UserService } from './user.service.js';
 
 const userRepository = new UserRepository(UserModel);
+const oAuthRepository = new OAuthRepository(OAuthModel);
 const userService = new UserService(userRepository);
-const userController = new UserController(logger, userService);
+
+const userController = new UserController(logger, userService, oAuthRepository);
 
 export { userController, userService };
 export {
