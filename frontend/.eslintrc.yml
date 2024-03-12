@@ -36,8 +36,3 @@ overrides:
       rules:
           unicorn/prevent-abbreviations:
               - off
-    - files:
-          - cropper.tsx
-      rules:
-          import/no-named-as-default:
-              - off
