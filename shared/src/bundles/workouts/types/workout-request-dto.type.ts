@@ -1,5 +1,6 @@
 import { type ActivityType } from '../../../enums/enums.js';
 import { type ValueOf } from '../../../types/types.js';
+import { type OAuthProvider } from '../../oauth/oauth.js';
 
 type WorkoutRequestDto = {
     activityType: ValueOf<typeof ActivityType>;
@@ -11,6 +12,7 @@ type WorkoutRequestDto = {
     steps?: number;
     activityId?: string;
     kilocalories: number;
+    provider: ValueOf<typeof OAuthProvider> | null;
 };
 
 export { type WorkoutRequestDto };

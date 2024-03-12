@@ -3,7 +3,7 @@ import { type fitness_v1 } from 'googleapis';
 import {
     GoogleFitDataSourceId,
     GoogleFitRequiredActivity,
-} from '../enums/enums.js';
+ OAuthProvider } from '../enums/enums.js';
 import {
     type ValueOf,
     type WorkoutRequestDto,
@@ -115,6 +115,7 @@ const formatGoogleFitResponse = async (
                 activityId: session.id as string,
                 distance,
                 speed,
+                provider: OAuthProvider.GOOGLE_FIT,
                 heartRate,
                 activityType,
                 steps,
