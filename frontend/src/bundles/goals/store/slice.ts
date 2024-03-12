@@ -36,7 +36,7 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(createGoal.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.goals.unshift(action.payload);
+            state.goals.push(action.payload);
         });
         builder.addCase(createGoal.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;

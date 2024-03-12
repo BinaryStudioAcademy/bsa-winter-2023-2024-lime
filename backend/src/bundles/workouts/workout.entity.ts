@@ -2,6 +2,7 @@ import { ActivityType } from '~/common/enums/enums.js';
 import { type Entity, type ValueOf } from '~/common/types/types.js';
 
 import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
+import { type OAuthProvider } from './enums/enums.js';
 
 class WorkoutEntity implements Entity {
     private 'id': number | null;
@@ -15,6 +16,7 @@ class WorkoutEntity implements Entity {
     private 'distance': number;
     private 'speed': number;
     private 'kilocalories': number;
+    private 'provider': ValueOf<typeof OAuthProvider> | null;
 
     private constructor({
         id,
@@ -28,6 +30,7 @@ class WorkoutEntity implements Entity {
         distance,
         speed,
         kilocalories,
+        provider,
     }: {
         id: number | null;
         userId: number;
@@ -40,6 +43,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof OAuthProvider> | null;
     }) {
         this.id = id;
         this.userId = userId;
@@ -54,6 +58,7 @@ class WorkoutEntity implements Entity {
         if (activityType === ActivityType.WALKING) {
             this.steps = steps;
         }
+        this.provider = provider;
     }
 
     public static initialize(payload: {
@@ -68,6 +73,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof OAuthProvider> | null;
     }): WorkoutEntity {
         return new WorkoutEntity({
             ...payload,
@@ -85,6 +91,7 @@ class WorkoutEntity implements Entity {
         steps?: number;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
+        provider: ValueOf<typeof OAuthProvider> | null;
     }): WorkoutEntity {
         return new WorkoutEntity({
             id: null,
@@ -103,6 +110,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof OAuthProvider> | null;
     } {
         return {
             id: this.id as number,
@@ -118,6 +126,7 @@ class WorkoutEntity implements Entity {
             distance: this.distance,
             speed: this.speed,
             kilocalories: this.kilocalories,
+            provider: this.provider,
         };
     }
 
@@ -132,6 +141,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         speed: number;
         kilocalories: number;
+        provider: ValueOf<typeof OAuthProvider> | null;
     } {
         return {
             userId: this.userId,
@@ -144,6 +154,7 @@ class WorkoutEntity implements Entity {
             distance: this.distance,
             speed: this.speed,
             kilocalories: this.kilocalories,
+            provider: this.provider,
         };
     }
 }

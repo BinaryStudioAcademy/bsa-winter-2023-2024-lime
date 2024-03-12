@@ -37,10 +37,7 @@ const Auth: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
 
-    const { dataStatus, user } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-        user: auth.user,
-    }));
+    const { dataStatus, user } = useAppSelector(({ auth }) => auth);
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
         ({ passwordReset }) => ({

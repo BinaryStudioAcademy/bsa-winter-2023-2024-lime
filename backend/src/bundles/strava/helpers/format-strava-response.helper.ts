@@ -3,6 +3,7 @@ import {
     MILLISECONDS_PER_SECOND,
     StravaRequiredActivity,
 } from '../constants/constants.js';
+import { OAuthProvider } from '../enums/enums.js';
 import {
     type StravaActivityResponseDto,
     type ValueOf,
@@ -57,6 +58,7 @@ const formatStravaResponse = ({
         kilocalories: calories,
         workoutEndedAt: endDate,
         heartRate: heartrate ?? null,
+        provider: OAuthProvider.STRAVA,
     };
 };
 
