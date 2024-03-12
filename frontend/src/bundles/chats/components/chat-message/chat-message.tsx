@@ -4,13 +4,13 @@ import { formatChatLinkDate } from '../../helpers/format-chat-link-date.helper.j
 
 type Properties = {
     isCurrentUserMessage: boolean;
-    date: Date;
+    sendDate: Date;
     message: string;
 };
 
 const ChatMessage = ({
     isCurrentUserMessage,
-    date,
+    sendDate,
     message,
 }: Properties): JSX.Element => {
     return (
@@ -22,12 +22,12 @@ const ChatMessage = ({
         >
             <div className="flex flex-col">
                 <span className="text-secondary">
-                    {formatChatLinkDate(date)}
+                    {formatChatLinkDate(sendDate)}
                 </span>
                 <div
-                    className={`${isCurrentUserMessage ? 'bg-lm-yellow-200 bg-opacity-90 text-start' : 'bg-secondary '} text-primary rounded-xl px-3 py-2`}
+                    className={`${isCurrentUserMessage ? 'bg-lm-yellow-200 bg-opacity-90 text-start' : 'bg-secondary '} rounded-xl px-3 py-2`}
                 >
-                    <span>{message}</span>
+                    <span className="text-primary">{message}</span>
                 </div>
             </div>
         </li>

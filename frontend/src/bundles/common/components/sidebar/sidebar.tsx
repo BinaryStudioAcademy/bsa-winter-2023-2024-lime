@@ -96,7 +96,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                             icon={<ChatsIcon />}
                             text="Chats"
                             to={AppRoute.CHATS}
-                            isActive={activeRoute === AppRoute.CHATS}
+                            isActive={activeRoute.includes('/chats')}
                         />
                         <div className="absolute -right-2 -top-2">
                             <Icon name="aiPoweredIcon" />

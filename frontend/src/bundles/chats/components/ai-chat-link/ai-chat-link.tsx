@@ -1,6 +1,5 @@
 import { Icon, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { useParams } from '~/bundles/common/hooks/hooks.js';
 
 import { formatChatLinkDate } from '../../helpers/helpers.js';
 
@@ -9,8 +8,7 @@ type Properties = {
 };
 
 const AiChatLink = ({ lastMessage }: Properties): JSX.Element => {
-    const { id: parameterId } = useParams();
-    const isActive = parameterId === 'ai-assistant';
+    const isActive = true;
 
     return (
         <Link to={AppRoute.CHATS_AI_ASSISTANT}>

@@ -1,24 +1,21 @@
 import { Button } from '~/bundles/common/components/components.js';
 
+import { type ChatLink as TChatLink } from '../../types/types.js';
 import { AiChatLink } from '../ai-chat-link/ai-chat-link.js';
-import { ChatRoomLink } from '../chat-room-link/chat-room-link.js';
+import { ChatLink } from '../chat-link/chat-link.js';
 import { ChatSearchBar } from '../chat-search-bar/chat-search-bar.js';
 
 type Properties = {
-    chats: {
-        status: string;
-        lastMessage: string;
-        username: string;
-    }[];
+    chatLinks: TChatLink[];
     aiChat: {
         lastMessage: string;
     };
 };
 
-const ChatSidebar = ({ chats, aiChat }: Properties): JSX.Element => {
+const ChatSidebar = ({ chatLinks, aiChat }: Properties): JSX.Element => {
     const hasChat = true;
     return (
-        <div className="flex max-h-full flex-col overflow-hidden px-3">
+        <div className="border-r-lm-grey-300 flex max-h-full flex-col overflow-hidden border-r px-3">
             <div className="mb-4">
                 <ChatSearchBar />
                 <Button label="Add new chat" size="sm" variant="primary" />
@@ -30,13 +27,13 @@ const ChatSidebar = ({ chats, aiChat }: Properties): JSX.Element => {
             <span className="text-secondary mb-1">Friends</span>
             <ul className="mb-4 flex h-full flex-1 list-none flex-col gap-5 overflow-y-auto">
                 {hasChat &&
-                    chats.map((item, id) => (
+                    chatLinks.map(({ status, username, lastMessage }, id) => (
                         <li key={id}>
-                            <ChatRoomLink
+                            <ChatLink
                                 id={id}
-                                status={item.status}
-                                username={item.username}
-                                lastMessage={item.lastMessage}
+                                status={status}
+                                username={username}
+                                lastMessage={lastMessage}
                             />
                         </li>
                     ))}

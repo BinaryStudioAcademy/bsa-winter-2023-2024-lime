@@ -4,12 +4,10 @@ import {
     configureString,
     getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
-import { useParams } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
+import { Status } from '../../enums/enums.js';
 import { formatChatLinkDate } from '../../helpers/helpers.js';
-
-const Status = { ONLINE: 'online', OFFLINE: 'offline' };
 
 type Properties = {
     id: number;
@@ -18,14 +16,13 @@ type Properties = {
     username: string;
 };
 
-const ChatRoomLink = ({
+const ChatLink = ({
     id,
     status,
     lastMessage,
     username,
 }: Properties): JSX.Element => {
-    const { id: parameterId } = useParams();
-    const isActive = String(id) === parameterId;
+    const isActive = false;
 
     const chatRouteById = configureString(AppRoute.CHATS_$ID, {
         id: String(id),
@@ -51,15 +48,18 @@ const ChatRoomLink = ({
                         )}
                     ></div>
                 </div>
-                <div className="flex w-full max-w-[9rem] flex-col gap-1 overflow-hidden text-ellipsis whitespace-nowrap py-2">
+                <div className="flex w-full max-w-[9rem] flex-col gap-1 overflow-hidden py-2">
                     <p
                         className={`${isActive ? 'text-action' : 'text-primary'} text-sm font-semibold`}
                     >
                         {username}
                     </p>
-                    <p className="text-secondary text-xs">{lastMessage}</p>
+                    <p className="text-secondary truncate whitespace-nowrap text-xs">
+                        {lastMessage}
+                    </p>
                 </div>
                 <p className="text-secondary mr-1 text-xs">
+                    {/*  We'll use our date. */}
                     {formatChatLinkDate(new Date())}
                 </p>
             </div>
@@ -67,4 +67,4 @@ const ChatRoomLink = ({
     );
 };
 
-export { ChatRoomLink };
+export { ChatLink };

@@ -1,64 +1,25 @@
-const chatsData = [
+import { Status } from '../enums/status.enum.js';
+
+const chatsLinksData = [
     {
-        status: 'online',
-        lastMessage: 'Hi! How are you',
+        id: 1,
+        status: Status.ONLINE,
+        lastMessage:
+            'Hi! How are youHi! How are youHi! How are youHi! How are you',
         username: 'User1',
     },
     {
-        status: 'offline',
+        id: 2,
+        status: Status.OFFLINE,
         lastMessage: 'Hi!',
         username: 'User2',
     },
     {
-        status: 'online',
+        id: 3,
+        status: Status.ONLINE,
         lastMessage: 'Hello!',
         username: 'User3',
     },
-    {
-        status: 'offline',
-        lastMessage: 'Online',
-        username: 'User4',
-    },
-    {
-        status: 'online',
-        lastMessage: 'Offline',
-        username: 'User5',
-    },
-    {
-        status: 'offline',
-        lastMessage: 'Demo',
-        username: 'User6',
-    },
-    {
-        status: 'online',
-        lastMessage: 'Offline',
-        username: 'User7',
-    },
-    {
-        status: 'offline',
-        lastMessage: 'Demo',
-        username: 'User8',
-    },
-    {
-        status: 'online',
-        lastMessage: 'Offline',
-        username: 'User7',
-    },
-    {
-        status: 'offline',
-        lastMessage: 'Demo',
-        username: 'User8',
-    },
-    {
-        status: 'online',
-        lastMessage: 'Offline',
-        username: 'User9',
-    },
-    {
-        status: 'offline',
-        lastMessage: 'Demo',
-        username: 'User10',
-    },
 ];
 
-export { chatsData };
+export { chatsLinksData };
