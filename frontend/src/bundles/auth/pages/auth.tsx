@@ -45,9 +45,9 @@ const Auth: React.FC = () => {
         }),
     );
 
-    const isLoading = dataStatus === DataStatus.PENDING;
-
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
+
+    const isLoading = dataStatus === DataStatus.PENDING;
 
     const handleSignInSubmit = useCallback(
         (payload: UserAuthRequestDto): void => {
