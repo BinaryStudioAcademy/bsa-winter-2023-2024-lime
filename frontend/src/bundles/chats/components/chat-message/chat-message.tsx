@@ -16,8 +16,8 @@ const ChatMessage = ({
     return (
         <li
             className={getValidClassNames(
-                'w-full max-w-[85%]',
                 isCurrentUserMessage ? 'self-end text-end' : 'self-start',
+                'w-full max-w-[85%]',
             )}
         >
             <div className="flex flex-col">
@@ -25,7 +25,12 @@ const ChatMessage = ({
                     {formatChatLinkDate(sendDate)}
                 </span>
                 <div
-                    className={`${isCurrentUserMessage ? 'bg-lm-yellow-200 bg-opacity-90 text-start' : 'bg-secondary '} rounded-xl px-3 py-2`}
+                    className={getValidClassNames(
+                        isCurrentUserMessage
+                            ? 'bg-lm-yellow-200 bg-opacity-90 text-start'
+                            : 'bg-secondary ',
+                        'rounded-xl px-3 py-2',
+                    )}
                 >
                     <span className="text-primary">{message}</span>
                 </div>

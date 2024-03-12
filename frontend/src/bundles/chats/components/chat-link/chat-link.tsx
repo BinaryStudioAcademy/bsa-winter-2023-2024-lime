@@ -31,7 +31,11 @@ const ChatLink = ({
     return (
         <Link to={chatRouteById}>
             <div
-                className={`flex items-center gap-5 ${isActive && 'bg-secondary border-l-lm-yellow-100 rounded-br-xl rounded-tr-xl border-l-4 p-2'}`}
+                className={getValidClassNames(
+                    isActive &&
+                        'bg-secondary border-l-lm-yellow-100 rounded-br-xl rounded-tr-xl border-l-4 p-2',
+                    'flex items-center gap-5',
+                )}
             >
                 <div className="relative">
                     <Avatar
@@ -48,9 +52,12 @@ const ChatLink = ({
                         )}
                     ></div>
                 </div>
-                <div className="flex w-full max-w-[9rem] flex-col gap-1 overflow-hidden py-2">
+                <div className="flex w-full flex-col gap-1 overflow-hidden py-2 lg:max-w-[9rem]">
                     <p
-                        className={`${isActive ? 'text-action' : 'text-primary'} text-sm font-semibold`}
+                        className={getValidClassNames(
+                            isActive ? 'text-action' : 'text-primary',
+                            'text-sm font-semibold',
+                        )}
                     >
                         {username}
                     </p>

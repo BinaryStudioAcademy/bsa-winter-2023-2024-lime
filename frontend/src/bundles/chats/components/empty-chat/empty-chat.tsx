@@ -8,7 +8,7 @@ const EmptyChat = (): JSX.Element => {
                 Choose the chat or{' '}
                 {/* This link must be replaced by link with friends page*/}
                 <Link className="text-action" to={AppRoute.CHATS}>
-                    create new one.
+                    find a user to start one.
                 </Link>
             </p>
         </div>

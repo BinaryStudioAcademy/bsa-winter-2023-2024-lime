@@ -3,8 +3,10 @@ import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { Button, Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
+import { type MessageRequestDto } from '../../types/types.js';
+
 type Properties = {
-    onSubmit: (payload: { message: string }) => void;
+    onSubmit: (payload: MessageRequestDto) => void;
 };
 
 const ChatMessageForm = ({ onSubmit }: Properties): JSX.Element => {
@@ -41,9 +43,7 @@ const ChatMessageForm = ({ onSubmit }: Properties): JSX.Element => {
                 size="sm"
                 variant="primary"
                 label=""
-                leftIcon={
-                    <PaperAirplaneIcon className="text-lm-black-100 w-6" />
-                }
+                leftIcon={<PaperAirplaneIcon className="w-6" />}
                 className="h-[90%] max-w-[3rem]"
             />
         </form>
