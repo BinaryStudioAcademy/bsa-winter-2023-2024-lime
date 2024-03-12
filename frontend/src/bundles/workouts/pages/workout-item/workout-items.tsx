@@ -18,9 +18,11 @@ const WorkoutItem = (): JSX.Element => {
 
     if (!currentWorkout) {
         return (
-            <p className="font-base text-primary w-full text-center text-xl">
-                You don&#39;t have such workout
-            </p>
+            <div className="flex h-full w-full items-center justify-center">
+                <p className="font-base text-primary text-xl">
+                    You don&#39;t have such workout
+                </p>
+            </div>
         );
     }
 
