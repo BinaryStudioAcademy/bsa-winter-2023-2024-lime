@@ -115,8 +115,14 @@ const Goals: React.FC = () => {
                     <div className="flex flex-col gap-8 ">
                         <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <GoalWidget
-                                value={lastGoal?.progress as number}
-                                target={lastGoal?.progress as number}
+                                value={
+                                    (lastGoal?.distance as number) ||
+                                    (lastGoal?.duration as number)
+                                }
+                                target={
+                                    (lastGoal?.distance as number) ||
+                                    (lastGoal?.duration as number)
+                                }
                                 title={
                                     lastGoal
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
@@ -133,6 +139,7 @@ const Goals: React.FC = () => {
                                         : GoalTypes.STANDART
                                 }
                                 hasAchievement={Boolean(lastGoal)}
+                                hasDistance={Boolean(lastGoal?.distance)}
                             />
                         </section>
                         <section>
@@ -154,6 +161,8 @@ const Goals: React.FC = () => {
                                             frequency,
                                             frequencyType,
                                             progress,
+                                            distance,
+                                            duration,
                                         }) => (
                                             <GoalCard
                                                 key={id}
@@ -161,6 +170,8 @@ const Goals: React.FC = () => {
                                                 frequency={frequency}
                                                 frequencyType={frequencyType}
                                                 progress={progress}
+                                                distance={distance}
+                                                duration={duration}
                                             />
                                         ),
                                     )}
