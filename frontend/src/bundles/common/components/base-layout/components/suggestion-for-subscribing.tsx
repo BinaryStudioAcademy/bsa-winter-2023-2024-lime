@@ -1,9 +1,15 @@
 import { differenceInDays } from 'date-fns';
 
-import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
+import {
+    Button,
+    ButtonVariant,
+    Modal,
+} from '~/bundles/common/components/components.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
+    useAppSelector,
+    useCallback,
     useEffect,
     useNavigate,
     useState,
@@ -11,8 +17,6 @@ import {
 import { actions as subscriptionActions } from '~/bundles/subscription/store/subscriptions.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
-import { useAppSelector, useCallback } from '../../../hooks/hooks.js';
-import { Button, ButtonVariant, Modal } from '../../components.js';
 import { REMINDER_PERIOD } from '../constants/constants.js';
 
 const SuggestionForSubscribing: React.FC = () => {
