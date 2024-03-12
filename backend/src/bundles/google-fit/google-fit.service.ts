@@ -1,12 +1,13 @@
 import { type fitness_v1, google } from 'googleapis';
 
 import {
+    type OAuthEntity,
     type OAuthRepository,
-    ErrorMessage,
-    HttpCode,
-    HttpError,
+} from '~/bundles/oauth/oauth.js';
+import {
     OAuthActionsPath,
     OAuthProvider,
+    oAuthService,
 } from '~/bundles/oauth/oauth.js';
 import {
     type WorkoutRepository,
@@ -44,19 +45,18 @@ class GoogleFitService {
         });
     }
 
-    public async handleData(id: number): Promise<void> {
-        const oAuthEntity = await this.oAuthRepository.find({ userId: id });
+    public async handleData(oAuthEntity: OAuthEntity): Promise<void> {
+        const isTokenInvalid = oAuthService.checkAccessToken(oAuthEntity);
 
-        if (!oAuthEntity) {
-            throw new HttpError({
-                status: HttpCode.BAD_REQUEST,
-                message: ErrorMessage.NO_CONNECTION,
-            });
-        }
-        const { accessToken, refreshToken, userId } = oAuthEntity.toObject();
+        const { accessToken, userId, provider, refreshToken } =
+            oAuthEntity.toObject();
+
+        const token = isTokenInvalid
+            ? await oAuthService.getAccessToken(provider, userId)
+            : accessToken;
 
         this.OAuth2.setCredentials({
-            access_token: accessToken,
+            access_token: token,
             refresh_token: refreshToken,
         });
 

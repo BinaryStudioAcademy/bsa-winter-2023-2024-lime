@@ -177,7 +177,7 @@ class UserController extends BaseController {
             provider: OAuthProvider.GOOGLE_FIT,
         });
         if (oAuthEntity) {
-            await googleFitService.handleData(id);
+            await googleFitService.handleData(oAuthEntity);
         }
         return {
             type: ApiHandlerResponseType.DATA,
