@@ -1,8 +1,7 @@
-import { type File } from 'fastify-multer/lib/interfaces.js';
-
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
+import { type File } from '~/common/services/file/types/types.js';
 import {
     cryptService,
     fileService,

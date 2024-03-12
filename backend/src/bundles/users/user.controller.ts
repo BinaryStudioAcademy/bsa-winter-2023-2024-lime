@@ -1,5 +1,3 @@
-import { type File } from 'fastify-multer/lib/interfaces.js';
-
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -15,6 +13,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 import { upload } from '~/common/middlewares/file.middleware.js';
+import { type File } from '~/common/services/file/types/types.js';
 
 import { UsersApiPath } from './enums/enums.js';
 

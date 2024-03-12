@@ -1,5 +1,5 @@
 import { type FastifyRequest as OriginalFastifyRequest } from 'fastify';
-import { type File } from 'fastify-multer/lib/interfaces.js';
+import { type File } from '~/common/services/file/types/types.ts';
 
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
