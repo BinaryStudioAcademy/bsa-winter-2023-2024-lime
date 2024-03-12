@@ -22,7 +22,7 @@ const WorkoutItem = (): JSX.Element => {
 
     if (!currentWorkout) {
         return (
-            <p className="text-md text-center text-white">
+            <p className="text-md text-primary text-center">
                 You don&#39;t have such workout
             </p>
         );

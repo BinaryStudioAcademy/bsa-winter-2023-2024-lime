@@ -23,6 +23,7 @@ export { Select } from './select/select.js';
 export { SubNavigation } from './sub-navigation/sub-navigation.js';
 export { ThemeSwitcher } from './theme-switcher/theme-switcher.js';
 export { Toggle } from './toggle/toggle.js';
+export { UserInfoCard } from './user-info-card/user-info-card.js';
 export { ActivityWidget, ActivityWidgetColor } from './widgets/widgets.js';
 export { Provider as StoreProvider } from 'react-redux';
 export { Outlet as RouterOutlet } from 'react-router-dom';
