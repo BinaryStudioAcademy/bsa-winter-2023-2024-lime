@@ -7,10 +7,11 @@ import {
 } from '~/bundles/common/types/types.js';
 
 import {
+    authorizeIdentity,
     logout,
     refreshUser,
     signIn,
-    signInOAuthUser,
+    signInIdentity,
     signUp,
     updateUser,
 } from './actions.js';
@@ -85,14 +86,23 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(updateUser.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
-        builder.addCase(signInOAuthUser.pending, (state) => {
+        builder.addCase(authorizeIdentity.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;
         });
-        builder.addCase(signInOAuthUser.fulfilled, (state, action) => {
+        builder.addCase(authorizeIdentity.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(authorizeIdentity.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(signInIdentity.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(signInIdentity.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
             state.user = action.payload.user;
         });
-        builder.addCase(signInOAuthUser.rejected, (state) => {
+        builder.addCase(signInIdentity.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

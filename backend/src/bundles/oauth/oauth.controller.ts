@@ -10,21 +10,12 @@ import {
 import { ApiPath } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
 
-import {
-    AppRoute,
-    HttpCode,
-    OAuthActionsPath,
-    OAuthType,
-} from './enums/enums.js';
+import { AppRoute, HttpCode, OAuthActionsPath } from './enums/enums.js';
 import {
     type OAuthExchangeAuthCodeDto,
     type OAuthProviderParameterDto,
 } from './types/types.js';
-import {
-    oAuthConnectionProviderValidationSchema,
-    oAuthIdentityProviderValidationSchema,
-    oAuthProviderValidationSchema,
-} from './validation-schemas/validation-schemas.js';
+import { oAuthProviderValidationSchema } from './validation-schemas/validation-schemas.js';
 
 class OAuthController extends BaseController {
     private oAuthService: OAuthService;
@@ -42,30 +33,16 @@ class OAuthController extends BaseController {
         this.config = config;
 
         this.addRoute({
-            path: OAuthActionsPath.$PROVIDER_AUTHORIZE_CONNECTION,
+            path: OAuthActionsPath.$PROVIDER_AUTHORIZE,
             method: 'GET',
             validation: {
-                params: oAuthConnectionProviderValidationSchema,
+                params: oAuthProviderValidationSchema,
             },
             isProtected: true,
             handler: (options) =>
-                this.authorizeConnection(
+                this.authorize(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
-                        params: OAuthProviderParameterDto;
-                    }>,
-                ),
-        });
-
-        this.addRoute({
-            path: OAuthActionsPath.$PROVIDER_AUTHORIZE_IDENTITY,
-            method: 'GET',
-            validation: {
-                params: oAuthIdentityProviderValidationSchema,
-            },
-            handler: (options) =>
-                this.authorizeIdentity(
-                    options as ApiHandlerOptions<{
                         params: OAuthProviderParameterDto;
                     }>,
                 ),
@@ -132,7 +109,7 @@ class OAuthController extends BaseController {
      *                      $ref: '#/components/schemas/Error'
      */
 
-    private async authorizeConnection(
+    private async authorize(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
             params: OAuthProviderParameterDto;
@@ -142,27 +119,7 @@ class OAuthController extends BaseController {
         const { provider } = options.params;
         const redirectUrl = await this.oAuthService.getAuthorizeRedirectUrl(
             provider,
-            OAuthType.CONNECTION,
             id,
-        );
-
-        return {
-            type: ApiHandlerResponseType.DATA,
-            status: HttpCode.OK,
-            payload: { redirectUrl: redirectUrl.href },
-        };
-    }
-
-    private async authorizeIdentity(
-        options: ApiHandlerOptions<{
-            params: OAuthProviderParameterDto;
-        }>,
-    ): Promise<ApiHandlerResponse> {
-        const { provider } = options.params;
-        const redirectUrl = await this.oAuthService.getAuthorizeRedirectUrl(
-            provider,
-            OAuthType.IDENTITY,
-            null,
         );
 
         return {
@@ -186,37 +143,16 @@ class OAuthController extends BaseController {
             ...query,
             userId: data.userId,
             state: data.uuid,
-            type: data.type,
         };
 
-        if (payload.type === OAuthType.CONNECTION) {
-            await this.oAuthService.exchangeAuthCodeForConnection(
-                provider,
-                isStateJSON ? payload : query,
-            );
-            return {
-                type: ApiHandlerResponseType.REDIRECT,
-                status: HttpCode.FOUND,
-                redirectUrl: `${this.config.ENV.APP.CLIENT_BASE_URL}${AppRoute.PROFILE_CONNECTIONS}`,
-            };
-        }
-
-        if (payload.type === OAuthType.IDENTITY) {
-            const token = await this.oAuthService.exchangeAuthCodeForIdentity(
-                provider,
-                isStateJSON ? payload : query,
-            );
-            return {
-                type: ApiHandlerResponseType.REDIRECT,
-                status: HttpCode.FOUND,
-                redirectUrl: `${this.config.ENV.APP.CLIENT_BASE_URL}${AppRoute.OAUTH}/${token}`,
-            };
-        }
-
+        await this.oAuthService.exchangeAuthCodeForConnection(
+            provider,
+            isStateJSON ? payload : query,
+        );
         return {
             type: ApiHandlerResponseType.REDIRECT,
-            status: HttpCode.BAD_REQUEST,
-            redirectUrl: `${this.config.ENV.APP.CLIENT_BASE_URL}${AppRoute.NOT_FOUND}`,
+            status: HttpCode.FOUND,
+            redirectUrl: `${this.config.ENV.APP.CLIENT_BASE_URL}${AppRoute.PROFILE_CONNECTIONS}`,
         };
     }
 

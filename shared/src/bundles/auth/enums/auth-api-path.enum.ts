@@ -3,7 +3,7 @@ const AuthApiPath = {
     SIGN_UP: '/sign-up',
     SIGN_IN: '/sign-in',
     LOGOUT: '/logout',
-    OAUTH: '/oauth',
+    IDENTITY: '/identity',
 } as const;
 
 export { AuthApiPath };

@@ -5,14 +5,14 @@ import {
     type UserAuthResponseDto,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
-import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
 import {
     type UserAuthRequestDto,
     type UserUpdateProfileRequestDto,
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
-import { type AuthResponseDto, type AuthTokenRequestDto } from '../auth.js';
+import { type AuthResponseDto, type IdentityAuthTokenDto } from '../auth.js';
+import { type IdentityProvider } from '../enums/enums.js';
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
@@ -69,20 +69,20 @@ const updateUser = createAsyncThunk<
 
 const authorizeIdentity = createAsyncThunk<
     unknown,
-    ValueOf<typeof OAuthProvider>,
+    ValueOf<typeof IdentityProvider>,
     AsyncThunkConfig
 >(`${sliceName}/auth-google`, async (provider, { extra }) => {
-    const { connectionApi } = extra;
-    return await connectionApi.authorizeIdentity(provider);
+    const { authApi } = extra;
+    return await authApi.authorizeIdentity(provider);
 });
 
-const signInOAuthUser = createAsyncThunk<
+const signInIdentity = createAsyncThunk<
     AuthResponseDto,
-    AuthTokenRequestDto,
+    IdentityAuthTokenDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-in-oauth-user`, async (tokenPayload, { extra }) => {
     const { authApi } = extra;
-    const response = await authApi.authOAuthUser(tokenPayload);
+    const response = await authApi.signInIdentity(tokenPayload);
     if (response.token) {
         await storage.set(StorageKey.TOKEN, response.token);
     }
@@ -94,7 +94,7 @@ export {
     logout,
     refreshUser,
     signIn,
-    signInOAuthUser,
+    signInIdentity,
     signUp,
     updateUser,
 };

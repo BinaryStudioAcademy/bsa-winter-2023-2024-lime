@@ -53,7 +53,7 @@ class UserService implements Service {
         return user.toObject() as UserAuthResponseDto;
     }
 
-    public async findOrCreateOAuthUser(
+    public async findOrCreateIdentityUser(
         payload: UserOAuthRequestDto,
     ): Promise<UserAuthResponseDto> {
         const { email, fullName, avatarUrl } = payload;
@@ -68,7 +68,6 @@ class UserService implements Service {
                 user.id,
                 {
                     fullName,
-                    avatarUrl,
                 },
             )) as UserEntity;
             return updatedUser.toObject() as UserAuthResponseDto;

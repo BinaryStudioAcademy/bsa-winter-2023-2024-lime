@@ -56,29 +56,7 @@ class ConnectionApi extends BaseHttpApi {
         const response = await this.load(
             this.getFullEndpoint(
                 this.oAuthPath,
-                OAuthActionsPath.$PROVIDER_AUTHORIZE_CONNECTION,
-                { provider },
-            ),
-            {
-                method: 'GET',
-                contentType: ContentType.JSON,
-                hasAuth: true,
-            },
-        );
-
-        const { redirectUrl } =
-            await response.json<OAuthAuthorizeResponseDto>();
-
-        window.location.href = redirectUrl;
-    }
-
-    public async authorizeIdentity(
-        provider: ValueOf<typeof OAuthProvider>,
-    ): Promise<void> {
-        const response = await this.load(
-            this.getFullEndpoint(
-                this.oAuthPath,
-                OAuthActionsPath.$PROVIDER_AUTHORIZE_IDENTITY,
+                OAuthActionsPath.$PROVIDER_AUTHORIZE,
                 { provider },
             ),
             {

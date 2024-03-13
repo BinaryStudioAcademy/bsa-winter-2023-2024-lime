@@ -1,3 +1,4 @@
+import { IDENTITY_TOKEN_ADDITIONAL } from '~/bundles/identity/identity.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
@@ -8,7 +9,7 @@ import { cryptService, jwtService } from '~/common/services/services.js';
 import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
 import {
     type AuthResponseDto,
-    type AuthTokenRequestDto,
+    type IdentityAuthTokenDto,
 } from './types/types.js';
 
 class AuthService {
@@ -85,12 +86,13 @@ class AuthService {
         return { user, token };
     }
 
-    public async authOAuthUser(
-        tokenRequestDto: AuthTokenRequestDto,
+    public async signInIdentity(
+        tokenRequestDto: IdentityAuthTokenDto,
     ): Promise<AuthResponseDto> {
         try {
             const { userId } = await jwtService.verifyToken(
                 tokenRequestDto.token,
+                IDENTITY_TOKEN_ADDITIONAL,
             );
 
             const userById = await this.userService.find({ id: userId });

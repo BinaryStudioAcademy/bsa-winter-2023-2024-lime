@@ -1,5 +1,6 @@
 export {
     type AuthResponseDto,
-    type AuthTokenRequestDto,
+    type IdentityAuthTokenDto,
+    type RedirectUrlResponseDto,
     type UserAuthResponseDto,
 } from 'shared';

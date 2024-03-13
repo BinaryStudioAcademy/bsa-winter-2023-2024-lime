@@ -12,7 +12,7 @@ import { type Logger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
 import { AuthApiPath } from './enums/enums.js';
-import { type AuthTokenRequestDto } from './types/types.js';
+import { type IdentityAuthTokenDto } from './types/types.js';
 
 class AuthController extends BaseController {
     private authService: AuthService;
@@ -51,11 +51,13 @@ class AuthController extends BaseController {
         });
 
         this.addRoute({
-            path: AuthApiPath.OAUTH,
+            path: AuthApiPath.IDENTITY,
             method: 'POST',
             handler: (options) =>
-                this.authOAuthUser(
-                    options as ApiHandlerOptions<{ body: AuthTokenRequestDto }>,
+                this.signInIdentity(
+                    options as ApiHandlerOptions<{
+                        body: IdentityAuthTokenDto;
+                    }>,
                 ),
         });
     }
@@ -167,15 +169,53 @@ class AuthController extends BaseController {
         };
     }
 
-    private async authOAuthUser(
+    /**
+     * @swagger
+     * /api/v1/auth/sign-in-identity:
+     *    post:
+     *      tags:
+     *         - Auth
+     *      description: Sign in user into the application using token
+     *      requestBody:
+     *        description: Token data
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                token:
+     *                  type: string
+     *      responses:
+     *        201:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  user:
+     *                    type: object
+     *                    $ref: '#/components/schemas/User'
+     *                  token:
+     *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                    type: object
+     *                    $ref: '#/components/schemas/Error'
+     */
+    private async signInIdentity(
         options: ApiHandlerOptions<{
-            body: AuthTokenRequestDto;
+            body: IdentityAuthTokenDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.authService.authOAuthUser(options.body),
+            payload: await this.authService.signInIdentity(options.body),
         };
     }
 }

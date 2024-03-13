@@ -1,4 +1,5 @@
 import { actions as appActions } from '~/app/store/app.js';
+import { type IdentityAuthTokenDto } from '~/bundles/auth/auth.js';
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import { Loader } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
@@ -9,9 +10,7 @@ import {
     useParams,
 } from '~/bundles/common/hooks/hooks.js';
 
-import { type AuthTokenRequestDto } from '../auth.js';
-
-const OAuth = (): JSX.Element => {
+const Identity = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const { token } = useParams();
     const { user, dataStatus } = useAppSelector(({ auth }) => auth);
@@ -19,7 +18,7 @@ const OAuth = (): JSX.Element => {
     useEffect(() => {
         if (token) {
             void dispatch(
-                authActions.signInOAuthUser({ token } as AuthTokenRequestDto),
+                authActions.signInIdentity({ token } as IdentityAuthTokenDto),
             );
         }
     }, [token, dispatch]);
@@ -39,4 +38,4 @@ const OAuth = (): JSX.Element => {
     return <Loader isOverflow />;
 };
 
-export { OAuth };
+export { Identity };

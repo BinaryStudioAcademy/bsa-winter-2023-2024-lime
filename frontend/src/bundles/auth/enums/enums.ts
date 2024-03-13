@@ -1,1 +1,1 @@
-export { AuthApiPath, OAuthProvider } from 'shared';
+export { AuthApiPath, IdentityActionsPath, IdentityProvider } from 'shared';

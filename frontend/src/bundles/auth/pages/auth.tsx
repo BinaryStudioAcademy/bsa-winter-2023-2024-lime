@@ -1,5 +1,5 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import { OAuthProvider } from '~/bundles/auth/enums/enums.js';
+import { IdentityProvider } from '~/bundles/auth/enums/enums.js';
 import {
     ForgotPasswordForm,
     Modal,
@@ -53,7 +53,7 @@ const Auth: React.FC = () => {
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
 
     const handleGoogleOAuth = useCallback((): void => {
-        void dispatch(authActions.authorizeIdentity(OAuthProvider.GOOGLE));
+        void dispatch(authActions.authorizeIdentity(IdentityProvider.GOOGLE));
     }, [dispatch]);
 
     const handleSignInSubmit = useCallback(

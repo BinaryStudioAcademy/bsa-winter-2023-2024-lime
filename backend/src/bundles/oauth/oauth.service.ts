@@ -3,7 +3,6 @@ import crypto from 'node:crypto';
 import { jwtService } from '~/common/services/services.js';
 
 import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
-import { OAuthType } from './enums/enums.js';
 import {
     type OAuthEntity,
     type OAuthExchangeAuthCodeDto,
@@ -57,24 +56,21 @@ class OAuthService {
 
     public async getAuthorizeRedirectUrl(
         provider: ValueOf<typeof OAuthProvider>,
-        type: ValueOf<typeof OAuthType>,
-        userId: number | null,
+        userId: number,
     ): Promise<URL> {
-        const oAuthStateEntity = await this.createOAuthState(type, userId);
+        const oAuthStateEntity = await this.createOAuthState(userId);
         const strategy = this.getStrategy(provider);
 
         return strategy.getAuthorizeRedirectUrl(oAuthStateEntity);
     }
 
     private async createOAuthState(
-        type: ValueOf<typeof OAuthType>,
         userId: number | null,
     ): Promise<OAuthStateEntity> {
         const uuid = crypto.randomUUID();
         const oAuthStateEntity = OAuthStateEntity.initializeNew({
             userId,
             uuid,
-            type,
         });
 
         return await this.oAuthStateRepository.create(oAuthStateEntity);
@@ -93,11 +89,10 @@ class OAuthService {
             });
         }
 
-        const { userId, state: uuid, type } = payload;
+        const { userId, state: uuid } = payload;
         const isStateValid = await this.verifyOAuthState({
             userId,
             uuid,
-            type,
         });
         if (!isStateValid) {
             throw new HttpError({
@@ -118,7 +113,6 @@ class OAuthService {
         const item = await this.oAuthRepository.find({
             userId: oAuthObject.userId,
             provider: oAuthObject.provider,
-            type: oAuthObject.type,
         });
 
         if (!item) {
@@ -133,7 +127,6 @@ class OAuthService {
             {
                 userId: oAuthObject.userId,
                 provider: oAuthObject.provider,
-                type: oAuthObject.type,
             },
             oAuthObject,
         )) as OAuthEntity;
@@ -148,7 +141,6 @@ class OAuthService {
         const connectionExists = await this.oAuthRepository.find({
             userId: payload.userId,
             provider,
-            type: OAuthType.CONNECTION,
         });
         if (connectionExists) {
             throw new HttpError({
@@ -170,12 +162,10 @@ class OAuthService {
     private async verifyOAuthState({
         userId,
         uuid,
-        type,
     }: OAuthState): Promise<boolean> {
         const state = await this.oAuthStateRepository.find({
             uuid,
             userId,
-            type,
         });
 
         return Boolean(state);

@@ -3,11 +3,7 @@ export {
     AchievementsApiPath,
     Metric,
 } from './bundles/achievements/achievements.js';
-export {
-    type AuthResponseDto,
-    type AuthTokenRequestDto,
-    AuthApiPath,
-} from './bundles/auth/auth.js';
+export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
@@ -21,6 +17,14 @@ export {
     goalValidationSchema,
 } from './bundles/goals/goals.js';
 export {
+    type IdentityAuthTokenDto,
+    type IdentityProviderParameterDto,
+    type IdentityResponseDto,
+    IdentityActionsPath,
+    IdentityProvider,
+    identityProviderValidationSchema,
+} from './bundles/identity/identity.js';
+export {
     type NotificationRequestDto,
     type NotificationResponseDto,
     NotificationsApiPath,
@@ -33,11 +37,8 @@ export {
     type OAuthProviderParameterDto,
     type OAuthResponseDto,
     OAuthActionsPath,
-    oAuthConnectionProviderValidationSchema,
-    oAuthIdentityProviderValidationSchema,
     OAuthProvider,
     oAuthProviderValidationSchema,
-    OAuthType,
 } from './bundles/oauth/oauth.js';
 export {
     type PasswordForgotRequestDto,
@@ -119,6 +120,7 @@ export {
     type EntityIdParameterDto,
     type Paged,
     type PaginationParameters,
+    type RedirectUrlResponseDto,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,

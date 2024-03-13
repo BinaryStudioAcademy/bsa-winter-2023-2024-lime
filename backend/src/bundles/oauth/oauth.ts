@@ -1,7 +1,4 @@
-import {
-    googleFitOAuthStrategy,
-    googleOAuthStrategy,
-} from '~/bundles/google/google.js';
+import { googleFitOAuthStrategy } from '~/bundles/google-fit/google-fit.js';
 import { stravaOAuthStrategy } from '~/bundles/strava/strava.js';
 import { config } from '~/common/config/config.js';
 import { logger } from '~/common/logger/logger.js';
@@ -17,7 +14,6 @@ import { OAuthStateRepository } from './oauth-state.repository.js';
 const oAuthStrategies = {
     [OAuthProvider.STRAVA]: stravaOAuthStrategy,
     [OAuthProvider.GOOGLE_FIT]: googleFitOAuthStrategy,
-    [OAuthProvider.GOOGLE]: googleOAuthStrategy,
 };
 
 const oAuthStateRepository = new OAuthStateRepository(OAuthStateModel);
@@ -33,7 +29,7 @@ export {
     type OAuthExchangeAuthCodeDto,
     type OAuthStrategy,
 } from './types/types.js';
-export { oAuthController, oAuthService };
+export { oAuthController, oAuthService, oAuthStateRepository };
 export {
     ErrorMessage,
     HttpCode,

@@ -9,5 +9,4 @@ export {
     HttpError,
     OAuthActionsPath,
     OAuthProvider,
-    OAuthType,
 } from 'shared';

@@ -1,7 +1,6 @@
 const OAuthActionsPath = {
     AUTHORIZE: '/authorize',
-    $PROVIDER_AUTHORIZE_CONNECTION: '/:provider/authorize-connection',
-    $PROVIDER_AUTHORIZE_IDENTITY: '/:provider/authorize-identity',
+    $PROVIDER_AUTHORIZE: '/:provider/authorize',
     DEAUTHORIZE: '/deauthorize',
     $PROVIDER_DEAUTHORIZE: '/:provider/deauthorize',
     REFRESH_TOKEN: '/refresh-token',

@@ -3,7 +3,7 @@ import {
     logout,
     refreshUser,
     signIn,
-    signInOAuthUser,
+    signInIdentity,
     signUp,
     updateUser,
 } from './actions.js';
@@ -17,7 +17,7 @@ const allActions = {
     refreshUser,
     logout,
     authorizeIdentity,
-    signInOAuthUser,
+    signInIdentity,
 };
 
 export { allActions as actions };
