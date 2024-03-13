@@ -8,7 +8,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 import { CircleProgress } from '~/bundles/overview/components/components.js';
 
-import { type FrequencyType } from '../../enums/enums.js';
+import { FrequencyType } from '../../enums/enums.js';
 
 type Properties = {
     activityType: ValueOf<typeof ActivityType>;
@@ -20,6 +20,8 @@ type Properties = {
 };
 
 const PLURAL = 's';
+const DAY_PREPOSITION = 'a';
+const WEEK_PREPOSITION = 'per';
 const MAXIMUM_PROGRESS = 100;
 
 const GoalCard: React.FC<Properties> = ({
@@ -27,11 +29,11 @@ const GoalCard: React.FC<Properties> = ({
     frequency,
     progress,
     frequencyType,
-    distance,
-    duration,
+    distance = null,
+    duration = null,
 }): JSX.Element => {
     return (
-        <div className="bg-secondary flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:p-5 lg:pl-8 xl:w-96">
+        <div className="bg-primary flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:w-[48.5%] lg:p-5 lg:pl-8">
             <div className="flex items-center gap-4">
                 <ActivityIcon
                     activityType={activityType}
@@ -40,12 +42,16 @@ const GoalCard: React.FC<Properties> = ({
                 <div className="flex flex-col">
                     <p className="text-primary text-sm font-extrabold leading-5 md:text-base">
                         {capitalizeFirstLetter(activityType)}{' '}
-                        {distance && convertMetersToKilometers(distance)} km
-                        {!distance && duration}
+                        {distance
+                            ? `${convertMetersToKilometers(distance)} km`
+                            : `${duration} min`}
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
-                        {frequency} {frequencyType}
-                        {frequency > 1 && PLURAL}
+                        {frequency} time{frequency > 1 && PLURAL}{' '}
+                        {frequencyType === FrequencyType.DAY
+                            ? DAY_PREPOSITION
+                            : WEEK_PREPOSITION}{' '}
+                        {frequencyType}
                     </p>
                 </div>
             </div>

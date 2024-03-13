@@ -33,8 +33,9 @@ const ConnectionsPage = (): JSX.Element => {
                         key={id}
                         title={option.title}
                         description={option.description}
-                        iconName={option.iconName}
+                        logoIcon={option.logoIcon}
                         provider={option.provider}
+                        buttonIcon={option.buttonIcon ?? null}
                     />
                 ))
             )}

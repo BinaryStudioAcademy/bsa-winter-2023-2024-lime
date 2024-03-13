@@ -110,13 +110,13 @@ const Goals: React.FC = () => {
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
-        <main className="bg-secondary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
+        <main className="bg-secondary ml-auto mr-auto flex w-full max-w-[71rem] flex-col gap-8 xl:flex-row xl:justify-normal">
             {isLoading ? (
-                <Loader />
+                <Loader isOverflow />
             ) : (
                 <>
-                    <div className="flex flex-col gap-8 ">
-                        <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
+                    <div className="flex w-full flex-col gap-8 xl:w-[70%]">
+                        <section>
                             <GoalWidget
                                 value={
                                     convertMetersToKilometers(
@@ -144,6 +144,7 @@ const Goals: React.FC = () => {
                                         : GoalTypes.STANDART
                                 }
                                 hasAchievement={Boolean(lastGoal)}
+                                hasDistance={Boolean(lastGoal?.distance)}
                             />
                         </section>
                         <section>
@@ -163,11 +164,11 @@ const Goals: React.FC = () => {
                                         ({
                                             id,
                                             activityType,
-                                            distance,
-                                            duration,
                                             frequency,
                                             frequencyType,
                                             progress,
+                                            distance,
+                                            duration,
                                         }) => (
                                             <GoalCard
                                                 key={id}
@@ -181,14 +182,14 @@ const Goals: React.FC = () => {
                                         ),
                                     )}
                             </div>
-                            <div className="md:w-full xl:w-96">
+                            <div className="md:w-full lg:w-[48.8%]">
                                 <Button
                                     type="button"
                                     label="Set the new goal"
                                     variant={ButtonVariant.SECONDARY}
                                     size={ComponentSize.LARGE}
                                     leftIcon={<PlusIcon className="w-6" />}
-                                    className="h-[5rem] sm:text-sm md:h-[7.5rem] md:text-xl"
+                                    className="h-[7.5rem] sm:text-sm md:text-xl"
                                     onClick={handleOpenModal}
                                 />
                             </div>
@@ -200,7 +201,7 @@ const Goals: React.FC = () => {
                             Achievements
                         </h2>
 
-                        <div className="flex w-full flex-col gap-4">
+                        <div className="flex w-full flex-col gap-4 lg:flex-row lg:flex-wrap xl:flex-col">
                             {achievements?.length > ZERO_VALUE &&
                                 achievements.map((achievement) => (
                                     <AchievementCard
