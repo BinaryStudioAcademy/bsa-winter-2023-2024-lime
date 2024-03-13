@@ -16,6 +16,7 @@ type WidgetProperties = {
     subTitle?: string;
     className?: string;
     hasAchievement?: boolean;
+    hasDistance?: boolean;
 };
 
 const GoalWidget = ({
@@ -26,6 +27,7 @@ const GoalWidget = ({
     subTitle = '',
     hasAchievement = true,
     className = '',
+    hasDistance = false,
 }: WidgetProperties): JSX.Element => {
     const rightTitle =
         goalType === GoalTypes.OVERVIEW
@@ -62,6 +64,7 @@ const GoalWidget = ({
                             value={value}
                             target={target}
                             goalType={goalType}
+                            hasDistance={hasDistance}
                         />
                     </div>
                 </div>
