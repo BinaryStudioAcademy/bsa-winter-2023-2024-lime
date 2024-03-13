@@ -48,7 +48,7 @@ const UserBonusBalance = ({
             <div
                 className={getValidClassNames(
                     className,
-                    ' bg-secondary flex flex-col justify-center gap-2 rounded-xl p-4',
+                    'bg-primary flex flex-col justify-center gap-2 rounded-xl p-4',
                 )}
             >
                 <div className="flex w-full items-center justify-start gap-2">

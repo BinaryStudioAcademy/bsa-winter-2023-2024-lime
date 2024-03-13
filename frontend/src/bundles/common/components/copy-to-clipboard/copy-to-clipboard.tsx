@@ -40,7 +40,7 @@ const CopyToClipboard = ({
         <div className={className}>
             <p className="text-primary mb-2 text-sm">{label}</p>
             <div className="flex items-center gap-2">
-                <div className="bg-secondary text-secondary flex h-9 items-center whitespace-nowrap rounded-lg p-4 text-sm">
+                <div className="bg-primary text-secondary flex h-9 items-center whitespace-nowrap rounded-lg p-4 text-sm">
                     <span>{textToDisplay ?? textToCopy}</span>
                 </div>
                 <div className="w-[8rem]">

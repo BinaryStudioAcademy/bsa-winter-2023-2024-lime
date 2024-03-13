@@ -120,43 +120,26 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <div className="bg-secondary pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
-            <div className="flex items-center pb-12">
-                <Avatar
-                    size="lg"
-                    email={user ? user?.email : ''}
-                    avatarUrl={user ? user.avatarUrl : ''}
-                />
-
-                <input
-                    id="avatarInput"
-                    type="file"
-                    accept="image/jpeg, image/png"
-                    className="hidden"
-                />
-                <div className="h-[38px] w-[115px]">
-                    <Button
-                        className="ml-3 [border-radius:1.25rem]"
-                        type="submit"
-                        label="Update file"
-                        variant={ButtonVariant.SECONDARY}
-                        size={ComponentSize.SMALL}
+            <div className="flex items-center justify-between pb-12">
+                <div>
+                    <Avatar
+                        size="lg"
+                        email={user ? user?.email : ''}
+                        avatarUrl={user ? user.avatarUrl : ''}
                     />
-
                     <input
                         id="avatarInput"
                         type="file"
                         accept="image/jpeg, image/png"
                         className="hidden"
                     />
-                    <div>
-                        <Button
-                            className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
-                            type="submit"
-                            label="Update file"
-                            variant={ButtonVariant.SECONDARY}
-                            size={ComponentSize.SMALL}
-                        />
-                    </div>
+                    <Button
+                        className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
+                        type="submit"
+                        label="Update file"
+                        variant={ButtonVariant.SECONDARY}
+                        size={ComponentSize.SMALL}
+                    />
                 </div>
                 <UserBonusBalance
                     userBonusesTransactions={userBonusesTransactions}
