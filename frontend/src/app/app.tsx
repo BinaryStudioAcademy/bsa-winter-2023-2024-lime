@@ -16,10 +16,9 @@ const App: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { redirectPath, isRefreshing } = useAppSelector(({ app, auth }) => ({
-        redirectPath: app.redirectPath,
-        isRefreshing: auth.isRefreshing,
-    }));
+    const { redirectPath } = useAppSelector(({ app }) => app);
+
+    const { isRefreshing } = useAppSelector(({ auth }) => auth);
 
     useEffect(() => {
         if (redirectPath) {

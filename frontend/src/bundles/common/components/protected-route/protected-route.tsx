@@ -8,16 +8,12 @@ type ProtectedRouteProperties = {
 };
 
 const ProtectedRoute: React.FC<ProtectedRouteProperties> = ({ children }) => {
-    const { isRefreshing, userAuthenticated, dataStatus } = useAppSelector(
-        ({ auth }) => ({
-            isRefreshing: auth.isRefreshing,
-            userAuthenticated: auth.user,
-            dataStatus: auth.dataStatus,
-        }),
+    const { isRefreshing, dataStatus, user } = useAppSelector(
+        ({ auth }) => auth,
     );
 
     if (dataStatus === DataStatus.FULFILLED) {
-        if (!isRefreshing && !userAuthenticated) {
+        if (!isRefreshing && !user) {
             return <Navigate to={AppRoute.SIGN_IN} />;
         }
         return children;
