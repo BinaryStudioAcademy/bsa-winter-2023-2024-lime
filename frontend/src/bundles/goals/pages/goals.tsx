@@ -18,6 +18,7 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import {
@@ -31,8 +32,10 @@ import {
     ActivityType,
 } from '~/bundles/goals/enums/enums.js';
 import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
+import { actions as notificationsActions } from '~/bundles/notifications/store/notifications.js';
 import { GoalWidget } from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
+import { NotificationType } from '~/framework/notification/enums/notification-type.enum.js';
 
 const activityToGoal: Record<
     ValueOf<typeof ActivityType>,
@@ -49,17 +52,11 @@ const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const { dataStatus: dataStatusGoals, goals } = useAppSelector(
-        ({ goals }) => ({
-            dataStatus: goals.dataStatus,
-            goals: goals.goals,
-        }),
+        ({ goals }) => goals,
     );
 
     const { dataStatus: dataStatusAchievements, achievements } = useAppSelector(
-        ({ achievements }) => ({
-            dataStatus: achievements.dataStatus,
-            achievements: achievements.achievements,
-        }),
+        ({ achievements }) => achievements,
     );
 
     const isLoading =
@@ -75,6 +72,35 @@ const Goals: React.FC = () => {
     useEffect(() => {
         void dispatch(achievementsActions.getAchievements());
     }, [dispatch]);
+
+    const previousGoalsReference = useRef(goals);
+
+    useEffect(() => {
+        const previousGoals = previousGoalsReference.current;
+        const dispatchNotification = (title: string, message: string): void => {
+            const notificationPayload = {
+                title: title,
+                message: message,
+                isRead: false,
+                type: NotificationType.DEFAULT,
+            };
+            void dispatch(
+                notificationsActions.createNotification(notificationPayload),
+            );
+        };
+        for (const [index, currentGoal] of goals.entries()) {
+            const previousGoal = previousGoals[index];
+            if (
+                previousGoal &&
+                currentGoal.completedAt !== previousGoal.completedAt
+            ) {
+                const title = 'Goal Completed!';
+                const message = `Congratulations! You have completed your ${currentGoal.activityType} goal.`;
+                dispatchNotification(title, message);
+            }
+        }
+        previousGoalsReference.current = goals;
+    }, [goals, dispatch]);
 
     const handleOpenModal = useCallback((): void => {
         void setIsModalOpen(true);

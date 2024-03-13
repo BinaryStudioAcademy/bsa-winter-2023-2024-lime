@@ -14,6 +14,8 @@ import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
+import { notificationApi } from '~/bundles/notifications/notifications.js';
+import { reducer as notificationsReducer } from '~/bundles/notifications/store/slice.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
@@ -44,6 +46,7 @@ type RootReducer = {
     subscriptions: ReturnType<typeof subscriptionsReducer>;
     theme: ReturnType<typeof themeReducer>;
     connections: ReturnType<typeof connectionsReducer>;
+    notifications: ReturnType<typeof notificationsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
 };
 
@@ -56,6 +59,7 @@ type ExtraArguments = {
     subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
     connectionApi: typeof connectionApi;
+    notificationApi: typeof notificationApi;
     workoutApi: typeof workoutApi;
 };
 
@@ -81,6 +85,7 @@ class Store {
                 subscriptions: subscriptionsReducer,
                 theme: themeReducer,
                 connections: connectionsReducer,
+                notifications: notificationsReducer,
                 workouts: workoutsReducer,
             },
             middleware: (getDefaultMiddleware) =>
@@ -104,6 +109,7 @@ class Store {
             subscriptionPlansApi,
             passwordResetApi,
             connectionApi,
+            notificationApi,
             workoutApi,
         };
     }
