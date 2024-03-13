@@ -14,11 +14,11 @@ type FriendProperties = {
     name: string | null;
     avatarUrl: string | null;
     isActive: boolean;
-    isFriend: boolean;
-    isSelected: boolean;
-    handleSelectCard: (id: number) => void;
-    toggleFriend: (id: number) => void;
-    // messageFriend: (id: number) => void;
+    isFollowed: boolean;
+    isCardSelected: boolean;
+    selectCard: (id: number) => void;
+    onToggleFollow: (id: number) => void;
+    // message: (id: number) => void;
 };
 
 const FriendCard = ({
@@ -26,47 +26,46 @@ const FriendCard = ({
     name,
     avatarUrl,
     isActive,
-    isFriend,
-    isSelected,
-    handleSelectCard,
-    toggleFriend,
-    // messageFriend,
+    isFollowed,
+    isCardSelected,
+    selectCard,
+    onToggleFollow,
+    // message,
 }: FriendProperties): JSX.Element => {
-    const handletoggleFriend = useCallback(() => {
-        toggleFriend(id);
-    }, [toggleFriend, id]);
+    const handleOnToggleFollow = useCallback(() => {
+        onToggleFollow(id);
+    }, [onToggleFollow, id]);
 
     // const handleSendMessage = useCallback(() => {
     //     messageFriend(id);
     // }, [messageFriend, id]);
 
-    const handleClick = useCallback((): void => {
-        handleSelectCard(id);
-    }, [handleSelectCard, id]);
+    const handleSelectCard = useCallback((): void => {
+        selectCard(id);
+    }, [selectCard, id]);
 
     return (
         <div
-            className={`hover:border-buttonPrimary flex h-[330px] w-[235px] flex-col overflow-hidden rounded-xl border ${isSelected ? 'border-buttonPrimary' : 'border-transparent'}`}
+            className={`hover:border-buttonPrimary flex w-full cursor-pointer flex-col rounded-xl border sm:max-w-40 lg:max-w-64 ${isCardSelected ? 'border-buttonPrimary' : 'border-transparent'}`}
         >
             <div
-                className="h-[227px] w-full cursor-pointer object-cover"
-                onClick={handleClick}
+                className="h-3/4 w-full"
+                onClick={handleSelectCard}
                 role="presentation"
             >
                 {avatarUrl && validateImageUrl(avatarUrl) ? (
                     <img
                         src={avatarUrl}
                         alt={name || 'avatar'}
-                        className="aspect-square rounded-t-xl object-cover "
+                        className="aspect-square rounded-t-xl object-cover"
                     />
                 ) : (
-                    <div className="bg-lm-grey-100 flex aspect-square h-[227px] w-full items-center justify-center rounded-t-xl">
+                    <div className="bg-lm-grey-100 flex aspect-square items-center justify-center rounded-t-xl">
                         <UserCircleIcon className="text-lm-grey-200 h-full w-full" />
                     </div>
                 )}
             </div>
-
-            <div className="bg-secondary flex h-full flex-col gap-2 rounded-b-xl p-4">
+            <div className="bg-primary flex flex-col gap-2 rounded-b-xl p-4">
                 <div className="flex items-center gap-2">
                     {isActive ? (
                         <div className="bg-buttonPrimary h-2 w-2 rounded-[50%]" />
@@ -80,35 +79,30 @@ const FriendCard = ({
                 </div>
                 <div className="flex w-full items-center justify-between">
                     <div className="inline-flex w-3/4 items-center">
-                        {isFriend ? (
-                            <Button
-                                onClick={handletoggleFriend}
-                                label={'Unfollow'}
-                                className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
-                                size={ComponentSize.SMALL}
-                                variant={isFriend ? 'secondary' : 'primary'}
-                            />
-                        ) : (
-                            <Button
-                                onClick={handletoggleFriend}
-                                label={'Follow'}
-                                className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
-                                size={ComponentSize.SMALL}
-                                variant={isFriend ? 'secondary' : 'primary'}
-                            />
-                        )}
+                        <Button
+                            onClick={handleOnToggleFollow}
+                            label={isFollowed ? 'Unfollow' : 'Follow'}
+                            className="sm:h-6 sm:px-1 sm:py-1  sm:text-[0.7rem] lg:h-8 lg:px-4 lg:py-2"
+                            size={ComponentSize.SMALL}
+                            variant={isFollowed ? 'secondary' : 'primary'}
+                        />
                     </div>
 
                     <button
                         // onClick={handleSendMessage}
-                        className="text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10"
-                        disabled={!isFriend}
+                        className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10`}
+                        disabled={!isFollowed}
+                        title={
+                            isFollowed
+                                ? 'Send message'
+                                : 'Follow to send message'
+                        }
                     >
                         <Icon
                             name={IconName.messageIcon}
                             size={ComponentSize.MEDIUM}
                             color={
-                                isFriend
+                                isFollowed
                                     ? IconColor.PRIMARY
                                     : IconColor.SECONDARY
                             }

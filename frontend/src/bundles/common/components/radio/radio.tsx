@@ -56,9 +56,9 @@ const Radio = <T extends FieldValues>({
             container: 'rounded-r-lg pt-9',
             input: 'peer/radio hidden',
             inputChecked: '',
-            label: 'sm:py-1.5 font-bold text-lm-grey-200 bg-lm-black-100 table-cell h-37 cursor-pointer px-5 py-2.5 text-center align-middle text-prebase whitespace-nowrap ',
+            label: 'sm:py-1.5 font-bold text-lm-grey-200 bg-primary table-cell h-37 cursor-pointer px-5 py-2.5 text-center align-middle text-prebase whitespace-nowrap ',
             labelChecked:
-                'peer-checked/radio:text-lm-black-100 peer-checked/radio:bg-lm-yellow-100',
+                'peer-checked/radio:text-buttonText peer-checked/radio:bg-buttonPrimary',
         },
     };
 

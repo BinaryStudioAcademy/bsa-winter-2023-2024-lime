@@ -3,6 +3,7 @@ const IconName = {
     logoIcon: 'logoIcon',
     notFoundIcon: 'notFoundIcon',
     stravaIcon: 'stravaIcon',
+    poweredByStravaIcon: 'poweredByStravaIcon',
     googleFitIcon: 'googleFitIcon',
     googleLogoIcon: 'googleLogoIcon',
     goalsIcon: 'goalsIcon',
@@ -22,6 +23,7 @@ const IconName = {
     goalIcon: 'goalIcon',
     starIcon: 'starIcon',
     friendsIcon: 'friendsIcon',
+    stavaButtonIcon: 'stavaButtonIcon',
 } as const;
 
 export { IconName };

@@ -6,10 +6,6 @@
     @apply flex w-full items-center justify-center gap-5;
 }
 
-.avatar {
-    @apply flex w-6 items-center justify-center rounded-full  sm:w-8  md:w-10;
-}
-
 .icon {
     @apply text-lm-grey-200 w-5 sm:w-6;
 }

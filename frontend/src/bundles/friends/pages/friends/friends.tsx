@@ -23,7 +23,9 @@ const Friends: React.FC = () => {
     const [selectedFriend, setSelectedFriend] =
         useState<UserFriendsResponseDto | null>(null);
 
-    const [activeTab, setActiveTab] = useState<string>(TabsFollowers.FIND_THE_FOLLOWERS);
+    const [activeTab, setActiveTab] = useState<string>(
+        TabsFollowers.FIND_THE_FOLLOWERS,
+    );
 
     const [users, setUsers] = useState<UserFriendsResponseDto[]>([]);
 
@@ -87,24 +89,18 @@ const Friends: React.FC = () => {
     }, [setUsers, allUsers, currentUser, friends, allUsersDataStatus]);
 
     useEffect(() => {
-        (activeTab === TabsFollowers.FIND_THE_FOLLOWERS)
+        activeTab === TabsFollowers.FIND_THE_FOLLOWERS
             ? users &&
-            setSelectedFriend(
-                users.find((user) => user.id === selectedFriendId) || null,
-            )
+              setSelectedFriend(
+                  users.find((user) => user.id === selectedFriendId) || null,
+              )
             : friends &&
-            setSelectedFriend(
-                friends.find(
-                    (friend) => friend.userId === selectedFriendId,
-                ) || null,
-            );
-    }, [
-        selectedFriendId,
-        setSelectedFriend,
-        users,
-        activeTab,
-        friends,
-    ]);
+              setSelectedFriend(
+                  friends.find(
+                      (friend) => friend.userId === selectedFriendId,
+                  ) || null,
+              );
+    }, [selectedFriendId, setSelectedFriend, users, activeTab, friends]);
 
     useEffect(() => {
         const loadAllUsers = async (): Promise<void> => {
@@ -122,69 +118,69 @@ const Friends: React.FC = () => {
 
     return (
         <section className="relative flex flex-col gap-5 whitespace-normal">
-
             <Tabs handleTabClick={handleTabClick} activeTab={activeTab} />
 
-            <div className={`flex flex-wrap items-start gap-5 ${selectedFriendId ? 'w-[calc(100%-354px)]' : 'w-full'}`}>
-                {activeTab === TabsFollowers.FIND_THE_FOLLOWERS && (
-                    users.length > 0 ? (
+            <div
+                className={`flex flex-wrap items-start gap-5 ${selectedFriendId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
+            >
+                {activeTab === TabsFollowers.FIND_THE_FOLLOWERS &&
+                    (users.length > 0 ? (
                         users.map((user) => (
                             <div key={user.id}>
                                 <FriendCard
                                     name={user.fullName || user.email}
                                     id={user.id}
-                                    isFriend={false}
+                                    isFollowed={false}
                                     isActive={true}
-                                    isSelected={selectedFriendId === user.id}
-                                    handleSelectCard={handleSelectCard}
+                                    isCardSelected={
+                                        selectedFriendId === user.id
+                                    }
+                                    selectCard={handleSelectCard}
                                     avatarUrl={user?.avatarUrl}
-                                    toggleFriend={handleAddFriend}
+                                    onToggleFollow={handleAddFriend}
                                 />
                             </div>
                         ))
                     ) : (
-                        <div>
-                            No user found to follow.
-                        </div>
-                    )
-                )}
+                        <div>No user found to follow.</div>
+                    ))}
 
-                {activeTab === TabsFollowers.MY_FOLLOWERS && (
-                    friends.length > 0 ? (
+                {activeTab === TabsFollowers.MY_FOLLOWERS &&
+                    (friends.length > 0 ? (
                         friends.map((friend) => (
-                            <div key={friend.userId} className={'cursor-pointer'}>
+                            <div
+                                key={friend.userId}
+                                className={'cursor-pointer'}
+                            >
                                 <FriendCard
                                     name={friend.fullName || friend.email}
                                     id={friend.userId}
-                                    isFriend={true}
+                                    isFollowed={true}
                                     isActive={true}
-                                    isSelected={selectedFriendId === friend.userId}
-                                    handleSelectCard={handleSelectCard}
+                                    isCardSelected={
+                                        selectedFriendId === friend.userId
+                                    }
+                                    selectCard={handleSelectCard}
                                     avatarUrl={friend?.avatarUrl}
-                                    toggleFriend={handleRemoveFriend}
+                                    onToggleFollow={handleRemoveFriend}
                                 />
                             </div>
                         ))
                     ) : (
-                        <div>
-                            You do not follow anyone yet.
-                        </div>
-                    )
-                )}
+                        <div>You do not follow anyone yet.</div>
+                    ))}
 
                 {activeTab === TabsFollowers.FOLLOWING && (
-                    <div>
-                        No one is following you yet.
-                    </div>
+                    <div>No one is following you yet.</div>
                 )}
             </div>
 
             {selectedFriend && (
-                <aside className="bg-primary border-buttonText fixed right-[6px] top-[88px] ml-4 h-full w-[354px] border-l-2 pb-4 pl-4 pr-4 pt-8">
+                <aside className="bg-secondary border-buttonText fixed right-[6px] top-[88px] ml-4 h-full w-[354px] border-l-2 pb-4 pl-4 pr-4 pt-8">
                     <FriendDetails
                         id={selectedFriend.id}
                         isActive={true}
-                        name={selectedFriend.fullName}
+                        name={selectedFriend.fullName || selectedFriend.email}
                         avatarUrl={selectedFriend.avatarUrl}
                     />
                 </aside>

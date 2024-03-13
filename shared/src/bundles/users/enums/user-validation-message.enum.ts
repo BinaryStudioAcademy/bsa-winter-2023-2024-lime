@@ -22,9 +22,9 @@ const UserValidationMessage = {
     BIRTHDATE_FORMAT: 'Invalid date format. Use DD/MM/YYYY',
     BIRTHDATE_IN_FUTURE: 'Date of birth can not be in the future',
     WEIGHT_VALUE: `Weight should be from ${WEIGHT.MIN_VALUE} to ${WEIGHT.MAX_VALUE} kg.`,
-    WEIGHT_WRONG: 'Weight should consist of digits.',
-    HEIGHT_WRONG: 'Height should consist of digits.',
-    HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MIN_VALUE} sm.`,
+    WEIGHT_WRONG: 'Weight should only contain numbers and a decimal point.',
+    HEIGHT_WRONG: 'Height should only contain numbers and a decimal point.',
+    HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MAX_VALUE} cm.`,
     USER_NOT_FOUND: 'User not found',
     FRIEND_NOT_FOUND: 'Friend not found',
 } as const;
