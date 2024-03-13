@@ -193,7 +193,7 @@ class UserRepository implements Repository {
             const userDetails = await this.userModel
                 .query(trx)
                 .findById(friendId)
-                .select(...USER_DETAILS_SELECT_FIELDS)
+                .select('email', ...USER_DETAILS_SELECT_FIELDS)
                 .leftJoin('user_details as ud', `ud.${USER_ID}`, 'users.id');
 
             await trx.commit();
@@ -231,7 +231,7 @@ class UserRepository implements Repository {
         try {
             const friends = await this.userModel
                 .query()
-                .select(...USER_DETAILS_SELECT_FIELDS)
+                .select('email', ...USER_DETAILS_SELECT_FIELDS)
                 .from(`${DatabaseTableName.USER_FRIENDS} as uf`)
                 .join(`${DatabaseTableName.USERS} as u`, 'uf.friend_id', 'u.id')
                 .leftJoin(

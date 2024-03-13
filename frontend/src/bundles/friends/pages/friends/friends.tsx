@@ -9,7 +9,9 @@ import {
 import {
     FriendCard,
     FriendDetails,
+    Tabs,
 } from '~/bundles/friends/components/components.js';
+import { TabsFollowers } from '~/bundles/friends/enums/enums.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
 import { type UserFriendsResponseDto } from '~/bundles/friends/types/types.js';
 import { actions as usersActions } from '~/bundles/users/store/users.js';
@@ -20,8 +22,9 @@ const Friends: React.FC = () => {
     );
     const [selectedFriend, setSelectedFriend] =
         useState<UserFriendsResponseDto | null>(null);
-    const [isTabAllUsersActive, setIsTabAllUsersActive] =
-        useState<boolean>(true);
+
+    const [activeTab, setActiveTab] = useState<string>(TabsFollowers.FIND_THE_FOLLOWERS);
+
     const [users, setUsers] = useState<UserFriendsResponseDto[]>([]);
 
     const dispatch = useAppDispatch();
@@ -43,17 +46,14 @@ const Friends: React.FC = () => {
         [setSelectedFriendId],
     );
 
-    const handleToggleFindFriendsTab = useCallback((): void => {
-        setIsTabAllUsersActive(true);
-        setSelectedFriend(null);
-        setSelectedFriendId(null);
-    }, [setIsTabAllUsersActive, setSelectedFriend, setSelectedFriendId]);
-
-    const handleToggleMyFriendsTab = useCallback((): void => {
-        setIsTabAllUsersActive(false);
-        setSelectedFriend(null);
-        setSelectedFriendId(null);
-    }, [setIsTabAllUsersActive, setSelectedFriend, setSelectedFriendId]);
+    const handleTabClick = useCallback(
+        (tab: string): void => {
+            setActiveTab(tab);
+            setSelectedFriend(null);
+            setSelectedFriendId(null);
+        },
+        [setActiveTab, setSelectedFriend, setSelectedFriendId],
+    );
 
     const handleAddFriend = useCallback(
         (id: number): void => {
@@ -87,22 +87,22 @@ const Friends: React.FC = () => {
     }, [setUsers, allUsers, currentUser, friends, allUsersDataStatus]);
 
     useEffect(() => {
-        isTabAllUsersActive
+        (activeTab === TabsFollowers.FIND_THE_FOLLOWERS)
             ? users &&
-              setSelectedFriend(
-                  users.find((user) => user.id === selectedFriendId) || null,
-              )
+            setSelectedFriend(
+                users.find((user) => user.id === selectedFriendId) || null,
+            )
             : friends &&
-              setSelectedFriend(
-                  friends.find(
-                      (friend) => friend.userId === selectedFriendId,
-                  ) || null,
-              );
+            setSelectedFriend(
+                friends.find(
+                    (friend) => friend.userId === selectedFriendId,
+                ) || null,
+            );
     }, [
         selectedFriendId,
         setSelectedFriend,
         users,
-        isTabAllUsersActive,
+        activeTab,
         friends,
     ]);
 
@@ -121,38 +121,17 @@ const Friends: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <section className={'relative flex flex-col gap-5'}>
-            <div
-                className={
-                    'text-secondary bg-secondary rounded-34 flex max-w-[346px] justify-between font-semibold leading-4 '
-                }
-            >
-                <div
-                    onClick={handleToggleFindFriendsTab}
-                    className={`transition-bg rounded-34 w-[178px] cursor-pointer px-4 py-3 text-center duration-300 ${isTabAllUsersActive ? 'bg-tertiary' : ''}`}
-                    role="presentation"
-                >
-                    Find the followers
-                </div>
+        <section className="relative flex flex-col gap-5 whitespace-normal">
 
-                <div
-                    onClick={handleToggleMyFriendsTab}
-                    className={`transition-bg rounded-34 w-[178px] cursor-pointer px-4 py-3 text-center duration-300 ${isTabAllUsersActive ? '' : 'bg-tertiary'}`}
-                    role="presentation"
-                >
-                    My followers
-                </div>
-            </div>
+            <Tabs handleTabClick={handleTabClick} activeTab={activeTab} />
 
-            <div
-                className={`flex flex-wrap items-start gap-5 ${selectedFriendId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
-            >
-                {isTabAllUsersActive ? (
+            <div className={`flex flex-wrap items-start gap-5 ${selectedFriendId ? 'w-[calc(100%-354px)]' : 'w-full'}`}>
+                {activeTab === TabsFollowers.FIND_THE_FOLLOWERS && (
                     users.length > 0 ? (
                         users.map((user) => (
                             <div key={user.id}>
                                 <FriendCard
-                                    name={user.fullName}
+                                    name={user.fullName || user.email}
                                     id={user.id}
                                     isFriend={false}
                                     isActive={true}
@@ -164,30 +143,40 @@ const Friends: React.FC = () => {
                             </div>
                         ))
                     ) : (
-                        <div className={'text-secondary'}>
+                        <div>
                             No user found to follow.
                         </div>
                     )
-                ) : (friends.length > 0 ? (
-                    friends.map((friend) => (
-                        <div key={friend.userId} className={'cursor-pointer'}>
-                            <FriendCard
-                                name={friend.fullName}
-                                id={friend.userId}
-                                isFriend={true}
-                                isActive={true}
-                                isSelected={selectedFriendId === friend.userId}
-                                handleSelectCard={handleSelectCard}
-                                avatarUrl={friend?.avatarUrl}
-                                toggleFriend={handleRemoveFriend}
-                            />
+                )}
+
+                {activeTab === TabsFollowers.MY_FOLLOWERS && (
+                    friends.length > 0 ? (
+                        friends.map((friend) => (
+                            <div key={friend.userId} className={'cursor-pointer'}>
+                                <FriendCard
+                                    name={friend.fullName || friend.email}
+                                    id={friend.userId}
+                                    isFriend={true}
+                                    isActive={true}
+                                    isSelected={selectedFriendId === friend.userId}
+                                    handleSelectCard={handleSelectCard}
+                                    avatarUrl={friend?.avatarUrl}
+                                    toggleFriend={handleRemoveFriend}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <div>
+                            You do not follow anyone yet.
                         </div>
-                    ))
-                ) : (
-                    <div className={'text-secondary'}>
-                        You do not have any friends yet.
+                    )
+                )}
+
+                {activeTab === TabsFollowers.FOLLOWING && (
+                    <div>
+                        No one is following you yet.
                     </div>
-                ))}
+                )}
             </div>
 
             {selectedFriend && (

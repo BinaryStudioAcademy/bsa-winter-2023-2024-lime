@@ -4,6 +4,7 @@ import { type Gender } from '../users.js';
 type UserFriendsResponseDto = {
     id: number;
     userId: number;
+    email: string | null;
     avatarUrl: string | null;
     username: string | null;
     fullName: string | null;
