@@ -45,7 +45,9 @@ export {
     type ScheduleRequestDto,
     type ScheduleResponseDto,
     ScheduleApiPath,
-    ScheduleValidationMessage } from './bundles/schedules/schedules.js';
+    ScheduleValidationMessage,
+    scheduleValidationSchema,
+} from './bundles/schedules/schedules.js';
 export {
     type SubscriptionPlansGetAllItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,

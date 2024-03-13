@@ -53,14 +53,12 @@ class ScheduleEntity implements Entity {
 
     public toObject(): {
         id: number;
-        userId: number;
         goalId?: number;
         activityType: ValueOf<typeof ActivityType>;
         startAt: Date;
     } {
         return {
             id: this.id as number,
-            userId: this.userId,
             activityType: this.activityType,
             goalId: this.goalId as number,
             startAt: this.startAt,

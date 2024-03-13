@@ -1,1 +1,1 @@
-export { idParameterValidationSchema } from 'shared';
+export { idParameterValidationSchema, scheduleValidationSchema } from 'shared';

@@ -3,7 +3,6 @@ import { type ValueOf } from '../../../types/types.js';
 
 type ScheduleResponseDto = {
     id: number;
-    userId: number;
     goalId?: number;
     activityType: ValueOf<typeof ActivityType>;
     startAt: Date;
