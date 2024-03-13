@@ -100,7 +100,7 @@ const Goals: React.FC = () => {
             }
         }
         previousGoalsReference.current = goals;
-    }, [goals]);
+    }, [goals, dispatchNotification]);
 
     const handleOpenModal = useCallback((): void => {
         void setIsModalOpen(true);
