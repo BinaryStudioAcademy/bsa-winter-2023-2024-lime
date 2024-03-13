@@ -33,7 +33,7 @@ import {
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
 
-import { Cropper } from './components/cropper/cropper.js';
+import { Cropper } from './components/components.js';
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
 type Properties = {

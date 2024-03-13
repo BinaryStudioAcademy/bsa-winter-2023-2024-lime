@@ -13,8 +13,7 @@ import { Button, Loader } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 
 import { DIMENSION } from './enums/enums.js';
-import { canvasPreview } from './helpers/canvas-preview.helper.js';
-import { toFile } from './helpers/helpers.js';
+import { canvasPreview, toFile } from './helpers/helpers.js';
 
 type Properties = {
     onAvatarUpload: (file: File) => void;

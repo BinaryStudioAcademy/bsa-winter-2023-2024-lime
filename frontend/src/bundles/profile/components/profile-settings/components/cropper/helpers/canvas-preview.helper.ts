@@ -1,4 +1,4 @@
-import { type CanvasProperties } from '../types/canvas-properties.type.js';
+import { type CanvasProperties } from '../types/types.js';
 
 const canvasPreview = ({
     image,
