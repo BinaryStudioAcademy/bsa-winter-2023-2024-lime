@@ -1,1 +1,1 @@
-export { type UserAvatarResponseDto } from './avatar-response-dto.type.js';
+export { type File } from 'fastify-multer/lib/interfaces.js';

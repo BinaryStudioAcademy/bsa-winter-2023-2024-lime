@@ -1,6 +1,15 @@
+import { MEGABYTE_PER_BYTE } from '../../../constants/constants.js';
 import { UserValidationRule } from './user-validation-rule.enum.js';
 
-const { PASSWORD, FULLNAME, NICKNAME, WEIGHT, HEIGHT } = UserValidationRule;
+const {
+    PASSWORD,
+    FULLNAME,
+    NICKNAME,
+    WEIGHT,
+    HEIGHT,
+    AVATAR_MAX_SIZE,
+    AVATAR_ALLOWED_TYPES,
+} = UserValidationRule;
 
 const UserValidationMessage = {
     REQUIRED: 'Please fill out this field',
@@ -26,6 +35,9 @@ const UserValidationMessage = {
     HEIGHT_WRONG: 'Height should consist of digits.',
     HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MIN_VALUE} sm.`,
     USER_NOT_FOUND: 'User not found',
+    FILE_REQUIRED: 'File is required',
+    FILE_SIZE_EXCEEDED: `File size exceeded. Max file size is ${AVATAR_MAX_SIZE / MEGABYTE_PER_BYTE}MB`,
+    FILE_TYPE_NOT_ALLOWED: `File type is not allowed. Only ${AVATAR_ALLOWED_TYPES.toString()} is allowed`,
 } as const;
 
 export { UserValidationMessage };

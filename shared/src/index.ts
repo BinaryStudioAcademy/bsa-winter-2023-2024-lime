@@ -8,8 +8,7 @@ export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
 } from './bundles/connections/connections.js';
-export { FileValidationMessage } from './bundles/file/file.js';
-export { type UserAvatarResponseDto } from './bundles/file/types/types.js';
+export { type File, FileValidationMessage } from './bundles/file/file.js';
 export {
     type GoalRequestDto,
     type GoalResponseDto,
@@ -62,6 +61,7 @@ export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
     Gender,
     passwordForgotValidationSchema,
     passwordResetValidationSchema,
@@ -69,6 +69,7 @@ export {
     UsersApiPath,
     userSignUpValidationSchema,
     userUpdateProfileValidationSchema,
+    userUploadAvatarValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {

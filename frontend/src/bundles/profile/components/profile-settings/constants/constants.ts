@@ -1,10 +1,8 @@
 import { Gender } from '~/bundles/common/enums/enums.js';
 import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
 
-const DEFAULT_UPDATE_PROFILE_PAYLOAD: Omit<
-    UserUpdateProfileRequestDto,
-    'avatarUrl'
-> = {
+const DEFAULT_UPDATE_PROFILE_PAYLOAD: UserUpdateProfileRequestDto = {
+    avatarUrl: '',
     fullName: '',
     username: '',
     dateOfBirth: '',

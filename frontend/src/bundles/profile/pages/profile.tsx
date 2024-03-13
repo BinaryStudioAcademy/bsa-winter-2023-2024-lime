@@ -12,9 +12,7 @@ import { ProfileSettings } from '../components/components.js';
 
 const Profile: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { dataStatus } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-    }));
+    const { dataStatus } = useAppSelector(({ auth }) => auth);
     const isLoading = dataStatus === DataStatus.PENDING;
     const handleProfileUpdate = useCallback(
         (payload: UserUpdateProfileRequestDto): void => {
@@ -22,8 +20,19 @@ const Profile: React.FC = () => {
         },
         [dispatch],
     );
+
+    const handleAvatarUpload = useCallback(
+        (file: File): void => {
+            void dispatch(authActions.uploadAvatar(file));
+        },
+        [dispatch],
+    );
     return (
-        <ProfileSettings onSubmit={handleProfileUpdate} isLoading={isLoading} />
+        <ProfileSettings
+            onSubmit={handleProfileUpdate}
+            onAvatarUpload={handleAvatarUpload}
+            isLoading={isLoading}
+        />
     );
 };
 

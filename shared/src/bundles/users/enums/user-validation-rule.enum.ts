@@ -1,3 +1,5 @@
+import { MEGABYTE_PER_BYTE } from '../../../constants/constants.js';
+
 const UserValidationRule = {
     EMAIL: {
         MIN_LENGTH: 6,
@@ -27,6 +29,8 @@ const UserValidationRule = {
         MIN_VALUE: 0,
         MAX_VALUE: 300,
     },
+    AVATAR_MAX_SIZE: MEGABYTE_PER_BYTE * 20,
+    AVATAR_ALLOWED_TYPES: ['webp'],
 } as const;
 
 export { UserValidationRule };

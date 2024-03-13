@@ -1,43 +1,45 @@
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { useCallback, useRef, useState } from 'react';
-import ReactCrop, {
-    //@ts-expect-error: unexpected error
+import {
     type Crop,
-    //@ts-expect-error: ...
     type PercentCrop,
-    //@ts-expect-error: ...
     centerCrop,
-    //@ts-expect-error: ...
     makeAspectCrop,
+    ReactCrop,
 } from 'react-image-crop';
 
-import { actions as authActions } from '~/bundles/auth/store/auth.js';
-import { Button } from '~/bundles/common/components/components.js';
-import { useAppDispatch } from '~/bundles/common/hooks/hooks.js';
+import { Button, Loader } from '~/bundles/common/components/components.js';
+import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
 
 import { canvasPreview } from './canvas-preview.js';
 import { DIMENSION } from './enums/enums.js';
 import { toFile } from './helpers/helpers.js';
 
-const Cropper = ({
-    closeModal,
-    render,
-    image,
-}: {
-    closeModal: React.Dispatch<React.SetStateAction<boolean>>;
-    render: (img: string | undefined) => void;
+type Properties = {
+    onAvatarUpload: (file: File) => void;
+    closeModal: () => void;
+    isLoading: boolean;
     image: string | null;
-}): JSX.Element => {
+};
+
+const Cropper = ({
+    onAvatarUpload,
+    closeModal,
+    isLoading,
+    image,
+}: Properties): JSX.Element => {
     const [crop, setCrop] = useState<Crop>();
     const [scale, setScale] = useState(1);
     const imgReference = useRef<HTMLImageElement>(null);
     const canvasReference = useRef<HTMLCanvasElement>(null);
 
-    const dispatch = useAppDispatch();
-    const handleCrop = useCallback((PercentCrop: PercentCrop) => {
-        setCrop(PercentCrop);
-    }, []);
+    const handleCrop = useCallback(
+        (PercentCrop: PercentCrop) => {
+            setCrop(PercentCrop);
+        },
+        [setCrop],
+    );
 
     const onImageLoad = useCallback(
         (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -61,32 +63,25 @@ const Cropper = ({
         setScale(Number.parseFloat(event.target.value));
     }, []);
 
-    const canvasToFile = useCallback(async (): Promise<void> => {
-        const imgPayload = await toFile(canvasReference);
-        void dispatch(authActions.upload(imgPayload));
-    }, [dispatch]);
-
-    const setCanvasPreview = useCallback(() => {
+    const handleClick = useCallback(async (): Promise<void> => {
         canvasPreview({
             crop,
             scale,
             canvas: canvasReference.current as HTMLCanvasElement,
             image: imgReference.current as HTMLImageElement,
         });
-
-        void canvasToFile();
-        const temporaryAvatar = canvasReference.current?.toDataURL();
-        render(temporaryAvatar);
-
-        closeModal(false);
+        if (canvasReference.current) {
+            const imgPayload = await toFile(canvasReference);
+            onAvatarUpload(imgPayload);
+            void closeModal();
+        }
     }, [
         crop,
         imgReference,
         canvasReference,
         scale,
         closeModal,
-        canvasToFile,
-        render,
+        onAvatarUpload,
     ]);
 
     return (
@@ -124,8 +119,9 @@ const Cropper = ({
             <Button
                 size="sm"
                 variant="secondary"
-                label="Crop avatar"
-                onClick={setCanvasPreview}
+                label="Upload image"
+                onClick={handleClick}
+                leftIcon={isLoading && <Loader color={IconColor.SECONDARY} />}
             />
             {crop && (
                 <canvas

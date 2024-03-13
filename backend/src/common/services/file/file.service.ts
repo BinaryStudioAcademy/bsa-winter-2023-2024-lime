@@ -5,7 +5,7 @@ import { FileValidationMessage } from 'shared';
 
 import { HttpCode, HttpError } from '~/common/http/http.js';
 
-import { type File,type FileServiceOptions } from './types/types.js';
+import { type File, type FileServiceOptions } from './types/types.js';
 
 class FileService {
     private s3: S3;

@@ -6,8 +6,8 @@ import {
 } from '~/bundles/common/types/types.js';
 import {
     type UserAuthRequestDto,
-    type UserAvatarResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
@@ -63,15 +63,18 @@ const updateUser = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/update-user`, async (updateUserPayload, { extra }) => {
     const { userApi } = extra;
+
     return await userApi.updateUser(updateUserPayload);
 });
 
-const upload = createAsyncThunk<UserAvatarResponseDto, File, AsyncThunkConfig>(
-    `${sliceName}/upload`,
-    async (imagePayload, { extra }) => {
-        const { userApi } = extra;
-        return await userApi.upload(imagePayload);
-    },
-);
+const uploadAvatar = createAsyncThunk<
+    UserUploadAvatarResponseDto,
+    File,
+    AsyncThunkConfig
+>(`${sliceName}/upload-avatar`, async (file, { extra }) => {
+    const { userApi } = extra;
 
-export { logout, refreshUser, signIn, signUp, updateUser, upload };
+    return await userApi.uploadAvatar(file);
+});
+
+export { logout, refreshUser, signIn, signUp, updateUser, uploadAvatar };

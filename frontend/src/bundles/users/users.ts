@@ -14,10 +14,10 @@ export { userApi };
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
-    type UserAvatarResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from './types/types.js';
 export {
     userAuthValidationSchema,

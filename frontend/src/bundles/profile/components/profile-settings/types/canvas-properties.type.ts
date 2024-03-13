@@ -1,4 +1,3 @@
-//@ts-expect-error: unexpected error
 import { type PercentCrop } from 'react-image-crop';
 
 type CanvasProperties = {

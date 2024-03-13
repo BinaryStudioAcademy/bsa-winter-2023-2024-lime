@@ -4,7 +4,7 @@ import {
     signIn,
     signUp,
     updateUser,
-    upload,
+    uploadAvatar,
 } from './actions.js';
 import { actions } from './slice.js';
 
@@ -15,7 +15,7 @@ const allActions = {
     updateUser,
     refreshUser,
     logout,
-    upload,
+    uploadAvatar,
 };
 
 export { allActions as actions };

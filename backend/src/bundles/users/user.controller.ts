@@ -16,6 +16,10 @@ import { upload } from '~/common/middlewares/file.middleware.js';
 import { type File } from '~/common/services/file/types/types.js';
 
 import { UsersApiPath } from './enums/enums.js';
+import {
+    userUpdateProfileValidationSchema,
+    userUploadAvatarValidationSchema,
+} from './validation-schemas/validation-schemas.js';
 
 /**
  * @swagger
@@ -90,6 +94,9 @@ class UserController extends BaseController {
             path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
+            validation: {
+                body: userUpdateProfileValidationSchema,
+            },
             handler: (options) =>
                 this.updateUser(
                     options as ApiHandlerOptions<{
@@ -267,13 +274,58 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+     * @swagger
+     * /api/v1/users/upload:
+     *   post:
+     *     tags:
+     *       - Users
+     *     description: This endpoint uploads user avatar and returns a link to it
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         multipart/form-data:
+     *           schema:
+     *             type: object
+     *             properties:
+     *                image:
+     *                  type: file
+     *                  nullable: false
+     *     responses:
+     *       201:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  avatarUrl:
+     *                    type: string
+     *                    nullable: false
+     *       400:
+     *         description: Conflict
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
     private async uploadAvatar(
         options: ApiHandlerOptions<{ file: File }>,
     ): Promise<ApiHandlerResponse> {
         const { file } = options;
+        const isValid = userUploadAvatarValidationSchema.safeParse({
+            image: file,
+        });
+        if (!isValid.success) {
+            throw new HttpError({
+                message: isValid.error.issues[0]?.message ?? 'Invalid file',
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
         try {
-            const avatarUrl = await this.userService.upload(file);
-
+            const avatarUrl = await this.userService.uploadAvatar(file);
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.CREATED,

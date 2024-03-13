@@ -1,7 +1,6 @@
 import { type Logger } from '~/common/logger/logger.js';
 import { type ServerAppRouteParameters } from '~/common/server-application/server-application.js';
 
-import { upload } from '../middlewares/file.middleware.js';
 import { ApiHandlerResponseType } from './enums/enums.js';
 import {
     type ApiHandler,
@@ -30,7 +29,6 @@ class BaseController implements Controller {
         this.routes.push({
             ...options,
             path: fullPath,
-            preHandler: upload.single('image'),
             handler: (request, reply) =>
                 this.mapHandler(handler, request, reply),
         });
