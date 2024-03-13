@@ -1,7 +1,7 @@
 import { type ValueOf } from '../../../types/types.js';
 import { type Gender } from '../users.js';
 
-type UserFriendsResponseDto = {
+type UserFollowingsResponseDto = {
     id: number;
     userId: number;
     email: string | null;
@@ -14,4 +14,4 @@ type UserFriendsResponseDto = {
     gender: ValueOf<typeof Gender> | null;
 };
 
-export { type UserFriendsResponseDto };
+export { type UserFollowingsResponseDto };

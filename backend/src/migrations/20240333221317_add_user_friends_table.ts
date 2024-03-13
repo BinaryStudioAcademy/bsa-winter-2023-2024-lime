@@ -5,7 +5,7 @@ import { DatabaseTableName } from '~/common/database/database.js';
 const ColumnName = {
     ID: 'id',
     USER_ID: 'user_id',
-    FRIEND_ID: 'friend_id',
+    FOLLOWING_ID: 'following_id',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at',
 } as const;
@@ -22,7 +22,7 @@ async function up(knex: Knex): Promise<void> {
             .index()
             .onDelete('CASCADE');
         table
-            .integer(ColumnName.FRIEND_ID)
+            .integer(ColumnName.FOLLOWING_ID)
             .unsigned()
             .notNullable()
             .references(ColumnName.ID)

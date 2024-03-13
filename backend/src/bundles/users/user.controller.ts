@@ -1,7 +1,7 @@
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
-    type UserFriendsRequestDto,
+    type UserFollowingsRequestDto,
     type UserUpdateProfileRequestDto,
 } from '~/bundles/users/users.js';
 import {
@@ -99,37 +99,37 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
-            path: UsersApiPath.FRIENDS,
+            path: UsersApiPath.FOLLOWINGS,
             method: 'POST',
             isProtected: true,
             handler: (options) =>
-                this.addFriend(
+                this.addFollowing(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
-                        body: UserFriendsRequestDto;
+                        body: UserFollowingsRequestDto;
                     }>,
                 ),
         });
 
         this.addRoute({
-            path: UsersApiPath.FRIENDS,
+            path: UsersApiPath.FOLLOWINGS,
             method: 'DELETE',
             isProtected: true,
             handler: (options) =>
-                this.removeFriend(
+                this.removeFollowing(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
-                        body: UserFriendsRequestDto;
+                        body: UserFollowingsRequestDto;
                     }>,
                 ),
         });
 
         this.addRoute({
-            path: UsersApiPath.FRIENDS,
+            path: UsersApiPath.FOLLOWINGS,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
-                this.getAllFriends(
+                this.getFollowings(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                     }>,
@@ -137,11 +137,11 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
-            path: UsersApiPath.NOT_FRIENDS,
+            path: UsersApiPath.ALL_FOLLOWINGS,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
-                this.getAllNonFriendUsers(
+                this.getAllFollowings(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                     }>,
@@ -309,11 +309,11 @@ class UserController extends BaseController {
 
     /**
      * @swagger
-     * /api/v1/users/friends:
+     * /api/v1/users/followings:
      *    post:
      *      tags:
      *       - Friends
-     *      description: Add friend
+     *      description: Add following
      *      security:
      *        - bearerAuth: []
      *      responses:
@@ -332,17 +332,20 @@ class UserController extends BaseController {
      *                      $ref: '#/components/schemas/Error'
      */
 
-    private async addFriend(
+    private async addFollowing(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
-            body: UserFriendsRequestDto;
+            body: UserFollowingsRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
-        const { friendId } = body;
+        const { followingId } = body;
         const { id } = user;
         try {
-            const addedFriend = await this.userService.addFriend(id, friendId);
+            const addedFriend = await this.userService.addFollowing(
+                id,
+                followingId,
+            );
             if (!addedFriend) {
                 throw new HttpError({
                     message: UserValidationMessage.USER_NOT_FOUND,
@@ -361,11 +364,11 @@ class UserController extends BaseController {
 
     /**
      * @swagger
-     * /api/v1/users/friends:
+     * /api/v1/users/followings:
      *    delete:
      *      tags:
      *       - Friends
-     *      description: Remove friend
+     *      description: Remove following
      *      security:
      *        - bearerAuth: []
      *      responses:
@@ -384,30 +387,30 @@ class UserController extends BaseController {
      *                      $ref: '#/components/schemas/Error'
      */
 
-    private async removeFriend(
+    private async removeFollowing(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
-            body: UserFriendsRequestDto;
+            body: UserFollowingsRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
-        const { friendId } = body;
+        const { followingId } = body;
         const { id } = user;
         try {
-            const friendRemoved = await this.userService.removeFriend(
+            const removedFollowing = await this.userService.removeFollowing(
                 id,
-                friendId,
+                followingId,
             );
-            if (!friendRemoved) {
+            if (!removedFollowing) {
                 throw new HttpError({
-                    message: UserValidationMessage.FRIEND_NOT_FOUND,
+                    message: UserValidationMessage.FOLLOWING_NOT_FOUND,
                     status: HttpCode.NOT_FOUND,
                 });
             }
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
-                payload: friendId,
+                payload: followingId,
             };
         } catch (error) {
             throw new Error(`Error occurred while removing friend: ${error}`);
@@ -416,11 +419,11 @@ class UserController extends BaseController {
 
     /**
      * @swagger
-     * /api/v1/users/friends:
+     * /api/v1/users/followings:
      *    get:
      *      tags:
      *       - Friends
-     *      description: Get all friends
+     *      description: Get all user followings
      *      security:
      *        - bearerAuth: []
      *      responses:
@@ -439,12 +442,12 @@ class UserController extends BaseController {
      *                      $ref: '#/components/schemas/Error'
      */
 
-    private async getAllFriends(
+    private async getFollowings(
         options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
     ): Promise<ApiHandlerResponse> {
         const { user } = options;
         try {
-            const friends = await this.userService.getAllFriends(user.id);
+            const friends = await this.userService.getFollowings(user.id);
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
@@ -460,11 +463,11 @@ class UserController extends BaseController {
 
     /**
      * @swagger
-     * /api/v1/users/not-friends:
+     * /api/v1/users/all-followings:
      *    get:
      *      tags:
      *       - Friends
-     *      description: Get all not friends
+     *      description: Get all followers that the user is not yet following
      *      security:
      *        - bearerAuth: []
      *      responses:
@@ -483,14 +486,12 @@ class UserController extends BaseController {
      *                      $ref: '#/components/schemas/Error'
      */
 
-    private async getAllNonFriendUsers(
+    private async getAllFollowings(
         options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
     ): Promise<ApiHandlerResponse> {
         const { user } = options;
         try {
-            const notFriends = await this.userService.getAllNonFriendUsers(
-                user.id,
-            );
+            const notFriends = await this.userService.getAllFollowings(user.id);
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,

@@ -1,6 +1,6 @@
 export {
     type UserAuthResponseDto,
-    type UserFriendsRequestDto,
-    type UserFriendsResponseDto,
+    type UserFollowingsRequestDto,
+    type UserFollowingsResponseDto,
     type UserGetAllItemResponseDto,
 } from 'shared';

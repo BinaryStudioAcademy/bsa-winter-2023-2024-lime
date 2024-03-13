@@ -2,37 +2,40 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
-    type UserFriendsRequestDto,
-    type UserFriendsResponseDto,
+    type UserFollowingsRequestDto,
+    type UserFollowingsResponseDto,
 } from '~/bundles/friends/types/types.js';
 
 import { name as sliceName } from './slice.js';
 
-const getFriends = createAsyncThunk<
-    UserFriendsResponseDto[],
+const getFollowings = createAsyncThunk<
+    UserFollowingsResponseDto[],
     undefined,
     AsyncThunkConfig
->(`${sliceName}/get-friends`, async (_, { extra }) => {
+>(`${sliceName}/get-followings`, async (_, { extra }) => {
     const { friendsApi } = extra;
-    return await friendsApi.getFriends();
+    return await friendsApi.getFollowings();
 });
 
-const addFriend = createAsyncThunk<
-    UserFriendsResponseDto,
-    UserFriendsRequestDto,
+const addFollowing = createAsyncThunk<
+    UserFollowingsResponseDto,
+    UserFollowingsRequestDto,
     AsyncThunkConfig
->(`${sliceName}/add-friend`, async (addFriendPayload, { extra }) => {
+>(`${sliceName}/add-following`, async (addFollowingPayload, { extra }) => {
     const { friendsApi } = extra;
-    return await friendsApi.addFriend(addFriendPayload);
+    return await friendsApi.addFollowing(addFollowingPayload);
 });
 
-const removeFriend = createAsyncThunk<
+const removeFollowing = createAsyncThunk<
     number,
-    UserFriendsRequestDto,
+    UserFollowingsRequestDto,
     AsyncThunkConfig
->(`${sliceName}/remove-friend`, async (removeFriendPayload, { extra }) => {
-    const { friendsApi } = extra;
-    return await friendsApi.removeFriend(removeFriendPayload);
-});
+>(
+    `${sliceName}/remove-following`,
+    async (removeFollowingPayload, { extra }) => {
+        const { friendsApi } = extra;
+        return await friendsApi.removeFollowing(removeFollowingPayload);
+    },
+);
 
-export { addFriend, getFriends, removeFriend };
+export { addFollowing, getFollowings, removeFollowing };

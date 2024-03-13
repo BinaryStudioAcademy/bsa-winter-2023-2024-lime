@@ -26,7 +26,7 @@ const UserValidationMessage = {
     HEIGHT_WRONG: 'Height should only contain numbers and a decimal point.',
     HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MAX_VALUE} cm.`,
     USER_NOT_FOUND: 'User not found',
-    FRIEND_NOT_FOUND: 'Friend not found',
+    FOLLOWING_NOT_FOUND: 'Following not found',
 } as const;
 
 export { UserValidationMessage };

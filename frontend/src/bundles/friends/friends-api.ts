@@ -5,8 +5,8 @@ import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
 import {
-    type UserFriendsRequestDto,
-    type UserFriendsResponseDto,
+    type UserFollowingsRequestDto,
+    type UserFollowingsResponseDto,
 } from './types/types.js';
 
 type Constructor = {
@@ -19,9 +19,9 @@ class FriendsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
         super({ path: ApiPath.USERS, baseUrl, http, storage });
     }
-    public async getFriends(): Promise<UserFriendsResponseDto[]> {
+    public async getFollowings(): Promise<UserFollowingsResponseDto[]> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.FRIENDS, {}),
+            this.getFullEndpoint(UsersApiPath.FOLLOWINGS, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
@@ -29,14 +29,14 @@ class FriendsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<UserFriendsResponseDto[]>();
+        return await response.json<UserFollowingsResponseDto[]>();
     }
 
-    public async addFriend(
-        payload: UserFriendsRequestDto,
-    ): Promise<UserFriendsResponseDto> {
+    public async addFollowing(
+        payload: UserFollowingsRequestDto,
+    ): Promise<UserFollowingsResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.FRIENDS, {}),
+            this.getFullEndpoint(UsersApiPath.FOLLOWINGS, {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
@@ -44,12 +44,14 @@ class FriendsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<UserFriendsResponseDto>();
+        return await response.json<UserFollowingsResponseDto>();
     }
 
-    public async removeFriend(payload: UserFriendsRequestDto): Promise<number> {
+    public async removeFollowing(
+        payload: UserFollowingsRequestDto,
+    ): Promise<number> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.FRIENDS, {}),
+            this.getFullEndpoint(UsersApiPath.FOLLOWINGS, {}),
             {
                 method: 'DELETE',
                 contentType: ContentType.JSON,

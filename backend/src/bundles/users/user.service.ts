@@ -8,7 +8,7 @@ import { UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
-    type UserFriendsResponseDto,
+    type UserFollowingsResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
@@ -85,14 +85,14 @@ class UserService implements Service {
         return Promise.resolve(true);
     }
 
-    public async addFriend(
+    public async addFollowing(
         id: number,
-        friendId: number,
-    ): Promise<UserFriendsResponseDto | null> {
+        followingId: number,
+    ): Promise<UserFollowingsResponseDto | null> {
         try {
-            const addedFriend = await this.userRepository.addFriend(
+            const addedFriend = await this.userRepository.addFollowing(
                 id,
-                friendId,
+                followingId,
             );
             if (!addedFriend) {
                 throw new HttpError({
@@ -106,29 +106,32 @@ class UserService implements Service {
         }
     }
 
-    public async removeFriend(id: number, friendId: number): Promise<number> {
+    public async removeFollowing(
+        id: number,
+        followingId: number,
+    ): Promise<number> {
         try {
-            return await this.userRepository.removeFriend(id, friendId);
+            return await this.userRepository.removeFollowing(id, followingId);
         } catch (error) {
             throw new Error(`Error occurred while removing friend: ${error}`);
         }
     }
 
-    public async getAllFriends(
+    public async getFollowings(
         userId: number,
-    ): Promise<UserFriendsResponseDto[] | null> {
+    ): Promise<UserFollowingsResponseDto[] | null> {
         try {
-            return await this.userRepository.getAllFriends(userId);
+            return await this.userRepository.getFollowings(userId);
         } catch (error) {
             throw new Error(`Error occurred while fetching friends: ${error}`);
         }
     }
 
-    public async getAllNonFriendUsers(
+    public async getAllFollowings(
         userId: number,
-    ): Promise<UserFriendsResponseDto[] | null> {
+    ): Promise<UserFollowingsResponseDto[] | null> {
         try {
-            return await this.userRepository.getAllNonFriendUsers(userId);
+            return await this.userRepository.getAllFollowings(userId);
         } catch (error) {
             throw new Error(
                 `Error occurred while fetching not friends: ${error}`,

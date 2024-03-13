@@ -5,7 +5,7 @@ import {
 
 class UserFriendsModel extends AbstractModel {
     public 'userId': number;
-    public 'friendId': number;
+    public 'followingId': number;
 
     public static override get tableName(): string {
         return DatabaseTableName.USER_FRIENDS;

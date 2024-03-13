@@ -1,7 +1,7 @@
 const TabsFollowers = {
-    FIND_THE_FOLLOWERS: 'Find the followers',
+    FIND_FOLLOWINGS: 'Find followings',
+    MY_FOLLOWINGS: 'My followings',
     MY_FOLLOWERS: 'My followers',
-    FOLLOWING: 'Following',
 } as const;
 
 export { TabsFollowers };

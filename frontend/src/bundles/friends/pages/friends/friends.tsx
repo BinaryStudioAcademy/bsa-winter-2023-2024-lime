@@ -7,31 +7,32 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import {
-    FriendCard,
     FriendDetails,
+    TabContent,
     Tabs,
 } from '~/bundles/friends/components/components.js';
 import { TabsFollowers } from '~/bundles/friends/enums/enums.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
-import { type UserFriendsResponseDto } from '~/bundles/friends/types/types.js';
+import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js';
 import { actions as usersActions } from '~/bundles/users/store/users.js';
 
 const Friends: React.FC = () => {
-    const [selectedFriendId, setSelectedFriendId] = useState<number | null>(
-        null,
-    );
-    const [selectedFriend, setSelectedFriend] =
-        useState<UserFriendsResponseDto | null>(null);
-
-    const [activeTab, setActiveTab] = useState<string>(
-        TabsFollowers.FIND_THE_FOLLOWERS,
-    );
-
-    const [users, setUsers] = useState<UserFriendsResponseDto[]>([]);
-
     const dispatch = useAppDispatch();
 
+    const tabs = [TabsFollowers.FIND_FOLLOWINGS, TabsFollowers.MY_FOLLOWINGS];
+    const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
+    const [selectedCard, setSelectedCard] =
+        useState<UserFollowingsResponseDto | null>(null);
+
+    const [activeTab, setActiveTab] = useState<string>(
+        TabsFollowers.FIND_FOLLOWINGS,
+    );
+
+    const [users, setUsers] = useState<UserFollowingsResponseDto[]>([]);
+
     const currentUser = useAppSelector((state) => state.auth.user);
+    const followings = useAppSelector((state) => state.friends.followings);
+
     const { users: allUsers, dataStatus: allUsersDataStatus } = useAppSelector(
         ({ users }) => ({
             users: users.users,
@@ -39,72 +40,78 @@ const Friends: React.FC = () => {
         }),
     );
 
-    const friends = useAppSelector((state) => state.friends.friends);
-
     const handleSelectCard = useCallback(
         (id: number): void => {
-            setSelectedFriendId(id);
+            setSelectedCardId(id);
         },
-        [setSelectedFriendId],
+        [setSelectedCardId],
     );
 
     const handleTabClick = useCallback(
         (tab: string): void => {
             setActiveTab(tab);
-            setSelectedFriend(null);
-            setSelectedFriendId(null);
+            setSelectedCard(null);
+            setSelectedCardId(null);
         },
-        [setActiveTab, setSelectedFriend, setSelectedFriendId],
+        [setActiveTab, setSelectedCard, setSelectedCardId],
     );
 
-    const handleAddFriend = useCallback(
+    const handleAddFollowing = useCallback(
         (id: number): void => {
-            const addFriend = async (id: number): Promise<void> => {
-                await dispatch(friendsActions.addFriend({ friendId: id }));
+            const addFollowing = async (id: number): Promise<void> => {
+                await dispatch(
+                    friendsActions.addFollowing({ followingId: id }),
+                );
             };
-            void addFriend(id);
+            void addFollowing(id);
         },
         [dispatch],
     );
 
-    const handleRemoveFriend = useCallback(
+    const handleRemoveFollowing = useCallback(
         (id: number): void => {
-            const removeFriend = async (id: number): Promise<void> => {
-                await dispatch(friendsActions.removeFriend({ friendId: id }));
+            const removeFollowing = async (id: number): Promise<void> => {
+                await dispatch(
+                    friendsActions.removeFollowing({ followingId: id }),
+                );
             };
-            void removeFriend(id);
+            void removeFollowing(id);
         },
         [dispatch],
     );
 
     useEffect(() => {
         if (allUsersDataStatus === DataStatus.FULFILLED) {
-            const notFriends = allUsers.filter(
+            const notFollowedUsers = allUsers.filter(
                 (user) =>
                     user.id !== currentUser?.id &&
-                    !friends.some((friend) => friend.userId === user.id),
+                    !followings?.some(
+                        (following) => following.userId === user.id,
+                    ),
             );
-            setUsers(notFriends as unknown as UserFriendsResponseDto[]);
+            setUsers(
+                notFollowedUsers as unknown as UserFollowingsResponseDto[],
+            );
         }
-    }, [setUsers, allUsers, currentUser, friends, allUsersDataStatus]);
+    }, [setUsers, allUsers, currentUser, followings, allUsersDataStatus]);
 
     useEffect(() => {
-        if (activeTab === TabsFollowers.FIND_THE_FOLLOWERS) {
+        if (activeTab === TabsFollowers.FIND_FOLLOWINGS) {
             if (users) {
-                setSelectedFriend(
-                    users.find((user) => user.id === selectedFriendId) || null,
+                setSelectedCard(
+                    users.find((user) => user.id === selectedCardId) || null,
                 );
             }
         } else {
-            if (friends) {
-                setSelectedFriend(
-                    friends.find(
-                        (friend) => friend.userId === selectedFriendId,
+            if (followings) {
+                setSelectedCard(
+                    followings.find(
+                        (following) => following.userId === selectedCardId,
                     ) || null,
                 );
             }
         }
-    }, [selectedFriendId, setSelectedFriend, users, activeTab, friends]);
+    }, [selectedCardId, setSelectedCard, users, activeTab, followings]);
 
     useEffect(() => {
         const loadAllUsers = async (): Promise<void> => {
@@ -114,78 +121,63 @@ const Friends: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        const loadAllFriends = async (): Promise<void> => {
-            await dispatch(friendsActions.getFriends());
+        const loadFollowings = async (): Promise<void> => {
+            await dispatch(friendsActions.getFollowings());
         };
-        void loadAllFriends();
+        void loadFollowings();
     }, [dispatch]);
 
     return (
         <section className="relative flex flex-col gap-5 whitespace-normal">
-            <Tabs handleTabClick={handleTabClick} activeTab={activeTab} />
+            <Tabs
+                tabs={tabs}
+                handleTabClick={handleTabClick}
+                activeTab={activeTab}
+            />
 
             <div
-                className={`flex flex-wrap items-start gap-5 ${selectedFriendId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
+                className={`flex flex-wrap items-start gap-5 ${selectedCardId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
             >
-                {activeTab === TabsFollowers.FIND_THE_FOLLOWERS &&
-                    (users.length > 0 ? (
-                        users.map((user) => (
-                            <div key={user.id}>
-                                <FriendCard
-                                    name={user.fullName || user.email}
-                                    id={user.id}
-                                    isFollowed={false}
-                                    isActive={true}
-                                    isCardSelected={
-                                        selectedFriendId === user.id
-                                    }
-                                    selectCard={handleSelectCard}
-                                    avatarUrl={user?.avatarUrl}
-                                    onToggleFollow={handleAddFriend}
-                                />
-                            </div>
-                        ))
-                    ) : (
-                        <div>No user found to follow.</div>
-                    ))}
+                {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
+                    <TabContent
+                        users={users}
+                        isFollowed={false}
+                        selectedCardId={selectedCardId}
+                        selectCard={handleSelectCard}
+                        onToggleFollow={handleAddFollowing}
+                        noUsersText={'No user found to follow.'}
+                    />
+                )}
 
-                {activeTab === TabsFollowers.MY_FOLLOWERS &&
-                    (friends.length > 0 ? (
-                        friends.map((friend) => (
-                            <div
-                                key={friend.userId}
-                                className={'cursor-pointer'}
-                            >
-                                <FriendCard
-                                    name={friend.fullName || friend.email}
-                                    id={friend.userId}
-                                    isFollowed={true}
-                                    isActive={true}
-                                    isCardSelected={
-                                        selectedFriendId === friend.userId
-                                    }
-                                    selectCard={handleSelectCard}
-                                    avatarUrl={friend?.avatarUrl}
-                                    onToggleFollow={handleRemoveFriend}
-                                />
-                            </div>
-                        ))
-                    ) : (
-                        <div>You do not follow anyone yet.</div>
-                    ))}
+                {activeTab === TabsFollowers.MY_FOLLOWINGS && (
+                    <TabContent
+                        users={followings}
+                        isFollowed={true}
+                        selectedCardId={selectedCardId}
+                        selectCard={handleSelectCard}
+                        onToggleFollow={handleRemoveFollowing}
+                        noUsersText={'You do not follow anyone yet.'}
+                    />
+                )}
 
-                {activeTab === TabsFollowers.FOLLOWING && (
-                    <div>No one is following you yet.</div>
+                {activeTab === TabsFollowers.MY_FOLLOWERS && (
+                    <div
+                        className={
+                            'text-primary flex h-[70vh] w-full items-center justify-center text-xl'
+                        }
+                    >
+                        No one is following you yet.
+                    </div>
                 )}
             </div>
 
-            {selectedFriend && (
+            {selectedCard && (
                 <aside className="bg-secondary border-buttonText fixed right-[6px] top-[88px] ml-4 h-full w-[354px] border-l-2 pb-4 pl-4 pr-4 pt-8">
                     <FriendDetails
-                        id={selectedFriend.id}
+                        id={selectedCard.id}
                         isActive={true}
-                        name={selectedFriend.fullName || selectedFriend.email}
-                        avatarUrl={selectedFriend.avatarUrl}
+                        name={selectedCard.fullName || selectedCard.email}
+                        avatarUrl={selectedCard.avatarUrl}
                     />
                 </aside>
             )}

@@ -1,11 +1,11 @@
-import { addFriend, getFriends, removeFriend } from './actions.js';
+import { addFollowing, getFollowings, removeFollowing } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
-    getFriends,
-    addFriend,
-    removeFriend,
+    getFollowings,
+    addFollowing,
+    removeFollowing,
 };
 
 export { allActions as actions };

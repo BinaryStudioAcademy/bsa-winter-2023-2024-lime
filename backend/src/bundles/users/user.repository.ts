@@ -1,4 +1,4 @@
-import { type UserFriendsResponseDto } from '~/bundles/users/types/types.js';
+import { type UserFollowingsResponseDto } from '~/bundles/users/types/types.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { DatabaseTableName } from '~/common/database/database.js';
@@ -175,10 +175,10 @@ class UserRepository implements Repository {
         return Promise.resolve(true);
     }
 
-    public async addFriend(
+    public async addFollowing(
         id: number,
-        friendId: number,
-    ): Promise<UserFriendsResponseDto | null> {
+        followingId: number,
+    ): Promise<UserFollowingsResponseDto | null> {
         const trx = await this.userModel.startTransaction();
         try {
             const user = await this.userModel.query(trx).findById(id);
@@ -187,26 +187,29 @@ class UserRepository implements Repository {
             }
             await user
                 .$relatedQuery('userFriends', trx)
-                .insert({ friendId })
+                .insert({ followingId })
                 .returning('*')
                 .first();
 
             const userDetails = await this.userModel
                 .query(trx)
-                .findById(friendId)
+                .findById(followingId)
                 .select('email', ...USER_DETAILS_SELECT_FIELDS)
                 .leftJoin('user_details as ud', `ud.${USER_ID}`, 'users.id');
 
             await trx.commit();
 
-            return userDetails as unknown as UserFriendsResponseDto;
+            return userDetails as unknown as UserFollowingsResponseDto;
         } catch (error) {
             await trx.rollback();
             throw new Error(`Error adding user friend: ${error}`);
         }
     }
 
-    public async removeFriend(id: number, friendId: number): Promise<number> {
+    public async removeFollowing(
+        id: number,
+        followingId: number,
+    ): Promise<number> {
         const trx = await this.userModel.startTransaction();
         try {
             const user = await this.userModel.query(trx).findById(id);
@@ -216,50 +219,55 @@ class UserRepository implements Repository {
             await user
                 .$relatedQuery('userFriends', trx)
                 .delete()
-                .where('friend_id', friendId);
+                .where('following_id', followingId);
             await trx.commit();
 
-            return friendId;
+            return followingId;
         } catch (error) {
             await trx.rollback();
             throw new Error(`Error removing user friend: ${error}`);
         }
     }
 
-    public async getAllFriends(
+    public async getFollowings(
         userId: number,
-    ): Promise<UserFriendsResponseDto[] | null> {
+    ): Promise<UserFollowingsResponseDto[] | null> {
         try {
             const friends = await this.userModel
                 .query()
                 .select('email', ...USER_DETAILS_SELECT_FIELDS)
                 .from(`${DatabaseTableName.USER_FRIENDS} as uf`)
-                .join(`${DatabaseTableName.USERS} as u`, 'uf.friend_id', 'u.id')
+                .join(
+                    `${DatabaseTableName.USERS} as u`,
+                    'uf.following_id',
+                    'u.id',
+                )
                 .leftJoin(
                     `${DatabaseTableName.USER_DETAILS} as ud`,
                     'u.id',
                     `ud.${USER_ID}`,
                 )
                 .where(`uf.${USER_ID}`, userId);
-            return friends as unknown as UserFriendsResponseDto[];
+            return friends as unknown as UserFollowingsResponseDto[];
         } catch (error) {
             throw new Error(`Error fetching friends: ${error}`);
         }
     }
 
-    public async getAllNonFriendUsers(
+    public async getAllFollowings(
         userId: number,
-    ): Promise<UserFriendsResponseDto[] | null> {
+    ): Promise<UserFollowingsResponseDto[] | null> {
         try {
             const allUsers = await this.userModel
                 .query()
                 .whereNot('id', userId)
                 .withGraphFetched(USER_DETAILS_GRAPH);
-            const friends = await this.getAllFriends(userId);
-            const friendIds = friends && friends.map((friend) => friend.userId);
+            const friends = await this.getFollowings(userId);
+            const followingIds =
+                friends && friends.map((friend) => friend.userId);
 
             const nonFriendUsers = allUsers.filter(
-                (user) => friendIds && !friendIds.includes(user.id),
+                (user) => followingIds && !followingIds.includes(user.id),
             );
 
             const nonFriendUsersDetail = nonFriendUsers.map((user) => {
@@ -277,7 +285,7 @@ class UserRepository implements Repository {
                 };
             });
 
-            return nonFriendUsersDetail as unknown as UserFriendsResponseDto[];
+            return nonFriendUsersDetail as unknown as UserFollowingsResponseDto[];
         } catch (error) {
             throw new Error(`Error fetching non-friend users: ${error}`);
         }

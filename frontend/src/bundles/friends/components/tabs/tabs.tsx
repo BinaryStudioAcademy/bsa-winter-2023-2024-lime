@@ -1,14 +1,12 @@
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
-import { TabsFollowers } from '~/bundles/friends/enums/enums.js';
 
 type Properties = {
+    tabs: string[];
     handleTabClick: (tab: string) => void;
     activeTab: string;
 };
 
-const Tabs = ({ handleTabClick, activeTab }: Properties): JSX.Element => {
-    const tabs = [TabsFollowers.FIND_THE_FOLLOWERS, TabsFollowers.MY_FOLLOWERS];
-
+const Tabs = ({ tabs, handleTabClick, activeTab }: Properties): JSX.Element => {
     const handleClick = useCallback(
         (tab: string) => {
             return () => {
