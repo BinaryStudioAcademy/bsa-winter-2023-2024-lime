@@ -1,4 +1,4 @@
-import { type WorkoutResponseDto } from 'shared';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 const SUNDAY_INDEX = 0;
 const SATURDAY_INDEX = 6;

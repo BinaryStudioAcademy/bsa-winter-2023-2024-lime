@@ -1,14 +1,11 @@
-import {
-    type GoalResponseDto,
-    type WorkoutResponseDto,
-    ActivityType,
-} from 'shared';
-
 import { type AchievementService } from '~/bundles/achievements/achievement.service.js';
-import { userAchievementService } from '~/bundles/achievements/achievements.js';
+import { type UserAchievementService } from '~/bundles/achievements/user-achievement.service.js';
 import { type GoalService } from '~/bundles/goals/goal.service.js';
+import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import { workoutService } from '~/bundles/workouts/workouts.js';
 import { COMPLETED_GOAL_VALUE } from '~/common/constants/constants.js';
+import { ActivityType } from '~/common/enums/enums.js';
 import {
     calculateGoalProgress,
     checkAchievementUniqueness,
@@ -22,13 +19,16 @@ import {
 class CalculationProgressService {
     private achievementService: AchievementService;
     private goalService: GoalService;
+    private userAchievementsService: UserAchievementService;
 
     public constructor(
         goalService: GoalService,
         achievementService: AchievementService,
+        userAchievementsService: UserAchievementService,
     ) {
         this.achievementService = achievementService;
         this.goalService = goalService;
+        this.userAchievementsService = userAchievementsService;
     }
 
     public async calculateProgress(userId: number): Promise<void> {
@@ -133,6 +133,7 @@ class CalculationProgressService {
                 checkWalkingAchievements(walkingWorkouts, achievement),
             )
             .map((item) => item.toObject().id);
+
         const uniqueWalkingAchievements = checkAchievementUniqueness(
             userWalkingAchievements,
             userAchievementsListById,
@@ -142,7 +143,7 @@ class CalculationProgressService {
         }
 
         for (const achievement of userAchievements) {
-            await userAchievementService.create({
+            await this.userAchievementsService.create({
                 userId,
                 achievementId: achievement,
             });

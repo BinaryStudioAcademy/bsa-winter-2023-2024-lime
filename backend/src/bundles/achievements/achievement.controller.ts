@@ -1,4 +1,5 @@
 import { type AchievementService } from '~/bundles/achievements/achievement.service.js';
+import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -74,13 +75,13 @@ class AchievementController extends BaseController {
         });
 
         this.addRoute({
-            path: AchievementsApiPath.USER_ID,
+            path: AchievementsApiPath.CURRENT_USER,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
                 this.findUserParams(
                     options as ApiHandlerOptions<{
-                        params: AchievementGetItemResponseDto;
+                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
@@ -208,10 +209,10 @@ class AchievementController extends BaseController {
     }
 
     private findUserParams(
-        options: ApiHandlerOptions<{ params: AchievementGetItemResponseDto }>,
+        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
     ): Promise<ApiHandlerResponse> {
-        const { params } = options;
-        return this.findByUserId(params.id);
+        const { id: userId } = options.user;
+        return this.findByUserId(userId);
     }
 }
 

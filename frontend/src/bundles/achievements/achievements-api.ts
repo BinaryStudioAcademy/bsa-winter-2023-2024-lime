@@ -19,7 +19,7 @@ class AchievementsApi extends BaseHttpApi {
 
     public async getAchievements(): Promise<AchievementsGetAllResponseDto[]> {
         const response = await this.load(
-            this.getFullEndpoint(AchievementsApiPath.ROOT, {}),
+            this.getFullEndpoint(AchievementsApiPath.CURRENT_USER, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,

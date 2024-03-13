@@ -1,8 +1,8 @@
 import {
     type ActivityType,
     type ValueOf,
-    type WorkoutResponseDto,
-} from 'shared';
+} from '~/bundles/achievements/enums/enums.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 function filterWorkoutsByActivityType(
     array: WorkoutResponseDto[],

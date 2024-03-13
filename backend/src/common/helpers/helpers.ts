@@ -1,4 +1,4 @@
-export { calculateGoalProgress } from './calculate-progress-helper.js';
+export { calculateGoalProgress } from './calculate-goal-progress-helper.js';
 export { calculateTotalDistance } from './calculate-total-distance-helper.js';
 export { calculateTotalDuration } from './calculate-total-duration-helper.js';
 export { checkAchievementUniqueness } from './check-achievement-uniqueness-helper.js';

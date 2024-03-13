@@ -1,4 +1,4 @@
-import { type WorkoutResponseDto } from 'shared';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 function filterMonthWorkouts(
     workouts: WorkoutResponseDto[],

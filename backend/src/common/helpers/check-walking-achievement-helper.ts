@@ -1,6 +1,5 @@
-import { type WorkoutResponseDto } from 'shared';
-
 import { type AchievementEntity } from '~/bundles/achievements/achievement.entity.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import {
     WalkingAchievementDistance,
     WalkingAchievementName,

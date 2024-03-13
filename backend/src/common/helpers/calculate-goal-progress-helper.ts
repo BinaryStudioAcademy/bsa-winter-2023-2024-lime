@@ -1,9 +1,6 @@
-import {
-    type GoalResponseDto,
-    type WorkoutResponseDto,
-    FrequencyType,
-} from 'shared';
-
+import { FrequencyType } from '~/bundles/goals/enums/enums.js';
+import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import {
     COMPLETED_GOAL_VALUE,
     PERSENTAGE_MULTIPLIER,
