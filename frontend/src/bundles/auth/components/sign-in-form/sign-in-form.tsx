@@ -56,12 +56,6 @@ const SignInForm: React.FC<Properties> = ({
                         rightIcon={<Icon name="googleLogoIcon" />}
                         onClick={handleOAuth}
                     />
-                    {/* <Button
-                        size={ComponentSize.MEDIUM}
-                        variant={ButtonVariant.SECONDARY}
-                        label="Continue with "
-                        rightIcon={<Icon name="facebookIcon" />}
-                    /> */}
                 </div>
 
                 <p className="text-secondary mb-6 mt-10 text-center text-xs">

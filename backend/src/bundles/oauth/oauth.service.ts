@@ -1,7 +1,5 @@
 import crypto from 'node:crypto';
 
-import { jwtService } from '~/common/services/services.js';
-
 import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
 import {
     type OAuthEntity,
@@ -64,9 +62,7 @@ class OAuthService {
         return strategy.getAuthorizeRedirectUrl(oAuthStateEntity);
     }
 
-    private async createOAuthState(
-        userId: number | null,
-    ): Promise<OAuthStateEntity> {
+    private async createOAuthState(userId: number): Promise<OAuthStateEntity> {
         const uuid = crypto.randomUUID();
         const oAuthStateEntity = OAuthStateEntity.initializeNew({
             userId,
@@ -77,64 +73,6 @@ class OAuthService {
     }
 
     public async exchangeAuthCode(
-        provider: ValueOf<typeof OAuthProvider>,
-        payload: OAuthExchangeAuthCodeDto,
-    ): Promise<OAuthEntity> {
-        const strategy = this.getStrategy(provider);
-        const isValid = strategy.checkScope(payload.scope);
-        if (!isValid) {
-            throw new HttpError({
-                message: ErrorMessage.INVALID_SCOPE,
-                status: HttpCode.BAD_REQUEST,
-            });
-        }
-
-        const { userId, state: uuid } = payload;
-        const isStateValid = await this.verifyOAuthState({
-            userId,
-            uuid,
-        });
-        if (!isStateValid) {
-            throw new HttpError({
-                status: HttpCode.FORBIDDEN,
-                message: ErrorMessage.UNVERIFIED,
-            });
-        }
-
-        return await strategy.exchangeAuthCode(payload);
-    }
-
-    public async exchangeAuthCodeForIdentity(
-        provider: ValueOf<typeof OAuthProvider>,
-        payload: OAuthExchangeAuthCodeDto,
-    ): Promise<string> {
-        const oAuthEntity = await this.exchangeAuthCode(provider, payload);
-        const oAuthObject = oAuthEntity.toNewObject();
-        const item = await this.oAuthRepository.find({
-            userId: oAuthObject.userId,
-            provider: oAuthObject.provider,
-        });
-
-        if (!item) {
-            const createdOAuthEntity =
-                await this.oAuthRepository.create(oAuthEntity);
-            const createdOAuth = createdOAuthEntity.toObject();
-            return await jwtService.createToken({
-                userId: createdOAuth.userId,
-            });
-        }
-        const updatedOAuthEntity = (await this.oAuthRepository.update(
-            {
-                userId: oAuthObject.userId,
-                provider: oAuthObject.provider,
-            },
-            oAuthObject,
-        )) as OAuthEntity;
-        const updatedOAuth = updatedOAuthEntity.toObject();
-        return await jwtService.createToken({ userId: updatedOAuth.userId });
-    }
-
-    public async exchangeAuthCodeForConnection(
         provider: ValueOf<typeof OAuthProvider>,
         payload: OAuthExchangeAuthCodeDto,
     ): Promise<void> {
@@ -149,7 +87,25 @@ class OAuthService {
             });
         }
 
-        const oAuthEntity = await this.exchangeAuthCode(provider, payload);
+        const strategy = this.getStrategy(provider);
+        const isValid = strategy.checkScope(payload.scope);
+        if (!isValid) {
+            throw new HttpError({
+                message: ErrorMessage.INVALID_SCOPE,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        const { userId, state: uuid } = payload;
+        const isStateValid = await this.verifyOAuthState({ userId, uuid });
+        if (!isStateValid) {
+            throw new HttpError({
+                status: HttpCode.FORBIDDEN,
+                message: ErrorMessage.UNVERIFIED,
+            });
+        }
+
+        const oAuthEntity = await strategy.exchangeAuthCode(payload);
         await this.oAuthRepository.create(oAuthEntity);
     }
 
@@ -163,10 +119,7 @@ class OAuthService {
         userId,
         uuid,
     }: OAuthState): Promise<boolean> {
-        const state = await this.oAuthStateRepository.find({
-            uuid,
-            userId,
-        });
+        const state = await this.oAuthStateRepository.find({ uuid, userId });
 
         return Boolean(state);
     }
