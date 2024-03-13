@@ -91,15 +91,15 @@ const Friends: React.FC = () => {
     useEffect(() => {
         activeTab === TabsFollowers.FIND_THE_FOLLOWERS
             ? users &&
-              setSelectedFriend(
-                  users.find((user) => user.id === selectedFriendId) || null,
-              )
+            setSelectedFriend(
+                users.find((user) => user.id === selectedFriendId) || null,
+            )
             : friends &&
-              setSelectedFriend(
-                  friends.find(
-                      (friend) => friend.userId === selectedFriendId,
-                  ) || null,
-              );
+            setSelectedFriend(
+                friends.find(
+                    (friend) => friend.userId === selectedFriendId,
+                ) || null,
+            );
     }, [selectedFriendId, setSelectedFriend, users, activeTab, friends]);
 
     useEffect(() => {
