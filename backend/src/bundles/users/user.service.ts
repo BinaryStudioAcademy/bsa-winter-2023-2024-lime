@@ -63,14 +63,7 @@ class UserService implements Service {
         });
 
         if (userByEmail) {
-            const user = userByEmail.toObject();
-            const updatedUser = (await this.userRepository.updateUserProfile(
-                user.id,
-                {
-                    fullName,
-                },
-            )) as UserEntity;
-            return updatedUser.toObject() as UserAuthResponseDto;
+            return userByEmail.toObject();
         }
 
         const { stripeCustomerId } = await stripeService.createCustomer(email);
