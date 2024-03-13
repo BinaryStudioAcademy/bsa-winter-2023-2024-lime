@@ -1,0 +1,1 @@
+export { ActivityType } from 'shared';
