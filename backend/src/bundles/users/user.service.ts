@@ -14,8 +14,8 @@ import {
 } from '../user-bonuses/user-bonuses.js';
 import { UserValidationMessage } from './enums/enums.js';
 import {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
@@ -49,7 +49,7 @@ class UserService implements Service {
     }
 
     public async create(
-        payload: UserAuthRequestDto,
+        payload: UserAuthSignInRequestDto,
     ): Promise<UserAuthResponseDto> {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);

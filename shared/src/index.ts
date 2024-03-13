@@ -67,8 +67,9 @@ export {
     UserBonusTransactionType,
 } from './bundles/user-bonuses/user-bonuses.js';
 export {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,

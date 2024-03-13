@@ -16,7 +16,7 @@ const UserBonusTransacrionItem = ({
     date,
 }: Properties): JSX.Element => {
     return (
-        <div className="bg-secondary flex items-center justify-center gap-5 rounded-xl p-4">
+        <div className="bg-primary flex items-center justify-center gap-5 rounded-xl p-4">
             {transactionType === UserBonusTransactionType.INCOME ? (
                 <p className="text-action text-sm lg:text-xl"> +{amount}</p>
             ) : (

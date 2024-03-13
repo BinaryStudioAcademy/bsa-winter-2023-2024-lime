@@ -1,6 +1,7 @@
 import {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserService,
 } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
@@ -21,7 +22,7 @@ class AuthService {
     }
 
     private async verifyLoginCredentials(
-        userRequestDto: UserAuthRequestDto,
+        userRequestDto: UserAuthSignInRequestDto,
     ): Promise<UserAuthResponseDto> {
         const user = await this.userService.find({
             email: userRequestDto.email,
@@ -50,7 +51,7 @@ class AuthService {
     }
 
     public async signIn(
-        userRequestDto: UserAuthRequestDto,
+        userRequestDto: UserAuthSignInRequestDto,
     ): Promise<AuthResponseDto> {
         const user = await this.verifyLoginCredentials(userRequestDto);
         const token = await jwtService.createToken({ userId: user.id });
@@ -59,11 +60,12 @@ class AuthService {
     }
 
     public async signUp(
-        userRequestDto: UserAuthRequestDto,
-        referralCode: string,
+        userRequestDto: UserAuthSignUpRequestDto,
     ): Promise<AuthResponseDto> {
+        const { referralCode, ...payload } = userRequestDto;
+
         const userByEmail = await this.userService.find({
-            email: userRequestDto.email,
+            email: payload.email,
         });
 
         if (userByEmail) {
@@ -73,22 +75,21 @@ class AuthService {
             });
         }
 
-        const isReferralProvided = referralCode.length > 0;
         const inviterUser = await this.userService.findWithUserDetailsJoined({
             referralCode,
         });
 
-        if (isReferralProvided && !inviterUser) {
+        if (referralCode && !inviterUser) {
             throw new HttpError({
                 message: UserValidationMessage.USER_WITH_REFERRAL_ID_NOT_FOUND,
                 status: HttpCode.NOT_FOUND,
             });
         }
 
-        const user = await this.userService.create(userRequestDto);
+        const user = await this.userService.create(payload);
         const token = await jwtService.createToken({ userId: user.id });
 
-        if (isReferralProvided && inviterUser) {
+        if (referralCode && inviterUser) {
             const { id: inviterId } = inviterUser.toObject();
 
             await this.userService.createUserBonusTransaction({

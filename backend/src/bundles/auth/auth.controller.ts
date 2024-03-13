@@ -1,4 +1,7 @@
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 import { userAuthValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
@@ -12,7 +15,6 @@ import { type Logger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
 import { AuthApiPath } from './enums/enums.js';
-import { type AuthSignUpRequestDto } from './types/types.js';
 
 class AuthController extends BaseController {
     private authService: AuthService;
@@ -31,8 +33,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signUp(
                     options as ApiHandlerOptions<{
-                        query: AuthSignUpRequestDto;
-                        body: UserAuthRequestDto;
+                        body: UserAuthSignUpRequestDto;
                     }>,
                 ),
         });
@@ -46,7 +47,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signIn(
                     options as ApiHandlerOptions<{
-                        body: UserAuthRequestDto;
+                        body: UserAuthSignInRequestDto;
                     }>,
                 ),
         });
@@ -96,7 +97,7 @@ class AuthController extends BaseController {
 
     private async signIn(
         options: ApiHandlerOptions<{
-            body: UserAuthRequestDto;
+            body: UserAuthSignInRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
@@ -156,17 +157,13 @@ class AuthController extends BaseController {
      */
     private async signUp(
         options: ApiHandlerOptions<{
-            query: AuthSignUpRequestDto;
-            body: UserAuthRequestDto;
+            body: UserAuthSignUpRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
-            payload: await this.authService.signUp(
-                options.body,
-                options.query.referralCode,
-            ),
+            payload: await this.authService.signUp(options.body),
         };
     }
 }

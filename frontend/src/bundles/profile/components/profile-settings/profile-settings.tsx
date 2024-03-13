@@ -1,4 +1,3 @@
-import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import {
     Avatar,
     Button,
@@ -28,6 +27,7 @@ import {
     useEffect,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { actions as userBonusesActions } from '~/bundles/user-bonuses/store/user-bonuses.js';
 import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
@@ -46,8 +46,9 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     const dispatch = useAppDispatch();
 
     const [valuesDefault, setValuesDefault] = useState(false);
-    const { user, userBonusesTransactions, userBonusesStatus } = useAppSelector(
-        ({ auth }) => auth,
+    const { user } = useAppSelector(({ auth }) => auth);
+    const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
+        ({ userBonuses }) => userBonuses,
     );
 
     const { control, errors, reset, setValue, handleSubmit } =
@@ -115,13 +116,13 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     }, [reset]);
 
     const handleShowTransactions = useCallback((): void => {
-        void dispatch(authActions.loadAllUserBonusesTransactions());
+        void dispatch(userBonusesActions.loadAllUserBonusesTransactions());
     }, [dispatch]);
 
     return (
         <div className="bg-secondary pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
             <div className="flex items-center justify-between pb-12">
-                <div>
+                <div className="flex items-center">
                     <Avatar
                         size="lg"
                         email={user ? user?.email : ''}
@@ -133,13 +134,15 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         accept="image/jpeg, image/png"
                         className="hidden"
                     />
-                    <Button
-                        className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
-                        type="submit"
-                        label="Update file"
-                        variant={ButtonVariant.SECONDARY}
-                        size={ComponentSize.SMALL}
-                    />
+                    <div>
+                        <Button
+                            className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
+                            type="submit"
+                            label="Update file"
+                            variant={ButtonVariant.SECONDARY}
+                            size={ComponentSize.SMALL}
+                        />
+                    </div>
                 </div>
                 <UserBonusBalance
                     userBonusesTransactions={userBonusesTransactions}

@@ -16,8 +16,9 @@ const userController = new UserController(
 
 export { userController, userRepository, userService };
 export {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
 export { UserEntity } from './user.entity.js';

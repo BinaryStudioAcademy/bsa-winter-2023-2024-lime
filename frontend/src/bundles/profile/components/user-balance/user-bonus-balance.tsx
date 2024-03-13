@@ -82,21 +82,27 @@ const UserBonusBalance = ({
                     </div>
                 ) : (
                     <div className="flex h-full max-h-[25rem] flex-col gap-3 overflow-y-auto pr-2">
-                        {userBonusesTransactions.map((bonus) => (
-                            <UserBonusTransacrionItem
-                                key={bonus.id}
-                                amount={bonus.amount}
-                                actionMessage={
-                                    UserBonusTransactionMessage[
-                                        bonus.actionType as ValueOf<
-                                            typeof UserBonusActionType
-                                        >
-                                    ]
-                                }
-                                transactionType={bonus.transactionType}
-                                date={bonus.createdAt}
-                            />
-                        ))}
+                        {userBonusesTransactions.length > 0 ? (
+                            userBonusesTransactions.map((bonus) => (
+                                <UserBonusTransacrionItem
+                                    key={bonus.id}
+                                    amount={bonus.amount}
+                                    actionMessage={
+                                        UserBonusTransactionMessage[
+                                            bonus.actionType as ValueOf<
+                                                typeof UserBonusActionType
+                                            >
+                                        ]
+                                    }
+                                    transactionType={bonus.transactionType}
+                                    date={bonus.createdAt}
+                                />
+                            ))
+                        ) : (
+                            <div className="text-primary">
+                                You don&#39;t have any bonuses yet
+                            </div>
+                        )}
                     </div>
                 )}
             </Modal>

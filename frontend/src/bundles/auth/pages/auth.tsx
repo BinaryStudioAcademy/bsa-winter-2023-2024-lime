@@ -18,7 +18,10 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import { type PasswordForgotRequestDto } from '~/bundles/password-reset/types/types.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 
 import {
     PasswordForgotSuccessMessage,
@@ -55,7 +58,7 @@ const Auth: React.FC = () => {
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
 
     const handleSignInSubmit = useCallback(
-        (payload: UserAuthRequestDto): void => {
+        (payload: UserAuthSignInRequestDto): void => {
             void dispatch(authActions.signIn(payload));
         },
         [dispatch],
@@ -64,10 +67,15 @@ const Auth: React.FC = () => {
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpForm): void => {
             const { email, password } = payload;
-            const signUpDTO: UserAuthRequestDto = { email, password };
-
             const referralCode = searchParameters.get('referralCode');
-            void dispatch(authActions.signUp({ referralCode, signUpDTO }));
+
+            const signUpDTO: UserAuthSignUpRequestDto = {
+                email,
+                password,
+                referralCode,
+            };
+
+            void dispatch(authActions.signUp(signUpDTO));
         },
         [dispatch, searchParameters],
     );
