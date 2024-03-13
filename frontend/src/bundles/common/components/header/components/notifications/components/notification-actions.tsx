@@ -1,5 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type NotificationResponseDto } from '~/bundles/notifications/types/types.js';
 
@@ -44,7 +45,10 @@ const NotificationActions = ({
     return (
         <button
             onClick={handleReadClick}
-            className={`border-buttonTertiary bg-primary relative w-full rounded border  p-4 transition-all ${notification.isRead ? 'bg-secondary' : ''} `}
+            className={getValidClassNames(
+                'border-buttonTertiary bg-primary relative w-full rounded border  p-4 transition-all',
+                notification.isRead ? 'bg-secondary' : '',
+            )}
         >
             {children}
             {notification.isRead && (
