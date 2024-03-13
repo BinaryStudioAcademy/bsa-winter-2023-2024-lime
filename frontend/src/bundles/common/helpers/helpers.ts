@@ -1,5 +1,5 @@
 export { applyThemeClassname } from './apply-theme-classname/apply-theme-classname.helper.js';
-export { calculateAge } from './calculate-age/calculate-age.js';
+export { calculateAge } from './calculate-age/calculate-age.helper.js';
 export { calculateTotal } from './calculate-total/calculate-total.helper.js';
 export { capitalizeFirstLetter } from './capitalize-first-letter/capitalize-first-letter.helper.js';
 export { convertHeightToCentimeters } from './convert-height/convert-height-to-cm.js';

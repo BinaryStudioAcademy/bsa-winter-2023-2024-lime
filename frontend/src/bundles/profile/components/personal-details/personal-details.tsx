@@ -92,7 +92,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                     </li>
                 </ul>
             </div>
-            <div className="my-6 w-full overflow-hidden">
+            <div className="my-6 w-full overflow-auto">
                 <h2 className="text-primary">Preferences</h2>
                 <ul className="mt-2 w-full gap-2 md:grid lg:grid-cols-2">
                     {goals && goals.length > ZERO_VALUE ? (
