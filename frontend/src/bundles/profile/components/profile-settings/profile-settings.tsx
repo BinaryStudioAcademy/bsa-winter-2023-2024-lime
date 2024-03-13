@@ -33,8 +33,8 @@ import {
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
 
+import { Cropper } from './components/cropper/cropper.js';
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
-import { Cropper } from './cropper.js';
 
 type Properties = {
     onSubmit: (payload: UserUpdateProfileRequestDto) => void;
