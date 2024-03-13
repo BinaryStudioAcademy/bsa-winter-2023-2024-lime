@@ -25,10 +25,10 @@ const SubNavigationItemWorkout = ({
     });
 
     return (
-        <li>
+        <li className="flex items-center justify-center">
             <Link
                 to={redirectPath}
-                className="flex w-5/6 min-w-60 max-w-72 items-center justify-between gap-4"
+                className="flex w-5/6 min-w-60 max-w-full items-center justify-between gap-4"
             >
                 <div className="flex w-full items-center gap-4">
                     <ActivityIcon
