@@ -28,7 +28,7 @@ const ChatMessage = ({
                     className={getValidClassNames(
                         isCurrentUserMessage
                             ? 'bg-lm-yellow-200 bg-opacity-90 text-start'
-                            : 'bg-secondary ',
+                            : 'bg-primary ',
                         'rounded-xl px-3 py-2',
                     )}
                 >

@@ -20,7 +20,7 @@ const Chats = (): JSX.Element => {
                         'overflow-hidden',
                     )}
                 >
-                    {id ? <Chat currentChatLink={id} /> : <EmptyChat />}
+                    {id ? <Chat /> : <EmptyChat />}
                 </div>
             </div>
         </div>

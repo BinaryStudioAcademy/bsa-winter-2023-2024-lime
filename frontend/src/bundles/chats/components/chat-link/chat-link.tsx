@@ -33,7 +33,7 @@ const ChatLink = ({
             <div
                 className={getValidClassNames(
                     isActive &&
-                        'bg-secondary border-l-lm-yellow-100 rounded-br-xl rounded-tr-xl border-l-4 p-2',
+                        'bg-primary border-l-lm-yellow-100 rounded-br-xl rounded-tr-xl border-l-4 p-2',
                     'flex items-center gap-5',
                 )}
             >

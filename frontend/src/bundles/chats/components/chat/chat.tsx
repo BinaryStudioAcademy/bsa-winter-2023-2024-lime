@@ -1,10 +1,10 @@
-import { ArrowLeftCircleIcon } from '@heroicons/react/16/solid';
+import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 import { AppRoute } from 'shared';
 
 import {
     Avatar,
-    Button,
     Link,
+    UserInfoCard,
 } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
@@ -13,11 +13,7 @@ import { messages } from '../../constants/constants.js';
 import { ChatMessage } from '../chat-message/chat-message.js';
 import { ChatMessageForm } from '../chat-message-form/chat-message-form.js';
 
-type Properties = {
-    currentChatLink: string;
-};
-
-const Chat = ({ currentChatLink }: Properties): JSX.Element => {
+const Chat = (): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleSubmit = useCallback((): void => {}, []);
@@ -39,7 +35,7 @@ const Chat = ({ currentChatLink }: Properties): JSX.Element => {
                             to={AppRoute.CHATS}
                             className="mr-2 flex lg:hidden"
                         >
-                            <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6" />
+                            <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
                         </Link>
                         <Avatar
                             size="sm"
@@ -47,9 +43,6 @@ const Chat = ({ currentChatLink }: Properties): JSX.Element => {
                             avatarUrl={null}
                         />
                         <span className="text-primary font-bold">Username</span>
-                        <div className="text-primary font-bold">
-                            {currentChatLink}
-                        </div>
                     </div>
                 </div>
                 <ul className="flex h-full flex-1 flex-col-reverse gap-4 overflow-y-auto px-4 pr-2">
@@ -70,18 +63,23 @@ const Chat = ({ currentChatLink }: Properties): JSX.Element => {
             </div>
             <div
                 className={getValidClassNames(
-                    isOpen ? ' translate-x-0' : 'translate-x-[100%]',
-                    'bg-lm-grey-200 absolute right-0 h-full w-full transition-transform duration-[0.5s] ease-[ease-in-out] md:w-[80%]',
+                    isOpen ? 'translate-x-0' : 'translate-x-[100%]',
+                    'absolute right-0 h-full w-full transition-transform duration-[0.5s] ease-[ease-in-out] md:w-[22.375rem]',
                 )}
             >
-                <Button
-                    label="X"
-                    variant="primary"
-                    size="md"
-                    type="button"
-                    onClick={toggleSidebarProfile}
-                    className="ml-2 mt-2 h-[2rem] w-[2rem]"
-                />
+                <div className="relative flex h-full w-full flex-col">
+                    <button
+                        className="absolute ml-5 mt-5"
+                        onClick={toggleSidebarProfile}
+                    >
+                        <XCircleIcon className="text-action w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
+                    </button>
+                    <UserInfoCard
+                        name={'User'}
+                        image={''}
+                        className="w-full px-8"
+                    />
+                </div>
             </div>
         </div>
     );

@@ -62,13 +62,15 @@ const Input = <T extends FieldValues>({
         return isPassword ? '\u2022'.repeat(6) : placeholder;
     };
 
-    const inputStyles = `bg-secondary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`;
     const textAreaStyles =
-        'bg-secondary text-primary placeholder:text-lm-grey-200 disabled:text-lm-grey-300 h-15 w-full rounded-lg p-4 focus:border focus:border-buttonPrimary focus:outline-none overflow-hidden resize-none';
+        'bg-primary text-primary placeholder:text-lm-grey-200 disabled:text-lm-grey-300 h-15 w-full rounded-lg p-4 focus:border focus:border-buttonPrimary focus:outline-none overflow-hidden resize-none';
 
     return (
         <label
-            className={`${className} text-primary flex max-h-20 flex-col text-sm`}
+            className={getValidClassNames(
+                className,
+                'text-primary flex max-h-20 flex-col text-sm',
+            )}
         >
             <span
                 className={getValidClassNames(
@@ -93,7 +95,7 @@ const Input = <T extends FieldValues>({
                         placeholder={placeholderGenerator()}
                         autoComplete="off"
                         disabled={isDisabled}
-                        className={inputStyles}
+                        className={`bg-primary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`}
                         onFocus={onFocus}
                     />
                 )}
