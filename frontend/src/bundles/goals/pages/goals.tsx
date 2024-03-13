@@ -75,17 +75,20 @@ const Goals: React.FC = () => {
 
     const previousGoalsReference = useRef(goals);
 
-    const dispatchNotification = (activityType: string): void => {
-        const notificationPayload = {
-            title: 'Goal Completed!',
-            message: `Congratulations! You have completed your ${activityType} goal.`,
-            isRead: false,
-            type: NotificationType.DEFAULT,
-        };
-        void dispatch(
-            notificationsActions.createNotification(notificationPayload),
-        );
-    };
+    const dispatchNotification = useCallback(
+        (activityType: string): void => {
+            const notificationPayload = {
+                title: 'Goal Completed!',
+                message: `Congratulations! You have completed your ${activityType} goal.`,
+                isRead: false,
+                type: NotificationType.DEFAULT,
+            };
+            void dispatch(
+                notificationsActions.createNotification(notificationPayload),
+            );
+        },
+        [dispatch],
+    );
 
     useEffect(() => {
         const previousGoals = previousGoalsReference.current;
