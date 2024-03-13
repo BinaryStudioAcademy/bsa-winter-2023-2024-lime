@@ -1,5 +1,6 @@
 import { type RelationMappings, Model } from 'objection';
 
+import { ChatModel, MessageAttributes } from '~/bundles/chats/chats.js';
 import {
     OAuthInfoAttributes,
     OAuthModel,
@@ -34,6 +35,8 @@ class UserModel extends AbstractModel {
     public 'userOAuthInfo': OAuthModel;
 
     public 'userOAuthState': OAuthStateModel;
+
+    public 'chats': ChatModel[];
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -87,6 +90,18 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
+                },
+            },
+            chats: {
+                relation: Model.ManyToManyRelation,
+                modelClass: ChatModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    through: {
+                        from: `${DatabaseTableName.MESSAGES}.${MessageAttributes.SENDER_ID}`,
+                        to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
+                    },
+                    to: `${DatabaseTableName.CHATS}.`,
                 },
             },
         };

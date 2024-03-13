@@ -4,6 +4,7 @@ export {
     Metric,
 } from './bundles/achievements/achievements.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export { SenderType } from './bundles/chats/chats.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,

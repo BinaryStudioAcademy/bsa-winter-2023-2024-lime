@@ -10,6 +10,7 @@ const userService = new UserService(userRepository);
 const userController = new UserController(logger, userService);
 
 export { userController, userService };
+export { UserAttributes } from './enums/enums.js';
 export {
     type UserAuthRequestDto,
     type UserAuthResponseDto,
