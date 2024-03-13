@@ -37,7 +37,7 @@ const WorkoutStats = ({ workout }: Properties): JSX.Element => {
 
     return (
         <div
-            className="bg-primary bg-wave-grey mt-[1.25rem] h-[19.8rem] w-full rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat"
+            className="bg-primary bg-wave-grey mt-[1.25rem] h-[15rem] w-full rounded-[0.5rem] bg-contain bg-bottom bg-no-repeat lg:h-[19.8rem]"
             key={id}
         >
             <div className="px-[1.875rem] py-[1.25rem]">
