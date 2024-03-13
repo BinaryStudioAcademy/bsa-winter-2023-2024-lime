@@ -63,3 +63,7 @@
 .custom-date-picker .rmdp-year-picker {
     @apply bg-secondary;
 }
+
+.custom-date-picker .rmdp-range {
+    @apply bg-lm-yellow-200 shadow-none;
+}
