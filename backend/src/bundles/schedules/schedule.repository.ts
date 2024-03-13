@@ -5,10 +5,10 @@ import { type Repository } from '~/common/types/types.js';
 import { ScheduleValidationMessage } from './enums/enums.js';
 import { type ScheduleModel } from './schedule.model.js';
 
-class ScheduleRepository implements Repository  {
+class ScheduleRepository implements Repository {
     private scheduleModel: typeof ScheduleModel;
-   public constructor(scheduleModel: typeof ScheduleModel) {
-       this.scheduleModel = scheduleModel;
+    public constructor(scheduleModel: typeof ScheduleModel) {
+        this.scheduleModel = scheduleModel;
     }
 
     public async find(

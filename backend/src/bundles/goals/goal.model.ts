@@ -1,4 +1,4 @@
-import { type RelationMappings,Model } from 'objection';
+import { type RelationMappings, Model } from 'objection';
 
 import { ScheduleAttributes } from '~/bundles/schedules/enums/enums.js';
 import { ScheduleModel } from '~/bundles/schedules/schedules.js';

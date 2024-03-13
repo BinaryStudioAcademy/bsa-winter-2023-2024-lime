@@ -2,7 +2,7 @@ import { type Entity, type ValueOf } from '~/common/types/types.js';
 
 import { type ActivityType } from './enums/enums.js';
 
-class ScheduleEntity implements Entity  {
+class ScheduleEntity implements Entity {
     private 'id': number | null;
     private 'userId': number;
     private 'goalId': number | undefined;
@@ -14,13 +14,13 @@ class ScheduleEntity implements Entity  {
         userId,
         goalId,
         activityType,
-        startAt
+        startAt,
     }: {
         id: number | null;
         userId: number;
         goalId?: number;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date
+        startAt: Date;
     }) {
         this.id = id;
         this.userId = userId;
@@ -34,7 +34,7 @@ class ScheduleEntity implements Entity  {
         userId: number;
         goalId?: number;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date
+        startAt: Date;
     }): ScheduleEntity {
         return new ScheduleEntity({ ...payload });
     }
@@ -43,11 +43,11 @@ class ScheduleEntity implements Entity  {
         userId: number;
         goalId?: number;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date
+        startAt: Date;
     }): ScheduleEntity {
         return new ScheduleEntity({
             id: null,
-            ...payload
+            ...payload,
         });
     }
 
@@ -56,7 +56,7 @@ class ScheduleEntity implements Entity  {
         userId: number;
         goalId?: number;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date
+        startAt: Date;
     } {
         return {
             id: this.id as number,
@@ -71,7 +71,7 @@ class ScheduleEntity implements Entity  {
         userId: number;
         goalId?: number;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date
+        startAt: Date;
     } {
         return {
             userId: this.userId,
@@ -80,7 +80,6 @@ class ScheduleEntity implements Entity  {
             startAt: this.startAt,
         };
     }
-
 }
 
 export { ScheduleEntity };
