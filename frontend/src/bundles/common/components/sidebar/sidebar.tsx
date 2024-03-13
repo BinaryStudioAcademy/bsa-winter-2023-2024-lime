@@ -99,7 +99,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                             to={AppRoute.CHATS}
                             isActive={
                                 activeRoute === AppRoute.CHATS ||
-                                activeRoute.includes('/chats')
+                                activeRoute.includes(AppRoute.CHATS)
                             }
                         />
                         <div className="absolute -right-2 -top-2">
