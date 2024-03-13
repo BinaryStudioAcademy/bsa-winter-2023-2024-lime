@@ -53,7 +53,7 @@ const Workout: React.FC = () => {
                 <div className="flex w-full flex-col md:flex-row">
                     {workouts.length > 0 ? (
                         <>
-                            <div className="my-[-1rem] ml-[-1rem]">
+                            <div className="my-[-2rem] ml-[-1rem]">
                                 <SubNavigationWorkout
                                     title={subNavigationTitle}
                                 />
