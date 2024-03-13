@@ -1,54 +1,39 @@
+import { type WorkoutResponseDto } from 'shared';
+
+import { type AchievementEntity } from '~/bundles/achievements/achievement.entity.js';
 import {
-    type ActivityType,
-    type ValueOf,
-    type WorkoutResponseDto,
-} from 'shared';
+    CyclingAchievementDistance,
+    CyclingAchievementName,
+} from '~/common/enums/enums.js';
+import {
+    calculateTotalDistance,
+    calculateTotalDuration,
+    filterMonthWorkouts,
+    filterWeekendWorkouts,
+} from '~/common/helpers/helpers.js';
 
-import { CyclingAchievementDistance } from '~/common/enums/cycling-achievement-distance.enum.js';
-import { CyclingAchievementName } from '~/common/enums/cycling-achievement-name.enum.js';
-
-type Achievement = {
-    name: string;
-    activityType: ValueOf<typeof ActivityType>;
-    requirement: number;
-    requirementMetric: string;
-};
+const HOUR = 60;
+const TWICE = 2;
+const AVERAGE_SPEED = 25;
 
 function checkCyclingAchievements(
     workouts: WorkoutResponseDto[],
-    achievement: Achievement,
+    achievement: AchievementEntity,
 ): boolean {
-    const totalDistance = workouts.reduce(
-        (accumulator, workout) => accumulator + workout.distance,
-        0,
-    );
+    const totalDistance = calculateTotalDistance(workouts);
     const averageSpeed =
         workouts.reduce(
             (accumulator, workout) => accumulator + workout.speed,
             0,
         ) / workouts.length;
 
-    const monthWorkout = workouts.filter(
-        (workout) =>
-            (workout.workoutEndedAt as Date).getMonth() ===
-            new Date().getMonth(),
-    );
-    const monthWorkoutDistance = monthWorkout.reduce(
-        (accumulator, workout) => accumulator + workout.distance,
-        0,
-    );
+    const monthWorkout = filterMonthWorkouts(workouts);
+    const monthWorkoutDistance = calculateTotalDistance(monthWorkout);
 
-    const weekendWorkout = workouts.filter(
-        (workout) =>
-            (workout.workoutEndedAt as Date).getDay() === 0 ||
-            (workout.workoutEndedAt as Date).getDay() === 6,
-    );
-    const weekendWorkoutDuration = weekendWorkout.reduce(
-        (accumulator, workout) => accumulator + workout.duration,
-        0,
-    );
+    const weekendWorkout = filterWeekendWorkouts(workouts);
+    const weekendWorkoutDuration = calculateTotalDuration(weekendWorkout);
 
-    switch (achievement.name) {
+    switch (achievement.toObject().name) {
         case CyclingAchievementName.FIRST: {
             return totalDistance >= CyclingAchievementDistance.FIVE;
         }
@@ -70,12 +55,12 @@ function checkCyclingAchievements(
             );
         }
         case CyclingAchievementName.DURATION_PER_WEEKEND: {
-            return weekendWorkoutDuration >= 120;
+            return weekendWorkoutDuration >= TWICE * HOUR;
         }
         case CyclingAchievementName.AVERAGE_SPEED: {
             return (
                 totalDistance >= CyclingAchievementDistance.TWENTY &&
-                averageSpeed >= 25
+                averageSpeed >= AVERAGE_SPEED
             );
         }
         default: {

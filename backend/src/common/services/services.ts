@@ -1,4 +1,4 @@
-// import { achievementService } from '~/bundles/achievements/achievements.js';
+import { achievementService } from '~/bundles/achievements/achievements.js';
 import { goalService } from '~/bundles/goals/goals.js';
 import { config } from '~/common/config/config.js';
 import { JwtService } from '~/common/services/jwt/jwt.service.js';
@@ -26,7 +26,7 @@ const stripeService = new StripeService(
 );
 const calculationProgressService = new CalculationProgressService(
     goalService,
-    // achievementService,
+    achievementService,
 );
 
 const openAIService = new OpenAIService(OPEN_AI_API_KEY, OPEN_AI_MODEL);
