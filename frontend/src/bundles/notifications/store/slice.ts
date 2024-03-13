@@ -35,7 +35,7 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(createNotification.fulfilled, (state, action) => {
-            state.notifications = [...state.notifications, action.payload];
+            state.notifications.push(action.payload);
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(createNotification.rejected, (state) => {
