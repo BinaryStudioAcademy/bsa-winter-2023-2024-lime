@@ -44,12 +44,28 @@ const userUpdateProfile = z
                     UnicodePattern.BIRTHDATE_PATTERN,
                     UserValidationMessage.BIRTHDATE_FORMAT,
                 )
+                .refine(
+                    (value) => {
+                        if (!value) {
+                            return true;
+                        }
+                        const [day, month, year] = value.split('/');
+                        const enteredDate = new Date(`${year}-${month}-${day}`);
+                        const currentDate = new Date();
+                        return enteredDate <= currentDate;
+                    },
+                    { message: UserValidationMessage.BIRTHDATE_IN_FUTURE },
+                )
                 .nullable(),
             z.literal(''),
         ]),
         weight: z.union([
             z.coerce
-                .number()
+                .number({
+                    errorMap: () => ({
+                        message: UserValidationMessage.WEIGHT_WRONG,
+                    }),
+                })
                 .nullable()
                 .refine(
                     (value) => {
@@ -69,7 +85,11 @@ const userUpdateProfile = z
         ]),
         height: z.union([
             z.coerce
-                .number()
+                .number({
+                    errorMap: () => ({
+                        message: UserValidationMessage.HEIGHT_WRONG,
+                    }),
+                })
                 .refine(
                     (value) => {
                         if (!value) {

@@ -45,10 +45,10 @@ const ChartGoalProgress = (): JSX.Element => {
     }, []);
 
     return (
-        <div className="bg-secondary rounded-30 relative max-w-[990px] p-8">
-            <div className="flex h-10 items-center justify-between">
+        <div className="bg-primary rounded-30 relative p-8">
+            <div className="mb-4 flex h-10 items-center justify-between">
                 <h1 className="text-secondary">Goal Progress</h1>
-                <div>
+                <div className="w-[100px]">
                     <Select
                         className="bg-secondary w-[100px] text-xs"
                         control={control}

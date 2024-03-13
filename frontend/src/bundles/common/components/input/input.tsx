@@ -13,6 +13,8 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 
+import { ErrorMessageWithHint } from './components/error-message-with-hint.js';
+
 type Properties<T extends FieldValues> = {
     className?: string;
     control: Control<T, null>;
@@ -54,7 +56,9 @@ const Input = <T extends FieldValues>({
     };
 
     return (
-        <label className={`${className} flex h-20 flex-col text-sm text-white`}>
+        <label
+            className={`${className} text-primary flex h-20 flex-col text-sm`}
+        >
             <span className="mb-[0.5rem] font-medium">
                 {label} {required && <span className="text-lm-red">*</span>}
             </span>
@@ -65,7 +69,7 @@ const Input = <T extends FieldValues>({
                     placeholder={placeholderGenerator()}
                     autoComplete="off"
                     disabled={isDisabled}
-                    className={`bg-secondary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`}
+                    className={`bg-primary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`}
                     onFocus={onFocus}
                 />
                 {isPassword && (
@@ -84,9 +88,7 @@ const Input = <T extends FieldValues>({
                 )}
             </div>
             {hasError && (
-                <span className="text-lm-red bg-primary dark:text-lm-red rounded-lg px-3 text-sm dark:rounded-lg dark:bg-transparent dark:font-normal">
-                    {error as string}
-                </span>
+                <ErrorMessageWithHint errorMessage={error as string} />
             )}
         </label>
     );

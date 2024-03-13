@@ -17,7 +17,7 @@ const getStyles = <
         control: (state) =>
             getValidClassNames(
                 state.isFocused ? `${borderColor}` : 'border-0',
-                `w-full p-2.5 min-h-11 bg-secondary border
+                `w-full p-2.5 h-9 bg-primary border
                 outline-none rounded-md text-inherit shadow-none hover:cursor-pointer`,
             ),
         dropdownIndicator: (state) => {
@@ -33,13 +33,13 @@ const getStyles = <
                 errorMessage ? 'hover:text-lm-red' : 'hover:text-action',
                 'bg-primary text-lm-grey-200 bg-none hover:bg-transparent hover:cursor-pointer p-4',
             ),
-        singleValue: () => 'text-lm-grey-200',
+        singleValue: () => 'text-primary',
         multiValue: () =>
             'bg-lm-grey-500 rounded-lg items-center py-1 pl-2 pr-1 ml-1 gap-2 ',
         multiValueLabel: () => `${textColor} `,
         multiValueRemove: () => `${textColor} hover:opacity-9`,
         clearIndicator: () => 'p-0 text-lm-grey-500 mr-4 hover:opacity-9',
-        menuList: () => 'max-h-200 overflow-auto custom-scrollbar bg-secondary',
+        menuList: () => 'max-h-200 overflow-auto custom-scrollbar bg-primary',
         noOptionsMessage: () => 'text-lm-grey-200 p-4',
         menu: () => 'mt-1',
     };

@@ -1,6 +1,5 @@
 import { Loader } from '~/bundles/common/components/components.js';
-import { AppRoute } from '~/bundles/common/enums/app-route.enum.js';
-import { DataStatus } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -92,7 +91,7 @@ const SubscriptionPage = (): JSX.Element => {
                         onChangeSubscription={handleChangeSubscription}
                     />
                 ) : (
-                    <span className="font-base text-xl text-white">
+                    <span className="font-base text-primary text-xl">
                         Looks like you dont have subscription yet. Choose from
                         below.
                     </span>

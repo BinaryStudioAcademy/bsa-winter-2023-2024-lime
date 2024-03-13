@@ -21,7 +21,7 @@ const ActivityWidget = ({
     icon,
 }: Properties): JSX.Element => {
     const classes = {
-        base: 'h-[10.5rem] rounded-[0.5rem] text-white p-[1rem] flex flex-wrap gap-[1rem] bg-no-repeat bg-contain bg-bottom min-w-[100px]',
+        base: 'h-[10.5rem] rounded-[0.5rem] text-primary p-[1rem] flex flex-wrap gap-[1rem] bg-no-repeat bg-cover bg-center min-w-[100px]',
         icon: 'h-[2.5rem] w-[2.5rem] rounded-[0.25rem] flex items-center justify-center',
     };
 
@@ -60,10 +60,12 @@ const ActivityWidget = ({
                     {icon}
                 </div>
                 <div>
-                    <h3 className="text-base font-extrabold leading-5">
+                    <h3 className="text-base font-extrabold leading-5 text-white">
                         {label}
                     </h3>
-                    <h4 className="leading-1 text-xs font-normal">{value}</h4>
+                    <h4 className="leading-1 text-xs font-normal text-white">
+                        {value}
+                    </h4>
                 </div>
             </div>
         </>

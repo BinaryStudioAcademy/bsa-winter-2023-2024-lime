@@ -12,6 +12,10 @@ import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
     configureISOString,
+    convertHeightToCentimeters,
+    convertHeightToMillimeters,
+    convertWeightToGrams,
+    convertWeightToKilograms,
     getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -50,13 +54,29 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     useEffect(() => {
         if (!valuesDefault && user) {
             for (const key of getObjectKeys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
-                if (key === 'dateOfBirth' && user.dateOfBirth) {
-                    setValue(key, configureDateString(user.dateOfBirth));
-                } else {
-                    if (user[key]) {
-                        setValue(key, user[key]);
-                    } else {
-                        setValue(key, DEFAULT_UPDATE_PROFILE_PAYLOAD[key]);
+                switch (key) {
+                    case 'dateOfBirth': {
+                        setValue(
+                            key,
+                            user.dateOfBirth
+                                ? configureDateString(user.dateOfBirth)
+                                : '',
+                        );
+                        break;
+                    }
+                    case 'weight': {
+                        setValue(key, convertWeightToKilograms(user[key]));
+                        break;
+                    }
+                    case 'height': {
+                        setValue(key, convertHeightToCentimeters(user[key]));
+                        break;
+                    }
+                    default: {
+                        setValue(
+                            key,
+                            user[key] || DEFAULT_UPDATE_PROFILE_PAYLOAD[key],
+                        );
                     }
                 }
             }
@@ -69,13 +89,13 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
-                    weight: data.weight || null,
-                    height: data.height || null,
+                    weight: convertWeightToGrams(data.weight),
+                    height: convertHeightToMillimeters(data.height),
                     dateOfBirth: data.dateOfBirth
                         ? configureISOString(data.dateOfBirth || '')
                         : null,
                     fullName: (data.fullName || '').trim(),
-                    username: (data.username || '').trim(),
+                    username: data.username ? data.username.trim() : null,
                 };
                 onSubmit(payload);
             })(event_);
@@ -88,7 +108,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
     }, [reset]);
 
     return (
-        <div className="bg-lm-black-200 pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
+        <div className="bg-secondary pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
             <div className="flex items-center pb-12">
                 <Avatar
                     size="lg"
@@ -112,64 +132,63 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     />
                 </div>
             </div>
-            <form
-                className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4"
-                onSubmit={handleFormSubmit}
-            >
-                <Input
-                    className="border-0 lg:col-start-1 lg:col-end-3"
-                    type="text"
-                    label="Full Name"
-                    placeholder="John Doe"
-                    name="fullName"
-                    control={control}
-                    errors={errors}
-                    isDisabled={isLoading}
-                />
+            <form onSubmit={handleFormSubmit}>
+                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4">
+                    <Input
+                        className="border-0 lg:col-start-1 lg:col-end-3"
+                        type="text"
+                        label="Full Name"
+                        placeholder="John Doe"
+                        name="fullName"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                    />
 
-                <Input
-                    className="lg:col-start-3 lg:col-end-5"
-                    type="text"
-                    label="Nickname"
-                    placeholder="MyNickname2024"
-                    name="username"
-                    control={control}
-                    errors={errors}
-                    isDisabled={isLoading}
-                />
-                <DatePicker
-                    name="dateOfBirth"
-                    control={control}
-                    errors={errors}
-                    label="Date of birth"
-                    placeholder="DD/MM/YYYY"
-                    className="lg:col-start-1 lg:col-end-3 "
-                />
-                <Input
-                    className="lg:col-start-3 lg:col-end-4 "
-                    type="text"
-                    label="Weight"
-                    placeholder="0 kg"
-                    name="weight"
-                    control={control}
-                    errors={errors}
-                    isDisabled={isLoading}
-                />
-                <Input
-                    className="lg:col-start-4 lg:col-end-5 "
-                    type="text"
-                    label="Height"
-                    placeholder="0 sm"
-                    name="height"
-                    control={control}
-                    errors={errors}
-                    isDisabled={isLoading}
-                />
-                <div className="flex lg:col-start-1 lg:col-end-3">
+                    <Input
+                        className="lg:col-start-3 lg:col-end-5"
+                        type="text"
+                        label="Nickname"
+                        placeholder="MyNickname2024"
+                        name="username"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                    />
+                    <DatePicker
+                        name="dateOfBirth"
+                        control={control}
+                        errors={errors}
+                        label="Date of birth"
+                        placeholder="DD/MM/YYYY"
+                        className="lg:col-start-1 lg:col-end-3 "
+                    />
+                    <Input
+                        className="lg:col-start-3 lg:col-end-4 "
+                        type="text"
+                        label="Weight"
+                        placeholder="0 kg"
+                        name="weight"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                    />
+                    <Input
+                        className="lg:col-start-4 lg:col-end-5 "
+                        type="text"
+                        label="Height"
+                        placeholder="0 sm"
+                        name="height"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                    />
+                </div>
+                <div className="flex">
                     <Radio
                         id="radio-male"
                         name="gender"
-                        label="Male"
+                        label="male"
                         value={Gender.MALE}
                         control={control}
                         type="card"
@@ -178,7 +197,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     <Radio
                         id="radio-female"
                         name="gender"
-                        label="Female"
+                        label="female"
                         value={Gender.FEMALE}
                         control={control}
                         type="card"
@@ -187,15 +206,15 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     <Radio
                         id="radio-other"
                         name="gender"
-                        label="Prefer not to say"
+                        label="prefer not to say"
                         value={Gender.OTHER}
                         control={control}
                         type="card"
                         className="lg:w-50 rounded-r-lg"
                     />
                 </div>
-                <ul className="mt-14 flex lg:col-start-3 lg:col-end-5 lg:row-start-4 lg:mt-6">
-                    <li className="mr-6 w-full">
+                <ul className="mt-14 flex justify-end lg:mt-6">
+                    <li className="mr-6 w-[150px]">
                         <Button
                             label={isLoading ? '' : 'Reset'}
                             leftIcon={
@@ -208,7 +227,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                             size={ComponentSize.MEDIUM}
                         />
                     </li>
-                    <li className="w-full">
+                    <li className="w-[150px]">
                         <Button
                             label={isLoading ? '' : 'Save'}
                             leftIcon={
@@ -219,6 +238,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                             type="submit"
                             variant={ButtonVariant.PRIMARY}
                             size={ComponentSize.MEDIUM}
+                            className={'w-[150px]'}
                         />
                     </li>
                 </ul>

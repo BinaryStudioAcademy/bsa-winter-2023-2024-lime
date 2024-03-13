@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const ButtonColors = {
     TEXT: 'var(--button-text)',
@@ -17,6 +17,9 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
+            'lm-cyan': '#05CFCF',
+            'lm-light-blue': '#056ECF',
+            'lm-light-yellow': '#f1ffca',
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -46,10 +49,12 @@ export default {
                 300: '#313134',
                 400: '#000000',
             },
+            'strava-brand': '#FC4C02',
         },
         fontSize: {
             xs: '0.75rem',
             sm: '0.875rem',
+            prebase: '0.9375rem',
             base: '1rem',
             md: '1.125rem',
             xl: '1.25rem',
@@ -58,6 +63,7 @@ export default {
             '4xl': '2.625rem',
         },
         fontWeight: {
+            light: '300',
             normal: '400',
             semibold: '500',
             bold: '600',
@@ -84,21 +90,34 @@ export default {
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'fade-in': 'fade-in 500ms ease-in',
+            },
+            keyframes: {
+                'fade-in': {
+                    '0%': {
+                        transform: 'scale(0)',
+                        opacity: '0',
+                    },
+                    '100%': {
+                        transform: 'scale(1)',
+                        opacity: '1',
+                    },
+                },
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
-                gilroyLight: ['Gilroy-Light', ...defaultTheme.fontFamily.sans],
-                gilroyBold: ['Gilroy-Bold', ...defaultTheme.fontFamily.sans],
+                accent: ['Lato', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
-                'goalWidget':
-                    'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%)',
+                'goalWidget': 'var(--gradient-goal-widget)',
                 'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
+                'wave-grey': 'url("~/assets/img/wave-grey.svg")',
+                'progress-line': 'url("~/assets/img/progress-line.svg")',
             },
             borderRadius: {
                 '30': '1.9rem',
@@ -115,13 +134,14 @@ export default {
             },
             height: {
                 '30': '7.5625rem',
-                '37': '2.3125',
-                '38': '2.375',
-                '54': '54px',
+                '37': '2.3125rem',
+                '38': '2.375rem',
+                '54': '3.375rem;',
             },
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+                '60': '3.75rem',
             },
             minHeight: {
                 '90': 'calc(100vh - 5.5rem)',
@@ -129,13 +149,12 @@ export default {
             maxHeight: {
                 '90': 'calc(100vh - 5.5rem)',
             },
-            spacing: {
-                '60': '3.75rem',
-            },
             textColor: {
                 primary: 'var(--text-primary)',
                 secondary: 'var(--text-secondary)',
                 action: 'var(--text-action)',
+                infoSection: 'var(--text-info-section)',
+                card: 'var(--text-card)',
                 buttonText: ButtonColors.TEXT,
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
@@ -144,14 +163,26 @@ export default {
             backgroundColor: {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
+                tertiary: 'var(--background-tertiary)',
+                buttonPrimary: ButtonColors.PRIMARY,
+                buttonSecondary: ButtonColors.SECONDARY,
+                buttonTertiary: ButtonColors.TERTIARY,
+                schedule: 'var(--background-schedule)',
+            },
+            borderColor: {
+                primary: 'var(--border-primary)',
+                inactive: 'var(--border-inactive)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
             },
-            borderColor: {
-                buttonPrimary: ButtonColors.PRIMARY,
-                buttonSecondary: ButtonColors.SECONDARY,
-                buttonTertiary: ButtonColors.TERTIARY,
+            ringColor: {
+                primary: 'var(--ring-primary)',
+                inactive: 'var(--ring-inactive)',
+            },
+            stroke: {
+                progressBase: 'var(--stroke-progress-base-bg)',
+                primary: 'var(--circle-primary)',
             },
         },
     },

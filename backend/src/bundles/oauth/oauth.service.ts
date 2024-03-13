@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 
+import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
 import {
     type OAuthEntity,
     type OAuthExchangeAuthCodeDto,
@@ -146,7 +147,7 @@ class OAuthService {
                 await strategy.exchangeRefreshToken(oAuthEntity);
             const updatedOAuth = (await this.oAuthRepository.update(
                 { provider, userId },
-                refreshedOAuth.toObject(),
+                refreshedOAuth.toNewObject(),
             )) as OAuthEntity;
 
             const updatedOAuthObject = updatedOAuth.toObject();
@@ -158,9 +159,11 @@ class OAuthService {
         return oAuthObject.accessToken;
     }
 
-    private checkAccessToken(oAuthEntity: OAuthEntity): boolean {
+    public checkAccessToken(oAuthEntity: OAuthEntity): boolean {
         const oAuthObject = oAuthEntity.toObject();
-        const secondsSinceEpoch = Math.round(Date.now() / 1000);
+        const secondsSinceEpoch = Math.round(
+            Date.now() / MILLISECONDS_PER_SECOND,
+        );
 
         return oAuthObject.expiresAt <= secondsSinceEpoch;
     }
@@ -169,6 +172,8 @@ class OAuthService {
         provider: ValueOf<typeof OAuthProvider>,
         userId: number,
     ): Promise<void> {
+        await this.getAccessToken(provider, userId);
+
         const oAuthEntity = await this.oAuthRepository.find({
             userId,
             provider,

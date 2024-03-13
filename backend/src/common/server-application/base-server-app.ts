@@ -16,13 +16,22 @@ import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { createProtectedRoutes } from '~/common/helpers/create-protected-routes-helper.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
-import { authPlugin, verifyStripeWebhook } from '~/common/plugins/plugins.js';
-import { jwtService, stripeService } from '~/common/services/services.js';
+import {
+    authPlugin,
+    socketInjectorPlugin,
+    verifyStripeWebhook,
+} from '~/common/plugins/plugins.js';
+import {
+    jwtService,
+    socketService,
+    stripeService,
+} from '~/common/services/services.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
     type ValidationSchema,
 } from '~/common/types/types.js';
+import { initStravaWebhook } from '~/common/webhooks/webhooks.js';
 
 import {
     type ServerApp,
@@ -55,6 +64,7 @@ class BaseServerApp implements ServerApp {
         this.apis = apis;
 
         this.app = Fastify();
+        socketService.initializeIo(this.app.server);
     }
 
     public addRoute(parameters: ServerAppRouteParameters): void {
@@ -66,6 +76,7 @@ class BaseServerApp implements ServerApp {
             handler,
             schema: {
                 body: validation?.body,
+                querystring: validation?.query,
                 params: validation?.params,
             },
         });
@@ -145,6 +156,7 @@ class BaseServerApp implements ServerApp {
         });
 
         await this.app.register(multer.contentParser);
+        await this.app.register(socketInjectorPlugin, { io: socketService.io });
     }
 
     private initValidationCompiler(): void {
@@ -158,6 +170,10 @@ class BaseServerApp implements ServerApp {
                 } as R;
             };
         });
+    }
+
+    private async initWebhooks(): Promise<void> {
+        await initStravaWebhook();
     }
 
     private initErrorHandler(): void {
@@ -243,6 +259,8 @@ class BaseServerApp implements ServerApp {
                     stack: error.stack,
                 });
             });
+
+        await this.initWebhooks();
 
         this.logger.info(
             `Application is listening on PORT – ${this.config.ENV.APP.PORT.toString()}, on ENVIRONMENT – ${

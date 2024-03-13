@@ -1,5 +1,8 @@
 import { Icon } from '~/bundles/common/components/components.js';
-import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import {
+    capitalizeFirstLetter,
+    getValidClassNames,
+} from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { CircleProgress } from '../components.js';
@@ -12,6 +15,8 @@ type WidgetProperties = {
     title?: string;
     subTitle?: string;
     className?: string;
+    hasAchievement?: boolean;
+    hasDistance?: boolean;
 };
 
 const GoalWidget = ({
@@ -20,10 +25,14 @@ const GoalWidget = ({
     goalType = GoalTypes.OVERVIEW,
     title = 'Track Your Daily Activities',
     subTitle = '',
+    hasAchievement = true,
     className = '',
+    hasDistance = false,
 }: WidgetProperties): JSX.Element => {
     const rightTitle =
-        goalType === GoalTypes.OVERVIEW ? 'Exercises' : 'Running on Track';
+        goalType === GoalTypes.OVERVIEW
+            ? 'Exercises'
+            : capitalizeFirstLetter(goalType);
 
     return (
         <div
@@ -37,24 +46,29 @@ const GoalWidget = ({
                     {title}
                 </p>
                 {subTitle && (
-                    <p className="text-lm-black-200 text-sm">{subTitle}</p>
+                    <p className="text-lm-black-200 hidden text-sm md:block">
+                        {subTitle}
+                    </p>
                 )}
             </div>
-            <div className="flex items-center gap-3.5">
-                <div className="flex items-center gap-2 text-white">
-                    {goalType === GoalTypes.OVERVIEW && (
-                        <Icon name="workoutIcon" size="lg" />
-                    )}
-                    <p className="text-base font-extrabold">{rightTitle}</p>
+            {hasAchievement && (
+                <div className="flex items-center gap-3.5">
+                    <div className="flex items-center gap-2 text-white">
+                        {goalType === GoalTypes.OVERVIEW && (
+                            <Icon name="workoutIcon" size="lg" />
+                        )}
+                        <p className="text-base font-extrabold">{rightTitle}</p>
+                    </div>
+                    <div className="flex items-center justify-center">
+                        <CircleProgress
+                            value={value}
+                            target={target}
+                            goalType={goalType}
+                            hasDistance={hasDistance}
+                        />
+                    </div>
                 </div>
-                <div className="flex items-center justify-center">
-                    <CircleProgress
-                        value={value}
-                        target={target}
-                        goalType={goalType}
-                    />
-                </div>
-            </div>
+            )}
         </div>
     );
 };
