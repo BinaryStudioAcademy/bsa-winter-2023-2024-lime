@@ -7,7 +7,7 @@ import {
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { Status } from '../../enums/enums.js';
-import { formatChatLinkDate } from '../../helpers/helpers.js';
+import { formatChatDate } from '../../helpers/helpers.js';
 
 type Properties = {
     id: number;
@@ -67,7 +67,7 @@ const ChatLink = ({
                 </div>
                 <p className="text-secondary mr-1 text-xs">
                     {/*  We'll use our date. */}
-                    {formatChatLinkDate(new Date())}
+                    {formatChatDate(new Date())}
                 </p>
             </div>
         </Link>

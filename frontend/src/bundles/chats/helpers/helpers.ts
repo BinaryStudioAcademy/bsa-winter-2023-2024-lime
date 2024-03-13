@@ -1,1 +1,1 @@
-export { formatChatLinkDate } from './format-chat-link-date.helper.js';
+export { formatChatDate } from './format-chat-date.helper.js';

@@ -17,7 +17,7 @@ const ChatSidebar = ({ chatLinks, className }: Properties): JSX.Element => {
         <div
             className={getValidClassNames(
                 className,
-                'border-r-lm-grey-300 max-h-full flex-col overflow-hidden border-r px-3 lg:flex',
+                'border-r-buttonTertiary max-h-full flex-col overflow-hidden border-r px-3 lg:flex',
             )}
         >
             <div className="mb-4">

@@ -2,7 +2,7 @@ import { Icon, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
-import { formatChatLinkDate } from '../../helpers/helpers.js';
+import { formatChatDate } from '../../helpers/helpers.js';
 
 const AiChatLink = (): JSX.Element => {
     const isActive = true;
@@ -26,7 +26,7 @@ const AiChatLink = (): JSX.Element => {
                     <p className="text-secondary text-xs">Hello!</p>
                 </div>
                 <p className="text-secondary text-xs">
-                    {formatChatLinkDate(new Date())}
+                    {formatChatDate(new Date())}
                 </p>
             </div>
         </Link>

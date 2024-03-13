@@ -1,6 +1,6 @@
 import { format, isThisWeek, isThisYear, isToday } from 'date-fns';
 
-const formatChatLinkDate = (date: Date): string => {
+const formatChatDate = (date: Date): string => {
     if (isToday(date)) {
         return format(date, 'HH:mm');
     } else if (isThisWeek(date)) {
@@ -12,4 +12,4 @@ const formatChatLinkDate = (date: Date): string => {
     }
 };
 
-export { formatChatLinkDate };
+export { formatChatDate };

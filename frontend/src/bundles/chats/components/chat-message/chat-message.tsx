@@ -1,6 +1,6 @@
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
-import { formatChatLinkDate } from '../../helpers/format-chat-link-date.helper.js';
+import { formatChatDate } from '../../helpers/format-chat-date.helper.js';
 
 type Properties = {
     isCurrentUserMessage: boolean;
@@ -22,7 +22,7 @@ const ChatMessage = ({
         >
             <div className="flex flex-col">
                 <span className="text-secondary">
-                    {formatChatLinkDate(sendDate)}
+                    {formatChatDate(sendDate)}
                 </span>
                 <div
                     className={getValidClassNames(
