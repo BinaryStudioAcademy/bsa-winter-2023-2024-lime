@@ -68,7 +68,7 @@ const Input = <T extends FieldValues>({
 
     return (
         <label
-            className={`${className} flex max-h-20 flex-col text-sm text-white`}
+            className={`${className} text-primary flex max-h-20 flex-col text-sm`}
         >
             <span
                 className={getValidClassNames(
