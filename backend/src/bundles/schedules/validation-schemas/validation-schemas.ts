@@ -1,0 +1,1 @@
+export { idParameterValidationSchema } from 'shared';
