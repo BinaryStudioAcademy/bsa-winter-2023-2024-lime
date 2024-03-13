@@ -6,6 +6,8 @@ import {
     OAuthStateAttributes,
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
+import { ScheduleAttributes } from '~/bundles/schedules/enums/enums.js';
+import { ScheduleModel } from '~/bundles/schedules/schedules.js';
 import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
 import { WorkoutModel } from '~/bundles/workouts/workouts.js';
 import {
@@ -34,6 +36,8 @@ class UserModel extends AbstractModel {
     public 'userOAuthInfo': OAuthModel;
 
     public 'userOAuthState': OAuthStateModel;
+
+    public 'schedules': ScheduleModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -87,6 +91,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
+                },
+            },
+            schedules: {
+                relation: Model.HasManyRelation,
+                modelClass: ScheduleModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.SCHEDULES}.${ScheduleAttributes.USER_ID}`,
                 },
             },
         };
