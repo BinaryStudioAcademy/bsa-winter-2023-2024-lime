@@ -75,10 +75,10 @@ const Goals: React.FC = () => {
 
     const previousGoalsReference = useRef(goals);
 
-    const dispatchNotification = (title: string, message: string): void => {
+    const dispatchNotification = (activityType: string): void => {
         const notificationPayload = {
-            title: title,
-            message: message,
+            title: 'Goal Completed!',
+            message: `Congratulations! You have completed your ${activityType} goal.`,
             isRead: false,
             type: NotificationType.DEFAULT,
         };
@@ -89,19 +89,18 @@ const Goals: React.FC = () => {
 
     useEffect(() => {
         const previousGoals = previousGoalsReference.current;
+
         for (const [index, currentGoal] of goals.entries()) {
             const previousGoal = previousGoals[index];
             if (
                 previousGoal &&
                 currentGoal.completedAt !== previousGoal.completedAt
             ) {
-                const title = 'Goal Completed!';
-                const message = `Congratulations! You have completed your ${currentGoal.activityType} goal.`;
-                dispatchNotification(title, message);
+                dispatchNotification(currentGoal.activityType);
             }
         }
         previousGoalsReference.current = goals;
-    }, [goals, dispatchNotification]);
+    }, [goals]);
 
     const handleOpenModal = useCallback((): void => {
         void setIsModalOpen(true);

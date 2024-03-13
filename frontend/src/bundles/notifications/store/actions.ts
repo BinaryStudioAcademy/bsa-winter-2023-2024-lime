@@ -26,27 +26,4 @@ const createNotification = createAsyncThunk<
     return await notificationApi.createNotification(notification);
 });
 
-const dismissNotification = createAsyncThunk<number, number, AsyncThunkConfig>(
-    `${name}/dismissNotification`,
-    async (notificationId, { extra }) => {
-        const { notificationApi } = extra;
-        await notificationApi.dismissNotification(notificationId.toString());
-        return notificationId;
-    },
-);
-
-const deleteNotification = createAsyncThunk<number, number, AsyncThunkConfig>(
-    `${name}/deleteNotification`,
-    async (notificationId, { extra }) => {
-        const { notificationApi } = extra;
-        await notificationApi.deleteNotification(notificationId.toString());
-        return notificationId;
-    },
-);
-
-export {
-    createNotification,
-    deleteNotification,
-    dismissNotification,
-    fetchNotifications,
-};
+export { createNotification, fetchNotifications };

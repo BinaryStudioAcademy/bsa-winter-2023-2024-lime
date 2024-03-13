@@ -3,12 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 
 import { type NotificationStateTypeSlice } from '../types/types.js';
-import {
-    createNotification,
-    deleteNotification,
-    dismissNotification,
-    fetchNotifications,
-} from './actions.js';
+import { createNotification, fetchNotifications } from './actions.js';
 
 const State: NotificationStateTypeSlice = {
     notifications: [],
@@ -36,39 +31,9 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(createNotification.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.notifications.push(action.payload);
+            state.notifications = [...state.notifications, action.payload];
         });
         builder.addCase(createNotification.rejected, (state) => {
-            state.dataStatus = DataStatus.REJECTED;
-        });
-        builder.addCase(dismissNotification.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
-        });
-        builder.addCase(dismissNotification.fulfilled, (state, action) => {
-            state.notifications = state.notifications.map((notification) => {
-                if (notification.id === action.payload) {
-                    return {
-                        ...notification,
-                        isRead: true,
-                    };
-                }
-                return notification;
-            });
-            state.dataStatus = DataStatus.FULFILLED;
-        });
-        builder.addCase(dismissNotification.rejected, (state) => {
-            state.dataStatus = DataStatus.REJECTED;
-        });
-        builder.addCase(deleteNotification.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
-        });
-        builder.addCase(deleteNotification.fulfilled, (state, action) => {
-            state.notifications = state.notifications.filter(
-                (notification) => notification.id !== action.payload,
-            );
-            state.dataStatus = DataStatus.FULFILLED;
-        });
-        builder.addCase(deleteNotification.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

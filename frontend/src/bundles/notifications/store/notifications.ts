@@ -1,16 +1,9 @@
-import {
-    createNotification,
-    deleteNotification,
-    dismissNotification,
-    fetchNotifications,
-} from './actions.js';
+import { createNotification, fetchNotifications } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     createNotification,
-    deleteNotification,
-    dismissNotification,
     fetchNotifications,
 };
 

@@ -49,46 +49,6 @@ class NotificationsApi extends BaseHttpApi {
 
         return await response.json();
     }
-
-    public async dismissNotification(notificationId: string): Promise<void> {
-        await this.load(
-            this.getFullEndpoint(NotificationsApiPath.DISMISS, {
-                notificationId,
-            }),
-            {
-                method: 'PATCH',
-                contentType: 'application/json',
-                hasAuth: true,
-                payload: JSON.stringify({}),
-            },
-        );
-    }
-
-    public async deleteNotification(notificationId: string): Promise<void> {
-        await this.load(
-            this.getFullEndpoint(NotificationsApiPath.DELETE, {
-                notificationId,
-            }),
-            {
-                method: 'DELETE',
-                contentType: 'application/json',
-                hasAuth: true,
-            },
-        );
-    }
-
-    public async getUnreadNotificationsCount(): Promise<number> {
-        const response = await this.load(
-            this.getFullEndpoint(NotificationsApiPath.UNREAD, {}),
-            {
-                method: 'GET',
-                contentType: 'application/json',
-                hasAuth: true,
-            },
-        );
-
-        return await response.json();
-    }
 }
 
 export { NotificationsApi };
