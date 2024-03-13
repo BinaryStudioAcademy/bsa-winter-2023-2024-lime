@@ -49,6 +49,7 @@ export default {
                 300: '#313134',
                 400: '#000000',
             },
+            'strava-brand': '#FC4C02',
         },
         fontSize: {
             xs: '0.75rem',
@@ -135,7 +136,7 @@ export default {
                 '30': '7.5625rem',
                 '37': '2.3125rem',
                 '38': '2.375rem',
-                '54': '3.375rem;'
+                '54': '3.375rem;',
             },
             spacing: {
                 '13': '3.25',
