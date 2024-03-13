@@ -135,6 +135,18 @@ class UserController extends BaseController {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: UsersApiPath.NOT_FRIENDS,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getAllNonFriendUsers(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -441,6 +453,52 @@ class UserController extends BaseController {
         } catch (error) {
             throw new HttpError({
                 message: `Error fetching user's friends: ${error}`,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/not-friends:
+     *    get:
+     *      tags:
+     *       - Friends
+     *      description: Get all not friends
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+
+    private async getAllNonFriendUsers(
+        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user } = options;
+        try {
+            const notFriends = await this.userService.getAllNonFriendUsers(
+                user.id,
+            );
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.OK,
+                payload: notFriends,
+            };
+        } catch (error) {
+            throw new HttpError({
+                message: `Error fetching user's not friends: ${error}`,
                 status: HttpCode.INTERNAL_SERVER_ERROR,
             });
         }

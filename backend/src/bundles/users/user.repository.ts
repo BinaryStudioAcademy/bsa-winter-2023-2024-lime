@@ -7,6 +7,7 @@ import { type Repository } from '~/common/types/types.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
 const USER_ID = 'user_id';
+const USER_DETAILS_GRAPH = '[userDetails]';
 const USER_DETAILS_SELECT_FIELDS = [
     'ud.id',
     `ud.${USER_ID}`,
@@ -32,7 +33,7 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('[userDetails]')
+            .withGraphFetched(USER_DETAILS_GRAPH)
             .execute();
 
         if (!user) {
@@ -56,7 +57,7 @@ class UserRepository implements Repository {
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('[userDetails]')
+            .withGraphFetched(USER_DETAILS_GRAPH)
             .execute();
 
         return users.map((user) => {
@@ -243,6 +244,42 @@ class UserRepository implements Repository {
             return friends as unknown as UserFriendsResponseDto[];
         } catch (error) {
             throw new Error(`Error fetching friends: ${error}`);
+        }
+    }
+
+    public async getAllNonFriendUsers(
+        userId: number,
+    ): Promise<UserFriendsResponseDto[] | null> {
+        try {
+            const allUsers = await this.userModel
+                .query()
+                .whereNot('id', userId)
+                .withGraphFetched(USER_DETAILS_GRAPH);
+            const friends = await this.getAllFriends(userId);
+            const friendIds = friends && friends.map((friend) => friend.userId);
+
+            const nonFriendUsers = allUsers.filter(
+                (user) => friendIds && !friendIds.includes(user.id),
+            );
+
+            const nonFriendUsersDetail = nonFriendUsers.map((user) => {
+                const { userDetails, ...userInfo } = user;
+                return {
+                    ...userInfo,
+                    email: user.email,
+                    fullName: userDetails.fullName,
+                    avatarUrl: userDetails.avatarUrl,
+                    username: userDetails.username,
+                    dateOfBirth: userDetails.dateOfBirth,
+                    weight: userDetails.weight,
+                    height: userDetails.height,
+                    gender: userDetails.gender,
+                };
+            });
+
+            return nonFriendUsersDetail as unknown as UserFriendsResponseDto[];
+        } catch (error) {
+            throw new Error(`Error fetching non-friend users: ${error}`);
         }
     }
 }

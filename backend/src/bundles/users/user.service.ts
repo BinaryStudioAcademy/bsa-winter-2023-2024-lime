@@ -123,6 +123,18 @@ class UserService implements Service {
             throw new Error(`Error occurred while fetching friends: ${error}`);
         }
     }
+
+    public async getAllNonFriendUsers(
+        userId: number,
+    ): Promise<UserFriendsResponseDto[] | null> {
+        try {
+            return await this.userRepository.getAllNonFriendUsers(userId);
+        } catch (error) {
+            throw new Error(
+                `Error occurred while fetching not friends: ${error}`,
+            );
+        }
+    }
 }
 
 export { UserService };
