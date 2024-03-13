@@ -40,6 +40,7 @@ export {
     PasswordResetApiPath,
     PasswordResetValidationMessage,
 } from './bundles/password-reset/password-reset.js';
+export { ScheduleValidationMessage } from './bundles/schedules/schedules.js';
 export {
     type SubscriptionPlansGetAllItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,

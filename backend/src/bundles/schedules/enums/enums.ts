@@ -1,2 +1,2 @@
 export { ScheduleAttributes } from './schedule-attributes.enum.js';
-export { ActivityType } from 'shared';
+export { ActivityType, ScheduleValidationMessage } from 'shared';
