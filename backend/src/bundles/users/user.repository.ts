@@ -254,7 +254,7 @@ class UserRepository implements Repository {
         }
     }
 
-    public async getAllFollowings(
+    public async getNotFollowed(
         userId: number,
     ): Promise<UserFollowingsResponseDto[] | null> {
         try {

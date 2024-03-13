@@ -8,6 +8,15 @@ import {
 
 import { name as sliceName } from './slice.js';
 
+const getNotFollowed = createAsyncThunk<
+    UserFollowingsResponseDto[],
+    undefined,
+    AsyncThunkConfig
+>(`${sliceName}/get-not-followed`, async (_, { extra }) => {
+    const { friendsApi } = extra;
+    return await friendsApi.getNotFollowed();
+});
+
 const getFollowings = createAsyncThunk<
     UserFollowingsResponseDto[],
     undefined,
@@ -38,4 +47,4 @@ const removeFollowing = createAsyncThunk<
     },
 );
 
-export { addFollowing, getFollowings, removeFollowing };
+export { addFollowing, getFollowings, getNotFollowed, removeFollowing };

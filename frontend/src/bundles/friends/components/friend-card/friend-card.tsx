@@ -8,41 +8,42 @@ import {
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { validateImageUrl } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
+import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js';
 
 type FriendProperties = {
-    id: number;
-    name: string | null;
-    avatarUrl: string | null;
     isActive: boolean;
     isFollowed: boolean;
     isCardSelected: boolean;
-    selectCard: (id: number) => void;
+    user: UserFollowingsResponseDto;
+    selectCard: (user: UserFollowingsResponseDto | null) => void;
     onToggleFollow: (id: number) => void;
     // message: (id: number) => void;
 };
 
 const FriendCard = ({
-    id,
-    name,
-    avatarUrl,
     isActive,
     isFollowed,
     isCardSelected,
+    user,
     selectCard,
     onToggleFollow,
     // message,
 }: FriendProperties): JSX.Element => {
+    const { id, fullName, email, avatarUrl } = user;
     const handleOnToggleFollow = useCallback(() => {
+        if (isCardSelected) {
+            selectCard(null);
+        }
         onToggleFollow(id);
-    }, [onToggleFollow, id]);
+    }, [onToggleFollow, id, isCardSelected, selectCard]);
+
+    const handleSelectCard = useCallback((): void => {
+        selectCard(user);
+    }, [selectCard, user]);
 
     // const handleSendMessage = useCallback(() => {
     //     messageFriend(id);
     // }, [messageFriend, id]);
-
-    const handleSelectCard = useCallback((): void => {
-        selectCard(id);
-    }, [selectCard, id]);
 
     return (
         <div
@@ -56,7 +57,7 @@ const FriendCard = ({
                 {avatarUrl && validateImageUrl(avatarUrl) ? (
                     <img
                         src={avatarUrl}
-                        alt={name || 'avatar'}
+                        alt={fullName || 'avatar'}
                         className="aspect-square rounded-t-xl object-cover"
                     />
                 ) : (
@@ -74,7 +75,7 @@ const FriendCard = ({
                     )}
 
                     <h3 className="text-primary font-extrabold sm:text-xs lg:text-[1rem]">
-                        {name}
+                        {fullName || email}
                     </h3>
                 </div>
                 <div className="flex w-full items-center justify-between">

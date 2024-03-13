@@ -127,11 +127,11 @@ class UserService implements Service {
         }
     }
 
-    public async getAllFollowings(
+    public async getNotFollowed(
         userId: number,
     ): Promise<UserFollowingsResponseDto[] | null> {
         try {
-            return await this.userRepository.getAllFollowings(userId);
+            return await this.userRepository.getNotFollowed(userId);
         } catch (error) {
             throw new Error(
                 `Error occurred while fetching not friends: ${error}`,

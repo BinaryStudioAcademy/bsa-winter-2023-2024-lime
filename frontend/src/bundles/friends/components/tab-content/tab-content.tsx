@@ -4,8 +4,8 @@ import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js
 type Properties = {
     users: UserFollowingsResponseDto[];
     isFollowed: boolean;
-    selectedCardId: number | null;
-    selectCard: (id: number) => void;
+    selectedCardId: number | undefined;
+    selectCard: (user: UserFollowingsResponseDto | null) => void;
     onToggleFollow: (id: number) => void;
     noUsersText: string;
 };
@@ -24,13 +24,11 @@ const TabContent = ({
                 users.map((user) => (
                     <div key={user.id}>
                         <FriendCard
-                            name={user.fullName || user.email}
-                            id={user.id}
+                            user={user}
                             isFollowed={isFollowed}
                             isActive={true}
                             isCardSelected={selectedCardId === user.id}
                             selectCard={selectCard}
-                            avatarUrl={user?.avatarUrl}
                             onToggleFollow={onToggleFollow}
                         />
                     </div>

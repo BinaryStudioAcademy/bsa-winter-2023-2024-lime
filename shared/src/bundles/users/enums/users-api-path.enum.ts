@@ -2,7 +2,7 @@ const UsersApiPath = {
     ROOT: '/',
     CURRENT: '/current',
     UPDATE_USER: '/update',
-    ALL_FOLLOWINGS: '/followings/all',
+    NOT_FOLLOWED: '/not-followed',
     FOLLOWINGS: '/followings',
     FOLLOWERS: '/followers',
 } as const;

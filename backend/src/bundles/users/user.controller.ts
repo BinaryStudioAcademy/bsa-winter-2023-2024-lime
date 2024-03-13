@@ -137,11 +137,11 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
-            path: UsersApiPath.ALL_FOLLOWINGS,
+            path: UsersApiPath.NOT_FOLLOWED,
             method: 'GET',
             isProtected: true,
             handler: (options) =>
-                this.getAllFollowings(
+                this.getNotFollowed(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                     }>,
@@ -463,7 +463,7 @@ class UserController extends BaseController {
 
     /**
      * @swagger
-     * /api/v1/users/all-followings:
+     * /api/v1/users/not-followed:
      *    get:
      *      tags:
      *       - Friends
@@ -486,12 +486,12 @@ class UserController extends BaseController {
      *                      $ref: '#/components/schemas/Error'
      */
 
-    private async getAllFollowings(
+    private async getNotFollowed(
         options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
     ): Promise<ApiHandlerResponse> {
         const { user } = options;
         try {
-            const notFriends = await this.userService.getAllFollowings(user.id);
+            const notFriends = await this.userService.getNotFollowed(user.id);
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
@@ -499,7 +499,7 @@ class UserController extends BaseController {
             };
         } catch (error) {
             throw new HttpError({
-                message: `Error fetching user's not friends: ${error}`,
+                message: `Error fetching user's not followed: ${error}`,
                 status: HttpCode.INTERNAL_SERVER_ERROR,
             });
         }

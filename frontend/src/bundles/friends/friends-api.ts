@@ -19,6 +19,19 @@ class FriendsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
         super({ path: ApiPath.USERS, baseUrl, http, storage });
     }
+    public async getNotFollowed(): Promise<UserFollowingsResponseDto[]> {
+        const response = await this.load(
+            this.getFullEndpoint(UsersApiPath.NOT_FOLLOWED, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<UserFollowingsResponseDto[]>();
+    }
+
     public async getFollowings(): Promise<UserFollowingsResponseDto[]> {
         const response = await this.load(
             this.getFullEndpoint(UsersApiPath.FOLLOWINGS, {}),

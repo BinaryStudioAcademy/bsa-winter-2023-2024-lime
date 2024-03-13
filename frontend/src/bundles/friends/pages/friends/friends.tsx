@@ -1,3 +1,4 @@
+import { Loader } from '~/bundles/common/components/components.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
@@ -14,13 +15,11 @@ import {
 import { TabsFollowers } from '~/bundles/friends/enums/enums.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
 import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js';
-import { actions as usersActions } from '~/bundles/users/store/users.js';
 
 const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const tabs = [TabsFollowers.FIND_FOLLOWINGS, TabsFollowers.MY_FOLLOWINGS];
-    const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
     const [selectedCard, setSelectedCard] =
         useState<UserFollowingsResponseDto | null>(null);
 
@@ -28,32 +27,22 @@ const Friends: React.FC = () => {
         TabsFollowers.FIND_FOLLOWINGS,
     );
 
-    const [users, setUsers] = useState<UserFollowingsResponseDto[]>([]);
-
-    const currentUser = useAppSelector((state) => state.auth.user);
-    const followings = useAppSelector((state) => state.friends.followings);
-
-    const { users: allUsers, dataStatus: allUsersDataStatus } = useAppSelector(
-        ({ users }) => ({
-            users: users.users,
-            dataStatus: users.dataStatus,
-        }),
-    );
+    const users = useAppSelector((state) => state.friends.users);
+    const loading = useAppSelector((state) => state.friends.dataStatus);
 
     const handleSelectCard = useCallback(
-        (id: number): void => {
-            setSelectedCardId(id);
+        (user: UserFollowingsResponseDto | null): void => {
+            setSelectedCard(user);
         },
-        [setSelectedCardId],
+        [setSelectedCard],
     );
 
     const handleTabClick = useCallback(
         (tab: string): void => {
             setActiveTab(tab);
             setSelectedCard(null);
-            setSelectedCardId(null);
         },
-        [setActiveTab, setSelectedCard, setSelectedCardId],
+        [setActiveTab, setSelectedCard],
     );
 
     const handleAddFollowing = useCallback(
@@ -81,51 +70,14 @@ const Friends: React.FC = () => {
     );
 
     useEffect(() => {
-        if (allUsersDataStatus === DataStatus.FULFILLED) {
-            const notFollowedUsers = allUsers.filter(
-                (user) =>
-                    user.id !== currentUser?.id &&
-                    !followings?.some(
-                        (following) => following.userId === user.id,
-                    ),
-            );
-            setUsers(
-                notFollowedUsers as unknown as UserFollowingsResponseDto[],
-            );
-        }
-    }, [setUsers, allUsers, currentUser, followings, allUsersDataStatus]);
-
-    useEffect(() => {
-        if (activeTab === TabsFollowers.FIND_FOLLOWINGS) {
-            if (users) {
-                setSelectedCard(
-                    users.find((user) => user.id === selectedCardId) || null,
-                );
-            }
-        } else {
-            if (followings) {
-                setSelectedCard(
-                    followings.find(
-                        (following) => following.userId === selectedCardId,
-                    ) || null,
-                );
-            }
-        }
-    }, [selectedCardId, setSelectedCard, users, activeTab, followings]);
-
-    useEffect(() => {
-        const loadAllUsers = async (): Promise<void> => {
-            await dispatch(usersActions.loadAll());
+        const loadUsers = async (): Promise<void> => {
+            activeTab === TabsFollowers.FIND_FOLLOWINGS &&
+                (await dispatch(friendsActions.getNotFollowed()));
+            activeTab === TabsFollowers.MY_FOLLOWINGS &&
+                (await dispatch(friendsActions.getFollowings()));
         };
-        void loadAllUsers();
-    }, [dispatch]);
-
-    useEffect(() => {
-        const loadFollowings = async (): Promise<void> => {
-            await dispatch(friendsActions.getFollowings());
-        };
-        void loadFollowings();
-    }, [dispatch]);
+        void loadUsers();
+    }, [dispatch, activeTab]);
 
     return (
         <section className="relative flex flex-col gap-5 whitespace-normal">
@@ -134,42 +86,45 @@ const Friends: React.FC = () => {
                 handleTabClick={handleTabClick}
                 activeTab={activeTab}
             />
+            {loading === DataStatus.FULFILLED ? (
+                <div
+                    className={`flex flex-wrap items-start gap-5 ${selectedCard?.id ? 'w-[calc(100%-354px)]' : 'w-full'}`}
+                >
+                    {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
+                        <TabContent
+                            users={users}
+                            isFollowed={false}
+                            selectedCardId={selectedCard?.id}
+                            selectCard={handleSelectCard}
+                            onToggleFollow={handleAddFollowing}
+                            noUsersText={'No user found to follow.'}
+                        />
+                    )}
 
-            <div
-                className={`flex flex-wrap items-start gap-5 ${selectedCardId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
-            >
-                {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
-                    <TabContent
-                        users={users}
-                        isFollowed={false}
-                        selectedCardId={selectedCardId}
-                        selectCard={handleSelectCard}
-                        onToggleFollow={handleAddFollowing}
-                        noUsersText={'No user found to follow.'}
-                    />
-                )}
+                    {activeTab === TabsFollowers.MY_FOLLOWINGS && (
+                        <TabContent
+                            users={users}
+                            isFollowed={true}
+                            selectedCardId={selectedCard?.id}
+                            selectCard={handleSelectCard}
+                            onToggleFollow={handleRemoveFollowing}
+                            noUsersText={'You do not follow anyone yet.'}
+                        />
+                    )}
 
-                {activeTab === TabsFollowers.MY_FOLLOWINGS && (
-                    <TabContent
-                        users={followings}
-                        isFollowed={true}
-                        selectedCardId={selectedCardId}
-                        selectCard={handleSelectCard}
-                        onToggleFollow={handleRemoveFollowing}
-                        noUsersText={'You do not follow anyone yet.'}
-                    />
-                )}
-
-                {activeTab === TabsFollowers.MY_FOLLOWERS && (
-                    <div
-                        className={
-                            'text-primary flex h-[70vh] w-full items-center justify-center text-xl'
-                        }
-                    >
-                        No one is following you yet.
-                    </div>
-                )}
-            </div>
+                    {activeTab === TabsFollowers.MY_FOLLOWERS && (
+                        <div
+                            className={
+                                'text-primary flex h-[70vh] w-full items-center justify-center text-xl'
+                            }
+                        >
+                            No one is following you yet.
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <Loader />
+            )}
 
             {selectedCard && (
                 <aside className="bg-secondary border-buttonText fixed right-[6px] top-[88px] ml-4 h-full w-[354px] border-l-2 pb-4 pl-4 pr-4 pt-8">
