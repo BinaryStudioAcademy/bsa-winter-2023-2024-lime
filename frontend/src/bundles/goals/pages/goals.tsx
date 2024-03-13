@@ -12,10 +12,7 @@ import { CreateGoalForm } from '~/bundles/common/components/create-goal-form/cre
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
-import {
-    convertMetersToKilometers,
-    convertToMeters,
-} from '~/bundles/common/helpers/helpers.js';
+import { convertToMeters } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -119,14 +116,12 @@ const Goals: React.FC = () => {
                         <section>
                             <GoalWidget
                                 value={
-                                    convertMetersToKilometers(
-                                        lastGoal?.distance as number,
-                                    ) ?? (lastGoal?.duration as number)
+                                    (lastGoal?.distance as number) ??
+                                    (lastGoal?.duration as number)
                                 }
                                 target={
-                                    convertMetersToKilometers(
-                                        lastGoal?.distance as number,
-                                    ) || (lastGoal?.duration as number)
+                                    (lastGoal?.distance as number) ||
+                                    (lastGoal?.duration as number)
                                 }
                                 title={
                                     lastGoal
@@ -147,11 +142,11 @@ const Goals: React.FC = () => {
                                 hasDistance={Boolean(lastGoal?.distance)}
                             />
                         </section>
-                        <section>
+                        <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                 Goals
                             </h2>
-                            <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
+                            <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:flex-wrap">
                                 {(goals.length === ZERO_VALUE &&
                                     unfulfilledGoals.length === ZERO_VALUE) || (
                                     <p className="text-primary mb-5 w-full text-xl font-extrabold">
@@ -182,7 +177,7 @@ const Goals: React.FC = () => {
                                         ),
                                     )}
                             </div>
-                            <div className="md:w-full lg:w-[48.8%]">
+                            <div className="w-full lg:w-[48.5%]">
                                 <Button
                                     type="button"
                                     label="Set the new goal"
