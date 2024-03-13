@@ -70,6 +70,7 @@ const ProfileSettings: React.FC<Properties> = ({
             if (image) {
                 setImgToCrop(URL.createObjectURL(image[0] as File));
                 setIsOpen(true);
+                event.target.value = '';
             }
         },
         [],
@@ -89,11 +90,17 @@ const ProfileSettings: React.FC<Properties> = ({
                         break;
                     }
                     case 'weight': {
-                        setValue(key, convertWeightToKilograms(user[key]));
+                        setValue(
+                            key,
+                            convertWeightToKilograms(user[key]) || '',
+                        );
                         break;
                     }
                     case 'height': {
-                        setValue(key, convertHeightToCentimeters(user[key]));
+                        setValue(
+                            key,
+                            convertHeightToCentimeters(user[key]) || '',
+                        );
                         break;
                     }
                     default: {
@@ -136,13 +143,11 @@ const ProfileSettings: React.FC<Properties> = ({
     );
 
     const closeModal = useCallback((): void => {
-        setImgToCrop('');
         setIsOpen(false);
     }, []);
 
     const handleReset = useCallback((): void => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
-        setImgToCrop('');
     }, [reset]);
 
     return (

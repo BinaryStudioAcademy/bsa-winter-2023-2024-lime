@@ -1,6 +1,6 @@
 const DIMENSION = {
     aspectRatio: 1,
-    min: 25,
+    min: 100,
 } as const;
 
 export { DIMENSION };

@@ -35,8 +35,8 @@ const Cropper = ({
     const canvasReference = useRef<HTMLCanvasElement>(null);
 
     const handleCrop = useCallback(
-        (PercentCrop: PercentCrop) => {
-            setCrop(PercentCrop);
+        (percentCrop: PercentCrop) => {
+            setCrop(percentCrop);
         },
         [setCrop],
     );
@@ -46,7 +46,7 @@ const Cropper = ({
             const { width, height } = event.currentTarget;
             const imgCrop: Crop = makeAspectCrop(
                 {
-                    unit: '%',
+                    unit: 'px',
                     width: DIMENSION.min,
                 },
                 DIMENSION.aspectRatio,
@@ -70,6 +70,7 @@ const Cropper = ({
             canvas: canvasReference.current as HTMLCanvasElement,
             image: imgReference.current as HTMLImageElement,
         });
+
         if (canvasReference.current) {
             const imgPayload = await toFile(canvasReference);
             onAvatarUpload(imgPayload);
@@ -126,7 +127,7 @@ const Cropper = ({
             {crop && (
                 <canvas
                     ref={canvasReference}
-                    className="border-lm-yellow-100 m-auto mt-5 hidden h-[9.375] w-[9.375rem] border object-contain"
+                    className="border-lm-yellow-100 m-auto mt-5 hidden h-[9.375rem] w-[9.375rem] border object-contain"
                 />
             )}
         </>

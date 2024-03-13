@@ -6,10 +6,13 @@ const canvasPreview = ({
     crop,
     scale = 1,
 }: CanvasProperties): void => {
+    if (canvas === null || image === null) {
+        return;
+    }
     const context = canvas.getContext('2d');
 
     if (!context) {
-        throw new Error('No 2d context');
+        return;
     }
 
     const scaleX = image.naturalWidth / image.width;
