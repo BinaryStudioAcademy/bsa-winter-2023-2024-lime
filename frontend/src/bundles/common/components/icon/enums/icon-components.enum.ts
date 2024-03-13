@@ -17,7 +17,6 @@ import GoogleLogoIcon from '~/assets/img/icons/google-logo.svg?react';
 import LogoIcon from '~/assets/img/icons/logo-icon.svg?react';
 import MessageIcon from '~/assets/img/icons/message-icon.svg?react';
 import NotFoundIcon from '~/assets/img/icons/not-found-icon.svg?react';
-import SearchIcon from '~/assets/img/icons/search-icon.svg?react';
 import StarIcon from '~/assets/img/icons/star-icon.svg?react';
 import StepsIcon from '~/assets/img/icons/steps-icon.svg?react';
 import StravaIcon from '~/assets/img/icons/strava-icon.svg?react';
@@ -56,7 +55,6 @@ const IconComponent: Record<
     feedIcon: FeedIcon,
     goalIcon: GoalIcon,
     starIcon: StarIcon,
-    searchIcon: SearchIcon,
     aiAssistantIcon: AiAssistantIconfrom,
     aiPoweredIcon: AiPoweredIcon,
     stavaButtonIcon: StavaButtonIcon,

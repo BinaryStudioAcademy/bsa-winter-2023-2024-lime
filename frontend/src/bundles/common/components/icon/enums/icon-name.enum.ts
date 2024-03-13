@@ -22,7 +22,6 @@ const IconName = {
     feedIcon: 'feedIcon',
     goalIcon: 'goalIcon',
     starIcon: 'starIcon',
-    searchIcon: 'searchIcon',
     aiAssistantIcon: 'aiAssistantIcon',
     aiPoweredIcon: 'aiPoweredIcon',
     stavaButtonIcon: 'stavaButtonIcon',
