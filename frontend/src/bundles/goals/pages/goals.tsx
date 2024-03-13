@@ -75,19 +75,20 @@ const Goals: React.FC = () => {
 
     const previousGoalsReference = useRef(goals);
 
+    const dispatchNotification = (title: string, message: string): void => {
+        const notificationPayload = {
+            title: title,
+            message: message,
+            isRead: false,
+            type: NotificationType.DEFAULT,
+        };
+        void dispatch(
+            notificationsActions.createNotification(notificationPayload),
+        );
+    };
+
     useEffect(() => {
         const previousGoals = previousGoalsReference.current;
-        const dispatchNotification = (title: string, message: string): void => {
-            const notificationPayload = {
-                title: title,
-                message: message,
-                isRead: false,
-                type: NotificationType.DEFAULT,
-            };
-            void dispatch(
-                notificationsActions.createNotification(notificationPayload),
-            );
-        };
         for (const [index, currentGoal] of goals.entries()) {
             const previousGoal = previousGoals[index];
             if (
@@ -100,7 +101,7 @@ const Goals: React.FC = () => {
             }
         }
         previousGoalsReference.current = goals;
-    }, [goals, dispatch]);
+    }, [goals, dispatchNotification]);
 
     const handleOpenModal = useCallback((): void => {
         void setIsModalOpen(true);
