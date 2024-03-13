@@ -88,18 +88,36 @@ const Friends: React.FC = () => {
         }
     }, [setUsers, allUsers, currentUser, friends, allUsersDataStatus]);
 
+    // useEffect(() => {
+    //     activeTab === TabsFollowers.FIND_THE_FOLLOWERS
+    //         ? users &&
+    //             setSelectedFriend(
+    //                 users.find((user) => user.id === selectedFriendId) || null,
+    //             )
+    //         : friends &&
+    //             setSelectedFriend(
+    //                 friends.find(
+    //                     (friend) => friend.userId === selectedFriendId,
+    //                 ) || null,
+    //             );
+    // }, [selectedFriendId, setSelectedFriend, users, activeTab, friends]);
+
     useEffect(() => {
-        activeTab === TabsFollowers.FIND_THE_FOLLOWERS
-            ? users &&
+        if (activeTab === TabsFollowers.FIND_THE_FOLLOWERS) {
+            if (users) {
                 setSelectedFriend(
                     users.find((user) => user.id === selectedFriendId) || null,
-                )
-            : friends &&
+                );
+            }
+        } else {
+            if (friends) {
                 setSelectedFriend(
                     friends.find(
                         (friend) => friend.userId === selectedFriendId,
                     ) || null,
                 );
+            }
+        }
     }, [selectedFriendId, setSelectedFriend, users, activeTab, friends]);
 
     useEffect(() => {
