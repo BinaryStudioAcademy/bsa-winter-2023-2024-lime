@@ -121,7 +121,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
 
     return (
         <div className="bg-secondary pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
-            <div className="flex items-center justify-between pb-12">
+            <div className="flex flex-col items-start justify-between gap-5 pb-12 xl:flex-row xl:items-center">
                 <div className="flex items-center">
                     <Avatar
                         size="lg"
