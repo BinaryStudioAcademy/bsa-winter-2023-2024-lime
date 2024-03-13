@@ -4,7 +4,6 @@ export {
     Metric,
 } from './bundles/achievements/achievements.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
-export { SenderType } from './bundles/chats/chats.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
@@ -17,6 +16,7 @@ export {
     GoalsApiPath,
     goalValidationSchema,
 } from './bundles/goals/goals.js';
+export { SenderType } from './bundles/messages/messages.js';
 export {
     type NotificationRequestDto,
     type NotificationResponseDto,

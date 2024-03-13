@@ -1,5 +1,6 @@
 import { type RelationMappings, Model } from 'objection';
 
+import { ChatAttributes, ChatModel } from '~/bundles/chats/chats.js';
 import { UserAttributes, UserModel } from '~/bundles/users/users.js';
 import {
     AbstractModel,
@@ -7,12 +8,7 @@ import {
 } from '~/common/database/database.js';
 import { type ValueOf } from '~/common/types/types.js';
 
-import { ChatModel } from './chat.model.js';
-import {
-    type SenderType,
-    ChatAttributes,
-    MessageAttributes,
-} from './enums/enums.js';
+import { type SenderType, MessageAttributes } from './enums/enums.js';
 
 class MessageModel extends AbstractModel {
     public 'chatId': number;

@@ -1,13 +1,16 @@
 import { type RelationMappings, Model } from 'objection';
 
+import {
+    MessageAttributes,
+    MessageModel,
+} from '~/bundles/messages/messages.js';
 import { UserAttributes, UserModel } from '~/bundles/users/users.js';
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { ChatAttributes, MessageAttributes } from './enums/enums.js';
-import { MessageModel } from './message.model.js';
+import { ChatAttributes } from './enums/enums.js';
 
 class ChatModel extends AbstractModel {
     public 'messages': MessageModel[];

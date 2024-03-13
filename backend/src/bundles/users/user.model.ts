@@ -1,6 +1,7 @@
 import { type RelationMappings, Model } from 'objection';
 
-import { ChatModel, MessageAttributes } from '~/bundles/chats/chats.js';
+import { ChatModel } from '~/bundles/chats/chats.js';
+import { MessageAttributes } from '~/bundles/messages/messages.js';
 import {
     OAuthInfoAttributes,
     OAuthModel,
