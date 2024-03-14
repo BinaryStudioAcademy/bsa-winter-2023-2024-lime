@@ -12,6 +12,7 @@ const ActivityWidgetColor = {
     YELLOW: 'yellow',
     MAGENTA: 'magenta',
     PURPLE: 'purple',
+    GREEN: 'green',
 } as const;
 
 const ActivityWidget = ({
@@ -40,6 +41,10 @@ const ActivityWidget = ({
         [ActivityWidgetColor.PURPLE]: {
             base: 'bg-lm-purple-200 bg-wave-purple',
             icon: 'bg-lm-purple-100',
+        },
+        [ActivityWidgetColor.GREEN]: {
+            base: 'bg-lm-mint-200 bg-wave-green',
+            icon: 'bg-lm-mint-100',
         },
     };
 

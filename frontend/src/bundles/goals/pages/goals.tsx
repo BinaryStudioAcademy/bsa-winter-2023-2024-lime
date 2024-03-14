@@ -49,17 +49,11 @@ const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const { dataStatus: dataStatusGoals, goals } = useAppSelector(
-        ({ goals }) => ({
-            dataStatus: goals.dataStatus,
-            goals: goals.goals,
-        }),
+        ({ goals }) => goals,
     );
 
     const { dataStatus: dataStatusAchievements, achievements } = useAppSelector(
-        ({ achievements }) => ({
-            dataStatus: achievements.dataStatus,
-            achievements: achievements.achievements,
-        }),
+        ({ achievements }) => achievements,
     );
 
     const { currentSubscription: isSubscribed } = useAppSelector(

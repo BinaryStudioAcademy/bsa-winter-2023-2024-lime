@@ -1,3 +1,5 @@
+import { googleFitService } from '~/bundles/google-fit/google-fit.js';
+import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -11,10 +13,10 @@ import {
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
-import { type Logger } from '~/common/logger/logger.js';
 
 import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath } from './enums/enums.js';
+import { type UserControllerProperties } from './types/types.js';
 
 /**
  * @swagger
@@ -82,17 +84,19 @@ import { UsersApiPath } from './enums/enums.js';
  */
 class UserController extends BaseController {
     private userService: UserService;
-
+    private oAuthRepository: OAuthRepository;
     private userBonusService: UserBonusService;
 
-    public constructor(
-        logger: Logger,
-        userService: UserService,
-        userBonusService: UserBonusService,
-    ) {
+    public constructor({
+        logger,
+        userService,
+        oAuthRepository,
+        userBonusService,
+    }: UserControllerProperties) {
         super(logger, ApiPath.USERS);
 
         this.userService = userService;
+        this.oAuthRepository = oAuthRepository;
         this.userBonusService = userBonusService;
 
         this.addRoute({
@@ -110,6 +114,18 @@ class UserController extends BaseController {
                 this.getCurrentUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.GET_BY_ID,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getUserById(
+                    options as ApiHandlerOptions<{
+                        params: { id: number };
                     }>,
                 ),
         });
@@ -201,18 +217,69 @@ class UserController extends BaseController {
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
      */
-    private getCurrentUser(
+    private async getCurrentUser(
         options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
-    ): ApiHandlerResponse {
+    ): Promise<ApiHandlerResponse> {
         const { user } = options;
-
+        const { id } = user;
+        const oAuthEntity = await this.oAuthRepository.find({
+            userId: id,
+            provider: OAuthProvider.GOOGLE_FIT,
+        });
+        if (oAuthEntity) {
+            void googleFitService.handleData(oAuthEntity);
+        }
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: user,
         };
     }
+    /**
+     * @swagger
+     * /api/v1/users/{id}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *        description: The ID of the user to retrieve
+     *        schema:
+     *          type: integer
+     *      tags:
+     *       - Users
+     *      description: Returns user by ID
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private async getUserById(
+        options: ApiHandlerOptions<{
+            params: { id: number };
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { params } = options;
+        const achievement = await this.userService.find({ id: params.id });
 
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: achievement,
+        };
+    }
     /**
      * @swagger
      * /api/v1/users/update:

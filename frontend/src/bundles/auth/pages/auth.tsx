@@ -1,4 +1,5 @@
 import authLogo from '~/assets/img/auth-logo.svg';
+import { IdentityProvider } from '~/bundles/auth/enums/enums.js';
 import {
     ForgotPasswordForm,
     Loader,
@@ -48,14 +49,22 @@ const Auth: React.FC = () => {
     );
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
-        ({ passwordReset }) => ({
-            dataStatus: passwordReset.dataStatus,
-        }),
+        ({ passwordReset }) => passwordReset,
     );
 
     const isLoading = dataStatus === DataStatus.PENDING;
 
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
+
+    const handleGoogleOAuth = useCallback((): void => {
+        const referralCode = searchParameters.get('referralCode');
+        void dispatch(
+            authActions.authorizeIdentity({
+                provider: IdentityProvider.GOOGLE,
+                referralCode: referralCode ?? null,
+            }),
+        );
+    }, [dispatch, searchParameters]);
 
     const handleSignInSubmit = useCallback(
         (payload: UserAuthSignInRequestDto): void => {
@@ -119,6 +128,7 @@ const Auth: React.FC = () => {
                         onSubmit={handleSignInSubmit}
                         onModalOpen={handleOpenModal}
                         isLoading={isLoading}
+                        handleOAuth={handleGoogleOAuth}
                     />
                 );
             }
@@ -127,6 +137,7 @@ const Auth: React.FC = () => {
                     <SignUpForm
                         onSubmit={handleSignUpSubmit}
                         isLoading={isLoading}
+                        handleOAuth={handleGoogleOAuth}
                     />
                 );
             }

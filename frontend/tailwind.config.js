@@ -17,9 +17,14 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
+            'lm-emerald': '#8cc751',
             'lm-cyan': '#05CFCF',
             'lm-light-blue': '#056ECF',
             'lm-light-yellow': '#f1ffca',
+            'lm-mint': {
+                100: '#90EE90',
+                200: '#50C878',
+            },
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -118,6 +123,7 @@ export default {
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
                 'wave-grey': 'url("~/assets/img/wave-grey.svg")',
+                'wave-green': 'url("~/assets/img/wave-green.svg")',
                 'progress-line': 'url("~/assets/img/progress-line.svg")',
             },
             borderRadius: {
