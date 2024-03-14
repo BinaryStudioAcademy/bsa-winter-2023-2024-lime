@@ -1,6 +1,8 @@
+export { type UserControllerProperties } from './user-controller-properties.type.js';
 export {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
     type ValueOf,

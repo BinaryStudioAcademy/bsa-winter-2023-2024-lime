@@ -1,6 +1,6 @@
-import { type UserAuthRequestDto } from 'shared';
+import { type UserAuthSignInRequestDto } from 'shared';
 
-type UserSignUpForm = UserAuthRequestDto & {
+type UserSignUpForm = UserAuthSignInRequestDto & {
     passwordConfirm: string;
 };
 

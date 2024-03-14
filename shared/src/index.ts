@@ -3,7 +3,11 @@ export {
     AchievementsApiPath,
     Metric,
 } from './bundles/achievements/achievements.js';
-export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export {
+    type AuthResponseDto,
+    type AuthSignUpRequestDto,
+    AuthApiPath,
+} from './bundles/auth/auth.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
@@ -56,8 +60,16 @@ export {
     SubscriptionValidationMessage,
 } from './bundles/subscriptions/subscriptions.js';
 export {
-    type UserAuthRequestDto,
+    type UserBonusCreateRequestDto,
+    type UserBonusGetAllItemResponseDto,
+    type UserBonusGetAllResponseDto,
+    UserBonusActionType,
+    UserBonusTransactionType,
+} from './bundles/user-bonuses/user-bonuses.js';
+export {
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,

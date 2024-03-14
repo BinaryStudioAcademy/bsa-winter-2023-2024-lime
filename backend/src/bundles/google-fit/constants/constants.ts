@@ -6,4 +6,3 @@ export {
     READ_LOCATION_SCOPE,
     WRITE_ACTIVITY_SCOPE,
 } from './google-fit-required-scopes.constant.js';
-export { MILLISECONDS_PER_SECOND } from 'shared';

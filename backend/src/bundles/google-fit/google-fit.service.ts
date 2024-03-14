@@ -15,9 +15,9 @@ import {
 } from '~/bundles/workouts/workouts.js';
 import { type Config } from '~/common/config/config.js';
 
-import { MILLISECONDS_PER_SECOND } from './constants/constants.js';
-import { Action, ApiPath } from './enums/enums.js';
-import { formatGoogleFitResponse, prepareActions } from './helpers/helpers.js';
+import { Action, ApiPath, GoogleFitDataSourceId } from './enums/enums.js';
+import { formatActivityName, prepareActions } from './helpers/helpers.js';
+import { type WorkoutRequestDto } from './types/types.js';
 
 class GoogleFitService {
     private config: Config;
@@ -45,74 +45,146 @@ class GoogleFitService {
         });
     }
 
+    private async getFitnessData(
+        dataSourceId: string,
+        datasetId: string,
+    ): Promise<number> {
+        const response = await this.fitness.users.dataSources.datasets.get({
+            userId: 'me',
+            dataSourceId,
+            datasetId,
+        });
+
+        const INITIAL_VALUE = 0;
+        const DECIMAL_PLACES = 2;
+
+        const result =
+            response.data.point
+                ?.map((p) => {
+                    if (!p.value) {
+                        return INITIAL_VALUE;
+                    }
+                    const [value] = p.value;
+                    if (value && value.intVal) {
+                        return value.intVal ?? INITIAL_VALUE;
+                    }
+                    return value?.fpVal ?? INITIAL_VALUE;
+                })
+                .reduce((a, b) => a + b, INITIAL_VALUE) ?? INITIAL_VALUE;
+
+        return Number.parseFloat(result.toFixed(DECIMAL_PLACES));
+    }
+
+    private async formatGoogleFitResponse(
+        sessions: fitness_v1.Schema$Session[],
+    ): Promise<WorkoutRequestDto[]> {
+        const result = await Promise.all(
+            sessions.map(async (session): Promise<WorkoutRequestDto | null> => {
+                const MILLIS_TO_NANOS = 1_000_000;
+                const startTimeMillis = session.startTimeMillis as string;
+                const endTimeMillis = session.endTimeMillis as string;
+                const startTimeNanos = +startTimeMillis * MILLIS_TO_NANOS;
+                const endTimeNanos = +endTimeMillis * MILLIS_TO_NANOS;
+                const datasetId = `${startTimeNanos}-${endTimeNanos}`;
+                const activityType = formatActivityName(
+                    session.activityType ?? null,
+                );
+
+                if (!activityType) {
+                    return null;
+                }
+
+                const [steps, calories, heartRate, distance, speed] =
+                    await Promise.all([
+                        this.getFitnessData(
+                            GoogleFitDataSourceId.STEPS,
+                            datasetId,
+                        ),
+                        this.getFitnessData(
+                            GoogleFitDataSourceId.CALORIES,
+                            datasetId,
+                        ),
+                        this.getFitnessData(
+                            GoogleFitDataSourceId.HEART_RATE,
+                            datasetId,
+                        ),
+                        this.getFitnessData(
+                            GoogleFitDataSourceId.DISTANCE,
+                            datasetId,
+                        ),
+                        this.getFitnessData(
+                            GoogleFitDataSourceId.SPEED,
+                            datasetId,
+                        ),
+                    ]);
+
+                return {
+                    activityId: session.id as string,
+                    distance,
+                    speed,
+                    provider: OAuthProvider.GOOGLE_FIT,
+                    heartRate,
+                    activityType,
+                    steps,
+                    kilocalories: calories,
+                    workoutStartedAt: new Date(+startTimeMillis),
+                    workoutEndedAt: new Date(+endTimeMillis),
+                };
+            }),
+        );
+
+        return result.filter(Boolean) as WorkoutRequestDto[];
+    }
+
     public async handleData(oAuthEntity: OAuthEntity): Promise<void> {
-        const isTokenInvalid = oAuthService.checkAccessToken(oAuthEntity);
+        const { userId, provider, refreshToken } = oAuthEntity.toObject();
 
-        const { accessToken, userId, provider, refreshToken } =
-            oAuthEntity.toObject();
-
-        const token = isTokenInvalid
-            ? await oAuthService.getAccessToken(provider, userId)
-            : accessToken;
+        const token = await oAuthService.getAccessToken(provider, userId);
 
         this.OAuth2.setCredentials({
             access_token: token,
             refresh_token: refreshToken,
         });
 
-        const SECONDS_IN_MINUTE = 60;
-        const MINUTES_IN_HOUR = 60;
-        const HOURS_IN_DAY = 24;
-        const DAYS_BACK = 30;
-
-        const startTime = new Date(
-            Date.now() -
-                DAYS_BACK *
-                    HOURS_IN_DAY *
-                    MINUTES_IN_HOUR *
-                    SECONDS_IN_MINUTE *
-                    MILLISECONDS_PER_SECOND,
-        ).toISOString();
+        const startTime = new Date();
+        startTime.setMonth(startTime.getMonth() - 1);
 
         const sessionsResponse = await this.fitness.users.sessions.list({
             userId: 'me',
-            startTime,
+            startTime: startTime.toISOString(),
         });
 
         const sessions = sessionsResponse.data.session ?? [];
-        const formattedResponse = await formatGoogleFitResponse(
-            sessions,
-            this.fitness,
-        );
+        const formattedResponse = await this.formatGoogleFitResponse(sessions);
         const workoutEntities = await this.workoutRepository.findAll({
             userId,
+            provider,
         });
         const workouts = workoutEntities.map((workout) =>
             workout.toNewObject(),
         );
         const preparedActions = prepareActions(workouts, formattedResponse);
 
-        for (const { action, data } of preparedActions) {
-            switch (action) {
-                case Action.CREATE: {
-                    await workoutService.create({ ...data, userId });
-                    break;
+        void Promise.all(
+            preparedActions.map(({ action, data }) => {
+                switch (action) {
+                    case Action.CREATE: {
+                        return workoutService.create({ ...data, userId });
+                    }
+                    case Action.UPDATE: {
+                        return workoutService.update(
+                            { activityId: data.activityId },
+                            { ...data, userId },
+                        );
+                    }
+                    case Action.DELETE: {
+                        return workoutService.delete({
+                            activityId: data.activityId,
+                        });
+                    }
                 }
-                case Action.UPDATE: {
-                    await workoutService.update(
-                        { activityId: data.activityId },
-                        { ...data, userId },
-                    );
-                    break;
-                }
-                case Action.DELETE: {
-                    await workoutService.delete({
-                        activityId: data.activityId,
-                    });
-                    break;
-                }
-            }
-        }
+            }),
+        );
     }
 }
 
