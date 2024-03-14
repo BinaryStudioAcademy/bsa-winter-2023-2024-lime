@@ -1,3 +1,4 @@
+export { type UserControllerProperties } from './user-controller-properties.type.js';
 export { type UserIdentityRequestDto } from './user-identity-request-dto.type.js';
 export {
     type UserAuthResponseDto,
