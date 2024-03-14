@@ -42,7 +42,12 @@ const GoalWidget = ({
             )}
         >
             <div>
-                <p className="font-heavybold text-lm-black-200 hidden text-[1.5rem] leading-7 md:block">
+                <p
+                    className={getValidClassNames(
+                        'font-heavybold text-lm-black-200 text-xl leading-7 md:text-[1.5rem]',
+                        hasAchievement ? 'hidden md:block' : '',
+                    )}
+                >
                     {title}
                 </p>
                 {subTitle && (

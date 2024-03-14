@@ -21,8 +21,10 @@ function ThemeSwitcher({
     className = defaultClassName,
 }: Properties): JSX.Element {
     const dispatch = useAppDispatch();
-    const { theme } = useAppSelector((state) => state.theme);
+
+    const { theme } = useAppSelector(({ theme }) => theme);
     const size = window.innerWidth < 768 ? 48 : 52;
+
 
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());

@@ -10,7 +10,7 @@ import { config } from '~/framework/config/config.js';
 const stripe = loadStripe(config.ENV.STRIPE.PUBLIC_KEY);
 
 const SubscriptionCheckout = (): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.theme);
+    const { theme } = useAppSelector(({ theme }) => theme);
     const { clientSecret } = useAppSelector(({ subscriptions }) => {
         return {
             clientSecret: subscriptions?.clientSecret as string,
