@@ -10,7 +10,10 @@ type Properties = {
     avatarUrl?: string | null;
 };
 
-const Navigation = ({ email, avatarUrl }: Properties): JSX.Element => {
+const Navigation: React.FC<Properties> = ({
+    email,
+    avatarUrl,
+}): JSX.Element => {
     return (
         <nav className={styles['navigation']}>
             <ul className={styles['menu-list']}>

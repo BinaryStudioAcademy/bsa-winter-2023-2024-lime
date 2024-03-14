@@ -4,11 +4,11 @@ import { Link } from '~/bundles/common/components/components.js';
 import { type AppRoute } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-type ViewAllButtonProperties = {
+type Properties = {
     to: ValueOf<typeof AppRoute>;
 };
 
-const ViewAllButton: React.FC<ViewAllButtonProperties> = ({ to }) => {
+const ViewAllButton: React.FC<Properties> = ({ to }) => {
     return (
         <Link to={to} className="flex items-center gap-1">
             <span className="text-action text-sm font-semibold leading-4">

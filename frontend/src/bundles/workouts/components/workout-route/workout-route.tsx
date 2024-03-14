@@ -5,7 +5,7 @@ type Properties = {
     workout: WorkoutResponseDto;
 };
 
-const WorkoutRoute = ({ workout }: Properties): JSX.Element => {
+const WorkoutRoute: React.FC<Properties> = ({ workout }): JSX.Element => {
     const { workoutEndedAt } = workout;
 
     return (

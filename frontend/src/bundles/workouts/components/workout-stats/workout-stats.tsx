@@ -12,7 +12,7 @@ type Properties = {
     workout: WorkoutResponseDto;
 };
 
-const WorkoutStats = ({ workout }: Properties): JSX.Element => {
+const WorkoutStats: React.FC<Properties> = ({ workout }): JSX.Element => {
     const {
         duration,
         distance,
