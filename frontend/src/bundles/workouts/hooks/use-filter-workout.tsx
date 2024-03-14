@@ -6,18 +6,21 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-import { type SingleValue } from '~/bundles/common/types/types.js';
+import {
+    type SingleValue,
+    type ValueOf,
+} from '~/bundles/common/types/types.js';
 
+import { filterSelectTypes } from '../enums/filter-select-types.enums.js';
 import {
     mapWorkoutActivitySelect,
     mapWorkoutYearSelect,
+    sortWorkoutsByDate,
 } from '../helpers/helpers.js';
 import { type UseFilterWorkout } from '../types/types.js';
 
 const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
-    const sortedItems = workouts.toSorted((a, b) => {
-        return b.workoutStartedAt.getTime() - a.workoutStartedAt.getTime();
-    });
+    const sortedItems = sortWorkoutsByDate(workouts);
     const [filteredWorkouts, setFilteredWorkouts] =
         useState<WorkoutResponseDto[]>(sortedItems);
     const [options, setOptions] = useState<UseFilterWorkout['options']>({
@@ -61,8 +64,11 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
     }, []);
 
     const manageOptions = useCallback(
-        (newValue: SingleValue<SelectOption>, filterType: string) => {
-            if (filterType === 'year') {
+        (
+            newValue: SingleValue<SelectOption>,
+            filterType: ValueOf<typeof filterSelectTypes>,
+        ) => {
+            if (filterType === filterSelectTypes.YEAR) {
                 setOptions((previousData) => ({
                     ...previousData,
                     year: {
@@ -93,7 +99,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
 
     const filterByYear = useCallback(
         (newValue: SingleValue<SelectOption>) => {
-            manageOptions(newValue, 'year');
+            manageOptions(newValue, filterSelectTypes.YEAR);
             if (!newValue) {
                 return sortedItems;
             }
@@ -110,7 +116,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
     const filterByActivity = useCallback(
         (newValue: SingleValue<SelectOption>) => {
             const hasSelectedYear = options.year.selected.value !== '';
-            manageOptions(newValue, 'activity');
+            manageOptions(newValue, filterSelectTypes.ACTIVITY);
             if (!newValue || newValue.value === '') {
                 if (hasSelectedYear) {
                     return workouts.filter(
@@ -164,10 +170,10 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
     const handleFilter = useCallback(
         (newValue: SingleValue<SelectOption>, filterType: string) => {
             const filtered =
-                filterType === 'year'
+                filterType === filterSelectTypes.YEAR
                     ? filterByYear(newValue)
                     : filterByActivity(newValue);
-            if (filtered && filterType === 'year') {
+            if (filtered && filterType === filterSelectTypes.YEAR) {
                 updateActivityOptions(filtered);
             }
             setFilteredWorkouts(filtered);
