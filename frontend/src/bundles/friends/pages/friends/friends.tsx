@@ -12,23 +12,49 @@ import {
     TabContent,
     Tabs,
 } from '~/bundles/friends/components/components.js';
-import { TabsFollowers } from '~/bundles/friends/enums/enums.js';
+import {
+    LIMIT,
+    PAGE,
+    TabsFollowers,
+} from '~/bundles/friends/constants/constants.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
 import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js';
 
 const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
-
     const tabs = [TabsFollowers.FIND_FOLLOWINGS, TabsFollowers.MY_FOLLOWINGS];
+    const [limit, setLimit] = useState<number>(LIMIT);
+
     const [selectedCard, setSelectedCard] =
         useState<UserFollowingsResponseDto | null>(null);
-
     const [activeTab, setActiveTab] = useState<string>(
         TabsFollowers.FIND_FOLLOWINGS,
     );
 
     const users = useAppSelector((state) => state.friends.users);
-    const loading = useAppSelector((state) => state.friends.dataStatus);
+    const isLoading = useAppSelector((state) => state.friends.dataStatus);
+    const totalCount = useAppSelector((state) => state.friends.totalCount);
+
+    const handleLoadMore = useCallback((): void => {
+        setLimit(limit + LIMIT);
+        const loadUsers = async (): Promise<void> => {
+            activeTab === TabsFollowers.FIND_FOLLOWINGS &&
+                (await dispatch(
+                    friendsActions.getNotFollowed({
+                        page: PAGE.toString(),
+                        limit: (limit + LIMIT).toString(),
+                    }),
+                ));
+            activeTab === TabsFollowers.MY_FOLLOWINGS &&
+                (await dispatch(
+                    friendsActions.getFollowings({
+                        page: PAGE.toString(),
+                        limit: (limit + LIMIT).toString(),
+                    }),
+                ));
+        };
+        void loadUsers();
+    }, [setLimit, limit, dispatch, activeTab]);
 
     const handleSelectCard = useCallback(
         (user: UserFollowingsResponseDto | null): void => {
@@ -39,10 +65,11 @@ const Friends: React.FC = () => {
 
     const handleTabClick = useCallback(
         (tab: string): void => {
+            setLimit(LIMIT);
             setActiveTab(tab);
             setSelectedCard(null);
         },
-        [setActiveTab, setSelectedCard],
+        [setActiveTab, setSelectedCard, setLimit],
     );
 
     const handleAddFollowing = useCallback(
@@ -72,12 +99,22 @@ const Friends: React.FC = () => {
     useEffect(() => {
         const loadUsers = async (): Promise<void> => {
             activeTab === TabsFollowers.FIND_FOLLOWINGS &&
-                (await dispatch(friendsActions.getNotFollowed()));
+                (await dispatch(
+                    friendsActions.getNotFollowed({
+                        page: PAGE.toString(),
+                        limit: limit.toString(),
+                    }),
+                ));
             activeTab === TabsFollowers.MY_FOLLOWINGS &&
-                (await dispatch(friendsActions.getFollowings()));
+                (await dispatch(
+                    friendsActions.getFollowings({
+                        page: PAGE.toString(),
+                        limit: limit.toString(),
+                    }),
+                ));
         };
         void loadUsers();
-    }, [dispatch, activeTab]);
+    }, [dispatch, activeTab, limit]);
 
     return (
         <section className="relative flex flex-col gap-5 whitespace-normal">
@@ -86,18 +123,20 @@ const Friends: React.FC = () => {
                 handleTabClick={handleTabClick}
                 activeTab={activeTab}
             />
-            {loading === DataStatus.FULFILLED ? (
+            {isLoading === DataStatus.FULFILLED ? (
                 <div
-                    className={`flex flex-wrap items-start gap-5 ${selectedCard?.id ? 'w-[calc(100%-354px)]' : 'w-full'}`}
+                    className={`flex flex-wrap items-start gap-5 ${selectedCard?.userId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
                 >
                     {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
                         <TabContent
                             users={users}
                             isFollowed={false}
-                            selectedCardId={selectedCard?.id}
+                            selectedCardId={selectedCard?.userId}
                             selectCard={handleSelectCard}
                             onToggleFollow={handleAddFollowing}
                             noUsersText={'No user found to follow.'}
+                            totalCount={totalCount ?? 0}
+                            loadMore={handleLoadMore}
                         />
                     )}
 
@@ -105,10 +144,12 @@ const Friends: React.FC = () => {
                         <TabContent
                             users={users}
                             isFollowed={true}
-                            selectedCardId={selectedCard?.id}
+                            selectedCardId={selectedCard?.userId}
                             selectCard={handleSelectCard}
                             onToggleFollow={handleRemoveFollowing}
                             noUsersText={'You do not follow anyone yet.'}
+                            totalCount={totalCount}
+                            loadMore={handleLoadMore}
                         />
                     )}
 
@@ -123,13 +164,15 @@ const Friends: React.FC = () => {
                     )}
                 </div>
             ) : (
-                <Loader />
+                <div className={'flex h-[70vh]'}>
+                    <Loader isOverflow={true} />
+                </div>
             )}
 
             {selectedCard && (
                 <aside className="bg-secondary border-buttonText fixed right-[6px] top-[88px] ml-4 h-full w-[354px] border-l-2 pb-4 pl-4 pr-4 pt-8">
                     <FriendDetails
-                        id={selectedCard.id}
+                        id={selectedCard.userId}
                         isActive={true}
                         name={selectedCard.fullName || selectedCard.email}
                         avatarUrl={selectedCard.avatarUrl}

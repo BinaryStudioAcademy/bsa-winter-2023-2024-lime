@@ -1,3 +1,5 @@
+import { MAX_NUMBER_OF_USERS } from '~/bundles/users/constants/constants.js';
+import { type PaginationParameters } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -132,6 +134,7 @@ class UserController extends BaseController {
                 this.getFollowings(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
+                        query: PaginationParameters;
                     }>,
                 ),
         });
@@ -144,6 +147,7 @@ class UserController extends BaseController {
                 this.getNotFollowed(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
+                        query: PaginationParameters;
                     }>,
                 ),
         });
@@ -443,15 +447,38 @@ class UserController extends BaseController {
      */
 
     private async getFollowings(
-        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            query: PaginationParameters;
+        }>,
     ): Promise<ApiHandlerResponse> {
-        const { user } = options;
+        const { user, query } = options;
+        const { page = '1', limit = '10' } = query;
+
         try {
-            const friends = await this.userService.getFollowings(user.id);
+            const offset = ((+page - 1) * +limit).toString();
+            const totalCount = await this.userService.getFollowings(
+                user.id,
+                '0',
+                MAX_NUMBER_OF_USERS,
+            );
+            const friends = await this.userService.getFollowings(
+                user.id,
+                offset,
+                limit,
+            );
+
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
-                payload: friends,
+                payload: {
+                    users: friends,
+                    query: {
+                        page: +page,
+                        limit: +limit,
+                        totalCount: totalCount?.length,
+                    },
+                },
             };
         } catch (error) {
             throw new HttpError({
@@ -487,15 +514,37 @@ class UserController extends BaseController {
      */
 
     private async getNotFollowed(
-        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            query: PaginationParameters;
+        }>,
     ): Promise<ApiHandlerResponse> {
-        const { user } = options;
+        const { user, query } = options;
+        const { page = '1', limit = '10' } = query;
+
         try {
-            const notFriends = await this.userService.getNotFollowed(user.id);
+            const offset = ((+page - 1) * +limit).toString();
+            const totalCount = await this.userService.getNotFollowed(
+                user.id,
+                '0',
+                MAX_NUMBER_OF_USERS,
+            );
+            const notFriends = await this.userService.getNotFollowed(
+                user.id,
+                offset,
+                limit,
+            );
             return {
                 type: ApiHandlerResponseType.DATA,
                 status: HttpCode.OK,
-                payload: notFriends,
+                payload: {
+                    users: notFriends,
+                    query: {
+                        page: +page,
+                        limit: +limit,
+                        totalCount: totalCount?.length,
+                    },
+                },
             };
         } catch (error) {
             throw new HttpError({

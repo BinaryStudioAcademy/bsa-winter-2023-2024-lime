@@ -17,6 +17,7 @@ const AppRoute = {
     PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
     NOT_FOUND: '*',
     PROFILE: '/profile/settings',
+    PROFILE_PUBLIC: '/profile/public',
     FRIENDS: '/friends',
 } as const;
 

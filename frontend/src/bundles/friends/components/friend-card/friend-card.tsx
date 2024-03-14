@@ -17,7 +17,6 @@ type FriendProperties = {
     user: UserFollowingsResponseDto;
     selectCard: (user: UserFollowingsResponseDto | null) => void;
     onToggleFollow: (id: number) => void;
-    // message: (id: number) => void;
 };
 
 const FriendCard = ({
@@ -27,23 +26,18 @@ const FriendCard = ({
     user,
     selectCard,
     onToggleFollow,
-    // message,
 }: FriendProperties): JSX.Element => {
-    const { id, fullName, email, avatarUrl } = user;
+    const { userId, fullName, email, avatarUrl } = user;
     const handleOnToggleFollow = useCallback(() => {
         if (isCardSelected) {
             selectCard(null);
         }
-        onToggleFollow(id);
-    }, [onToggleFollow, id, isCardSelected, selectCard]);
+        onToggleFollow(userId);
+    }, [onToggleFollow, userId, isCardSelected, selectCard]);
 
     const handleSelectCard = useCallback((): void => {
         selectCard(user);
     }, [selectCard, user]);
-
-    // const handleSendMessage = useCallback(() => {
-    //     messageFriend(id);
-    // }, [messageFriend, id]);
 
     return (
         <div
@@ -68,11 +62,9 @@ const FriendCard = ({
             </div>
             <div className="bg-primary flex flex-col gap-2 rounded-b-xl p-4">
                 <div className="flex items-center gap-2">
-                    {isActive ? (
-                        <div className="bg-buttonPrimary h-2 w-2 rounded-[50%]" />
-                    ) : (
-                        <div className="bg-buttonTertiary h-2 w-2 rounded-[50%]" />
-                    )}
+                    <div
+                        className={`${isActive ? 'bg-buttonPrimary' : 'bg-buttonTertiary'} h-2 w-2 rounded-[50%]`}
+                    />
 
                     <h3 className="text-primary font-extrabold sm:text-xs lg:text-[1rem]">
                         {fullName || email}
@@ -90,7 +82,6 @@ const FriendCard = ({
                     </div>
 
                     <button
-                        // onClick={handleSendMessage}
                         className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10`}
                         disabled={!isFollowed}
                         title={

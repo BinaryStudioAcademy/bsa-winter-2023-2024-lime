@@ -1,3 +1,4 @@
+import { MAX_NUMBER_OF_USERS } from '~/bundles/users/constants/constants.js';
 import { type UserFollowingsResponseDto } from '~/bundles/users/types/types.js';
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
@@ -231,6 +232,8 @@ class UserRepository implements Repository {
 
     public async getFollowings(
         userId: number,
+        offset: string,
+        limit: string,
     ): Promise<UserFollowingsResponseDto[] | null> {
         try {
             const friends = await this.userModel
@@ -247,7 +250,9 @@ class UserRepository implements Repository {
                     'u.id',
                     `ud.${USER_ID}`,
                 )
-                .where(`uf.${USER_ID}`, userId);
+                .where(`uf.${USER_ID}`, userId)
+                .offset(Number(offset))
+                .limit(Number(limit));
             return friends as unknown as UserFollowingsResponseDto[];
         } catch (error) {
             throw new Error(`Error fetching friends: ${error}`);
@@ -256,36 +261,45 @@ class UserRepository implements Repository {
 
     public async getNotFollowed(
         userId: number,
+        offset: string,
+        limit: string,
     ): Promise<UserFollowingsResponseDto[] | null> {
         try {
             const allUsers = await this.userModel
                 .query()
                 .whereNot('id', userId)
                 .withGraphFetched(USER_DETAILS_GRAPH);
-            const friends = await this.getFollowings(userId);
-            const followingIds =
-                friends && friends.map((friend) => friend.userId);
+
+            const friends = await this.getFollowings(
+                userId,
+                '0',
+                MAX_NUMBER_OF_USERS,
+            );
+            const followingIds = friends?.map((friend) => friend.userId) || [];
 
             const nonFriendUsers = allUsers.filter(
-                (user) => followingIds && !followingIds.includes(user.id),
+                (user) => !followingIds.includes(user.id) && user.id !== userId,
             );
 
-            const nonFriendUsersDetail = nonFriendUsers.map((user) => {
-                const { userDetails, ...userInfo } = user;
-                return {
-                    ...userInfo,
-                    email: user.email,
-                    fullName: userDetails.fullName,
-                    avatarUrl: userDetails.avatarUrl,
-                    username: userDetails.username,
-                    dateOfBirth: userDetails.dateOfBirth,
-                    weight: userDetails.weight,
-                    height: userDetails.height,
-                    gender: userDetails.gender,
-                };
-            });
+            const paginatedUsers = nonFriendUsers
+                .slice(Number(offset), Number(offset) + Number(limit))
+                .map((user) => {
+                    const { userDetails, ...userInfo } = user;
+                    return {
+                        ...userInfo,
+                        email: user.email,
+                        userId: userDetails.userId,
+                        fullName: userDetails.fullName,
+                        avatarUrl: userDetails.avatarUrl,
+                        username: userDetails.username,
+                        dateOfBirth: userDetails.dateOfBirth,
+                        weight: userDetails.weight,
+                        height: userDetails.height,
+                        gender: userDetails.gender,
+                    };
+                });
 
-            return nonFriendUsersDetail as unknown as UserFollowingsResponseDto[];
+            return paginatedUsers as UserFollowingsResponseDto[];
         } catch (error) {
             throw new Error(`Error fetching non-friend users: ${error}`);
         }

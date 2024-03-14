@@ -14,11 +14,13 @@ import {
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     users: UserFollowingsResponseDto[];
+    totalCount: number | undefined;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     users: [],
+    totalCount: 0,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -31,7 +33,8 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(getNotFollowed.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.users = action.payload;
+            state.users = action.payload.users;
+            state.totalCount = action.payload.query.totalCount ?? 0;
         });
         builder.addCase(getNotFollowed.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
@@ -42,21 +45,24 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(getFollowings.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.users = action.payload;
+            state.users = action.payload.users;
+            state.totalCount = action.payload.query.totalCount ?? 0;
         });
         builder.addCase(getFollowings.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
 
         builder.addCase(addFollowing.fulfilled, (state, action) => {
+            state.totalCount && (state.totalCount -= 1);
             state.users = state.users.filter(
-                (following) => following.id !== action.payload.id,
+                (following) => following.userId !== action.payload.userId,
             );
         });
 
         builder.addCase(removeFollowing.fulfilled, (state, action) => {
+            state.totalCount && (state.totalCount -= 1);
             state.users = state.users.filter(
-                (following) => following.id !== action.payload,
+                (following) => following.userId !== action.payload,
             );
         });
     },

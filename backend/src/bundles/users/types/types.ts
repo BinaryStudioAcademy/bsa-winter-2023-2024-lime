@@ -1,4 +1,5 @@
 export {
+    type PaginationParameters,
     type UserAuthRequestDto,
     type UserAuthResponseDto,
     type UserFollowingsRequestDto,

@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
+    type PaginationParameters,
     type UserFollowingsRequestDto,
     type UserFollowingsResponseDto,
 } from '~/bundles/friends/types/types.js';
@@ -9,21 +10,21 @@ import {
 import { name as sliceName } from './slice.js';
 
 const getNotFollowed = createAsyncThunk<
-    UserFollowingsResponseDto[],
-    undefined,
+    { users: UserFollowingsResponseDto[]; query: PaginationParameters },
+    PaginationParameters,
     AsyncThunkConfig
->(`${sliceName}/get-not-followed`, async (_, { extra }) => {
+>(`${sliceName}/get-not-followed`, async (paginationPayload, { extra }) => {
     const { friendsApi } = extra;
-    return await friendsApi.getNotFollowed();
+    return await friendsApi.getNotFollowed(paginationPayload);
 });
 
 const getFollowings = createAsyncThunk<
-    UserFollowingsResponseDto[],
-    undefined,
+    { users: UserFollowingsResponseDto[]; query: PaginationParameters },
+    PaginationParameters,
     AsyncThunkConfig
->(`${sliceName}/get-followings`, async (_, { extra }) => {
+>(`${sliceName}/get-followings`, async (paginationPayload, { extra }) => {
     const { friendsApi } = extra;
-    return await friendsApi.getFollowings();
+    return await friendsApi.getFollowings(paginationPayload);
 });
 
 const addFollowing = createAsyncThunk<

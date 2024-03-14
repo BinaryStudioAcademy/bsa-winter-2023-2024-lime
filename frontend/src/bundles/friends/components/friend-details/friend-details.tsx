@@ -1,15 +1,18 @@
-import { UserCircleIcon } from '@heroicons/react/24/solid';
+import { ChevronRightIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
 import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
 import { Avatar, Card } from '~/bundles/common/components/components.js';
-import { ViewAllButton } from '~/bundles/common/components/info-section/components/view-all-button/view-all-button.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { formatDateString } from '~/bundles/common/helpers/format-date-string/format-date-string.helper.js';
-import { validateImageUrl } from '~/bundles/common/helpers/validate-image-url/validate-image-url.helper.js';
+import {
+    formatDateString,
+    validateImageUrl,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
+    useCallback,
     useEffect,
+    useNavigate,
 } from '~/bundles/common/hooks/hooks.js';
 
 type Properties = {
@@ -26,10 +29,15 @@ const FriendDetails = ({
     avatarUrl,
 }: Properties): JSX.Element => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { achievements } = useAppSelector(({ achievements }) => ({
         achievements: achievements.achievements,
     }));
+
+    const handleMoreInfoClick = useCallback((): void => {
+        void navigate(`${AppRoute.PROFILE_PUBLIC}/${id}`);
+    }, [navigate, id]);
 
     useEffect(() => {
         void dispatch(achievementsActions.getAchievementsByUserId(id));
@@ -38,11 +46,9 @@ const FriendDetails = ({
     return (
         <div className={'flex flex-col items-center justify-center '}>
             <div className="mb-4 flex items-center gap-2">
-                {isActive ? (
-                    <div className="bg-buttonPrimary h-2 w-2 rounded-[50%]" />
-                ) : (
-                    <div className="bg-buttonTertiary h-2 w-2 rounded-[50%]" />
-                )}
+                <div
+                    className={`${isActive ? 'bg-buttonPrimary' : 'bg-buttonTertiary'} bg-buttonPrimary h-2 w-2 rounded-[50%]`}
+                />
 
                 <h3 className="text-primary font-heading font-semibold sm:text-xs lg:text-[1rem]">
                     {name}
@@ -53,7 +59,7 @@ const FriendDetails = ({
                 {avatarUrl && validateImageUrl(avatarUrl) ? (
                     <Avatar
                         size="xl"
-                        email={name || ''}
+                        email={name ?? ''}
                         avatarUrl={avatarUrl}
                     />
                 ) : (
@@ -67,7 +73,16 @@ const FriendDetails = ({
                 <h3 className="text-lm-grey-200 text-xl font-extrabold leading-6">
                     Achievements
                 </h3>
-                <ViewAllButton to={AppRoute.PROFILE} />
+                <div
+                    onClick={handleMoreInfoClick}
+                    role="presentation"
+                    className="flex cursor-pointer items-center gap-1"
+                >
+                    <span className="text-action text-sm font-semibold leading-4">
+                        More info
+                    </span>
+                    <ChevronRightIcon className="text-action h-3 w-3" />
+                </div>
             </div>
 
             {achievements.length > 0 && (

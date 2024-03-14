@@ -5,6 +5,7 @@ import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
 import {
+    type PaginationParameters,
     type UserFollowingsRequestDto,
     type UserFollowingsResponseDto,
 } from './types/types.js';
@@ -19,9 +20,18 @@ class FriendsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
         super({ path: ApiPath.USERS, baseUrl, http, storage });
     }
-    public async getNotFollowed(): Promise<UserFollowingsResponseDto[]> {
+
+    public async getNotFollowed(
+        payload: PaginationParameters,
+    ): Promise<{
+        users: UserFollowingsResponseDto[];
+        query: PaginationParameters;
+    }> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.NOT_FOLLOWED, {}),
+            this.getFullEndpoint(
+                `${UsersApiPath.NOT_FOLLOWED}?page=${payload.page}&limit=${payload.limit}`,
+                {},
+            ),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
@@ -29,12 +39,23 @@ class FriendsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<UserFollowingsResponseDto[]>();
+        return await response.json<{
+            users: UserFollowingsResponseDto[];
+            query: PaginationParameters;
+        }>();
     }
 
-    public async getFollowings(): Promise<UserFollowingsResponseDto[]> {
+    public async getFollowings(
+        payload: PaginationParameters,
+    ): Promise<{
+        users: UserFollowingsResponseDto[];
+        query: PaginationParameters;
+    }> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.FOLLOWINGS, {}),
+            this.getFullEndpoint(
+                `${UsersApiPath.FOLLOWINGS}?page=${payload.page}&limit=${payload.limit}`,
+                {},
+            ),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
@@ -42,7 +63,10 @@ class FriendsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json<UserFollowingsResponseDto[]>();
+        return await response.json<{
+            users: UserFollowingsResponseDto[];
+            query: PaginationParameters;
+        }>();
     }
 
     public async addFollowing(

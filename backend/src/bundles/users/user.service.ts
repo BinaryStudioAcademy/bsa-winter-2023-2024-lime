@@ -119,9 +119,15 @@ class UserService implements Service {
 
     public async getFollowings(
         userId: number,
+        offset: string,
+        limit: string,
     ): Promise<UserFollowingsResponseDto[] | null> {
         try {
-            return await this.userRepository.getFollowings(userId);
+            return await this.userRepository.getFollowings(
+                userId,
+                offset,
+                limit,
+            );
         } catch (error) {
             throw new Error(`Error occurred while fetching friends: ${error}`);
         }
@@ -129,9 +135,15 @@ class UserService implements Service {
 
     public async getNotFollowed(
         userId: number,
+        offset: string,
+        limit: string,
     ): Promise<UserFollowingsResponseDto[] | null> {
         try {
-            return await this.userRepository.getNotFollowed(userId);
+            return await this.userRepository.getNotFollowed(
+                userId,
+                offset,
+                limit,
+            );
         } catch (error) {
             throw new Error(
                 `Error occurred while fetching not friends: ${error}`,

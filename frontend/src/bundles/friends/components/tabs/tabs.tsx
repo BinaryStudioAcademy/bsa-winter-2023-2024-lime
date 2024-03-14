@@ -19,14 +19,14 @@ const Tabs = ({ tabs, handleTabClick, activeTab }: Properties): JSX.Element => {
     return (
         <div
             className={
-                'text-secondary bg-primary rounded-34 flex max-w-[320px] justify-between font-semibold leading-4 '
+                'text-secondary bg-primary rounded-34 flex max-w-max items-center justify-between font-semibold leading-4 '
             }
         >
             {tabs.map((tab) => (
                 <div
                     key={tab}
                     onClick={handleClick(tab)}
-                    className={`transition-bg rounded-34 w-[160px] cursor-pointer whitespace-nowrap px-4 py-3 text-center duration-300 ${tab === activeTab ? 'bg-tertiary' : ''}`}
+                    className={`transition-bg rounded-34 flex w-[120px] cursor-pointer items-center justify-center self-stretch px-4 py-3 text-center duration-300 sm:w-[140px] md:w-[160px] lg:w-[180px] ${tab === activeTab ? 'bg-tertiary' : ''}`}
                     role="presentation"
                 >
                     {tab}
