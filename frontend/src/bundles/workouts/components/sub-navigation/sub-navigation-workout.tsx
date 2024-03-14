@@ -4,13 +4,11 @@ import { useFilterWorkout } from '../../hooks/use-filter-workout.js';
 import { SubNavigationFilter } from './components/sub-navigation-filter.js';
 import { SubNavigationWorkoutsList } from './components/sub-navigation-list.js';
 
-type SubNavigationProperties = {
+type Properties = {
     title?: string;
 };
 
-const SubNavigationWorkout = ({
-    title,
-}: SubNavigationProperties): JSX.Element => {
+const SubNavigationWorkout = ({ title }: Properties): JSX.Element => {
     const workouts = useAppSelector(({ workouts }) => workouts.workouts);
     const { handles, options, filteredWorkouts } = useFilterWorkout(workouts);
 

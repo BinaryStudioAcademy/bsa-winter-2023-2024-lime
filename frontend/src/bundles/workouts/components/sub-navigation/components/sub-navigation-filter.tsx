@@ -8,7 +8,7 @@ type Options = {
     selected: SelectOption;
 };
 
-type SubNavigationFilterProperties = {
+type Properties = {
     options: {
         year: Options;
         activity: Options;
@@ -22,10 +22,7 @@ type SubNavigationFilterProperties = {
     };
 };
 
-const SubNavigationFilter = ({
-    options,
-    handles,
-}: SubNavigationFilterProperties): JSX.Element => {
+const SubNavigationFilter = ({ options, handles }: Properties): JSX.Element => {
     const { handleFilter, handleReset } = handles;
 
     const { control, errors } = useAppForm({

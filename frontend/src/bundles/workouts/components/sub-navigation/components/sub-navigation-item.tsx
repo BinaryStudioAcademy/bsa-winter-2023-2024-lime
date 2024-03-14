@@ -9,13 +9,11 @@ import {
 } from '~/bundles/common/helpers/helpers.js';
 import { useLocation } from '~/bundles/common/hooks/hooks.js';
 
-type SubNavigationItemWorkoutProperties = {
+type Properties = {
     item: WorkoutResponseDto;
 };
 
-const SubNavigationItemWorkout = ({
-    item,
-}: SubNavigationItemWorkoutProperties): JSX.Element => {
+const SubNavigationItemWorkout = ({ item }: Properties): JSX.Element => {
     const { activityType, id, workoutStartedAt, provider } = item;
     const { pathname } = useLocation();
     const isActive = id.toString() === pathname.split('/').pop();
