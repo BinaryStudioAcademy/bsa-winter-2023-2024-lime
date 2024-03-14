@@ -16,17 +16,22 @@ import {
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
 import { SubscriptionModel } from '../subscriptions/subscription.model.js';
 import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
+import {
+    UserBonusAttributes,
+    UserBonusModel,
+} from '../user-bonuses/user-bonuses.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
 class UserModel extends AbstractModel {
     public 'email': string;
 
-    public 'passwordHash': string;
+    public 'passwordHash': string | null;
 
     public 'stripeCustomerId': string;
 
     public 'userDetails': UserDetailsModel;
+
     public 'workouts': WorkoutModel;
 
     public 'userAchievements': UserAchievementModel;
@@ -34,6 +39,8 @@ class UserModel extends AbstractModel {
     public 'userOAuthInfo': OAuthModel;
 
     public 'userOAuthState': OAuthStateModel;
+
+    public 'userBonus': UserBonusModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -71,6 +78,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.OAUTH_STATE}.${OAuthStateAttributes.ID}`,
+                },
+            },
+            userBonus: {
+                relation: Model.HasManyRelation,
+                modelClass: UserBonusModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_BONUSES}.${UserBonusAttributes.USER_ID}`,
                 },
             },
             userAchievements: {

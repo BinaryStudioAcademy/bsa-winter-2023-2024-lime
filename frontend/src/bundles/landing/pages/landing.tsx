@@ -36,7 +36,7 @@ import {
 import { FEATURES, TESTIMONIALS } from '../constants/constants.js';
 
 const Landing = (): JSX.Element => {
-    const { theme } = useAppSelector((state) => state.theme);
+    const { theme } = useAppSelector(({ theme }) => theme);
     const { user } = useAppSelector(({ auth }) => auth);
     const dispatch = useAppDispatch();
 

@@ -112,6 +112,19 @@ class WorkoutController extends BaseController {
             isProtected: true,
             handler: (options) => this.findAll(options),
         });
+
+        this.addRoute({
+            path: WorkoutsApiPath.USER_ID,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.findByUserId(
+                    options as ApiHandlerOptions<{
+                        params: { userId: number };
+                    }>,
+                ),
+        });
+
         this.addRoute({
             path: WorkoutsApiPath.ROOT,
             method: 'POST',
@@ -475,7 +488,53 @@ class WorkoutController extends BaseController {
             ),
         };
     }
+    /**
+     * @swagger
+     * /api/v1/workouts/user/{userId}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: userId
+     *        required: true
+     *        description: The ID of the user whose workouts should be retrieved
+     *        schema:
+     *          type: integer
+     *      tags:
+     *       - Workouts
+     *      description: Returns workouts by user ID for the current month
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/schemas/Workout'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private async findByUserId(
+        options: ApiHandlerOptions<{ params: { userId: number } }>,
+    ): Promise<ApiHandlerResponse> {
+        const { userId } = options.params;
 
+        const result =
+            await this.workoutService.findAllByUserIdAndCurrentMonth(userId);
+
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: result,
+        };
+    }
     /**
      * @swagger
      * /api/v1/workouts/{id}:
