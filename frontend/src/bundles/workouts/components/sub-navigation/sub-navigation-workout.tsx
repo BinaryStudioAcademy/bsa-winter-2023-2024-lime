@@ -1,9 +1,6 @@
-import { useAppSelector, useState } from '~/bundles/common/hooks/hooks.js';
-import {
-    mapWorkoutActivitySelect,
-    mapWorkoutYearSelect,
-} from '~/bundles/workouts/helpers/helpers.js';
+import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
 
+import { useFilterWorkout } from '../../hooks/use-filter-workout.js';
 import { SubNavigationFilter } from './components/sub-navigation-filter.js';
 import { SubNavigationWorkoutsList } from './components/sub-navigation-list.js';
 
@@ -15,10 +12,7 @@ const SubNavigationWorkout = ({
     title,
 }: SubNavigationProperties): JSX.Element => {
     const workouts = useAppSelector(({ workouts }) => workouts.workouts);
-    const [localItems, setItems] = useState([...workouts]);
-    const sortedItems = localItems.toSorted((a, b) => {
-        return b.workoutStartedAt.getTime() - a.workoutStartedAt.getTime();
-    });
+    const { handles, options, filteredWorkouts } = useFilterWorkout(workouts);
 
     return (
         <div
@@ -31,13 +25,8 @@ const SubNavigationWorkout = ({
                     {title}
                 </h1>
             )}
-            <SubNavigationFilter
-                items={sortedItems}
-                setItems={setItems}
-                mapWorkoutActivitySelect={mapWorkoutActivitySelect}
-                mapWorkoutYearSelect={mapWorkoutYearSelect}
-            />
-            <SubNavigationWorkoutsList items={sortedItems} />
+            <SubNavigationFilter options={options} handles={handles} />
+            <SubNavigationWorkoutsList items={filteredWorkouts} />
         </div>
     );
 };
