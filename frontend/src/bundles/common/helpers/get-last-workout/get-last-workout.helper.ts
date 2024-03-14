@@ -11,7 +11,7 @@ const getLastWorkout = (
         return workouts[0] as WorkoutResponseDto;
     }
 
-    const sortedWorkouts = [...workouts].toSorted((a, b) => {
+    const sortedWorkouts = workouts.toSorted((a, b) => {
         return (
             new Date(b.workoutStartedAt).getTime() -
             new Date(a.workoutStartedAt).getTime()
