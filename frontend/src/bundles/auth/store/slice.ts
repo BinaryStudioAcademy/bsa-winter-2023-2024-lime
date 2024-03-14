@@ -17,13 +17,17 @@ type State = {
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     user: null,
-    isRefreshing: false,
+    isRefreshing: true,
 };
 
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'auth',
-    reducers: {},
+    reducers: {
+        stopRefreshing(state) {
+            state.isRefreshing = false;
+        }
+    },
     extraReducers(builder) {
         builder.addCase(signUp.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;

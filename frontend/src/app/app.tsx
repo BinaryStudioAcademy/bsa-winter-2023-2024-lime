@@ -9,13 +9,10 @@ import {
     useAppSelector,
     useEffect,
     useNavigate,
-    useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
 const App: React.FC = () => {
-    const [initialRefreshing, setInitialRefreshing] = useState(true);
-
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -36,13 +33,15 @@ const App: React.FC = () => {
 
             if (token) {
                 await dispatch(authActions.refreshUser());
+            } else {
+                dispatch(authActions.stopRefreshing());
             }
         };
 
-        void refreshUser().finally(() => setInitialRefreshing(false));
+        void refreshUser();
     }, [dispatch]);
 
-    if (initialRefreshing || isRefreshing) {
+    if (isRefreshing) {
         return <Loader isOverflow />;
     }
     return <RouterOutlet />;
