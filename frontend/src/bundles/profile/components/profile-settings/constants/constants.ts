@@ -8,6 +8,7 @@ const DEFAULT_UPDATE_PROFILE_PAYLOAD: UserUpdateProfileRequestDto = {
     dateOfBirth: '',
     weight: '',
     height: '',
+    location: '',
     gender: Gender.MALE,
 };
 

@@ -20,6 +20,7 @@ type State = {
     user: UserAuthResponseDto | null;
     isRefreshing: boolean;
     updateProfile: {
+        dataStatus: ValueOf<typeof DataStatus>;
         avatarUrl: string | null;
     };
 };
@@ -29,6 +30,7 @@ const initialState: State = {
     user: null,
     isRefreshing: false,
     updateProfile: {
+        dataStatus: DataStatus.IDLE,
         avatarUrl: null,
     },
 };
@@ -86,24 +88,24 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(updateUser.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
+            state.updateProfile.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(updateUser.fulfilled, (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
+            state.updateProfile.dataStatus = DataStatus.FULFILLED;
             state.user = action.payload;
         });
         builder.addCase(updateUser.rejected, (state) => {
-            state.dataStatus = DataStatus.REJECTED;
+            state.updateProfile.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(uploadAvatar.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
+            state.updateProfile.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(uploadAvatar.fulfilled, (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
+            state.updateProfile.dataStatus = DataStatus.FULFILLED;
             state.updateProfile.avatarUrl = action.payload.avatarUrl;
         });
         builder.addCase(uploadAvatar.rejected, (state) => {
-            state.dataStatus = DataStatus.REJECTED;
+            state.updateProfile.dataStatus = DataStatus.REJECTED;
         });
     },
 });

@@ -3,6 +3,7 @@ import {
     Avatar,
     Button,
     ButtonVariant,
+    CopyToClipboard,
     DatePicker,
     Input,
     Loader,
@@ -26,13 +27,17 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { actions as userBonusesActions } from '~/bundles/user-bonuses/store/user-bonuses.js';
 import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
 
+import { constructReferralUrl } from '../../helpers/helpers.js';
+import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
 import { Cropper } from './components/components.js';
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
@@ -47,12 +52,17 @@ const ProfileSettings: React.FC<Properties> = ({
     onAvatarUpload,
     isLoading,
 }) => {
+    const fileInputReference = useRef<HTMLInputElement>(null);
     const [imgToCrop, setImgToCrop] = useState('');
     const [isOpen, setIsOpen] = useState(false);
 
+    const dispatch = useAppDispatch();
+
     const [valuesDefault, setValuesDefault] = useState(false);
     const { user, updateProfile } = useAppSelector(({ auth }) => auth);
-    const dispatch = useAppDispatch();
+    const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
+        ({ userBonuses }) => userBonuses,
+    );
 
     const { control, errors, reset, setValue, handleSubmit, getValues } =
         useAppForm<UserUpdateProfileRequestDto>({
@@ -128,6 +138,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
                     avatarUrl: data.avatarUrl || null,
+                    location: data.location ? data.location.trim() : null,
                     weight: convertWeightToGrams(data.weight),
                     height: convertHeightToMillimeters(data.height),
                     dateOfBirth: data.dateOfBirth
@@ -150,44 +161,77 @@ const ProfileSettings: React.FC<Properties> = ({
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
     }, [reset]);
 
+    const handleShowTransactions = useCallback((): void => {
+        void dispatch(userBonusesActions.loadAllUserBonusesTransactions());
+    }, [dispatch]);
+
+    const handleUploadClick = useCallback((): void => {
+        if (fileInputReference.current) {
+            fileInputReference.current.click();
+        }
+    }, [fileInputReference]);
+
     return (
         <div className="bg-secondary pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
-            <div className="flex items-center pb-12">
-                <Avatar
-                    size="lg"
-                    email={user?.email ?? ''}
-                    avatarUrl={getValues().avatarUrl}
-                />
-
-                <input
-                    id="avatarInput"
-                    type="file"
-                    accept="image/jpeg, image/png"
-                    name="update-file"
-                    onChange={selectImage}
-                    className="hidden"
-                />
-                <label
-                    htmlFor="avatarInput"
-                    className="w-115 border-lm-yellow-100 text-lm-yellow-100 hover:border-lm-yellow-200 hover:text-lm-yellow-200 ml-3 flex h-[38px] cursor-pointer items-center justify-center rounded-[20px] border font-extrabold"
-                >
-                    Update file
-                </label>
-                <Modal
-                    isOpen={isOpen}
-                    title="Crop your avatar"
-                    onClose={closeModal}
-                >
-                    <Cropper
-                        image={imgToCrop}
-                        onAvatarUpload={onAvatarUpload}
-                        isLoading={isLoading}
-                        closeModal={closeModal}
+            <div className="flex flex-col items-start justify-between gap-5 pb-12 xl:flex-row xl:items-center">
+                <div className="flex items-center">
+                    <Avatar
+                        size="lg"
+                        email={user ? user?.email : ''}
+                        avatarUrl={getValues().avatarUrl}
                     />
-                </Modal>
+                    <input
+                        id="avatarInput"
+                        type="file"
+                        accept="image/jpeg, image/png"
+                        name="update-file"
+                        onChange={selectImage}
+                        className="hidden"
+                        ref={fileInputReference}
+                    />
+                    <div>
+                        <Button
+                            className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
+                            type="submit"
+                            label="Update file"
+                            variant={ButtonVariant.SECONDARY}
+                            size={ComponentSize.SMALL}
+                            onClick={handleUploadClick}
+                        />
+                    </div>
+                    <Modal
+                        isOpen={isOpen}
+                        title="Crop your avatar"
+                        onClose={closeModal}
+                    >
+                        <Cropper
+                            image={imgToCrop}
+                            onAvatarUpload={onAvatarUpload}
+                            isLoading={isLoading}
+                            closeModal={closeModal}
+                        />
+                    </Modal>
+                </div>
+                <UserBonusBalance
+                    userBonusesTransactions={userBonusesTransactions}
+                    userBonusesStatus={userBonusesStatus}
+                    className="h-[50%]"
+                    bonusBalance={user?.bonusBalance ?? 0}
+                    onShowTransactions={handleShowTransactions}
+                />
             </div>
+            <CopyToClipboard
+                label="Copy link with your referral code"
+                className="mb-10 w-[60%]"
+                textToCopy={
+                    user?.referralCode
+                        ? constructReferralUrl(user?.referralCode)
+                        : ''
+                }
+                textToDisplay={user?.referralCode ?? 'You dont have a code'}
+            />
             <form onSubmit={handleFormSubmit}>
-                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-2 gap-x-6 lg:grid-cols-4">
+                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 lg:grid-cols-4">
                     <Input
                         className="border-0 lg:col-start-1 lg:col-end-3"
                         type="text"
@@ -233,6 +277,16 @@ const ProfileSettings: React.FC<Properties> = ({
                         label="Height"
                         placeholder="0 sm"
                         name="height"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                    />
+                    <Input
+                        className="border-0 lg:col-start-1 lg:col-end-5"
+                        type="text"
+                        label="Location"
+                        placeholder="Kyiv, Ukraine"
+                        name="location"
                         control={control}
                         errors={errors}
                         isDisabled={isLoading}

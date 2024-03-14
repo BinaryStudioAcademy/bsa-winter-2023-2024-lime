@@ -1,5 +1,8 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
@@ -18,7 +21,9 @@ class AuthApi extends BaseHttpApi {
         super({ path: ApiPath.AUTH, baseUrl, http, storage });
     }
 
-    public async signUp(payload: UserAuthRequestDto): Promise<AuthResponseDto> {
+    public async signUp(
+        payload: UserAuthSignUpRequestDto,
+    ): Promise<AuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.SIGN_UP, {}),
             {
@@ -31,7 +36,9 @@ class AuthApi extends BaseHttpApi {
 
         return await response.json<AuthResponseDto>();
     }
-    public async signIn(payload: UserAuthRequestDto): Promise<AuthResponseDto> {
+    public async signIn(
+        payload: UserAuthSignInRequestDto,
+    ): Promise<AuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(AuthApiPath.SIGN_IN, {}),
             {

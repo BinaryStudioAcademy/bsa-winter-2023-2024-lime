@@ -44,11 +44,11 @@ class BaseHttpApi implements HttpApi {
         path: string,
         options: HttpApiOptions,
     ): Promise<HttpApiResponse> {
-        const { method, contentType, payload = null, hasAuth } = options;
+        const { method, contentType, payload = null, hasAuth, query } = options;
 
         const headers = await this.getHeaders(contentType, hasAuth);
 
-        const response = await this.http.load(path, {
+        const response = await this.http.load(this.getUrl(path, query), {
             method,
             headers,
             payload,
@@ -70,6 +70,21 @@ class BaseHttpApi implements HttpApi {
             ...(copiedParameters as string[]),
             options,
         );
+    }
+
+    private getUrl<T extends Record<string, unknown>>(
+        path: string,
+        queryParameters?: T | undefined,
+    ): string {
+        if (!queryParameters) {
+            return path;
+        }
+
+        const query = new URLSearchParams(
+            queryParameters as Record<string, string>,
+        ).toString();
+
+        return `${path}?${query}`;
     }
 
     private async getHeaders(
