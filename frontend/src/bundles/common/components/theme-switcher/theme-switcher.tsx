@@ -15,14 +15,15 @@ type Properties = {
 };
 
 const defaultClassName =
-    'fixed bg-primary rounded-full md:bottom-4 md:right-4 bottom-4 right-4';
+    'fixed bg-primary rounded-full md:bottom-3 md:right-3 bottom-2 right-2';
 
 function ThemeSwitcher({
     className = defaultClassName,
 }: Properties): JSX.Element {
     const dispatch = useAppDispatch();
-    const { theme } = useAppSelector((state) => state.theme);
-    const size = window.innerWidth < 768 ? 48 : 64;
+
+    const { theme } = useAppSelector(({ theme }) => theme);
+    const size = window.innerWidth < 768 ? 48 : 52;
 
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());

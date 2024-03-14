@@ -1,4 +1,7 @@
-import { CalendarDaysIcon as ScheduleIcon } from '@heroicons/react/16/solid';
+import {
+    CalendarDaysIcon as ScheduleIcon,
+    ChatBubbleOvalLeftEllipsisIcon as ChatsIcon,
+} from '@heroicons/react/16/solid';
 import {
     ArrowLeftStartOnRectangleIcon as LogoutIcon,
     QuestionMarkCircleIcon as HelpIcon,
@@ -95,6 +98,20 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                             to={AppRoute.SCHEDULE}
                             isActive={activeRoute === AppRoute.SCHEDULE}
                         />
+                        <div className="relative">
+                            <SidebarNav
+                                icon={<ChatsIcon />}
+                                text="Chats"
+                                to={AppRoute.CHATS}
+                                isActive={
+                                    activeRoute === AppRoute.CHATS ||
+                                    activeRoute.includes(AppRoute.CHATS)
+                                }
+                            />
+                            <div className="absolute -right-2 -top-2">
+                                <Icon name="aiPoweredIcon" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -120,6 +137,7 @@ const Sidebar = ({ isOpen = true, toggleSidebar }: Properties): JSX.Element => {
                                 onClick={handleLogout}
                             />
                         </div>
+
                         <div className="flex w-[10rem] items-center justify-center px-6 py-4">
                             <Icon name={IconName.poweredByStravaIcon} />
                         </div>
