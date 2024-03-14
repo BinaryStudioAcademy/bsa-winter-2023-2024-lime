@@ -81,11 +81,11 @@ class CalculationProgressService {
         }
 
         if (hasCompletedGoal) {
-            const goalDetails = await this.goalService.find({});
             await this.notificationService.create({
                 userId,
                 title: 'Goal Completed',
-                message: `Congratulations! You have completed your ${goalDetails?.activityType} goal.`,
+                message:
+                    'Congratulations! You have completed your goal. Go to Goals Page to see your results.',
                 isRead: false,
                 type: 'default',
             });
