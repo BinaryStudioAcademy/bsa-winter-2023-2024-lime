@@ -6,8 +6,10 @@ import {
     Icon,
     Loader,
 } from '~/bundles/common/components/components.js';
-import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.enum.js';
-import { IconName } from '~/bundles/common/components/icon/enums/icon-name.enum.js';
+import {
+    IconColor,
+    IconName,
+} from '~/bundles/common/components/icon/enums/enums.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     calculateTotal,
@@ -59,11 +61,12 @@ const PublicProfile: React.FC = () => {
         ({ goals }) => goals,
     );
 
-    const isLoading =
-        dataStatusUser === DataStatus.PENDING ||
-        dataStatusAchievements === DataStatus.PENDING ||
-        dataStatusWorkouts === DataStatus.PENDING ||
-        dataStatusGoals === DataStatus.PENDING;
+    const isLoading = [
+        dataStatusUser,
+        dataStatusAchievements,
+        dataStatusWorkouts,
+        dataStatusGoals,
+    ].includes(DataStatus.PENDING);
 
     const totalDuration = calculateTotal(workouts, 'duration');
     const totalDistance = calculateTotal(workouts, 'distance');
