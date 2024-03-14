@@ -29,6 +29,10 @@ const UserValidationMessage = {
     LOCATION_WRONG: 'Location should be in format City, Country',
     LOCATION_LENGTH: `lOCATION should have from ${LOCATION.MIN_LENGTH} to ${LOCATION.MAX_LENGTH} characters.`,
     USER_NOT_FOUND: 'User not found',
+    USER_WITH_REFERRAL_ID_NOT_FOUND: 'User with this referral id was not found',
+    BONUS_OPERATION_LACK_OF_FUNDS:
+        'Operation can not be finished due to lack of funds.',
+    BONUS_OPERATION_NOT_SUCCESSFUL: 'Operation was not sucessfull.',
 } as const;
 
 export { UserValidationMessage };

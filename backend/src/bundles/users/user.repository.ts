@@ -2,6 +2,10 @@ import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { type Repository } from '~/common/types/types.js';
 
+import {
+    type UserBonusEntity,
+    type UserBonusGetAllItemResponseDto,
+} from '../user-bonuses/user-bonuses.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
 class UserRepository implements Repository {
@@ -17,7 +21,7 @@ class UserRepository implements Repository {
         const user = await this.userModel
             .query()
             .findOne(query)
-            .withGraphFetched('[userDetails]')
+            .withGraphFetched('userDetails')
             .execute();
 
         if (!user) {
@@ -35,6 +39,39 @@ class UserRepository implements Repository {
             weight: userDetails.weight,
             height: userDetails.height,
             gender: userDetails.gender,
+            referralCode: userDetails.referralCode,
+            bonusBalance: userDetails.bonusBalance,
+            location: userDetails.location,
+        });
+    }
+
+    public async findWithUserDetailsJoined(
+        query: Record<string, unknown>,
+    ): Promise<UserEntity | null> {
+        const user = await this.userModel
+            .query()
+            .joinRelated('userDetails')
+            .findOne(query)
+            .withGraphFetched('userDetails')
+            .execute();
+
+        if (!user) {
+            return null;
+        }
+
+        const { userDetails, ...userInfo } = user;
+
+        return UserEntity.initialize({
+            ...userInfo,
+            fullName: userDetails.fullName,
+            avatarUrl: userDetails.avatarUrl,
+            username: userDetails.username,
+            dateOfBirth: userDetails.dateOfBirth,
+            weight: userDetails.weight,
+            height: userDetails.height,
+            gender: userDetails.gender,
+            referralCode: userDetails.referralCode,
+            bonusBalance: userDetails.bonusBalance,
             location: userDetails.location,
         });
     }
@@ -42,7 +79,7 @@ class UserRepository implements Repository {
     public async findAll(): Promise<UserEntity[]> {
         const users = await this.userModel
             .query()
-            .withGraphFetched('[userDetails]')
+            .withGraphFetched('userDetails')
             .execute();
 
         return users.map((user) => {
@@ -57,13 +94,17 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                referralCode: userDetails.referralCode,
+                bonusBalance: userDetails.bonusBalance,
                 location: userDetails.location,
             });
         });
     }
 
     public async create(entity: UserEntity): Promise<UserEntity> {
-        const { email, passwordHash, stripeCustomerId } = entity.toNewObject();
+        const { email, passwordHash, stripeCustomerId, referralCode } =
+            entity.toNewObject();
+
         const trx = await this.userModel.startTransaction();
 
         try {
@@ -79,7 +120,7 @@ class UserRepository implements Repository {
 
             const userDetails = await user
                 .$relatedQuery('userDetails', trx)
-                .insert({})
+                .insert({ referralCode })
                 .returning('*')
                 .execute();
 
@@ -100,6 +141,8 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                referralCode: userDetails.referralCode,
+                bonusBalance: userDetails.bonusBalance,
                 location: userDetails.location,
             });
         } catch (error) {
@@ -107,6 +150,7 @@ class UserRepository implements Repository {
             throw error;
         }
     }
+
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
@@ -120,7 +164,7 @@ class UserRepository implements Repository {
             .execute();
     }
 
-    public async updateUserProfile(
+    public async updateUserDetails(
         userId: number,
         payload: Partial<UserDetailsModel>,
     ): Promise<UserEntity | null> {
@@ -152,6 +196,8 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                referralCode: userDetails.referralCode,
+                bonusBalance: userDetails.bonusBalance,
                 location: userDetails.location,
             });
         } catch (error) {
@@ -159,6 +205,35 @@ class UserRepository implements Repository {
             throw new Error(`Error updating user details: ${error}`);
         }
     }
+
+    public async createUserBonusTransaction(
+        entity: UserBonusEntity,
+    ): Promise<UserBonusGetAllItemResponseDto | null> {
+        const { userId, actionType, transactionType, amount } =
+            entity.toNewObject();
+
+        const user = await this.userModel.query().findById(userId);
+
+        if (!user) {
+            return null;
+        }
+
+        const userBonusTransaction = await user
+            .$relatedQuery('userBonus')
+            .insert({ userId, actionType, transactionType, amount })
+            .returning('*')
+            .first();
+
+        return {
+            id: userBonusTransaction.id,
+            userId: userBonusTransaction.userId,
+            actionType: userBonusTransaction.actionType,
+            transactionType: userBonusTransaction.transactionType,
+            amount: userBonusTransaction.amount,
+            createdAt: userBonusTransaction.createdAt,
+        };
+    }
+
     public delete(): ReturnType<Repository['delete']> {
         return Promise.resolve(true);
     }

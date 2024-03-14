@@ -2,6 +2,7 @@ import {
     Avatar,
     Button,
     ButtonVariant,
+    CopyToClipboard,
     DatePicker,
     Input,
     Loader,
@@ -19,17 +20,21 @@ import {
     getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
+    useAppDispatch,
     useAppForm,
     useAppSelector,
     useCallback,
     useEffect,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { actions as userBonusesActions } from '~/bundles/user-bonuses/store/user-bonuses.js';
 import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
 
+import { constructReferralUrl } from '../../helpers/helpers.js';
+import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
@@ -38,10 +43,13 @@ type Properties = {
 };
 
 const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+    const dispatch = useAppDispatch();
+
     const [valuesDefault, setValuesDefault] = useState(false);
-    const { user } = useAppSelector(({ auth }) => ({
-        user: auth.user,
-    }));
+    const { user } = useAppSelector(({ auth }) => auth);
+    const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
+        ({ userBonuses }) => userBonuses,
+    );
 
     const { control, errors, reset, setValue, handleSubmit } =
         useAppForm<UserUpdateProfileRequestDto>({
@@ -108,31 +116,53 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
     }, [reset]);
 
+    const handleShowTransactions = useCallback((): void => {
+        void dispatch(userBonusesActions.loadAllUserBonusesTransactions());
+    }, [dispatch]);
+
     return (
         <div className="bg-secondary pl-13 pr-18 h-screen px-12 pb-9 pt-3 lg:w-[874px]">
-            <div className="flex items-center pb-12">
-                <Avatar
-                    size="lg"
-                    email={user ? user?.email : ''}
-                    avatarUrl={user ? user.avatarUrl : ''}
-                />
-
-                <input
-                    id="avatarInput"
-                    type="file"
-                    accept="image/jpeg, image/png"
-                    className="hidden"
-                />
-                <div className="h-[38px] w-[115px]">
-                    <Button
-                        className="ml-3 [border-radius:1.25rem]"
-                        type="submit"
-                        label="Update file"
-                        variant={ButtonVariant.SECONDARY}
-                        size={ComponentSize.SMALL}
+            <div className="flex flex-col items-start justify-between gap-5 pb-12 xl:flex-row xl:items-center">
+                <div className="flex items-center">
+                    <Avatar
+                        size="lg"
+                        email={user ? user?.email : ''}
+                        avatarUrl={user ? user.avatarUrl : ''}
                     />
+                    <input
+                        id="avatarInput"
+                        type="file"
+                        accept="image/jpeg, image/png"
+                        className="hidden"
+                    />
+                    <div>
+                        <Button
+                            className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
+                            type="submit"
+                            label="Update file"
+                            variant={ButtonVariant.SECONDARY}
+                            size={ComponentSize.SMALL}
+                        />
+                    </div>
                 </div>
+                <UserBonusBalance
+                    userBonusesTransactions={userBonusesTransactions}
+                    userBonusesStatus={userBonusesStatus}
+                    className="h-[50%]"
+                    bonusBalance={user?.bonusBalance ?? 0}
+                    onShowTransactions={handleShowTransactions}
+                />
             </div>
+            <CopyToClipboard
+                label="Copy link with your referral code"
+                className="mb-10 w-[60%]"
+                textToCopy={
+                    user?.referralCode
+                        ? constructReferralUrl(user?.referralCode)
+                        : ''
+                }
+                textToDisplay={user?.referralCode ?? 'You dont have a code'}
+            />
             <form onSubmit={handleFormSubmit}>
                 <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 lg:grid-cols-4">
                     <Input
