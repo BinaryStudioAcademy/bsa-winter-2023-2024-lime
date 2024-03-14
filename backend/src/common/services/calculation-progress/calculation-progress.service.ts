@@ -169,10 +169,24 @@ class CalculationProgressService {
         }
 
         for (const achievement of userAchievements) {
-            await this.userAchievementsService.create({
+            const newAchievemenet = await this.userAchievementsService.create({
                 userId,
                 achievementId: achievement,
             });
+            if (newAchievemenet) {
+                const achievementDetails =
+                    await this.achievementService.findById(achievement);
+
+                if (achievementDetails) {
+                    await this.notificationService.create({
+                        userId,
+                        title: 'New Achievement',
+                        message: `Congratulations! You have unlocked a new achievement: ${achievementDetails.toObject().name}.`,
+                        isRead: false,
+                        type: 'default',
+                    });
+                }
+            }
         }
     }
 }
