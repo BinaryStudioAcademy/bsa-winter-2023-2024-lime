@@ -6,6 +6,8 @@ import {
 class UserMessageModel extends AbstractModel {
     public 'userId': number;
 
+    public 'messageId': number;
+
     public static override get tableName(): string {
         return DatabaseTableName.USER_MESSAGE;
     }
