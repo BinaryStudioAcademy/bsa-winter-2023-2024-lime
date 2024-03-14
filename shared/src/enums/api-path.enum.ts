@@ -11,6 +11,7 @@ const ApiPath = {
     OAUTH: '/oauth',
     USER_BONUSES: '/user-bonuses',
     STRAVA: '/strava',
+    IDENTITY: '/identity',
 } as const;
 
 export { ApiPath };

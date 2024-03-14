@@ -140,6 +140,7 @@ class OAuthController extends BaseController {
         const { provider } = options.params;
         const data = isStateJSON ? JSON.parse(query.state) : query;
         const payload = { ...query, userId: data.userId, state: data.uuid };
+
         await this.oAuthService.exchangeAuthCode(
             provider,
             isStateJSON ? payload : query,
