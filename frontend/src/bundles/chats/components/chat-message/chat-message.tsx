@@ -1,6 +1,5 @@
+import { formatChatDate } from '~/bundles/chats/helpers/format-chat-date.helper.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-
-import { formatChatDate } from '../../helpers/format-chat-date.helper.js';
 
 type Properties = {
     isCurrentUserMessage: boolean;

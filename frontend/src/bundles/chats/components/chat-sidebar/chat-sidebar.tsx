@@ -1,10 +1,9 @@
+import { AiChatLink } from '~/bundles/chats/components/ai-chat-link/ai-chat-link.js';
+import { ChatLink } from '~/bundles/chats/components/chat-link/chat-link.js';
+import { ChatSearchBar } from '~/bundles/chats/components/chat-search-bar/chat-search-bar.js';
+import { type ChatLink as TChatLink } from '~/bundles/chats/types/types.js';
 import { Button } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-
-import { type ChatLink as TChatLink } from '../../types/types.js';
-import { AiChatLink } from '../ai-chat-link/ai-chat-link.js';
-import { ChatLink } from '../chat-link/chat-link.js';
-import { ChatSearchBar } from '../chat-search-bar/chat-search-bar.js';
 
 type Properties = {
     chatLinks: TChatLink[];

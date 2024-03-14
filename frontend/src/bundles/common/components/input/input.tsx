@@ -65,6 +65,12 @@ const Input = <T extends FieldValues>({
     const textAreaStyles =
         'bg-primary text-primary placeholder:text-lm-grey-200 disabled:text-lm-grey-300 h-15 w-full rounded-lg p-4 focus:border focus:border-buttonPrimary focus:outline-none overflow-hidden resize-none';
 
+    const inputStyles = getValidClassNames(
+        'bg-primary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none',
+        hasError && 'border-lm-red border',
+        isPassword && 'pr-8',
+    );
+
     return (
         <label
             className={getValidClassNames(
@@ -87,6 +93,8 @@ const Input = <T extends FieldValues>({
                         {...field}
                         placeholder={placeholder}
                         rows={rows}
+                        autoComplete="off"
+                        disabled={isDisabled}
                     />
                 ) : (
                     <input
@@ -95,7 +103,7 @@ const Input = <T extends FieldValues>({
                         placeholder={placeholderGenerator()}
                         autoComplete="off"
                         disabled={isDisabled}
-                        className={`bg-primary text-primary placeholder:text-lm-grey-200 focus:border-buttonPrimary disabled:text-lm-grey-300 h-9 w-full rounded-lg p-4 focus:border focus:outline-none ${hasError && 'border-lm-red border'} ${isPassword && 'pr-8'}`}
+                        className={inputStyles}
                         onFocus={onFocus}
                     />
                 )}

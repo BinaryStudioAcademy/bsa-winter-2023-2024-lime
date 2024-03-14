@@ -1,9 +1,8 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
+import { type MessageRequestDto } from '~/bundles/chats/types/types.js';
 import { Button, Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
-
-import { type MessageRequestDto } from '../../types/types.js';
 
 type Properties = {
     onSubmit: (payload: MessageRequestDto) => void;

@@ -1,3 +1,5 @@
+import { Status } from '~/bundles/chats/enums/enums.js';
+import { formatChatDate } from '~/bundles/chats/helpers/helpers.js';
 import { Avatar, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
@@ -5,9 +7,6 @@ import {
     getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
-
-import { Status } from '../../enums/enums.js';
-import { formatChatDate } from '../../helpers/helpers.js';
 
 type Properties = {
     id: number;

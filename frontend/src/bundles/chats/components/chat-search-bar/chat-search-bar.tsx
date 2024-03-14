@@ -1,5 +1,3 @@
-import { type FormEvent } from 'react';
-
 import { Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
@@ -18,15 +16,8 @@ const ChatSearchBar = (): JSX.Element => {
         [handleSearchChats, handleSubmit],
     );
 
-    const handleFormSubmit = useCallback(
-        (event_: FormEvent<HTMLFormElement>): void => {
-            event_.preventDefault();
-        },
-        [],
-    );
-
     return (
-        <form onChange={handleFormChange} onSubmit={handleFormSubmit}>
+        <form onChange={handleFormChange}>
             <Input
                 placeholder="Find a friend"
                 className="h-[3.75rem] justify-center"

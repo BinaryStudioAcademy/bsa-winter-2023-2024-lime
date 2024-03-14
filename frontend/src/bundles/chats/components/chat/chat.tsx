@@ -1,17 +1,16 @@
 import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
-import { AppRoute } from 'shared';
 
+import { ChatMessage } from '~/bundles/chats/components/chat-message/chat-message.js';
+import { ChatMessageForm } from '~/bundles/chats/components/chat-message-form/chat-message-form.js';
+import { messages } from '~/bundles/chats/constants/constants.js';
 import {
     Avatar,
     Link,
     UserInfoCard,
 } from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
-
-import { messages } from '../../constants/constants.js';
-import { ChatMessage } from '../chat-message/chat-message.js';
-import { ChatMessageForm } from '../chat-message-form/chat-message-form.js';
 
 const Chat = (): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);

@@ -19,7 +19,10 @@ const AiChatLink = (): JSX.Element => {
                 <Icon name="aiAssistantIcon" className="h-12 w-12" />
                 <div className="flex w-full flex-col gap-1 overflow-hidden text-ellipsis whitespace-nowrap py-2 lg:max-w-[9rem]">
                     <p
-                        className={`${isActive ? 'text-action' : 'text-primary'} text-sm`}
+                        className={getValidClassNames(
+                            isActive ? 'text-action' : 'text-primary',
+                            'text-sm',
+                        )}
                     >
                         Personal Assistant
                     </p>
