@@ -24,6 +24,8 @@ const IconName = {
     feedIcon: 'feedIcon',
     goalIcon: 'goalIcon',
     starIcon: 'starIcon',
+    aiAssistantIcon: 'aiAssistantIcon',
+    aiPoweredIcon: 'aiPoweredIcon',
     stavaButtonIcon: 'stavaButtonIcon',
 } as const;
 

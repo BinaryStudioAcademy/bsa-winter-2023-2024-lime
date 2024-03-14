@@ -19,6 +19,10 @@ const AppRoute = {
     PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
     PROFILE_PUBLIC_$ID: '/profile/public/:id',
     NOT_FOUND: '*',
+    PROFILE: '/profile/settings',
+    CHATS: '/chats',
+    CHATS_$ID: '/chats/:id',
+    CHATS_AI_ASSISTANT: '/chats/ai-assistant',
 } as const;
 
 export { AppRoute };

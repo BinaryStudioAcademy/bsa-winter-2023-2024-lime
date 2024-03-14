@@ -21,6 +21,7 @@ import { Profile } from '~/bundles/profile/pages/profile.js';
 import { Workout, WorkoutItem } from '~/bundles/workouts/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
+import { Chats } from './bundles/chats/pages/chats.js';
 import { BaseLayout } from './bundles/common/components/base-layout/base-layout.js';
 import { Landing } from './bundles/landing/pages/landing.js';
 import { Overview } from './bundles/overview/pages/overview.js';
@@ -83,6 +84,14 @@ const routes = [
                     {
                         path: AppRoute.HELP,
                         element: <div>HELP PAGE</div>,
+                    },
+                    {
+                        path: AppRoute.CHATS,
+                        element: <Chats />,
+                    },
+                    {
+                        path: AppRoute.CHATS_$ID,
+                        element: <Chats />,
                     },
                     {
                         element: <ProfileLayout />,
