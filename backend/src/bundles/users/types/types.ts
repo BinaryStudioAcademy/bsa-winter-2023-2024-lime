@@ -1,3 +1,4 @@
+export { type UserIdentityRequestDto } from './user-identity-request-dto.type.js';
 export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,

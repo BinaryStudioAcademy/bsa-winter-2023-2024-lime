@@ -11,7 +11,8 @@ import {
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
-import { type AuthResponseDto } from '../auth.js';
+import { type AuthResponseDto, type IdentityAuthTokenDto } from '../auth.js';
+import { type IdentityAuthorizeDto } from '../types/types.js';
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
@@ -67,4 +68,34 @@ const updateUser = createAsyncThunk<
     return await userApi.updateUser(updateUserPayload);
 });
 
-export { logout, refreshUser, signIn, signUp, updateUser };
+const authorizeIdentity = createAsyncThunk<
+    unknown,
+    IdentityAuthorizeDto,
+    AsyncThunkConfig
+>(`${sliceName}/auth-google`, async (authorizePayload, { extra }) => {
+    const { authApi } = extra;
+    return await authApi.authorizeIdentity(authorizePayload);
+});
+
+const signInIdentity = createAsyncThunk<
+    AuthResponseDto,
+    IdentityAuthTokenDto,
+    AsyncThunkConfig
+>(`${sliceName}/sign-in-oauth-user`, async (tokenPayload, { extra }) => {
+    const { authApi } = extra;
+    const response = await authApi.signInIdentity(tokenPayload);
+    if (response.token) {
+        await storage.set(StorageKey.TOKEN, response.token);
+    }
+    return response;
+});
+
+export {
+    authorizeIdentity,
+    logout,
+    refreshUser,
+    signIn,
+    signInIdentity,
+    signUp,
+    updateUser,
+};
