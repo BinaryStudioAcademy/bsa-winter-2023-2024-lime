@@ -1,6 +1,13 @@
 import { PlusIcon } from '@heroicons/react/16/solid';
 
-import { Button, ButtonVariant, DateCalendar, Modal, ScheduleCard } from '~/bundles/common/components/components.js';
+import {
+    Button,
+    ButtonVariant,
+    CreateScheduleForm,
+    DateCalendar,
+    Modal,
+    ScheduleCard,
+} from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback, useState } from '~/bundles/common/hooks/hooks.js';
 
@@ -62,6 +69,7 @@ const Schedule: React.FC = () => {
                 title="Set the new shcedule"
                 onClose={handleModalStatus}
             >
+                <CreateScheduleForm onSubmit={() => null} isLoading={false}/>
             </Modal>
         </>
     );

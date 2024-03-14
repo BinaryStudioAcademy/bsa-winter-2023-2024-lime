@@ -9,6 +9,7 @@ export { convertWeightToGrams } from './convert-weight/convert-weight-to-grams.j
 export { convertWeightToKilograms } from './convert-weight/convert-weight-to-kilograms.js';
 export { formatDate } from './format-date/format-date.helper.js';
 export { formatDateString } from './format-date-string/format-date-string.helper.js';
+export { getActivityOptions } from './get-activity-options/get-activity-options.helper.js';
 export { getObjectKeys } from './get-object-keys/get-object-keys.js';
 export { getTimeFromDate } from './get-time-from-date/get-time-from-date.helper.js';
 export { getUserId } from './get-user-id/get-user-id.js';
