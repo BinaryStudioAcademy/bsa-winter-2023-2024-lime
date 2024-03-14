@@ -9,16 +9,16 @@ import {
     useAppSelector,
     useEffect,
     useNavigate,
-    useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
 const App: React.FC = () => {
-    const [isRefreshing, setIsRefreshing] = useState(true);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const redirectPath = useAppSelector(({ app }) => app.redirectPath);
+    const { redirectPath } = useAppSelector(({ app }) => app);
+
+    const { isRefreshing } = useAppSelector(({ auth }) => auth);
 
     useEffect(() => {
         if (redirectPath) {
@@ -36,13 +36,12 @@ const App: React.FC = () => {
             }
         };
 
-        void refreshUser().finally(() => setIsRefreshing(false));
+        void refreshUser();
     }, [dispatch]);
 
     if (isRefreshing) {
         return <Loader isOverflow />;
     }
-
     return <RouterOutlet />;
 };
 

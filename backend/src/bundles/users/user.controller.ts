@@ -13,6 +13,7 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
+import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath } from './enums/enums.js';
 
 /**
@@ -56,14 +57,43 @@ import { UsersApiPath } from './enums/enums.js';
  *              - male
  *              - female
  *              - prefer not to say
+ *      UserBonus:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          userId:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          amount:
+ *            type: number
+ *          actionType:
+ *            type: string
+ *            enum:
+ *              - registered
+ *              - invited
+ *          createdAt:
+ *            type: string
+ *            nullable: true
+ *
  */
 class UserController extends BaseController {
     private userService: UserService;
 
-    public constructor(logger: Logger, userService: UserService) {
+    private userBonusService: UserBonusService;
+
+    public constructor(
+        logger: Logger,
+        userService: UserService,
+        userBonusService: UserBonusService,
+    ) {
         super(logger, ApiPath.USERS);
 
         this.userService = userService;
+        this.userBonusService = userBonusService;
 
         this.addRoute({
             path: UsersApiPath.ROOT,
@@ -93,6 +123,18 @@ class UserController extends BaseController {
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.CURRENT_BONUSES,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.findBonusesByUserId(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
@@ -254,6 +296,48 @@ class UserController extends BaseController {
                 status: HttpCode.BAD_REQUEST,
             });
         }
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/current-bonuses:
+     *    get:
+     *      tags:
+     *       - Users
+     *      description: Returns an array of users bonuses transactions
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 properties:
+     *                   items:
+     *                     type: array
+     *                     items:
+     *                       $ref: '#/components/schemas/UserBonus'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private async findBonusesByUserId(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const userId = options.user.id;
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: await this.userBonusService.findMany({ userId }),
+        };
     }
 }
 

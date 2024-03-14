@@ -20,7 +20,7 @@ const WorkoutTitle = ({ workout }: Properties): JSX.Element => {
                 className={baseClass}
             />
             <h1 className="flex flex-col">
-                <span className="text-lm-grey-200 text-xs">Details of</span>
+                <span className="text-lm-grey-200 text-s">Details of</span>
                 <span className="text-primary text-xl font-extrabold">
                     {capitalizeFirstLetter(activityType)} activity
                 </span>
