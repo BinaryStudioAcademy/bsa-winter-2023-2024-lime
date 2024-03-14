@@ -1,7 +1,7 @@
-import { type SingleValue } from 'react-select';
 import { type WorkoutResponseDto } from 'shared';
 
 import { type SelectOption } from '~/bundles/common/components/select/types/select.type.js';
+import { type SingleValue } from '~/bundles/common/types/types.js';
 
 type Options = {
     items: SelectOption[];

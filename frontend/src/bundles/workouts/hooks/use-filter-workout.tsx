@@ -1,4 +1,3 @@
-import { type SingleValue } from 'react-select';
 import { type WorkoutResponseDto, AppRoute, configureString } from 'shared';
 
 import { type SelectOption } from '~/bundles/common/components/select/types/select.type.js';
@@ -7,12 +6,13 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { type SingleValue } from '~/bundles/common/types/types.js';
 
 import {
     mapWorkoutActivitySelect,
     mapWorkoutYearSelect,
 } from '../helpers/helpers.js';
-import { type UseFilterWorkout } from '../types/use-filter-workout.type.js';
+import { type UseFilterWorkout } from '../types/types.js';
 
 const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
     const sortedItems = workouts.toSorted((a, b) => {
