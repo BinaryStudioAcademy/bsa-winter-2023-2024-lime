@@ -1,11 +1,11 @@
 import {
     ActivityWidget,
     ActivityWidgetColor,
-    AdvertisementBanner,
     Card,
     Icon,
     InfoSection,
 } from '~/bundles/common/components/components.js';
+import { GoogleAds } from '~/bundles/common/components/google-ads/google-ads.js';
 import {
     IconColor,
     IconName,
@@ -67,7 +67,7 @@ const Overview: React.FC = () => {
     return (
         <div className="justify-center gap-8 xl:flex">
             {!isSubscribed && (
-                <AdvertisementBanner className="bg-lm-red hidden max-w-64 flex-1 2xl:flex" />
+                <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
             )}
             <div className="max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
                 <div className="xl:basis-[68%]">
@@ -109,7 +109,7 @@ const Overview: React.FC = () => {
                         </li>
                     </ul>
                     {!isSubscribed && (
-                        <AdvertisementBanner className="bg-lm-red mb-6 hidden h-44 xl:flex" />
+                        <GoogleAds className="mb-6 hidden h-44 xl:flex" />
                     )}
                     <ChartGoalProgress />
                     <div className="mt-5">Achievements</div>
@@ -135,9 +135,7 @@ const Overview: React.FC = () => {
                             <p>Empty schedule</p>
                         )}
                     </InfoSection>
-                    {!isSubscribed && (
-                        <AdvertisementBanner className="bg-lm-red mb-5 h-48" />
-                    )}
+                    {!isSubscribed && <GoogleAds className="mb-5 h-48" />}
                     <InfoSection title="Goals" viewAllLink={AppRoute.GOALS}>
                         {goalsData.length > 0 ? (
                             <ul>
@@ -157,7 +155,7 @@ const Overview: React.FC = () => {
                 </div>
             </div>
             {!isSubscribed && (
-                <AdvertisementBanner className="bg-lm-red hidden max-w-64 flex-1 2xl:flex" />
+                <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
             )}
         </div>
     );

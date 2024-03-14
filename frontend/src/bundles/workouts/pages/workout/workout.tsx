@@ -1,4 +1,5 @@
 import {
+    GoogleAds,
     Loader,
     SubNavigation,
 } from '~/bundles/common/components/components.js';
@@ -29,6 +30,10 @@ const Workout: React.FC = () => {
         workouts: workouts.workouts,
     }));
 
+    const isSubscribed = useAppSelector(
+        ({ subscriptions }) => subscriptions.currentSubscription,
+    );
+
     useEffect(() => {
         void dispatch(actions.getWorkouts());
     }, [dispatch]);
@@ -58,27 +63,35 @@ const Workout: React.FC = () => {
     const isLoading = dataStatus === DataStatus.PENDING;
 
     return (
-        <section className="relative flex h-full">
+        <section className="relative flex h-full justify-center gap-8">
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
-                <div className="flex w-full">
-                    <SubNavigation
-                        title={subNavigationTitle}
-                        items={subNavigationItems}
-                    />
-                    <div className="border-lm-black-400 h-full border"></div>
+                <>
+                    {!isSubscribed && (
+                        <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
+                    )}
+                    <div className="flex w-full max-w-[1136px]">
+                        <SubNavigation
+                            title={subNavigationTitle}
+                            items={subNavigationItems}
+                        />
+                        <div className="border-lm-black-400 h-full border"></div>
 
-                    <div className="w-full max-w-[50rem] px-[1.5rem]">
-                        {workouts.length > 0 ? (
-                            <WorkoutItem />
-                        ) : (
-                            <p className="text-md text-primary text-center">
-                                You don&#39;t have any workouts yet
-                            </p>
-                        )}
+                        <div className="w-full max-w-[50rem] px-[1.5rem]">
+                            {workouts.length > 0 ? (
+                                <WorkoutItem />
+                            ) : (
+                                <p className="text-md text-primary text-center">
+                                    You don&#39;t have any workouts yet
+                                </p>
+                            )}
+                        </div>
                     </div>
-                </div>
+                    {!isSubscribed && (
+                        <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
+                    )}
+                </>
             )}
         </section>
     );

@@ -5,6 +5,7 @@ import {
     AchievementCard,
     Button,
     ButtonVariant,
+    GoogleAds,
     Loader,
     ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
@@ -62,6 +63,10 @@ const Goals: React.FC = () => {
         }),
     );
 
+    const isSubscribed = useAppSelector(
+        ({ subscriptions }) => subscriptions.currentSubscription,
+    );
+
     const isLoading =
         dataStatusGoals === DataStatus.PENDING ||
         dataStatusAchievements === DataStatus.PENDING;
@@ -107,93 +112,105 @@ const Goals: React.FC = () => {
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
 
     return (
-        <main className="bg-secondary flex w-full flex-col gap-8 md:justify-between lg:flex-row lg:justify-normal">
+        <main className="bg-secondary flex w-full flex-col justify-center gap-8 lg:flex-row">
             {isLoading ? (
                 <Loader />
             ) : (
                 <>
-                    <div className="flex flex-col gap-8 ">
-                        <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
-                            <GoalWidget
-                                value={lastGoal?.progress as number}
-                                target={lastGoal?.progress as number}
-                                title={
-                                    lastGoal
-                                        ? GOALS_MESSAGES.GOAL_COMPLETED
-                                        : GOALS_MESSAGES.NO_GOALS
-                                }
-                                subTitle={
-                                    lastGoal
-                                        ? GOALS_MESSAGES.GOAL_ENCOURAGE
-                                        : ''
-                                }
-                                goalType={
-                                    lastGoal
-                                        ? activityToGoal[lastGoal.activityType]
-                                        : GoalTypes.STANDART
-                                }
-                                hasAchievement={Boolean(lastGoal)}
-                            />
-                        </section>
-                        <section>
-                            <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
-                                Goals
-                            </h2>
-                            <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
-                                {goals.length === ZERO_VALUE && (
-                                    <p className="text-primary mb-5 w-full text-xl font-extrabold">
-                                        No goals yet
-                                    </p>
-                                )}
-
-                                {unfulfilledGoals?.length > ZERO_VALUE &&
-                                    unfulfilledGoals.map(
-                                        ({
-                                            id,
-                                            activityType,
-                                            frequency,
-                                            frequencyType,
-                                            progress,
-                                        }) => (
-                                            <GoalCard
-                                                key={id}
-                                                activityType={activityType}
-                                                frequency={frequency}
-                                                frequencyType={frequencyType}
-                                                progress={progress}
-                                            />
-                                        ),
-                                    )}
-                            </div>
-                            <div className="md:w-full xl:w-96">
-                                <Button
-                                    type="button"
-                                    label="Set the new goal"
-                                    variant={ButtonVariant.SECONDARY}
-                                    size={ComponentSize.LARGE}
-                                    leftIcon={<PlusIcon className="w-6" />}
-                                    className="h-[5rem] sm:text-sm md:h-[7.5rem] md:text-xl"
-                                    onClick={handleOpenModal}
+                    {!isSubscribed && (
+                        <GoogleAds className="hidden h-[63rem] max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
+                    )}
+                    <div className="flex max-w-[1136px] flex-col gap-8 lg:flex-row">
+                        <div className="flex flex-col gap-8">
+                            <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
+                                <GoalWidget
+                                    value={lastGoal?.progress as number}
+                                    target={lastGoal?.progress as number}
+                                    title={
+                                        lastGoal
+                                            ? GOALS_MESSAGES.GOAL_COMPLETED
+                                            : GOALS_MESSAGES.NO_GOALS
+                                    }
+                                    subTitle={
+                                        lastGoal
+                                            ? GOALS_MESSAGES.GOAL_ENCOURAGE
+                                            : ''
+                                    }
+                                    goalType={
+                                        lastGoal
+                                            ? activityToGoal[
+                                                  lastGoal.activityType
+                                              ]
+                                            : GoalTypes.STANDART
+                                    }
+                                    hasAchievement={Boolean(lastGoal)}
                                 />
+                            </section>
+                            <section>
+                                <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
+                                    Goals
+                                </h2>
+                                <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
+                                    {goals.length === ZERO_VALUE && (
+                                        <p className="text-primary mb-5 w-full text-xl font-extrabold">
+                                            No goals yet
+                                        </p>
+                                    )}
+
+                                    {unfulfilledGoals?.length > ZERO_VALUE &&
+                                        unfulfilledGoals.map(
+                                            ({
+                                                id,
+                                                activityType,
+                                                frequency,
+                                                frequencyType,
+                                                progress,
+                                            }) => (
+                                                <GoalCard
+                                                    key={id}
+                                                    activityType={activityType}
+                                                    frequency={frequency}
+                                                    frequencyType={
+                                                        frequencyType
+                                                    }
+                                                    progress={progress}
+                                                />
+                                            ),
+                                        )}
+                                </div>
+                                <div className="md:w-full xl:w-96">
+                                    <Button
+                                        type="button"
+                                        label="Set the new goal"
+                                        variant={ButtonVariant.SECONDARY}
+                                        size={ComponentSize.LARGE}
+                                        leftIcon={<PlusIcon className="w-6" />}
+                                        className="h-[5rem] sm:text-sm md:h-[7.5rem] md:text-xl"
+                                        onClick={handleOpenModal}
+                                    />
+                                </div>
+                            </section>
+                        </div>
+
+                        <section>
+                            {!isSubscribed && (
+                                <GoogleAds className="mb-5 h-64" />
+                            )}
+                            <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
+                                Achievements
+                            </h2>
+
+                            <div className="flex w-full flex-col gap-4">
+                                {achievements?.length > ZERO_VALUE &&
+                                    achievements.map((achievement) => (
+                                        <AchievementCard
+                                            key={achievement.id}
+                                            achievement={achievement}
+                                        />
+                                    ))}
                             </div>
                         </section>
                     </div>
-
-                    <section>
-                        <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
-                            Achievements
-                        </h2>
-
-                        <div className="flex w-full flex-col gap-4">
-                            {achievements?.length > ZERO_VALUE &&
-                                achievements.map((achievement) => (
-                                    <AchievementCard
-                                        key={achievement.id}
-                                        achievement={achievement}
-                                    />
-                                ))}
-                        </div>
-                    </section>
 
                     <Modal
                         isOpen={isModalOpen}
@@ -206,6 +223,9 @@ const Goals: React.FC = () => {
                         />
                     </Modal>
                     <ThemeSwitcher className="absolute bottom-4 right-4" />
+                    {!isSubscribed && (
+                        <GoogleAds className="hidden h-[63rem] max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
+                    )}
                 </>
             )}
         </main>
