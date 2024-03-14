@@ -25,6 +25,7 @@ import {
     subscriptionApi,
     subscriptionPlansApi,
 } from '~/bundles/subscription/subscription.js';
+import { reducer as userBonusesReducer } from '~/bundles/user-bonuses/store/user-bonuses.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { reducer as workoutsReducer } from '~/bundles/workouts/store/workouts.js';
@@ -48,6 +49,7 @@ type RootReducer = {
     notifications: ReturnType<typeof notificationsReducer>;
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
+    userBonuses: ReturnType<typeof userBonusesReducer>;
 };
 
 type ExtraArguments = {
@@ -87,6 +89,7 @@ class Store {
                 notifications: notificationsReducer,
                 connections: connectionsReducer,
                 workouts: workoutsReducer,
+                userBonuses: userBonusesReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({

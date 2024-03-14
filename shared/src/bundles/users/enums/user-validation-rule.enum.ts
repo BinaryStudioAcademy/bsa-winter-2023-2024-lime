@@ -27,6 +27,10 @@ const UserValidationRule = {
         MIN_VALUE: 0,
         MAX_VALUE: 300,
     },
+    LOCATION: {
+        MIN_LENGTH: 2,
+        MAX_LENGTH: 300,
+    },
 } as const;
 
 export { UserValidationRule };

@@ -3,6 +3,7 @@ export { ActivityIcon } from './activity-icon/activity-icon.js';
 export { Avatar } from './avatar/avatar.js';
 export { Button, ButtonVariant } from './button/button.js';
 export { Card } from './card/card.js';
+export { CopyToClipboard } from './copy-to-clipboard/copy-to-clipboard.js';
 export { DatePicker } from './date-picker/date-picker.js';
 export { DownloadBanner } from './download-banner/download-banner.jsx';
 export { ForgotPasswordForm } from './forgot-password-form/forgot-password-form.js';
