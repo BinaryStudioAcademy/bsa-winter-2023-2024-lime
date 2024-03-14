@@ -201,7 +201,7 @@ const Goals: React.FC = () => {
 
                         <section>
                             {!isSubscribed && (
-                                <GoogleAds className="mb-5 h-64" />
+                                <GoogleAds className="mb-5 h-48" />
                             )}
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                 Achievements
