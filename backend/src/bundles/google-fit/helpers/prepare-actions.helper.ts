@@ -56,6 +56,7 @@ const prepareActions = (
             )
         ) {
             actions.push({ data, action: Action.CREATE });
+            break;
         }
 
         if (!dataFromDatabase.some((item) => isEquivalentWorkout(item, data))) {
