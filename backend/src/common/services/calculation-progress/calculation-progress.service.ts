@@ -2,6 +2,7 @@ import { type AchievementService } from '~/bundles/achievements/achievement.serv
 import { type UserAchievementService } from '~/bundles/achievements/user-achievement.service.js';
 import { type GoalService } from '~/bundles/goals/goal.service.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
+import { type NotificationService } from '~/bundles/notifications/notification.service.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import { workoutService } from '~/bundles/workouts/workouts.js';
 import { COMPLETED_GOAL_VALUE } from '~/common/constants/constants.js';
@@ -20,15 +21,20 @@ class CalculationProgressService {
     private achievementService: AchievementService;
     private goalService: GoalService;
     private userAchievementsService: UserAchievementService;
+    private notificationService: NotificationService;
 
+    /* eslint-disable max-params */
     public constructor(
+        /* eslint-enable max-params */
         goalService: GoalService,
         achievementService: AchievementService,
         userAchievementsService: UserAchievementService,
+        notificationService: NotificationService,
     ) {
         this.achievementService = achievementService;
         this.goalService = goalService;
         this.userAchievementsService = userAchievementsService;
+        this.notificationService = notificationService;
     }
 
     public async calculateProgress(userId: number): Promise<void> {
@@ -44,12 +50,14 @@ class CalculationProgressService {
         goals: GoalResponseDto[],
         workouts: WorkoutResponseDto[],
     ): Promise<void> {
+        let hasCompletedGoal = false;
+
         for (const goal of goals) {
             const filteredWorkouts = workouts.filter(
                 (workout) => workout.activityType === goal.activityType,
             );
 
-            await this.goalService.update(
+            const updatedGoal = await this.goalService.update(
                 { id: goal.id },
                 {
                     ...goal,
@@ -62,6 +70,24 @@ class CalculationProgressService {
                             : null,
                 },
             );
+
+            if (
+                calculateGoalProgress(goal, filteredWorkouts) ===
+                    COMPLETED_GOAL_VALUE &&
+                updatedGoal
+            ) {
+                hasCompletedGoal = true;
+            }
+        }
+
+        if (hasCompletedGoal) {
+            await this.notificationService.create({
+                userId,
+                title: 'Goal Completed',
+                message: 'Congratulations! You have completed your goal.',
+                isRead: false,
+                type: 'default',
+            });
         }
     }
 
