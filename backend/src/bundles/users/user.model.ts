@@ -1,7 +1,10 @@
 import { type RelationMappings, Model } from 'objection';
 
-// import { ChatModel } from '~/bundles/chats/chats.js';
-// import { MessageAttributes } from '~/bundles/messages/messages.js';
+import {
+    AiAssistantAttributes,
+    AiAssistantModel,
+} from '~/bundles/ai-assistants/ai-assistants.js';
+import { ChatModel } from '~/bundles/chats/chats.js';
 import {
     OAuthInfoAttributes,
     OAuthModel,
@@ -16,9 +19,7 @@ import {
 } from '~/common/database/database.js';
 
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
-// import { ChatModel } from '../chats/chats.js';
-// import { UserMessageAttributes } from '../messages/enums/user-message-attributes.js';
-// import { UserMessageModel } from '../messages/user-message.model.js';
+import { MessageAttributes } from '../messages/messages.js';
 import { SubscriptionModel } from '../subscriptions/subscription.model.js';
 import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
@@ -32,6 +33,7 @@ class UserModel extends AbstractModel {
     public 'stripeCustomerId': string;
 
     public 'userDetails': UserDetailsModel;
+
     public 'workouts': WorkoutModel;
 
     public 'userAchievements': UserAchievementModel;
@@ -40,7 +42,9 @@ class UserModel extends AbstractModel {
 
     public 'userOAuthState': OAuthStateModel;
 
-    // public 'chats': ChatModel[];
+    public 'chats': ChatModel[];
+
+    public 'aiAssistant': AiAssistantModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -96,18 +100,26 @@ class UserModel extends AbstractModel {
                     to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
                 },
             },
-            // chats: {
-            //     relation: Model.ManyToManyRelation,
-            //     modelClass: ChatModel,
-            //     join: {
-            //         from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-            //         through: {
-            //             from: `${DatabaseTableName.MESSAGES}.${MessageAttributes.SENDER_ID}`,
-            //             to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
-            //         },
-            //         to: `${DatabaseTableName.CHATS}.`,
-            //     },
-            // },
+            chats: {
+                relation: Model.ManyToManyRelation,
+                modelClass: ChatModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    through: {
+                        from: `${DatabaseTableName.MESSAGES}.${MessageAttributes.SENDER_ID}`,
+                        to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
+                    },
+                    to: `${DatabaseTableName.CHATS}.`,
+                },
+            },
+            aiAssistant: {
+                relation: Model.HasOneRelation,
+                modelClass: AiAssistantModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.AI_ASSISTANTS}.${AiAssistantAttributes.USER_ID}`,
+                },
+            },
         };
     }
 }
