@@ -26,7 +26,7 @@ const { reducer, actions, name } = createSlice({
     reducers: {
         stopRefreshing(state) {
             state.isRefreshing = false;
-        }
+        },
     },
     extraReducers(builder) {
         builder.addCase(signUp.pending, (state) => {
