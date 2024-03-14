@@ -114,7 +114,7 @@ const Goals: React.FC = () => {
     return (
         <main className="bg-secondary flex w-full flex-col justify-center gap-8 lg:flex-row">
             {isLoading ? (
-                <Loader />
+                <Loader isOverflow />
             ) : (
                 <>
                     {!isSubscribed && (
