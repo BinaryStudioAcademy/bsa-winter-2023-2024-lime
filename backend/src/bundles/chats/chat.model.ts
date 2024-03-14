@@ -4,7 +4,7 @@ import {
     MessageAttributes,
     MessageModel,
 } from '~/bundles/messages/messages.js';
-import { UserAttributes, UserModel } from '~/bundles/users/users.js';
+// import { UserAttributes, UserModel } from '~/bundles/users/users.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -15,7 +15,7 @@ import { ChatAttributes } from './enums/enums.js';
 class ChatModel extends AbstractModel {
     public 'messages': MessageModel[];
 
-    public 'users': UserModel[];
+    // public 'users': UserModel[];
 
     public static override get tableName(): string {
         return DatabaseTableName.CHATS;
@@ -31,18 +31,18 @@ class ChatModel extends AbstractModel {
                     to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
                 },
             },
-            users: {
-                relation: Model.ManyToManyRelation,
-                modelClass: UserModel,
-                join: {
-                    from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
-                    through: {
-                        from: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
-                        to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.SENDER_ID}`,
-                    },
-                    to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                },
-            },
+            // users: {
+            //     relation: Model.ManyToManyRelation,
+            //     modelClass: UserModel,
+            //     join: {
+            //         from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
+            //         through: {
+            //             from: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
+            //             to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.SENDER_ID}`,
+            //         },
+            //         to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+            //     },
+            // },
         };
     }
 }
