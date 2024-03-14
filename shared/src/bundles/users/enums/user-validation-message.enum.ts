@@ -1,6 +1,7 @@
 import { UserValidationRule } from './user-validation-rule.enum.js';
 
-const { PASSWORD, FULLNAME, NICKNAME, WEIGHT, HEIGHT } = UserValidationRule;
+const { LOCATION, PASSWORD, FULLNAME, NICKNAME, WEIGHT, HEIGHT } =
+    UserValidationRule;
 
 const UserValidationMessage = {
     REQUIRED: 'Please fill out this field',
@@ -25,6 +26,8 @@ const UserValidationMessage = {
     WEIGHT_WRONG: 'Weight should only contain numbers and a decimal point.',
     HEIGHT_WRONG: 'Height should only contain numbers and a decimal point.',
     HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MAX_VALUE} cm.`,
+    LOCATION_WRONG: 'Location should be in format City, Country',
+    LOCATION_LENGTH: `lOCATION should have from ${LOCATION.MIN_LENGTH} to ${LOCATION.MAX_LENGTH} characters.`,
     USER_NOT_FOUND: 'User not found',
     USER_WITH_REFERRAL_ID_NOT_FOUND: 'User with this referral id was not found',
     BONUS_OPERATION_LACK_OF_FUNDS:

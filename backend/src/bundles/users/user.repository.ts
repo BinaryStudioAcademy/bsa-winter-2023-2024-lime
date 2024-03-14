@@ -41,6 +41,7 @@ class UserRepository implements Repository {
             gender: userDetails.gender,
             referralCode: userDetails.referralCode,
             bonusBalance: userDetails.bonusBalance,
+            location: userDetails.location,
         });
     }
 
@@ -71,6 +72,7 @@ class UserRepository implements Repository {
             gender: userDetails.gender,
             referralCode: userDetails.referralCode,
             bonusBalance: userDetails.bonusBalance,
+            location: userDetails.location,
         });
     }
 
@@ -94,6 +96,7 @@ class UserRepository implements Repository {
                 gender: userDetails.gender,
                 referralCode: userDetails.referralCode,
                 bonusBalance: userDetails.bonusBalance,
+                location: userDetails.location,
             });
         });
     }
@@ -140,6 +143,7 @@ class UserRepository implements Repository {
                 gender: userDetails.gender,
                 referralCode: userDetails.referralCode,
                 bonusBalance: userDetails.bonusBalance,
+                location: userDetails.location,
             });
         } catch (error) {
             await trx.rollback();
@@ -194,6 +198,7 @@ class UserRepository implements Repository {
                 gender: userDetails.gender,
                 referralCode: userDetails.referralCode,
                 bonusBalance: userDetails.bonusBalance,
+                location: userDetails.location,
             });
         } catch (error) {
             await trx.rollback();
