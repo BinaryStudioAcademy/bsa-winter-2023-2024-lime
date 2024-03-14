@@ -14,6 +14,7 @@ import GoalIcon from '~/assets/img/icons/goal-icon.svg?react';
 import GoalsIcon from '~/assets/img/icons/goals-icon.svg?react';
 import GoogleFitIcon from '~/assets/img/icons/google-fit-icon.svg?react';
 import GoogleLogoIcon from '~/assets/img/icons/google-logo.svg?react';
+import LimeCoinIcon from '~/assets/img/icons/lime-coin-icon.svg?react';
 import LogoIcon from '~/assets/img/icons/logo-icon.svg?react';
 import MessageIcon from '~/assets/img/icons/message-icon.svg?react';
 import NotFoundIcon from '~/assets/img/icons/not-found-icon.svg?react';
@@ -44,6 +45,7 @@ const IconComponent: Record<
     stepsIcon: StepsIcon,
     googleLogoIcon: GoogleLogoIcon,
     facebookIcon: FacebookIcon,
+    limeCoinIcon: LimeCoinIcon,
     messageIcon: MessageIcon,
     cyclingIcon: CyclingIcon,
     walkingIcon: WalkingIcon,
