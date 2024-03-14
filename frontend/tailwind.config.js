@@ -165,6 +165,7 @@ export default {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
                 tertiary: 'var(--background-tertiary)',
+                overlay: 'var(--modal-overlay)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
