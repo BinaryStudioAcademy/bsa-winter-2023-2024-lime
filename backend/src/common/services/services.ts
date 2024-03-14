@@ -28,12 +28,12 @@ const stripeService = new StripeService(
     config.ENV.STRIPE.SECRET_KEY,
     config.ENV.STRIPE.WEBHOOK_SECRET,
 );
-const calculationProgressService = new CalculationProgressService(
+const calculationProgressService = new CalculationProgressService({
     goalService,
     achievementService,
     userAchievementService,
     notificationService,
-);
+});
 
 const openAIService = new OpenAIService(OPEN_AI_API_KEY, OPEN_AI_MODEL);
 const fileService = new FileService({

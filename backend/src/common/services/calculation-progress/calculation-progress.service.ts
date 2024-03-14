@@ -23,17 +23,20 @@ class CalculationProgressService {
     private userAchievementsService: UserAchievementService;
     private notificationService: NotificationService;
 
-    /* eslint-disable max-params */
-    public constructor(
-        /* eslint-enable max-params */
-        goalService: GoalService,
-        achievementService: AchievementService,
-        userAchievementsService: UserAchievementService,
-        notificationService: NotificationService,
-    ) {
+    public constructor({
+        goalService,
+        achievementService,
+        userAchievementService,
+        notificationService,
+    }: {
+        goalService: GoalService;
+        achievementService: AchievementService;
+        userAchievementService: UserAchievementService;
+        notificationService: NotificationService;
+    }) {
         this.achievementService = achievementService;
         this.goalService = goalService;
-        this.userAchievementsService = userAchievementsService;
+        this.userAchievementsService = userAchievementService;
         this.notificationService = notificationService;
     }
 
