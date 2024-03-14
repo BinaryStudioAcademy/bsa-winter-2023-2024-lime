@@ -17,9 +17,14 @@ import { type UserSignUpForm } from './type.js';
 type Properties = {
     onSubmit: (payload: UserSignUpForm) => void;
     isLoading: boolean;
+    handleOAuth: () => void;
 };
 
-const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+const SignUpForm: React.FC<Properties> = ({
+    onSubmit,
+    isLoading,
+    handleOAuth,
+}) => {
     const { control, errors, handleSubmit } = useAppForm<UserSignUpForm>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
         validationSchema: userSignUpValidationSchema,
@@ -45,12 +50,7 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
                         rightIcon={<Icon name="googleLogoIcon" />}
-                    />
-                    <Button
-                        size={ComponentSize.MEDIUM}
-                        variant={ButtonVariant.SECONDARY}
-                        label="Continue with "
-                        rightIcon={<Icon name="facebookIcon" />}
+                        onClick={handleOAuth}
                     />
                 </div>
 

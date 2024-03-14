@@ -36,6 +36,13 @@ class PasswordResetService {
             });
         }
 
+        if (user.passwordHash === null) {
+            throw new HttpError({
+                message: PasswordResetValidationMessage.USER_OAUTH,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
         const token = await jwtService.createToken(
             { userId: user.id },
             '1d',
@@ -70,10 +77,19 @@ class PasswordResetService {
             });
         }
 
+        const userPasswordHash = user.getPasswordHash();
+
+        if (!userPasswordHash) {
+            throw new HttpError({
+                message: PasswordResetValidationMessage.USER_OAUTH,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
         try {
             await jwtService.verifyToken(
                 passwordResetRequestDto.token,
-                user.getPasswordHash(),
+                userPasswordHash,
             );
         } catch {
             throw new HttpError({
@@ -94,7 +110,7 @@ class PasswordResetService {
 
         const existPassword = cryptService.compareSyncPassword(
             passwordResetRequestDto.password,
-            user.getPasswordHash(),
+            userPasswordHash,
         );
 
         if (existPassword) {

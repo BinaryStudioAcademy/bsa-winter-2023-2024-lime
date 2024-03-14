@@ -21,6 +21,15 @@ export {
     goalValidationSchema,
 } from './bundles/goals/goals.js';
 export {
+    type IdentityAuthorizeDto,
+    type IdentityAuthTokenDto,
+    type IdentityProviderParameterDto,
+    type IdentityResponseDto,
+    IdentityActionsPath,
+    IdentityProvider,
+    identityProviderValidationSchema,
+} from './bundles/identity/identity.js';
+export {
     type NotificationRequestDto,
     type NotificationResponseDto,
     NotificationsApiPath,
@@ -124,6 +133,7 @@ export {
     type EntityIdParameterDto,
     type Paged,
     type PaginationParameters,
+    type RedirectUrlResponseDto,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,

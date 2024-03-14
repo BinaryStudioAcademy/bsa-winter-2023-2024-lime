@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 
 import { App } from '~/app/app.js';
 import { Auth } from '~/bundles/auth/pages/auth.js';
+import { Identity } from '~/bundles/auth/pages/identity.js';
 import {
     DownloadBanner,
     NotificationContainer,
@@ -42,6 +43,10 @@ const routes = [
             {
                 path: AppRoute.SIGN_IN,
                 element: <Auth />,
+            },
+            {
+                path: AppRoute.IDENTITY_$TOKEN,
+                element: <Identity />,
             },
             {
                 path: AppRoute.SIGN_UP,

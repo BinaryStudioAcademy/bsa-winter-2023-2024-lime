@@ -41,7 +41,7 @@ type EnvironmentSchema = {
         CLIENT_ID: string;
         CLIENT_SECRET: string;
     };
-    GOOGLE_FIT: {
+    GOOGLE: {
         CLIENT_ID: string;
         CLIENT_SECRET: string;
     };

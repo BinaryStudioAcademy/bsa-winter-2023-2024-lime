@@ -8,6 +8,7 @@ const ButtonVariant = {
     TERTIARY: 'tertiary',
     SIDEBAR: 'sidebar',
     DANGER: 'danger',
+    CREATE_GOAL: 'createGoal',
 } as const;
 
 type ButtonSize = Exclude<
@@ -47,6 +48,8 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
         'align-middle hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
     [ButtonVariant.DANGER]:
         'rounded-lg justify-center bg-lm-red text-primary hover:opacity-80',
+    [ButtonVariant.CREATE_GOAL]:
+        'border justify-center border-buttonPrimary rounded-lg bg-primary text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary disabled:border-buttonTertiary',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {
