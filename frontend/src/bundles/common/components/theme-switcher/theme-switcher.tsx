@@ -25,7 +25,6 @@ function ThemeSwitcher({
     const { theme } = useAppSelector(({ theme }) => theme);
     const size = window.innerWidth < 768 ? 48 : 52;
 
-
     useEffect(() => {
         void dispatch(themeActions.fetchTheme());
     }, [dispatch]);
