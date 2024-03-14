@@ -35,6 +35,7 @@ class UserRepository implements Repository {
             weight: userDetails.weight,
             height: userDetails.height,
             gender: userDetails.gender,
+            location: userDetails.location,
         });
     }
 
@@ -56,6 +57,7 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                location: userDetails.location,
             });
         });
     }
@@ -98,6 +100,7 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                location: userDetails.location,
             });
         } catch (error) {
             await trx.rollback();
@@ -149,6 +152,7 @@ class UserRepository implements Repository {
                 weight: userDetails.weight,
                 height: userDetails.height,
                 gender: userDetails.gender,
+                location: userDetails.location,
             });
         } catch (error) {
             await trx.rollback();
