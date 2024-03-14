@@ -6,7 +6,6 @@ import {
     Button,
     ButtonVariant,
     Loader,
-    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { CreateGoalForm } from '~/bundles/common/components/create-goal-form/create-goal-form.js';
 import { Modal } from '~/bundles/common/components/modal/modal.js';
@@ -180,7 +179,7 @@ const Goals: React.FC = () => {
                                 <Button
                                     type="button"
                                     label="Set the new goal"
-                                    variant={ButtonVariant.SECONDARY}
+                                    variant={ButtonVariant.CREATE_GOAL}
                                     size={ComponentSize.LARGE}
                                     leftIcon={<PlusIcon className="w-6" />}
                                     className="h-[7.5rem] sm:text-sm md:text-xl"
@@ -216,7 +215,6 @@ const Goals: React.FC = () => {
                             onSubmit={handleAddGoal}
                         />
                     </Modal>
-                    <ThemeSwitcher className="absolute bottom-4 right-4" />
                 </>
             )}
         </main>

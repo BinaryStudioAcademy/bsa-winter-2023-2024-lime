@@ -15,6 +15,7 @@ const IconName = {
     caloriesIcon: 'caloriesIcon',
     stepsIcon: 'stepsIcon',
     durationIcon: 'durationIcon',
+    limeCoinIcon: 'limeCoinIcon',
     cyclingIcon: 'cyclingIcon',
     runningIcon: 'runningIcon',
     walkingIcon: 'walkingIcon',

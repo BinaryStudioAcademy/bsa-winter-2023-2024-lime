@@ -21,7 +21,13 @@ class UserDetailsModel extends AbstractModel {
 
     public 'height': number | null;
 
+    public 'location': string | null;
+
     public 'gender': ValueOf<typeof Gender> | null;
+
+    public 'referralCode': string | null;
+
+    public 'bonusBalance': number | null;
 
     public static override get tableName(): string {
         return DatabaseTableName.USER_DETAILS;

@@ -13,11 +13,15 @@ import {
     useEffect,
     useLocation,
     useNavigate,
+    useSearchParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import { type PasswordForgotRequestDto } from '~/bundles/password-reset/types/types.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 
 import {
     PasswordForgotSuccessMessage,
@@ -33,6 +37,8 @@ const Auth: React.FC = () => {
     const { pathname } = useLocation();
 
     const navigate = useNavigate();
+
+    const [searchParameters] = useSearchParams();
 
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
@@ -52,7 +58,7 @@ const Auth: React.FC = () => {
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
 
     const handleSignInSubmit = useCallback(
-        (payload: UserAuthRequestDto): void => {
+        (payload: UserAuthSignInRequestDto): void => {
             void dispatch(authActions.signIn(payload));
         },
         [dispatch],
@@ -61,11 +67,17 @@ const Auth: React.FC = () => {
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpForm): void => {
             const { email, password } = payload;
-            const signUpDTO: UserAuthRequestDto = { email, password };
+            const referralCode = searchParameters.get('referralCode');
+
+            const signUpDTO: UserAuthSignUpRequestDto = {
+                email,
+                password,
+                referralCode,
+            };
 
             void dispatch(authActions.signUp(signUpDTO));
         },
-        [dispatch],
+        [dispatch, searchParameters],
     );
 
     const handleForgotPassword = useCallback(
@@ -125,7 +137,7 @@ const Auth: React.FC = () => {
 
     const classes = {
         base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-secondary lg:flex-none lg:w-[45rem]',
-        form: 'justify-between text-primary px-[2rem] pb-[3.75rem] pt-[10rem] lg:px-[11.25rem] lg:justify-center lg:pt-0 lg:pb-0',
+        form: 'justify-between text-primary px-[2rem] pb-[3.75rem] sm:pt-[6rem] pt-[10rem] lg:px-[11.25rem] lg:justify-center lg:pt-0 lg:pb-0 min-h-[46rem]',
         main: 'bg-auth overflow-y-auto flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
         logoContainer:
             'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
