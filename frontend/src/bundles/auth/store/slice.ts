@@ -30,7 +30,7 @@ const initialState: State = {
     user: null,
     isRefreshing: false,
     updateProfile: {
-        dataStatus: DataStatus.IDLE,
+        dataStatus: DataStatus.IDLE, // quick fix for the issue with blank layout while updating user profile
         avatarUrl: null,
     },
 };
