@@ -109,6 +109,9 @@ const Goals: React.FC = () => {
 
     const unfulfilledGoals = goals.filter((goal) => !goal.completedAt);
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
+    const goalType = lastGoal
+        ? activityToGoal[lastGoal.activityType]
+        : GoalTypes.STANDART;
 
     return (
         <main className="bg-secondary flex w-full flex-col justify-center gap-8 xl:flex-row">
@@ -141,13 +144,7 @@ const Goals: React.FC = () => {
                                             ? GOALS_MESSAGES.GOAL_ENCOURAGE
                                             : ''
                                     }
-                                    goalType={
-                                        lastGoal
-                                            ? activityToGoal[
-                                                  lastGoal.activityType
-                                              ]
-                                            : GoalTypes.STANDART
-                                    }
+                                    goalType={goalType}
                                     hasAchievement={Boolean(lastGoal)}
                                     hasDistance={Boolean(lastGoal?.distance)}
                                 />

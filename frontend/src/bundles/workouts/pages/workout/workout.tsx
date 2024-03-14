@@ -32,7 +32,7 @@ const Workout: React.FC = () => {
         workouts: workouts.workouts,
     }));
 
-        const { currentSubscription: isSubscribed } = useAppSelector(
+    const { currentSubscription: isSubscribed } = useAppSelector(
         ({ subscriptions }) => subscriptions,
     );
 
@@ -69,35 +69,35 @@ const Workout: React.FC = () => {
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
-                    <>
+                <>
                     {!isSubscribed && (
                         <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
                     )}
-                <div className="flex w-full max-w-[1136px]">
-                    {workouts.length > 0 ? (
-                        <>
-                            <div className="my-[-2rem] ml-[-2rem]">
-                                <SubNavigation
-                                    title={subNavigationTitle}
-                                    items={subNavigationItems}
-                                />
-                            </div>
+                    <div className="flex w-full max-w-[1136px]">
+                        {workouts.length > 0 ? (
+                            <>
+                                <div className="my-[-2rem] ml-[-2rem]">
+                                    <SubNavigation
+                                        title={subNavigationTitle}
+                                        items={subNavigationItems}
+                                    />
+                                </div>
 
-                            <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
+                                <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
 
-                            <div className="w-full px-[1.5rem]">
-                                <WorkoutItem />
+                                <div className="w-full px-[1.5rem]">
+                                    <WorkoutItem />
+                                </div>
+                            </>
+                        ) : (
+                            <div className="font-base text-primary flex w-full flex-col items-center justify-center gap-2 px-[2rem] text-center text-xl">
+                                <p>You don&#39;t have any workouts yet</p>
+                                <Icon name={IconName.workoutIcon} />
+                                <p>When you add some they will appear here</p>
                             </div>
-                        </>
-                    ) : (
-                        <div className="font-base text-primary flex w-full flex-col items-center justify-center gap-2 px-[2rem] text-center text-xl">
-                            <p>You don&#39;t have any workouts yet</p>
-                            <Icon name={IconName.workoutIcon} />
-                            <p>When you add some they will appear here</p>
-                        </div>
-                    )}
-                        </div>
-                         {!isSubscribed && (
+                        )}
+                    </div>
+                    {!isSubscribed && (
                         <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
                     )}
                 </>
