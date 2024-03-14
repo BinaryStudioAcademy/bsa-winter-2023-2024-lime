@@ -6,6 +6,7 @@ import ArrowDownIcon from '~/assets/img/icons/arrow-down-icon.svg?react';
 import BellIcon from '~/assets/img/icons/bell-icon.svg?react';
 import CaloriesIcon from '~/assets/img/icons/calories-icon.svg?react';
 import CommunityIcon from '~/assets/img/icons/community-icon.svg?react';
+import DurationIcon from '~/assets/img/icons/duration-icon.svg?react';
 import FacebookIcon from '~/assets/img/icons/facebook.svg?react';
 import FeedIcon from '~/assets/img/icons/feed-icon.svg?react';
 import GoalIcon from '~/assets/img/icons/goal-icon.svg?react';
@@ -41,6 +42,7 @@ const IconComponent: Record<
     googleFitIcon: GoogleFitIcon,
     caloriesIcon: CaloriesIcon,
     stepsIcon: StepsIcon,
+    durationIcon: DurationIcon,
     googleLogoIcon: GoogleLogoIcon,
     facebookIcon: FacebookIcon,
     limeCoinIcon: LimeCoinIcon,

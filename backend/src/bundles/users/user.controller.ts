@@ -115,6 +115,18 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
+            path: UsersApiPath.GET_BY_ID,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getUserById(
+                    options as ApiHandlerOptions<{
+                        params: { id: number };
+                    }>,
+                ),
+        });
+
+        this.addRoute({
             path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
@@ -212,7 +224,51 @@ class UserController extends BaseController {
             payload: user,
         };
     }
+    /**
+     * @swagger
+     * /api/v1/users/{id}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *        description: The ID of the user to retrieve
+     *        schema:
+     *          type: integer
+     *      tags:
+     *       - Users
+     *      description: Returns user by ID
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private async getUserById(
+        options: ApiHandlerOptions<{
+            params: { id: number };
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { params } = options;
+        const achievement = await this.userService.find({ id: params.id });
 
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: achievement,
+        };
+    }
     /**
      * @swagger
      * /api/v1/users/update:

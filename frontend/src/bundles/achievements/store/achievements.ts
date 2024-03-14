@@ -1,9 +1,10 @@
-import { getAchievements } from './actions.js';
+import { getAchievements, getAchievementsByUserId } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     getAchievements,
+    getAchievementsByUserId,
 };
 
 export { allActions as actions };
