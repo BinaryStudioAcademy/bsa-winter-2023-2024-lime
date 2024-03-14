@@ -13,6 +13,7 @@ import { type IdentityService } from './identity.js';
 import {
     type IdentityExchangeAuthCodeDto,
     type IdentityProviderParameterDto,
+    type IdentityReferralCodeQueryDto,
 } from './types/types.js';
 import { identityProviderValidationSchema } from './validation-schemas/validation-schemas.js';
 
@@ -40,6 +41,7 @@ class IdentityController extends BaseController {
                 this.authorize(
                     options as ApiHandlerOptions<{
                         params: IdentityProviderParameterDto;
+                        query: IdentityReferralCodeQueryDto;
                     }>,
                 ),
         });
@@ -92,11 +94,15 @@ class IdentityController extends BaseController {
     private async authorize(
         options: ApiHandlerOptions<{
             params: IdentityProviderParameterDto;
+            query: IdentityReferralCodeQueryDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { provider } = options.params;
-        const redirectUrl =
-            await this.identityService.getAuthorizeRedirectUrl(provider);
+        const { referralCode } = options.query;
+        const redirectUrl = await this.identityService.getAuthorizeRedirectUrl(
+            provider,
+            referralCode ?? null,
+        );
 
         return {
             type: ApiHandlerResponseType.DATA,
@@ -118,6 +124,7 @@ class IdentityController extends BaseController {
         const payload = {
             ...query,
             state: data.uuid,
+            referralCode: data.referralCode,
         };
 
         const { token } = await this.identityService.exchangeAuthCode(

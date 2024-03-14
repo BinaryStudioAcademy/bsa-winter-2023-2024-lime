@@ -1,5 +1,6 @@
 export { IdentityActionsPath, IdentityProvider } from './enums/enums.js';
 export {
+    type IdentityAuthorizeDto,
     type IdentityAuthTokenDto,
     type IdentityProviderParameterDto,
     type IdentityResponseDto,

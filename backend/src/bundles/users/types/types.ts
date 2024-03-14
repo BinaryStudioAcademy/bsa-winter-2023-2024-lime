@@ -1,4 +1,4 @@
-export { type UserOAuthRequestDto } from './user-oauth-request-dto.type.js';
+export { type UserIdentityRequestDto } from './user-identity-request-dto.type.js';
 export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,

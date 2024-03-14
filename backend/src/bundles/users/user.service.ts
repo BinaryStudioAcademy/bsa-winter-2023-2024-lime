@@ -9,6 +9,8 @@ import { type Service } from '~/common/types/types.js';
 import {
     type UserBonusCreateRequestDto,
     type UserBonusGetAllItemResponseDto,
+    BonusAmount,
+    UserBonusActionType,
     UserBonusEntity,
     UserBonusTransactionType,
 } from '../user-bonuses/user-bonuses.js';
@@ -17,7 +19,7 @@ import {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserGetAllResponseDto,
-    type UserOAuthRequestDto,
+    type UserIdentityRequestDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
 import { type UserDetailsModel } from './user-details.model.js';
@@ -70,9 +72,9 @@ class UserService implements Service {
     }
 
     public async findOrCreateIdentityUser(
-        payload: UserOAuthRequestDto,
+        payload: UserIdentityRequestDto,
     ): Promise<UserAuthResponseDto> {
-        const { email, fullName, avatarUrl } = payload;
+        const { email, fullName, avatarUrl, referralCode } = payload;
 
         const userByEmail = await this.userRepository.find({
             email,
@@ -82,18 +84,42 @@ class UserService implements Service {
             return userByEmail.toObject();
         }
 
+        const inviterUser = await this.findWithUserDetailsJoined({
+            referralCode,
+        });
+
         const { stripeCustomerId } = await stripeService.createCustomer(email);
+        const generatedReferralCode = crypto.randomUUID();
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
                 stripeCustomerId,
-                referralCode: null,
                 fullName,
+                referralCode: generatedReferralCode,
                 avatarUrl,
             }),
         );
 
-        return user.toObject() as UserAuthResponseDto;
+        const createdUser = user.toObject() as UserAuthResponseDto;
+
+        if (referralCode && inviterUser) {
+            const { id: inviterId } = inviterUser.toObject();
+            await this.createUserBonusTransaction({
+                userId: createdUser.id,
+                actionType: UserBonusActionType.REGISTERED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.REGISTERED],
+            });
+
+            await this.createUserBonusTransaction({
+                userId: inviterId,
+                actionType: UserBonusActionType.INVITED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.INVITED],
+            });
+        }
+
+        return createdUser;
     }
 
     public async updateUserProfile(

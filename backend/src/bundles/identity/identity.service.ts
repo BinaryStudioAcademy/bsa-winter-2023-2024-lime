@@ -42,18 +42,22 @@ class IdentityService {
 
     public async getAuthorizeRedirectUrl(
         provider: ValueOf<typeof IdentityProvider>,
+        referralCode: string | null,
     ): Promise<URL> {
-        const oAuthStateEntity = await this.createOAuthState();
+        const oAuthStateEntity = await this.createOAuthState(referralCode);
         const strategy = this.getStrategy(provider);
 
         return strategy.getAuthorizeRedirectUrl(oAuthStateEntity);
     }
 
-    private async createOAuthState(): Promise<OAuthStateEntity> {
+    private async createOAuthState(
+        referralCode: string | null,
+    ): Promise<OAuthStateEntity> {
         const uuid = crypto.randomUUID();
         const oAuthStateEntity = OAuthStateEntity.initializeNew({
             userId: null,
             uuid,
+            referralCode,
         });
 
         return await this.oAuthStateRepository.create(oAuthStateEntity);
@@ -72,9 +76,10 @@ class IdentityService {
             });
         }
 
-        const { state: uuid } = payload;
+        const { state: uuid, referralCode } = payload;
         const isStateValid = await this.verifyOAuthState({
             uuid,
+            referralCode: referralCode ?? null,
         });
         if (!isStateValid) {
             throw new HttpError({
@@ -98,9 +103,13 @@ class IdentityService {
         return this.strategies[provider];
     }
 
-    private async verifyOAuthState({ uuid }: IdentityState): Promise<boolean> {
+    private async verifyOAuthState({
+        uuid,
+        referralCode,
+    }: IdentityState): Promise<boolean> {
         const state = await this.oAuthStateRepository.find({
             uuid,
+            referralCode,
         });
 
         return Boolean(state);

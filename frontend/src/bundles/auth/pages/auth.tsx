@@ -59,8 +59,14 @@ const Auth: React.FC = () => {
     const isResetPasswordLoading = resetPasswordStatus === DataStatus.PENDING;
 
     const handleGoogleOAuth = useCallback((): void => {
-        void dispatch(authActions.authorizeIdentity(IdentityProvider.GOOGLE));
-    }, [dispatch]);
+        const referralCode = searchParameters.get('referralCode');
+        void dispatch(
+            authActions.authorizeIdentity({
+                provider: IdentityProvider.GOOGLE,
+                referralCode: referralCode ?? null,
+            }),
+        );
+    }, [dispatch, searchParameters]);
 
     const handleSignInSubmit = useCallback(
         (payload: UserAuthSignInRequestDto): void => {

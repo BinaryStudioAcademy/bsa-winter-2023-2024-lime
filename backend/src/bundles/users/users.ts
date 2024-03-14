@@ -19,7 +19,7 @@ export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
-    type UserOAuthRequestDto,
+    type UserIdentityRequestDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';
 export { UserEntity } from './user.entity.js';

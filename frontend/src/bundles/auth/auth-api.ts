@@ -1,5 +1,4 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
 import {
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
@@ -13,8 +12,8 @@ import {
     type IdentityAuthTokenDto,
     type RedirectUrlResponseDto,
 } from './auth.js';
-import { type IdentityProvider } from './enums/enums.js';
 import { AuthApiPath, IdentityActionsPath } from './enums/enums.js';
+import { type IdentityAuthorizeDto } from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -66,8 +65,9 @@ class AuthApi extends BaseHttpApi {
     }
 
     public async authorizeIdentity(
-        provider: ValueOf<typeof IdentityProvider>,
+        payload: IdentityAuthorizeDto,
     ): Promise<void> {
+        const { provider, referralCode } = payload;
         const response = await this.load(
             this.getFullEndpoint(
                 this.identityPath,
@@ -78,6 +78,7 @@ class AuthApi extends BaseHttpApi {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: false,
+                query: { referralCode },
             },
         );
 

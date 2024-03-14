@@ -3,7 +3,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
     type AsyncThunkConfig,
     type UserAuthResponseDto,
-    type ValueOf,
 } from '~/bundles/common/types/types.js';
 import {
     type UserAuthSignInRequestDto,
@@ -13,7 +12,7 @@ import {
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
 import { type AuthResponseDto, type IdentityAuthTokenDto } from '../auth.js';
-import { type IdentityProvider } from '../enums/enums.js';
+import { type IdentityAuthorizeDto } from '../types/types.js';
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
@@ -71,11 +70,11 @@ const updateUser = createAsyncThunk<
 
 const authorizeIdentity = createAsyncThunk<
     unknown,
-    ValueOf<typeof IdentityProvider>,
+    IdentityAuthorizeDto,
     AsyncThunkConfig
->(`${sliceName}/auth-google`, async (provider, { extra }) => {
+>(`${sliceName}/auth-google`, async (authorizePayload, { extra }) => {
     const { authApi } = extra;
-    return await authApi.authorizeIdentity(provider);
+    return await authApi.authorizeIdentity(authorizePayload);
 });
 
 const signInIdentity = createAsyncThunk<

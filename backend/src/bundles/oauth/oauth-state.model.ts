@@ -8,6 +8,8 @@ class OAuthStateModel extends AbstractModel {
 
     public 'uuid': string;
 
+    public 'referralCode': string | null;
+
     public static override get tableName(): string {
         return DatabaseTableName.OAUTH_STATE;
     }

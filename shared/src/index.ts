@@ -21,6 +21,7 @@ export {
     goalValidationSchema,
 } from './bundles/goals/goals.js';
 export {
+    type IdentityAuthorizeDto,
     type IdentityAuthTokenDto,
     type IdentityProviderParameterDto,
     type IdentityResponseDto,

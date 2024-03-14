@@ -39,7 +39,7 @@ class GoogleIdentityStrategy implements IdentityStrategy {
     }
 
     public getAuthorizeRedirectUrl(oAuthStateEntity: OAuthStateEntity): URL {
-        const { uuid } = oAuthStateEntity.toObject();
+        const { uuid, referralCode } = oAuthStateEntity.toObject();
         const url = this.OAuth2.generateAuthUrl({
             access_type: GOOGLE_ACCESS_TYPE,
             scope: [
@@ -47,7 +47,7 @@ class GoogleIdentityStrategy implements IdentityStrategy {
                 `${GOOGLE_API_URL}${GOOGLE_EMAIL_SCOPE}`,
                 `${GOOGLE_API_URL}${GOOGLE_PROFILE_SCOPE}`,
             ],
-            state: JSON.stringify({ uuid }),
+            state: JSON.stringify({ uuid, referralCode }),
         });
         return new URL(url);
     }
@@ -55,7 +55,7 @@ class GoogleIdentityStrategy implements IdentityStrategy {
     public async exchangeAuthCode(
         payload: IdentityExchangeAuthCodeDto,
     ): Promise<UserAuthResponseDto> {
-        const { code } = payload;
+        const { code, referralCode } = payload;
         const {
             res,
             tokens: { id_token },
@@ -73,6 +73,7 @@ class GoogleIdentityStrategy implements IdentityStrategy {
             email: userInfo.email,
             fullName: userInfo.name,
             avatarUrl: userInfo.picture,
+            referralCode,
         });
     }
 
