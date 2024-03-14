@@ -122,11 +122,12 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
                 return sortedItems;
             }
 
+            const selectedYear = options.year.selected.value.toString();
             return workouts.filter((item) => {
+                const itemYear = item.workoutStartedAt.getFullYear().toString();
                 return hasSelectedYear
                     ? item.activityType === newValue.value &&
-                          item.workoutStartedAt.getFullYear().toString() ===
-                              options.year.selected.value.toString()
+                          itemYear === selectedYear
                     : item.activityType === newValue.value;
             });
         },
