@@ -1,2 +1,5 @@
 export { AuthApiPath } from './enums/enums.js';
-export { type AuthResponseDto } from './types/types.js';
+export {
+    type AuthResponseDto,
+    type AuthSignUpRequestDto,
+} from './types/types.js';

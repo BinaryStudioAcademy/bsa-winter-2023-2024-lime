@@ -5,7 +5,8 @@ import {
     type UserAuthResponseDto,
 } from '~/bundles/common/types/types.js';
 import {
-    type UserAuthRequestDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserUpdateProfileRequestDto,
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
@@ -15,10 +16,11 @@ import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
     AuthResponseDto,
-    UserAuthRequestDto,
+    UserAuthSignUpRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
     const { authApi } = extra;
+
     const response = await authApi.signUp(registerPayload);
     if (response.token) {
         await storage.set(StorageKey.TOKEN, response.token);
@@ -28,7 +30,7 @@ const signUp = createAsyncThunk<
 
 const signIn = createAsyncThunk<
     AuthResponseDto,
-    UserAuthRequestDto,
+    UserAuthSignInRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-in`, async (loginPayload, { extra }) => {
     const { authApi } = extra;

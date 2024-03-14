@@ -7,7 +7,6 @@ import {
     ButtonVariant,
     GoogleAds,
     Loader,
-    ThemeSwitcher,
 } from '~/bundles/common/components/components.js';
 import { CreateGoalForm } from '~/bundles/common/components/create-goal-form/create-goal-form.js';
 import { Modal } from '~/bundles/common/components/modal/modal.js';
@@ -229,7 +228,6 @@ const Goals: React.FC = () => {
                             onSubmit={handleAddGoal}
                         />
                     </Modal>
-                    <ThemeSwitcher className="absolute bottom-4 right-4" />
                     {!isSubscribed && (
                         <GoogleAds className="hidden h-[63rem] max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
                     )}
