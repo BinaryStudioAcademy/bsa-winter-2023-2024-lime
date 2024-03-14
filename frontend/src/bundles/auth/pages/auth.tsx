@@ -48,9 +48,7 @@ const Auth: React.FC = () => {
     );
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
-        ({ passwordReset }) => ({
-            dataStatus: passwordReset.dataStatus,
-        }),
+        ({ passwordReset }) => passwordReset,
     );
 
     const isLoading = dataStatus === DataStatus.PENDING;

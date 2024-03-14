@@ -31,9 +31,7 @@ const PasswordReset: React.FC = () => {
 
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
-    const dataStatus = useAppSelector(
-        ({ passwordReset }) => passwordReset.dataStatus,
-    );
+    const { dataStatus } = useAppSelector(({ passwordReset }) => passwordReset);
 
     const isLoading = dataStatus === DataStatus.PENDING;
 
