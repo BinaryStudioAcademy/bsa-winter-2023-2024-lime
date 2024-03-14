@@ -1,6 +1,6 @@
 import { type NotificationResponseDto } from '~/bundles/notifications/types/types.js';
 
-type NotificationDisplayProperties = {
+type Properties = {
     notification: NotificationResponseDto;
     isOpened: boolean;
 };
@@ -8,7 +8,7 @@ type NotificationDisplayProperties = {
 const NotificationDisplay = ({
     notification,
     isOpened,
-}: NotificationDisplayProperties): JSX.Element => {
+}: Properties): JSX.Element => {
     const { title, message } = notification;
     return (
         <details className="pointer-events-none w-full" open={isOpened}>

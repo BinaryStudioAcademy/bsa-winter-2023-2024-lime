@@ -4,7 +4,7 @@ import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type NotificationResponseDto } from '~/bundles/notifications/types/types.js';
 
-type NotificationActionsProperties = {
+type Properties = {
     notification: NotificationResponseDto;
     onRead: (id: number) => void;
     onDelete: (id: number) => void;
@@ -20,7 +20,7 @@ const NotificationActions = ({
     onDelete,
     setIsOpened,
     children,
-}: NotificationActionsProperties): JSX.Element => {
+}: Properties): JSX.Element => {
     const handleReadClick = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
             event.stopPropagation();
