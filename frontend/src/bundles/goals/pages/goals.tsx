@@ -121,11 +121,17 @@ const Goals: React.FC = () => {
                         <GoogleAds className="hidden h-[63rem] max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
                     )}
                     <div className="flex max-w-[1136px] flex-col gap-8 lg:flex-row">
-                        <div className="flex flex-col gap-8">
-                            <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
+                        <div className="flex w-full flex-col gap-8 xl:w-[70%]">
+                            <section>
                                 <GoalWidget
-                                    value={lastGoal?.progress as number}
-                                    target={lastGoal?.progress as number}
+                                    value={
+                                        (lastGoal?.distance as number) ||
+                                        (lastGoal?.duration as number)
+                                    }
+                                    target={
+                                        (lastGoal?.distance as number) ||
+                                        (lastGoal?.duration as number)
+                                    }
                                     title={
                                         lastGoal
                                             ? GOALS_MESSAGES.GOAL_COMPLETED
@@ -144,13 +150,14 @@ const Goals: React.FC = () => {
                                             : GoalTypes.STANDART
                                     }
                                     hasAchievement={Boolean(lastGoal)}
+                                    hasDistance={Boolean(lastGoal?.distance)}
                                 />
                             </section>
                             <section>
                                 <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                     Goals
                                 </h2>
-                                <div className="mb-4 flex flex-col gap-4 md:w-full lg:w-[37rem] lg:flex-row lg:flex-wrap xl:w-[49rem]">
+                                <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:flex-wrap">
                                     {goals.length === ZERO_VALUE && (
                                         <p className="text-primary mb-5 w-full text-xl font-extrabold">
                                             No goals yet
