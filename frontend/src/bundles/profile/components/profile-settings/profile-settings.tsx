@@ -324,12 +324,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 <ul className="mt-14 flex justify-end lg:mt-6">
                     <li className="mr-6 w-[150px]">
                         <Button
-                            label={isLoading ? '' : 'Reset'}
-                            leftIcon={
-                                isLoading && (
-                                    <Loader color={IconColor.SECONDARY} />
-                                )
-                            }
+                            label="Reset"
                             onClick={handleReset}
                             variant={ButtonVariant.SECONDARY}
                             size={ComponentSize.MEDIUM}
