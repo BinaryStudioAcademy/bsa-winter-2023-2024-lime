@@ -1,6 +1,9 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
@@ -31,7 +34,9 @@ class AuthApi extends BaseHttpApi {
         this.identityPath = ApiPath.IDENTITY;
     }
 
-    public async signUp(payload: UserAuthRequestDto): Promise<AuthResponseDto> {
+    public async signUp(
+        payload: UserAuthSignUpRequestDto,
+    ): Promise<AuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(this.authPath, AuthApiPath.SIGN_UP, {}),
             {
@@ -44,7 +49,9 @@ class AuthApi extends BaseHttpApi {
 
         return await response.json<AuthResponseDto>();
     }
-    public async signIn(payload: UserAuthRequestDto): Promise<AuthResponseDto> {
+    public async signIn(
+        payload: UserAuthSignInRequestDto,
+    ): Promise<AuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(this.authPath, AuthApiPath.SIGN_IN, {}),
             {
@@ -70,7 +77,7 @@ class AuthApi extends BaseHttpApi {
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
-                hasAuth: true,
+                hasAuth: false,
             },
         );
 

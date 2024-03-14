@@ -1,7 +1,8 @@
 export { type UserOAuthRequestDto } from './user-oauth-request-dto.type.js';
 export {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
     type ValueOf,

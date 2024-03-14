@@ -2,6 +2,7 @@ import authLogo from '~/assets/img/auth-logo.svg';
 import { IdentityProvider } from '~/bundles/auth/enums/enums.js';
 import {
     ForgotPasswordForm,
+    Loader,
     Modal,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
@@ -13,11 +14,15 @@ import {
     useEffect,
     useLocation,
     useNavigate,
+    useSearchParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as passwordResetActions } from '~/bundles/password-reset/store/password-reset.js';
 import { type PasswordForgotRequestDto } from '~/bundles/password-reset/types/types.js';
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 
 import {
     PasswordForgotSuccessMessage,
@@ -34,13 +39,14 @@ const Auth: React.FC = () => {
 
     const navigate = useNavigate();
 
+    const [searchParameters] = useSearchParams();
+
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
 
-    const { dataStatus, user } = useAppSelector(({ auth }) => ({
-        dataStatus: auth.dataStatus,
-        user: auth.user,
-    }));
+    const { dataStatus, user, isRefreshing } = useAppSelector(
+        ({ auth }) => auth,
+    );
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
         ({ passwordReset }) => ({
@@ -57,7 +63,7 @@ const Auth: React.FC = () => {
     }, [dispatch]);
 
     const handleSignInSubmit = useCallback(
-        (payload: UserAuthRequestDto): void => {
+        (payload: UserAuthSignInRequestDto): void => {
             void dispatch(authActions.signIn(payload));
         },
         [dispatch],
@@ -66,11 +72,17 @@ const Auth: React.FC = () => {
     const handleSignUpSubmit = useCallback(
         (payload: UserSignUpForm): void => {
             const { email, password } = payload;
-            const signUpDTO: UserAuthRequestDto = { email, password };
+            const referralCode = searchParameters.get('referralCode');
+
+            const signUpDTO: UserAuthSignUpRequestDto = {
+                email,
+                password,
+                referralCode,
+            };
 
             void dispatch(authActions.signUp(signUpDTO));
         },
-        [dispatch],
+        [dispatch, searchParameters],
     );
 
     const handleForgotPassword = useCallback(
@@ -137,6 +149,10 @@ const Auth: React.FC = () => {
         logoContainer:
             'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
     };
+
+    if (isRefreshing || user) {
+        return <Loader isOverflow />;
+    }
 
     return (
         <main className={getValidClassNames(classes.main)}>

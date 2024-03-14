@@ -5,6 +5,7 @@ import { UserValidationMessage, UserValidationRule } from '../enums/enums.js';
 type UserAuthRequestValidationDto = {
     email: z.ZodString;
     password: z.ZodString;
+    referralCode: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 };
 
 const basicUserAuth = z.object<UserAuthRequestValidationDto>({
@@ -36,6 +37,8 @@ const basicUserAuth = z.object<UserAuthRequestValidationDto>({
         .max(UserValidationRule.PASSWORD.MAX_LENGTH, {
             message: UserValidationMessage.INVALID_PASSWORD,
         }),
+
+    referralCode: z.string().nullish(),
 });
 
 const userAuth = basicUserAuth.refine(

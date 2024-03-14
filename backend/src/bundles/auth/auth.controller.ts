@@ -1,4 +1,7 @@
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 import { userAuthValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
@@ -31,7 +34,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signUp(
                     options as ApiHandlerOptions<{
-                        body: UserAuthRequestDto;
+                        body: UserAuthSignUpRequestDto;
                     }>,
                 ),
         });
@@ -45,7 +48,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signIn(
                     options as ApiHandlerOptions<{
-                        body: UserAuthRequestDto;
+                        body: UserAuthSignInRequestDto;
                     }>,
                 ),
         });
@@ -106,7 +109,7 @@ class AuthController extends BaseController {
 
     private async signIn(
         options: ApiHandlerOptions<{
-            body: UserAuthRequestDto;
+            body: UserAuthSignInRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
@@ -123,6 +126,13 @@ class AuthController extends BaseController {
      *      tags:
      *         - Auth
      *      description: Sign up user into the application
+     *      parameters:
+     *        - in: query
+     *          name: referralCode
+     *          schema:
+     *            type: string
+     *          required: false
+     *          description: Optional referral code to invite other users
      *      requestBody:
      *        description: User auth data
      *        required: true
@@ -159,7 +169,7 @@ class AuthController extends BaseController {
      */
     private async signUp(
         options: ApiHandlerOptions<{
-            body: UserAuthRequestDto;
+            body: UserAuthSignUpRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
