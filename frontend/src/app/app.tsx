@@ -15,16 +15,13 @@ import { storage, StorageKey } from '~/framework/storage/storage.js';
 
 const App: React.FC = () => {
     const [initialRefreshing, setInitialRefreshing] = useState(true);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { redirectPath } = useAppSelector(({ app }) => ({
-        redirectPath: app.redirectPath,
-    }));
+    const { redirectPath } = useAppSelector(({ app }) => app);
 
-    const { isRefreshing } = useAppSelector(({ auth }) => ({
-        isRefreshing: auth.isRefreshing,
-    }));
+    const { isRefreshing } = useAppSelector(({ auth }) => auth);
 
     useEffect(() => {
         if (redirectPath) {
@@ -48,7 +45,6 @@ const App: React.FC = () => {
     if (initialRefreshing || isRefreshing) {
         return <Loader isOverflow />;
     }
-
     return <RouterOutlet />;
 };
 
