@@ -95,9 +95,8 @@ class CalculationProgressService {
             userCyclingAchievements,
             userAchievementsListById,
         );
-        if (uniqueCyclingAchievements.length > 0) {
-            userAchievements.push(...uniqueCyclingAchievements);
-        }
+
+        userAchievements.push(...uniqueCyclingAchievements);
 
         const runningWorkouts = filterWorkoutsByActivityType(
             workouts,
@@ -116,9 +115,7 @@ class CalculationProgressService {
             userRunningAchievements,
             userAchievementsListById,
         );
-        if (uniqueRunningAchievements.length > 0) {
-            userAchievements.push(...uniqueRunningAchievements);
-        }
+        userAchievements.push(...uniqueRunningAchievements);
 
         const walkingWorkouts = filterWorkoutsByActivityType(
             workouts,
@@ -138,9 +135,8 @@ class CalculationProgressService {
             userWalkingAchievements,
             userAchievementsListById,
         );
-        if (uniqueWalkingAchievements.length > 0) {
-            userAchievements.push(...uniqueWalkingAchievements);
-        }
+
+        userAchievements.push(...uniqueWalkingAchievements);
 
         for (const achievement of userAchievements) {
             await this.userAchievementsService.create({

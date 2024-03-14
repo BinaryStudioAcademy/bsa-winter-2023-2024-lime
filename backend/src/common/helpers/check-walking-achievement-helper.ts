@@ -12,6 +12,8 @@ import {
 } from '~/common/helpers/helpers.js';
 
 const ZERO_VALUE = 0;
+const WORKOUT_DURATION = 5;
+const CALORIES_VALUE = 500;
 
 function checkWalkingAchievements(
     workouts: WorkoutResponseDto[],
@@ -49,7 +51,7 @@ function checkWalkingAchievements(
             );
         }
         case WalkingAchievementName.PER_WEEKEND: {
-            return weekendWorkoutDuration >= 5;
+            return weekendWorkoutDuration >= WORKOUT_DURATION;
         }
         case WalkingAchievementName.HUNDRED_PER_MONTH: {
             return monthWorkoutDistance >= WalkingAchievementDistance.HUNDRED;
@@ -59,8 +61,9 @@ function checkWalkingAchievements(
         }
         case WalkingAchievementName.CALORIES_PER_WALK: {
             return (
-                workouts.filter((workout) => workout.kilocalories === 500)
-                    .length > ZERO_VALUE
+                workouts.filter(
+                    (workout) => workout.kilocalories === CALORIES_VALUE,
+                ).length > ZERO_VALUE
             );
         }
         default: {
