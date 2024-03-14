@@ -7,6 +7,7 @@ export { CopyToClipboard } from './copy-to-clipboard/copy-to-clipboard.js';
 export { DatePicker } from './date-picker/date-picker.js';
 export { DownloadBanner } from './download-banner/download-banner.jsx';
 export { ForgotPasswordForm } from './forgot-password-form/forgot-password-form.js';
+export { GoogleAds } from './google-ads/google-ads.js';
 export { Header } from './header/header.js';
 export { Icon } from './icon/icon.js';
 export { InfoSection } from './info-section/info-section.js';

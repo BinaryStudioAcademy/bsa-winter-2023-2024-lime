@@ -1,4 +1,5 @@
 import {
+    GoogleAds,
     Icon,
     Loader,
     SubNavigation,
@@ -31,6 +32,10 @@ const Workout: React.FC = () => {
         workouts: workouts.workouts,
     }));
 
+        const { currentSubscription: isSubscribed } = useAppSelector(
+        ({ subscriptions }) => subscriptions,
+    );
+
     useEffect(() => {
         void dispatch(actions.getWorkouts());
     }, [dispatch]);
@@ -60,11 +65,15 @@ const Workout: React.FC = () => {
     const isLoading = dataStatus === DataStatus.PENDING;
 
     return (
-        <section className="relative flex h-full">
+        <section className="relative flex h-full justify-center gap-8">
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
-                <div className="flex w-full">
+                    <>
+                    {!isSubscribed && (
+                        <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
+                    )}
+                <div className="flex w-full max-w-[1136px]">
                     {workouts.length > 0 ? (
                         <>
                             <div className="my-[-2rem] ml-[-2rem]">
@@ -87,7 +96,11 @@ const Workout: React.FC = () => {
                             <p>When you add some they will appear here</p>
                         </div>
                     )}
-                </div>
+                        </div>
+                         {!isSubscribed && (
+                        <GoogleAds className="hidden max-w-64 flex-1 2xl:flex 2xl:text-[15px]" />
+                    )}
+                </>
             )}
         </section>
     );
