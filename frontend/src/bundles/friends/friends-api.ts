@@ -21,9 +21,7 @@ class FriendsApi extends BaseHttpApi {
         super({ path: ApiPath.USERS, baseUrl, http, storage });
     }
 
-    public async getNotFollowed(
-        payload: PaginationParameters,
-    ): Promise<{
+    public async getNotFollowed(payload: PaginationParameters): Promise<{
         users: UserFollowingsResponseDto[];
         query: PaginationParameters;
     }> {
@@ -45,9 +43,7 @@ class FriendsApi extends BaseHttpApi {
         }>();
     }
 
-    public async getFollowings(
-        payload: PaginationParameters,
-    ): Promise<{
+    public async getFollowings(payload: PaginationParameters): Promise<{
         users: UserFollowingsResponseDto[];
         query: PaginationParameters;
     }> {
