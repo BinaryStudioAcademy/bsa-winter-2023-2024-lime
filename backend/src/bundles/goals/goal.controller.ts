@@ -115,6 +115,18 @@ class GoalController extends BaseController {
         });
 
         this.addRoute({
+            path: GoalsApiPath.USER_ID,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.findByUserId(
+                    options as ApiHandlerOptions<{
+                        params: { userId: number };
+                    }>,
+                ),
+        });
+
+        this.addRoute({
             path: GoalsApiPath.ROOT,
             method: 'POST',
             validation: {
@@ -251,7 +263,51 @@ class GoalController extends BaseController {
             }),
         };
     }
+    /**
+     * @swagger
+     * /api/v1/goals/user/{userId}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: userId
+     *        required: true
+     *        description: The ID of the user whose goals should be retrieved
+     *        schema:
+     *          type: integer
+     *      tags:
+     *       - Goals
+     *      description: Returns goals by user ID
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/GoalResponseDto'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private async findByUserId(
+        options: ApiHandlerOptions<{ params: { userId: number } }>,
+    ): Promise<ApiHandlerResponse> {
+        const { userId } = options.params;
 
+        const result = await this.goalService.findAll({ userId });
+
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: result,
+        };
+    }
     /**
      * @swagger
      * /api/v1/goals/:

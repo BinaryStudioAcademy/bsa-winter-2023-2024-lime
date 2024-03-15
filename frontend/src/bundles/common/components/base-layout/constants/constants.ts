@@ -1,0 +1,3 @@
+const REMINDER_PERIOD = 7;
+
+export { REMINDER_PERIOD };

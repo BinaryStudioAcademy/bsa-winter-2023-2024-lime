@@ -5,6 +5,7 @@ import { type ReactNode } from '~/bundles/common/types/types.js';
 import { getValidClassNames } from '../../helpers/helpers.js';
 import { useSidebarToggle } from '../../hooks/hooks.js';
 import { RouterOutlet } from '../components.js';
+import { SuggestionForSubscribing } from './components/suggestion-for-subscribing.js';
 import styles from './styles.module.css';
 
 type Properties = {
@@ -27,6 +28,8 @@ const BaseLayout: React.FC<Properties> = () => {
             <div className={styles['content-container']}>
                 <RouterOutlet />
             </div>
+
+            <SuggestionForSubscribing />
         </div>
     );
 };

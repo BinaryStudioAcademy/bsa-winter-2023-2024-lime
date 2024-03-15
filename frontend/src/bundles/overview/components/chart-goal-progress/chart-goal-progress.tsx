@@ -47,10 +47,10 @@ const ChartGoalProgress = (): JSX.Element => {
     return (
         <div className="bg-primary rounded-30 relative p-8">
             <div className="mb-4 flex h-10 items-center justify-between">
-                <h1 className="text-secondary">Goal Progress</h1>
+                <h1 className="text-secondary font-extrabold">Goal Progress</h1>
                 <div className="w-[100px]">
                     <Select
-                        className="bg-secondary w-[100px] text-xs"
+                        className="bg-secondary border-buttonPrimary w-[100px] rounded-md  border text-xs"
                         control={control}
                         name="select"
                         options={selectData}

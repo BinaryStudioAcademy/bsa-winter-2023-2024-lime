@@ -30,6 +30,19 @@ class GoalsApi extends BaseHttpApi {
         return items;
     }
 
+    public async getGoalsByUserId(userId: string): Promise<GoalResponseDto[]> {
+        const response = await this.load(
+            this.getFullEndpoint(GoalsApiPath.USER_ID, { userId }),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        const { items } = await response.json<{ items: GoalResponseDto[] }>();
+        return items;
+    }
+
     public async createGoal(payload: GoalRequestDto): Promise<GoalResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(GoalsApiPath.ROOT, {}),
