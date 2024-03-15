@@ -1,8 +1,7 @@
 import { useState } from '~/bundles/common/hooks/hooks.js';
 import { type NotificationResponseDto } from '~/bundles/notifications/types/types.js';
 
-import { NotificationActions } from './notification-actions.js';
-import { NotificationDisplay } from './notification-display.js';
+import { NotificationActions, NotificationDisplay } from './components.js';
 
 type Properties = {
     notifications: NotificationResponseDto[];
