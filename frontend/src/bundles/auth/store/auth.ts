@@ -1,7 +1,9 @@
 import {
+    authorizeIdentity,
     logout,
     refreshUser,
     signIn,
+    signInIdentity,
     signUp,
     updateUser,
     uploadAvatar,
@@ -15,6 +17,8 @@ const allActions = {
     updateUser,
     refreshUser,
     logout,
+    authorizeIdentity,
+    signInIdentity,
     uploadAvatar,
 };
 

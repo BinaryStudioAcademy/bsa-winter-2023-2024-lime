@@ -48,17 +48,11 @@ const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const { dataStatus: dataStatusGoals, goals } = useAppSelector(
-        ({ goals }) => ({
-            dataStatus: goals.dataStatus,
-            goals: goals.goals,
-        }),
+        ({ goals }) => goals,
     );
 
     const { dataStatus: dataStatusAchievements, achievements } = useAppSelector(
-        ({ achievements }) => ({
-            dataStatus: achievements.dataStatus,
-            achievements: achievements.achievements,
-        }),
+        ({ achievements }) => achievements,
     );
 
     const isLoading =
@@ -179,7 +173,7 @@ const Goals: React.FC = () => {
                                 <Button
                                     type="button"
                                     label="Set the new goal"
-                                    variant={ButtonVariant.SECONDARY}
+                                    variant={ButtonVariant.CREATE_GOAL}
                                     size={ComponentSize.LARGE}
                                     leftIcon={<PlusIcon className="w-6" />}
                                     className="h-[7.5rem] sm:text-sm md:text-xl"

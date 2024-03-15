@@ -42,6 +42,7 @@ const UserValidationMessage = {
     BONUS_OPERATION_LACK_OF_FUNDS:
         'Operation can not be finished due to lack of funds.',
     BONUS_OPERATION_NOT_SUCCESSFUL: 'Operation was not sucessfull.',
+    USER_OAUTH: 'Use OAuth to sign in',
     FILE_REQUIRED: 'File is required',
     FILE_SIZE_EXCEEDED: `File size exceeded. Max file size is ${AVATAR_MAX_SIZE / MEGABYTE_PER_BYTE}MB`,
     FILE_TYPE_NOT_ALLOWED: `File type is not allowed. Only ${AVATAR_ALLOWED_TYPES.toString()} is allowed`,
