@@ -1,25 +1,35 @@
 import { type RelationMappings, Model } from 'objection';
 
+import { UserAchievementModel } from '~/bundles/achievements/achievements.js';
+import {
+    AiAssistantAttributes,
+    AiAssistantModel,
+} from '~/bundles/ai-assistants/ai-assistants.js';
+import { ChatModel, ChatUserAttributes } from '~/bundles/chats/chats.js';
+import { MessageAttributes } from '~/bundles/messages/messages.js';
 import {
     OAuthInfoAttributes,
     OAuthModel,
     OAuthStateAttributes,
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
-import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
-import { WorkoutModel } from '~/bundles/workouts/workouts.js';
+import {
+    SubscriptionAttributes,
+    SubscriptionModel,
+} from '~/bundles/subscriptions/subscriptions.js';
+import {
+    UserBonusAttributes,
+    UserBonusModel,
+} from '~/bundles/user-bonuses/user-bonuses.js';
+import {
+    WorkoutAttributes,
+    WorkoutModel,
+} from '~/bundles/workouts/workouts.js';
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { UserAchievementModel } from '../achievements/user-achievement.model.js';
-import { SubscriptionModel } from '../subscriptions/subscription.model.js';
-import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
-import {
-    UserBonusAttributes,
-    UserBonusModel,
-} from '../user-bonuses/user-bonuses.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -41,6 +51,10 @@ class UserModel extends AbstractModel {
     public 'userOAuthState': OAuthStateModel;
 
     public 'userBonus': UserBonusModel;
+
+    public 'chats': ChatModel[];
+
+    public 'aiAssistant': AiAssistantModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -102,6 +116,26 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
+                },
+            },
+            chats: {
+                relation: Model.ManyToManyRelation,
+                modelClass: ChatModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    through: {
+                        from: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.USER_ID}`,
+                        to: `${DatabaseTableName.CHATS_USERS}.${MessageAttributes.CHAT_ID}`,
+                    },
+                    to: `${DatabaseTableName.CHATS}.`,
+                },
+            },
+            aiAssistant: {
+                relation: Model.HasOneRelation,
+                modelClass: AiAssistantModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.AI_ASSISTANTS}.${AiAssistantAttributes.USER_ID}`,
                 },
             },
         };
