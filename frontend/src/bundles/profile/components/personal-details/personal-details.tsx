@@ -12,6 +12,7 @@ import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import {
     calculateAge,
     capitalizeFirstLetter,
+    getUniqueValues,
 } from '~/bundles/common/helpers/helpers.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
@@ -24,7 +25,7 @@ interface PersonalDetailsProperties {
     onFollowToggle: (id: number, isFollowed: boolean) => void;
     message: (id: number) => void;
 }
-const PLURAL = 's';
+
 const ZERO_VALUE = 0;
 const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     id,
@@ -96,23 +97,19 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
             </div>
             <div className="my-6 w-full overflow-auto">
                 <h2 className="text-primary">Preferences</h2>
-                <ul className="mt-2 w-full gap-2 md:grid lg:grid-cols-2">
+                <ul className="mt-2 grid w-full gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                     {goals && goals.length > ZERO_VALUE ? (
-                        goals.map((goal) => (
+                        getUniqueValues(goals, 'activityType').map((goal) => (
                             <li
                                 key={goal.id}
-                                className="text-primary bg-secondary mt-2 w-full rounded-lg p-2 sm:flex sm:items-center sm:justify-between lg:flex lg:w-full lg:flex-col lg:items-center xl:flex-row"
+                                className="text-primary bg-secondary mt-2 rounded-lg p-2 sm:flex sm:items-center lg:flex lg:w-full lg:flex-col lg:items-center xl:flex-row"
                             >
                                 <ActivityIcon
                                     activityType={goal.activityType}
                                     size={ComponentSize.SMALL}
                                 />
-                                <p>
+                                <p className="ml-4 md:ml-0 lg:ml-4">
                                     {capitalizeFirstLetter(goal.activityType)}
-                                </p>
-                                <p className="text-lm-grey-200 text-xs font-normal leading-3">
-                                    {goal.frequency} {goal.frequencyType}
-                                    {goal.frequency > 1 && PLURAL}
                                 </p>
                             </li>
                         ))
