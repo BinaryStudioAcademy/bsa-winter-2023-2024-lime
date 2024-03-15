@@ -13,14 +13,14 @@ const sizeToClass: Record<AvatarSize, string> = {
     [ComponentSize.SMALL]: 'h-10 w-10',
     [ComponentSize.MEDIUM]: 'h-20 w-20',
     [ComponentSize.LARGE]: 'h-30 w-30',
-    [ComponentSize.EXTRA_LARGE]: 'h-44 w-44'
+    [ComponentSize.EXTRA_LARGE]: 'h-44 w-44',
 };
 
 const sizeMap: Record<AvatarSize, string> = {
     [ComponentSize.SMALL]: 'text-xl',
     [ComponentSize.MEDIUM]: 'text-3xl',
     [ComponentSize.LARGE]: 'text-4xl',
-    [ComponentSize.EXTRA_LARGE]: 'text-4xl'
+    [ComponentSize.EXTRA_LARGE]: 'text-4xl',
 };
 
 const Avatar = ({ size, email, avatarUrl }: Properties): JSX.Element => {
