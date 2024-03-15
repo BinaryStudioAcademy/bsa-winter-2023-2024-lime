@@ -12,6 +12,8 @@ import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import {
     calculateAge,
     capitalizeFirstLetter,
+    convertHeightToCentimeters,
+    convertWeightToKilograms,
 } from '~/bundles/common/helpers/helpers.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
@@ -43,6 +45,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         weight,
         height,
         gender,
+        location,
     } = user;
 
     const handleToggleFriend = useCallback(() => {
@@ -65,13 +68,13 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                     <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
                         Weight
                         <p className="text-bold text-primary mt-2 text-xl">
-                            {weight ?? '-'}
+                            {convertWeightToKilograms(weight) ?? '-'}
                         </p>
                     </li>
                     <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
                         Height
                         <p className="text-primary text-bold mt-2 text-xl">
-                            {height ?? '-'}
+                            {convertHeightToCentimeters(height) ?? '-'}
                         </p>
                     </li>
                     <li className="text-lm-grey-200 flex w-20 flex-col items-center justify-end sm:w-1/3 md:w-1/2 lg:w-1/3">
@@ -89,7 +92,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                     <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
                         Location
                         <p className="text-bold text-primary mt-2 text-xl">
-                            Kyiv
+                            {location ?? '-'}
                         </p>
                     </li>
                 </ul>
