@@ -15,6 +15,7 @@ import {
     convertHeightToCentimeters,
     convertWeightToKilograms,
     getUniqueValues,
+    getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
@@ -143,7 +144,12 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                 </div>
                 <button
                     onClick={handleSendMessage}
-                    className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'} inline-flex min-h-12 min-w-12 items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11`}
+                    className={getValidClassNames(
+                        isFollowed
+                            ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary'
+                            : 'text-lm-grey-200',
+                        'inline-flex min-h-12 min-w-12 items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11',
+                    )}
                     disabled={!isFollowed}
                     title={
                         isFollowed ? 'Send message' : 'Follow to send message'
