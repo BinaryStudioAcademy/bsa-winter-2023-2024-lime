@@ -102,13 +102,14 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                         getUniqueValues(goals, 'activityType').map((goal) => (
                             <li
                                 key={goal.id}
-                                className="text-primary bg-secondary mt-2 rounded-lg p-2 sm:flex sm:items-center lg:flex lg:w-full lg:flex-col lg:items-center xl:flex-row"
+                                className="text-primary bg-secondary mt-2 flex items-center rounded-lg  p-2 lg:w-full lg:flex-col lg:items-center xl:flex-row"
                             >
                                 <ActivityIcon
                                     activityType={goal.activityType}
                                     size={ComponentSize.SMALL}
+                                    className="min-h-9 min-w-9"
                                 />
-                                <p className="ml-4 md:ml-0 lg:ml-4">
+                                <p className="w-full text-center">
                                     {capitalizeFirstLetter(goal.activityType)}
                                 </p>
                             </li>
@@ -133,7 +134,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                 </div>
                 <button
                     onClick={handleSendMessage}
-                    className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11`}
+                    className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'} inline-flex min-h-12 min-w-12 items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11`}
                     disabled={!isFollowed}
                     title={
                         isFollowed ? 'Send message' : 'Follow to send message'
