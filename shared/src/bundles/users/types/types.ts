@@ -1,5 +1,6 @@
-export { type UserAuthRequestDto } from './user-auth-request-dto.type.js';
 export { type UserAuthResponseDto } from './user-auth-response-dto.type.js';
+export { type UserAuthSignInRequestDto } from './user-auth-sign-in-request-dto.type.js';
+export { type UserAuthSignUpRequestDto } from './user-auth-sign-up-request-dto.type.js';
 export { type UserFollowingsRequestDto } from './user-followings-request-dto.type.js';
 export { type UserFollowingsResponseDto } from './user-followings-response-dto.type.js';
 export { type UserGetAllItemResponseDto } from './user-get-all-item-response-dto.type.js';

@@ -1,3 +1,5 @@
+import { googleFitService } from '~/bundles/google-fit/google-fit.js';
+import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { MAX_NUMBER_OF_USERS } from '~/bundles/users/constants/constants.js';
 import { type PaginationParameters } from '~/bundles/users/types/types.js';
 import { type UserService } from '~/bundles/users/user.service.js';
@@ -14,9 +16,10 @@ import {
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
-import { type Logger } from '~/common/logger/logger.js';
 
+import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath, UserValidationMessage } from './enums/enums.js';
+import { type UserControllerProperties } from './types/types.js';
 
 /**
  * @swagger
@@ -59,14 +62,45 @@ import { UsersApiPath, UserValidationMessage } from './enums/enums.js';
  *              - male
  *              - female
  *              - prefer not to say
+ *      UserBonus:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          userId:
+ *            type: number
+ *            format: number
+ *            minimum: 1
+ *          amount:
+ *            type: number
+ *          actionType:
+ *            type: string
+ *            enum:
+ *              - registered
+ *              - invited
+ *          createdAt:
+ *            type: string
+ *            nullable: true
+ *
  */
 class UserController extends BaseController {
     private userService: UserService;
+    private oAuthRepository: OAuthRepository;
+    private userBonusService: UserBonusService;
 
-    public constructor(logger: Logger, userService: UserService) {
+    public constructor({
+        logger,
+        userService,
+        oAuthRepository,
+        userBonusService,
+    }: UserControllerProperties) {
         super(logger, ApiPath.USERS);
 
         this.userService = userService;
+        this.oAuthRepository = oAuthRepository;
+        this.userBonusService = userBonusService;
 
         this.addRoute({
             path: UsersApiPath.ROOT,
@@ -88,6 +122,18 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
+            path: UsersApiPath.GET_BY_ID,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getUserById(
+                    options as ApiHandlerOptions<{
+                        params: { id: number };
+                    }>,
+                ),
+        });
+
+        this.addRoute({
             path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
@@ -96,6 +142,18 @@ class UserController extends BaseController {
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
                         body: UserUpdateProfileRequestDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.CURRENT_BONUSES,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.findBonusesByUserId(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
@@ -214,18 +272,69 @@ class UserController extends BaseController {
      *                      type: object
      *                      $ref: '#/components/schemas/Error'
      */
-    private getCurrentUser(
+    private async getCurrentUser(
         options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
-    ): ApiHandlerResponse {
+    ): Promise<ApiHandlerResponse> {
         const { user } = options;
-
+        const { id } = user;
+        const oAuthEntity = await this.oAuthRepository.find({
+            userId: id,
+            provider: OAuthProvider.GOOGLE_FIT,
+        });
+        if (oAuthEntity) {
+            void googleFitService.handleData(oAuthEntity);
+        }
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: user,
         };
     }
+    /**
+     * @swagger
+     * /api/v1/users/{id}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *        description: The ID of the user to retrieve
+     *        schema:
+     *          type: integer
+     *      tags:
+     *       - Users
+     *      description: Returns user by ID
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private async getUserById(
+        options: ApiHandlerOptions<{
+            params: { id: number };
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { params } = options;
+        const achievement = await this.userService.find({ id: params.id });
 
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: achievement,
+        };
+    }
     /**
      * @swagger
      * /api/v1/users/update:
@@ -309,6 +418,48 @@ class UserController extends BaseController {
                 status: HttpCode.BAD_REQUEST,
             });
         }
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/current-bonuses:
+     *    get:
+     *      tags:
+     *       - Users
+     *      description: Returns an array of users bonuses transactions
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 properties:
+     *                   items:
+     *                     type: array
+     *                     items:
+     *                       $ref: '#/components/schemas/UserBonus'
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+    private async findBonusesByUserId(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const userId = options.user.id;
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: await this.userBonusService.findMany({ userId }),
+        };
     }
 
     /**

@@ -1,12 +1,22 @@
+import { IDENTITY_TOKEN_ADDITIONAL } from '~/bundles/identity/identity.js';
 import {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserService,
 } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
+import {
+    BonusAmount,
+    UserBonusActionType,
+    UserBonusTransactionType,
+} from '../user-bonuses/user-bonuses.js';
 import { HttpCode, HttpError, UserValidationMessage } from './enums/enums.js';
-import { type AuthResponseDto } from './types/types.js';
+import {
+    type AuthResponseDto,
+    type IdentityAuthTokenDto,
+} from './types/types.js';
 
 class AuthService {
     private userService: UserService;
@@ -16,7 +26,7 @@ class AuthService {
     }
 
     private async verifyLoginCredentials(
-        userRequestDto: UserAuthRequestDto,
+        userRequestDto: UserAuthSignInRequestDto,
     ): Promise<UserAuthResponseDto> {
         const user = await this.userService.find({
             email: userRequestDto.email,
@@ -29,9 +39,18 @@ class AuthService {
             });
         }
 
+        const userPasswordHash = user.getPasswordHash();
+
+        if (!userPasswordHash) {
+            throw new HttpError({
+                message: UserValidationMessage.USER_OAUTH,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
         const isEqualPassword = cryptService.compareSyncPassword(
             userRequestDto.password,
-            user.getPasswordHash(),
+            userPasswordHash,
         );
 
         if (!isEqualPassword) {
@@ -45,7 +64,7 @@ class AuthService {
     }
 
     public async signIn(
-        userRequestDto: UserAuthRequestDto,
+        userRequestDto: UserAuthSignInRequestDto,
     ): Promise<AuthResponseDto> {
         const user = await this.verifyLoginCredentials(userRequestDto);
         const token = await jwtService.createToken({ userId: user.id });
@@ -54,10 +73,12 @@ class AuthService {
     }
 
     public async signUp(
-        userRequestDto: UserAuthRequestDto,
+        userRequestDto: UserAuthSignUpRequestDto,
     ): Promise<AuthResponseDto> {
+        const { referralCode, ...payload } = userRequestDto;
+
         const userByEmail = await this.userService.find({
-            email: userRequestDto.email,
+            email: payload.email,
         });
 
         if (userByEmail) {
@@ -67,10 +88,75 @@ class AuthService {
             });
         }
 
-        const user = await this.userService.create(userRequestDto);
+        const inviterUser = await this.userService.findWithUserDetailsJoined({
+            referralCode,
+        });
+
+        if (referralCode && !inviterUser) {
+            throw new HttpError({
+                message: UserValidationMessage.USER_WITH_REFERRAL_ID_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
+        const user = await this.userService.create(payload);
         const token = await jwtService.createToken({ userId: user.id });
 
+        if (referralCode && inviterUser) {
+            const { id: inviterId } = inviterUser.toObject();
+
+            await this.userService.createUserBonusTransaction({
+                userId: user.id,
+                actionType: UserBonusActionType.REGISTERED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.REGISTERED],
+            });
+
+            await this.userService.createUserBonusTransaction({
+                userId: inviterId,
+                actionType: UserBonusActionType.INVITED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.INVITED],
+            });
+
+            return {
+                user: {
+                    ...user,
+                    bonusBalance: BonusAmount[UserBonusActionType.REGISTERED],
+                },
+                token,
+            };
+        }
+
         return { user, token };
+    }
+
+    public async signInIdentity(
+        tokenRequestDto: IdentityAuthTokenDto,
+    ): Promise<AuthResponseDto> {
+        try {
+            const { userId } = await jwtService.verifyToken(
+                tokenRequestDto.token,
+                IDENTITY_TOKEN_ADDITIONAL,
+            );
+
+            const userById = await this.userService.find({ id: userId });
+
+            if (!userById) {
+                throw new HttpError({
+                    message: UserValidationMessage.USER_NOT_FOUND,
+                    status: HttpCode.NOT_FOUND,
+                });
+            }
+            const user = userById.toObject();
+            const newToken = await jwtService.createToken({ userId: user.id });
+            return { user, token: newToken };
+        } catch {
+            throw new HttpError({
+                message: UserValidationMessage.TOKEN_INVALID,
+                status: HttpCode.FORBIDDEN,
+            });
+        }
     }
 }
 

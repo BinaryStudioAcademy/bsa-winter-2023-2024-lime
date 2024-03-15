@@ -107,6 +107,22 @@ const userUpdateProfile = z
                 .nullable(),
             z.literal(''),
         ]),
+        location: z.union([
+            z
+                .string()
+                .trim()
+                .regex(UnicodePattern.LOCATION_PATTERN, {
+                    message: UserValidationMessage.LOCATION_WRONG,
+                })
+                .min(UserValidationRule.LOCATION.MIN_LENGTH, {
+                    message: UserValidationMessage.LOCATION_LENGTH,
+                })
+                .max(UserValidationRule.LOCATION.MAX_LENGTH, {
+                    message: UserValidationMessage.LOCATION_LENGTH,
+                })
+                .nullable(),
+            z.literal(''),
+        ]),
         gender: z.enum(['male', 'female', 'prefer not to say']),
     })
     .required();

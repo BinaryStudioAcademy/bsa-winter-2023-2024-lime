@@ -1,7 +1,10 @@
+export { type UserControllerProperties } from './user-controller-properties.type.js';
+export { type UserIdentityRequestDto } from './user-identity-request-dto.type.js';
 export {
     type PaginationParameters,
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserFollowingsRequestDto,
     type UserFollowingsResponseDto,
     type UserGetAllResponseDto,

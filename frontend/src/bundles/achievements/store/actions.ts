@@ -18,9 +18,10 @@ const getAchievementsByUserId = createAsyncThunk<
     AchievementsGetAllResponseDto[],
     number,
     AsyncThunkConfig
->(`${sliceName}/get-by-user-id`, async (userId, { extra }) => {
+>(`${sliceName}/get-by-user-id`, async (id, { extra }) => {
     const { achievementsApi } = extra;
-    return await achievementsApi.getAchievementsByUserId(userId);
+    const idString = String(id);
+    return achievementsApi.getUserAchievements(idString);
 });
 
 export { getAchievements, getAchievementsByUserId };
