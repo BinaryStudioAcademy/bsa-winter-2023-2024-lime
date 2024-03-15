@@ -1,3 +1,4 @@
+import { Checkbox } from '~/bundles/common/components/checkbox/checkbox.js';
 import {
     Avatar,
     Button,
@@ -97,6 +98,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
+                    isPublic: data.isPublic,
                     location: data.location ? data.location.trim() : null,
                     weight: convertWeightToGrams(data.weight),
                     height: convertHeightToMillimeters(data.height),
@@ -106,6 +108,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     fullName: (data.fullName || '').trim(),
                     username: data.username ? data.username.trim() : null,
                 };
+
                 onSubmit(payload);
             })(event_);
         },
@@ -252,6 +255,15 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         control={control}
                         type="card"
                         className="lg:w-50 rounded-r-lg"
+                    />
+                </div>
+                <div className="mt-4">
+                    <Checkbox
+                        name="isPublic"
+                        label="I agree to share my private information publicly on this platform."
+                        ariaLabel="privacy-policy"
+                        control={control}
+                        errors={errors}
                     />
                 </div>
                 <ul className="mt-14 flex justify-end lg:mt-6">

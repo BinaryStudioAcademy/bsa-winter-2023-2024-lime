@@ -26,6 +26,8 @@ class UserEntity implements Entity {
 
     private 'location': string | null;
 
+    private 'isPublic': boolean;
+
     private 'gender': ValueOf<typeof Gender> | null;
 
     private 'referralCode': string | null;
@@ -45,6 +47,7 @@ class UserEntity implements Entity {
         height,
         location,
         gender,
+        isPublic,
         referralCode,
         bonusBalance,
     }: {
@@ -60,6 +63,7 @@ class UserEntity implements Entity {
         height: number | null;
         location: string | null;
         gender: ValueOf<typeof Gender> | null;
+        isPublic: boolean;
         referralCode: string | null;
         bonusBalance: number | null;
     }) {
@@ -75,6 +79,7 @@ class UserEntity implements Entity {
         this.height = height;
         this.location = location;
         this.gender = gender;
+        this.isPublic = isPublic;
         this.referralCode = referralCode;
         this.bonusBalance = bonusBalance;
     }
@@ -96,6 +101,7 @@ class UserEntity implements Entity {
         height,
         location,
         gender,
+        isPublic,
         referralCode,
         bonusBalance,
     }: {
@@ -111,6 +117,7 @@ class UserEntity implements Entity {
         height: number | null;
         location: string | null;
         gender: ValueOf<typeof Gender> | null;
+        isPublic: boolean;
         referralCode: string | null;
         bonusBalance: number | null;
     }): UserEntity {
@@ -127,6 +134,7 @@ class UserEntity implements Entity {
             height,
             location,
             gender,
+            isPublic,
             referralCode,
             bonusBalance,
         });
@@ -160,6 +168,7 @@ class UserEntity implements Entity {
             height: null,
             location: null,
             gender: null,
+            isPublic: false,
             referralCode,
             bonusBalance: null,
         });
@@ -177,6 +186,7 @@ class UserEntity implements Entity {
         height: number | null;
         location: string | null;
         gender: ValueOf<typeof Gender> | null;
+        isPublic: boolean;
         referralCode: string | null;
         bonusBalance: number | null;
     } {
@@ -192,6 +202,7 @@ class UserEntity implements Entity {
             height: this.height as number,
             location: this.location,
             gender: this.gender,
+            isPublic: this.isPublic,
             referralCode: this.referralCode,
             bonusBalance: this.bonusBalance as number,
         };
