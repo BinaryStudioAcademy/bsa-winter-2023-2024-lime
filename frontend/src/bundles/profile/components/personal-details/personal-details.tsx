@@ -28,7 +28,9 @@ interface PersonalDetailsProperties {
     message: (id: number) => void;
 }
 
+const ACTIVITY_TYPE_KEY = 'activityType';
 const ZERO_VALUE = 0;
+
 const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     id,
     user,
@@ -102,21 +104,25 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                 <h2 className="text-primary">Preferences</h2>
                 <ul className="mt-2 grid w-full gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                     {goals && goals.length > ZERO_VALUE ? (
-                        getUniqueValues(goals, 'activityType').map((goal) => (
-                            <li
-                                key={goal.id}
-                                className="text-primary bg-secondary mt-2 flex items-center rounded-lg  p-2 lg:w-full lg:flex-col lg:items-center xl:flex-row"
-                            >
-                                <ActivityIcon
-                                    activityType={goal.activityType}
-                                    size={ComponentSize.SMALL}
-                                    className="min-h-9 min-w-9"
-                                />
-                                <p className="w-full text-center">
-                                    {capitalizeFirstLetter(goal.activityType)}
-                                </p>
-                            </li>
-                        ))
+                        getUniqueValues(goals, ACTIVITY_TYPE_KEY).map(
+                            (goal) => (
+                                <li
+                                    key={goal.id}
+                                    className="text-primary bg-secondary mt-2 flex items-center rounded-lg  p-2 lg:w-full lg:flex-col lg:items-center xl:flex-row"
+                                >
+                                    <ActivityIcon
+                                        activityType={goal.activityType}
+                                        size={ComponentSize.SMALL}
+                                        className="min-h-9 min-w-9"
+                                    />
+                                    <p className="w-full text-center">
+                                        {capitalizeFirstLetter(
+                                            goal.activityType,
+                                        )}
+                                    </p>
+                                </li>
+                            ),
+                        )
                     ) : (
                         <p className="text-lm-grey-200 mt-2">
                             No goals defined
