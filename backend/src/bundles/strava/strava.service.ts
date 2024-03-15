@@ -95,7 +95,7 @@ class StravaService {
                 await this.workoutService.create({
                     ...formattedActivityInfo,
                     userId,
-                    activityId: object_id,
+                    activityId: object_id.toString(),
                 });
                 break;
             }
@@ -105,7 +105,7 @@ class StravaService {
                     {
                         ...formattedActivityInfo,
                         userId,
-                        activityId: object_id,
+                        activityId: object_id.toString(),
                     },
                 );
                 break;

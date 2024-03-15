@@ -6,6 +6,7 @@ export { EventKey } from './event-keys.js';
 export { GoalFrequency } from './goal-frequency.enum.js';
 export { Theme } from './theme.js';
 export {
+    type SubscriptionGetItemResponseDto,
     ActivityType,
     ApiPath,
     AppEnvironment,

@@ -35,7 +35,7 @@ class AchievementService {
             await this.achievementRepository.findByUserId(userId);
 
         if (!userAchievements || userAchievements.length === 0) {
-            throw new Error('User achievements not found');
+            return null;
         }
 
         return userAchievements;

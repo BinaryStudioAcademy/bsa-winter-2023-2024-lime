@@ -8,7 +8,7 @@ class UserEntity implements Entity {
 
     private 'email': string;
 
-    private 'passwordHash': string;
+    private 'passwordHash': string | null;
 
     private 'stripeCustomerId': string;
 
@@ -24,7 +24,13 @@ class UserEntity implements Entity {
 
     private 'height': number | null;
 
+    private 'location': string | null;
+
     private 'gender': ValueOf<typeof Gender> | null;
+
+    private 'referralCode': string | null;
+
+    private 'bonusBalance': number | null;
 
     private constructor({
         id,
@@ -37,11 +43,14 @@ class UserEntity implements Entity {
         dateOfBirth,
         weight,
         height,
+        location,
         gender,
+        referralCode,
+        bonusBalance,
     }: {
         id: number | null;
         email: string;
-        passwordHash: string;
+        passwordHash: string | null;
         stripeCustomerId: string;
         fullName: string | null;
         avatarUrl: string | null;
@@ -49,7 +58,10 @@ class UserEntity implements Entity {
         dateOfBirth: string | null;
         weight: number | null;
         height: number | null;
+        location: string | null;
         gender: ValueOf<typeof Gender> | null;
+        referralCode: string | null;
+        bonusBalance: number | null;
     }) {
         this.id = id;
         this.email = email;
@@ -61,10 +73,13 @@ class UserEntity implements Entity {
         this.dateOfBirth = dateOfBirth;
         this.weight = weight;
         this.height = height;
+        this.location = location;
         this.gender = gender;
+        this.referralCode = referralCode;
+        this.bonusBalance = bonusBalance;
     }
 
-    public getPasswordHash(): string {
+    public getPasswordHash(): string | null {
         return this.passwordHash;
     }
 
@@ -79,11 +94,14 @@ class UserEntity implements Entity {
         dateOfBirth,
         weight,
         height,
+        location,
         gender,
+        referralCode,
+        bonusBalance,
     }: {
         id: number;
         email: string;
-        passwordHash: string;
+        passwordHash: string | null;
         stripeCustomerId: string;
         fullName: string | null;
         avatarUrl: string | null;
@@ -91,7 +109,10 @@ class UserEntity implements Entity {
         dateOfBirth: string | null;
         weight: number | null;
         height: number | null;
+        location: string | null;
         gender: ValueOf<typeof Gender> | null;
+        referralCode: string | null;
+        bonusBalance: number | null;
     }): UserEntity {
         return new UserEntity({
             id,
@@ -104,7 +125,10 @@ class UserEntity implements Entity {
             dateOfBirth,
             weight,
             height,
+            location,
             gender,
+            referralCode,
+            bonusBalance,
         });
     }
 
@@ -112,23 +136,32 @@ class UserEntity implements Entity {
         email,
         passwordHash,
         stripeCustomerId,
+        referralCode,
+        fullName,
+        avatarUrl,
     }: {
         email: string;
-        passwordHash: string;
         stripeCustomerId: string;
+        referralCode: string | null;
+        passwordHash?: string;
+        fullName?: string;
+        avatarUrl?: string;
     }): UserEntity {
         return new UserEntity({
             id: null,
             email,
-            passwordHash,
+            passwordHash: passwordHash ?? null,
             stripeCustomerId,
-            fullName: null,
-            avatarUrl: null,
+            fullName: fullName ?? null,
+            avatarUrl: avatarUrl ?? null,
             username: null,
             dateOfBirth: null,
             weight: null,
             height: null,
+            location: null,
             gender: null,
+            referralCode,
+            bonusBalance: null,
         });
     }
 
@@ -142,7 +175,10 @@ class UserEntity implements Entity {
         dateOfBirth: string | null;
         weight: number | null;
         height: number | null;
+        location: string | null;
         gender: ValueOf<typeof Gender> | null;
+        referralCode: string | null;
+        bonusBalance: number | null;
     } {
         return {
             id: this.id as number,
@@ -154,19 +190,28 @@ class UserEntity implements Entity {
             dateOfBirth: this.dateOfBirth,
             weight: this.weight as number,
             height: this.height as number,
+            location: this.location,
             gender: this.gender,
+            referralCode: this.referralCode,
+            bonusBalance: this.bonusBalance as number,
         };
     }
 
     public toNewObject(): {
         email: string;
-        passwordHash: string;
+        passwordHash: string | null;
         stripeCustomerId: string;
+        referralCode: string | null;
+        fullName: string | null;
+        avatarUrl: string | null;
     } {
         return {
             email: this.email,
             passwordHash: this.passwordHash,
             stripeCustomerId: this.stripeCustomerId,
+            referralCode: this.referralCode,
+            fullName: this.fullName,
+            avatarUrl: this.avatarUrl,
         };
     }
 }
