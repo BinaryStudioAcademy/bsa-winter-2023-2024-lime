@@ -1,27 +1,31 @@
 import { type RelationMappings, Model } from 'objection';
 
+import { UserAchievementModel } from '~/bundles/achievements/achievements.js';
 import {
     AiAssistantAttributes,
     AiAssistantModel,
 } from '~/bundles/ai-assistants/ai-assistants.js';
-import { ChatModel } from '~/bundles/chats/chats.js';
+import { ChatModel, ChatUserAttributes } from '~/bundles/chats/chats.js';
+import { MessageAttributes } from '~/bundles/messages/messages.js';
 import {
     OAuthInfoAttributes,
     OAuthModel,
     OAuthStateAttributes,
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
-import { WorkoutAttributes } from '~/bundles/workouts/enums/enums.js';
-import { WorkoutModel } from '~/bundles/workouts/workouts.js';
+import {
+    SubscriptionAttributes,
+    SubscriptionModel,
+} from '~/bundles/subscriptions/subscriptions.js';
+import {
+    WorkoutAttributes,
+    WorkoutModel,
+} from '~/bundles/workouts/workouts.js';
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { UserAchievementModel } from '../achievements/user-achievement.model.js';
-import { MessageAttributes } from '../messages/messages.js';
-import { SubscriptionModel } from '../subscriptions/subscription.model.js';
-import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
@@ -106,8 +110,8 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     through: {
-                        from: `${DatabaseTableName.MESSAGES}.${MessageAttributes.SENDER_ID}`,
-                        to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
+                        from: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.USER_ID}`,
+                        to: `${DatabaseTableName.CHATS_USERS}.${MessageAttributes.CHAT_ID}`,
                     },
                     to: `${DatabaseTableName.CHATS}.`,
                 },

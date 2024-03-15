@@ -16,7 +16,6 @@ export {
     GoalsApiPath,
     goalValidationSchema,
 } from './bundles/goals/goals.js';
-export { SenderType } from './bundles/messages/messages.js';
 export {
     type NotificationRequestDto,
     type NotificationResponseDto,

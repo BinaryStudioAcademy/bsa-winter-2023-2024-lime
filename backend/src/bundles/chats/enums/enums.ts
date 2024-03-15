@@ -1,2 +1,2 @@
 export { ChatAttributes } from './chat-attributes.enum.js';
-export { SenderType } from 'shared';
+export { ChatUserAttributes } from './chat-user-attributes.enum.js';
