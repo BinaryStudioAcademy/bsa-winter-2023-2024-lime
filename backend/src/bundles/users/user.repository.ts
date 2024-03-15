@@ -1,7 +1,10 @@
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Repository } from '~/common/types/types.js';
 
+import { type AchievementRepository } from '../achievements/achievement.repository.js';
+import { Achievements, ErrorMessage } from '../achievements/achievements.js';
 import {
     type UserBonusEntity,
     type UserBonusGetAllItemResponseDto,
@@ -11,8 +14,14 @@ import { type UserDetailsModel } from './user-details.model.js';
 class UserRepository implements Repository {
     private userModel: typeof UserModel;
 
-    public constructor(userModel: typeof UserModel) {
+    private achievementRepository: AchievementRepository;
+
+    public constructor(
+        userModel: typeof UserModel,
+        achievementRepository: AchievementRepository,
+    ) {
         this.userModel = userModel;
+        this.achievementRepository = achievementRepository;
     }
 
     public async find(
@@ -130,9 +139,22 @@ class UserRepository implements Repository {
                 .returning('*')
                 .execute();
 
+            const achievement = await this.achievementRepository.find({
+                name: Achievements.JOIN,
+            });
+
+            if (!achievement) {
+                throw new HttpError({
+                    message: ErrorMessage.ACHIEVEMENT_NOT_FOUND,
+                    status: HttpCode.NOT_FOUND,
+                });
+            }
+
+            const { id } = achievement.toObject();
+
             await user
                 .$relatedQuery('userAchievements', trx)
-                .insert({ achievementId: 1 })
+                .insert({ achievementId: id })
                 .returning('*')
                 .execute();
 
