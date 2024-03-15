@@ -16,6 +16,18 @@
     @apply border-lm-yellow-100 text-primary mt-1.5 hover:border-white;
 }
 
+.custom-date-picker .rmdp-shadow {
+    @apply bg-lm-black-100;
+}
+
+.custom-date-picker .rmdp-border-bottom {
+    @apply border-b-0;
+}
+
+.custom-date-picker .rmdp-time-picker div input {
+    @apply bg-transparent;
+}
+
 .custom-date-picker .rmdp-header {
     @apply mb-2;
 }

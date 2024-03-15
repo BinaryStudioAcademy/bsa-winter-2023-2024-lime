@@ -1,6 +1,4 @@
-import {
-    setGoalFrequencyOpitons,
-} from '~/bundles/common/components/create-goal-form/helpers/helpers.js';
+import { setGoalFrequencyOpitons } from '~/bundles/common/components/create-goal-form/helpers/helpers.js';
 import { getActivityOptions } from '~/bundles/common/helpers/helpers.js';
 
 const DEFAULT_CREATE_GOAL_PAYLOAD = {

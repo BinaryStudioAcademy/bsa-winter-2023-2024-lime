@@ -4,6 +4,8 @@ import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
 const DEFAULT_SCHEDULE_FORM_VALUE = {
     activity: getActivityOptions[0]?.value as ValueOf<typeof ActivityType>,
+    dateOfStart: '',
+    goalLabel: null
 };
 
 export { DEFAULT_SCHEDULE_FORM_VALUE };

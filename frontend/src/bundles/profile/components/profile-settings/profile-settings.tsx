@@ -188,6 +188,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     />
                     <DatePicker
                         name="dateOfBirth"
+                        format='DD/MM/YYYY'
                         control={control}
                         errors={errors}
                         label="Date of birth"

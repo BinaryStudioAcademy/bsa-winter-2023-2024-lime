@@ -4,7 +4,7 @@ import {
     type FieldPath,
     type FieldValues,
 } from 'react-hook-form';
-import ReactDatePicker, { type DateObject } from 'react-multi-date-picker';
+import ReactDatePicker, { type DateObject, type Plugin } from 'react-multi-date-picker';
 
 import { useCallback, useFormController } from '../../hooks/hooks.js';
 import { Input } from '../components.js';
@@ -15,8 +15,11 @@ type Properties<T extends FieldValues> = {
     name: FieldPath<T>;
     control: Control<T, null>;
     errors: FieldErrors<T>;
+    format: string;
+    plugins?: Plugin[];
     className?: string;
     label?: string;
+    minDate?: Date;
     placeholder?: string;
 };
 
@@ -24,6 +27,9 @@ const DatePicker = <T extends FieldValues>({
     name,
     control,
     errors,
+    format,
+    plugins,
+    minDate,
     className,
     label = '',
     placeholder = '',
@@ -33,7 +39,7 @@ const DatePicker = <T extends FieldValues>({
     const handleDaySelect = useCallback(
         (date: DateObjectProperties): false | undefined => {
             if ((date as DateObject).isValid) {
-                const formattedDate = (date as DateObject).format('DD/MM/YYYY');
+                const formattedDate = (date as DateObject).format(format);
                 field.onChange(formattedDate);
                 return;
             }
@@ -45,10 +51,12 @@ const DatePicker = <T extends FieldValues>({
     return (
         <div className={className}>
             <ReactDatePicker
+                minDate={minDate ?? ''}
                 containerClassName={'custom-date-picker'}
                 onChange={handleDaySelect}
                 offsetY={label ? -10 : -30}
-                format="DD/MM/YYYY"
+                format={format}
+                plugins={plugins ?? []}
                 render={
                     <Input
                         type="text"

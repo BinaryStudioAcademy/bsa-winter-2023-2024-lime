@@ -1,28 +1,38 @@
+import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 
-import { Button, ButtonVariant } from '~/bundles/common/components/button/button.js';
-import { Select } from '~/bundles/common/components/select/select.js';
-import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
+import {
+    Button,
+    ButtonVariant,
+    DatePicker,
+    Select,
+} from '~/bundles/common/components/components.js';
+import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
+import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getActivityOptions } from '~/bundles/common/helpers/helpers.js';
-import { useCallback } from '~/bundles/common/hooks/hooks.js';
-import { useAppForm } from '~/bundles/common/hooks/use-app-form/use-app-form.hook.js';
+import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type CreateScheduleRequest } from '~/bundles/common/types/types.js';
 
 import { DEFAULT_SCHEDULE_FORM_VALUE } from './constants/constants.js';
-import {
-    scheduleValidationSchema
-} from './validation-schemas/validation-schemas.js';
+// import { scheduleValidationSchema } from './validation-schemas/validation-schemas.js';
 
 type Properties = {
     onSubmit: (payload: CreateScheduleRequest) => void;
+    goalsList: SelectOption[];
     isLoading: boolean;
 };
 
-const CreateScheduleForm: React.FC<Properties> = ({ isLoading, onSubmit }) => {
-    const { control, errors, handleSubmit } = useAppForm<CreateScheduleRequest>({
-        defaultValues: DEFAULT_SCHEDULE_FORM_VALUE,
-        validationSchema: scheduleValidationSchema,
-        mode: 'onTouched',
-    });
+const CreateScheduleForm: React.FC<Properties> = ({
+    isLoading,
+    onSubmit,
+    goalsList,
+}) => {
+    const { control, errors, handleSubmit } = useAppForm<CreateScheduleRequest>(
+        {
+            defaultValues: DEFAULT_SCHEDULE_FORM_VALUE,
+            // validationSchema: scheduleValidationSchema,
+            mode: 'onTouched',
+        },
+    );
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -46,14 +56,28 @@ const CreateScheduleForm: React.FC<Properties> = ({ isLoading, onSubmit }) => {
                     isDisabled={isLoading}
                     required
                 />
-                <Select
-                    label="Goal"
-                    name="activity"
+
+                <DatePicker
+                    format='DD/MM/YYYY HH:mm'
+                    plugins={[
+                        <TimePicker position="bottom" hideSeconds key={1} />
+                    ]}
+                    name="dateOfStart"
+                    minDate={new Date()}
                     control={control}
                     errors={errors}
-                    options={[]}
+                    label="Date of start"
+                    placeholder="DD/MM/YYYY HH:mm"
+                    className="lg:col-start-1 lg:col-end-3"
+                />
+
+                <Select
+                    label="Goal"
+                    name="goalLabel"
+                    control={control}
+                    errors={errors}
+                    options={goalsList}
                     isDisabled={isLoading}
-                    required
                 />
             </div>
 

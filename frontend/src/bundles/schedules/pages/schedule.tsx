@@ -9,18 +9,61 @@ import {
     ScheduleCard,
 } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { useAppForm, useCallback, useState } from '~/bundles/common/hooks/hooks.js';
+import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
+import {
+    useAppForm,
+    useAppSelector,
+    useCallback,
+    useMemo,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
+import { type CreateScheduleRequest } from '~/bundles/common/types/types.js';
+import { FrequencyType } from '~/bundles/goals/enums/enums.js';
+import { convertDateToIso } from '~/bundles/schedules/helpers/helpers.js';
 
 import { DEFAULT_CALENDAR_VALUE } from '../constants/constants.js';
+import { type ScheduleRequestDto } from '../types/types.js';
+
+const ZERO_VALUE = 0;
 
 const Schedule: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
     const { control } = useAppForm({
         mode: 'onTouched',
         shouldUnregister: false,
         defaultValues: DEFAULT_CALENDAR_VALUE,
     });
+
+    const { goals } = useAppSelector(({ goals }) => goals);
+
+    const addScheduleHandler = useCallback(({ activity, goalLabel, dateOfStart }: CreateScheduleRequest) => {
+        const convertedDate = convertDateToIso(dateOfStart);
+        const preparedData: ScheduleRequestDto = {
+            activityType: activity,
+            goalId: goalLabel,
+            startAt: convertedDate as unknown as Date
+        };
+        console.log(preparedData);
+    }, []);
+
+    const PLURAL = 's';
+    const DAY_PREPOSITION = 'a';
+    const WEEK_PREPOSITION = 'per';
+
+    const goalsList = useMemo(() => {
+        return goals.map(({ activityType, id, frequency, frequencyType }) => ({
+            value: id,
+            label: `
+                 ${capitalizeFirstLetter(activityType)} ${frequency} time${frequency > 1 ? PLURAL: ''}
+                 ${
+                     frequencyType === FrequencyType.DAY
+                         ? DAY_PREPOSITION
+                         : WEEK_PREPOSITION
+                 }
+                 ${frequencyType}
+            `,
+        }));
+    }, [goals]);
 
     const handleModalStatus = useCallback(() => {
         setIsModalOpen((previousState) => !previousState);
@@ -46,9 +89,21 @@ const Schedule: React.FC = () => {
                 <div className="w-full px-[2rem]">
                     <div className="mb-3">
                         <ul>
-                            <ScheduleCard weekDay="Monday" activityType="walking" date="08:00" />
-                            <ScheduleCard weekDay="Wedenesday" activityType="running" date="08:00" />
-                            <ScheduleCard weekDay="Friday" activityType="cycling" date="08:00" />
+                            <ScheduleCard
+                                weekDay="Monday"
+                                activityType="walking"
+                                date="08:00"
+                            />
+                            <ScheduleCard
+                                weekDay="Wednesday"
+                                activityType="running"
+                                date="08:00"
+                            />
+                            <ScheduleCard
+                                weekDay="Friday"
+                                activityType="cycling"
+                                date="08:00"
+                            />
                         </ul>
                     </div>
                     <div className="md:w-full lg:w-[48.8%]">
@@ -69,7 +124,11 @@ const Schedule: React.FC = () => {
                 title="Set the new shcedule"
                 onClose={handleModalStatus}
             >
-                <CreateScheduleForm onSubmit={() => null} isLoading={false}/>
+                <CreateScheduleForm
+                    onSubmit={addScheduleHandler}
+                    isLoading={false}
+                    goalsList={goalsList.length > ZERO_VALUE ? [...goalsList, { value: '', label: 'None' }] : goalsList}
+                />
             </Modal>
         </>
     );

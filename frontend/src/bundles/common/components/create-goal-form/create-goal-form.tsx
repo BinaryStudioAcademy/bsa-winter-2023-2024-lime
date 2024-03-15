@@ -5,9 +5,7 @@ import {
     Select,
 } from '~/bundles/common/components/components.js';
 import { DEFAULT_CREATE_GOAL_PAYLOAD } from '~/bundles/common/components/create-goal-form/constants/constants.js';
-import {
-    setGoalFrequencyOpitons,
-} from '~/bundles/common/components/create-goal-form/helpers/helpers.js';
+import { setGoalFrequencyOpitons } from '~/bundles/common/components/create-goal-form/helpers/helpers.js';
 import { goalValidationSchema } from '~/bundles/common/components/create-goal-form/validation-schemas/goal.validation-schema.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getActivityOptions } from '~/bundles/common/helpers/helpers.js';
