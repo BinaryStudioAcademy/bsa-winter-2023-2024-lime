@@ -6,7 +6,7 @@ import { type NotificationService } from '~/bundles/notifications/notification.s
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import { workoutService } from '~/bundles/workouts/workouts.js';
 import { COMPLETED_GOAL_VALUE } from '~/common/constants/constants.js';
-import { ActivityType } from '~/common/enums/enums.js';
+import { ActivityType, NotificationMessage } from '~/common/enums/enums.js';
 import {
     calculateGoalProgress,
     checkAchievementUniqueness,
@@ -87,8 +87,7 @@ class CalculationProgressService {
             await this.notificationService.create({
                 userId,
                 title: 'Goal Completed',
-                message:
-                    'Congratulations! You have completed your goal. Go to Goals Page to see your results.',
+                message: NotificationMessage.GOAL_COMPLETED,
                 isRead: false,
                 type: 'default',
             });
@@ -185,7 +184,7 @@ class CalculationProgressService {
                     await this.notificationService.create({
                         userId,
                         title: 'New Achievement',
-                        message: `Congratulations! You have unlocked a new achievement: ${achievementDetails.toObject().name}.`,
+                        message: `${NotificationMessage.NEW_ACHIEVEMENT} ${achievementDetails.toObject().name}.`,
                         isRead: false,
                         type: 'default',
                     });
