@@ -14,7 +14,7 @@ import {
     fetchNotifications,
 } from '~/bundles/notifications/store/actions.js';
 
-import { NotificationBell,NotificationList } from './components/components.js';
+import { NotificationBell, NotificationList } from './components/components.js';
 
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
