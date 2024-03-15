@@ -91,7 +91,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                     </li>
                     <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
                         Location
-                        <p className="text-bold text-primary mt-2 text-xl">
+                        <p className="text-bold text-primary mt-2 text-center text-xl">
                             {location ?? '-'}
                         </p>
                     </li>
