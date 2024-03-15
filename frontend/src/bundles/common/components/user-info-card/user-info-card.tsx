@@ -3,6 +3,7 @@ import { ChevronRightIcon } from '@heroicons/react/16/solid';
 import { type AchievementsGetAllResponseDto } from '~/bundles/achievements/types/types.js';
 import {
     AchievementCard,
+    Avatar,
     Button,
     ButtonVariant,
 } from '~/bundles/common/components/components.js';
@@ -48,11 +49,7 @@ const UserInfoCard: React.FC<Properties> = ({
                         {name}
                     </p>
                 </div>
-                <img
-                    src={image}
-                    alt={name}
-                    className="h-44 w-44 overflow-hidden rounded-full object-cover"
-                />
+                <Avatar size="xl" email={image ? '' : name} avatarUrl={image} />
             </div>
             <div className="relative flex flex-col gap-4">
                 <h2 className="text-secondary text-xl font-extrabold">
