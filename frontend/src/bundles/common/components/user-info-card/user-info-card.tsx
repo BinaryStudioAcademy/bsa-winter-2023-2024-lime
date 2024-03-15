@@ -49,7 +49,7 @@ const UserInfoCard: React.FC<Properties> = ({
                         {name}
                     </p>
                 </div>
-                <Avatar size="xl" email={image ? '' : name} avatarUrl={image} />
+                <Avatar size="xl" email={name} avatarUrl={image} />
             </div>
             <div className="relative flex flex-col gap-4">
                 <h2 className="text-secondary text-xl font-extrabold">
