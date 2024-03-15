@@ -56,7 +56,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         message(id);
     }, [message, id]);
     return (
-        <div className="bg-primary flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full  xl:w-[25rem]">
+        <div className="bg-primary flex h-full min-h-[50rem] w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full md:min-h-[55rem]  xl:w-[25rem]">
             <div className="lg:min-h-[7rem]">
                 <Avatar size="lg" email={email} avatarUrl={avatarUrl} />
             </div>
