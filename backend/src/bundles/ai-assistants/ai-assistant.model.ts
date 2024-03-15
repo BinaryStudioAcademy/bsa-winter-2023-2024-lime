@@ -14,8 +14,6 @@ class AiAssistantModel extends AbstractModel {
 
     public 'chatId': number;
 
-    public 'assistantId': string;
-
     public 'threadId': string;
 
     public 'user': UserModel;
