@@ -1,4 +1,4 @@
-import { ApiPath } from '~/bundles/common/enums/enums.js';
+import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { type Http } from '~/framework/http/types/types.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
@@ -25,7 +25,7 @@ class NotificationsApi extends BaseHttpApi {
             this.getFullEndpoint(NotificationsApiPath.ROOT, {}),
             {
                 method: 'GET',
-                contentType: 'application/json',
+                contentType: ContentType.JSON,
                 hasAuth: true,
             },
         );
@@ -40,7 +40,7 @@ class NotificationsApi extends BaseHttpApi {
             this.getFullEndpoint(NotificationsApiPath.ROOT, {}),
             {
                 method: 'POST',
-                contentType: 'application/json',
+                contentType: ContentType.JSON,
                 hasAuth: true,
                 payload: JSON.stringify(payload),
             },
@@ -56,7 +56,7 @@ class NotificationsApi extends BaseHttpApi {
             }),
             {
                 method: 'PATCH',
-                contentType: 'application/json',
+                contentType: ContentType.JSON,
                 hasAuth: true,
                 payload: JSON.stringify({}),
             },
@@ -70,7 +70,7 @@ class NotificationsApi extends BaseHttpApi {
             }),
             {
                 method: 'DELETE',
-                contentType: 'application/json',
+                contentType: ContentType.JSON,
                 hasAuth: true,
             },
         );
@@ -81,7 +81,7 @@ class NotificationsApi extends BaseHttpApi {
             this.getFullEndpoint(NotificationsApiPath.UNREAD, {}),
             {
                 method: 'GET',
-                contentType: 'application/json',
+                contentType: ContentType.JSON,
                 hasAuth: true,
             },
         );
