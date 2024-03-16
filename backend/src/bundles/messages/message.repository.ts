@@ -43,7 +43,7 @@ class MessageRepository implements Repository {
         });
     }
 
-    public async create(payload: MessageEntity): Promise<unknown> {
+    public async create(payload: MessageEntity): Promise<MessageEntity> {
         const message = payload.toNewObject();
 
         const chatEntity = await this.messageModel

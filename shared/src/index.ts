@@ -4,7 +4,10 @@ export {
     Metric,
 } from './bundles/achievements/achievements.js';
 export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
-export { type ChatRequestDto } from './bundles/chats/chats.js';
+export {
+    type ChatRequestDto,
+    type ChatResponseDto,
+} from './bundles/chats/chats.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,

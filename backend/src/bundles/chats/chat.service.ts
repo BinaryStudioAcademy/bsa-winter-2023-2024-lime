@@ -5,7 +5,7 @@ import { type Service } from '~/common/types/types.js';
 import { ChatEntity } from './chat.entity.js';
 import { type ChatRepository } from './chat.repository.js';
 import { ErrorMessage } from './enums/enums.js';
-import { type ChatCreateDto } from './types/types.js';
+import { type ChatCreateDto, type ChatResponseDto } from './types/types.js';
 
 class ChatService implements Service {
     private chatRepository: ChatRepository;
@@ -14,7 +14,9 @@ class ChatService implements Service {
         this.chatRepository = chatRepository;
     }
 
-    public async find(query: Record<string, unknown>): Promise<unknown> {
+    public async find(
+        query: Record<string, unknown>,
+    ): Promise<ChatResponseDto | null> {
         const chat = await this.chatRepository.find(query);
 
         return chat ? chat.toObject() : null;
@@ -24,7 +26,7 @@ class ChatService implements Service {
         userId,
     }: {
         userId: number;
-    }): Promise<{ items: unknown[] }> {
+    }): Promise<{ items: ChatResponseDto[] }> {
         const chats = await this.chatRepository.findAll({ userId });
 
         return {
@@ -32,7 +34,7 @@ class ChatService implements Service {
         };
     }
 
-    public async create(payload: ChatCreateDto): Promise<unknown> {
+    public async create(payload: ChatCreateDto): Promise<ChatResponseDto> {
         const { creatorId, membersId, isAssistant } = payload;
 
         if (isAssistant) {
@@ -55,7 +57,7 @@ class ChatService implements Service {
 
         const chat = await this.chatRepository.create(chatEntity);
 
-        return chat.toNewObject();
+        return chat.toObject();
     }
 
     public update(

@@ -1,1 +1,1 @@
-export { type ChatRequestDto } from './types/types.js';
+export { type ChatRequestDto, type ChatResponseDto } from './types/types.js';
