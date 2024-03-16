@@ -10,7 +10,7 @@ import { useFormController } from '~/bundles/common/hooks/hooks.js';
 
 import { getValidClassNames } from '../../helpers/helpers.js';
 
-type CheckboxProperties<T extends FieldValues> = {
+type Properties<T extends FieldValues> = {
     name: FieldPath<T>;
     label: string;
     ariaLabel: string;
@@ -36,7 +36,7 @@ const Checkbox = <T extends FieldValues>({
     ariaLabel,
     control,
     errors,
-}: CheckboxProperties<T>): JSX.Element => {
+}: Properties<T>): JSX.Element => {
     const { field } = useFormController<T>({ name, control });
     const error = errors[name]?.message;
     const hasError = Boolean(error);
