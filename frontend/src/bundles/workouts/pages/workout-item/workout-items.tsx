@@ -37,6 +37,7 @@ const WorkoutItem = (): JSX.Element => {
                 <NavLink
                     to={STRAVA_ATHLETE_TRAINING_URL}
                     className="text-strava-brand mt-[0.5rem] text-right"
+                    target="_blank"
                     reloadDocument
                 >
                     View on Strava
