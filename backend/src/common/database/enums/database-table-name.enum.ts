@@ -14,7 +14,6 @@ const DatabaseTableName = {
     CHATS: 'chats',
     CHATS_USERS: 'chats_users',
     MESSAGES: 'messages',
-    AI_ASSISTANTS: 'ai_assistants',
 } as const;
 
 export { DatabaseTableName };

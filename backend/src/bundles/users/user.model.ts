@@ -2,10 +2,10 @@ import { type RelationMappings, Model } from 'objection';
 
 import { UserAchievementModel } from '~/bundles/achievements/achievements.js';
 import {
-    AiAssistantAttributes,
-    AiAssistantModel,
-} from '~/bundles/ai-assistants/ai-assistants.js';
-import { ChatModel, ChatUserAttributes } from '~/bundles/chats/chats.js';
+    ChatAttributes,
+    ChatModel,
+    ChatUserAttributes,
+} from '~/bundles/chats/chats.js';
 import { MessageAttributes } from '~/bundles/messages/messages.js';
 import {
     OAuthInfoAttributes,
@@ -47,8 +47,6 @@ class UserModel extends AbstractModel {
     public 'userOAuthState': OAuthStateModel;
 
     public 'chats': ChatModel[];
-
-    public 'aiAssistant': AiAssistantModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -113,15 +111,7 @@ class UserModel extends AbstractModel {
                         from: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.USER_ID}`,
                         to: `${DatabaseTableName.CHATS_USERS}.${MessageAttributes.CHAT_ID}`,
                     },
-                    to: `${DatabaseTableName.CHATS}.`,
-                },
-            },
-            aiAssistant: {
-                relation: Model.HasOneRelation,
-                modelClass: AiAssistantModel,
-                join: {
-                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.AI_ASSISTANTS}.${AiAssistantAttributes.USER_ID}`,
+                    to: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
                 },
             },
         };
