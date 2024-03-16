@@ -1,3 +1,4 @@
+import { DatabaseTableName } from '~/common/database/database.js';
 import { type Repository } from '~/common/types/types.js';
 
 import { ChatEntity } from './chat.entity.js';
@@ -13,40 +14,73 @@ class ChatRepository implements Repository {
     public async find(
         query: Record<string, unknown>,
     ): Promise<ChatEntity | null> {
-        const chat = await this.chatModel.query().findOne(query).execute();
+        const chat = await this.chatModel
+            .query()
+            .findOne(query)
+            .withGraphFetched(`[${DatabaseTableName.MESSAGES}]`)
+            .execute();
 
         return chat ? ChatEntity.initialize(chat) : null;
     }
 
-    public async findAll(): Promise<ChatEntity[]> {
-        const chats = await this.chatModel.query().execute();
+    public async findAll(
+        query: Record<string, unknown>,
+    ): Promise<ChatEntity[]> {
+        const chats = await this.chatModel
+            .query()
+            .whereExists(
+                this.chatModel
+                    .relatedQuery(DatabaseTableName.USERS)
+                    .where(query),
+            )
+            .withGraphFetched(`[${DatabaseTableName.MESSAGES}]`)
+            .modifyGraph(`[${DatabaseTableName.MESSAGES}]`, (builder) => {
+                void builder.orderBy('createdAt', 'desc').limit(1);
+            })
+            .execute();
 
         return chats.map((chat) => {
             return ChatEntity.initialize(chat);
         });
     }
 
-    public async create(payload: ChatEntity): Promise<unknown> {
-        const chat = payload.toNewObject();
+    public async create(payload: ChatEntity): Promise<ChatEntity> {
+        const { isAssistant, membersId } = payload.toNewObject();
 
-        const chatEntity = await this.chatModel
-            .query()
-            .insert(chat)
-            .returning('*')
-            .execute();
+        const trx = await this.chatModel.startTransaction();
 
-        return ChatEntity.initialize(chatEntity);
+        try {
+            const chat = await this.chatModel
+                .query(trx)
+                .insert({ isAssistant })
+                .returning('*')
+                .withGraphFetched(`[${DatabaseTableName.MESSAGES}]`)
+                .execute();
+
+            for (const id of membersId) {
+                await chat
+                    .$relatedQuery(DatabaseTableName.USERS, trx)
+                    .relate(id);
+            }
+
+            await trx.commit();
+
+            return ChatEntity.initialize(chat);
+        } catch (error) {
+            await trx.rollback();
+            throw error;
+        }
     }
 
     public async update(
         query: Record<string, unknown>,
         payload: ChatEntity,
     ): Promise<ChatEntity | null> {
-        const chat = payload.toObject();
+        const { isAssistant } = payload.toObject();
 
         const updatedChat = await this.chatModel
             .query()
-            .patch(chat)
+            .patch({ isAssistant })
             .where(query)
             .returning('*')
             .first()

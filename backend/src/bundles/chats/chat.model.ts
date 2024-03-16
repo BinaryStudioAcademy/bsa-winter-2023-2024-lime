@@ -4,17 +4,20 @@ import {
     MessageAttributes,
     MessageModel,
 } from '~/bundles/messages/messages.js';
+import { UserAttributes, UserModel } from '~/bundles/users/users.js';
 import {
     AbstractModel,
     DatabaseTableName,
 } from '~/common/database/database.js';
 
-import { ChatAttributes } from './enums/enums.js';
+import { ChatAttributes, ChatUserAttributes } from './enums/enums.js';
 
 class ChatModel extends AbstractModel {
     public 'isAssistant': boolean;
 
     public 'messages': MessageModel[];
+
+    public 'users': UserModel[];
 
     public static override get tableName(): string {
         return DatabaseTableName.CHATS;
@@ -28,6 +31,18 @@ class ChatModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
                     to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
+                },
+            },
+            users: {
+                relation: Model.ManyToManyRelation,
+                modelClass: UserModel,
+                join: {
+                    from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
+                    through: {
+                        from: `${DatabaseTableName.CHATS_USERS}.${MessageAttributes.CHAT_ID}`,
+                        to: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.USER_ID}`,
+                    },
+                    to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                 },
             },
         };

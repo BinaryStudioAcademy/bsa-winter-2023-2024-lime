@@ -4,5 +4,6 @@ export {
     ApiPath,
     AppEnvironment,
     ContentType,
+    HttpCode,
     ServerErrorType,
 } from 'shared';

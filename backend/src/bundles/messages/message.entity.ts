@@ -11,24 +11,34 @@ class MessageEntity implements Entity {
 
     private 'isSeen': boolean;
 
+    private 'createdAt': string;
+
+    private 'updatedAt': string;
+
     private constructor({
         id,
         chatId,
         senderId,
         text,
         isSeen,
+        createdAt,
+        updatedAt,
     }: {
         id: number | null;
         chatId: number;
         senderId: number | null;
         text: string;
         isSeen: boolean;
+        createdAt: string;
+        updatedAt: string;
     }) {
         this.id = id;
         this.chatId = chatId;
         this.senderId = senderId;
         this.text = text;
         this.isSeen = isSeen;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public static initialize({
@@ -37,12 +47,16 @@ class MessageEntity implements Entity {
         senderId,
         text,
         isSeen,
+        createdAt,
+        updatedAt,
     }: {
         id: number;
         chatId: number;
         senderId: number | null;
         text: string;
         isSeen: boolean;
+        createdAt: string;
+        updatedAt: string;
     }): MessageEntity {
         return new MessageEntity({
             id,
@@ -50,6 +64,8 @@ class MessageEntity implements Entity {
             senderId,
             text,
             isSeen,
+            createdAt,
+            updatedAt,
         });
     }
 
@@ -64,12 +80,16 @@ class MessageEntity implements Entity {
         text: string;
         isSeen: boolean;
     }): MessageEntity {
+        const creationDate = new Date().toISOString();
+
         return new MessageEntity({
             id: null,
             chatId,
             senderId: senderId ?? null,
             text,
             isSeen,
+            createdAt: creationDate,
+            updatedAt: creationDate,
         });
     }
 
@@ -79,6 +99,8 @@ class MessageEntity implements Entity {
         senderId: number | null;
         text: string;
         isSeen: boolean;
+        createdAt: string;
+        updatedAt: string;
     } {
         return {
             id: this.id as number,
@@ -86,6 +108,8 @@ class MessageEntity implements Entity {
             senderId: this.senderId,
             text: this.text,
             isSeen: this.isSeen,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
         };
     }
 
@@ -94,12 +118,16 @@ class MessageEntity implements Entity {
         senderId: number | null;
         text: string;
         isSeen: boolean;
+        createdAt: string;
+        updatedAt: string;
     } {
         return {
             chatId: this.chatId,
             senderId: this.senderId ?? null,
             text: this.text,
             isSeen: this.isSeen,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
         };
     }
 }

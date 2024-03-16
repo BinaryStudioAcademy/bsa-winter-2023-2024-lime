@@ -10,6 +10,8 @@ const ApiPath = {
     CONNECTIONS: '/connections',
     OAUTH: '/oauth',
     STRAVA: '/strava',
+    CHATS: '/chats',
+    MESSAGES: '/messages',
 } as const;
 
 export { ApiPath };

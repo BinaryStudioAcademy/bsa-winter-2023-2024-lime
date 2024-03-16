@@ -6,7 +6,6 @@ import {
     ChatModel,
     ChatUserAttributes,
 } from '~/bundles/chats/chats.js';
-import { MessageAttributes } from '~/bundles/messages/messages.js';
 import {
     OAuthInfoAttributes,
     OAuthModel,
@@ -109,7 +108,7 @@ class UserModel extends AbstractModel {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     through: {
                         from: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.USER_ID}`,
-                        to: `${DatabaseTableName.CHATS_USERS}.${MessageAttributes.CHAT_ID}`,
+                        to: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.CHAT_ID}`,
                     },
                     to: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
                 },
