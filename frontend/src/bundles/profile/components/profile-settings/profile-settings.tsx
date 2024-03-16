@@ -1,3 +1,4 @@
+import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import {
     Avatar,
     Button,
@@ -9,6 +10,7 @@ import {
     Radio,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
+import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
@@ -25,6 +27,7 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as userBonusesActions } from '~/bundles/user-bonuses/store/user-bonuses.js';
@@ -35,29 +38,53 @@ import {
 
 import { constructReferralUrl } from '../../helpers/helpers.js';
 import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
+import { Cropper } from './components/components.js';
 import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserUpdateProfileRequestDto) => void;
+    onAvatarUpload: (file: File) => void;
     isLoading: boolean;
 };
 
-const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+const ProfileSettings: React.FC<Properties> = ({
+    onSubmit,
+    onAvatarUpload,
+    isLoading,
+}) => {
+    const fileInputReference = useRef<HTMLInputElement>(null);
+    const [imgToCrop, setImgToCrop] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+
     const dispatch = useAppDispatch();
 
     const [valuesDefault, setValuesDefault] = useState(false);
-    const { user } = useAppSelector(({ auth }) => auth);
+    const { user, updateProfile } = useAppSelector(({ auth }) => auth);
     const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
         ({ userBonuses }) => userBonuses,
     );
 
-    const { control, errors, reset, setValue, handleSubmit } =
+    const { control, errors, reset, setValue, handleSubmit, getValues } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
             mode: 'onTouched',
             shouldUnregister: false,
         });
+
+    const selectImage = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setImgToCrop('');
+
+            const image = event.target.files;
+            if (image) {
+                setImgToCrop(URL.createObjectURL(image[0] as File));
+                setIsOpen(true);
+                event.target.value = '';
+            }
+        },
+        [],
+    );
 
     useEffect(() => {
         if (!valuesDefault && user) {
@@ -73,11 +100,17 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         break;
                     }
                     case 'weight': {
-                        setValue(key, convertWeightToKilograms(user[key]));
+                        setValue(
+                            key,
+                            convertWeightToKilograms(user[key]) || '',
+                        );
                         break;
                     }
                     case 'height': {
-                        setValue(key, convertHeightToCentimeters(user[key]));
+                        setValue(
+                            key,
+                            convertHeightToCentimeters(user[key]) || '',
+                        );
                         break;
                     }
                     default: {
@@ -92,11 +125,19 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         }
     }, [user, setValue, valuesDefault]);
 
+    useEffect(() => {
+        if (updateProfile.avatarUrl) {
+            setValue('avatarUrl', updateProfile.avatarUrl);
+            dispatch(authActions.clearUpdateProfile());
+        }
+    }, [updateProfile, setValue, dispatch]);
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
+                    avatarUrl: data.avatarUrl || null,
                     location: data.location ? data.location.trim() : null,
                     weight: convertWeightToGrams(data.weight),
                     height: convertHeightToMillimeters(data.height),
@@ -112,6 +153,10 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         [handleSubmit, onSubmit],
     );
 
+    const closeModal = useCallback((): void => {
+        setIsOpen(false);
+    }, []);
+
     const handleReset = useCallback((): void => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
     }, [reset]);
@@ -120,6 +165,12 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         void dispatch(userBonusesActions.loadAllUserBonusesTransactions());
     }, [dispatch]);
 
+    const handleUploadClick = useCallback((): void => {
+        if (fileInputReference.current) {
+            fileInputReference.current.click();
+        }
+    }, [fileInputReference]);
+
     return (
         <div className="bg-secondary pl-13 pr-18 h-full px-12 pb-9 pt-3 lg:w-[874px]">
             <div className="flex flex-col items-start justify-between gap-5 pb-12 xl:flex-row xl:items-center">
@@ -127,13 +178,16 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     <Avatar
                         size="lg"
                         email={user ? user?.email : ''}
-                        avatarUrl={user ? user.avatarUrl : ''}
+                        avatarUrl={getValues().avatarUrl}
                     />
                     <input
                         id="avatarInput"
                         type="file"
                         accept="image/jpeg, image/png"
+                        name="update-file"
+                        onChange={selectImage}
                         className="hidden"
+                        ref={fileInputReference}
                     />
                     <div>
                         <Button
@@ -142,8 +196,21 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                             label="Update file"
                             variant={ButtonVariant.SECONDARY}
                             size={ComponentSize.SMALL}
+                            onClick={handleUploadClick}
                         />
                     </div>
+                    <Modal
+                        isOpen={isOpen}
+                        title="Crop your avatar"
+                        onClose={closeModal}
+                    >
+                        <Cropper
+                            image={imgToCrop}
+                            onAvatarUpload={onAvatarUpload}
+                            isLoading={isLoading}
+                            closeModal={closeModal}
+                        />
+                    </Modal>
                 </div>
                 <UserBonusBalance
                     userBonusesTransactions={userBonusesTransactions}
@@ -258,12 +325,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                 <ul className="mt-14 flex justify-end lg:mt-6">
                     <li className="mr-6 w-[150px]">
                         <Button
-                            label={isLoading ? '' : 'Reset'}
-                            leftIcon={
-                                isLoading && (
-                                    <Loader color={IconColor.SECONDARY} />
-                                )
-                            }
+                            label="Reset"
                             onClick={handleReset}
                             variant={ButtonVariant.SECONDARY}
                             size={ComponentSize.MEDIUM}

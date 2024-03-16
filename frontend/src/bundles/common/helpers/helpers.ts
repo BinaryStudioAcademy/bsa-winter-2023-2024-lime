@@ -15,6 +15,7 @@ export { getActivityOptions } from './get-activity-options/get-activity-options.
 export { getLastWorkout } from './get-last-workout/get-last-workout.helper.js';
 export { getObjectKeys } from './get-object-keys/get-object-keys.js';
 export { getTimeFromDate } from './get-time-from-date/get-time-from-date.helper.js';
+export { getUniqueValues } from './get-unique-values/get-unique-values.helper.js';
 export { getUserId } from './get-user-id/get-user-id.js';
 export { getValidClassNames } from './get-valid-class-names/get-valid-class-names.helper.js';
 export { metersToKilometers } from './meters-to-kilometers/meters-to-kilometers.helper.js';

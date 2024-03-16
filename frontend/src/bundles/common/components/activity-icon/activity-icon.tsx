@@ -19,11 +19,11 @@ type Properties = {
 
 const baseClass = 'text-white flex items-center justify-center';
 
-const ActivityIcon = ({
+const ActivityIcon: React.FC<Properties> = ({
     activityType,
     size,
     className = '',
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     return (
         <div
             className={getValidClassNames(

@@ -9,14 +9,14 @@ type Properties = {
     avatarBgColor?: string;
 };
 
-const TestimonialCard = ({
+const TestimonialCard: React.FC<Properties> = ({
     rating,
     text,
     name,
     occupation,
     avatarImage,
     avatarBgColor,
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const ratingToEmoji: Record<1 | 2 | 3 | 4 | 5, string> = {
         1: '\u2B50',
         2: '\u2B50\u2B50',

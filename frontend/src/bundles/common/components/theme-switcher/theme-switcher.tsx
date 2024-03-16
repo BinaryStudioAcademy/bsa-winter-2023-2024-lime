@@ -17,9 +17,9 @@ type Properties = {
 const defaultClassName =
     'fixed bg-primary rounded-full md:bottom-3 md:right-3 bottom-2 right-2';
 
-function ThemeSwitcher({
+const ThemeSwitcher: React.FC<Properties> = ({
     className = defaultClassName,
-}: Properties): JSX.Element {
+}): JSX.Element => {
     const dispatch = useAppDispatch();
 
     const { theme } = useAppSelector(({ theme }) => theme);
@@ -47,6 +47,6 @@ function ThemeSwitcher({
             </div>
         </>
     );
-}
+};
 
 export { ThemeSwitcher };
