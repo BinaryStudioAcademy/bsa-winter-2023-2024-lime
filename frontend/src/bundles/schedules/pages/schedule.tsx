@@ -57,9 +57,11 @@ const Schedule: React.FC = () => {
                 goalId: goalLabel as number,
                 startAt: convertedDate as unknown as Date,
             };
-            console.log(preparedData);
+
+            void dispatch(scheduleActions.createSchedule(preparedData));
+            setIsModalOpen((previousState) => !previousState);
         },
-        [],
+        [dispatch],
     );
 
     const PLURAL = 's';

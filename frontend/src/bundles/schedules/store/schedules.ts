@@ -1,9 +1,10 @@
-import { getSchedules } from './actions.js';
+import { createSchedule, getSchedules } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     getSchedules,
+    createSchedule,
 };
 
 export { allActions as actions };

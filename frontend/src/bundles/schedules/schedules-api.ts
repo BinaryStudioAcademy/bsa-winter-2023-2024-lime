@@ -4,7 +4,11 @@ import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
 import { ScheduleApiPath } from './enums/enums.js';
-import { type ScheduleGetAllResponseDto } from './types/types.js';
+import {
+    type ScheduleGetAllResponseDto,
+    type ScheduleRequestDto,
+    type ScheduleResponseDto,
+} from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -27,6 +31,22 @@ class ScheduleApi extends BaseHttpApi {
         );
 
         return await response.json<ScheduleGetAllResponseDto>();
+    }
+
+    public async createSchedule(
+        payload: ScheduleRequestDto,
+    ): Promise<ScheduleResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(ScheduleApiPath.ROOT, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<ScheduleResponseDto>();
     }
 }
 
