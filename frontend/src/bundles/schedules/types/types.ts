@@ -1,1 +1,5 @@
-export { type ScheduleRequestDto } from 'shared';
+export {
+    type ScheduleGetAllResponseDto,
+    type ScheduleRequestDto,
+    type ScheduleResponseDto,
+} from 'shared';

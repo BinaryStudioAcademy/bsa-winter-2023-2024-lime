@@ -60,6 +60,7 @@ export {
     ScheduleApiPath,
     ScheduleValidationMessage,
     scheduleValidationSchema,
+    UnicodePattern,
 } from './bundles/schedules/schedules.js';
 export {
     type SubscriptionPlansGetAllItemResponseDto,

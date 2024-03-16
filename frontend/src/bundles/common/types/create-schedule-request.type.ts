@@ -3,7 +3,7 @@ import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
 type CreateScheduleRequest = {
     activity: ValueOf<typeof ActivityType>;
-    goalLabel: number | null
+    goalLabel: number | null;
     dateOfStart: string;
 };
 

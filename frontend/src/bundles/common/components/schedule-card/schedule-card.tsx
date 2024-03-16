@@ -1,5 +1,6 @@
 import { ActivityIcon } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
@@ -17,6 +18,10 @@ const ScheduleCard: React.FC<Properties> = ({
     date,
     className,
 }) => {
+    const activity = capitalizeFirstLetter(activityType) as ValueOf<
+        typeof ActivityType
+    >;
+
     return (
         <li className={`${styles['schedule__item']} ${className ?? ''}`}>
             <div className="schedule-card bg-primary w-full rounded-lg p-4">
@@ -34,7 +39,7 @@ const ScheduleCard: React.FC<Properties> = ({
                         </div>
                         <div>
                             <div className="text-lm-grey-200 leading-1 mb-2 text-sm font-bold">
-                                {activityType}
+                                {activity}
                             </div>
                             <div className="leading-1 text-lm-grey-300 text-xs font-normal">
                                 At {date}

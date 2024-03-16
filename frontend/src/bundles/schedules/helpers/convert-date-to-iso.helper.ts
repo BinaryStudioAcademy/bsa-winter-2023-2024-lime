@@ -1,13 +1,9 @@
+import { formatISO, parse } from 'date-fns';
 
-const convertDateToIso = (date: string): string | null => {
-    const [datePart, timePart] = date.split(' ');
-    if (datePart && timePart) {
-        const [day, month, year] = datePart.split('/').map(Number);
-        const [hours, minutes] = timePart.split(':').map(Number);
-
-        return year && month ? new Date(year, month - 1, day, hours, minutes).toISOString() : null;
-    }
-    return null;
+const convertDateToIso = (date: string): string => {
+    const formatString = 'dd/MM/yyyy HH:mm';
+    const parsedDate = parse(date, formatString, new Date());
+    return formatISO(parsedDate);
 };
 
 export { convertDateToIso };

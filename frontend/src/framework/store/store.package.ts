@@ -18,6 +18,8 @@ import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
 import { reducer as connectionsReducer } from '~/bundles/profile/pages/connections-page/store/connections.js';
+import { scheduleApi } from '~/bundles/schedules/schedules.js';
+import { reducer as schedulesReducer } from '~/bundles/schedules/store/schedules.js';
 import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';
 import {
     subscriptionApi,
@@ -47,6 +49,7 @@ type RootReducer = {
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
     userBonuses: ReturnType<typeof userBonusesReducer>;
+    schedules: ReturnType<typeof schedulesReducer>;
 };
 
 type ExtraArguments = {
@@ -59,6 +62,7 @@ type ExtraArguments = {
     passwordResetApi: typeof passwordResetApi;
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
+    scheduleApi: typeof scheduleApi;
 };
 
 class Store {
@@ -85,6 +89,7 @@ class Store {
                 connections: connectionsReducer,
                 workouts: workoutsReducer,
                 userBonuses: userBonusesReducer,
+                schedules: schedulesReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -108,6 +113,7 @@ class Store {
             passwordResetApi,
             connectionApi,
             workoutApi,
+            scheduleApi,
         };
     }
 }

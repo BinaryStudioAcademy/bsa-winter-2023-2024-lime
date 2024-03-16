@@ -4,7 +4,10 @@ import {
     type FieldPath,
     type FieldValues,
 } from 'react-hook-form';
-import ReactDatePicker, { type DateObject, type Plugin } from 'react-multi-date-picker';
+import ReactDatePicker, {
+    type DateObject,
+    type Plugin,
+} from 'react-multi-date-picker';
 
 import { useCallback, useFormController } from '../../hooks/hooks.js';
 import { Input } from '../components.js';

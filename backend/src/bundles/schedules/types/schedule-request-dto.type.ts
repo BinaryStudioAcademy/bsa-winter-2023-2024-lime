@@ -1,7 +1,7 @@
 import { type ScheduleRequestDto as GlobalScheduleRequestDto } from 'shared';
 
 type ScheduleRequestDto = GlobalScheduleRequestDto & {
-    userId: number
+    userId: number;
 };
 
 export { type ScheduleRequestDto };

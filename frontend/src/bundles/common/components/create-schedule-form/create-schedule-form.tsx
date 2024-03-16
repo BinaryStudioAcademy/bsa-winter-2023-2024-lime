@@ -13,7 +13,7 @@ import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type CreateScheduleRequest } from '~/bundles/common/types/types.js';
 
 import { DEFAULT_SCHEDULE_FORM_VALUE } from './constants/constants.js';
-// import { scheduleValidationSchema } from './validation-schemas/validation-schemas.js';
+import { scheduleValidationSchema } from './validation-schemas/validation-schemas.js';
 
 type Properties = {
     onSubmit: (payload: CreateScheduleRequest) => void;
@@ -29,7 +29,7 @@ const CreateScheduleForm: React.FC<Properties> = ({
     const { control, errors, handleSubmit } = useAppForm<CreateScheduleRequest>(
         {
             defaultValues: DEFAULT_SCHEDULE_FORM_VALUE,
-            // validationSchema: scheduleValidationSchema,
+            validationSchema: scheduleValidationSchema,
             mode: 'onTouched',
         },
     );
@@ -58,9 +58,9 @@ const CreateScheduleForm: React.FC<Properties> = ({
                 />
 
                 <DatePicker
-                    format='DD/MM/YYYY HH:mm'
+                    format="DD/MM/YYYY HH:mm"
                     plugins={[
-                        <TimePicker position="bottom" hideSeconds key={1} />
+                        <TimePicker position="bottom" hideSeconds key={1} />,
                     ]}
                     name="dateOfStart"
                     minDate={new Date()}

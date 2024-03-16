@@ -1,3 +1,4 @@
+export { UnicodePattern } from './constants/constants.js';
 export { ScheduleApiPath, ScheduleValidationMessage } from './enums/enums.js';
 export {
     type ScheduleGetAllResponseDto,

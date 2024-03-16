@@ -1,50 +1,66 @@
 import { PlusIcon } from '@heroicons/react/16/solid';
+import { format } from 'date-fns';
 
 import {
     Button,
     ButtonVariant,
     CreateScheduleForm,
     DateCalendar,
+    Loader,
     Modal,
     ScheduleCard,
 } from '~/bundles/common/components/components.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { ComponentSize, DataStatus } from '~/bundles/common/enums/enums.js';
 import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
 import {
+    useAppDispatch,
     useAppForm,
     useAppSelector,
     useCallback,
+    useEffect,
     useMemo,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { type CreateScheduleRequest } from '~/bundles/common/types/types.js';
 import { FrequencyType } from '~/bundles/goals/enums/enums.js';
-import { convertDateToIso } from '~/bundles/schedules/helpers/helpers.js';
+import { actions as goalActions } from '~/bundles/goals/store/goals.js';
+import { actions as scheduleActions } from '~/bundles/schedules/store/schedules.js';
 
 import { DEFAULT_CALENDAR_VALUE } from '../constants/constants.js';
+import { convertDateToIso } from '../helpers/helpers.js';
 import { type ScheduleRequestDto } from '../types/types.js';
 
 const ZERO_VALUE = 0;
 
 const Schedule: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
     const { control } = useAppForm({
         mode: 'onTouched',
         shouldUnregister: false,
         defaultValues: DEFAULT_CALENDAR_VALUE,
     });
 
-    const { goals } = useAppSelector(({ goals }) => goals);
+    const { dataStatus: goalsDataStatus, goals } = useAppSelector(
+        ({ goals }) => goals,
+    );
 
-    const addScheduleHandler = useCallback(({ activity, goalLabel, dateOfStart }: CreateScheduleRequest) => {
-        const convertedDate = convertDateToIso(dateOfStart);
-        const preparedData: ScheduleRequestDto = {
-            activityType: activity,
-            goalId: goalLabel,
-            startAt: convertedDate as unknown as Date
-        };
-        console.log(preparedData);
-    }, []);
+    const { dataStatus: scheduleDataStatus, schedules } = useAppSelector(
+        ({ schedules }) => schedules,
+    );
+
+    const addScheduleHandler = useCallback(
+        ({ activity, goalLabel, dateOfStart }: CreateScheduleRequest) => {
+            const convertedDate = convertDateToIso(dateOfStart);
+            const preparedData: ScheduleRequestDto = {
+                activityType: activity,
+                goalId: goalLabel as number,
+                startAt: convertedDate as unknown as Date,
+            };
+            console.log(preparedData);
+        },
+        [],
+    );
 
     const PLURAL = 's';
     const DAY_PREPOSITION = 'a';
@@ -54,7 +70,7 @@ const Schedule: React.FC = () => {
         return goals.map(({ activityType, id, frequency, frequencyType }) => ({
             value: id,
             label: `
-                 ${capitalizeFirstLetter(activityType)} ${frequency} time${frequency > 1 ? PLURAL: ''}
+                 ${capitalizeFirstLetter(activityType)} ${frequency} time${frequency > 1 ? PLURAL : ''}
                  ${
                      frequencyType === FrequencyType.DAY
                          ? DAY_PREPOSITION
@@ -69,55 +85,80 @@ const Schedule: React.FC = () => {
         setIsModalOpen((previousState) => !previousState);
     }, []);
 
+    useEffect(() => {
+        if (isModalOpen && goalsDataStatus !== DataStatus.FULFILLED) {
+            void dispatch(goalActions.getGoals());
+        }
+    }, [isModalOpen]);
+
+    useEffect(() => {
+        if (scheduleDataStatus !== DataStatus.FULFILLED) {
+            void dispatch(scheduleActions.getSchedules());
+        }
+    }, [dispatch]);
+
+    const isSchedulesLoading = scheduleDataStatus === DataStatus.PENDING;
+
     return (
         <>
             <section className="relative flex h-full">
-                <div className="my-[-2rem] ml-[-2rem]">
-                    <div className="bg-secondary flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2rem]">
-                        <h1 className="text-primary text-xl font-bold">
-                            My Schedule
-                        </h1>
-                        <DateCalendar
-                            name="date"
-                            control={control}
-                            range={true}
-                            minDate={new Date()}
-                        />
-                    </div>
-                </div>
-                <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
-                <div className="w-full px-[2rem]">
-                    <div className="mb-3">
-                        <ul>
-                            <ScheduleCard
-                                weekDay="Monday"
-                                activityType="walking"
-                                date="08:00"
-                            />
-                            <ScheduleCard
-                                weekDay="Wednesday"
-                                activityType="running"
-                                date="08:00"
-                            />
-                            <ScheduleCard
-                                weekDay="Friday"
-                                activityType="cycling"
-                                date="08:00"
-                            />
-                        </ul>
-                    </div>
-                    <div className="md:w-full lg:w-[48.8%]">
-                        <Button
-                            type="button"
-                            label="Set the new shcedule"
-                            variant={ButtonVariant.SECONDARY}
-                            size={ComponentSize.LARGE}
-                            leftIcon={<PlusIcon className="w-6" />}
-                            className="h-[6.75rem] sm:text-sm md:text-xl"
-                            onClick={handleModalStatus}
-                        />
-                    </div>
-                </div>
+                {isSchedulesLoading ? (
+                    <Loader isOverflow />
+                ) : (
+                    <>
+                        <div className="my-[-2rem] ml-[-2rem]">
+                            <div className="bg-secondary flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2rem]">
+                                <h1 className="text-primary text-xl font-bold">
+                                    My Schedule
+                                </h1>
+                                <DateCalendar
+                                    name="date"
+                                    control={control}
+                                    range={true}
+                                    minDate={new Date()}
+                                />
+                            </div>
+                        </div>
+                        <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
+                        <div className="w-full px-[2rem]">
+                            <div className="mb-3">
+                                <ul>
+                                    {schedules.map(
+                                        ({ activityType, id, startAt }) => {
+                                            const date = new Date(startAt);
+                                            const weekDay = format(
+                                                date,
+                                                'EEEE',
+                                            );
+                                            const hours = format(date, 'HH');
+                                            const minutes = format(date, 'mm');
+
+                                            return (
+                                                <ScheduleCard
+                                                    weekDay={weekDay ?? ''}
+                                                    activityType={activityType}
+                                                    date={`${hours}:${minutes}`}
+                                                    key={id}
+                                                />
+                                            );
+                                        },
+                                    )}
+                                </ul>
+                            </div>
+                            <div className="md:w-full lg:w-[48.8%]">
+                                <Button
+                                    type="button"
+                                    label="Set the new shcedule"
+                                    variant={ButtonVariant.SECONDARY}
+                                    size={ComponentSize.LARGE}
+                                    leftIcon={<PlusIcon className="w-6" />}
+                                    className="h-[6.75rem] sm:text-sm md:text-xl"
+                                    onClick={handleModalStatus}
+                                />
+                            </div>
+                        </div>
+                    </>
+                )}
             </section>
             <Modal
                 isOpen={isModalOpen}
@@ -127,7 +168,11 @@ const Schedule: React.FC = () => {
                 <CreateScheduleForm
                     onSubmit={addScheduleHandler}
                     isLoading={false}
-                    goalsList={goalsList.length > ZERO_VALUE ? [...goalsList, { value: '', label: 'None' }] : goalsList}
+                    goalsList={
+                        goalsList.length > ZERO_VALUE
+                            ? [...goalsList, { value: '', label: 'None' }]
+                            : goalsList
+                    }
                 />
             </Modal>
         </>
