@@ -12,6 +12,8 @@ import {
 import { ChatAttributes } from './enums/enums.js';
 
 class ChatModel extends AbstractModel {
+    public 'isAssistant': boolean;
+
     public 'messages': MessageModel[];
 
     public static override get tableName(): string {
