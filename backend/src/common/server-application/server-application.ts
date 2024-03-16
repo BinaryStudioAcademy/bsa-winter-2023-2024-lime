@@ -1,4 +1,5 @@
 import { achievementController } from '~/bundles/achievements/achievements.js';
+import { aiAssistantController } from '~/bundles/ai-assistants/ai-assistant.js';
 import { authController } from '~/bundles/auth/auth.js';
 import { connectionController } from '~/bundles/connections/connections.js';
 import { goalController } from '~/bundles/goals/goals.js';
@@ -34,6 +35,7 @@ const apiV1 = new BaseServerAppApi(
     ...achievementController.routes,
     ...stravaController.routes,
     ...identityController.routes,
+    ...aiAssistantController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

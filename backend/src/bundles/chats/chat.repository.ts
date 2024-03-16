@@ -26,7 +26,7 @@ class ChatRepository implements Repository {
         });
     }
 
-    public async create(payload: ChatEntity): Promise<unknown> {
+    public async create(payload: ChatEntity): Promise<ChatEntity> {
         const chat = payload.toNewObject();
 
         const chatEntity = await this.chatModel

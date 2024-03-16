@@ -12,6 +12,7 @@ const ApiPath = {
     USER_BONUSES: '/user-bonuses',
     STRAVA: '/strava',
     IDENTITY: '/identity',
+    AI_ASSISTANT: '/ai-assistant',
 } as const;
 
 export { ApiPath };

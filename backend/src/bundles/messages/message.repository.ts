@@ -43,12 +43,20 @@ class MessageRepository implements Repository {
         });
     }
 
-    public async create(payload: MessageEntity): Promise<unknown> {
-        const message = payload.toNewObject();
+    public async findAllById(
+        query: Record<string, unknown>,
+    ): Promise<MessageEntity[]> {
+        const messages = await this.messageModel.query().where(query).execute();
 
+        return messages.map((message) => {
+            return MessageEntity.initialize(message);
+        });
+    }
+
+    public async create(payload: MessageEntity): Promise<unknown> {
         const chatEntity = await this.messageModel
             .query()
-            .insert(message)
+            .insert(payload.toNewObject())
             .returning('*')
             .execute();
 

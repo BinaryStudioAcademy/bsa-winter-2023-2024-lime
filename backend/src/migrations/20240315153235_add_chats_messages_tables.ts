@@ -49,7 +49,6 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(MessagesColumnName.CHAT_ID)
             .unsigned()
-            .unique()
             .notNullable()
             .references(MessagesColumnName.ID)
             .inTable(CHATS_TABLE_NAME)
@@ -58,13 +57,12 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(MessagesColumnName.SENDER_ID)
             .unsigned()
-            .unique()
-            .notNullable()
+            .nullable()
             .references(MessagesColumnName.ID)
             .inTable(USERS_TABLE_NAME)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
-        table.string(MessagesColumnName.TEXT).notNullable();
+        table.text(MessagesColumnName.TEXT).notNullable();
         table.boolean(MessagesColumnName.IS_SEEN).notNullable();
         table
             .dateTime(MessagesColumnName.CREATED_AT)
@@ -81,7 +79,6 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(ChatsUsersColumnName.CHAT_ID)
             .unsigned()
-            .unique()
             .notNullable()
             .references(ChatsUsersColumnName.ID)
             .inTable(CHATS_TABLE_NAME)
@@ -90,7 +87,6 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(ChatsUsersColumnName.USER_ID)
             .unsigned()
-            .unique()
             .notNullable()
             .references(ChatsUsersColumnName.ID)
             .inTable(USERS_TABLE_NAME)
