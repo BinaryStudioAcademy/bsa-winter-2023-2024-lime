@@ -88,7 +88,7 @@ const PublicProfile: React.FC = () => {
     if (user) {
         return (
             <main className="flex h-full w-full sm:w-full sm:flex-col md:flex-row-reverse">
-                <div className="h-full sm:mb-8">
+                <div className="sm:mb-8">
                     <PersonalDetails
                         id={NumericId}
                         user={user}
