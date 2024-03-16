@@ -23,7 +23,11 @@ const sizeMap: Record<AvatarSize, string> = {
     [ComponentSize.EXTRA_LARGE]: 'text-4xl',
 };
 
-const Avatar = ({ size, email, avatarUrl }: Properties): JSX.Element => {
+const Avatar: React.FC<Properties> = ({
+    size,
+    email,
+    avatarUrl,
+}): JSX.Element => {
     const firstLetter = email ? email.charAt(0).toUpperCase() : '';
 
     return (

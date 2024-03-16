@@ -35,7 +35,7 @@ const styles = {
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
+const Sidebar: React.FC<Properties> = ({ isOpen = true }): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute, setActiveRoute] = useState(pathname);

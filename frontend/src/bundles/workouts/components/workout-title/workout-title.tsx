@@ -7,7 +7,7 @@ type Properties = {
     workout: WorkoutResponseDto;
 };
 
-const WorkoutTitle = ({ workout }: Properties): JSX.Element => {
+const WorkoutTitle: React.FC<Properties> = ({ workout }): JSX.Element => {
     const { activityType } = workout;
 
     const baseClass = '!p-3 !bg-lm-grey-500';
