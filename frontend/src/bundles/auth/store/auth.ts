@@ -6,6 +6,7 @@ import {
     signInIdentity,
     signUp,
     updateUser,
+    uploadAvatar,
 } from './actions.js';
 import { actions } from './slice.js';
 
@@ -18,6 +19,7 @@ const allActions = {
     logout,
     authorizeIdentity,
     signInIdentity,
+    uploadAvatar,
 };
 
 export { allActions as actions };

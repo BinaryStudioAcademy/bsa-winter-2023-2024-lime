@@ -28,7 +28,7 @@ type ButtonProperties = {
     isDisabled?: boolean;
     isActive?: boolean;
     className?: string;
-    onClick?: () => void;
+    onClick?: () => void | Promise<void>;
 };
 
 const baseClasses =
