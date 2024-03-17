@@ -29,4 +29,24 @@ const createSchedule = createAsyncThunk<
     return await scheduleApi.createSchedule(data);
 });
 
-export { createSchedule, getSchedules };
+const updateSchedule = createAsyncThunk<
+    ScheduleResponseDto,
+    { id: string; payload: ScheduleRequestDto },
+    AsyncThunkConfig
+>(`${name}/update-schedule`, async ({ payload, id }, { extra }) => {
+    const { scheduleApi } = extra;
+
+    return await scheduleApi.updateSchedule(id, payload);
+});
+
+const deleteSchedule = createAsyncThunk<
+    number,
+    { id: string },
+    AsyncThunkConfig
+>(`${name}/delete-schedule`, async ({ id }, { extra }) => {
+    const { scheduleApi } = extra;
+
+    return await scheduleApi.deleteSchedule(id);
+});
+
+export { createSchedule, deleteSchedule, getSchedules, updateSchedule };

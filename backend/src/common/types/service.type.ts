@@ -8,7 +8,7 @@ type Service<T = unknown> = {
         query: Record<string, unknown>,
         payload: Record<string, unknown>,
     ): Promise<T | null>;
-    delete(payload: unknown): Promise<boolean>;
+    delete(payload: unknown): Promise<boolean | number>;
 };
 
 export { type Service };

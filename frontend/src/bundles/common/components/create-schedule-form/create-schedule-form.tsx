@@ -9,37 +9,50 @@ import {
 import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getActivityOptions } from '~/bundles/common/helpers/helpers.js';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import {
+    useAppForm,
+    useCallback,
+    useEffect,
+} from '~/bundles/common/hooks/hooks.js';
 import { type CreateScheduleRequest } from '~/bundles/common/types/types.js';
 
-import { DEFAULT_SCHEDULE_FORM_VALUE } from './constants/constants.js';
 import { scheduleValidationSchema } from './validation-schemas/validation-schemas.js';
 
 type Properties = {
     onSubmit: (payload: CreateScheduleRequest) => void;
     goalsList: SelectOption[];
     isLoading: boolean;
+    value: CreateScheduleRequest;
 };
 
 const CreateScheduleForm: React.FC<Properties> = ({
     isLoading,
     onSubmit,
     goalsList,
+    value,
 }) => {
-    const { control, errors, handleSubmit } = useAppForm<CreateScheduleRequest>(
-        {
-            defaultValues: DEFAULT_SCHEDULE_FORM_VALUE,
+    const { control, errors, handleSubmit, setValue } =
+        useAppForm<CreateScheduleRequest>({
+            defaultValues: value,
             validationSchema: scheduleValidationSchema,
             mode: 'onTouched',
-        },
-    );
+        });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit(onSubmit)(event_);
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, value],
     );
+
+    useEffect(() => {
+        for (const key of Object.keys(value)) {
+            setValue(
+                key as keyof CreateScheduleRequest,
+                value[key as keyof CreateScheduleRequest],
+            );
+        }
+    }, [value]);
 
     return (
         <form

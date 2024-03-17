@@ -4,7 +4,12 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type ScheduleResponseDto } from '../types/types.js';
-import { createSchedule, getSchedules } from './actions.js';
+import {
+    createSchedule,
+    deleteSchedule,
+    getSchedules,
+    updateSchedule,
+} from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
@@ -31,14 +36,43 @@ const { reducer, actions, name } = createSlice({
             state.schedules.push(action.payload);
         });
 
+        builder.addCase(updateSchedule.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+
+            const index = state.schedules.findIndex(
+                (schedule) => schedule.id === action.payload.id,
+            );
+
+            if (index !== -1) {
+                state.schedules[index] = action.payload;
+            }
+        });
+
+        builder.addCase(deleteSchedule.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.schedules = [...state.schedules].filter(
+                (schedule) => schedule.id !== action.payload,
+            );
+        });
+
         builder.addMatcher(
-            isAnyOf(getSchedules.pending, createSchedule.pending),
+            isAnyOf(
+                getSchedules.pending,
+                createSchedule.pending,
+                updateSchedule.pending,
+                deleteSchedule.pending,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
             },
         );
         builder.addMatcher(
-            isAnyOf(getSchedules.rejected, createSchedule.rejected),
+            isAnyOf(
+                getSchedules.rejected,
+                createSchedule.rejected,
+                updateSchedule.rejected,
+                deleteSchedule.rejected,
+            ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
             },

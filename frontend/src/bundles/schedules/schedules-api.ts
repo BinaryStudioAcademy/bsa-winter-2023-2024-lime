@@ -48,6 +48,35 @@ class ScheduleApi extends BaseHttpApi {
 
         return await response.json<ScheduleResponseDto>();
     }
+
+    public async updateSchedule(
+        id: string,
+        payload: ScheduleRequestDto,
+    ): Promise<ScheduleResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(ScheduleApiPath.ID, { id }),
+            {
+                method: 'PUT',
+                contentType: ContentType.JSON,
+                payload: JSON.stringify(payload),
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<ScheduleResponseDto>();
+    }
+
+    public async deleteSchedule(id: string): Promise<number> {
+        const response = await this.load(
+            this.getFullEndpoint(ScheduleApiPath.ID, { id }),
+            {
+                method: 'DELETE',
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<number>();
+    }
 }
 
 export { ScheduleApi };

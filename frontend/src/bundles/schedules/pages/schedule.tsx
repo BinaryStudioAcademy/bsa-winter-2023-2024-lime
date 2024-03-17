@@ -3,7 +3,7 @@ import {
     PlusIcon,
 } from '@heroicons/react/16/solid';
 import { type ChartData } from 'chart.js';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 import {
     Button,
@@ -15,6 +15,7 @@ import {
     Modal,
     ScheduleCard,
 } from '~/bundles/common/components/components.js';
+import { DEFAULT_SCHEDULE_FORM_VALUE } from '~/bundles/common/components/create-schedule-form/constants/constants.js';
 import { ComponentSize, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     capitalizeFirstLetter,
@@ -49,6 +50,10 @@ const WEEK_PREPOSITION = 'per';
 
 const Schedule: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isUpdateMode, setIsUpdateMode] = useState<boolean>(false);
+    const [baseFormValue, setBaseFormValue] = useState<CreateScheduleRequest>(
+        DEFAULT_SCHEDULE_FORM_VALUE,
+    );
     const dispatch = useAppDispatch();
     const { control, watch } = useAppForm({
         mode: 'onTouched',
@@ -64,23 +69,6 @@ const Schedule: React.FC = () => {
 
     const { dataStatus: scheduleDataStatus, schedules } = useAppSelector(
         ({ schedules }) => schedules,
-    );
-
-    const addScheduleHandler = useCallback(
-        ({ activity, goalLabel, dateOfStart }: CreateScheduleRequest) => {
-            const convertedDate = convertDateToIso(
-                dateOfStart,
-                'dd/MM/yyyy HH:mm',
-            );
-            const preparedData: ScheduleRequestDto = {
-                activityType: activity,
-                goalId: goalLabel as number,
-                startAt: convertedDate as unknown as Date,
-            };
-            void dispatch(scheduleActions.createSchedule(preparedData));
-            setIsModalOpen((previousState) => !previousState);
-        },
-        [dispatch],
     );
 
     const goalsList = useMemo(() => {
@@ -145,8 +133,72 @@ const Schedule: React.FC = () => {
     }, [randomGoal]);
 
     const handleModalStatus = useCallback(() => {
+        if (isUpdateMode) {
+            setIsUpdateMode(false);
+        }
+        if (isModalOpen) {
+            setBaseFormValue(DEFAULT_SCHEDULE_FORM_VALUE);
+        }
         setIsModalOpen((previousState) => !previousState);
-    }, []);
+    }, [isModalOpen]);
+
+    const updateScheduleHandler = useCallback(
+        (id: number) => {
+            const schedule = schedules.find((schedule) => schedule.id === id);
+            if (schedule) {
+                const date = parseISO(schedule.startAt as unknown as string);
+                setBaseFormValue({
+                    activity: schedule.activityType,
+                    goalLabel: schedule.goalId ?? null,
+                    dateOfStart: format(date, 'dd/MM/yyyy HH:mm'),
+                });
+                handleModalStatus();
+                setIsUpdateMode(true);
+            }
+        },
+        [dispatch, schedules, handleModalStatus],
+    );
+
+    const deleteScheduleHandler = useCallback(
+        (id: number) => {
+            void dispatch(scheduleActions.deleteSchedule({ id: String(id) }));
+        },
+        [dispatch],
+    );
+
+    const addScheduleHandler = useCallback(
+        ({ activity, goalLabel, dateOfStart }: CreateScheduleRequest) => {
+            const convertedDate = convertDateToIso(
+                dateOfStart,
+                'dd/MM/yyyy HH:mm',
+            ) as unknown as Date;
+
+            const preparedData: ScheduleRequestDto = {
+                activityType: activity,
+                goalId: goalLabel as number,
+                startAt: convertedDate,
+            };
+
+            const schedule = schedules.find((item) => {
+                return (
+                    new Date(item.startAt).getTime() ===
+                    new Date(convertedDate).getTime()
+                );
+            });
+
+            isUpdateMode && schedule
+                ? void dispatch(
+                      scheduleActions.updateSchedule({
+                          id: String(schedule.id),
+                          payload: preparedData,
+                      }),
+                  )
+                : void dispatch(scheduleActions.createSchedule(preparedData));
+
+            handleModalStatus();
+        },
+        [dispatch, handleModalStatus, schedules, isUpdateMode],
+    );
 
     useEffect(() => {
         if (scheduleDataStatus !== DataStatus.FULFILLED) {
@@ -208,8 +260,16 @@ const Schedule: React.FC = () => {
                                                         activityType={
                                                             activityType
                                                         }
+                                                        id={id}
+                                                        isExpanded={true}
                                                         date={`${hours}:${minutes}`}
                                                         key={id}
+                                                        onUpdate={
+                                                            updateScheduleHandler
+                                                        }
+                                                        onDelete={
+                                                            deleteScheduleHandler
+                                                        }
                                                     />
                                                 );
                                             },
@@ -304,7 +364,8 @@ const Schedule: React.FC = () => {
             >
                 <CreateScheduleForm
                     onSubmit={addScheduleHandler}
-                    isLoading={false}
+                    isLoading={isLoading}
+                    value={baseFormValue}
                     goalsList={
                         goalsList.length > ZERO_VALUE
                             ? [...goalsList, { value: '', label: 'None' }]
