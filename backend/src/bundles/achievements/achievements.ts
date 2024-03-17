@@ -12,7 +12,8 @@ const achievementController = new AchievementController(
     achievementService,
 );
 
-export { achievementController, achievementService };
+export { Achievements, ErrorMessage } from './enums/enums.js';
+export { achievementController, achievementRepository, achievementService };
 export { AchievementEntity } from './achievement.entity.js';
 export { AchievementModel } from './achievement.model.js';
 export { AchievementService } from './achievement.service.js';

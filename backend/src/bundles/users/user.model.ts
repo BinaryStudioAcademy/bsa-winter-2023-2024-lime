@@ -17,6 +17,10 @@ import {
     SubscriptionModel,
 } from '~/bundles/subscriptions/subscriptions.js';
 import {
+    UserBonusAttributes,
+    UserBonusModel,
+} from '~/bundles/user-bonuses/user-bonuses.js';
+import {
     WorkoutAttributes,
     WorkoutModel,
 } from '~/bundles/workouts/workouts.js';
@@ -31,7 +35,7 @@ import { UserDetailsModel } from './user-details.model.js';
 class UserModel extends AbstractModel {
     public 'email': string;
 
-    public 'passwordHash': string;
+    public 'passwordHash': string | null;
 
     public 'stripeCustomerId': string;
 
@@ -48,6 +52,8 @@ class UserModel extends AbstractModel {
     public 'chats': ChatModel[];
 
     public 'aiChat': ChatModel;
+
+    public 'userBonus': UserBonusModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -85,6 +91,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.OAUTH_STATE}.${OAuthStateAttributes.ID}`,
+                },
+            },
+            userBonus: {
+                relation: Model.HasManyRelation,
+                modelClass: UserBonusModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.USER_BONUSES}.${UserBonusAttributes.USER_ID}`,
                 },
             },
             userAchievements: {

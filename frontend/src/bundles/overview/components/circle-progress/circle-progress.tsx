@@ -13,7 +13,7 @@ import {
 import { CircleSizeToFontParameters } from '~/bundles/overview/components/circle-progress/helpers/helpers.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/enums.js';
 
-type CircularProgressProperties = {
+type Properties = {
     value: number;
     target: number;
     size?: CircleSizes;
@@ -30,14 +30,14 @@ const classes = {
         'inline-flex font-normal text-[1.5rem] font-accent font-light',
 };
 
-const CircleProgress = ({
+const CircleProgress: React.FC<Properties> = ({
     value,
     target,
     size = ComponentSize.MEDIUM,
     color = CircularProgressColors.primary,
     goalType = GoalTypes.STANDART,
     hasDistance = false,
-}: CircularProgressProperties): JSX.Element => {
+}): JSX.Element => {
     const { radius, stroke } = CircularProgressSizes[size];
     const { fontSize, fontFamily, fontColor } =
         CircleSizeToFontParameters[size];

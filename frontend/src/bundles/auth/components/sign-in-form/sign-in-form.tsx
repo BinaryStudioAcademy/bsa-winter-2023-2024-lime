@@ -10,28 +10,31 @@ import { IconColor } from '~/bundles/common/components/icon/enums/icon-colors.en
 import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import {
-    type UserAuthRequestDto,
+    type UserAuthSignInRequestDto,
     userAuthValidationSchema,
 } from '~/bundles/users/users.js';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './constants/constants.js';
 
 type Properties = {
-    onSubmit: (payload: UserAuthRequestDto) => void;
+    onSubmit: (payload: UserAuthSignInRequestDto) => void;
     onModalOpen: () => void;
     isLoading: boolean;
+    handleOAuth: () => void;
 };
 
 const SignInForm: React.FC<Properties> = ({
     onSubmit,
     onModalOpen,
     isLoading,
+    handleOAuth,
 }) => {
-    const { control, errors, handleSubmit } = useAppForm<UserAuthRequestDto>({
-        defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-        validationSchema: userAuthValidationSchema,
-        mode: 'onSubmit',
-    });
+    const { control, errors, handleSubmit } =
+        useAppForm<UserAuthSignInRequestDto>({
+            defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
+            validationSchema: userAuthValidationSchema,
+            mode: 'onSubmit',
+        });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -52,12 +55,7 @@ const SignInForm: React.FC<Properties> = ({
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
                         rightIcon={<Icon name="googleLogoIcon" />}
-                    />
-                    <Button
-                        size={ComponentSize.MEDIUM}
-                        variant={ButtonVariant.SECONDARY}
-                        label="Continue with "
-                        rightIcon={<Icon name="facebookIcon" />}
+                        onClick={handleOAuth}
                     />
                 </div>
 

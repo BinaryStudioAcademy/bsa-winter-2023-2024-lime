@@ -11,12 +11,12 @@ type Properties = {
     classNameContentWrapper?: string;
 };
 
-const Popover = ({
+const Popover: React.FC<Properties> = ({
     className,
     classNameContentWrapper,
     content,
     children,
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const popupReference = useRef<HTMLDivElement>(null);
 

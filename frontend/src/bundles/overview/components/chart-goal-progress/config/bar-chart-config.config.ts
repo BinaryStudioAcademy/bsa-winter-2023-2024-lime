@@ -12,7 +12,9 @@ const optionsBarChart = {
             grid: {
                 display: true,
                 drawBorder: false,
-                color: '#383F4A',
+            },
+            border: {
+                display: false,
             },
         },
         x: {

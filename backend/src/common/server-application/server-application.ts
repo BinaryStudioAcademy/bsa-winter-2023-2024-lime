@@ -3,6 +3,7 @@ import { authController } from '~/bundles/auth/auth.js';
 import { chatController } from '~/bundles/chats/chats.js';
 import { connectionController } from '~/bundles/connections/connections.js';
 import { goalController } from '~/bundles/goals/goals.js';
+import { identityController } from '~/bundles/identity/identity.js';
 import { messageController } from '~/bundles/messages/messages.js';
 import { notificationController } from '~/bundles/notifications/notifications.js';
 import { oAuthController } from '~/bundles/oauth/oauth.js';
@@ -36,6 +37,7 @@ const apiV1 = new BaseServerAppApi(
     ...stravaController.routes,
     ...chatController.routes,
     ...messageController.routes,
+    ...identityController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

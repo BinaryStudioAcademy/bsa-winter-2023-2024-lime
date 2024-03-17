@@ -1,0 +1,1 @@
+export { identityProviderValidationSchema } from 'shared';

@@ -5,20 +5,24 @@ import {
     type UserAuthResponseDto,
 } from '~/bundles/common/types/types.js';
 import {
-    type UserAuthRequestDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
-import { type AuthResponseDto } from '../auth.js';
+import { type AuthResponseDto, type IdentityAuthTokenDto } from '../auth.js';
+import { type IdentityAuthorizeDto } from '../types/types.js';
 import { name as sliceName } from './slice.js';
 
 const signUp = createAsyncThunk<
     AuthResponseDto,
-    UserAuthRequestDto,
+    UserAuthSignUpRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-up`, async (registerPayload, { extra }) => {
     const { authApi } = extra;
+
     const response = await authApi.signUp(registerPayload);
     if (response.token) {
         await storage.set(StorageKey.TOKEN, response.token);
@@ -28,7 +32,7 @@ const signUp = createAsyncThunk<
 
 const signIn = createAsyncThunk<
     AuthResponseDto,
-    UserAuthRequestDto,
+    UserAuthSignInRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/sign-in`, async (loginPayload, { extra }) => {
     const { authApi } = extra;
@@ -62,7 +66,49 @@ const updateUser = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/update-user`, async (updateUserPayload, { extra }) => {
     const { userApi } = extra;
+
     return await userApi.updateUser(updateUserPayload);
 });
 
-export { logout, refreshUser, signIn, signUp, updateUser };
+const uploadAvatar = createAsyncThunk<
+    UserUploadAvatarResponseDto,
+    File,
+    AsyncThunkConfig
+>(`${sliceName}/upload-avatar`, async (file, { extra }) => {
+    const { userApi } = extra;
+
+    return await userApi.uploadAvatar(file);
+});
+
+const authorizeIdentity = createAsyncThunk<
+    unknown,
+    IdentityAuthorizeDto,
+    AsyncThunkConfig
+>(`${sliceName}/auth-google`, async (authorizePayload, { extra }) => {
+    const { authApi } = extra;
+    return await authApi.authorizeIdentity(authorizePayload);
+});
+
+const signInIdentity = createAsyncThunk<
+    AuthResponseDto,
+    IdentityAuthTokenDto,
+    AsyncThunkConfig
+>(`${sliceName}/sign-in-oauth-user`, async (tokenPayload, { extra }) => {
+    const { authApi } = extra;
+    const response = await authApi.signInIdentity(tokenPayload);
+    if (response.token) {
+        await storage.set(StorageKey.TOKEN, response.token);
+    }
+    return response;
+});
+
+export {
+    authorizeIdentity,
+    logout,
+    refreshUser,
+    signIn,
+    signInIdentity,
+    signUp,
+    updateUser,
+    uploadAvatar,
+};

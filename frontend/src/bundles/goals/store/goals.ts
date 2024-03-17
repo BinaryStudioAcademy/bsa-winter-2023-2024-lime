@@ -1,10 +1,11 @@
-import { createGoal, getGoals } from './actions.js';
+import { createGoal, getGoals, getGoalsByUserId } from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
     getGoals,
     createGoal,
+    getGoalsByUserId,
 };
 
 export { allActions as actions };
