@@ -183,7 +183,7 @@ class FriendRepository implements Repository {
         try {
             const user = await this.userModel.query(trx).findById(id);
             if (!user) {
-                return 0;
+                throw new Error('User not found');
             }
             await user
                 .$relatedQuery('friends', trx)

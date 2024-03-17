@@ -32,9 +32,11 @@ const Friends: React.FC = () => {
         TabsFollowers.FIND_FOLLOWINGS,
     );
 
-    const users = useAppSelector((state) => state.friends.users);
-    const isLoading = useAppSelector((state) => state.friends.dataStatus);
-    const totalCount = useAppSelector((state) => state.friends.totalCount);
+    const {
+        users,
+        dataStatus: isLoading,
+        totalCount,
+    } = useAppSelector(({ friends }) => friends);
 
     const handleLoadMore = useCallback((): void => {
         setLimit(limit + LIMIT);
@@ -75,24 +77,14 @@ const Friends: React.FC = () => {
 
     const handleAddFollowing = useCallback(
         (id: number): void => {
-            const addFollowing = async (id: number): Promise<void> => {
-                await dispatch(
-                    friendsActions.addFollowing({ followingId: id }),
-                );
-            };
-            void addFollowing(id);
+            void dispatch(friendsActions.addFollowing({ followingId: id }));
         },
         [dispatch],
     );
 
     const handleRemoveFollowing = useCallback(
         (id: number): void => {
-            const removeFollowing = async (id: number): Promise<void> => {
-                await dispatch(
-                    friendsActions.removeFollowing({ followingId: id }),
-                );
-            };
-            void removeFollowing(id);
+            void dispatch(friendsActions.removeFollowing({ followingId: id }));
         },
         [dispatch],
     );
@@ -175,7 +167,7 @@ const Friends: React.FC = () => {
                     <FriendDetails
                         id={selectedCard.userId}
                         isActive={true}
-                        name={selectedCard.fullName || selectedCard.email}
+                        name={selectedCard.fullName ?? selectedCard.email}
                         avatarUrl={selectedCard.avatarUrl}
                     />
                 </aside>

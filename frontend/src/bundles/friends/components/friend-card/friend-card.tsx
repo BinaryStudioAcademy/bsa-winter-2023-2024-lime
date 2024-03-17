@@ -6,6 +6,7 @@ import {
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
@@ -27,6 +28,17 @@ const FriendCard = ({
     onToggleFollow,
 }: Properties): JSX.Element => {
     const { userId, fullName, email, avatarUrl } = user;
+
+    const classes = {
+        base: 'hover:border-buttonPrimary flex w-full cursor-pointer flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-transparent',
+        selected:
+            'hover:border-buttonPrimary flex w-full cursor-pointer flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-buttonPrimary ',
+        followed:
+            'text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10',
+        notFollowed:
+            'text-lm-grey-200 inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10',
+    };
+
     const handleOnToggleFollow = useCallback(() => {
         if (isCardSelected) {
             selectCard(null);
@@ -40,7 +52,9 @@ const FriendCard = ({
 
     return (
         <div
-            className={`hover:border-buttonPrimary flex w-full cursor-pointer flex-col rounded-xl border sm:max-w-40 lg:max-w-64 ${isCardSelected ? 'border-buttonPrimary' : 'border-transparent'}`}
+            className={getValidClassNames(
+                isCardSelected ? classes.selected : classes.base,
+            )}
         >
             <div
                 className="h-3/4 w-full"
@@ -50,7 +64,7 @@ const FriendCard = ({
                 {avatarUrl ? (
                     <img
                         src={avatarUrl}
-                        alt={fullName || 'avatar'}
+                        alt={fullName ?? 'avatar'}
                         className="aspect-square rounded-t-xl object-cover"
                     />
                 ) : (
@@ -66,7 +80,7 @@ const FriendCard = ({
                     />
 
                     <h3 className="text-primary font-extrabold sm:text-xs lg:text-[1rem]">
-                        {fullName || email}
+                        {fullName ?? email}
                     </h3>
                 </div>
                 <div className="flex w-full items-center justify-between">
@@ -81,7 +95,9 @@ const FriendCard = ({
                     </div>
 
                     <button
-                        className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10`}
+                        className={getValidClassNames(
+                            isFollowed ? classes.followed : classes.notFollowed,
+                        )}
                         disabled={!isFollowed}
                         title={
                             isFollowed

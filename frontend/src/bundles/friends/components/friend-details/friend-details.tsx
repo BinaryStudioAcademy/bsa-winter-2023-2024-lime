@@ -5,6 +5,7 @@ import { Avatar, Card } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     formatDateString,
+    getValidClassNames,
     validateImageUrl,
 } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -33,6 +34,11 @@ const FriendDetails = ({
 
     const { achievements } = useAppSelector(({ achievements }) => achievements);
 
+    const classes = {
+        base: 'bg-buttonTertiary h-2 w-2 rounded-[50%]',
+        active: 'bg-buttonPrimary h-2 w-2 rounded-[50%]',
+    };
+
     const handleMoreInfoClick = useCallback((): void => {
         void navigate(`${AppRoute.PROFILE_PUBLIC}/${id}`);
     }, [navigate, id]);
@@ -45,7 +51,9 @@ const FriendDetails = ({
         <div className={'flex flex-col items-center justify-center '}>
             <div className="mb-4 flex items-center gap-2">
                 <div
-                    className={`${isActive ? 'bg-buttonPrimary' : 'bg-buttonTertiary'} bg-buttonPrimary h-2 w-2 rounded-[50%]`}
+                    className={getValidClassNames(
+                        isActive ? classes.active : classes.base,
+                    )}
                 />
 
                 <h3 className="text-primary font-heading font-semibold sm:text-xs lg:text-[1rem]">
