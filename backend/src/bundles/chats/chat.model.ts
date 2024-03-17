@@ -1,4 +1,4 @@
-import { type RelationMappings, Model } from 'objection';
+import { type QueryBuilder, type RelationMappings, Model } from 'objection';
 
 import {
     MessageAttributes,
@@ -18,6 +18,8 @@ class ChatModel extends AbstractModel {
     public 'messages': MessageModel[];
 
     public 'users': UserModel[];
+
+    public 'lastMessage': MessageModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.CHATS;
@@ -43,6 +45,17 @@ class ChatModel extends AbstractModel {
                         to: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.USER_ID}`,
                     },
                     to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                },
+            },
+            lastMessage: {
+                relation: Model.HasOneRelation,
+                modelClass: MessageModel,
+                filter: (builder: QueryBuilder<MessageModel>): void => {
+                    void builder.orderBy(ChatAttributes.CREATED_AT, 'desc').limit(1);
+                },
+                join: {
+                    from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
+                    to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
                 },
             },
         };

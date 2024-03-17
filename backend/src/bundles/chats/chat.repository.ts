@@ -33,10 +33,7 @@ class ChatRepository implements Repository {
                     .relatedQuery(DatabaseTableName.USERS)
                     .where(query),
             )
-            .withGraphFetched(`[${DatabaseTableName.MESSAGES}]`)
-            .modifyGraph(`[${DatabaseTableName.MESSAGES}]`, (builder) => {
-                void builder.orderBy('createdAt', 'desc').limit(1);
-            })
+            .withGraphFetched('lastMessage')
             .execute();
 
         return chats.map((chat) => {

@@ -13,41 +13,49 @@ class ChatEntity implements Entity {
 
     private 'membersId': number[] | null;
 
-    private 'messages': MessageEntity[];
+    private 'messages': MessageEntity[] | undefined;
+
+    private 'lastMessage': MessageEntity | undefined;
 
     private constructor({
         id,
         isAssistant,
         membersId,
         messages,
+        lastMessage,
     }: {
         id: number | null;
         isAssistant: boolean;
         membersId: number[] | null;
-        messages: MessageEntity[];
+        messages: MessageEntity[] | undefined;
+        lastMessage: MessageEntity | undefined;
     }) {
         this.id = id;
         this.isAssistant = isAssistant;
         this.membersId = membersId;
         this.messages = messages;
+        this.lastMessage = lastMessage;
     }
 
     public static initialize({
         id,
         isAssistant,
         messages,
+        lastMessage,
     }: {
         id: number;
         isAssistant: boolean;
-        messages: MessageModel[];
+        messages: MessageModel[] | undefined;
+        lastMessage: MessageModel | undefined;
     }): ChatEntity {
         return new ChatEntity({
             id,
             isAssistant,
             membersId: null,
-            messages: messages.map((message) =>
-                MessageEntity.initialize(message),
-            ),
+            messages:
+                messages &&
+                messages.map((message) => MessageEntity.initialize(message)),
+            lastMessage: lastMessage && MessageEntity.initialize(lastMessage),
         });
     }
 
@@ -63,18 +71,23 @@ class ChatEntity implements Entity {
             isAssistant,
             membersId,
             messages: [],
+            lastMessage: undefined,
         });
     }
 
     public toObject(): {
         id: number;
         isAssistant: boolean;
-        messages: MessageResponseDto[];
+        messages: MessageResponseDto[] | undefined;
+        lastMessage: MessageResponseDto | undefined;
     } {
         return {
             id: this.id as number,
             isAssistant: this.isAssistant,
-            messages: this.messages.map((message) => message.toObject()),
+            messages:
+                this.messages &&
+                this.messages.map((message) => message.toObject()),
+            lastMessage: this.lastMessage && this.lastMessage.toObject(),
         };
     }
 

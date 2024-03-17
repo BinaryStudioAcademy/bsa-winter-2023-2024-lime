@@ -1,4 +1,4 @@
-import { type RelationMappings, Model } from 'objection';
+import { type QueryBuilder, type RelationMappings, Model } from 'objection';
 
 import { UserAchievementModel } from '~/bundles/achievements/achievements.js';
 import {
@@ -46,6 +46,8 @@ class UserModel extends AbstractModel {
     public 'userOAuthState': OAuthStateModel;
 
     public 'chats': ChatModel[];
+
+    public 'aiChat': ChatModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -104,6 +106,21 @@ class UserModel extends AbstractModel {
             chats: {
                 relation: Model.ManyToManyRelation,
                 modelClass: ChatModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    through: {
+                        from: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.USER_ID}`,
+                        to: `${DatabaseTableName.CHATS_USERS}.${ChatUserAttributes.CHAT_ID}`,
+                    },
+                    to: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
+                },
+            },
+            aiChat: {
+                relation: Model.HasOneThroughRelation,
+                modelClass: ChatModel,
+                filter: (builder: QueryBuilder<ChatModel>): void => {
+                    void builder.findOne(ChatAttributes.IS_ASSISTANT, true);
+                },
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     through: {
