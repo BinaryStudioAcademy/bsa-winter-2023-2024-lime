@@ -20,18 +20,6 @@ class MessageController extends BaseController {
 
         this.messageService = messageService;
 
-        // this.addRoute({
-        //     path: MessagePath.ROOT,
-        //     method: 'POST',
-        //     isProtected: true,
-        //     handler: (options) =>
-        //         this.getChatMessages(
-        //             options as ApiHandlerOptions<{
-        //                 body: ChatMessagesRequestDto;
-        //             }>,
-        //         ),
-        // });
-
         this.addRoute({
             path: MessagePath.ROOT,
             method: 'POST',
@@ -45,21 +33,6 @@ class MessageController extends BaseController {
                 ),
         });
     }
-
-    // private async getChatMessages(
-    //     options: ApiHandlerOptions<{
-    //         body: ChatMessagesRequestDto;
-    //     }>,
-    // ): Promise<ApiHandlerResponse> {
-    //     console.log({ options });
-    //     return {
-    //         type: ApiHandlerResponseType.DATA,
-    //         status: HttpCode.OK,
-    //         payload: await this.messageService.findAll({
-    //             chatId: options.body.chatId,
-    //         }),
-    //     };
-    // }
 
     private async create(
         options: ApiHandlerOptions<{
