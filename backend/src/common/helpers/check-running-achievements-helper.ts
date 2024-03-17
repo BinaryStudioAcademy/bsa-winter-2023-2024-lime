@@ -6,17 +6,31 @@ import {
 } from '~/common/enums/enums.js';
 import {
     calculateTotalDistance,
-    calculateTotalDuration,
+    checkAchievementUniqueness,
     filterMonthWorkouts,
     filterWeekendWorkouts,
 } from '~/common/helpers/helpers.js';
 
-function checkRunningAchievements(
-    workouts: WorkoutResponseDto[],
-    achievement: AchievementEntity,
-): boolean {
-    const totalDistance = calculateTotalDistance(workouts);
-    const totalDuration = calculateTotalDuration(workouts);
+const HALF_HOUR = 30;
+const WORKOUTS_QUANTITY = 20;
+
+type Properties = {
+    workouts: WorkoutResponseDto[];
+    achievement: AchievementEntity;
+    lastWorkout: WorkoutResponseDto;
+    userAchievementsListById: number[] | undefined;
+};
+
+function checkRunningAchievements({
+    workouts,
+    achievement,
+    lastWorkout,
+    userAchievementsListById,
+}: Properties): boolean {
+    if (workouts.length === 0) {
+        return false;
+    }
+
     const monthWorkout = filterMonthWorkouts(workouts);
     const monthWorkoutDistance = calculateTotalDistance(monthWorkout);
     const weekendWorkout = filterWeekendWorkouts(workouts);
@@ -24,31 +38,79 @@ function checkRunningAchievements(
 
     switch (achievement.toObject().name) {
         case RunningAchievementName.FIRST_ONE: {
-            return totalDistance >= RunningAchievementDistance.ONE;
+            return (
+                lastWorkout.distance >= RunningAchievementDistance.ONE &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case RunningAchievementName.FIRST_FIVE: {
-            return totalDistance >= RunningAchievementDistance.FIVE;
+            return (
+                lastWorkout.distance >= RunningAchievementDistance.FIVE &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case RunningAchievementName.FIRST_TEN: {
-            return totalDistance >= RunningAchievementDistance.TEN;
+            return (
+                lastWorkout.distance >= RunningAchievementDistance.TEN &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case RunningAchievementName.FIRST_HALF_MARATHON: {
-            return totalDistance >= RunningAchievementDistance.HALF_MARATHON;
+            return (
+                lastWorkout.distance >=
+                    RunningAchievementDistance.HALF_MARATHON &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case RunningAchievementName.FIRST_MARATHON: {
-            return totalDistance >= RunningAchievementDistance.MARATHON;
+            return (
+                lastWorkout.distance >= RunningAchievementDistance.MARATHON &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case RunningAchievementName.FIRST_HALF_HOUR: {
-            return totalDuration >= 30;
+            return (
+                lastWorkout.duration >= HALF_HOUR &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case RunningAchievementName.HUNDRED_PER_MONTH: {
-            return monthWorkoutDistance >= RunningAchievementDistance.HUNDRED;
+            const workoutQuantity = userAchievementsListById?.filter(
+                (item) => item === achievement.toObject().id,
+            ).length as number;
+
+            const monthWorkoutDistanceToCheck =
+                monthWorkoutDistance -
+                RunningAchievementDistance.HUNDRED * workoutQuantity;
+
+            return (
+                monthWorkoutDistanceToCheck >=
+                RunningAchievementDistance.HUNDRED
+            );
         }
         case RunningAchievementName.PER_WEEKEND: {
             return weekendWorkoutDistance >= RunningAchievementDistance.TEN;
         }
         case RunningAchievementName.QUANTITY_PER_MONTH: {
-            return monthWorkout.length >= 20;
+            return monthWorkout.length >= WORKOUTS_QUANTITY;
         }
         default: {
             return false;

@@ -7,6 +7,7 @@ import {
 import {
     calculateTotalDistance,
     calculateTotalDuration,
+    checkAchievementUniqueness,
     filterMonthWorkouts,
     filterWeekendWorkouts,
 } from '~/common/helpers/helpers.js';
@@ -15,17 +16,19 @@ const HOUR = 60;
 const TWICE = 2;
 const AVERAGE_SPEED = 25;
 
-function checkCyclingAchievements(
-    workouts: WorkoutResponseDto[],
-    achievement: AchievementEntity,
-): boolean {
-    const totalDistance = calculateTotalDistance(workouts);
-    const averageSpeed =
-        workouts.reduce(
-            (accumulator, workout) => accumulator + workout.speed,
-            0,
-        ) / workouts.length;
+type Properties = {
+    workouts: WorkoutResponseDto[];
+    achievement: AchievementEntity;
+    lastWorkout: WorkoutResponseDto;
+    userAchievementsListById: number[] | undefined;
+};
 
+function checkCyclingAchievements({
+    workouts,
+    achievement,
+    lastWorkout,
+    userAchievementsListById,
+}: Properties): boolean {
     const monthWorkout = filterMonthWorkouts(workouts);
     const monthWorkoutDistance = calculateTotalDistance(monthWorkout);
 
@@ -34,32 +37,63 @@ function checkCyclingAchievements(
 
     switch (achievement.toObject().name) {
         case CyclingAchievementName.FIRST: {
-            return totalDistance >= CyclingAchievementDistance.FIVE;
+            return (
+                lastWorkout.distance >= CyclingAchievementDistance.FIVE &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case CyclingAchievementName.TWENTY_JOURNEY: {
-            return totalDistance >= CyclingAchievementDistance.TWENTY;
+            return lastWorkout.distance >= CyclingAchievementDistance.TWENTY;
         }
         case CyclingAchievementName.FIFTY_JOURNEY: {
-            return totalDistance >= CyclingAchievementDistance.FIFTY;
+            return lastWorkout.distance >= CyclingAchievementDistance.FIFTY;
         }
         case CyclingAchievementName.TWO_HUNDREDS_PER_MONTH: {
+            const workoutQuantity = userAchievementsListById?.filter(
+                (item) => item === achievement.toObject().id,
+            ).length as number;
+
+            const monthWorkoutDistanceToCheck =
+                monthWorkoutDistance -
+                CyclingAchievementDistance.TWO_HUNDREDS * workoutQuantity;
+
             return (
-                monthWorkoutDistance >= CyclingAchievementDistance.TWO_HUNDREDS
+                monthWorkoutDistanceToCheck >=
+                CyclingAchievementDistance.TWO_HUNDREDS
             );
         }
         case CyclingAchievementName.THREE_HUNDREDS_PER_MONTH: {
+            const workoutQuantity = userAchievementsListById?.filter(
+                (item) => item === achievement.toObject().id,
+            ).length as number;
+
+            const monthWorkoutDistanceToCheck =
+                monthWorkoutDistance -
+                CyclingAchievementDistance.TWO_HUNDREDS * workoutQuantity;
+
             return (
-                monthWorkoutDistance >=
+                monthWorkoutDistanceToCheck >=
                 CyclingAchievementDistance.THREE_HUNDREDS
             );
         }
         case CyclingAchievementName.DURATION_PER_WEEKEND: {
-            return weekendWorkoutDuration >= TWICE * HOUR;
+            const workoutQuantity = userAchievementsListById?.filter(
+                (item) => item === achievement.toObject().id,
+            ).length as number;
+
+            const weekendWorkoutDistanceToCheck =
+                weekendWorkoutDuration -
+                CyclingAchievementDistance.TWO_HUNDREDS * workoutQuantity;
+
+            return weekendWorkoutDistanceToCheck >= TWICE * HOUR;
         }
         case CyclingAchievementName.AVERAGE_SPEED: {
             return (
-                totalDistance >= CyclingAchievementDistance.TWENTY &&
-                averageSpeed >= AVERAGE_SPEED
+                lastWorkout.distance >= CyclingAchievementDistance.TWENTY &&
+                lastWorkout.speed >= AVERAGE_SPEED
             );
         }
         default: {

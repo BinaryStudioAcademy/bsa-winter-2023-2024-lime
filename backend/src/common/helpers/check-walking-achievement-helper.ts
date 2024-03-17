@@ -7,19 +7,30 @@ import {
 import {
     calculateTotalDistance,
     calculateTotalDuration,
+    checkAchievementUniqueness,
     filterMonthWorkouts,
     filterWeekendWorkouts,
 } from '~/common/helpers/helpers.js';
 
-const ZERO_VALUE = 0;
 const WORKOUT_DURATION = 5;
 const CALORIES_VALUE = 500;
 
-function checkWalkingAchievements(
-    workouts: WorkoutResponseDto[],
-    achievement: AchievementEntity,
-): boolean {
-    const totalDistance = calculateTotalDistance(workouts);
+type Properties = {
+    workouts: WorkoutResponseDto[];
+    achievement: AchievementEntity;
+    lastWorkout: WorkoutResponseDto;
+    userAchievementsListById: number[] | undefined;
+};
+
+function checkWalkingAchievements({
+    workouts,
+    achievement,
+    lastWorkout,
+    userAchievementsListById,
+}: Properties): boolean {
+    if (workouts.length === 0) {
+        return false;
+    }
 
     const dayWorkout = workouts.filter(
         (workout) =>
@@ -37,13 +48,31 @@ function checkWalkingAchievements(
 
     switch (achievement.toObject().name) {
         case WalkingAchievementName.FIRST_FIVE: {
-            return dayTotalSteps >= WalkingAchievementDistance.FIVE;
+            return (
+                dayTotalSteps >= WalkingAchievementDistance.FIVE &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case WalkingAchievementName.FIRST_TEN: {
-            return dayTotalSteps >= WalkingAchievementDistance.TEN;
+            return (
+                dayTotalSteps >= WalkingAchievementDistance.TEN &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case WalkingAchievementName.FIRST_FIFTEEN: {
-            return dayTotalSteps >= WalkingAchievementDistance.FIFTEEN;
+            return (
+                dayTotalSteps >= WalkingAchievementDistance.FIFTEEN &&
+                !checkAchievementUniqueness(
+                    achievement.toObject().id,
+                    userAchievementsListById,
+                )
+            );
         }
         case WalkingAchievementName.STEPS_BY_WEEK: {
             return workouts.every(
@@ -51,20 +80,34 @@ function checkWalkingAchievements(
             );
         }
         case WalkingAchievementName.PER_WEEKEND: {
-            return weekendWorkoutDuration >= WORKOUT_DURATION;
+            const workoutQuantity = userAchievementsListById?.filter(
+                (item) => item === achievement.toObject().id,
+            ).length as number;
+
+            const weekendWorkoutDurationToCheck =
+                weekendWorkoutDuration - WORKOUT_DURATION * workoutQuantity;
+
+            return weekendWorkoutDurationToCheck >= WORKOUT_DURATION;
         }
         case WalkingAchievementName.HUNDRED_PER_MONTH: {
-            return monthWorkoutDistance >= WalkingAchievementDistance.HUNDRED;
+            const workoutQuantity = userAchievementsListById?.filter(
+                (item) => item === achievement.toObject().id,
+            ).length as number;
+
+            const monthWorkoutDistanceToCheck =
+                monthWorkoutDistance -
+                WalkingAchievementDistance.HUNDRED * workoutQuantity;
+
+            return (
+                monthWorkoutDistanceToCheck >=
+                WalkingAchievementDistance.HUNDRED
+            );
         }
         case WalkingAchievementName.DISTANCE_WALK: {
-            return totalDistance >= WalkingAchievementDistance.TEN;
+            return lastWorkout.distance >= WalkingAchievementDistance.TEN;
         }
         case WalkingAchievementName.CALORIES_PER_WALK: {
-            return (
-                workouts.filter(
-                    (workout) => workout.kilocalories === CALORIES_VALUE,
-                ).length > ZERO_VALUE
-            );
+            return lastWorkout.kilocalories >= CALORIES_VALUE;
         }
         default: {
             return false;

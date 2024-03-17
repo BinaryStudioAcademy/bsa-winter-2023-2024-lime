@@ -1,9 +1,7 @@
 function checkAchievementUniqueness(
-    achievementsToCheck: number[],
+    achievementsToCheck: number,
     achievements: number[] | undefined,
-): number[] {
-    return achievementsToCheck.filter(
-        (achievement) => !achievements?.includes(achievement),
-    );
+): boolean {
+    return achievements ? achievements?.includes(achievementsToCheck) : false;
 }
 export { checkAchievementUniqueness };

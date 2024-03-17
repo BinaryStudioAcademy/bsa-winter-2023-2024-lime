@@ -8,7 +8,6 @@ import { COMPLETED_GOAL_VALUE } from '~/common/constants/constants.js';
 import { ActivityType } from '~/common/enums/enums.js';
 import {
     calculateGoalProgress,
-    checkAchievementUniqueness,
     checkCyclingAchievements,
     checkRunningAchievements,
     checkWalkingAchievements,
@@ -35,8 +34,10 @@ class CalculationProgressService {
         const { items: goals } = await this.goalService.findAll({ userId });
         const { items: workouts } = await workoutService.findAll({ userId });
 
+        const lastWorkout = workouts.at(-1) as WorkoutResponseDto;
+
         await this.updateGoal(userId, goals, workouts);
-        await this.updateAchievement(userId, workouts);
+        await this.updateAchievement(userId, workouts, lastWorkout);
     }
 
     private async updateGoal(
@@ -68,6 +69,7 @@ class CalculationProgressService {
     private async updateAchievement(
         userId: number,
         workouts: WorkoutResponseDto[],
+        lastWorkout: WorkoutResponseDto,
     ): Promise<void> {
         const achievementsList = await this.achievementService.findAll();
         const userAchievementsList =
@@ -78,65 +80,77 @@ class CalculationProgressService {
 
         const userAchievements = [];
 
-        const cyclingWorkouts = filterWorkoutsByActivityType(
-            workouts,
-            ActivityType.CYCLING,
-        );
-        const cyclingAchievements = filterAchievementByActivityType(
-            achievementsList,
-            ActivityType.CYCLING,
-        );
-        const userCyclingAchievements = cyclingAchievements
-            .filter((achievement) =>
-                checkCyclingAchievements(cyclingWorkouts, achievement),
-            )
-            .map((item) => item.toObject().id);
-        const uniqueCyclingAchievements = checkAchievementUniqueness(
-            userCyclingAchievements,
-            userAchievementsListById,
-        );
+        switch (lastWorkout.activityType) {
+            case ActivityType.CYCLING: {
+                const cyclingWorkouts = filterWorkoutsByActivityType(
+                    workouts,
+                    ActivityType.CYCLING,
+                );
+                const cyclingAchievements = filterAchievementByActivityType(
+                    achievementsList,
+                    ActivityType.CYCLING,
+                );
+                const userCyclingAchievements = cyclingAchievements
+                    .filter((achievement) =>
+                        checkCyclingAchievements({
+                            workouts: cyclingWorkouts,
+                            achievement,
+                            lastWorkout,
+                            userAchievementsListById,
+                        }),
+                    )
+                    .map((item) => item.toObject().id);
 
-        userAchievements.push(...uniqueCyclingAchievements);
+                userAchievements.push(...userCyclingAchievements);
+                break;
+            }
+            case ActivityType.RUNNING: {
+                const runningWorkouts = filterWorkoutsByActivityType(
+                    workouts,
+                    ActivityType.RUNNING,
+                );
+                const runningAchievements = filterAchievementByActivityType(
+                    achievementsList,
+                    ActivityType.RUNNING,
+                );
+                const userRunningAchievements = runningAchievements
+                    .filter((achievement) =>
+                        checkRunningAchievements({
+                            workouts: runningWorkouts,
+                            achievement,
+                            lastWorkout,
+                            userAchievementsListById,
+                        }),
+                    )
+                    .map((item) => item.toObject().id);
 
-        const runningWorkouts = filterWorkoutsByActivityType(
-            workouts,
-            ActivityType.RUNNING,
-        );
-        const runningAchievements = filterAchievementByActivityType(
-            achievementsList,
-            ActivityType.RUNNING,
-        );
-        const userRunningAchievements = runningAchievements
-            .filter((achievement) =>
-                checkRunningAchievements(runningWorkouts, achievement),
-            )
-            .map((item) => item.toObject().id);
-        const uniqueRunningAchievements = checkAchievementUniqueness(
-            userRunningAchievements,
-            userAchievementsListById,
-        );
-        userAchievements.push(...uniqueRunningAchievements);
+                userAchievements.push(...userRunningAchievements);
+                break;
+            }
+            case ActivityType.WALKING: {
+                const walkingWorkouts = filterWorkoutsByActivityType(
+                    workouts,
+                    ActivityType.WALKING,
+                );
+                const walkingAchievements = filterAchievementByActivityType(
+                    achievementsList,
+                    ActivityType.WALKING,
+                );
+                const userWalkingAchievements = walkingAchievements
+                    .filter((achievement) =>
+                        checkWalkingAchievements({
+                            workouts: walkingWorkouts,
+                            achievement,
+                            lastWorkout,
+                            userAchievementsListById,
+                        }),
+                    )
+                    .map((item) => item.toObject().id);
 
-        const walkingWorkouts = filterWorkoutsByActivityType(
-            workouts,
-            ActivityType.WALKING,
-        );
-        const walkingAchievements = filterAchievementByActivityType(
-            achievementsList,
-            ActivityType.WALKING,
-        );
-        const userWalkingAchievements = walkingAchievements
-            .filter((achievement) =>
-                checkWalkingAchievements(walkingWorkouts, achievement),
-            )
-            .map((item) => item.toObject().id);
-
-        const uniqueWalkingAchievements = checkAchievementUniqueness(
-            userWalkingAchievements,
-            userAchievementsListById,
-        );
-
-        userAchievements.push(...uniqueWalkingAchievements);
+                userAchievements.push(...userWalkingAchievements);
+                break;
+            }
+        }
 
         for (const achievement of userAchievements) {
             await this.userAchievementsService.create({
