@@ -23,7 +23,6 @@ export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
-    type UserFollowingsRequestDto,
     type UserIdentityRequestDto,
     type UserUpdateProfileRequestDto,
 } from './types/types.js';

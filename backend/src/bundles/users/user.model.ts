@@ -14,6 +14,7 @@ import {
 } from '~/common/database/database.js';
 
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
+import { FriendModel } from '../friends/friend.model.js';
 import { SubscriptionModel } from '../subscriptions/subscription.model.js';
 import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
 import {
@@ -22,7 +23,6 @@ import {
 } from '../user-bonuses/user-bonuses.js';
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
-import { UserFriendsModel } from './user-friends.model.js';
 
 class UserModel extends AbstractModel {
     public 'email': string;
@@ -43,7 +43,7 @@ class UserModel extends AbstractModel {
 
     public 'userBonus': UserBonusModel;
 
-    public 'userFriends': UserFriendsModel;
+    public 'friends': FriendModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -92,19 +92,19 @@ class UserModel extends AbstractModel {
                 },
             },
             userAchievements: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: UserAchievementModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_ACHIEVEMENTS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
-            userFriends: {
-                relation: Model.HasOneRelation,
-                modelClass: UserFriendsModel,
+            friends: {
+                relation: Model.HasManyRelation,
+                modelClass: FriendModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                    to: `${DatabaseTableName.USER_FRIENDS}.${UserDetailsAttributes.USER_ID}`,
+                    to: `${DatabaseTableName.FRIENDS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
             workouts: {

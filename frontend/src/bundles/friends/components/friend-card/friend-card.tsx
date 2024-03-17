@@ -6,16 +6,15 @@ import {
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { validateImageUrl } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
-import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js';
+import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
 type FriendProperties = {
     isActive: boolean;
     isFollowed: boolean;
     isCardSelected: boolean;
-    user: UserFollowingsResponseDto;
-    selectCard: (user: UserFollowingsResponseDto | null) => void;
+    user: FriendResponseDto;
+    selectCard: (user: FriendResponseDto | null) => void;
     onToggleFollow: (id: number) => void;
 };
 
@@ -48,7 +47,7 @@ const FriendCard = ({
                 onClick={handleSelectCard}
                 role="presentation"
             >
-                {avatarUrl && validateImageUrl(avatarUrl) ? (
+                {avatarUrl ? (
                     <img
                         src={avatarUrl}
                         alt={fullName || 'avatar'}

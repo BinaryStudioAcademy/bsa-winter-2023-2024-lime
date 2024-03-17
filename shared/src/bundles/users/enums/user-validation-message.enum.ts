@@ -34,7 +34,6 @@ const UserValidationMessage = {
         'Operation can not be finished due to lack of funds.',
     BONUS_OPERATION_NOT_SUCCESSFUL: 'Operation was not sucessfull.',
     USER_OAUTH: 'Use OAuth to sign in',
-    FOLLOWING_NOT_FOUND: 'Following not found',
 } as const;
 
 export { UserValidationMessage };

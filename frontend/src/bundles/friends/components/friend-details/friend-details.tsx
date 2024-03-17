@@ -31,9 +31,7 @@ const FriendDetails = ({
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { achievements } = useAppSelector(({ achievements }) => ({
-        achievements: achievements.achievements,
-    }));
+    const { achievements } = useAppSelector(({ achievements }) => achievements);
 
     const handleMoreInfoClick = useCallback((): void => {
         void navigate(`${AppRoute.PROFILE_PUBLIC}/${id}`);

@@ -14,6 +14,11 @@ export {
 } from './bundles/connections/connections.js';
 export { FileValidationMessage } from './bundles/file/file.js';
 export {
+    type FriendRequestDto,
+    type FriendResponseDto,
+    FriendsApiPath,
+} from './bundles/friends/friends.js';
+export {
     type GoalRequestDto,
     type GoalResponseDto,
     FrequencyType,
@@ -79,8 +84,6 @@ export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
-    type UserFollowingsRequestDto,
-    type UserFollowingsResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,

@@ -18,7 +18,6 @@ import { UserValidationMessage } from './enums/enums.js';
 import {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
-    type UserFollowingsResponseDto,
     type UserGetAllResponseDto,
     type UserIdentityRequestDto,
     type UserUpdateProfileRequestDto,
@@ -194,71 +193,6 @@ class UserService implements Service {
         return userBonus;
     }
 
-    public async addFollowing(
-        id: number,
-        followingId: number,
-    ): Promise<UserFollowingsResponseDto | null> {
-        try {
-            const addedFriend = await this.userRepository.addFollowing(
-                id,
-                followingId,
-            );
-            if (!addedFriend) {
-                throw new HttpError({
-                    message: UserValidationMessage.USER_NOT_FOUND,
-                    status: HttpCode.NOT_FOUND,
-                });
-            }
-            return addedFriend;
-        } catch (error) {
-            throw new Error(`Error occurred ${error}`);
-        }
-    }
-
-    public async removeFollowing(
-        id: number,
-        followingId: number,
-    ): Promise<number> {
-        try {
-            return await this.userRepository.removeFollowing(id, followingId);
-        } catch (error) {
-            throw new Error(`Error occurred while removing friend: ${error}`);
-        }
-    }
-
-    public async getFollowings(
-        userId: number,
-        offset: string,
-        limit: string,
-    ): Promise<UserFollowingsResponseDto[] | null> {
-        try {
-            return await this.userRepository.getFollowings(
-                userId,
-                offset,
-                limit,
-            );
-        } catch (error) {
-            throw new Error(`Error occurred while fetching friends: ${error}`);
-        }
-    }
-
-    public async getNotFollowed(
-        userId: number,
-        offset: string,
-        limit: string,
-    ): Promise<UserFollowingsResponseDto[] | null> {
-        try {
-            return await this.userRepository.getNotFollowed(
-                userId,
-                offset,
-                limit,
-            );
-        } catch (error) {
-            throw new Error(
-                `Error occurred while fetching not friends: ${error}`,
-            );
-        }
-    }
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,

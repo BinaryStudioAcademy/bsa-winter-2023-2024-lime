@@ -1,13 +1,13 @@
 import { Button } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { FriendCard } from '~/bundles/friends/components/components.js';
-import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js';
+import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
 type Properties = {
-    users: UserFollowingsResponseDto[];
+    users: FriendResponseDto[];
     isFollowed: boolean;
     selectedCardId: number | undefined;
-    selectCard: (user: UserFollowingsResponseDto | null) => void;
+    selectCard: (user: FriendResponseDto | null) => void;
     onToggleFollow: (id: number) => void;
     noUsersText: string;
     totalCount: number | undefined;

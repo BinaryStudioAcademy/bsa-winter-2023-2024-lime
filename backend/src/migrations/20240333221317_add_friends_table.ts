@@ -1,6 +1,7 @@
 import { type Knex } from 'knex';
 
-import { DatabaseTableName } from '~/common/database/database.js';
+const TABLE_NAME = 'friends';
+const USERS_TABLE_NAME = 'users';
 
 const ColumnName = {
     ID: 'id',
@@ -11,14 +12,14 @@ const ColumnName = {
 } as const;
 
 async function up(knex: Knex): Promise<void> {
-    return knex.schema.createTable(DatabaseTableName.USER_FRIENDS, (table) => {
+    return knex.schema.createTable(TABLE_NAME, (table) => {
         table.increments(ColumnName.ID).primary();
         table
             .integer(ColumnName.USER_ID)
             .unsigned()
             .notNullable()
             .references(ColumnName.ID)
-            .inTable(DatabaseTableName.USERS)
+            .inTable(USERS_TABLE_NAME)
             .index()
             .onDelete('CASCADE');
         table
@@ -26,7 +27,7 @@ async function up(knex: Knex): Promise<void> {
             .unsigned()
             .notNullable()
             .references(ColumnName.ID)
-            .inTable(DatabaseTableName.USERS)
+            .inTable(USERS_TABLE_NAME)
             .onDelete('CASCADE');
         table
             .dateTime(ColumnName.CREATED_AT)
@@ -40,7 +41,7 @@ async function up(knex: Knex): Promise<void> {
 }
 
 async function down(knex: Knex): Promise<void> {
-    return knex.schema.dropTableIfExists(DatabaseTableName.USER_FRIENDS);
+    return knex.schema.dropTableIfExists(TABLE_NAME);
 }
 
 export { down, up };

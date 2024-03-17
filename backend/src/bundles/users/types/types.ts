@@ -5,8 +5,6 @@ export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
-    type UserFollowingsRequestDto,
-    type UserFollowingsResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
     type ValueOf,

@@ -3,8 +3,6 @@ export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
-    type UserFollowingsRequestDto,
-    type UserFollowingsResponseDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,

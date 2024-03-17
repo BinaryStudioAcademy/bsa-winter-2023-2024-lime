@@ -21,7 +21,7 @@ class AchievementModel extends AbstractModel {
     public static override get relationMappings(): RelationMappings {
         return {
             userAchievements: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: UserAchievementModel,
                 join: {
                     from: `${DatabaseTableName.ACHIEVEMENTS}.id`,

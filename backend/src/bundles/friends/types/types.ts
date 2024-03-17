@@ -2,6 +2,5 @@ export {
     type FriendRequestDto,
     type FriendResponseDto,
     type PaginationParameters,
-    type UserAuthResponseDto,
-    type UserGetAllItemResponseDto,
+    type ValueOf,
 } from 'shared';

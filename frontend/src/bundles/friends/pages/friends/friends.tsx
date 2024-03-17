@@ -18,15 +18,16 @@ import {
     TabsFollowers,
 } from '~/bundles/friends/constants/constants.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
-import { type UserFollowingsResponseDto } from '~/bundles/friends/types/types.js';
+import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
 const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
     const tabs = [TabsFollowers.FIND_FOLLOWINGS, TabsFollowers.MY_FOLLOWINGS];
     const [limit, setLimit] = useState<number>(LIMIT);
 
-    const [selectedCard, setSelectedCard] =
-        useState<UserFollowingsResponseDto | null>(null);
+    const [selectedCard, setSelectedCard] = useState<FriendResponseDto | null>(
+        null,
+    );
     const [activeTab, setActiveTab] = useState<string>(
         TabsFollowers.FIND_FOLLOWINGS,
     );
@@ -57,7 +58,7 @@ const Friends: React.FC = () => {
     }, [setLimit, limit, dispatch, activeTab]);
 
     const handleSelectCard = useCallback(
-        (user: UserFollowingsResponseDto | null): void => {
+        (user: FriendResponseDto | null): void => {
             setSelectedCard(user);
         },
         [setSelectedCard],

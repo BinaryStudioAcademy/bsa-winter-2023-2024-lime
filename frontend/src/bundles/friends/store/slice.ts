@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import { type UserFollowingsResponseDto } from '../types/types.js';
+import { type FriendResponseDto } from '../types/types.js';
 import {
     addFollowing,
     getFollowings,
@@ -13,7 +13,7 @@ import {
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
-    users: UserFollowingsResponseDto[];
+    users: FriendResponseDto[];
     totalCount: number | undefined;
 };
 

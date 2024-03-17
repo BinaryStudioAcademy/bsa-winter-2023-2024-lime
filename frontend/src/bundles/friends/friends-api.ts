@@ -1,13 +1,13 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
-import { UsersApiPath } from '~/bundles/users/enums/enums.js';
+import { FriendsApiPath } from '~/bundles/friends/enums/enums.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
 import {
+    type FriendRequestDto,
+    type FriendResponseDto,
     type PaginationParameters,
-    type UserFollowingsRequestDto,
-    type UserFollowingsResponseDto,
 } from './types/types.js';
 
 type Constructor = {
@@ -18,16 +18,16 @@ type Constructor = {
 
 class FriendsApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
-        super({ path: ApiPath.USERS, baseUrl, http, storage });
+        super({ path: ApiPath.FRIENDS, baseUrl, http, storage });
     }
 
     public async getNotFollowed(payload: PaginationParameters): Promise<{
-        users: UserFollowingsResponseDto[];
+        users: FriendResponseDto[];
         query: PaginationParameters;
     }> {
         const response = await this.load(
             this.getFullEndpoint(
-                `${UsersApiPath.NOT_FOLLOWED}?page=${payload.page}&limit=${payload.limit}`,
+                `${FriendsApiPath.ROOT}?page=${payload.page}&limit=${payload.limit}`,
                 {},
             ),
             {
@@ -38,18 +38,18 @@ class FriendsApi extends BaseHttpApi {
         );
 
         return await response.json<{
-            users: UserFollowingsResponseDto[];
+            users: FriendResponseDto[];
             query: PaginationParameters;
         }>();
     }
 
     public async getFollowings(payload: PaginationParameters): Promise<{
-        users: UserFollowingsResponseDto[];
+        users: FriendResponseDto[];
         query: PaginationParameters;
     }> {
         const response = await this.load(
             this.getFullEndpoint(
-                `${UsersApiPath.FOLLOWINGS}?page=${payload.page}&limit=${payload.limit}`,
+                `${FriendsApiPath.FOLLOWINGS}?page=${payload.page}&limit=${payload.limit}`,
                 {},
             ),
             {
@@ -60,16 +60,16 @@ class FriendsApi extends BaseHttpApi {
         );
 
         return await response.json<{
-            users: UserFollowingsResponseDto[];
+            users: FriendResponseDto[];
             query: PaginationParameters;
         }>();
     }
 
     public async addFollowing(
-        payload: UserFollowingsRequestDto,
-    ): Promise<UserFollowingsResponseDto> {
+        payload: FriendRequestDto,
+    ): Promise<FriendResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.FOLLOWINGS, {}),
+            this.getFullEndpoint(FriendsApiPath.FOLLOWINGS, {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
@@ -77,14 +77,12 @@ class FriendsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<UserFollowingsResponseDto>();
+        return await response.json<FriendResponseDto>();
     }
 
-    public async removeFollowing(
-        payload: UserFollowingsRequestDto,
-    ): Promise<number> {
+    public async removeFollowing(payload: FriendRequestDto): Promise<number> {
         const response = await this.load(
-            this.getFullEndpoint(UsersApiPath.FOLLOWINGS, {}),
+            this.getFullEndpoint(FriendsApiPath.FOLLOWINGS, {}),
             {
                 method: 'DELETE',
                 contentType: ContentType.JSON,
