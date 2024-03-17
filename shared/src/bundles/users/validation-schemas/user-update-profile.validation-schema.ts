@@ -5,6 +5,7 @@ import { UnicodePattern } from './constants/constants.js';
 
 const userUpdateProfile = z
     .object({
+        avatarUrl: z.string().nullable(),
         fullName: z.union([
             z
                 .string()

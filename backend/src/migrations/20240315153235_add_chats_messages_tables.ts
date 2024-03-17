@@ -100,6 +100,10 @@ async function up(knex: Knex): Promise<void> {
             .dateTime(ChatsUsersColumnName.UPDATED_AT)
             .notNullable()
             .defaultTo(knex.fn.now());
+        table.unique([
+            ChatsUsersColumnName.CHAT_ID,
+            ChatsUsersColumnName.USER_ID,
+        ]);
     });
 }
 

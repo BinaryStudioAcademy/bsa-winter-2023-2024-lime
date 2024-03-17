@@ -8,19 +8,19 @@ import { type AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-type SidebarNavProperties = {
+type Properties = {
     text: string;
     icon: JSX.Element;
     to: ValueOf<typeof AppRoute>;
     isActive?: boolean;
 };
 
-const SidebarNav = ({
+const SidebarNav: React.FC<Properties> = ({
     text,
     to,
     icon,
     isActive = false,
-}: SidebarNavProperties): JSX.Element => {
+}): JSX.Element => {
     const classes = {
         active: 'text-lm-black-100 hover:text-lm-black-200',
         inactive: 'text-lm-grey-200 hover:text-lm-black-400',

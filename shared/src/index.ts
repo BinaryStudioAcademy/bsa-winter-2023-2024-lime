@@ -9,10 +9,14 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type ChatRequestDto,
+    type ChatResponseDto,
+} from './bundles/chats/chats.js';
+export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
 } from './bundles/connections/connections.js';
-export { FileValidationMessage } from './bundles/file/file.js';
+export { type File, FileValidationMessage } from './bundles/file/file.js';
 export {
     type GoalRequestDto,
     type GoalResponseDto,
@@ -29,6 +33,10 @@ export {
     IdentityProvider,
     identityProviderValidationSchema,
 } from './bundles/identity/identity.js';
+export {
+    type MessageRequestDto,
+    type MessageResponseDto,
+} from './bundles/messages/messages.js';
 export {
     type NotificationRequestDto,
     type NotificationResponseDto,
@@ -82,6 +90,7 @@ export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
     Gender,
     passwordForgotValidationSchema,
     passwordResetValidationSchema,
@@ -89,6 +98,7 @@ export {
     UsersApiPath,
     userSignUpValidationSchema,
     userUpdateProfileValidationSchema,
+    userUploadAvatarValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {

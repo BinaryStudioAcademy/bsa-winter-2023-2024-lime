@@ -19,8 +19,8 @@ const userController = new UserController({
     userBonusService,
 });
 
-export { userController, userRepository, userService };
 export { UserAttributes } from './enums/enums.js';
+export { userController, userRepository, userService };
 export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,

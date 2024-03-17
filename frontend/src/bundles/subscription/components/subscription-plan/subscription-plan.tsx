@@ -12,14 +12,14 @@ type Properties = {
     onSubscribe: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
 };
 
-const SubscriptionPlan = ({
+const SubscriptionPlan: React.FC<Properties> = ({
     id,
     name,
     description,
     price,
     stripePriceId,
     onSubscribe,
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const handleSubscribeButtonClick = useCallback(() => {
         onSubscribe({ planId: id, stripePriceId });
     }, [id, stripePriceId, onSubscribe]);

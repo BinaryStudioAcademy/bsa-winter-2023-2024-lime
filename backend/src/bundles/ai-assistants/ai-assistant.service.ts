@@ -33,7 +33,7 @@ class AiAssistantService {
 
         if (!chat) {
             return await this.chatRepository.create(
-                ChatEntity.initializeNew({ isAssistant: true }),
+                ChatEntity.initializeNew({ membersId: [], isAssistant: true }),
             );
         }
 
@@ -56,7 +56,7 @@ class AiAssistantService {
             });
         }
 
-        const chatMessages = await this.messageRepository.findAllById({
+        const chatMessages = await this.messageRepository.findMany({
             chatId: chatObject.id,
         });
 
