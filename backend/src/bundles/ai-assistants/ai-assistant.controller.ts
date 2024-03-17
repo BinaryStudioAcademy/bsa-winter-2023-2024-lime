@@ -11,7 +11,8 @@ import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/types/types.js';
 
 import { type AiAssistantService } from './ai-assistant.service.js';
-import { MAX_CONTEXT_MESSAGE_LENGTH } from './constants/constants.js';
+import { AiAssistantPath } from './enums/enums.js';
+import { type SendMessageRequestDto } from './types/types.js';
 
 class AiAssistantController extends BaseController {
     private aiAssistantService: AiAssistantService;
@@ -22,12 +23,12 @@ class AiAssistantController extends BaseController {
         this.aiAssistantService = aiAssistantService;
 
         this.addRoute({
-            path: '/send-message',
+            path: AiAssistantPath.SEND_MESSAGE,
             method: 'POST',
             handler: (options) =>
                 this.sendMessage(
                     options as ApiHandlerOptions<{
-                        body: { message: string; userId: number };
+                        body: SendMessageRequestDto;
                         // user: UserAuthResponseDto;
                     }>,
                 ),
@@ -36,18 +37,14 @@ class AiAssistantController extends BaseController {
 
     private async sendMessage(
         options: ApiHandlerOptions<{
-            body: { message: string; userId: number };
+            body: SendMessageRequestDto;
             // user: UserAuthResponseDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.aiAssistantService.sendMessage(
-                options.body.userId,
-                options.body.message,
-                MAX_CONTEXT_MESSAGE_LENGTH,
-            ),
+            payload: await this.aiAssistantService.sendMessage(options.body),
         };
     }
 }

@@ -2,54 +2,31 @@ import { HttpCode, HttpError } from '~/common/http/http.js';
 import { SenderType } from '~/common/services/open-ai/enums/enums.js';
 import { type OpenAIService } from '~/common/services/open-ai/open-ai.service.js';
 
-import { ChatEntity } from '../chats/chat.entity.js';
-import { type ChatRepository } from '../chats/chat.repository.js';
 import { MessageEntity } from '../messages/message.entity.js';
 import { type MessageRepository } from '../messages/message.repository.js';
 import { ErrorMessage } from './enums/enums.js';
+import { type SendMessageRequestDto } from './types/types.js';
 
 class AiAssistantService {
     private openAiService: OpenAIService;
-
-    private chatRepository: ChatRepository;
 
     private messageRepository: MessageRepository;
 
     public constructor(
         openAiService: OpenAIService,
-        chatRepository: ChatRepository,
         messageRepository: MessageRepository,
     ) {
         this.openAiService = openAiService;
-        this.chatRepository = chatRepository;
         this.messageRepository = messageRepository;
     }
 
-    private async findOrCreateChat(userId: number): Promise<ChatEntity> {
-        const chat = await this.chatRepository.find({
-            userId,
-            isAssistant: true,
-        });
-
-        if (!chat) {
-            return await this.chatRepository.create(
-                ChatEntity.initializeNew({ membersId: [], isAssistant: true }),
-            );
-        }
-
-        return chat;
-    }
-
-    public async sendMessage(
-        userId: number,
-        message: string,
-        contextMessagesCount: number,
-    ): Promise<{ message: string }> {
-        // const chat = await this.findOrCreateChat(userId);
-        // const chatObject = chat.toObject();
-
-        const chatObject = { id: 1 };
-        if (!chatObject) {
+    public async sendMessage({
+        userId,
+        message,
+        chatId,
+        contextMessagesCount,
+    }: SendMessageRequestDto): Promise<{ message: string }> {
+        if (!chatId) {
             throw new HttpError({
                 message: ErrorMessage.AI_CHAT_NOT_FOUND,
                 status: HttpCode.INTERNAL_SERVER_ERROR,
@@ -57,7 +34,7 @@ class AiAssistantService {
         }
 
         const chatMessages = await this.messageRepository.findMany({
-            chatId: chatObject.id,
+            chatId,
         });
 
         const contextMessages = chatMessages
@@ -82,7 +59,7 @@ class AiAssistantService {
 
         await this.messageRepository.create(
             MessageEntity.initializeNew({
-                chatId: chatObject.id,
+                chatId,
                 senderId: userId,
                 text: message,
                 isSeen: true,
@@ -91,7 +68,7 @@ class AiAssistantService {
 
         await this.messageRepository.create(
             MessageEntity.initializeNew({
-                chatId: chatObject.id,
+                chatId,
                 senderId: null,
                 text: responseMessage,
                 isSeen: false,
