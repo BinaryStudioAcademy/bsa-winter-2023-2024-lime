@@ -11,6 +11,7 @@ export {
 export {
     type ChatRequestDto,
     type ChatResponseDto,
+    chatValidationSchema,
 } from './bundles/chats/chats.js';
 export {
     type ConnectionGetAllItemResponseDto,
@@ -36,6 +37,7 @@ export {
 export {
     type MessageRequestDto,
     type MessageResponseDto,
+    messageValidationSchema,
 } from './bundles/messages/messages.js';
 export {
     type NotificationRequestDto,

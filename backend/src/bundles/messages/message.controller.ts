@@ -11,6 +11,7 @@ import { type Logger } from '~/common/logger/logger.js';
 import { MessagePath } from './enums/enums.js';
 import { type MessageService } from './message.service.js';
 import { type MessageRequestDto } from './types/types.js';
+import { messageValidationSchema } from './validation-schemas/validation-schemas.js';
 
 class MessageController extends BaseController {
     private messageService: MessageService;
@@ -24,6 +25,9 @@ class MessageController extends BaseController {
             path: MessagePath.ROOT,
             method: 'POST',
             isProtected: true,
+            validation: {
+                body: messageValidationSchema,
+            },
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{

@@ -14,6 +14,7 @@ import {
     type ChatRequestDto,
     type EntityIdParameterDto,
 } from './types/types.js';
+import { chatValidationSchema } from './validation-schemas/validation-schemas.js';
 
 class ChatController extends BaseController {
     private chatService: ChatService;
@@ -51,6 +52,9 @@ class ChatController extends BaseController {
             path: ChatsPath.ROOT,
             method: 'POST',
             isProtected: true,
+            validation: {
+                body: chatValidationSchema,
+            },
             handler: (options) =>
                 this.create(
                     options as ApiHandlerOptions<{
