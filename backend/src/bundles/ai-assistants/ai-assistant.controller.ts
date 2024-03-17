@@ -44,7 +44,6 @@ class AiAssistantController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.aiAssistantService.sendMessage(
-                // options.user.id,
                 options.body.userId,
                 options.body.message,
                 MAX_CONTEXT_MESSAGE_LENGTH,

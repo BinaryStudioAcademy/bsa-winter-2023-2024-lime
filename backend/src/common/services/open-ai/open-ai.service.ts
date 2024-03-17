@@ -23,7 +23,7 @@ class OpenAIService {
             messages: [
                 {
                     role: SenderType.ASSISTANT,
-                    content: AssistantParameters.INSTUCTIONS,
+                    content: AssistantParameters.INSTRUCTIONS,
                 },
                 ...messages,
             ],

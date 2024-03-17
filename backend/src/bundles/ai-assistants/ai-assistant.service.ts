@@ -1,5 +1,3 @@
-import { type ChatCompletionMessageParam } from 'openai/resources/chat/index.mjs';
-
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { SenderType } from '~/common/services/open-ai/enums/enums.js';
 import { type OpenAIService } from '~/common/services/open-ai/open-ai.service.js';
@@ -46,11 +44,11 @@ class AiAssistantService {
         userId: number,
         message: string,
         contextMessagesCount: number,
-    ): Promise<string> {
-        const chat = await this.findOrCreateChat(userId);
-        const chatObject = chat.toObject();
+    ): Promise<{ message: string }> {
+        // const chat = await this.findOrCreateChat(userId);
+        // const chatObject = chat.toObject();
 
-        // const chatObject = { id: 1 };
+        const chatObject = { id: 1 };
         if (!chatObject) {
             throw new HttpError({
                 message: ErrorMessage.AI_CHAT_NOT_FOUND,
@@ -62,7 +60,7 @@ class AiAssistantService {
             chatId: chatObject.id,
         });
 
-        const contextMessages: ChatCompletionMessageParam[] = chatMessages
+        const contextMessages = chatMessages
             .slice(0, contextMessagesCount)
             .map((message) => {
                 const messageObject = message.toObject();
@@ -73,8 +71,6 @@ class AiAssistantService {
                     content: messageObject.text,
                 };
             });
-
-        // console.log(contextMessages);
 
         const responseMessage = await this.openAiService.sendRequest([
             ...contextMessages,
@@ -102,7 +98,7 @@ class AiAssistantService {
             }),
         );
 
-        return responseMessage;
+        return { message: responseMessage };
     }
 }
 
