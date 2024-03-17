@@ -23,6 +23,24 @@ class ChatRepository implements Repository {
         return chat ? ChatEntity.initialize(chat) : null;
     }
 
+    public async findByUser(
+        query: Record<string, unknown>,
+        userId: number,
+    ): Promise<ChatEntity | null> {
+        const chat = await this.chatModel
+            .query()
+            .findOne(query)
+            .whereExists(
+                this.chatModel
+                    .relatedQuery(DatabaseTableName.USERS)
+                    .where({ userId }),
+            )
+            .withGraphFetched(`[${DatabaseTableName.MESSAGES}]`)
+            .execute();
+
+        return chat ? ChatEntity.initialize(chat) : null;
+    }
+
     public async findAll(
         query: Record<string, unknown>,
     ): Promise<ChatEntity[]> {
