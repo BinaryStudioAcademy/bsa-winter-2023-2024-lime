@@ -14,6 +14,7 @@ import {
     capitalizeFirstLetter,
     convertHeightToCentimeters,
     convertWeightToKilograms,
+    getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
@@ -46,6 +47,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         height,
         gender,
         location,
+        isPublic,
     } = user;
 
     const handleToggleFriend = useCallback(() => {
@@ -65,31 +67,45 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
             {username && <p className="text-primary mb-4">@{username}</p>}
             <div className="bg-secondary w-full rounded-lg p-4 shadow-xl">
                 <ul className="flex w-full flex-wrap justify-evenly">
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Weight
-                        <p className="text-bold text-primary mt-2 text-xl">
-                            {convertWeightToKilograms(weight) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Height
-                        <p className="text-primary text-bold mt-2 text-xl">
-                            {convertHeightToCentimeters(height) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center justify-end sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Age
-                        <p className="text-bold text-primary mt-2 text-xl">
-                            {calculateAge(dateOfBirth) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
+                    {isPublic && (
+                        <>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Weight
+                                <p className="text-bold text-primary mt-2 text-xl">
+                                    {convertWeightToKilograms(weight) ?? '-'}
+                                </p>
+                            </li>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Height
+                                <p className="text-primary text-bold mt-2 text-xl">
+                                    {convertHeightToCentimeters(height) ?? '-'}
+                                </p>
+                            </li>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center justify-end sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Age
+                                <p className="text-bold text-primary mt-2 text-xl">
+                                    {calculateAge(dateOfBirth) ?? '-'}
+                                </p>
+                            </li>
+                        </>
+                    )}
+                    <li
+                        className={getValidClassNames(
+                            isPublic ? 'sm:w-1/2' : 'sm:w-full',
+                            'text-lm-grey-200 mt-4 flex flex-col items-center min-[1400px]:w-1/2',
+                        )}
+                    >
                         Gender
                         <p className="text-bold text-primary mt-2 text-xl">
                             {gender ?? '-'}
                         </p>
                     </li>
-                    <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
+                    <li
+                        className={getValidClassNames(
+                            isPublic ? 'sm:w-1/2' : 'sm:w-full',
+                            'text-lm-grey-200 mt-4 flex flex-col items-center min-[1400px]:w-1/2',
+                        )}
+                    >
                         Location
                         <p className="text-bold text-primary mt-2 text-center text-xl">
                             {location ?? '-'}
