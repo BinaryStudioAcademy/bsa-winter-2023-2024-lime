@@ -6,7 +6,11 @@ type Properties = {
     children?: JSX.Element | JSX.Element[];
 };
 
-const Fade = ({ x, className, children }: Properties): JSX.Element => {
+const Fade: React.FC<Properties> = ({
+    x,
+    className,
+    children,
+}): JSX.Element => {
     return (
         <motion.div
             className={className}

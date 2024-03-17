@@ -7,7 +7,7 @@ type Properties = {
     className?: string;
 };
 
-const Layout = ({ children, className }: Properties): JSX.Element => (
+const Layout: React.FC<Properties> = ({ children, className }): JSX.Element => (
     <div className={getValidClassNames(className, 'mx-auto my-0 w-full p-7')}>
         {children}
     </div>

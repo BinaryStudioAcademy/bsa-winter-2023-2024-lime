@@ -15,12 +15,12 @@ const ActivityWidgetColor = {
     GREEN: 'green',
 } as const;
 
-const ActivityWidget = ({
+const ActivityWidget: React.FC<Properties> = ({
     label,
     value,
     color,
     icon,
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const classes = {
         base: 'h-[10.5rem] rounded-[0.5rem] text-primary p-[1rem] flex flex-wrap gap-[1rem] bg-no-repeat bg-cover bg-center min-w-[100px]',
         icon: 'h-[2.5rem] w-[2.5rem] rounded-[0.25rem] flex items-center justify-center',

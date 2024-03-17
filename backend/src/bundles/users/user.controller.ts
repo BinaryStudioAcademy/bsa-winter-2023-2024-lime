@@ -13,10 +13,13 @@ import {
 import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
+import { upload } from '~/common/middlewares/middlewares.js';
+import { type File } from '~/common/services/file/types/types.js';
 
 import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath } from './enums/enums.js';
 import { type UserControllerProperties } from './types/types.js';
+import { userUploadAvatarValidationSchema } from './validation-schemas/validation-schemas.js';
 
 /**
  * @swagger
@@ -153,6 +156,15 @@ class UserController extends BaseController {
                         user: UserAuthResponseDto;
                     }>,
                 ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.UPLOAD_AVATAR,
+            method: 'POST',
+            isProtected: true,
+            preHandler: upload.single('image'),
+            handler: (options) =>
+                this.uploadAvatar(options as ApiHandlerOptions<{ file: File }>),
         });
     }
 
@@ -405,6 +417,71 @@ class UserController extends BaseController {
             status: HttpCode.OK,
             payload: await this.userBonusService.findMany({ userId }),
         };
+    }
+
+    /**
+     * @swagger
+     * /api/v1/users/upload:
+     *   post:
+     *     tags:
+     *       - Users
+     *     description: This endpoint uploads user avatar and returns a link to it
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         multipart/form-data:
+     *           schema:
+     *             type: object
+     *             properties:
+     *                image:
+     *                  type: file
+     *                  nullable: false
+     *     responses:
+     *       201:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  avatarUrl:
+     *                    type: string
+     *                    nullable: false
+     *       400:
+     *         description: Conflict
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
+    private async uploadAvatar(
+        options: ApiHandlerOptions<{ file: File }>,
+    ): Promise<ApiHandlerResponse> {
+        const { file } = options;
+        const isValid = userUploadAvatarValidationSchema.safeParse({
+            image: file,
+        });
+        if (!isValid.success) {
+            throw new HttpError({
+                message: isValid.error.issues[0]?.message ?? 'Invalid file',
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+        try {
+            const avatarUrl = await this.userService.uploadAvatar(file);
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.CREATED,
+                payload: avatarUrl,
+            };
+        } catch (error) {
+            throw new HttpError({
+                message: `Something went wrong ${error}`,
+                status: HttpCode.CONFLICT,
+            });
+        }
     }
 }
 
