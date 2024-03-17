@@ -6,6 +6,7 @@ const sizeToClass: Record<ValueOf<typeof ComponentSize>, string> = {
     [ComponentSize.MEDIUM]: 'h-6 w-6',
     [ComponentSize.LARGE]: 'h-8 w-8',
     [ComponentSize.EXTRA_LARGE]: 'h-40 w-40',
+    [ComponentSize.HUGE]: 'h-176 w-176',
 };
 
 export { sizeToClass };

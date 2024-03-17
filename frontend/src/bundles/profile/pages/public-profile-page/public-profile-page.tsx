@@ -88,7 +88,7 @@ const PublicProfile: React.FC = () => {
     if (user) {
         return (
             <main className="flex h-full w-full sm:w-full sm:flex-col md:flex-row-reverse">
-                <div className="h-full sm:mb-8">
+                <div className="sm:mb-8">
                     <PersonalDetails
                         id={NumericId}
                         user={user}
@@ -110,14 +110,14 @@ const PublicProfile: React.FC = () => {
                                 />
                             ) : (
                                 <p className="text-md text-primary">
-                                    User don&#39;t have workouts yet
+                                    User doesn&#39;t have workouts yet
                                 </p>
                             )}
                         </div>
                     </section>
                     <section className="text-primary px-[1.5rem]">
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
-                            Statistics Section for current month
+                            Statistics of current month
                         </h2>
                         <ul className="mb-6 flex flex-col gap-4 md:flex-col xl:flex-row">
                             <li className="flex-1">
@@ -174,7 +174,7 @@ const PublicProfile: React.FC = () => {
                                 ))
                             ) : (
                                 <p className="text-md text-primary">
-                                    User don&#39;t have achievements yet
+                                    User doesn&#39;t have achievements yet
                                 </p>
                             )}
                         </div>

@@ -1,7 +1,16 @@
+import { MEGABYTE_PER_BYTE } from '../../../constants/constants.js';
 import { UserValidationRule } from './user-validation-rule.enum.js';
 
-const { LOCATION, PASSWORD, FULLNAME, NICKNAME, WEIGHT, HEIGHT } =
-    UserValidationRule;
+const {
+    LOCATION,
+    PASSWORD,
+    FULLNAME,
+    NICKNAME,
+    WEIGHT,
+    HEIGHT,
+    AVATAR_MAX_SIZE,
+    AVATAR_ALLOWED_TYPES,
+} = UserValidationRule;
 
 const UserValidationMessage = {
     REQUIRED: 'Please fill out this field',
@@ -34,6 +43,9 @@ const UserValidationMessage = {
         'Operation can not be finished due to lack of funds.',
     BONUS_OPERATION_NOT_SUCCESSFUL: 'Operation was not sucessfull.',
     USER_OAUTH: 'Use OAuth to sign in',
+    FILE_REQUIRED: 'File is required',
+    FILE_SIZE_EXCEEDED: `File size exceeded. Max file size is ${AVATAR_MAX_SIZE / MEGABYTE_PER_BYTE}MB`,
+    FILE_TYPE_NOT_ALLOWED: `File type is not allowed. Only ${AVATAR_ALLOWED_TYPES.toString()} is allowed`,
 } as const;
 
 export { UserValidationMessage };

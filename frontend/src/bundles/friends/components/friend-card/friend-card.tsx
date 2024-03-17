@@ -9,7 +9,7 @@ import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
-type FriendProperties = {
+type Properties = {
     isActive: boolean;
     isFollowed: boolean;
     isCardSelected: boolean;
@@ -25,7 +25,7 @@ const FriendCard = ({
     user,
     selectCard,
     onToggleFollow,
-}: FriendProperties): JSX.Element => {
+}: Properties): JSX.Element => {
     const { userId, fullName, email, avatarUrl } = user;
     const handleOnToggleFollow = useCallback(() => {
         if (isCardSelected) {

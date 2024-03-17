@@ -6,6 +6,7 @@ export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from './types/types.js';
 export {
     passwordForgot as passwordForgotValidationSchema,
@@ -13,4 +14,5 @@ export {
     userAuth as userAuthValidationSchema,
     userAuthPWConfirm as userSignUpValidationSchema,
     userUpdateProfile as userUpdateProfileValidationSchema,
+    userUploadAvatar as userUploadAvatarValidationSchema,
 } from './validation-schemas/validation-schemas.js';

@@ -56,7 +56,7 @@ const FriendDetails = ({
             <div className={'mb-44'}>
                 {avatarUrl && validateImageUrl(avatarUrl) ? (
                     <Avatar
-                        size="xl"
+                        size="xxl"
                         email={name ?? ''}
                         avatarUrl={avatarUrl}
                     />

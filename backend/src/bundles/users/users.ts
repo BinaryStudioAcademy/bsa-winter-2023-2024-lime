@@ -1,3 +1,4 @@
+import { achievementRepository } from '~/bundles/achievements/achievements.js';
 import { OAuthModel, OAuthRepository } from '~/bundles/oauth/oauth.js';
 import { logger } from '~/common/logger/logger.js';
 
@@ -7,7 +8,7 @@ import { UserModel } from './user.model.js';
 import { UserRepository } from './user.repository.js';
 import { UserService } from './user.service.js';
 
-const userRepository = new UserRepository(UserModel);
+const userRepository = new UserRepository(UserModel, achievementRepository);
 const oAuthRepository = new OAuthRepository(OAuthModel);
 const userService = new UserService(userRepository);
 
