@@ -52,7 +52,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         ({ userBonuses }) => userBonuses,
     );
 
-    const { control, errors, reset, setValue, handleSubmit } =
+    const { control, errors, reset, setValue, handleSubmit, getValues } =
         useAppForm<UserUpdateProfileRequestDto>({
             defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
             validationSchema: userUpdateProfileValidationSchema,
@@ -98,7 +98,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             void handleSubmit((data) => {
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
-                    isPublic: data.isPublic,
+                    isPublic: getValues().isPublic,
                     location: data.location ? data.location.trim() : null,
                     weight: convertWeightToGrams(data.weight),
                     height: convertHeightToMillimeters(data.height),
@@ -113,6 +113,13 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
             })(event_);
         },
         [handleSubmit, onSubmit],
+    );
+
+    const handleCheckboxChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>): void => {
+            setValue('isPublic', event.target.checked);
+        },
+        [setValue, getValues],
     );
 
     const handleReset = useCallback((): void => {
@@ -264,6 +271,7 @@ const ProfileSettings: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         ariaLabel="privacy-policy"
                         control={control}
                         errors={errors}
+                        onChange={handleCheckboxChange}
                     />
                 </div>
                 <ul className="mt-14 flex justify-end lg:mt-6">
