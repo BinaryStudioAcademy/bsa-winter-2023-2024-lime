@@ -38,9 +38,12 @@ class ChatService implements Service {
         const { creatorId, membersId, isAssistant } = payload;
 
         if (isAssistant) {
-            const assistantChatExists = await this.chatRepository.find({
-                isAssistant,
-            });
+            const assistantChatExists = await this.chatRepository.findByUser(
+                {
+                    isAssistant,
+                },
+                creatorId,
+            );
 
             if (assistantChatExists) {
                 throw new HttpError({
