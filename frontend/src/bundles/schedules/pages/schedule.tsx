@@ -1,4 +1,7 @@
-import { PlusIcon } from '@heroicons/react/16/solid';
+import {
+    CalendarDaysIcon as ScheduleIcon,
+    PlusIcon,
+} from '@heroicons/react/16/solid';
 import { format } from 'date-fns';
 
 import {
@@ -144,30 +147,48 @@ const Schedule: React.FC = () => {
                         </div>
                         <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
                         <div className="w-full px-[2rem]">
-                            <div className="mb-3">
-                                <ul>
-                                    {filteredSchedules.map(
-                                        ({ activityType, id, startAt }) => {
-                                            const date = new Date(startAt);
-                                            const weekDay = format(
-                                                date,
-                                                'EEEE',
-                                            );
-                                            const hours = format(date, 'HH');
-                                            const minutes = format(date, 'mm');
+                            {filteredSchedules.length > 0 ? (
+                                <div className="mb-3">
+                                    <ul>
+                                        {filteredSchedules.map(
+                                            ({ activityType, id, startAt }) => {
+                                                const date = new Date(startAt);
+                                                const weekDay = format(
+                                                    date,
+                                                    'EEEE',
+                                                );
+                                                const hours = format(
+                                                    date,
+                                                    'HH',
+                                                );
+                                                const minutes = format(
+                                                    date,
+                                                    'mm',
+                                                );
 
-                                            return (
-                                                <ScheduleCard
-                                                    weekDay={weekDay ?? ''}
-                                                    activityType={activityType}
-                                                    date={`${hours}:${minutes}`}
-                                                    key={id}
-                                                />
-                                            );
-                                        },
-                                    )}
-                                </ul>
-                            </div>
+                                                return (
+                                                    <ScheduleCard
+                                                        weekDay={weekDay ?? ''}
+                                                        activityType={
+                                                            activityType
+                                                        }
+                                                        date={`${hours}:${minutes}`}
+                                                        key={id}
+                                                    />
+                                                );
+                                            },
+                                        )}
+                                    </ul>
+                                </div>
+                            ) : (
+                                <div className="font-base text-primary mb-[1.75rem] flex items-center text-xl">
+                                    <p className="mr-3">
+                                        At this date, you don&#39;t have any
+                                        schedules yet
+                                    </p>
+                                    <ScheduleIcon className="h-6 w-6" />
+                                </div>
+                            )}
                             <div className="md:w-full lg:w-[48.8%]">
                                 <Button
                                     type="button"
