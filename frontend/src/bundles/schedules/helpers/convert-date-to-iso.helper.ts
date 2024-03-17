@@ -1,8 +1,7 @@
 import { formatISO, parse } from 'date-fns';
 
-const convertDateToIso = (date: string): string => {
-    const formatString = 'dd/MM/yyyy HH:mm';
-    const parsedDate = parse(date, formatString, new Date());
+const convertDateToIso = (date: string, format: string): string => {
+    const parsedDate = parse(date, format, new Date());
     return formatISO(parsedDate);
 };
 

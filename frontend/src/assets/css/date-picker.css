@@ -17,7 +17,7 @@
 }
 
 .custom-date-picker .rmdp-shadow {
-    @apply bg-lm-black-100;
+    @apply bg-primary;
 }
 
 .custom-date-picker .rmdp-border-bottom {

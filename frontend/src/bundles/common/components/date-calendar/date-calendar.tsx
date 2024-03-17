@@ -43,6 +43,7 @@ const DateCalendar = <T extends FieldValues>({
         <div className={className}>
             <Calendar
                 onChange={onChange}
+                value={field.value}
                 className="custom-date-picker"
                 range={range}
                 minDate={minDate ?? ''}

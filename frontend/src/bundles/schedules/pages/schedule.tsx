@@ -27,7 +27,7 @@ import { actions as goalActions } from '~/bundles/goals/store/goals.js';
 import { actions as scheduleActions } from '~/bundles/schedules/store/schedules.js';
 
 import { DEFAULT_CALENDAR_VALUE } from '../constants/constants.js';
-import { convertDateToIso } from '../helpers/helpers.js';
+import { convertDateToIso, isDateInRange } from '../helpers/helpers.js';
 import { type ScheduleRequestDto } from '../types/types.js';
 
 const ZERO_VALUE = 0;
@@ -35,11 +35,13 @@ const ZERO_VALUE = 0;
 const Schedule: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const dispatch = useAppDispatch();
-    const { control } = useAppForm({
+    const { control, watch } = useAppForm({
         mode: 'onTouched',
         shouldUnregister: false,
         defaultValues: DEFAULT_CALENDAR_VALUE,
     });
+
+    const watchedDate = watch('date');
 
     const { dataStatus: goalsDataStatus, goals } = useAppSelector(
         ({ goals }) => goals,
@@ -51,13 +53,15 @@ const Schedule: React.FC = () => {
 
     const addScheduleHandler = useCallback(
         ({ activity, goalLabel, dateOfStart }: CreateScheduleRequest) => {
-            const convertedDate = convertDateToIso(dateOfStart);
+            const convertedDate = convertDateToIso(
+                dateOfStart,
+                'dd/MM/yyyy HH:mm',
+            );
             const preparedData: ScheduleRequestDto = {
                 activityType: activity,
                 goalId: goalLabel as number,
                 startAt: convertedDate as unknown as Date,
             };
-
             void dispatch(scheduleActions.createSchedule(preparedData));
             setIsModalOpen((previousState) => !previousState);
         },
@@ -82,6 +86,23 @@ const Schedule: React.FC = () => {
             `,
         }));
     }, [goals]);
+
+    const filteredSchedules = useMemo(() => {
+        const START_TIME = 0;
+        const END_TIME = 1;
+        const formattedDates = watchedDate.map((item) =>
+            convertDateToIso(item, 'yyyy/MM/dd'),
+        );
+
+        const range = [...new Set(formattedDates)];
+
+        return schedules.filter((schedule) => {
+            const start = range[START_TIME] ?? String(ZERO_VALUE);
+            const end = range[END_TIME];
+
+            return isDateInRange(schedule.startAt, start, end);
+        });
+    }, [watchedDate, schedules]);
 
     const handleModalStatus = useCallback(() => {
         setIsModalOpen((previousState) => !previousState);
@@ -125,7 +146,7 @@ const Schedule: React.FC = () => {
                         <div className="w-full px-[2rem]">
                             <div className="mb-3">
                                 <ul>
-                                    {schedules.map(
+                                    {filteredSchedules.map(
                                         ({ activityType, id, startAt }) => {
                                             const date = new Date(startAt);
                                             const weekDay = format(

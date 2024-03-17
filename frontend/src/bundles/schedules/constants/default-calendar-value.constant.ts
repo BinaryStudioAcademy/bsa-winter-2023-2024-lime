@@ -1,5 +1,7 @@
+import { format } from 'date-fns';
+
 const DEFAULT_CALENDAR_VALUE = {
-    date: new Date(),
+    date: [format(new Date(), 'yyyy/MM/dd')],
 };
 
 export { DEFAULT_CALENDAR_VALUE };
