@@ -1,6 +1,7 @@
-import { Button } from '~/bundles/common/components/components.js';
+import { Button, Loader } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { FriendCard } from '~/bundles/friends/components/components.js';
+import { IconColor } from '~/bundles/friends/enums/enums.js';
 import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
 type Properties = {
@@ -12,6 +13,7 @@ type Properties = {
     noUsersText: string;
     totalCount: number | undefined;
     loadMore: () => void;
+    isLoading: boolean;
 };
 
 const TabContent = ({
@@ -23,6 +25,7 @@ const TabContent = ({
     noUsersText,
     totalCount,
     loadMore,
+    isLoading,
 }: Properties): JSX.Element => {
     return (
         <>
@@ -47,6 +50,13 @@ const TabContent = ({
                             onClick={loadMore}
                             label={'Load more'}
                             size={ComponentSize.MEDIUM}
+                            leftIcon={
+                                isLoading && (
+                                    <Loader color={IconColor.PRIMARY} />
+                                )
+                            }
+                            type="submit"
+                            isDisabled={isLoading}
                             variant={'secondary'}
                         />
                     </div>

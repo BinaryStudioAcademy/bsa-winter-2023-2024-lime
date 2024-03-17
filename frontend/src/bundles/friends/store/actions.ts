@@ -48,4 +48,19 @@ const removeFollowing = createAsyncThunk<
     },
 );
 
-export { addFollowing, getFollowings, getNotFollowed, removeFollowing };
+const loadMore = createAsyncThunk<
+    { users: FriendResponseDto[]; query: PaginationParameters },
+    PaginationParameters,
+    AsyncThunkConfig
+>(`${sliceName}/loadMore`, async (paginationPayload, { extra }) => {
+    const { friendsApi } = extra;
+    return await friendsApi.loadMore(paginationPayload);
+});
+
+export {
+    addFollowing,
+    getFollowings,
+    getNotFollowed,
+    loadMore,
+    removeFollowing,
+};

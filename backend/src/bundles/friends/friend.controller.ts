@@ -11,7 +11,7 @@ import {
     BaseController,
 } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
-import { HttpCode, HttpError } from '~/common/http/http.js';
+import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
 
 import { type UserAuthResponseDto } from './enums/enums.js';
@@ -77,8 +77,12 @@ import { FriendsApiPath } from './enums/enums.js';
  *           type: number
  *           format: integer
  *           description: The ID of the user being followed.
+ *         offset:
+ *           type: string
+ *           description: The offset for pagination.
  *       required:
  *         - followingId
+ *         - offset
  */
 
 class FriendController extends BaseController {
@@ -204,39 +208,31 @@ class FriendController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { user, query } = options;
         const { page = '1', limit = '10' } = query;
+        const offset = ((+page - 1) * +limit).toString();
 
-        try {
-            const offset = ((+page - 1) * +limit).toString();
-            const totalCount =
-                await this.friendService.findAllPotentialFollowings(
-                    user.id,
-                    '0',
-                    MAX_NUMBER_OF_USERS,
-                );
-            const notFollowings =
-                await this.friendService.findAllPotentialFollowings(
-                    user.id,
-                    offset,
-                    limit,
-                );
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.OK,
-                payload: {
-                    users: notFollowings,
-                    query: {
-                        page: +page,
-                        limit: +limit,
-                        totalCount: totalCount?.length,
-                    },
+        const totalCount = await this.friendService.findAllPotentialFollowings(
+            user.id,
+            '0',
+            MAX_NUMBER_OF_USERS,
+        );
+        const notFollowings =
+            await this.friendService.findAllPotentialFollowings(
+                user.id,
+                offset,
+                limit,
+            );
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: {
+                users: notFollowings,
+                query: {
+                    page: +page,
+                    limit: +limit,
+                    totalCount: totalCount?.length,
                 },
-            };
-        } catch (error) {
-            throw new HttpError({
-                message: `Error fetching all potential friends: ${error}`,
-                status: HttpCode.INTERNAL_SERVER_ERROR,
-            });
-        }
+            },
+        };
     }
 
     /**
@@ -301,38 +297,31 @@ class FriendController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { user, query } = options;
         const { page = '1', limit = '10' } = query;
+        const offset = ((+page - 1) * +limit).toString();
 
-        try {
-            const offset = ((+page - 1) * +limit).toString();
-            const totalCount = await this.friendService.getFollowings(
-                user.id,
-                '0',
-                MAX_NUMBER_OF_USERS,
-            );
-            const friends = await this.friendService.getFollowings(
-                user.id,
-                offset,
-                limit,
-            );
+        const totalCount = await this.friendService.getFollowings(
+            user.id,
+            '0',
+            MAX_NUMBER_OF_USERS,
+        );
+        const friends = await this.friendService.getFollowings(
+            user.id,
+            offset,
+            limit,
+        );
 
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.OK,
-                payload: {
-                    users: friends,
-                    query: {
-                        page: +page,
-                        limit: +limit,
-                        totalCount: totalCount?.length,
-                    },
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: {
+                users: friends,
+                query: {
+                    page: +page,
+                    limit: +limit,
+                    totalCount: totalCount?.length,
                 },
-            };
-        } catch (error) {
-            throw new HttpError({
-                message: `Error fetching user's followings: ${error}`,
-                status: HttpCode.INTERNAL_SERVER_ERROR,
-            });
-        }
+            },
+        };
     }
 
     /**
@@ -341,8 +330,8 @@ class FriendController extends BaseController {
      *   post:
      *     tags:
      *       - Friends
-     *     summary: Add following
-     *     description: Adds a user to the list of followings for the specified user.
+     *     summary: Add a user as following
+     *     description: Adds a user to the list of followings for the authenticated user.
      *     security:
      *       - bearerAuth: []
      *     requestBody:
@@ -353,7 +342,7 @@ class FriendController extends BaseController {
      *             $ref: '#/components/schemas/FriendRequestDto'
      *     responses:
      *       '200':
-     *         description: Successful operation. Returns the added following.
+     *         description: Successful operation. Returns the next user for following.
      *         content:
      *           application/json:
      *             schema:
@@ -373,22 +362,20 @@ class FriendController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
-        const { followingId } = body;
+        const { followingId, offset } = body;
         const { id } = user;
-        try {
-            const addedFollowing = await this.friendService.addFollowing(
-                id,
-                followingId,
-            );
 
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.OK,
-                payload: addedFollowing,
-            };
-        } catch (error) {
-            throw new Error(`Error occurred while adding following ${error}`);
-        }
+        const addedFollowing = await this.friendService.addFollowing(
+            id,
+            followingId,
+            offset,
+        );
+
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: addedFollowing,
+        };
     }
 
     /**
@@ -409,15 +396,11 @@ class FriendController extends BaseController {
      *             $ref: '#/components/schemas/FriendRequestDto'
      *     responses:
      *       '200':
-     *         description: Successful operation. Returns the ID of the removed following.
+     *         description: Successful operation. Returns the details of the next followed user.
      *         content:
      *           application/json:
      *             schema:
-     *               type: object
-     *               properties:
-     *                 followingId:
-     *                   type: number
-     *                   description: The ID of the removed following.
+     *               $ref: '#/components/schemas/Friend'
      *       '401':
      *         description: Unauthorized. Authentication failure.
      *         content:
@@ -433,21 +416,19 @@ class FriendController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
-        const { followingId } = body;
+        const { followingId, offset } = body;
         const { id } = user;
-        try {
-            await this.friendService.removeFollowing(id, followingId);
+        const data = await this.friendService.removeFollowing(
+            id,
+            followingId,
+            offset,
+        );
 
-            return {
-                type: ApiHandlerResponseType.DATA,
-                status: HttpCode.OK,
-                payload: followingId,
-            };
-        } catch (error) {
-            throw new Error(
-                `Error occurred while removing following: ${error}`,
-            );
-        }
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: data,
+        };
     }
 }
 

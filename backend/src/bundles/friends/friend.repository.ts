@@ -6,7 +6,6 @@ import { type UserModel } from '~/bundles/users/user.model.js';
 import { DatabaseTableName } from '~/common/database/database.js';
 import { type Repository } from '~/common/types/types.js';
 
-const USER_ID = 'user_id';
 const USER_DETAILS_GRAPH = '[userDetails]';
 
 class FriendRepository implements Repository {
@@ -54,46 +53,42 @@ class FriendRepository implements Repository {
         offset: string,
         limit: string,
     ): Promise<FriendResponseDto[] | null> {
-        try {
-            const allUsers = await this.userModel
-                .query()
-                .whereNot('id', userId)
-                .withGraphFetched(USER_DETAILS_GRAPH);
+        const allUsers = await this.userModel
+            .query()
+            .whereNot('id', userId)
+            .withGraphFetched(USER_DETAILS_GRAPH);
 
-            const friends = await this.getFollowings(
-                userId,
-                '0',
-                MAX_NUMBER_OF_USERS,
-            );
-            const followingIds = friends?.map((friend) => friend.userId) || [];
+        const friends = await this.getFollowings(
+            userId,
+            '0',
+            MAX_NUMBER_OF_USERS,
+        );
+        const followingIds = friends?.map((friend) => friend.userId) || [];
 
-            const nonFriendUsers = allUsers.filter(
-                (user) => !followingIds.includes(user.id) && user.id !== userId,
-            );
+        const nonFriendUsers = allUsers.filter(
+            (user) => !followingIds.includes(user.id) && user.id !== userId,
+        );
 
-            const paginatedUsers = nonFriendUsers
-                .slice(Number(offset), Number(offset) + Number(limit))
-                .map((user) => {
-                    const { userDetails, id, email } = user;
-                    return {
-                        id,
-                        userId: userDetails.userId,
-                        email,
-                        avatarUrl: userDetails.avatarUrl,
-                        username: userDetails.username,
-                        fullName: userDetails.fullName,
-                        dateOfBirth: userDetails.dateOfBirth,
-                        weight: userDetails.weight,
-                        height: userDetails.height,
-                        location: userDetails.location,
-                        gender: userDetails.gender,
-                    };
-                });
+        const paginatedUsers = nonFriendUsers
+            .slice(Number(offset), Number(offset) + Number(limit))
+            .map((user) => {
+                const { userDetails, id, email } = user;
+                return {
+                    id,
+                    userId: userDetails.userId,
+                    email,
+                    avatarUrl: userDetails.avatarUrl,
+                    username: userDetails.username,
+                    fullName: userDetails.fullName,
+                    dateOfBirth: userDetails.dateOfBirth,
+                    weight: userDetails.weight,
+                    height: userDetails.height,
+                    location: userDetails.location,
+                    gender: userDetails.gender,
+                };
+            });
 
-            return paginatedUsers as FriendResponseDto[];
-        } catch (error) {
-            throw new Error(`Error fetching all potential friends: ${error}`);
-        }
+        return paginatedUsers as FriendResponseDto[];
     }
 
     public async getFollowings(
@@ -101,103 +96,78 @@ class FriendRepository implements Repository {
         offset: string,
         limit: string,
     ): Promise<FriendResponseDto[] | null> {
-        try {
-            const followings = await FriendModel.query()
-                .select(`${DatabaseTableName.USERS}.email`, 'followingId')
-                .where(`${DatabaseTableName.FRIENDS}.userId`, userId)
-                .withGraphFetched('userDetails')
-                .join(
-                    DatabaseTableName.USERS,
-                    `${DatabaseTableName.USERS}.id`,
-                    `${DatabaseTableName.FRIENDS}.followingId`,
-                )
-                .offset(Number(offset))
-                .limit(Number(limit));
+        const followings = await FriendModel.query()
+            .select(`${DatabaseTableName.USERS}.email`, 'followingId')
+            .where(`${DatabaseTableName.FRIENDS}.userId`, userId)
+            .withGraphFetched('userDetails')
+            .join(
+                DatabaseTableName.USERS,
+                `${DatabaseTableName.USERS}.id`,
+                `${DatabaseTableName.FRIENDS}.followingId`,
+            )
+            .orderBy(`${DatabaseTableName.FRIENDS}.id`)
+            .offset(Number(offset))
+            .limit(Number(limit));
 
-            return followings.map(({ id, userDetails, email }) => ({
-                id,
-                userId: userDetails.userId,
-                email,
-                avatarUrl: userDetails.avatarUrl,
-                username: userDetails.username,
-                fullName: userDetails.fullName,
-                dateOfBirth: userDetails.dateOfBirth,
-                weight: userDetails.weight,
-                height: userDetails.height,
-                location: userDetails.location,
-                gender: userDetails.gender,
-            })) as FriendResponseDto[];
-        } catch (error) {
-            throw new Error(`Error fetching user's followings: ${error}`);
-        }
+        return followings.map(({ id, userDetails, email }) => ({
+            id,
+            userId: userDetails.userId,
+            email,
+            avatarUrl: userDetails.avatarUrl,
+            username: userDetails.username,
+            fullName: userDetails.fullName,
+            dateOfBirth: userDetails.dateOfBirth,
+            weight: userDetails.weight,
+            height: userDetails.height,
+            location: userDetails.location,
+            gender: userDetails.gender,
+        })) as FriendResponseDto[];
     }
 
     public async addFollowing(
         id: number,
         followingId: number,
+        offset: string,
     ): Promise<FriendResponseDto | null> {
         const trx = await this.userModel.startTransaction();
-        try {
-            const user = await this.userModel.query(trx).findById(id);
-            if (!user) {
-                return null;
-            }
 
-            await user
-                .$relatedQuery('friends', trx)
-                .insert({ followingId })
-                .returning('*')
-                .first();
-
-            const userDetails = await this.userModel
-                .query(trx)
-                .findById(followingId)
-                .select(
-                    'userId',
-                    'email',
-                    'avatarUrl',
-                    'username',
-                    'fullName',
-                    'dateOfBirth',
-                    'weight',
-                    'height',
-                    'location',
-                    'gender',
-                )
-                .leftJoin('user_details as ud', `ud.${USER_ID}`, 'users.id');
-
-            await trx.commit();
-
-            return userDetails as unknown as FriendResponseDto;
-        } catch (error) {
-            await trx.rollback();
-            throw new Error(`Error occurred while adding following: ${error}`);
+        const user = await this.userModel.query(trx).findById(id);
+        if (!user) {
+            throw new Error('User not found');
         }
+
+        await user
+            .$relatedQuery('friends', trx)
+            .insert({ followingId })
+            .returning('*')
+            .first();
+
+        const result = await this.findAllPotentialFollowings(id, offset, '1');
+
+        await trx.commit();
+        return result as unknown as FriendResponseDto;
     }
 
     public async removeFollowing(
         id: number,
         followingId: number,
-    ): Promise<number> {
+        offset: string,
+    ): Promise<FriendResponseDto | null> {
         const trx = await this.userModel.startTransaction();
-        try {
-            const user = await this.userModel.query(trx).findById(id);
-            if (!user) {
-                throw new Error('User not found');
-            }
-            await user
-                .$relatedQuery('friends', trx)
-                .delete()
-                .where('following_id', followingId);
-            await trx.commit();
 
-            return followingId;
-        } catch (error) {
-            await trx.rollback();
-            throw new Error(
-                `Error occurred while removing following: ${error}`,
-            );
+        const user = await this.userModel.query(trx).findById(id);
+        if (!user) {
+            throw new Error('User not found');
         }
+        await user
+            .$relatedQuery('friends', trx)
+            .delete()
+            .where('following_id', followingId);
+
+        const result = await this.getFollowings(id, offset, '1');
+
+        await trx.commit();
+        return result as unknown as FriendResponseDto;
     }
 
     public async update(

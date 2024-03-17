@@ -92,6 +92,28 @@ class FriendsApi extends BaseHttpApi {
         );
         return await response.json<number>();
     }
+
+    public async loadMore(payload: PaginationParameters): Promise<{
+        users: FriendResponseDto[];
+        query: PaginationParameters;
+    }> {
+        const response = await this.load(
+            this.getFullEndpoint(
+                `${payload.path}?page=${payload.page}&limit=${payload.limit}`,
+                {},
+            ),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+
+        return await response.json<{
+            users: FriendResponseDto[];
+            query: PaginationParameters;
+        }>();
+    }
 }
 
 export { FriendsApi };

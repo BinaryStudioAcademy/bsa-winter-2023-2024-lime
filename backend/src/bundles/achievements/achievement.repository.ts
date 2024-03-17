@@ -20,7 +20,6 @@ class AchievementRepository implements Repository {
         if (!achievement) {
             return null;
         }
-
         return AchievementEntity.initialize(achievement);
     }
 

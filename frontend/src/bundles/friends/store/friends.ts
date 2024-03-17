@@ -2,6 +2,7 @@ import {
     addFollowing,
     getFollowings,
     getNotFollowed,
+    loadMore,
     removeFollowing,
 } from './actions.js';
 import { actions } from './slice.js';
@@ -12,6 +13,7 @@ const allActions = {
     getNotFollowed,
     addFollowing,
     removeFollowing,
+    loadMore,
 };
 
 export { allActions as actions };

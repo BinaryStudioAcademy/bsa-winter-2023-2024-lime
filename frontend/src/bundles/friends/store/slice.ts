@@ -8,6 +8,7 @@ import {
     addFollowing,
     getFollowings,
     getNotFollowed,
+    loadMore,
     removeFollowing,
 } from './actions.js';
 
@@ -54,16 +55,40 @@ const { reducer, actions, name } = createSlice({
 
         builder.addCase(addFollowing.fulfilled, (state, action) => {
             state.totalCount && (state.totalCount -= 1);
-            state.users = state.users.filter(
-                (following) => following.userId !== action.payload.userId,
-            );
+            state.users = [
+                ...state.users.filter(
+                    (following) =>
+                        following.userId !== action.meta.arg.followingId,
+                ),
+                ...(Array.isArray(action.payload)
+                    ? action.payload
+                    : [action.payload]),
+            ];
         });
 
         builder.addCase(removeFollowing.fulfilled, (state, action) => {
             state.totalCount && (state.totalCount -= 1);
-            state.users = state.users.filter(
-                (following) => following.userId !== action.payload,
-            );
+            state.users = [
+                ...state.users.filter(
+                    (following) =>
+                        following.userId !== action.meta.arg.followingId,
+                ),
+                ...(Array.isArray(action.payload)
+                    ? action.payload
+                    : [action.payload]),
+            ];
+        });
+
+        builder.addCase(loadMore.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(loadMore.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.users = [...state.users, ...action.payload.users];
+            state.totalCount = action.payload.query.totalCount;
+        });
+        builder.addCase(loadMore.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
         });
     },
 });
