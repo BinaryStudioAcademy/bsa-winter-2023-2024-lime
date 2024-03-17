@@ -2,6 +2,7 @@ import {
     CalendarDaysIcon as ScheduleIcon,
     PlusIcon,
 } from '@heroicons/react/16/solid';
+import { type ChartData } from 'chart.js';
 import { format } from 'date-fns';
 
 import {
@@ -9,12 +10,16 @@ import {
     ButtonVariant,
     CreateScheduleForm,
     DateCalendar,
+    DoughnutChart,
     Loader,
     Modal,
     ScheduleCard,
 } from '~/bundles/common/components/components.js';
 import { ComponentSize, DataStatus } from '~/bundles/common/enums/enums.js';
-import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
+import {
+    capitalizeFirstLetter,
+    convertMetersToKilometers,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppForm,
@@ -29,11 +34,18 @@ import { FrequencyType } from '~/bundles/goals/enums/enums.js';
 import { actions as goalActions } from '~/bundles/goals/store/goals.js';
 import { actions as scheduleActions } from '~/bundles/schedules/store/schedules.js';
 
-import { DEFAULT_CALENDAR_VALUE } from '../constants/constants.js';
+import {
+    DEFAULT_CALENDAR_VALUE,
+    DOUGHNUT_DATASET,
+    DOUGHNUT_OPTIONS,
+} from '../constants/constants.js';
 import { convertDateToIso, isDateInRange } from '../helpers/helpers.js';
 import { type ScheduleRequestDto } from '../types/types.js';
 
 const ZERO_VALUE = 0;
+const PLURAL = 's';
+const DAY_PREPOSITION = 'a';
+const WEEK_PREPOSITION = 'per';
 
 const Schedule: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -71,10 +83,6 @@ const Schedule: React.FC = () => {
         [dispatch],
     );
 
-    const PLURAL = 's';
-    const DAY_PREPOSITION = 'a';
-    const WEEK_PREPOSITION = 'per';
-
     const goalsList = useMemo(() => {
         return goals.map(({ activityType, id, frequency, frequencyType }) => ({
             value: id,
@@ -107,28 +115,56 @@ const Schedule: React.FC = () => {
         });
     }, [watchedDate, schedules]);
 
+    const randomGoal = useMemo(() => {
+        const schedulesWithGoal = filteredSchedules.filter(
+            (schedule) => schedule.goalId,
+        );
+        const randomIndex = Math.floor(
+            Math.random() * schedulesWithGoal.length,
+        );
+        const schedule = schedulesWithGoal[randomIndex];
+        return goals.find((goal) => goal.id === schedule?.goalId);
+    }, [filteredSchedules]);
+
+    const doughnutData = useMemo((): ChartData<'doughnut'> | null => {
+        if (!randomGoal) {
+            return null;
+        }
+        const TOTAL_PERCENTAGE = 100;
+        return {
+            datasets: [
+                {
+                    data: [
+                        TOTAL_PERCENTAGE - randomGoal.progress,
+                        randomGoal.progress,
+                    ],
+                    ...DOUGHNUT_DATASET,
+                },
+            ],
+        };
+    }, [randomGoal]);
+
     const handleModalStatus = useCallback(() => {
         setIsModalOpen((previousState) => !previousState);
     }, []);
 
     useEffect(() => {
-        if (isModalOpen && goalsDataStatus !== DataStatus.FULFILLED) {
-            void dispatch(goalActions.getGoals());
-        }
-    }, [isModalOpen]);
-
-    useEffect(() => {
         if (scheduleDataStatus !== DataStatus.FULFILLED) {
             void dispatch(scheduleActions.getSchedules());
         }
+        if (goalsDataStatus !== DataStatus.FULFILLED) {
+            void dispatch(goalActions.getGoals());
+        }
     }, [dispatch]);
 
-    const isSchedulesLoading = scheduleDataStatus === DataStatus.PENDING;
+    const isLoading = [scheduleDataStatus, goalsDataStatus].includes(
+        DataStatus.PENDING,
+    );
 
     return (
         <>
             <section className="relative flex h-full">
-                {isSchedulesLoading ? (
+                {isLoading ? (
                     <Loader isOverflow />
                 ) : (
                     <>
@@ -148,8 +184,8 @@ const Schedule: React.FC = () => {
                         <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
                         <div className="w-full px-[2rem]">
                             {filteredSchedules.length > 0 ? (
-                                <div className="mb-3">
-                                    <ul>
+                                <div className="mb-3 flex justify-between gap-[1.2rem]">
+                                    <ul className="flex w-full flex-col gap-[0.7rem]">
                                         {filteredSchedules.map(
                                             ({ activityType, id, startAt }) => {
                                                 const date = new Date(startAt);
@@ -178,7 +214,62 @@ const Schedule: React.FC = () => {
                                                 );
                                             },
                                         )}
+                                        <div className="bg-primary w-full">
+                                            <Button
+                                                type="button"
+                                                label="Set new shcedule"
+                                                variant={
+                                                    ButtonVariant.SECONDARY
+                                                }
+                                                size={ComponentSize.LARGE}
+                                                leftIcon={
+                                                    <PlusIcon className="w-6" />
+                                                }
+                                                className="h-[6.75rem] sm:text-sm md:text-xl"
+                                                onClick={handleModalStatus}
+                                            />
+                                        </div>
                                     </ul>
+                                    {randomGoal ? (
+                                        <div className="bg-scheduleWidget bg-primary text-card flex h-full max-h-[20rem] w-full max-w-[23.75rem] flex-col items-center gap-[1.2rem] rounded-lg p-7 font-bold">
+                                            <div>
+                                                {capitalizeFirstLetter(
+                                                    randomGoal.activityType,
+                                                )}
+                                            </div>
+                                            <div>
+                                                <span>
+                                                    {randomGoal.frequency} time
+                                                    {randomGoal.frequency > 1 &&
+                                                        PLURAL}{' '}
+                                                </span>
+                                                :
+                                                <span>
+                                                    {randomGoal.distance
+                                                        ? `${convertMetersToKilometers(randomGoal.distance)} km`
+                                                        : `${randomGoal.duration} min`}
+                                                </span>
+                                                /
+                                                <span>
+                                                    {randomGoal.frequencyType}
+                                                </span>
+                                            </div>
+                                            {doughnutData && (
+                                                <div className="relative">
+                                                    <DoughnutChart
+                                                        className="h-[2.7rem] w-[11rem]"
+                                                        data={doughnutData}
+                                                        options={
+                                                            DOUGHNUT_OPTIONS
+                                                        }
+                                                    />
+                                                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                                                        {randomGoal.progress} %
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : null}
                                 </div>
                             ) : (
                                 <div className="font-base text-primary mb-[1.75rem] flex items-center text-xl">
@@ -189,17 +280,19 @@ const Schedule: React.FC = () => {
                                     <ScheduleIcon className="h-6 w-6" />
                                 </div>
                             )}
-                            <div className="md:w-full lg:w-[48.8%]">
-                                <Button
-                                    type="button"
-                                    label="Set the new shcedule"
-                                    variant={ButtonVariant.SECONDARY}
-                                    size={ComponentSize.LARGE}
-                                    leftIcon={<PlusIcon className="w-6" />}
-                                    className="h-[6.75rem] sm:text-sm md:text-xl"
-                                    onClick={handleModalStatus}
-                                />
-                            </div>
+                            {filteredSchedules.length === 0 ? (
+                                <div className="bg-primary md:w-full lg:w-[48.8%]">
+                                    <Button
+                                        type="button"
+                                        label="Set the new shcedule"
+                                        variant={ButtonVariant.SECONDARY}
+                                        size={ComponentSize.LARGE}
+                                        leftIcon={<PlusIcon className="w-6" />}
+                                        className="h-[6.75rem] sm:text-sm md:text-xl"
+                                        onClick={handleModalStatus}
+                                    />
+                                </div>
+                            ) : null}
                         </div>
                     </>
                 )}

@@ -75,6 +75,11 @@
         rgb(224 254 16) 36.42%,
         rgb(224 254 16 / 0%) 125.23%
     );
+    --gradient-schedule-widget: linear-gradient(
+        234.96deg,
+        #e0fe10 -19.3%,
+        rgba(224 254 16 / 0%) 100%
+    );
 
     /* STROKE */
     --stroke-progress-base-bg: rgb(28 34 39); /* White */

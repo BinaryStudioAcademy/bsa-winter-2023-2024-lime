@@ -4,8 +4,6 @@ import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
-import styles from './styles.module.css';
-
 type Properties = {
     weekDay: string;
     activityType: ValueOf<typeof ActivityType>;
@@ -23,7 +21,7 @@ const ScheduleCard: React.FC<Properties> = ({
     >;
 
     return (
-        <li className={`${styles['schedule__item']} ${className ?? ''}`}>
+        <li className={`${className ?? ''}`}>
             <div className="schedule-card bg-primary w-full rounded-lg p-4">
                 <div className="text-md text-card mb-4 font-semibold leading-3">
                     {weekDay}
