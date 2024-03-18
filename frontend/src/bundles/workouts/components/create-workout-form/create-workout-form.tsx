@@ -79,7 +79,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
             className="text-primary w-full px-1 text-sm"
             onSubmit={handleFormSubmit}
         >
-            <div className="grid gap-6 pb-10 md:grid-cols-6 md:grid-rows-4">
+            <div className="grid grid-cols-1 gap-6 pb-10 md:grid-cols-6 md:grid-rows-4">
                 <div className="md:col-span-6">
                     <Select
                         label="Type of activity"
