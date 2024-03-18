@@ -30,6 +30,9 @@ class ChatModel extends AbstractModel {
             messages: {
                 relation: Model.HasManyRelation,
                 modelClass: MessageModel,
+                filter: (builder: QueryBuilder<MessageModel>): void => {
+                    void builder.orderBy(MessageAttributes.CREATED_AT, 'desc');
+                },
                 join: {
                     from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
                     to: `${DatabaseTableName.MESSAGES}.${MessageAttributes.CHAT_ID}`,
