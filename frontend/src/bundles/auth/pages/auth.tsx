@@ -2,8 +2,8 @@ import authLogo from '~/assets/img/auth-logo.svg';
 import { IdentityProvider } from '~/bundles/auth/enums/enums.js';
 import {
     ForgotPasswordForm,
-    Loader,
     Modal,
+    Navigate,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
@@ -44,9 +44,7 @@ const Auth: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isPasswordForgot, setIsPasswordForgot] = useState(false);
 
-    const { dataStatus, user, isRefreshing } = useAppSelector(
-        ({ auth }) => auth,
-    );
+    const { dataStatus, user } = useAppSelector(({ auth }) => auth);
 
     const { dataStatus: resetPasswordStatus } = useAppSelector(
         ({ passwordReset }) => passwordReset,
@@ -109,12 +107,6 @@ const Auth: React.FC = () => {
     }, [isPasswordForgot]);
 
     useEffect(() => {
-        if (user) {
-            navigate(AppRoute.OVERVIEW);
-        }
-    }, [navigate, user]);
-
-    useEffect(() => {
         if (resetPasswordStatus === DataStatus.FULFILLED) {
             setIsPasswordForgot(true);
         }
@@ -154,8 +146,8 @@ const Auth: React.FC = () => {
             'hidden flex-1 items-center justify-center text-xl text-primary lg:flex',
     };
 
-    if (isRefreshing || user) {
-        return <Loader isOverflow />;
+    if (user) {
+        return <Navigate to={AppRoute.OVERVIEW} />;
     }
 
     return (

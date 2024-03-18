@@ -92,10 +92,13 @@ export default {
             'md': '768px',
             'lg': '1024px',
             'xl': '1280px',
+            '2xl': '1940px',
         },
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+
                 'fade-in': 'fade-in 500ms ease-in',
             },
             keyframes: {
@@ -108,6 +111,11 @@ export default {
                         transform: 'scale(1)',
                         opacity: '1',
                     },
+                },
+                pulse: {
+                    '0%': { transform: 'scale(1)', opacity: 1 },
+                    '50%': { transform: 'scale(1.05)', opacity: 0.5 },
+                    '100%': { transform: 'scale(1)', opacity: 1 },
                 },
             },
             fontFamily: {
@@ -176,6 +184,7 @@ export default {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
                 tertiary: 'var(--background-tertiary)',
+                overlay: 'var(--modal-overlay)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
