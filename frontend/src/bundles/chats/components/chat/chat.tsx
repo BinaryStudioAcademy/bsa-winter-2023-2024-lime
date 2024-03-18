@@ -1,12 +1,12 @@
 import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
+import { type ChatFullResponseDto, type UserAuthResponseDto } from 'shared';
 
 import { ChatMessage } from '~/bundles/chats/components/chat-message/chat-message.js';
 import { ChatMessageForm } from '~/bundles/chats/components/chat-message-form/chat-message-form.js';
-import { messages } from '~/bundles/chats/constants/constants.js';
-import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
+    Loader,
     UserInfoCard,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -14,25 +14,30 @@ import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
 
 type Properties = {
+    user: UserAuthResponseDto;
     currentChat: ChatFullResponseDto | null;
+    isLoading: boolean;
 };
 
-const Chat = ({ currentChat }: Properties): JSX.Element => {
-    const [isOpen, setIsOpen] = useState(false);
-
+const Chat = ({ user, currentChat, isLoading }: Properties): JSX.Element => {
     const handleSubmit = useCallback((): void => {}, []);
 
+    const [isOpen, setIsOpen] = useState(false);
     const toggleSidebarProfile = useCallback((): void => {
         setIsOpen(!isOpen);
     }, [setIsOpen, isOpen]);
 
-    if (!currentChat) {
-        return <div>No Chat</div>;
+    if (isLoading) {
+        return (
+            <div className="relative h-full">
+                <Loader isOverflow />
+            </div>
+        );
     }
 
     return (
-        <div className="relative flex h-full overflow-hidden">
-            <div className="flex max-h-full flex-col justify-between overflow-hidden">
+        <div className="relative flex h-full  overflow-hidden">
+            <div className="flex max-h-full w-full flex-col justify-between overflow-hidden">
                 <div className="flex h-20 w-full items-center p-4">
                     <div
                         className="flex cursor-pointer items-center gap-2"
@@ -54,13 +59,13 @@ const Chat = ({ currentChat }: Properties): JSX.Element => {
                     </div>
                 </div>
                 <ul className="flex h-full flex-1 flex-col-reverse gap-4 overflow-y-auto px-4 pr-2">
-                    {messages.map(
-                        ({ message, isCurrentUserMessage }, index) => (
+                    {currentChat?.messages.map(
+                        ({ id, text, senderId, createdAt }) => (
                             <ChatMessage
-                                key={index}
-                                isCurrentUserMessage={isCurrentUserMessage}
-                                sendDate={new Date()} // We'll use our date.
-                                message={message}
+                                key={id}
+                                isCurrentUserMessage={senderId === user.id}
+                                sendDate={createdAt}
+                                message={text}
                             />
                         ),
                     )}
@@ -69,7 +74,7 @@ const Chat = ({ currentChat }: Properties): JSX.Element => {
                     <ChatMessageForm onSubmit={handleSubmit} />
                 </div>
             </div>
-            {!currentChat.isAssistant && (
+            {currentChat && !currentChat.isAssistant && (
                 <div
                     className={getValidClassNames(
                         isOpen ? 'translate-x-0' : 'translate-x-[100%]',

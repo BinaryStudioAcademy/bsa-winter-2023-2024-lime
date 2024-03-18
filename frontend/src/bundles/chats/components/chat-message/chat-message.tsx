@@ -3,7 +3,7 @@ import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {
     isCurrentUserMessage: boolean;
-    sendDate: Date;
+    sendDate: string;
     message: string;
 };
 
@@ -16,7 +16,7 @@ const ChatMessage = ({
         <li
             className={getValidClassNames(
                 isCurrentUserMessage ? 'self-end text-end' : 'self-start',
-                'w-full max-w-[85%]',
+                'w-fit max-w-[85%]',
             )}
         >
             <div className="flex flex-col">

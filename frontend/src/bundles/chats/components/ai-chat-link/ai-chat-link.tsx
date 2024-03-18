@@ -3,8 +3,13 @@ import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
 import { formatChatDate } from '../../helpers/helpers.js';
+import { type ChatPreviewResponseDto } from '../../types/types.js';
 
-const AiChatLink = (): JSX.Element => {
+type Properties = {
+    aiAssistantChat: ChatPreviewResponseDto | null;
+};
+
+const AiChatLink = ({ aiAssistantChat }: Properties): JSX.Element => {
     const isActive = true;
 
     return (
@@ -26,10 +31,15 @@ const AiChatLink = (): JSX.Element => {
                     >
                         Personal Assistant
                     </p>
-                    <p className="text-secondary text-xs">Hello!</p>
+                    <p className="text-secondary text-xs">
+                        {aiAssistantChat && aiAssistantChat.lastMessage.text}
+                    </p>
                 </div>
                 <p className="text-secondary text-xs">
-                    {formatChatDate(new Date())}
+                    {formatChatDate(
+                        aiAssistantChat &&
+                            aiAssistantChat.lastMessage.createdAt,
+                    )}
                 </p>
             </div>
         </Link>
