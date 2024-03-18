@@ -153,7 +153,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 onSubmit(payload);
             })(event_);
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, getValues],
     );
 
     const closeModal = useCallback((): void => {
@@ -164,7 +164,7 @@ const ProfileSettings: React.FC<Properties> = ({
         (event: React.ChangeEvent<HTMLInputElement>): void => {
             setValue('isPublic', event.target.checked);
         },
-        [setValue, getValues],
+        [setValue],
     );
 
     const handleReset = useCallback((): void => {
