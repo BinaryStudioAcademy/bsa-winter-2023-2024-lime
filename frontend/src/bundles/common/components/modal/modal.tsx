@@ -1,5 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/16/solid';
 
+import { useMemo } from '~/bundles/common/hooks/hooks.js';
 import { type ReactNode, type ValueOf } from '~/bundles/common/types/types.js';
 
 import { ComponentSize } from '../../enums/enums.js';
@@ -25,10 +26,20 @@ const Modal: React.FC<Properties> = ({
     children,
     size = ComponentSize.MEDIUM,
 }) => {
+    const onBackdropClick = useMemo(
+        () => (event: React.MouseEvent<HTMLDivElement>) => {
+            if (event.target === event.currentTarget) {
+                onClose();
+            }
+        },
+        [onClose],
+    );
+
     const classes = {
-        modalClass: `relative transition ease-in-out duration-300 modal z-[2] flex items-center justify-center ${isOpen ? 'visible opacity-100' : 'invisible opacity-0'}`,
-        overlayClass:
-            'overlay bg-primary fixed inset-0 z-50 cursor-pointer opacity-90',
+        overlayClass: getValidClassNames(
+            'overlay bg-overlay fixed inset-0 z-50',
+            isOpen ? 'opacity-1' : 'opacity-0 pointer-events-none',
+        ),
         contentClass:
             'mx-auto max-h-[95%] bg-secondary rounded-34 fixed left-1/2 top-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2  flex-col items-start justify-center px-8 md:px-32 pb-24 pt-16 shadow-md transition-all',
         closeIconClass:
@@ -43,12 +54,11 @@ const Modal: React.FC<Properties> = ({
     };
 
     return (
-        <div className={getValidClassNames(classes.modalClass)}>
-            <div
-                className={getValidClassNames(classes.overlayClass)}
-                onClick={onClose}
-                role="presentation"
-            />
+        <div
+            className={getValidClassNames(classes.overlayClass)}
+            onClick={onBackdropClick}
+            role="presentation"
+        >
             <div
                 className={getValidClassNames(
                     classes.contentClass,
