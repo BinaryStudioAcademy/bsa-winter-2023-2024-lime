@@ -3,7 +3,7 @@ import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 import { ChatMessage } from '~/bundles/chats/components/chat-message/chat-message.js';
 import { ChatMessageForm } from '~/bundles/chats/components/chat-message-form/chat-message-form.js';
 import { messages } from '~/bundles/chats/constants/constants.js';
-import { type ChatResponseDto } from '~/bundles/chats/types/types.js';
+import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
@@ -14,7 +14,7 @@ import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
 
 type Properties = {
-    currentChat: ChatResponseDto | null;
+    currentChat: ChatFullResponseDto | null;
 };
 
 const Chat = ({ currentChat }: Properties): JSX.Element => {

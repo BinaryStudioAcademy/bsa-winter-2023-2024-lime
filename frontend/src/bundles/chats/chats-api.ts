@@ -1,6 +1,6 @@
 import {
+    type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,
-    type ChatResponseDto,
 } from '~/bundles/chats/types/types.js';
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { type Http } from '~/framework/http/http.js';
@@ -28,7 +28,7 @@ class ChatsApi extends BaseHttpApi {
         return await response.json<ChatGetAllItemsResponseDto>();
     }
 
-    public async getChat(chatId: string): Promise<ChatResponseDto> {
+    public async getChat(chatId: string): Promise<ChatFullResponseDto> {
         const response = await this.load(
             this.getFullEndpoint('/:id', { chatId }),
             {
@@ -37,7 +37,7 @@ class ChatsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<ChatResponseDto>();
+        return await response.json<ChatFullResponseDto>();
     }
 }
 
