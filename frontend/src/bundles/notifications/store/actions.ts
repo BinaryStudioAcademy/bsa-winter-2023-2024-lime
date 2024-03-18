@@ -9,7 +9,9 @@ import {
 import { name } from './slice.js';
 
 const fetchNotifications = createAsyncThunk<
-    NotificationResponseDto[],
+    {
+        items: NotificationResponseDto[];
+    },
     undefined,
     AsyncThunkConfig
 >(`${name}/fetchNotifications`, async (_, { extra }) => {

@@ -20,7 +20,9 @@ class NotificationsApi extends BaseHttpApi {
         super({ path: ApiPath.NOTIFICATIONS, baseUrl, http, storage });
     }
 
-    public async fetchNotifications(): Promise<Array<NotificationResponseDto>> {
+    public async fetchNotifications(): Promise<{        
+        items: NotificationResponseDto[];
+    }> {
         const response = await this.load(
             this.getFullEndpoint(NotificationsApiPath.ROOT, {}),
             {
@@ -70,7 +72,6 @@ class NotificationsApi extends BaseHttpApi {
             }),
             {
                 method: 'DELETE',
-                contentType: ContentType.JSON,
                 hasAuth: true,
             },
         );

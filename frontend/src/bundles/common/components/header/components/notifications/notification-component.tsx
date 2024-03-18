@@ -19,7 +19,7 @@ import { NotificationBell, NotificationList } from './components/components.js';
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const {
-        notifications: { items, count },
+        notifications: { items },
         dataStatus,
     } = useAppSelector(({ notifications }) => notifications);
 
@@ -56,10 +56,12 @@ const NotificationComponent = (): JSX.Element => {
         onClick: () => setShowList(false),
     });
 
+    const countUnread = items.filter((item) => !item.isRead).length;
+
     return (
         <div className="relative" ref={notificationListReference}>
             <NotificationBell
-                count={count || 0}
+                count={countUnread}
                 onClick={handleIconClick}
                 showList={showList}
             />

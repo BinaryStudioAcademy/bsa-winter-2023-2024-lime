@@ -7,7 +7,6 @@ import { type NotificationResponseDto } from './types.js';
 type NotificationStateTypeSlice = {
     notifications: {
         items: NotificationResponseDto[];
-        count: number;
     };
     dataStatus: ValueOf<typeof DataStatus>;
     isRefreshing: boolean;

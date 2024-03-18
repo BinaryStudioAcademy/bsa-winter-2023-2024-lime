@@ -43,14 +43,16 @@ const NotificationActions = ({
     );
 
     return (
-        <button
-            onClick={handleReadClick}
-            className={getValidClassNames(
-                'border-buttonTertiary bg-primary relative w-full rounded border  p-4 transition-all',
-                notification.isRead ? 'bg-secondary' : '',
-            )}
-        >
-            {children}
+        <div className="relative">
+            <button
+                onClick={handleReadClick}
+                className={getValidClassNames(
+                    'border-buttonTertiary bg-primary  w-full rounded border  p-4 transition-all',
+                    notification.isRead ? 'bg-secondary' : '',
+                )}
+            >
+                {children}
+            </button>
             {notification.isRead && (
                 <button
                     data-index={notification.id}
@@ -61,7 +63,7 @@ const NotificationActions = ({
                     <XMarkIcon />
                 </button>
             )}
-        </button>
+        </div>
     );
 };
 
