@@ -81,7 +81,9 @@ class ScheduleRepository implements Repository {
         });
     }
 
-    public async delete(query: Record<string, unknown>): Promise<number | boolean> {
+    public async delete(
+        query: Record<string, unknown>,
+    ): Promise<number | boolean> {
         const schedule = await this.scheduleModel
             .query()
             .findOne(query)
@@ -91,11 +93,7 @@ class ScheduleRepository implements Repository {
             return false;
         }
 
-        await this.scheduleModel
-            .query()
-            .delete()
-            .where(query)
-            .execute();
+        await this.scheduleModel.query().delete().where(query).execute();
 
         return schedule.id;
     }

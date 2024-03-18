@@ -5,7 +5,7 @@ type CreateScheduleRequest = {
     activity: ValueOf<typeof ActivityType>;
     goalLabel: number | null;
     dateOfStart: string;
-    id?: number
+    id?: number;
 };
 
 export { type CreateScheduleRequest };

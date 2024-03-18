@@ -59,6 +59,7 @@ const DatePicker = <T extends FieldValues>({
                 onChange={handleDaySelect}
                 offsetY={label ? -10 : -30}
                 format={format}
+                value={field.value}
                 plugins={plugins ?? []}
                 render={
                     <Input

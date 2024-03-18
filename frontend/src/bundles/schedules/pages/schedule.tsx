@@ -99,7 +99,11 @@ const Schedule: React.FC = () => {
             const start = range[START_TIME] ?? String(ZERO_VALUE);
             const end = range[END_TIME];
 
-            return isDateInRange(schedule.startAt, start, end);
+            return isDateInRange(
+                schedule.startAt as unknown as string,
+                start,
+                end,
+            );
         });
     }, [watchedDate, schedules]);
 
@@ -151,7 +155,7 @@ const Schedule: React.FC = () => {
                     activity: schedule.activityType,
                     goalLabel: schedule.goalId ?? null,
                     dateOfStart: format(date, 'dd/MM/yyyy HH:mm'),
-                    id
+                    id,
                 });
                 handleModalStatus();
                 setIsUpdateMode(true);
@@ -176,7 +180,7 @@ const Schedule: React.FC = () => {
 
             const preparedData: ScheduleRequestDto = {
                 activityType: activity,
-                goalId: goalLabel as number || null,
+                goalId: (goalLabel as number) || null,
                 startAt: convertedDate,
             };
 
@@ -231,7 +235,7 @@ const Schedule: React.FC = () => {
                         <div className="w-full px-[2rem]">
                             {filteredSchedules.length > 0 ? (
                                 <div className="mb-3 flex gap-[1.2rem]">
-                                    <ul className="flex w-full flex-col gap-[0.7rem] max-w-[25rem]">
+                                    <ul className="flex w-full max-w-[25rem] flex-col gap-[0.7rem]">
                                         {filteredSchedules.map(
                                             ({ activityType, id, startAt }) => {
                                                 const date = new Date(startAt);
@@ -353,7 +357,9 @@ const Schedule: React.FC = () => {
             </section>
             <Modal
                 isOpen={isModalOpen}
-                title={isUpdateMode ? 'Update schedule' : 'Set the new schedule'}
+                title={
+                    isUpdateMode ? 'Update schedule' : 'Set the new schedule'
+                }
                 onClose={handleModalStatus}
             >
                 <CreateScheduleForm

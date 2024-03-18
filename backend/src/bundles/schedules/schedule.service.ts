@@ -66,7 +66,9 @@ class ScheduleService implements Service {
         return schedule.toObject();
     }
 
-    public async delete(query: Record<string, unknown>): Promise<number | boolean> {
+    public async delete(
+        query: Record<string, unknown>,
+    ): Promise<number | boolean> {
         const schedule = await this.scheduleRepository.find(query);
 
         if (!schedule) {
