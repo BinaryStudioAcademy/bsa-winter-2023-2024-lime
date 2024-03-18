@@ -2,10 +2,11 @@ import { type AchievementService } from '~/bundles/achievements/achievement.serv
 import { type UserAchievementService } from '~/bundles/achievements/user-achievement.service.js';
 import { type GoalService } from '~/bundles/goals/goal.service.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
+import { type NotificationService } from '~/bundles/notifications/notification.service.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import { workoutService } from '~/bundles/workouts/workouts.js';
 import { COMPLETED_GOAL_VALUE } from '~/common/constants/constants.js';
-import { ActivityType } from '~/common/enums/enums.js';
+import { ActivityType, NotificationMessage } from '~/common/enums/enums.js';
 import {
     calculateGoalProgress,
     checkCyclingAchievements,
@@ -19,15 +20,23 @@ class CalculationProgressService {
     private achievementService: AchievementService;
     private goalService: GoalService;
     private userAchievementsService: UserAchievementService;
+    private notificationService: NotificationService;
 
-    public constructor(
-        goalService: GoalService,
-        achievementService: AchievementService,
-        userAchievementsService: UserAchievementService,
-    ) {
+    public constructor({
+        goalService,
+        achievementService,
+        userAchievementService,
+        notificationService,
+    }: {
+        goalService: GoalService;
+        achievementService: AchievementService;
+        userAchievementService: UserAchievementService;
+        notificationService: NotificationService;
+    }) {
         this.achievementService = achievementService;
         this.goalService = goalService;
-        this.userAchievementsService = userAchievementsService;
+        this.userAchievementsService = userAchievementService;
+        this.notificationService = notificationService;
     }
 
     public async calculateProgress(userId: number): Promise<void> {
@@ -45,12 +54,14 @@ class CalculationProgressService {
         goals: GoalResponseDto[],
         workouts: WorkoutResponseDto[],
     ): Promise<void> {
+        let hasCompletedGoal = false;
+
         for (const goal of goals) {
             const filteredWorkouts = workouts.filter(
                 (workout) => workout.activityType === goal.activityType,
             );
 
-            await this.goalService.update(
+            const updatedGoal = await this.goalService.update(
                 { id: goal.id },
                 {
                     ...goal,
@@ -63,6 +74,24 @@ class CalculationProgressService {
                             : null,
                 },
             );
+
+            if (
+                calculateGoalProgress(goal, filteredWorkouts) ===
+                    COMPLETED_GOAL_VALUE &&
+                updatedGoal
+            ) {
+                hasCompletedGoal = true;
+            }
+        }
+
+        if (hasCompletedGoal) {
+            await this.notificationService.create({
+                userId,
+                title: 'Goal Completed',
+                message: NotificationMessage.GOAL_COMPLETED,
+                isRead: false,
+                type: 'default',
+            });
         }
     }
 
@@ -153,10 +182,24 @@ class CalculationProgressService {
         }
 
         for (const achievement of userAchievements) {
-            await this.userAchievementsService.create({
+            const newAchievemenet = await this.userAchievementsService.create({
                 userId,
                 achievementId: achievement,
             });
+            if (newAchievemenet) {
+                const achievementDetails =
+                    await this.achievementService.findById(achievement);
+
+                if (achievementDetails) {
+                    await this.notificationService.create({
+                        userId,
+                        title: 'New Achievement',
+                        message: `${NotificationMessage.NEW_ACHIEVEMENT} ${achievementDetails.toObject().name}.`,
+                        isRead: false,
+                        type: 'default',
+                    });
+                }
+            }
         }
     }
 }
