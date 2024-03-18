@@ -17,6 +17,17 @@ class ScheduleService implements Service {
         this.scheduleRepository = scheduleRepository;
     }
 
+    public async deleteOutdatedSchedules(userId: number): Promise<void> {
+        const { items: schedules } = await this.findAll({ userId });
+        const now = new Date().toISOString();
+
+        for (const { startAt, id } of schedules) {
+            if (new Date(startAt).toISOString() < now) {
+                await this.scheduleRepository.delete({ id });
+            }
+        }
+    }
+
     public async find(
         query: Record<string, unknown>,
     ): Promise<ScheduleResponseDto | null> {
@@ -38,6 +49,17 @@ class ScheduleService implements Service {
     public async create(
         payload: ScheduleRequestDto,
     ): Promise<ScheduleResponseDto> {
+        const scheduleWithSameDate = await this.scheduleRepository.find({
+            startAt: payload.startAt,
+        });
+
+        if (scheduleWithSameDate) {
+            throw new HttpError({
+                status: HttpCode.BAD_REQUEST,
+                message: ScheduleValidationMessage.SCHEDULE_WITH_SAME_DATE,
+            });
+        }
+
         const schedule = await this.scheduleRepository.create(
             ScheduleEntity.initializeNew({ ...payload }),
         );
@@ -49,6 +71,17 @@ class ScheduleService implements Service {
         query: Record<string, unknown>,
         payload: ScheduleRequestDto,
     ): Promise<ScheduleResponseDto> {
+        const scheduleWithSameDate = await this.scheduleRepository.find({
+            startAt: payload.startAt,
+        });
+
+        if (scheduleWithSameDate) {
+            throw new HttpError({
+                status: HttpCode.BAD_REQUEST,
+                message: ScheduleValidationMessage.SCHEDULE_WITH_SAME_DATE,
+            });
+        }
+
         const schedule = await this.scheduleRepository.update(
             query,
             ScheduleEntity.initializeNew({

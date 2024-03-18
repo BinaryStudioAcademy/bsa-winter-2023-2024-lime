@@ -213,13 +213,13 @@ const Schedule: React.FC = () => {
 
     return (
         <>
-            <section className="relative flex h-full">
+            <section className="relative flex h-full w-full gap-[1.2rem]">
                 {isLoading ? (
                     <Loader isOverflow />
                 ) : (
                     <>
-                        <div className="my-[-2rem] ml-[-2rem]">
-                            <div className="bg-secondary flex h-full w-[20rem] flex-col gap-[1.75rem] overflow-auto p-[2rem]">
+                        <div>
+                            <div className="bg-secondary flex h-full flex-col gap-[1.75rem]">
                                 <h1 className="text-primary text-xl font-bold">
                                     My Schedule
                                 </h1>
@@ -232,7 +232,7 @@ const Schedule: React.FC = () => {
                             </div>
                         </div>
                         <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
-                        <div className="w-full px-[2rem]">
+                        <div className="w-full">
                             {filteredSchedules.length > 0 ? (
                                 <div className="mb-3 flex gap-[1.2rem]">
                                     <ul className="flex w-full max-w-[25rem] flex-col gap-[0.7rem]">
