@@ -13,6 +13,7 @@ import {
 const State: NotificationStateTypeSlice = {
     notifications: {
         items: [],
+        total: 0,
     },
     dataStatus: DataStatus.IDLE,
     isRefreshing: false,
@@ -27,8 +28,7 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-            const { items } = action.payload;
-            state.notifications.items = items;
+            state.notifications = action.payload;
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(fetchNotifications.rejected, (state) => {

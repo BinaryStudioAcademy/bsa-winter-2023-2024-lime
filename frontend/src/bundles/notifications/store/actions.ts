@@ -5,13 +5,12 @@ import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type NotificationRequestDto,
     type NotificationResponseDto,
+    type Paged,
 } from '../types/types.js';
 import { name } from './slice.js';
 
 const fetchNotifications = createAsyncThunk<
-    {
-        items: NotificationResponseDto[];
-    },
+    Paged<NotificationResponseDto>,
     undefined,
     AsyncThunkConfig
 >(`${name}/fetchNotifications`, async (_, { extra }) => {

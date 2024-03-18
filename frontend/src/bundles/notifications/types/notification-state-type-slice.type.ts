@@ -2,12 +2,10 @@ import { type ValueOf } from 'shared';
 
 import { type DataStatus } from '~/bundles/common/enums/enums.js';
 
-import { type NotificationResponseDto } from './types.js';
+import { type NotificationResponseDto, type Paged } from './types.js';
 
 type NotificationStateTypeSlice = {
-    notifications: {
-        items: NotificationResponseDto[];
-    };
+    notifications: Paged<NotificationResponseDto>;
     dataStatus: ValueOf<typeof DataStatus>;
     isRefreshing: boolean;
 };

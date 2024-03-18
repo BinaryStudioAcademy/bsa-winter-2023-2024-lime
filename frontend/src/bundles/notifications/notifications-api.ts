@@ -7,6 +7,7 @@ import { NotificationsApiPath } from './enums/enums.js';
 import {
     type NotificationRequestDto,
     type NotificationResponseDto,
+    type Paged,
 } from './types/types.js';
 
 type Constructor = {
@@ -20,9 +21,7 @@ class NotificationsApi extends BaseHttpApi {
         super({ path: ApiPath.NOTIFICATIONS, baseUrl, http, storage });
     }
 
-    public async fetchNotifications(): Promise<{
-        items: NotificationResponseDto[];
-    }> {
+    public async fetchNotifications(): Promise<Paged<NotificationResponseDto>> {
         const response = await this.load(
             this.getFullEndpoint(NotificationsApiPath.ROOT, {}),
             {
