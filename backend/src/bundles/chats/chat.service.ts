@@ -3,6 +3,7 @@ import { HttpError } from '~/common/http/http.js';
 import { type Service } from '~/common/types/types.js';
 
 import { ChatEntity } from './chat.entity.js';
+import { type ChatModel } from './chat.model.js';
 import { type ChatRepository } from './chat.repository.js';
 import { ErrorMessage } from './enums/enums.js';
 import { type ChatCreateDto, type ChatResponseDto } from './types/types.js';
@@ -26,11 +27,32 @@ class ChatService implements Service {
         userId,
     }: {
         userId: number;
-    }): Promise<{ items: ChatResponseDto[] }> {
-        const chats = await this.chatRepository.findAll({ userId });
+    }): Promise<{ items: ChatModel[] }> {
+        const chats = await this.chatRepository.findAll({ query: {}, userId });
 
         return {
-            items: chats.map((it) => it.toObject()),
+            items: chats,
+        };
+    }
+
+    public async findAllDivided({
+        userId,
+    }: {
+        userId: number;
+    }): Promise<unknown> {
+        const aiAssistantChat = await this.chatRepository.findByUser(
+            { isAssistant: true },
+            userId,
+        );
+
+        const userChats = await this.chatRepository.findAll({
+            query: { isAssistant: false },
+            userId,
+        });
+
+        return {
+            aiAssistantChat,
+            userChats,
         };
     }
 

@@ -1,4 +1,8 @@
-import { type QueryBuilder, type RelationMappings, Model } from 'objection';
+import {
+    type QueryBuilder,
+    type RelationMappings,
+    Model,
+} from 'objection';
 
 import {
     MessageAttributes,
@@ -38,6 +42,9 @@ class ChatModel extends AbstractModel {
             users: {
                 relation: Model.ManyToManyRelation,
                 modelClass: UserModel,
+                // filter: (builder: QueryBuilder<MessageModel>): void => {
+                //     void builder.select('*').withGraphFetched('userDetails');
+                // },
                 join: {
                     from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
                     through: {
@@ -51,7 +58,9 @@ class ChatModel extends AbstractModel {
                 relation: Model.HasOneRelation,
                 modelClass: MessageModel,
                 filter: (builder: QueryBuilder<MessageModel>): void => {
-                    void builder.orderBy(ChatAttributes.CREATED_AT, 'desc').limit(1);
+                    void builder
+                        .orderBy(ChatAttributes.CREATED_AT, 'desc')
+                        .limit(1);
                 },
                 join: {
                     from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,

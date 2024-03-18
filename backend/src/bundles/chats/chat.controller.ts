@@ -73,7 +73,7 @@ class ChatController extends BaseController {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.chatService.findAll({
+            payload: await this.chatService.findAllDivided({
                 userId: options.user.id,
             }),
         };

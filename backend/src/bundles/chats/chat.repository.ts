@@ -41,22 +41,23 @@ class ChatRepository implements Repository {
         return chat ? ChatEntity.initialize(chat) : null;
     }
 
-    public async findAll(
-        query: Record<string, unknown>,
-    ): Promise<ChatEntity[]> {
-        const chats = await this.chatModel
+    public async findAll({
+        query,
+        userId,
+    }: {
+        query: Record<string, unknown>;
+        userId: number;
+    }): Promise<ChatModel[]> {
+        return await this.chatModel
             .query()
+            .where(query)
             .whereExists(
                 this.chatModel
                     .relatedQuery(DatabaseTableName.USERS)
-                    .where(query),
+                    .where({ userId }),
             )
-            .withGraphFetched('lastMessage')
+            .withGraphFetched('[users(userDetails), lastMessage]')
             .execute();
-
-        return chats.map((chat) => {
-            return ChatEntity.initialize(chat);
-        });
     }
 
     public async create(payload: ChatEntity): Promise<ChatEntity> {
