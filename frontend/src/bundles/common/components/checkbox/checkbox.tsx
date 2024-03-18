@@ -66,7 +66,7 @@ const Checkbox = <T extends FieldValues>({
                 </div>
                 <label
                     className={getValidClassNames(
-                        field.value ? 'text-lm-grey-200' : 'text-lm-grey-500',
+                        field.value ? 'text-primary' : 'text-lm-grey-200',
                         classes.label,
                     )}
                     htmlFor="toggle-checkbox"
