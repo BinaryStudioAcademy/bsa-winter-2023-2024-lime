@@ -50,9 +50,10 @@ const { reducer, actions, name } = createSlice({
 
         builder.addCase(deleteSchedule.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.schedules = [...state.schedules].filter(
-                (schedule) => schedule.id !== action.payload,
-            );
+
+            state.schedules = state.schedules.filter(schedule => {
+                return schedule.id !== action.payload;
+            });
         });
 
         builder.addMatcher(

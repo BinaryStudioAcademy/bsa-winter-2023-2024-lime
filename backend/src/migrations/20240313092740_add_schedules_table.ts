@@ -35,7 +35,7 @@ async function up(knex: Knex): Promise<void> {
         table
             .integer(ColumnName.GOAL_ID)
             .unsigned()
-            .notNullable()
+            .nullable()
             .references(ColumnName.ID)
             .inTable(GOALS_TABLE_NAME)
             .onUpdate('CASCADE')

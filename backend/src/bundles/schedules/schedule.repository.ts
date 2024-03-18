@@ -81,8 +81,23 @@ class ScheduleRepository implements Repository {
         });
     }
 
-    public async delete(query: Record<string, unknown>): Promise<number> {
-        return await this.scheduleModel.query().where(query).del().execute();
+    public async delete(query: Record<string, unknown>): Promise<number | boolean> {
+        const schedule = await this.scheduleModel
+            .query()
+            .findOne(query)
+            .execute();
+
+        if (!schedule) {
+            return false;
+        }
+
+        await this.scheduleModel
+            .query()
+            .delete()
+            .where(query)
+            .execute();
+
+        return schedule.id;
     }
 }
 

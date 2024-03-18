@@ -151,6 +151,7 @@ const Schedule: React.FC = () => {
                     activity: schedule.activityType,
                     goalLabel: schedule.goalId ?? null,
                     dateOfStart: format(date, 'dd/MM/yyyy HH:mm'),
+                    id
                 });
                 handleModalStatus();
                 setIsUpdateMode(true);
@@ -163,11 +164,11 @@ const Schedule: React.FC = () => {
         (id: number) => {
             void dispatch(scheduleActions.deleteSchedule({ id: String(id) }));
         },
-        [dispatch],
+        [dispatch, handleModalStatus, schedules, isUpdateMode],
     );
 
     const addScheduleHandler = useCallback(
-        ({ activity, goalLabel, dateOfStart }: CreateScheduleRequest) => {
+        ({ activity, goalLabel, dateOfStart, id }: CreateScheduleRequest) => {
             const convertedDate = convertDateToIso(
                 dateOfStart,
                 'dd/MM/yyyy HH:mm',
@@ -175,21 +176,14 @@ const Schedule: React.FC = () => {
 
             const preparedData: ScheduleRequestDto = {
                 activityType: activity,
-                goalId: goalLabel as number,
+                goalId: goalLabel as number || null,
                 startAt: convertedDate,
             };
 
-            const schedule = schedules.find((item) => {
-                return (
-                    new Date(item.startAt).getTime() ===
-                    new Date(convertedDate).getTime()
-                );
-            });
-
-            isUpdateMode && schedule
+            isUpdateMode && id
                 ? void dispatch(
                       scheduleActions.updateSchedule({
-                          id: String(schedule.id),
+                          id: String(id),
                           payload: preparedData,
                       }),
                   )
@@ -236,8 +230,8 @@ const Schedule: React.FC = () => {
                         <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
                         <div className="w-full px-[2rem]">
                             {filteredSchedules.length > 0 ? (
-                                <div className="mb-3 flex justify-between gap-[1.2rem]">
-                                    <ul className="flex w-full flex-col gap-[0.7rem]">
+                                <div className="mb-3 flex gap-[1.2rem]">
+                                    <ul className="flex w-full flex-col gap-[0.7rem] max-w-[25rem]">
                                         {filteredSchedules.map(
                                             ({ activityType, id, startAt }) => {
                                                 const date = new Date(startAt);
@@ -359,7 +353,7 @@ const Schedule: React.FC = () => {
             </section>
             <Modal
                 isOpen={isModalOpen}
-                title="Set the new shcedule"
+                title={isUpdateMode ? 'Update schedule' : 'Set the new schedule'}
                 onClose={handleModalStatus}
             >
                 <CreateScheduleForm

@@ -40,7 +40,7 @@ const CreateScheduleForm: React.FC<Properties> = ({
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            void handleSubmit(onSubmit)(event_);
+            void handleSubmit((data) => onSubmit({ ...value, ...data }))(event_);
         },
         [handleSubmit, onSubmit, value],
     );

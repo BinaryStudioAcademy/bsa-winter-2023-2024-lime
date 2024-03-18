@@ -5,7 +5,7 @@ import { type ActivityType } from './enums/enums.js';
 class ScheduleEntity implements Entity {
     private 'id': number | null;
     private 'userId': number;
-    private 'goalId': number | undefined;
+    private 'goalId': number | null | undefined;
     private 'activityType': ValueOf<typeof ActivityType>;
     private 'startAt': Date;
 
@@ -18,7 +18,7 @@ class ScheduleEntity implements Entity {
     }: {
         id: number | null;
         userId: number;
-        goalId?: number;
+        goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
         startAt: Date;
     }) {
@@ -32,7 +32,7 @@ class ScheduleEntity implements Entity {
     public static initialize(payload: {
         id: number | null;
         userId: number;
-        goalId?: number;
+        goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
         startAt: Date;
     }): ScheduleEntity {
@@ -41,7 +41,7 @@ class ScheduleEntity implements Entity {
 
     public static initializeNew(payload: {
         userId: number;
-        goalId?: number;
+        goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
         startAt: Date;
     }): ScheduleEntity {
@@ -53,7 +53,7 @@ class ScheduleEntity implements Entity {
 
     public toObject(): {
         id: number;
-        goalId?: number;
+        goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
         startAt: Date;
     } {
@@ -67,7 +67,7 @@ class ScheduleEntity implements Entity {
 
     public toNewObject(): {
         userId: number;
-        goalId?: number;
+        goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
         startAt: Date;
     } {

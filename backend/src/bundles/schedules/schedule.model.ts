@@ -15,7 +15,7 @@ import { ScheduleAttributes } from './enums/enums.js';
 
 class ScheduleModel extends AbstractModel {
     public 'userId': number;
-    public 'goalId': number;
+    public 'goalId': number | null;
     public 'activityType': ValueOf<typeof ActivityType>;
     public 'startAt': Date;
 
