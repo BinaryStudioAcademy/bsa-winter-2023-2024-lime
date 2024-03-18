@@ -2,5 +2,5 @@ export { type NotificationStateTypeSlice } from './notification-state-type-slice
 export {
     type NotificationRequestDto,
     type NotificationResponseDto,
-    type Paged
+    type Paged,
 } from 'shared';
