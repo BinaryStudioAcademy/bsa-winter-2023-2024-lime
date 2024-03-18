@@ -8,6 +8,7 @@ import {
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from '~/bundles/users/users.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
@@ -65,7 +66,18 @@ const updateUser = createAsyncThunk<
     AsyncThunkConfig
 >(`${sliceName}/update-user`, async (updateUserPayload, { extra }) => {
     const { userApi } = extra;
+
     return await userApi.updateUser(updateUserPayload);
+});
+
+const uploadAvatar = createAsyncThunk<
+    UserUploadAvatarResponseDto,
+    File,
+    AsyncThunkConfig
+>(`${sliceName}/upload-avatar`, async (file, { extra }) => {
+    const { userApi } = extra;
+
+    return await userApi.uploadAvatar(file);
 });
 
 const authorizeIdentity = createAsyncThunk<
@@ -98,4 +110,5 @@ export {
     signInIdentity,
     signUp,
     updateUser,
+    uploadAvatar,
 };

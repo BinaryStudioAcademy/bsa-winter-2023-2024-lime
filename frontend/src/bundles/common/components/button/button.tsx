@@ -18,7 +18,7 @@ type ButtonSize = Exclude<
 
 type ButtonType = 'button' | 'submit';
 
-type ButtonProperties = {
+type Properties = {
     size: ButtonSize;
     variant: ValueOf<typeof ButtonVariant>;
     label: string;
@@ -28,7 +28,7 @@ type ButtonProperties = {
     isDisabled?: boolean;
     isActive?: boolean;
     className?: string;
-    onClick?: () => void;
+    onClick?: () => void | Promise<void>;
 };
 
 const baseClasses =
@@ -58,7 +58,7 @@ const buttonSizesToClasses: Record<ButtonSize, string> = {
     [ComponentSize.LARGE]: 'px-8 py-6 h-20 text-xl font-bold gap-3',
 };
 
-const Button: React.FC<ButtonProperties> = ({
+const Button: React.FC<Properties> = ({
     label,
     variant,
     size,
@@ -69,7 +69,7 @@ const Button: React.FC<ButtonProperties> = ({
     isDisabled = false,
     isActive = false,
     ...properties
-}: ButtonProperties): JSX.Element => {
+}): JSX.Element => {
     return (
         <button
             disabled={isDisabled}

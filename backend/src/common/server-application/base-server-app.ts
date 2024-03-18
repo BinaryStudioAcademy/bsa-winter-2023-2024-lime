@@ -68,7 +68,7 @@ class BaseServerApp implements ServerApp {
     }
 
     public addRoute(parameters: ServerAppRouteParameters): void {
-        const { path, method, handler, validation } = parameters;
+        const { path, method, handler, preHandler, validation } = parameters;
 
         this.app.route({
             url: path,
@@ -79,6 +79,7 @@ class BaseServerApp implements ServerApp {
                 querystring: validation?.query,
                 params: validation?.params,
             },
+            preHandler: preHandler ?? [],
         });
 
         this.logger.info(`Route: ${method as string} ${path} is registered`);

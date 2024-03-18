@@ -14,6 +14,8 @@ import {
     capitalizeFirstLetter,
     convertHeightToCentimeters,
     convertWeightToKilograms,
+    getUniqueValues,
+    getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
@@ -26,8 +28,10 @@ interface PersonalDetailsProperties {
     onFollowToggle: (id: number, isFollowed: boolean) => void;
     message: (id: number) => void;
 }
-const PLURAL = 's';
+
+const ACTIVITY_TYPE_KEY = 'activityType';
 const ZERO_VALUE = 0;
+
 const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     id,
     user,
@@ -56,7 +60,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         message(id);
     }, [message, id]);
     return (
-        <div className="bg-primary flex h-full w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full  xl:w-[25rem]">
+        <div className="bg-primary flex h-full min-h-[50rem] w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full md:min-h-[55rem]  xl:w-[25rem]">
             <div className="lg:min-h-[7rem]">
                 <Avatar size="lg" email={email} avatarUrl={avatarUrl} />
             </div>
@@ -99,26 +103,27 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
             </div>
             <div className="my-6 w-full overflow-auto">
                 <h2 className="text-primary">Preferences</h2>
-                <ul className="mt-2 w-full gap-2 md:grid lg:grid-cols-2">
+                <ul className="mt-2 grid w-full gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                     {goals && goals.length > ZERO_VALUE ? (
-                        goals.map((goal) => (
-                            <li
-                                key={goal.id}
-                                className="text-primary bg-secondary mt-2 w-full rounded-lg p-2 sm:flex sm:items-center sm:justify-between lg:flex lg:w-full lg:flex-col lg:items-center xl:flex-row"
-                            >
-                                <ActivityIcon
-                                    activityType={goal.activityType}
-                                    size={ComponentSize.SMALL}
-                                />
-                                <p>
-                                    {capitalizeFirstLetter(goal.activityType)}
-                                </p>
-                                <p className="text-lm-grey-200 text-xs font-normal leading-3">
-                                    {goal.frequency} {goal.frequencyType}
-                                    {goal.frequency > 1 && PLURAL}
-                                </p>
-                            </li>
-                        ))
+                        getUniqueValues(goals, ACTIVITY_TYPE_KEY).map(
+                            (goal) => (
+                                <li
+                                    key={goal.id}
+                                    className="text-primary bg-secondary mt-2 flex items-center rounded-lg  p-2 lg:w-full lg:flex-col lg:items-center xl:flex-row"
+                                >
+                                    <ActivityIcon
+                                        activityType={goal.activityType}
+                                        size={ComponentSize.SMALL}
+                                        className="min-h-9 min-w-9"
+                                    />
+                                    <p className="w-full text-center">
+                                        {capitalizeFirstLetter(
+                                            goal.activityType,
+                                        )}
+                                    </p>
+                                </li>
+                            ),
+                        )
                     ) : (
                         <p className="text-lm-grey-200 mt-2">
                             No goals defined
@@ -139,7 +144,12 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                 </div>
                 <button
                     onClick={handleSendMessage}
-                    className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11`}
+                    className={getValidClassNames(
+                        isFollowed
+                            ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary'
+                            : 'text-lm-grey-200',
+                        'inline-flex min-h-12 min-w-12 items-center justify-center rounded-full border sm:h-14 sm:w-14 lg:h-11 lg:w-11',
+                    )}
                     disabled={!isFollowed}
                     title={
                         isFollowed ? 'Send message' : 'Follow to send message'

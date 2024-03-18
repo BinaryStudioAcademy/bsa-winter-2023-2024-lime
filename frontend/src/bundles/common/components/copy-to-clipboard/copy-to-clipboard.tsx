@@ -11,12 +11,12 @@ type Properties = {
     className?: string;
 };
 
-const CopyToClipboard = ({
+const CopyToClipboard: React.FC<Properties> = ({
     textToCopy,
     textToDisplay,
     label,
     className = '',
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCopyToClipBoard = useCallback((): void => {

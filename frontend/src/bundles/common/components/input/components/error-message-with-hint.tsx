@@ -2,7 +2,9 @@ type Properties = {
     errorMessage: string;
 };
 
-const ErrorMessageWithHint = ({ errorMessage }: Properties): JSX.Element => {
+const ErrorMessageWithHint: React.FC<Properties> = ({
+    errorMessage,
+}): JSX.Element => {
     return (
         <div className="group relative">
             <span className="bg-secondary text-lm-red inline-block w-full cursor-pointer overflow-hidden truncate whitespace-nowrap px-3 text-sm">
