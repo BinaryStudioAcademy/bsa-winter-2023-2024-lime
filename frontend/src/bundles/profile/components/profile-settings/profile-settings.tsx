@@ -83,7 +83,7 @@ const ProfileSettings: React.FC<Properties> = ({
             if (image) {
                 const file = image[0] as File;
                 if (file && file.type.startsWith('image/')) {
-                    setImgToCrop(URL.createObjectURL(image[0] as File));
+                    setImgToCrop(URL.createObjectURL(file));
                     setIsOpen(true);
                 } else {
                     setImgFileError(true);
