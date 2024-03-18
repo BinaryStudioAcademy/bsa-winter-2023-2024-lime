@@ -2,33 +2,32 @@ import { HttpCode, HttpError } from '~/common/http/http.js';
 import { SenderType } from '~/common/services/open-ai/enums/enums.js';
 import { type OpenAIService } from '~/common/services/open-ai/open-ai.service.js';
 
-import { MessageEntity } from '../messages/message.entity.js';
-import { type MessageRepository } from '../messages/message.repository.js';
+import { type MessageService } from '../messages/message.service.js';
 import { ErrorMessage } from './enums/enums.js';
+import { getContextMessages } from './helpers/helpers.js';
 import {
-    type SendMessageRequestDto,
-    type SendMessageResponseDto,
+    type SendAiMessageRequestDto,
+    type SendAiMessageResponseDto,
 } from './types/types.js';
 
 class AiAssistantService {
     private openAiService: OpenAIService;
 
-    private messageRepository: MessageRepository;
+    private messageService: MessageService;
 
     public constructor(
         openAiService: OpenAIService,
-        messageRepository: MessageRepository,
+        messageService: MessageService,
     ) {
         this.openAiService = openAiService;
-        this.messageRepository = messageRepository;
+        this.messageService = messageService;
     }
 
-    public async sendMessage({
-        userId,
-        chatId,
-        message,
-        contextMessagesCount,
-    }: SendMessageRequestDto): Promise<SendMessageResponseDto> {
+    public async sendMessage(
+        userId: number,
+        payload: SendAiMessageRequestDto,
+    ): Promise<SendAiMessageResponseDto> {
+        const { chatId, text, contextMessagesCount } = payload;
         if (!chatId) {
             throw new HttpError({
                 message: ErrorMessage.AI_CHAT_NOT_FOUND,
@@ -36,49 +35,40 @@ class AiAssistantService {
             });
         }
 
-        const chatMessages = await this.messageRepository.findMany({
+        const chatMessages = await this.messageService.findAll({
             chatId,
         });
 
-        const contextMessages = chatMessages
-            .slice(contextMessagesCount * -1)
-            .map((message) => {
-                const messageObject = message.toObject();
-                return {
-                    role: messageObject.senderId
-                        ? SenderType.USER
-                        : SenderType.ASSISTANT,
-                    content: messageObject.text,
-                };
-            });
+        const contextMessages = getContextMessages(
+            chatMessages.items,
+            contextMessagesCount,
+        );
 
         const responseMessage = await this.openAiService.sendRequest([
             ...contextMessages,
             {
                 role: SenderType.USER,
-                content: message,
+                content: text,
             },
         ]);
 
-        await this.messageRepository.create(
-            MessageEntity.initializeNew({
-                chatId,
-                senderId: userId,
-                text: message,
-                isSeen: true,
-            }),
-        );
+        await this.messageService.create({
+            chatId,
+            senderId: userId,
+            text: text,
+        });
 
-        await this.messageRepository.create(
-            MessageEntity.initializeNew({
-                chatId,
-                senderId: null,
-                text: responseMessage,
-                isSeen: false,
-            }),
-        );
+        const aiResponse = await this.messageService.create({
+            chatId,
+            senderId: null,
+            text: responseMessage,
+        });
 
-        return { message: responseMessage };
+        return {
+            text: aiResponse.text,
+            createdAt: aiResponse.createdAt,
+            updatedAt: aiResponse.updatedAt,
+        };
     }
 }
 

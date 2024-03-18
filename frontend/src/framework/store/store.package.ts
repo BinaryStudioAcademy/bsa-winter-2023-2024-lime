@@ -8,6 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { reducer as appReducer } from '~/app/store/app.js';
 import { achievementsApi } from '~/bundles/achievements/achievements.js';
 import { reducer as achievementsReducer } from '~/bundles/achievements/store/achievements.js';
+import { aiAssistantApi } from '~/bundles/ai-assistant/ai-assistant.js';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { chatsApi } from '~/bundles/chats/chats.js';
@@ -63,6 +64,7 @@ type ExtraArguments = {
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
     chatsApi: typeof chatsApi;
+    aiAssistantApi: typeof aiAssistantApi;
 };
 
 class Store {
@@ -114,6 +116,7 @@ class Store {
             connectionApi,
             workoutApi,
             chatsApi,
+            aiAssistantApi,
         };
     }
 }

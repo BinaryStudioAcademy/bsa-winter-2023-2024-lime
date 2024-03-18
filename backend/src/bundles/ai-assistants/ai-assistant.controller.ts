@@ -10,9 +10,10 @@ import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/types/types.js';
 
+import { type UserAuthResponseDto } from '../users/users.js';
 import { type AiAssistantService } from './ai-assistant.service.js';
 import { AiAssistantPath } from './enums/enums.js';
-import { type SendMessageRequestDto } from './types/types.js';
+import { type SendAiMessageRequestDto } from './types/types.js';
 
 class AiAssistantController extends BaseController {
     private aiAssistantService: AiAssistantService;
@@ -28,8 +29,8 @@ class AiAssistantController extends BaseController {
             handler: (options) =>
                 this.sendMessage(
                     options as ApiHandlerOptions<{
-                        body: SendMessageRequestDto;
-                        // user: UserAuthResponseDto;
+                        user: UserAuthResponseDto;
+                        body: SendAiMessageRequestDto;
                     }>,
                 ),
         });
@@ -37,14 +38,17 @@ class AiAssistantController extends BaseController {
 
     private async sendMessage(
         options: ApiHandlerOptions<{
-            body: SendMessageRequestDto;
-            // user: UserAuthResponseDto;
+            user: UserAuthResponseDto;
+            body: SendAiMessageRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.aiAssistantService.sendMessage(options.body),
+            payload: await this.aiAssistantService.sendMessage(
+                options.user.id,
+                options.body,
+            ),
         };
     }
 }
