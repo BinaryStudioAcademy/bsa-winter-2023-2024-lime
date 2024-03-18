@@ -1,3 +1,4 @@
+import { XMarkIcon } from '@heroicons/react/16/solid';
 import { ChevronRightIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
 import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
@@ -15,12 +16,14 @@ import {
     useEffect,
     useNavigate,
 } from '~/bundles/common/hooks/hooks.js';
+import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
 type Properties = {
     id: number;
     name: string | null;
     isActive: boolean;
     avatarUrl: string | null;
+    setSelectedCard: (card: FriendResponseDto | null) => void;
 };
 
 const FriendDetails = ({
@@ -28,6 +31,7 @@ const FriendDetails = ({
     name,
     isActive,
     avatarUrl,
+    setSelectedCard,
 }: Properties): JSX.Element => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -37,11 +41,19 @@ const FriendDetails = ({
     const classes = {
         base: 'bg-buttonTertiary h-2 w-2 rounded-[50%]',
         active: 'bg-buttonPrimary h-2 w-2 rounded-[50%]',
+        closeIcon:
+            'stroke-lm-grey-200 fill-lm-grey-200 hover:stroke-lm-yellow-100 hover:fill-lm-yellow-100 absolute left-3 top-3 h-4 w-4 cursor-pointer transition-all ',
+        noAvatar:
+            'bg-lm-grey-100 h-176 w-176 flex aspect-square items-center justify-center rounded-[50%]',
     };
 
     const handleMoreInfoClick = useCallback((): void => {
         void navigate(`${AppRoute.PROFILE_PUBLIC}/${id}`);
     }, [navigate, id]);
+
+    const handleSetSelectedCard = useCallback((): void => {
+        void setSelectedCard(null);
+    }, [setSelectedCard]);
 
     useEffect(() => {
         void dispatch(achievementsActions.getAchievementsByUserId(id));
@@ -49,6 +61,11 @@ const FriendDetails = ({
 
     return (
         <div className={'flex flex-col items-center justify-center '}>
+            <XMarkIcon
+                onClick={handleSetSelectedCard}
+                className={getValidClassNames(classes.closeIcon)}
+            />
+
             <div className="mb-4 flex items-center gap-2">
                 <div
                     className={getValidClassNames(
@@ -69,7 +86,7 @@ const FriendDetails = ({
                         avatarUrl={avatarUrl}
                     />
                 ) : (
-                    <div className="bg-lm-grey-100 h-176 w-176 flex aspect-square items-center justify-center rounded-[50%]">
+                    <div className={getValidClassNames(classes.noAvatar)}>
                         <UserCircleIcon className="text-lm-grey-200 h-full w-full" />
                     </div>
                 )}

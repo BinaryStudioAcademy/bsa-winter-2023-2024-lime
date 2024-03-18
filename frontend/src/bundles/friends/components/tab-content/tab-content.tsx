@@ -31,16 +31,15 @@ const TabContent = ({
         <>
             {users?.length > 0 &&
                 users.map((user) => (
-                    <div key={user.userId}>
-                        <FriendCard
-                            user={user}
-                            isFollowed={isFollowed}
-                            isActive={true}
-                            isCardSelected={selectedCardId === user.userId}
-                            selectCard={selectCard}
-                            onToggleFollow={onToggleFollow}
-                        />
-                    </div>
+                    <FriendCard
+                        key={user.userId}
+                        user={user}
+                        isFollowed={isFollowed}
+                        isActive={true}
+                        isCardSelected={selectedCardId === user.userId}
+                        selectCard={selectCard}
+                        onToggleFollow={onToggleFollow}
+                    />
                 ))}
 
             {(totalCount ?? 0) > users.length ? (

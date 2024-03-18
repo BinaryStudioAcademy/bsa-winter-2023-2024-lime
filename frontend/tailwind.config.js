@@ -183,6 +183,7 @@ export default {
             },
             borderColor: {
                 primary: 'var(--border-primary)',
+                secondary: 'var(--border-secondary)',
                 inactive: 'var(--border-inactive)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,

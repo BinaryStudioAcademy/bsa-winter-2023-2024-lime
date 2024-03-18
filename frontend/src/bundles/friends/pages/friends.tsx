@@ -128,7 +128,7 @@ const Friends: React.FC = () => {
                 activeTab={activeTab}
             />
             <div
-                className={`flex flex-wrap items-start gap-5 ${selectedCard?.userId ? 'w-[calc(100%-354px)]' : 'w-full'}`}
+                className={`flex flex-wrap items-start justify-stretch gap-5 ${selectedCard?.userId ? 'md:w-[calc(100%-254px)] lg:w-[calc(100%-354px)]' : 'w-full'}`}
             >
                 {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
                     <TabContent
@@ -170,12 +170,13 @@ const Friends: React.FC = () => {
             </div>
 
             {selectedCard && (
-                <aside className="bg-secondary border-buttonText fixed right-[6px] top-[88px] ml-4 h-full w-[354px] border-l-2 pb-4 pl-4 pr-4 pt-8">
+                <aside className="bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px]">
                     <FriendDetails
                         id={selectedCard.userId}
                         isActive={true}
                         name={selectedCard.fullName ?? selectedCard.email}
                         avatarUrl={selectedCard.avatarUrl}
+                        setSelectedCard={setSelectedCard}
                     />
                 </aside>
             )}

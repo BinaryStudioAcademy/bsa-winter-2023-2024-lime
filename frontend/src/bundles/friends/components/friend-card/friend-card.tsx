@@ -30,9 +30,9 @@ const FriendCard = ({
     const { userId, fullName, email, avatarUrl } = user;
 
     const classes = {
-        base: 'hover:border-buttonPrimary flex w-full cursor-pointer flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-transparent',
+        base: 'hover:border-buttonPrimary flex w-full min-w-[200px] flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-transparent',
         selected:
-            'hover:border-buttonPrimary flex w-full cursor-pointer flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-buttonPrimary ',
+            'hover:border-buttonPrimary flex w-full min-w-[200px] flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-buttonPrimary ',
         followed:
             'text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10',
         notFollowed:
@@ -57,7 +57,7 @@ const FriendCard = ({
             )}
         >
             <div
-                className="h-3/4 w-full"
+                className="cursor-pointer"
                 onClick={handleSelectCard}
                 role="presentation"
             >
