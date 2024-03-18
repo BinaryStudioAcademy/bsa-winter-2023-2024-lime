@@ -16,7 +16,11 @@ import {
     ScheduleCard,
 } from '~/bundles/common/components/components.js';
 import { DEFAULT_SCHEDULE_FORM_VALUE } from '~/bundles/common/components/create-schedule-form/constants/constants.js';
-import { ComponentSize, DataStatus } from '~/bundles/common/enums/enums.js';
+import {
+    ComponentSize,
+    DataStatus,
+    Theme,
+} from '~/bundles/common/enums/enums.js';
 import {
     capitalizeFirstLetter,
     convertMetersToKilometers,
@@ -66,6 +70,8 @@ const Schedule: React.FC = () => {
     const { dataStatus: goalsDataStatus, goals } = useAppSelector(
         ({ goals }) => goals,
     );
+
+    const { theme } = useAppSelector(({ theme }) => theme);
 
     const { dataStatus: scheduleDataStatus, schedules } = useAppSelector(
         ({ schedules }) => schedules,
@@ -131,10 +137,16 @@ const Schedule: React.FC = () => {
                         randomGoal.progress,
                     ],
                     ...DOUGHNUT_DATASET,
+                    backgroundColor: [
+                        theme === Theme.DARK
+                            ? 'rgb(28, 34, 39)'
+                            : 'rgb(121 131 146)',
+                        'rgb(224 254 16)',
+                    ],
                 },
             ],
         };
-    }, [randomGoal]);
+    }, [randomGoal, theme]);
 
     const handleModalStatus = useCallback(() => {
         if (isUpdateMode) {
@@ -213,14 +225,14 @@ const Schedule: React.FC = () => {
 
     return (
         <>
-            <section className="relative flex h-full w-full gap-[1.2rem]">
+            <section className="relative flex h-full w-full flex-col gap-[1.2rem] lg:flex-row">
                 {isLoading ? (
                     <Loader isOverflow />
                 ) : (
                     <>
                         <div>
                             <div className="bg-secondary flex h-full flex-col gap-[1.75rem]">
-                                <h1 className="text-primary text-xl font-bold">
+                                <h1 className="text-card text-xl font-bold">
                                     My Schedule
                                 </h1>
                                 <DateCalendar
@@ -231,11 +243,11 @@ const Schedule: React.FC = () => {
                                 />
                             </div>
                         </div>
-                        <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
-                        <div className="w-full">
+                        <div className="bg-primary my-[-2rem] hidden h-[calc(100%+4rem)] w-1 lg:block"></div>
+                        <div className="w-full max-w-none lg:max-w-[23.5rem] xl:max-w-none">
                             {filteredSchedules.length > 0 ? (
-                                <div className="mb-3 flex gap-[1.2rem]">
-                                    <ul className="flex w-full max-w-[25rem] flex-col gap-[0.7rem]">
+                                <div className="mb-3 flex flex-col gap-[1.2rem] xl:flex-row">
+                                    <ul className="flex w-full flex-col gap-[0.7rem] lg:max-w-[25rem]">
                                         {filteredSchedules.map(
                                             ({ activityType, id, startAt }) => {
                                                 const date = new Date(startAt);
@@ -289,7 +301,7 @@ const Schedule: React.FC = () => {
                                         </div>
                                     </ul>
                                     {randomGoal ? (
-                                        <div className="bg-scheduleWidget bg-primary text-card flex h-full max-h-[20rem] w-full max-w-[23.75rem] flex-col items-center gap-[1.2rem] rounded-lg p-7 font-bold">
+                                        <div className="bg-scheduleWidget bg-primary text-card flex h-full max-h-[20rem] w-full flex-col items-center gap-[1.2rem] rounded-lg p-7 font-bold lg:max-w-[23.75rem]">
                                             <div>
                                                 {capitalizeFirstLetter(
                                                     randomGoal.activityType,
@@ -339,7 +351,7 @@ const Schedule: React.FC = () => {
                                 </div>
                             )}
                             {filteredSchedules.length === 0 ? (
-                                <div className="bg-primary md:w-full lg:w-[48.8%]">
+                                <div className="bg-primary w-full md:w-full xl:w-[48.8%]">
                                     <Button
                                         type="button"
                                         label="Set the new shcedule"

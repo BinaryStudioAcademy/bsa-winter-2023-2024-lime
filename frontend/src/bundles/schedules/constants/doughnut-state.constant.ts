@@ -1,5 +1,4 @@
 const DOUGHNUT_DATASET = {
-    backgroundColor: ['rgb(28, 34, 39)', 'rgb(224 254 16)'],
     borderColor: ['transparent', 'transparent'],
 } as const;
 
