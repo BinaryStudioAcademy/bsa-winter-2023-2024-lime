@@ -21,7 +21,6 @@ import {
     convertHeightToMillimeters,
     convertWeightToGrams,
     convertWeightToKilograms,
-    getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -60,11 +59,48 @@ const ProfileSettings: React.FC<Properties> = ({
 
     const dispatch = useAppDispatch();
 
-    const [valuesDefault, setValuesDefault] = useState(false);
     const { user, updateProfile } = useAppSelector(({ auth }) => auth);
     const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
         ({ userBonuses }) => userBonuses,
     );
+
+    const getDefaultValues = useCallback((): UserUpdateProfileRequestDto => {
+        const result: { [key: string]: string | number | null | undefined } = {
+            ...DEFAULT_UPDATE_PROFILE_PAYLOAD,
+        };
+        const data: { [key: string]: string | number | null | undefined } = {
+            ...user,
+        };
+
+        for (const key of Object.keys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
+            switch (key) {
+                case 'dateOfBirth': {
+                    if (data['dateOfBirth']) {
+                        result[key] = configureDateString(
+                            data['dateOfBirth'] as string,
+                        );
+                    }
+                    break;
+                }
+                case 'weight': {
+                    result[key] = convertWeightToKilograms(data[key] as number);
+                    break;
+                }
+                case 'height': {
+                    result[key] = convertHeightToCentimeters(
+                        data[key] as number,
+                    );
+                    break;
+                }
+                default: {
+                    if (data[key]) {
+                        result[key] = data[key];
+                    }
+                }
+            }
+        }
+        return result as UserUpdateProfileRequestDto;
+    }, [user]);
 
     const {
         control,
@@ -75,7 +111,7 @@ const ProfileSettings: React.FC<Properties> = ({
         getValues,
         isDirty,
     } = useAppForm<UserUpdateProfileRequestDto>({
-        defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
+        defaultValues: getDefaultValues(),
         validationSchema: userUpdateProfileValidationSchema,
         mode: 'onTouched',
         shouldUnregister: false,
@@ -96,47 +132,10 @@ const ProfileSettings: React.FC<Properties> = ({
     );
 
     useEffect(() => {
-        if (!valuesDefault && user) {
-            for (const key of getObjectKeys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
-                switch (key) {
-                    case 'dateOfBirth': {
-                        setValue(
-                            key,
-                            user.dateOfBirth
-                                ? configureDateString(user.dateOfBirth)
-                                : '',
-                        );
-                        break;
-                    }
-                    case 'weight': {
-                        setValue(
-                            key,
-                            convertWeightToKilograms(user[key]) || '',
-                        );
-                        break;
-                    }
-                    case 'height': {
-                        setValue(
-                            key,
-                            convertHeightToCentimeters(user[key]) || '',
-                        );
-                        break;
-                    }
-                    default: {
-                        setValue(
-                            key,
-                            user[key] || DEFAULT_UPDATE_PROFILE_PAYLOAD[key],
-                        );
-                    }
-                }
-            }
-            setValuesDefault(true);
-        }
-    }, [user, setValue, valuesDefault]);
-
-    useEffect(() => {
         if (updateProfile.avatarUrl) {
-            setValue('avatarUrl', updateProfile.avatarUrl);
+            setValue('avatarUrl', updateProfile.avatarUrl, {
+                shouldDirty: true,
+            });
             dispatch(authActions.clearUpdateProfile());
         }
     }, [updateProfile, setValue, dispatch]);
