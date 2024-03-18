@@ -6,6 +6,7 @@ import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 import {
     createWorkout,
+    deleteWorkout,
     getLastWorkoutsByUserId,
     getWorkouts,
 } from './actions.js';
@@ -53,6 +54,18 @@ const { reducer, actions, name } = createSlice({
             state.workouts = [...state.workouts, action.payload];
         });
         builder.addCase(createWorkout.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(deleteWorkout.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(deleteWorkout.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.workouts = state.workouts.filter(
+                (workout) => workout.id !== action.meta.arg,
+            );
+        });
+        builder.addCase(deleteWorkout.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

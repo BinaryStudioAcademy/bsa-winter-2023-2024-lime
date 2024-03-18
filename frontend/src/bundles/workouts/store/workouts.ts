@@ -1,5 +1,6 @@
 import {
     createWorkout,
+    deleteWorkout,
     getLastWorkoutsByUserId,
     getWorkouts,
 } from './actions.js';
@@ -10,6 +11,7 @@ const allActions = {
     getWorkouts,
     getLastWorkoutsByUserId,
     createWorkout,
+    deleteWorkout,
 };
 
 export { allActions as actions };

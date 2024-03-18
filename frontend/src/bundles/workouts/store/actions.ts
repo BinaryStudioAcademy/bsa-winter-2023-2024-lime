@@ -38,4 +38,13 @@ const createWorkout = createAsyncThunk<
     return await workoutApi.create(payload);
 });
 
-export { createWorkout, getLastWorkoutsByUserId, getWorkouts };
+const deleteWorkout = createAsyncThunk<unknown, number, AsyncThunkConfig>(
+    `${name}/delete-workout`,
+    async (id, { extra }) => {
+        const { workoutApi } = extra;
+
+        await workoutApi.delete(id);
+    },
+);
+
+export { createWorkout, deleteWorkout, getLastWorkoutsByUserId, getWorkouts };

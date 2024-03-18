@@ -61,6 +61,17 @@ class WorkoutApi extends BaseHttpApi {
         );
         return await response.json<WorkoutResponseDto>();
     }
+
+    public async delete(id: number): Promise<void> {
+        const response = await this.load(
+            this.getFullEndpoint(WorkoutsApiPath.ID, { id: String(id) }),
+            {
+                method: 'DELETE',
+                hasAuth: true,
+            },
+        );
+        await response.json<number>();
+    }
 }
 
 export { WorkoutApi };
