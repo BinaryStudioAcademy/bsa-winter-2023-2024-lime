@@ -10,6 +10,7 @@ import {
     Radio,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
+import { ErrorMessageWithHint } from '~/bundles/common/components/input/components/error-message-with-hint.js';
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
@@ -53,6 +54,7 @@ const ProfileSettings: React.FC<Properties> = ({
     isLoading,
 }) => {
     const fileInputReference = useRef<HTMLInputElement>(null);
+    const [imgFileError, setImgFileError] = useState(false);
     const [imgToCrop, setImgToCrop] = useState('');
     const [isOpen, setIsOpen] = useState(false);
 
@@ -74,12 +76,18 @@ const ProfileSettings: React.FC<Properties> = ({
 
     const selectImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
+            setImgFileError(false);
             setImgToCrop('');
 
             const image = event.target.files;
             if (image) {
-                setImgToCrop(URL.createObjectURL(image[0] as File));
-                setIsOpen(true);
+                const file = image[0] as File;
+                if (file && file.type.startsWith('image/')) {
+                    setImgToCrop(URL.createObjectURL(image[0] as File));
+                    setIsOpen(true);
+                } else {
+                    setImgFileError(true);
+                }
                 event.target.value = '';
             }
         },
@@ -185,11 +193,12 @@ const ProfileSettings: React.FC<Properties> = ({
                         type="file"
                         accept="image/jpeg, image/png"
                         name="update-file"
+                        aria-label="Upload avatar"
                         onChange={selectImage}
                         className="hidden"
                         ref={fileInputReference}
                     />
-                    <div>
+                    <div className="flex flex-col items-center gap-2">
                         <Button
                             className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
                             type="submit"
@@ -198,6 +207,13 @@ const ProfileSettings: React.FC<Properties> = ({
                             size={ComponentSize.SMALL}
                             onClick={handleUploadClick}
                         />
+                        {imgFileError && (
+                            <ErrorMessageWithHint
+                                errorMessage={
+                                    'Invalid file type, please upload a valid image'
+                                }
+                            />
+                        )}
                     </div>
                     <Modal
                         isOpen={isOpen}
