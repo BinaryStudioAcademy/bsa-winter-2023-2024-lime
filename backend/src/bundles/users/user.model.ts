@@ -37,6 +37,8 @@ import {
 import { UserAttributes, UserDetailsAttributes } from './enums/enums.js';
 import { UserDetailsModel } from './user-details.model.js';
 
+const USER_DETAILS_RELATION = 'userDetails';
+
 class UserModel extends AbstractModel {
     public 'email': string;
 
@@ -157,12 +159,12 @@ class UserModel extends AbstractModel {
             userDetails(builder): QueryBuilder<UserModel> {
                 return builder
                     .select(
-                        'email',
-                        'userDetails.fullName',
-                        'userDetails.userId',
-                        'userDetails.avatarUrl',
+                        `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                        `${DatabaseTableName.USERS}.${UserAttributes.EMAIL}`,
+                        `${USER_DETAILS_RELATION}.${UserDetailsAttributes.FULL_NAME}`,
+                        `${USER_DETAILS_RELATION}.${UserDetailsAttributes.AVATAR_URL}`,
                     )
-                    .leftJoinRelated('userDetails');
+                    .leftJoinRelated(USER_DETAILS_RELATION);
             },
         };
     }
