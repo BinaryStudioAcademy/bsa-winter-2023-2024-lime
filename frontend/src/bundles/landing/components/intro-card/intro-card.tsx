@@ -6,7 +6,11 @@ type Properties = {
     description: string;
 };
 
-const IntroCard = ({ number, title, description }: Properties): JSX.Element => {
+const IntroCard: React.FC<Properties> = ({
+    number,
+    title,
+    description,
+}): JSX.Element => {
     const styles = {
         default: {
             base: 'w-[18.5rem] opacity-30',

@@ -9,7 +9,7 @@ import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { validateImageUrl } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
-type FriendProperties = {
+type Properties = {
     id: number;
     name: string;
     avatarUrl: string;
@@ -19,7 +19,7 @@ type FriendProperties = {
     message: (id: number) => void;
 };
 
-const FriendCard = ({
+const FriendCard: React.FC<Properties> = ({
     id,
     name,
     avatarUrl,
@@ -27,7 +27,7 @@ const FriendCard = ({
     isFollowed,
     onToggleFollow,
     message,
-}: FriendProperties): JSX.Element => {
+}): JSX.Element => {
     const handleOnToggleFollow = useCallback(() => {
         onToggleFollow(id, isFollowed);
     }, [onToggleFollow, isFollowed, id]);

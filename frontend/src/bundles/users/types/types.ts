@@ -7,4 +7,5 @@ export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from 'shared';

@@ -14,18 +14,27 @@ import {
     signInIdentity,
     signUp,
     updateUser,
+    uploadAvatar,
 } from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     user: UserAuthResponseDto | null;
     isRefreshing: boolean;
+    updateProfile: {
+        dataStatus: ValueOf<typeof DataStatus>;
+        avatarUrl: string | null;
+    };
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     user: null,
     isRefreshing: true,
+    updateProfile: {
+        dataStatus: DataStatus.IDLE, // quick fix for the issue with blank layout while updating user profile
+        avatarUrl: null,
+    },
 };
 
 const { reducer, actions, name } = createSlice({
@@ -34,6 +43,9 @@ const { reducer, actions, name } = createSlice({
     reducers: {
         stopRefreshing(state) {
             state.isRefreshing = false;
+        },
+        clearUpdateProfile(state) {
+            state.updateProfile = initialState.updateProfile;
         },
     },
     extraReducers(builder) {
@@ -81,14 +93,24 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(updateUser.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
+            state.updateProfile.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(updateUser.fulfilled, (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
+            state.updateProfile.dataStatus = DataStatus.FULFILLED;
             state.user = action.payload;
         });
         builder.addCase(updateUser.rejected, (state) => {
-            state.dataStatus = DataStatus.REJECTED;
+            state.updateProfile.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(uploadAvatar.pending, (state) => {
+            state.updateProfile.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(uploadAvatar.fulfilled, (state, action) => {
+            state.updateProfile.dataStatus = DataStatus.FULFILLED;
+            state.updateProfile.avatarUrl = action.payload.avatarUrl;
+        });
+        builder.addCase(uploadAvatar.rejected, (state) => {
+            state.updateProfile.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(authorizeIdentity.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;

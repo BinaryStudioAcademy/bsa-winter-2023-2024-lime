@@ -3,11 +3,11 @@ import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
 import { type ReactNode } from '~/bundles/common/types/types.js';
 
-type ProtectedRouteProperties = {
+type Properties = {
     children: ReactNode;
 };
 
-const ProtectedRoute: React.FC<ProtectedRouteProperties> = ({ children }) => {
+const ProtectedRoute: React.FC<Properties> = ({ children }) => {
     const { isRefreshing, dataStatus, user } = useAppSelector(
         ({ auth }) => auth,
     );
