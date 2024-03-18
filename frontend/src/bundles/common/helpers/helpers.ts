@@ -4,6 +4,7 @@ export { calculateTotal } from './calculate-total/calculate-total.helper.js';
 export { capitalizeFirstLetter } from './capitalize-first-letter/capitalize-first-letter.helper.js';
 export { convertHeightToCentimeters } from './convert-height/convert-height-to-cm.js';
 export { convertHeightToMillimeters } from './convert-height/convert-height-to-mm.js';
+export { convertKMPHtoMPS } from './convert-kmph-to-mps/convert-kmph-to-mps.helper.js';
 export { convertMetersToKilometers } from './convert-meters-to-kilometers/convert-meters-to-kilometers.helper.js';
 export { convertSecondsToHMS } from './convert-seconds-to-hms/convert-seconds-to-hms.helper.js';
 export { convertToMeters } from './convert-to-meters/convert-to-meters.helper.js';

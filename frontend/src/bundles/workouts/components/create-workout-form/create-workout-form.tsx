@@ -6,9 +6,17 @@ import {
     Select,
     TimePicker,
 } from '~/bundles/common/components/components.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { configureDate } from '~/bundles/common/helpers/helpers.js';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import { ActivityType, ComponentSize } from '~/bundles/common/enums/enums.js';
+import {
+    configureDate,
+    convertKMPHtoMPS,
+    convertToMeters,
+} from '~/bundles/common/helpers/helpers.js';
+import {
+    useAppForm,
+    useCallback,
+    useFormWatch,
+} from '~/bundles/common/hooks/hooks.js';
 import {
     type CreateWorkoutPayload,
     type WorkoutRequestDto,
@@ -35,6 +43,11 @@ const CreateWorkoutForm: React.FC<Properties> = ({
         mode: 'onTouched',
     });
 
+    const activityTypeValue = useFormWatch({
+        name: 'activityType',
+        control,
+    });
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit((data) => {
@@ -48,11 +61,11 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                         data.workoutDate,
                         data.workoutEndedAt,
                     ) as Date,
-                    speed: Number(data.speed),
-                    distance: Number(data.distance),
+                    speed: convertKMPHtoMPS(Number(data.speed)),
+                    distance: convertToMeters(Number(data.distance)),
                     kilocalories: Number(data.kilocalories),
                     heartRate: data.heartRate ? Number(data.heartRate) : null,
-                    steps: Number(data.steps),
+                    ...(data.steps && { steps: Number(data.steps) }),
                     provider: null,
                 };
                 onSubmit(payload);
@@ -106,7 +119,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                     className="md:col-span-2"
                     type="text"
                     name="distance"
-                    label="Distance (meters)"
+                    label="Distance (km)"
                     placeholder="Enter distance"
                     control={control}
                     errors={errors}
@@ -146,16 +159,19 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                     errors={errors}
                     isDisabled={isLoading}
                 />
-                <Input
-                    className="md:col-span-3"
-                    type="text"
-                    name="steps"
-                    label="Steps"
-                    placeholder="Enter steps"
-                    control={control}
-                    errors={errors}
-                    isDisabled={isLoading}
-                />
+                {activityTypeValue === ActivityType.WALKING && (
+                    <Input
+                        className="md:col-span-3"
+                        type="text"
+                        name="steps"
+                        label="Steps"
+                        placeholder="Enter steps"
+                        control={control}
+                        errors={errors}
+                        isDisabled={isLoading}
+                        required
+                    />
+                )}
             </div>
 
             <Button

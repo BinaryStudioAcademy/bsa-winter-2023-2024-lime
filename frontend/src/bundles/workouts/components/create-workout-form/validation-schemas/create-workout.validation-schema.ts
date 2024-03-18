@@ -21,7 +21,7 @@ const createWorkout = z
                     .number({
                         errorMap: () => ({
                             message:
-                                CreateWorkoutValidationMessage.INVALID_FIELD,
+                                CreateWorkoutValidationMessage.INVALID_FLOAT_FIELD,
                         }),
                     })
                     .nonnegative({
@@ -36,7 +36,7 @@ const createWorkout = z
                     .number({
                         errorMap: () => ({
                             message:
-                                CreateWorkoutValidationMessage.INVALID_FIELD,
+                                CreateWorkoutValidationMessage.INVALID_FLOAT_FIELD,
                         }),
                     })
                     .min(CreateWorkoutValidationRule.SPEED.MIN_VALUE, {
@@ -51,17 +51,41 @@ const createWorkout = z
             .min(1, {
                 message: CreateWorkoutValidationMessage.REQUIRED,
             })
-            .pipe(z.coerce.number().nonnegative()),
+            .pipe(
+                z.coerce
+                    .number({
+                        errorMap: () => ({
+                            message:
+                                CreateWorkoutValidationMessage.INVALID_INT_FIELD,
+                        }),
+                    })
+                    .int({
+                        message:
+                            CreateWorkoutValidationMessage.INVALID_INT_FIELD,
+                    })
+                    .nonnegative({
+                        message: CreateWorkoutValidationMessage.POSITIVE_NUMBER,
+                    }),
+            ),
         heartRate: z
             .literal('', {
                 errorMap: () => ({
-                    message: CreateWorkoutValidationMessage.INVALID_FIELD,
+                    message: CreateWorkoutValidationMessage.INVALID_INT_FIELD,
                 }),
             })
             .transform(() => null)
             .or(
                 z.coerce
-                    .number()
+                    .number({
+                        errorMap: () => ({
+                            message:
+                                CreateWorkoutValidationMessage.INVALID_INT_FIELD,
+                        }),
+                    })
+                    .int({
+                        message:
+                            CreateWorkoutValidationMessage.INVALID_INT_FIELD,
+                    })
                     .min(CreateWorkoutValidationRule.HEART_RATE.MIN_VALUE, {
                         message:
                             CreateWorkoutValidationMessage.HEART_RATE_VALUE,
@@ -75,7 +99,7 @@ const createWorkout = z
         steps: z
             .literal('', {
                 errorMap: () => ({
-                    message: CreateWorkoutValidationMessage.INVALID_FIELD,
+                    message: CreateWorkoutValidationMessage.INVALID_INT_FIELD,
                 }),
             })
             .transform(() => null)
@@ -84,8 +108,12 @@ const createWorkout = z
                     .number({
                         errorMap: () => ({
                             message:
-                                CreateWorkoutValidationMessage.INVALID_FIELD,
+                                CreateWorkoutValidationMessage.INVALID_INT_FIELD,
                         }),
+                    })
+                    .int({
+                        message:
+                            CreateWorkoutValidationMessage.INVALID_INT_FIELD,
                     })
                     .nonnegative({
                         message: CreateWorkoutValidationMessage.POSITIVE_NUMBER,
@@ -123,6 +151,28 @@ const createWorkout = z
             .regex(
                 UnicodePattern.TIME_PATTERN,
                 CreateWorkoutValidationMessage.TIME_FORMAT,
+            )
+            .refine(
+                (value) => {
+                    if (!value) {
+                        return true;
+                    }
+                    const [hours, minutes, seconds] = value.split(':');
+                    const currentDate = new Date();
+                    const enteredDate = new Date(
+                        currentDate.getFullYear(),
+                        currentDate.getMonth(),
+                        currentDate.getDate(),
+                        Number(hours),
+                        Number(minutes),
+                        Number(seconds),
+                    );
+                    return enteredDate <= currentDate;
+                },
+                {
+                    message:
+                        CreateWorkoutValidationMessage.WORKOUT_TIME_IN_FUTURE,
+                },
             ),
         workoutEndedAt: z
             .string()
@@ -158,6 +208,18 @@ const createWorkout = z
         {
             message: CreateWorkoutValidationMessage.END_TIME_BEFORE_START_TIME,
             path: ['workoutEndedAt'],
+        },
+    )
+    .refine(
+        (schema) => {
+            const { activityType, steps } = schema;
+            return activityType === ActivityType.WALKING
+                ? steps !== null
+                : true;
+        },
+        {
+            message: CreateWorkoutValidationMessage.STEPS_REQUIRED,
+            path: ['steps'],
         },
     );
 
