@@ -24,6 +24,7 @@ type Properties<T extends FieldValues> = {
     label?: string;
     minDate?: Date;
     placeholder?: string;
+    required?: boolean;
 };
 
 const DatePicker = <T extends FieldValues>({
@@ -36,6 +37,7 @@ const DatePicker = <T extends FieldValues>({
     className,
     label = '',
     placeholder = '',
+    required = false,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
@@ -69,6 +71,7 @@ const DatePicker = <T extends FieldValues>({
                         name={name}
                         control={control}
                         errors={errors}
+                        required={required}
                     />
                 }
             />

@@ -71,17 +71,6 @@ class ScheduleService implements Service {
         query: Record<string, unknown>,
         payload: ScheduleRequestDto,
     ): Promise<ScheduleResponseDto> {
-        const scheduleWithSameDate = await this.scheduleRepository.find({
-            startAt: payload.startAt,
-        });
-
-        if (scheduleWithSameDate) {
-            throw new HttpError({
-                status: HttpCode.BAD_REQUEST,
-                message: ScheduleValidationMessage.SCHEDULE_WITH_SAME_DATE,
-            });
-        }
-
         const schedule = await this.scheduleRepository.update(
             query,
             ScheduleEntity.initializeNew({

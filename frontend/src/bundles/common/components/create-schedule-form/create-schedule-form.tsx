@@ -84,6 +84,7 @@ const CreateScheduleForm: React.FC<Properties> = ({
                     label="Date of start"
                     placeholder="DD/MM/YYYY HH:mm"
                     className="lg:col-start-1 lg:col-end-3"
+                    required
                 />
 
                 <Select

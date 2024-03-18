@@ -29,6 +29,7 @@ type Properties<
     control: Control<T, null>;
     errors: FieldErrors<T>;
     label?: string;
+    required?: boolean;
 };
 
 const animatedComponents = makeAnimated();
@@ -48,6 +49,7 @@ const Select = <
     isDisabled = false,
     isClearable = false,
     isSearchable = false,
+    required = false,
     ...rest
 }: Properties<T, IsMulti, Group>): JSX.Element => {
     const { field } = useFormController({ name, control });
@@ -95,7 +97,7 @@ const Select = <
         <div className="flex h-20 flex-col bg-transparent">
             {label && (
                 <span className="text-primary mb-[0.5rem] block text-sm font-medium">
-                    {label}
+                    {label} {required && <span className="text-lm-red">*</span>}
                 </span>
             )}
             <ReactSelect
