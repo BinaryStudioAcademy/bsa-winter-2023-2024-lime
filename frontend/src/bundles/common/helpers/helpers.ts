@@ -19,7 +19,9 @@ export { getValidClassNames } from './get-valid-class-names/get-valid-class-name
 export { metersToKilometers } from './meters-to-kilometers/meters-to-kilometers.helper.js';
 export { validateImageUrl } from './validate-image-url/validate-image-url.helper.js';
 export {
+    configureDate,
     configureDateString,
     configureISOString,
     configureString,
+    configureTimeString,
 } from 'shared';

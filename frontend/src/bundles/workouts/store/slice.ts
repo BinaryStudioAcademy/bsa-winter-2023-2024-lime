@@ -4,7 +4,11 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
-import { getLastWorkoutsByUserId, getWorkouts } from './actions.js';
+import {
+    createWorkout,
+    getLastWorkoutsByUserId,
+    getWorkouts,
+} from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
@@ -39,6 +43,16 @@ const { reducer, actions, name } = createSlice({
             state.workouts = action.payload.items;
         });
         builder.addCase(getLastWorkoutsByUserId.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(createWorkout.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(createWorkout.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.workouts = [...state.workouts, action.payload];
+        });
+        builder.addCase(createWorkout.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

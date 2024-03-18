@@ -63,3 +63,15 @@
 .custom-date-picker .rmdp-year-picker {
     @apply bg-secondary;
 }
+
+.custom-date-picker .rmdp-time-picker {
+    @apply bg-primary;
+}
+
+.custom-date-picker .rmdp-time-picker input {
+    @apply bg-secondary w-8 rounded-md;
+}
+
+.custom-date-picker .rmdp-wrapper {
+    @apply bg-secondary;
+}
