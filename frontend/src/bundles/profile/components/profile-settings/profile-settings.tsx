@@ -10,7 +10,6 @@ import {
     Radio,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
-import { ErrorMessageWithHint } from '~/bundles/common/components/input/components/error-message-with-hint.js';
 import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
@@ -36,11 +35,15 @@ import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 import { constructReferralUrl } from '../../helpers/helpers.js';
 import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
 import { Cropper } from './components/components.js';
-import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
+import {
+    DEFAULT_UPDATE_PROFILE_PAYLOAD,
+    ERROR_WRONG_FILETYPE_IMG,
+} from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserUpdateProfileRequestDto) => void;
@@ -54,7 +57,6 @@ const ProfileSettings: React.FC<Properties> = ({
     isLoading,
 }) => {
     const fileInputReference = useRef<HTMLInputElement>(null);
-    const [imgFileError, setImgFileError] = useState(false);
     const [imgToCrop, setImgToCrop] = useState('');
     const [isOpen, setIsOpen] = useState(false);
 
@@ -76,7 +78,6 @@ const ProfileSettings: React.FC<Properties> = ({
 
     const selectImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
-            setImgFileError(false);
             setImgToCrop('');
 
             const image = event.target.files;
@@ -86,7 +87,7 @@ const ProfileSettings: React.FC<Properties> = ({
                     setImgToCrop(URL.createObjectURL(file));
                     setIsOpen(true);
                 } else {
-                    setImgFileError(true);
+                    notificationManager.error(ERROR_WRONG_FILETYPE_IMG);
                 }
                 event.target.value = '';
             }
@@ -198,7 +199,7 @@ const ProfileSettings: React.FC<Properties> = ({
                         className="hidden"
                         ref={fileInputReference}
                     />
-                    <div className="flex flex-col items-center gap-2">
+                    <div>
                         <Button
                             className="ml-3 h-[38px] w-[115px] [border-radius:1.25rem]"
                             type="submit"
@@ -207,13 +208,6 @@ const ProfileSettings: React.FC<Properties> = ({
                             size={ComponentSize.SMALL}
                             onClick={handleUploadClick}
                         />
-                        {imgFileError && (
-                            <ErrorMessageWithHint
-                                errorMessage={
-                                    'Invalid file type, please upload a valid image'
-                                }
-                            />
-                        )}
                     </div>
                     <Modal
                         isOpen={isOpen}
