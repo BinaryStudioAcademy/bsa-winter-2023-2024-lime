@@ -20,6 +20,7 @@ export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from './types/types.js';
 export {
     userAuthValidationSchema,

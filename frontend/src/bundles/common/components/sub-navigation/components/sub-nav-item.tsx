@@ -13,10 +13,13 @@ type Properties = {
     bgColor: string;
 };
 
-const SubNavItem = ({ label, to, bgColor }: Properties): JSX.Element => {
+const SubNavItem: React.FC<Properties> = ({
+    label,
+    to,
+    bgColor,
+}): JSX.Element => {
     const { pathname } = useLocation();
     const navItemReference = useRef<HTMLAnchorElement>(null);
-
     const labelStyles = {
         base: 'text-sm text-left font-bold truncate leading-6 select-none ml-[2.25rem]',
         color: {

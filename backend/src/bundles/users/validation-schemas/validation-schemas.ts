@@ -3,4 +3,5 @@ export {
     passwordResetValidationSchema,
     userAuthValidationSchema,
     userUpdateProfileValidationSchema,
+    userUploadAvatarValidationSchema,
 } from 'shared';

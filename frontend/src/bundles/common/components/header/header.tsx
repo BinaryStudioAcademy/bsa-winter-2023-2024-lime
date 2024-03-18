@@ -10,11 +10,11 @@ import { IconColor } from '../icon/enums/enums.js';
 import { Message, Navigation } from './components/components.js';
 import styles from './styles.module.css';
 
-type HeaderProperties = {
+type Properties = {
     toggleSidebar: () => void;
 };
 
-const Header = ({ toggleSidebar }: HeaderProperties): JSX.Element => {
+const Header: React.FC<Properties> = ({ toggleSidebar }): JSX.Element => {
     const { theme } = useAppSelector(({ theme }) => theme);
     const { email, avatarUrl } = useAppSelector(
         ({ auth }) => auth.user as UserAuthResponseDto,

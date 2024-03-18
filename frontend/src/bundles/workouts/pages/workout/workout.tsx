@@ -43,7 +43,7 @@ const Workout: React.FC = () => {
     const isLoading = dataStatus === DataStatus.PENDING;
 
     return (
-        <section className="relative flex h-full">
+        <section className="relative flex h-full w-full max-w-[1136px]">
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
@@ -63,7 +63,7 @@ const Workout: React.FC = () => {
                             </div>
                         </>
                     ) : (
-                        <div className="font-base text-primary flex w-full flex-col items-center justify-center gap-2 px-[2rem] text-center text-xl">
+                        <div className="font-base text-primary flex w-full flex-col items-center justify-center gap-2 px-[2rem] text-center text-xl md:px-0">
                             <p>You don&#39;t have any workouts yet</p>
                             <Icon name={IconName.workoutIcon} />
                             <p>When you add some they will appear here</p>

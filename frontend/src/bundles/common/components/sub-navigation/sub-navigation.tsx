@@ -12,12 +12,12 @@ type Properties = {
     className?: string;
 };
 
-const SubNavigation = ({
+const SubNavigation: React.FC<Properties> = ({
     items,
     title,
     button,
     className = '',
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const bgColors = [
         'bg-lm-yellow-100',
         'bg-lm-magenta-100',

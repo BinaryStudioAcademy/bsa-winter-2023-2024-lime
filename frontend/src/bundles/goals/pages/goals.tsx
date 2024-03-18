@@ -5,6 +5,7 @@ import {
     AchievementCard,
     Button,
     ButtonVariant,
+    GoogleAds,
     Loader,
 } from '~/bundles/common/components/components.js';
 import { CreateGoalForm } from '~/bundles/common/components/create-goal-form/create-goal-form.js';
@@ -55,6 +56,10 @@ const Goals: React.FC = () => {
         ({ achievements }) => achievements,
     );
 
+    const { currentSubscription: isSubscribed } = useAppSelector(
+        ({ subscriptions }) => subscriptions,
+    );
+
     const isLoading =
         dataStatusGoals === DataStatus.PENDING ||
         dataStatusAchievements === DataStatus.PENDING;
@@ -98,9 +103,14 @@ const Goals: React.FC = () => {
 
     const unfulfilledGoals = goals.filter((goal) => !goal.completedAt);
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
+    const lastGoalMetrics = (lastGoal?.distance ||
+        lastGoal?.duration) as number;
+    const goalType = lastGoal
+        ? activityToGoal[lastGoal.activityType]
+        : GoalTypes.STANDART;
 
     return (
-        <main className="bg-secondary ml-auto mr-auto flex w-full max-w-[71rem] flex-col gap-8 xl:flex-row xl:justify-normal">
+        <main className="bg-secondary flex w-full max-w-[1136px] flex-col justify-center gap-8 xl:flex-row">
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
@@ -108,14 +118,8 @@ const Goals: React.FC = () => {
                     <div className="flex w-full flex-col gap-8 xl:w-[70%]">
                         <section>
                             <GoalWidget
-                                value={
-                                    (lastGoal?.distance as number) ||
-                                    (lastGoal?.duration as number)
-                                }
-                                target={
-                                    (lastGoal?.distance as number) ||
-                                    (lastGoal?.duration as number)
-                                }
+                                value={lastGoalMetrics}
+                                target={lastGoalMetrics}
                                 title={
                                     lastGoal
                                         ? GOALS_MESSAGES.GOAL_COMPLETED
@@ -126,11 +130,7 @@ const Goals: React.FC = () => {
                                         ? GOALS_MESSAGES.GOAL_ENCOURAGE
                                         : ''
                                 }
-                                goalType={
-                                    lastGoal
-                                        ? activityToGoal[lastGoal.activityType]
-                                        : GoalTypes.STANDART
-                                }
+                                goalType={goalType}
                                 hasAchievement={Boolean(lastGoal)}
                                 hasDistance={Boolean(lastGoal?.distance)}
                             />
@@ -184,6 +184,7 @@ const Goals: React.FC = () => {
                     </div>
 
                     <section>
+                        {!isSubscribed && <GoogleAds className="mb-5 h-48" />}
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                             Achievements
                         </h2>
@@ -198,7 +199,6 @@ const Goals: React.FC = () => {
                                 ))}
                         </div>
                     </section>
-
                     <Modal
                         isOpen={isModalOpen}
                         title="Set the new goal"

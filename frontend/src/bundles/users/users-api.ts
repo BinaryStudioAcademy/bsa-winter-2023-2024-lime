@@ -9,6 +9,7 @@ import {
     type UserBonusGetAllResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from './types/types.js';
 
 type Constructor = {
@@ -73,6 +74,7 @@ class UserApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
+
         return await response.json<UserAuthResponseDto>();
     }
 
@@ -86,6 +88,24 @@ class UserApi extends BaseHttpApi {
             },
         );
         return await response.json<UserBonusGetAllResponseDto>();
+    }
+
+    public async uploadAvatar(
+        payload: File,
+    ): Promise<UserUploadAvatarResponseDto> {
+        const imageData = new FormData();
+        imageData.append('image', payload);
+
+        const response = await this.load(
+            this.getFullEndpoint(UsersApiPath.UPLOAD_AVATAR, {}),
+            {
+                method: 'POST',
+                payload: imageData,
+                hasAuth: true,
+            },
+        );
+
+        return response.json<UserUploadAvatarResponseDto>();
     }
 }
 
