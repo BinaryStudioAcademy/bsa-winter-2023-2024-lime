@@ -6,24 +6,45 @@ import {
     type ValueOf,
 } from '~/bundles/common/types/types.js';
 
-import { logout, refreshUser, signIn, signUp, updateUser } from './actions.js';
+import {
+    authorizeIdentity,
+    logout,
+    refreshUser,
+    signIn,
+    signInIdentity,
+    signUp,
+    updateUser,
+    uploadAvatar,
+} from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     user: UserAuthResponseDto | null;
     isRefreshing: boolean;
+    updateProfile: {
+        dataStatus: ValueOf<typeof DataStatus>;
+        avatarUrl: string | null;
+    };
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     user: null,
     isRefreshing: false,
+    updateProfile: {
+        dataStatus: DataStatus.IDLE, // quick fix for the issue with blank layout while updating user profile
+        avatarUrl: null,
+    },
 };
 
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'auth',
-    reducers: {},
+    reducers: {
+        clearUpdateProfile(state) {
+            state.updateProfile = initialState.updateProfile;
+        },
+    },
     extraReducers(builder) {
         builder.addCase(signUp.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;
@@ -69,13 +90,42 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(updateUser.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
+            state.updateProfile.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(updateUser.fulfilled, (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
+            state.updateProfile.dataStatus = DataStatus.FULFILLED;
             state.user = action.payload;
         });
         builder.addCase(updateUser.rejected, (state) => {
+            state.updateProfile.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(uploadAvatar.pending, (state) => {
+            state.updateProfile.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(uploadAvatar.fulfilled, (state, action) => {
+            state.updateProfile.dataStatus = DataStatus.FULFILLED;
+            state.updateProfile.avatarUrl = action.payload.avatarUrl;
+        });
+        builder.addCase(uploadAvatar.rejected, (state) => {
+            state.updateProfile.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(authorizeIdentity.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(authorizeIdentity.fulfilled, (state) => {
+            state.dataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(authorizeIdentity.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(signInIdentity.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(signInIdentity.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.user = action.payload.user;
+        });
+        builder.addCase(signInIdentity.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

@@ -28,6 +28,20 @@ class AchievementsApi extends BaseHttpApi {
         );
         return await response.json<AchievementsGetAllResponseDto[]>();
     }
+
+    public async getUserAchievements(
+        id: string,
+    ): Promise<AchievementsGetAllResponseDto[]> {
+        const response = await this.load(
+            this.getFullEndpoint(AchievementsApiPath.USER_ID, { id }),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<AchievementsGetAllResponseDto[]>();
+    }
 }
 
 export { AchievementsApi };

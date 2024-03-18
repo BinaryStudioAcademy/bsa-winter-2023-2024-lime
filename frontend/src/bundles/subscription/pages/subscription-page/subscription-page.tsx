@@ -18,11 +18,7 @@ import { type SubscribeRequestDto } from '../../types/types.js';
 
 const SubscriptionPage = (): JSX.Element => {
     const { dataStatus, subscriptionPlans, currentSubscription } =
-        useAppSelector(({ subscriptions }) => ({
-            subscriptionPlans: subscriptions.subscriptionPlans,
-            currentSubscription: subscriptions.currentSubscription,
-            dataStatus: subscriptions.dataStatus,
-        }));
+        useAppSelector(({ subscriptions }) => subscriptions);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -91,7 +87,7 @@ const SubscriptionPage = (): JSX.Element => {
                         onChangeSubscription={handleChangeSubscription}
                     />
                 ) : (
-                    <span className="font-base text-xl text-white">
+                    <span className="font-base text-primary text-xl">
                         Looks like you dont have subscription yet. Choose from
                         below.
                     </span>

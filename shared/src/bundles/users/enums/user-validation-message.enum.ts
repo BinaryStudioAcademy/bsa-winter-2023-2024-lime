@@ -1,6 +1,16 @@
+import { MEGABYTE_PER_BYTE } from '../../../constants/constants.js';
 import { UserValidationRule } from './user-validation-rule.enum.js';
 
-const { PASSWORD, FULLNAME, NICKNAME, WEIGHT, HEIGHT } = UserValidationRule;
+const {
+    LOCATION,
+    PASSWORD,
+    FULLNAME,
+    NICKNAME,
+    WEIGHT,
+    HEIGHT,
+    AVATAR_MAX_SIZE,
+    AVATAR_ALLOWED_TYPES,
+} = UserValidationRule;
 
 const UserValidationMessage = {
     REQUIRED: 'Please fill out this field',
@@ -22,10 +32,20 @@ const UserValidationMessage = {
     BIRTHDATE_FORMAT: 'Invalid date format. Use DD/MM/YYYY',
     BIRTHDATE_IN_FUTURE: 'Date of birth can not be in the future',
     WEIGHT_VALUE: `Weight should be from ${WEIGHT.MIN_VALUE} to ${WEIGHT.MAX_VALUE} kg.`,
-    WEIGHT_WRONG: 'Weight should consist of digits.',
-    HEIGHT_WRONG: 'Height should consist of digits.',
-    HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MIN_VALUE} sm.`,
+    WEIGHT_WRONG: 'Weight should only contain numbers and a decimal point.',
+    HEIGHT_WRONG: 'Height should only contain numbers and a decimal point.',
+    HEIGHT_VALUE: `Height should be from ${HEIGHT.MIN_VALUE} to ${HEIGHT.MAX_VALUE} cm.`,
+    LOCATION_WRONG: 'Location should be in format City, Country',
+    LOCATION_LENGTH: `lOCATION should have from ${LOCATION.MIN_LENGTH} to ${LOCATION.MAX_LENGTH} characters.`,
     USER_NOT_FOUND: 'User not found',
+    USER_WITH_REFERRAL_ID_NOT_FOUND: 'User with this referral id was not found',
+    BONUS_OPERATION_LACK_OF_FUNDS:
+        'Operation can not be finished due to lack of funds.',
+    BONUS_OPERATION_NOT_SUCCESSFUL: 'Operation was not sucessfull.',
+    USER_OAUTH: 'Use OAuth to sign in',
+    FILE_REQUIRED: 'File is required',
+    FILE_SIZE_EXCEEDED: `File size exceeded. Max file size is ${AVATAR_MAX_SIZE / MEGABYTE_PER_BYTE}MB`,
+    FILE_TYPE_NOT_ALLOWED: `File type is not allowed. Only ${AVATAR_ALLOWED_TYPES.toString()} is allowed`,
 } as const;
 
 export { UserValidationMessage };

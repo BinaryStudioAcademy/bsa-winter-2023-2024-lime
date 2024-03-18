@@ -17,9 +17,14 @@ import { type UserSignUpForm } from './type.js';
 type Properties = {
     onSubmit: (payload: UserSignUpForm) => void;
     isLoading: boolean;
+    handleOAuth: () => void;
 };
 
-const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
+const SignUpForm: React.FC<Properties> = ({
+    onSubmit,
+    isLoading,
+    handleOAuth,
+}) => {
     const { control, errors, handleSubmit } = useAppForm<UserSignUpForm>({
         defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
         validationSchema: userSignUpValidationSchema,
@@ -45,16 +50,11 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                         variant={ButtonVariant.SECONDARY}
                         label="Continue with "
                         rightIcon={<Icon name="googleLogoIcon" />}
-                    />
-                    <Button
-                        size={ComponentSize.MEDIUM}
-                        variant={ButtonVariant.SECONDARY}
-                        label="Continue with "
-                        rightIcon={<Icon name="facebookIcon" />}
+                        onClick={handleOAuth}
                     />
                 </div>
 
-                <p className="text-lm-grey-100 mb-6 mt-10 text-center text-xs">
+                <p className="text-secondary mb-6 mt-10 text-center text-xs">
                     or Sign up with Email
                 </p>
                 <form onSubmit={handleFormSubmit}>

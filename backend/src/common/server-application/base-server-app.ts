@@ -16,8 +16,16 @@ import { type ValidationError } from '~/common/exceptions/exceptions.js';
 import { createProtectedRoutes } from '~/common/helpers/create-protected-routes-helper.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Logger } from '~/common/logger/logger.js';
-import { authPlugin, verifyStripeWebhook } from '~/common/plugins/plugins.js';
-import { jwtService, stripeService } from '~/common/services/services.js';
+import {
+    authPlugin,
+    socketInjectorPlugin,
+    verifyStripeWebhook,
+} from '~/common/plugins/plugins.js';
+import {
+    jwtService,
+    socketService,
+    stripeService,
+} from '~/common/services/services.js';
 import {
     type ServerCommonErrorResponse,
     type ServerValidationErrorResponse,
@@ -56,10 +64,11 @@ class BaseServerApp implements ServerApp {
         this.apis = apis;
 
         this.app = Fastify();
+        socketService.initializeIo(this.app.server);
     }
 
     public addRoute(parameters: ServerAppRouteParameters): void {
-        const { path, method, handler, validation } = parameters;
+        const { path, method, handler, preHandler, validation } = parameters;
 
         this.app.route({
             url: path,
@@ -70,6 +79,7 @@ class BaseServerApp implements ServerApp {
                 querystring: validation?.query,
                 params: validation?.params,
             },
+            preHandler: preHandler ?? [],
         });
 
         this.logger.info(`Route: ${method as string} ${path} is registered`);
@@ -147,6 +157,7 @@ class BaseServerApp implements ServerApp {
         });
 
         await this.app.register(multer.contentParser);
+        await this.app.register(socketInjectorPlugin, { io: socketService.io });
     }
 
     private initValidationCompiler(): void {

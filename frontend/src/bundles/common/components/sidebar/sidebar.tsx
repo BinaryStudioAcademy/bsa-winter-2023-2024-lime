@@ -1,4 +1,7 @@
-import { CalendarDaysIcon as ScheduleIcon } from '@heroicons/react/16/solid';
+import {
+    CalendarDaysIcon as ScheduleIcon,
+    ChatBubbleOvalLeftEllipsisIcon as ChatsIcon,
+} from '@heroicons/react/16/solid';
 import {
     ArrowLeftStartOnRectangleIcon as LogoutIcon,
     QuestionMarkCircleIcon as HelpIcon,
@@ -27,11 +30,12 @@ type Properties = {
 
 const styles = {
     baseStyle:
-        'bg-lm-black-100 flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
+        'bg-primary flex min-h-90 lg:w-72 w-64 flex-col content-center items-center p-7 text-white',
+
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
+const Sidebar: React.FC<Properties> = ({ isOpen = true }): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute, setActiveRoute] = useState(pathname);
@@ -88,6 +92,20 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
                     />
+                    <div className="relative">
+                        <SidebarNav
+                            icon={<ChatsIcon />}
+                            text="Chats"
+                            to={AppRoute.CHATS}
+                            isActive={
+                                activeRoute === AppRoute.CHATS ||
+                                activeRoute.includes(AppRoute.CHATS)
+                            }
+                        />
+                        <div className="absolute -right-2 -top-2">
+                            <Icon name="aiPoweredIcon" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -100,7 +118,7 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         isActive={activeRoute === AppRoute.HELP}
                     />
 
-                    <div className="flex items-center justify-center">
+                    <div className="text-lm-grey-200 flex items-center justify-center">
                         <Button
                             type="button"
                             label={'Logout'}
@@ -112,6 +130,10 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                             size={ComponentSize.MEDIUM}
                             onClick={handleLogout}
                         />
+                    </div>
+
+                    <div className="flex w-[10rem] items-center justify-center px-6 py-4">
+                        <Icon name={IconName.poweredByStravaIcon} />
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ const ButtonVariant = {
     TERTIARY: 'tertiary',
     SIDEBAR: 'sidebar',
     DANGER: 'danger',
+    CREATE_GOAL: 'createGoal',
 } as const;
 
 type ButtonSize = Exclude<
@@ -17,7 +18,7 @@ type ButtonSize = Exclude<
 
 type ButtonType = 'button' | 'submit';
 
-type ButtonProperties = {
+type Properties = {
     size: ButtonSize;
     variant: ValueOf<typeof ButtonVariant>;
     label: string;
@@ -27,7 +28,7 @@ type ButtonProperties = {
     isDisabled?: boolean;
     isActive?: boolean;
     className?: string;
-    onClick?: () => void;
+    onClick?: () => void | Promise<void>;
 };
 
 const baseClasses =
@@ -44,9 +45,11 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.TERTIARY]:
         'bg-transparent justify-center text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary',
     [ButtonVariant.SIDEBAR]:
-        'text-lm-grey-200 align hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
+        'align-middle hover:text-lm-black-200 hover:bg-lm-yellow-100 disabled:text-lm-grey-300 justify-start rounded-md',
     [ButtonVariant.DANGER]:
-        'rounded-lg justify-center bg-lm-red text-white hover:opacity-80',
+        'rounded-lg justify-center bg-lm-red text-primary hover:opacity-80',
+    [ButtonVariant.CREATE_GOAL]:
+        'border justify-center border-buttonPrimary rounded-lg bg-primary text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary disabled:border-buttonTertiary',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {
@@ -55,7 +58,7 @@ const buttonSizesToClasses: Record<ButtonSize, string> = {
     [ComponentSize.LARGE]: 'px-8 py-6 h-20 text-xl font-bold gap-3',
 };
 
-const Button: React.FC<ButtonProperties> = ({
+const Button: React.FC<Properties> = ({
     label,
     variant,
     size,
@@ -66,7 +69,7 @@ const Button: React.FC<ButtonProperties> = ({
     isDisabled = false,
     isActive = false,
     ...properties
-}: ButtonProperties): JSX.Element => {
+}): JSX.Element => {
     return (
         <button
             disabled={isDisabled}

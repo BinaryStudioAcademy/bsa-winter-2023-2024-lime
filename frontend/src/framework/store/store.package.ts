@@ -23,13 +23,17 @@ import {
     subscriptionApi,
     subscriptionPlansApi,
 } from '~/bundles/subscription/subscription.js';
+import { reducer as userBonusesReducer } from '~/bundles/user-bonuses/store/user-bonuses.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { reducer as workoutsReducer } from '~/bundles/workouts/store/workouts.js';
 import { workoutApi } from '~/bundles/workouts/workouts.js';
 import { type Config } from '~/framework/config/config.js';
 
-import { errorMiddleware } from './middlewares/error-middleware.js';
+import {
+    chatSocketMiddleware,
+    errorMiddleware,
+} from './middlewares/middlewares.js';
 
 type RootReducer = {
     app: ReturnType<typeof appReducer>;
@@ -42,6 +46,7 @@ type RootReducer = {
     theme: ReturnType<typeof themeReducer>;
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
+    userBonuses: ReturnType<typeof userBonusesReducer>;
 };
 
 type ExtraArguments = {
@@ -79,13 +84,16 @@ class Store {
                 theme: themeReducer,
                 connections: connectionsReducer,
                 workouts: workoutsReducer,
+                userBonuses: userBonusesReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
                     thunk: {
                         extraArgument: this.extraArguments,
                     },
-                }).prepend(errorMiddleware),
+                })
+                    .prepend(errorMiddleware)
+                    .concat(chatSocketMiddleware), // eslint-disable-line unicorn/prefer-spread
         });
     }
 

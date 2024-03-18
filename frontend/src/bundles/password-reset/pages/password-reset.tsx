@@ -1,8 +1,5 @@
 import authLogo from '~/assets/img/auth-logo.svg';
-import {
-    ResetPasswordForm,
-    ThemeSwitcher,
-} from '~/bundles/common/components/components.js';
+import { ResetPasswordForm } from '~/bundles/common/components/components.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     getUserId,
@@ -34,9 +31,7 @@ const PasswordReset: React.FC = () => {
 
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
-    const { dataStatus } = useAppSelector(({ passwordReset }) => ({
-        dataStatus: passwordReset.dataStatus,
-    }));
+    const { dataStatus } = useAppSelector(({ passwordReset }) => passwordReset);
 
     const isLoading = dataStatus === DataStatus.PENDING;
 
@@ -75,7 +70,7 @@ const PasswordReset: React.FC = () => {
 
     const classes = {
         main: 'bg-auth flex h-screen flex-col-reverse bg-cover bg-no-repeat lg:flex-row',
-        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-primary lg:flex-none lg:w-[45rem]',
+        base: 'relative flex flex-col flex-1 mx-[1rem] my-[1.125rem] rounded-[2.75rem] bg-secondary lg:flex-none lg:w-[45rem]',
         form: 'items-center justify-center text-primary px-[2rem] lg:px-[11rem] lg:justify-center pt-0 pb-0',
     };
 
@@ -94,7 +89,6 @@ const PasswordReset: React.FC = () => {
             <div className="text-primary hidden flex-1 items-center justify-center text-xl lg:flex">
                 <img src={authLogo} alt="LIME Logo" />
             </div>
-            <ThemeSwitcher className="absolute bottom-4 right-4" />
         </main>
     );
 };
