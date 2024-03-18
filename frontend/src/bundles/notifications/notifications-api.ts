@@ -20,7 +20,7 @@ class NotificationsApi extends BaseHttpApi {
         super({ path: ApiPath.NOTIFICATIONS, baseUrl, http, storage });
     }
 
-    public async fetchNotifications(): Promise<{        
+    public async fetchNotifications(): Promise<{
         items: NotificationResponseDto[];
     }> {
         const response = await this.load(
