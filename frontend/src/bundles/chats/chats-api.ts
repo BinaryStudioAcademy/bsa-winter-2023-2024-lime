@@ -2,11 +2,10 @@ import {
     type ChatGetAllItemsResponseDto,
     type ChatResponseDto,
 } from '~/bundles/chats/types/types.js';
+import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
-
-import { ApiPath, ContentType } from '../common/enums/enums.js';
 
 type Constructor = {
     baseUrl: string;

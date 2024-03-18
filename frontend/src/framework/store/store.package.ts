@@ -17,6 +17,7 @@ import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
+import { messageApi } from '~/bundles/messages/messages.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
@@ -65,6 +66,7 @@ type ExtraArguments = {
     workoutApi: typeof workoutApi;
     chatsApi: typeof chatsApi;
     aiAssistantApi: typeof aiAssistantApi;
+    messageApi: typeof messageApi;
 };
 
 class Store {
@@ -117,6 +119,7 @@ class Store {
             workoutApi,
             chatsApi,
             aiAssistantApi,
+            messageApi,
         };
     }
 }

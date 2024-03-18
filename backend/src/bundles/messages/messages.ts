@@ -8,7 +8,11 @@ import { MessageService } from './message.service.js';
 
 const messageRepository = new MessageRepository(MessageModel);
 const messageService = new MessageService(messageRepository);
-const messageController = new MessageController(logger, messageService, socketService);
+const messageController = new MessageController(
+    logger,
+    messageService,
+    socketService,
+);
 
 export { messageController, messageService };
 export { MessageAttributes } from './enums/enums.js';

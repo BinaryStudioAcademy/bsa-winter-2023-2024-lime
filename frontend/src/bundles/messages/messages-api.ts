@@ -3,10 +3,10 @@ import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
-import { AiAssistantPath } from './enums/enums.js';
+import { MessagePath } from './enums/enums.js';
 import {
-    type SendAiMessageRequestDto,
-    type SendAiMessageResponseDto,
+    type MessageRequestDto,
+    type MessageResponseDto,
 } from './types/types.js';
 
 type Constructor = {
@@ -15,16 +15,14 @@ type Constructor = {
     storage: Storage;
 };
 
-class AiAssistantApi extends BaseHttpApi {
+class MessagesApi extends BaseHttpApi {
     public constructor({ baseUrl, http, storage }: Constructor) {
-        super({ path: ApiPath.AI_ASSISTANT, baseUrl, http, storage });
+        super({ path: ApiPath.MESSAGES, baseUrl, http, storage });
     }
 
-    public async getAiResponse(
-        payload: SendAiMessageRequestDto,
-    ): Promise<SendAiMessageResponseDto> {
+    public async send(payload: MessageRequestDto): Promise<MessageResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(AiAssistantPath.SEND_MESSAGE, {}),
+            this.getFullEndpoint(MessagePath.ROOT, {}),
             {
                 method: 'POST',
                 payload: JSON.stringify(payload),
@@ -32,8 +30,8 @@ class AiAssistantApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<SendAiMessageResponseDto>();
+        return await response.json<MessageResponseDto>();
     }
 }
 
-export { AiAssistantApi };
+export { MessagesApi };

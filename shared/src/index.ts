@@ -43,6 +43,7 @@ export {
 export {
     type MessageRequestDto,
     type MessageResponseDto,
+    MessagePath,
     messageValidationSchema,
 } from './bundles/messages/messages.js';
 export {
