@@ -1,8 +1,4 @@
-import {
-    type QueryBuilder,
-    type RelationMappings,
-    Model,
-} from 'objection';
+import { type QueryBuilder, type RelationMappings, Model } from 'objection';
 
 import {
     MessageAttributes,

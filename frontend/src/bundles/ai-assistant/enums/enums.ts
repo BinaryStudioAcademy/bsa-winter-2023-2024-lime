@@ -1,0 +1,1 @@
+export { AiAssistantPath } from 'shared';

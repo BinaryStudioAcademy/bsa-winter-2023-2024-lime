@@ -8,6 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { reducer as appReducer } from '~/app/store/app.js';
 import { achievementsApi } from '~/bundles/achievements/achievements.js';
 import { reducer as achievementsReducer } from '~/bundles/achievements/store/achievements.js';
+import { aiAssistantApi } from '~/bundles/ai-assistant/ai-assistant.js';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { chatsApi } from '~/bundles/chats/chats.js';
@@ -16,6 +17,7 @@ import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
+import { messageApi } from '~/bundles/messages/messages.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
@@ -63,6 +65,8 @@ type ExtraArguments = {
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
     chatsApi: typeof chatsApi;
+    aiAssistantApi: typeof aiAssistantApi;
+    messageApi: typeof messageApi;
 };
 
 class Store {
@@ -114,6 +118,8 @@ class Store {
             connectionApi,
             workoutApi,
             chatsApi,
+            aiAssistantApi,
+            messageApi,
         };
     }
 }

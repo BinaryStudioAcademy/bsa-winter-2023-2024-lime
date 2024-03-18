@@ -1,14 +1,14 @@
 import { AiChatLink } from '~/bundles/chats/components/ai-chat-link/ai-chat-link.js';
 import { ChatLink } from '~/bundles/chats/components/chat-link/chat-link.js';
 import { ChatSearchBar } from '~/bundles/chats/components/chat-search-bar/chat-search-bar.js';
-import { type ChatResponseDto } from '~/bundles/chats/types/types.js';
+import { type ChatPreviewResponseDto } from '~/bundles/chats/types/types.js';
 import { Button } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
 import { Status } from '../../enums/status.enum.js';
 
 type Properties = {
-    chats: ChatResponseDto[];
+    chats: ChatPreviewResponseDto[];
     className?: string;
 };
 

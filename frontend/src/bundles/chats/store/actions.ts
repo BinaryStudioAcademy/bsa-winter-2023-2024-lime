@@ -1,8 +1,8 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
+    type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,
-    type ChatResponseDto,
 } from '~/bundles/chats/types/types.js';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
@@ -19,7 +19,7 @@ const getAllChats = createAsyncThunk<
 });
 
 const getChat = createAsyncThunk<
-    ChatResponseDto,
+    ChatFullResponseDto,
     { chatId: string },
     AsyncThunkConfig
 >(`${sliceName}/get-chat`, async (payload, { extra: { chatsApi } }) => {

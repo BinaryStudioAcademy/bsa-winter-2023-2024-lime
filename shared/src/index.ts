@@ -4,6 +4,11 @@ export {
     Metric,
 } from './bundles/achievements/achievements.js';
 export {
+    type SendAiMessageRequestDto,
+    type SendAiMessageResponseDto,
+    AiAssistantPath,
+} from './bundles/ai-assistant/ai-assistant.js';
+export {
     type AuthResponseDto,
     type AuthSignUpRequestDto,
     AuthApiPath,
@@ -41,6 +46,7 @@ export {
 export {
     type MessageRequestDto,
     type MessageResponseDto,
+    MessagePath,
     messageValidationSchema,
 } from './bundles/messages/messages.js';
 export {

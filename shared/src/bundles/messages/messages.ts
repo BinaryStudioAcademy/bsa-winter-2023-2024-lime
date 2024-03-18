@@ -1,3 +1,4 @@
+export { MessagePath } from './enums/enums.js';
 export {
     type MessageRequestDto,
     type MessageResponseDto,

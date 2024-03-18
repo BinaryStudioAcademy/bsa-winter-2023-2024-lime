@@ -1,8 +1,8 @@
-import { type ChatResponseDto } from './chat-response-dto.type.js';
+import { type ChatPreviewResponseDto } from './types.js';
 
 type ChatGetAllItemsResponseDto = {
-    aiAssistantChat: ChatResponseDto | null;
-    userChats: ChatResponseDto[];
+    aiAssistantChat: ChatPreviewResponseDto | null;
+    userChats: ChatPreviewResponseDto[];
 };
 
 export { type ChatGetAllItemsResponseDto };
