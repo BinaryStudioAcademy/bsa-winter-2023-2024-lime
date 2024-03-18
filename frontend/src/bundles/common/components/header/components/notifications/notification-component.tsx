@@ -50,7 +50,7 @@ const NotificationComponent = (): JSX.Element => {
 
     const notificationListReference = useRef(null);
 
-    const count = notifications.filter(
+    const count = notifications?.filter(
         (notification) => !notification.isRead,
     ).length;
 
@@ -62,7 +62,7 @@ const NotificationComponent = (): JSX.Element => {
     return (
         <div className="relative" ref={notificationListReference}>
             <NotificationBell
-                count={count}
+                count={isLoading ? 0 : count || 0}
                 onClick={handleIconClick}
                 showList={showList}
             />
