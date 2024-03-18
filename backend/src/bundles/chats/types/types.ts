@@ -3,7 +3,7 @@ export {
     type ChatGetAllItemsResponseDto,
     type ChatRequestDto,
     type ChatResponseDto,
-    type ChatUsersResponseDto,
+    type ChatUserResponseDto,
     type EntityIdParameterDto,
     type MessageResponseDto,
 } from 'shared';

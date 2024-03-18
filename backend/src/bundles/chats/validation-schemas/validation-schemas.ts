@@ -1,1 +1,1 @@
-export { chatValidationSchema } from 'shared';
+export { chatValidationSchema, idParameterValidationSchema } from 'shared';
