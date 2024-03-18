@@ -12,6 +12,7 @@ export {
     type ChatGetAllItemsResponseDto,
     type ChatRequestDto,
     type ChatResponseDto,
+    type ChatUsersResponseDto,
     chatValidationSchema,
 } from './bundles/chats/chats.js';
 export {
