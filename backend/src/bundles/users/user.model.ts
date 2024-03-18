@@ -1,4 +1,9 @@
-import { type QueryBuilder, type RelationMappings, Model } from 'objection';
+import {
+    type Modifiers,
+    type QueryBuilder,
+    type RelationMappings,
+    Model,
+} from 'objection';
 
 import { UserAchievementModel } from '~/bundles/achievements/achievements.js';
 import {
@@ -143,6 +148,21 @@ class UserModel extends AbstractModel {
                     },
                     to: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
                 },
+            },
+        };
+    }
+
+    public static override get modifiers(): Modifiers<QueryBuilder<UserModel>> {
+        return {
+            userDetails(builder): QueryBuilder<UserModel> {
+                return builder
+                    .select(
+                        'email',
+                        'userDetails.fullName',
+                        'userDetails.userId',
+                        'userDetails.avatarUrl',
+                    )
+                    .leftJoinRelated('userDetails');
             },
         };
     }
