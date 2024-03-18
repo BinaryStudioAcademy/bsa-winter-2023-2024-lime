@@ -91,6 +91,7 @@ export default {
             'md': '768px',
             'lg': '1024px',
             'xl': '1280px',
+            '2xl': '1940px',
         },
         extend: {
             animation: {
@@ -170,6 +171,7 @@ export default {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
                 tertiary: 'var(--background-tertiary)',
+                overlay: 'var(--modal-overlay)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
