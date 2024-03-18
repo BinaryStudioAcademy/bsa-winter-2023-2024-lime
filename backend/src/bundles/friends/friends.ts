@@ -1,4 +1,6 @@
+import { notificationService } from '~/bundles/notifications/notifications.js';
 import { UserModel } from '~/bundles/users/user.model.js';
+import { userService } from '~/bundles/users/users.js';
 import { logger } from '~/common/logger/logger.js';
 
 import { FriendController } from './friend.controller.js';
@@ -12,7 +14,12 @@ export {
 } from './types/types.js';
 
 const friendRepository = new FriendRepository(FriendModel, UserModel);
-const friendService = new FriendService(friendRepository);
+
+const friendService = new FriendService(
+    friendRepository,
+    userService,
+    notificationService,
+);
 const friendController = new FriendController(logger, friendService);
 
 export { friendController, friendService };
