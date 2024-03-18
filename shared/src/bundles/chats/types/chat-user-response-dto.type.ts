@@ -1,8 +1,8 @@
-type ChatUsersResponseDto = {
+type ChatUserResponseDto = {
     id: number;
     email: string;
     fullName: string;
     avatarUrl: string;
 };
 
-export { type ChatUsersResponseDto };
+export { type ChatUserResponseDto };

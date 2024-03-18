@@ -4,4 +4,5 @@ export {
     type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,
     type ChatPreviewResponseDto,
+    type ChatUserResponseDto,
 } from 'shared';

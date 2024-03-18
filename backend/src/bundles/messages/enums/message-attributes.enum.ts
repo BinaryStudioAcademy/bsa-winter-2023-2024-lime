@@ -4,6 +4,7 @@ const MessageAttributes = {
     SENDER_ID: 'senderId',
     TEXT: 'text',
     IS_SEEN: 'isSeen',
+    CREATED_AT: 'createdAt',
 } as const;
 
 export { MessageAttributes };

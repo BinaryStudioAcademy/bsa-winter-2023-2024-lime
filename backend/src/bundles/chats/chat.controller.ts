@@ -14,7 +14,10 @@ import {
     type ChatRequestDto,
     type EntityIdParameterDto,
 } from './types/types.js';
-import { chatValidationSchema } from './validation-schemas/validation-schemas.js';
+import {
+    chatValidationSchema,
+    idParameterValidationSchema,
+} from './validation-schemas/validation-schemas.js';
 
 class ChatController extends BaseController {
     private chatService: ChatService;
@@ -84,10 +87,12 @@ class ChatController extends BaseController {
             params: EntityIdParameterDto;
         }>,
     ): Promise<ApiHandlerResponse> {
+        const { id } = idParameterValidationSchema.parse(options.params);
+
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.chatService.find({ id: options.params.id }),
+            payload: await this.chatService.find({ id }),
         };
     }
 

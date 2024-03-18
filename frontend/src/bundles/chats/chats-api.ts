@@ -30,7 +30,7 @@ class ChatsApi extends BaseHttpApi {
 
     public async getChat(chatId: string): Promise<ChatFullResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint('/:id', { chatId }),
+            this.getFullEndpoint('/:id', { id: chatId }),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,

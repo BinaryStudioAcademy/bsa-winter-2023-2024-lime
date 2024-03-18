@@ -20,7 +20,7 @@ class ChatService implements Service {
     ): Promise<ChatResponseDto | null> {
         const chat = await this.chatRepository.find(query);
 
-        return chat ? (chat.toObject() as ChatResponseDto) : null;
+        return chat ? (chat.toObject() as unknown as ChatResponseDto) : null;
     }
 
     public async findAll({
@@ -82,7 +82,7 @@ class ChatService implements Service {
 
         const chat = await this.chatRepository.create(chatEntity);
 
-        return chat.toObject() as ChatResponseDto;
+        return chat.toObject() as unknown as ChatResponseDto;
     }
 
     public update(

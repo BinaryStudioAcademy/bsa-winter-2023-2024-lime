@@ -7,7 +7,7 @@ const getContextMessages = (
     items: MessageResponseDto[],
     contextMessagesCount: number,
 ): ChatCompletionMessageParam[] => {
-    return items.slice(contextMessagesCount * -1).map((message) => {
+    return items.slice(0, contextMessagesCount).map((message) => {
         return {
             role: message.senderId ? SenderType.USER : SenderType.ASSISTANT,
             content: message.text,
