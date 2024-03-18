@@ -1,4 +1,3 @@
-import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -19,11 +18,8 @@ import { NotificationBell, NotificationList } from './components/components.js';
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const {
-        notifications: { items },
-        dataStatus,
+        notifications: { items }
     } = useAppSelector(({ notifications }) => notifications);
-
-    const isLoading = dataStatus === DataStatus.PENDING;
 
     useEffect(() => {
         void dispatch(fetchNotifications());
@@ -65,7 +61,7 @@ const NotificationComponent = (): JSX.Element => {
                 onClick={handleIconClick}
                 showList={showList}
             />
-            {showList && !isLoading && (
+            {showList && (
                 <NotificationList
                     notifications={items}
                     onNotificationReadClick={handleNotificationReadClick}
