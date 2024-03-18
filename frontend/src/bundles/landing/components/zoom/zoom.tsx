@@ -5,7 +5,7 @@ type Properties = {
     children?: JSX.Element;
 };
 
-const Zoom = ({ className, children }: Properties): JSX.Element => {
+const Zoom: React.FC<Properties> = ({ className, children }): JSX.Element => {
     return (
         <motion.div
             className={className}

@@ -2,17 +2,17 @@ import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
-type SwitchProperties = {
+type Properties = {
     checked: boolean;
     onChange: (checked: boolean) => void;
     size?: number;
 };
 
-const Switch = ({
+const Switch: React.FC<Properties> = ({
     checked,
     onChange,
     size = 24,
-}: SwitchProperties): JSX.Element => {
+}): JSX.Element => {
     const handleChange = useCallback((): void => {
         onChange(!checked);
     }, [onChange, checked]);

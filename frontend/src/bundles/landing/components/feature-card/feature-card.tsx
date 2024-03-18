@@ -11,11 +11,11 @@ type Properties = {
     description: string;
 };
 
-const FeatureCard = ({
+const FeatureCard: React.FC<Properties> = ({
     iconName,
     title,
     description,
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     return (
         <div className="bg-secondary rounded-[1rem] px-[2rem] py-[1.5rem] leading-4">
             <div className="flex items-center">

@@ -9,7 +9,7 @@ type Properties = {
     className?: string;
 };
 
-const ProfileLayout = ({ className }: Properties): JSX.Element => (
+const ProfileLayout: React.FC<Properties> = ({ className }): JSX.Element => (
     <div className={getValidClassNames(className, 'mx-auto my-0 flex w-full')}>
         <ProfileNavigation />
         <RouterOutlet />
