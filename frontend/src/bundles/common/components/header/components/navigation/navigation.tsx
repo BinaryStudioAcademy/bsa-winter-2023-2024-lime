@@ -1,8 +1,9 @@
-import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon } from '@heroicons/react/24/solid';
 
 import { Avatar, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 
+import { NotificationComponent } from '../notifications/notification-component.js';
 import styles from './styles.module.css';
 
 type Properties = {
@@ -18,7 +19,7 @@ const Navigation: React.FC<Properties> = ({
         <nav className={styles['navigation']}>
             <ul className={styles['menu-list']}>
                 <li>
-                    <BellIcon className={styles['icon']} />
+                    <NotificationComponent />
                 </li>
                 <li>
                     <Link to={AppRoute.PROFILE_INFORMATION}>

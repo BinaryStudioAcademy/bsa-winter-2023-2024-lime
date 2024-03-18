@@ -1,0 +1,1 @@
+export { NotificationsApiPath } from 'shared';
