@@ -1,17 +1,18 @@
 import { AiChatLink } from '~/bundles/chats/components/ai-chat-link/ai-chat-link.js';
 import { ChatLink } from '~/bundles/chats/components/chat-link/chat-link.js';
 import { ChatSearchBar } from '~/bundles/chats/components/chat-search-bar/chat-search-bar.js';
-import { type ChatLink as TChatLink } from '~/bundles/chats/types/types.js';
+import { type ChatResponseDto } from '~/bundles/chats/types/types.js';
 import { Button } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
+import { Status } from '../../enums/status.enum.js';
+
 type Properties = {
-    chatLinks: TChatLink[];
+    chats: ChatResponseDto[];
     className?: string;
 };
 
-const ChatSidebar = ({ chatLinks, className }: Properties): JSX.Element => {
-    const hasChat = true;
+const ChatSidebar = ({ chats, className }: Properties): JSX.Element => {
     return (
         <div
             className={getValidClassNames(
@@ -29,14 +30,14 @@ const ChatSidebar = ({ chatLinks, className }: Properties): JSX.Element => {
             </div>
             <span className="text-secondary mb-1">Friends</span>
             <ul className="mb-4 flex h-full flex-1 list-none flex-col gap-5 overflow-y-auto">
-                {hasChat &&
-                    chatLinks.map(({ status, username, lastMessage }, id) => (
+                {chats.length > 1 &&
+                    chats.map(({ lastMessage }, id) => (
                         <li key={id}>
                             <ChatLink
                                 id={id}
-                                status={status}
-                                username={username}
-                                lastMessage={lastMessage}
+                                status={Status.ONLINE}
+                                username={'User 1'}
+                                lastMessage={lastMessage?.text ?? ''}
                             />
                         </li>
                     ))}

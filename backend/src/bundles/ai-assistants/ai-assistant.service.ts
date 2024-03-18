@@ -5,7 +5,10 @@ import { type OpenAIService } from '~/common/services/open-ai/open-ai.service.js
 import { MessageEntity } from '../messages/message.entity.js';
 import { type MessageRepository } from '../messages/message.repository.js';
 import { ErrorMessage } from './enums/enums.js';
-import { type SendMessageRequestDto } from './types/types.js';
+import {
+    type SendMessageRequestDto,
+    type SendMessageResponseDto,
+} from './types/types.js';
 
 class AiAssistantService {
     private openAiService: OpenAIService;
@@ -22,10 +25,10 @@ class AiAssistantService {
 
     public async sendMessage({
         userId,
-        message,
         chatId,
+        message,
         contextMessagesCount,
-    }: SendMessageRequestDto): Promise<{ message: string }> {
+    }: SendMessageRequestDto): Promise<SendMessageResponseDto> {
         if (!chatId) {
             throw new HttpError({
                 message: ErrorMessage.AI_CHAT_NOT_FOUND,
@@ -38,7 +41,7 @@ class AiAssistantService {
         });
 
         const contextMessages = chatMessages
-            .slice(0, contextMessagesCount)
+            .slice(contextMessagesCount * -1)
             .map((message) => {
                 const messageObject = message.toObject();
                 return {
