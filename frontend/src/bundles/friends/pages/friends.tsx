@@ -1,4 +1,5 @@
 import { DataStatus } from '~/bundles/common/enums/enums.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -24,6 +25,9 @@ const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
     const tabs = [TabsFollowers.FIND_FOLLOWINGS, TabsFollowers.MY_FOLLOWINGS];
     const [page, setPage] = useState<number>(PAGE);
+    const [detailsAsideStyle, setDetailsAsideStyle] = useState({
+        transform: 'translateX(110%)',
+    });
 
     const [selectedCard, setSelectedCard] = useState<FriendResponseDto | null>(
         null,
@@ -37,6 +41,12 @@ const Friends: React.FC = () => {
         dataStatus: isLoading,
         totalCount,
     } = useAppSelector(({ friends }) => friends);
+
+    const classes = {
+        detailsAside:
+            'bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px]',
+        animation: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
+    };
 
     const handleLoadMore = useCallback((): void => {
         setPage(page + 1);
@@ -120,6 +130,12 @@ const Friends: React.FC = () => {
         void loadUsers();
     }, [dispatch, activeTab]);
 
+    useEffect(() => {
+        selectedCard
+            ? setDetailsAsideStyle({ transform: 'translateX(0)' })
+            : setDetailsAsideStyle({ transform: 'translateX(110%)' });
+    }, [selectedCard]);
+
     return (
         <section className="relative flex flex-col gap-5 whitespace-normal">
             <Tabs
@@ -169,8 +185,14 @@ const Friends: React.FC = () => {
                 )}
             </div>
 
-            {selectedCard && (
-                <aside className="bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px]">
+            <aside
+                className={getValidClassNames(
+                    classes.detailsAside,
+                    classes.animation,
+                )}
+                style={detailsAsideStyle}
+            >
+                {selectedCard && (
                     <FriendDetails
                         id={selectedCard.userId}
                         isActive={true}
@@ -178,8 +200,8 @@ const Friends: React.FC = () => {
                         avatarUrl={selectedCard.avatarUrl}
                         setSelectedCard={setSelectedCard}
                     />
-                </aside>
-            )}
+                )}
+            </aside>
         </section>
     );
 };
