@@ -10,6 +10,8 @@ import { achievementsApi } from '~/bundles/achievements/achievements.js';
 import { reducer as achievementsReducer } from '~/bundles/achievements/store/achievements.js';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
+import { chatsApi } from '~/bundles/chats/chats.js';
+import { reducer as chatsReducer } from '~/bundles/chats/store/chats.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
@@ -47,6 +49,7 @@ type RootReducer = {
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
     userBonuses: ReturnType<typeof userBonusesReducer>;
+    chats: ReturnType<typeof chatsReducer>;
 };
 
 type ExtraArguments = {
@@ -59,6 +62,7 @@ type ExtraArguments = {
     passwordResetApi: typeof passwordResetApi;
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
+    chatsApi: typeof chatsApi;
 };
 
 class Store {
@@ -85,6 +89,7 @@ class Store {
                 connections: connectionsReducer,
                 workouts: workoutsReducer,
                 userBonuses: userBonusesReducer,
+                chats: chatsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -108,6 +113,7 @@ class Store {
             passwordResetApi,
             connectionApi,
             workoutApi,
+            chatsApi,
         };
     }
 }

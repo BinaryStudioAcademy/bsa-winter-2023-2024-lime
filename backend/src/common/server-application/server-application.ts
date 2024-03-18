@@ -1,4 +1,5 @@
 import { achievementController } from '~/bundles/achievements/achievements.js';
+import { aiAssistantController } from '~/bundles/ai-assistants/ai-assistant.js';
 import { authController } from '~/bundles/auth/auth.js';
 import { chatController } from '~/bundles/chats/chats.js';
 import { connectionController } from '~/bundles/connections/connections.js';
@@ -38,6 +39,7 @@ const apiV1 = new BaseServerAppApi(
     ...chatController.routes,
     ...messageController.routes,
     ...identityController.routes,
+    ...aiAssistantController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

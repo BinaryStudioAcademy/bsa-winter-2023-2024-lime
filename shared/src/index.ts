@@ -9,6 +9,7 @@ export {
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type ChatGetAllItemsResponseDto,
     type ChatRequestDto,
     type ChatResponseDto,
     chatValidationSchema,

@@ -11,6 +11,7 @@ import { UserService } from './user.service.js';
 const userRepository = new UserRepository(UserModel, achievementRepository);
 const oAuthRepository = new OAuthRepository(OAuthModel);
 const userService = new UserService(userRepository);
+
 const userController = new UserController({
     logger,
     userService,

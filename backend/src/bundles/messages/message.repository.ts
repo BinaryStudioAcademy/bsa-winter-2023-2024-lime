@@ -44,11 +44,9 @@ class MessageRepository implements Repository {
     }
 
     public async create(payload: MessageEntity): Promise<MessageEntity> {
-        const message = payload.toNewObject();
-
         const chatEntity = await this.messageModel
             .query()
-            .insert(message)
+            .insert(payload.toNewObject())
             .returning('*')
             .execute();
 

@@ -3,6 +3,7 @@ import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 import { ChatMessage } from '~/bundles/chats/components/chat-message/chat-message.js';
 import { ChatMessageForm } from '~/bundles/chats/components/chat-message-form/chat-message-form.js';
 import { messages } from '~/bundles/chats/constants/constants.js';
+import { type ChatResponseDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
@@ -12,7 +13,11 @@ import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
 
-const Chat = (): JSX.Element => {
+type Properties = {
+    currentChat: ChatResponseDto | null;
+};
+
+const Chat = ({ currentChat }: Properties): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleSubmit = useCallback((): void => {}, []);
@@ -20,6 +25,10 @@ const Chat = (): JSX.Element => {
     const toggleSidebarProfile = useCallback((): void => {
         setIsOpen(!isOpen);
     }, [setIsOpen, isOpen]);
+
+    if (!currentChat) {
+        return <div>No Chat</div>;
+    }
 
     return (
         <div className="relative flex h-full overflow-hidden">
@@ -60,26 +69,28 @@ const Chat = (): JSX.Element => {
                     <ChatMessageForm onSubmit={handleSubmit} />
                 </div>
             </div>
-            <div
-                className={getValidClassNames(
-                    isOpen ? 'translate-x-0' : 'translate-x-[100%]',
-                    'absolute right-0 h-full w-full transition-transform duration-[0.5s] ease-[ease-in-out] md:w-[22.375rem]',
-                )}
-            >
-                <div className="relative flex h-full w-full flex-col">
-                    <button
-                        className="absolute ml-5 mt-5"
-                        onClick={toggleSidebarProfile}
-                    >
-                        <XCircleIcon className="text-action w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
-                    </button>
-                    <UserInfoCard
-                        name={'User'}
-                        image={''}
-                        className="w-full px-8"
-                    />
+            {!currentChat.isAssistant && (
+                <div
+                    className={getValidClassNames(
+                        isOpen ? 'translate-x-0' : 'translate-x-[100%]',
+                        'absolute right-0 h-full w-full transition-transform duration-[0.5s] ease-[ease-in-out] md:w-[22.375rem]',
+                    )}
+                >
+                    <div className="relative flex h-full w-full flex-col">
+                        <button
+                            className="absolute ml-5 mt-5"
+                            onClick={toggleSidebarProfile}
+                        >
+                            <XCircleIcon className="text-action w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
+                        </button>
+                        <UserInfoCard
+                            name={'User'}
+                            image={''}
+                            className="w-full px-8"
+                        />
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

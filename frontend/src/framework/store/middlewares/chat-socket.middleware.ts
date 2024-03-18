@@ -1,6 +1,6 @@
 import { type Middleware } from '@reduxjs/toolkit';
 
-import { actions as chatActionCreator } from '~/bundles/chats/store/chat.js';
+import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
 import {
     SocketEvent,
     SocketNamespace,

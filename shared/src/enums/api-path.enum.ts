@@ -14,6 +14,7 @@ const ApiPath = {
     CHATS: '/chats',
     MESSAGES: '/messages',
     IDENTITY: '/identity',
+    AI_ASSISTANT: '/ai-assistant',
 } as const;
 
 export { ApiPath };
