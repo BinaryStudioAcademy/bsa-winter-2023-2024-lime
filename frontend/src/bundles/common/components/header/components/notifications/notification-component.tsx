@@ -49,7 +49,7 @@ const NotificationComponent = (): JSX.Element => {
         [dispatch],
     );
 
-    const notificationListReference = useRef(null);    
+    const notificationListReference = useRef(null);
 
     useHandleClickOutside({
         ref: notificationListReference,
