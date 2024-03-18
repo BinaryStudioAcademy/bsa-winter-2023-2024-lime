@@ -192,9 +192,9 @@ const Goals: React.FC = () => {
 
                         <div className="flex w-full flex-col gap-4 lg:flex-row lg:flex-wrap xl:flex-col">
                             {achievements?.length > ZERO_VALUE &&
-                                achievements.map((achievement) => (
+                                achievements.map((achievement, index) => (
                                     <AchievementCard
-                                        key={achievement.id}
+                                        key={index}
                                         achievement={achievement}
                                     />
                                 ))}
