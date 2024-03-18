@@ -20,7 +20,7 @@ type Properties = {
     onChangeSubscription: () => void;
 };
 
-const SubscriptionUserPanel = ({
+const SubscriptionUserPanel: React.FC<Properties> = ({
     subscriptionPlanName,
     subscriptionPlanPrice,
     status,
@@ -28,7 +28,7 @@ const SubscriptionUserPanel = ({
     expiresAt,
     stripeSubscriptionId,
     onChangeSubscription,
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const dispatch = useAppDispatch();
 
     const [currentCancelAtPeriodEnd, setCurrentCancelAtPeriodEnd] =

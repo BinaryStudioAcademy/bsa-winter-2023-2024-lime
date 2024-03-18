@@ -1,12 +1,11 @@
 import crypto from 'node:crypto';
 
 import S3 from 'aws-sdk/clients/s3.js';
-import { type File } from 'fastify-multer/lib/interfaces.js';
 import { FileValidationMessage } from 'shared';
 
 import { HttpCode, HttpError } from '~/common/http/http.js';
 
-import { type FileServiceOptions } from './types/types.js';
+import { type File, type FileServiceOptions } from './types/types.js';
 
 class FileService {
     private s3: S3;

@@ -10,14 +10,15 @@ type Properties = {
     avatarUrl?: string | null;
 };
 
-const Navigation = ({ email, avatarUrl }: Properties): JSX.Element => {
+const Navigation: React.FC<Properties> = ({
+    email,
+    avatarUrl,
+}): JSX.Element => {
     return (
         <nav className={styles['navigation']}>
             <ul className={styles['menu-list']}>
                 <li>
-                    <Link to={AppRoute.ROOT}>
-                        <BellIcon className={styles['icon']} />
-                    </Link>
+                    <BellIcon className={styles['icon']} />
                 </li>
                 <li>
                     <Link to={AppRoute.PROFILE_INFORMATION}>
