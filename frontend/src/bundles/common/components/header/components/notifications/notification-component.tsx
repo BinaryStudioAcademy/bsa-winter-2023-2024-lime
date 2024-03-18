@@ -18,9 +18,10 @@ import { NotificationBell, NotificationList } from './components/components.js';
 
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
-    const { notifications, dataStatus } = useAppSelector(
-        ({ notifications }) => notifications,
-    );
+    const {
+        notifications: { items, count },
+        dataStatus,
+    } = useAppSelector(({ notifications }) => notifications);
 
     const isLoading = dataStatus === DataStatus.PENDING;
 
@@ -48,11 +49,7 @@ const NotificationComponent = (): JSX.Element => {
         [dispatch],
     );
 
-    const notificationListReference = useRef(null);
-
-    const count = notifications?.filter(
-        (notification) => !notification.isRead,
-    ).length;
+    const notificationListReference = useRef(null);    
 
     useHandleClickOutside({
         ref: notificationListReference,
@@ -62,13 +59,13 @@ const NotificationComponent = (): JSX.Element => {
     return (
         <div className="relative" ref={notificationListReference}>
             <NotificationBell
-                count={isLoading ? 0 : count || 0}
+                count={count || 0}
                 onClick={handleIconClick}
                 showList={showList}
             />
             {showList && !isLoading && (
                 <NotificationList
-                    notifications={notifications}
+                    notifications={items}
                     onNotificationReadClick={handleNotificationReadClick}
                     onNotificationDeleteClick={handleNotificationDeleteClick}
                 />
