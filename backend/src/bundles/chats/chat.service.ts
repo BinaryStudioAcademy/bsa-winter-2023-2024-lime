@@ -6,10 +6,7 @@ import { ChatEntity } from './chat.entity.js';
 import { type ChatModel } from './chat.model.js';
 import { type ChatRepository } from './chat.repository.js';
 import { ErrorMessage } from './enums/enums.js';
-import {
-    type ChatCreateDto,
-    type ChatResponseDto,
-} from './types/types.js';
+import { type ChatCreateDto, type ChatResponseDto } from './types/types.js';
 
 class ChatService implements Service {
     private chatRepository: ChatRepository;
@@ -23,7 +20,7 @@ class ChatService implements Service {
     ): Promise<ChatResponseDto | null> {
         const chat = await this.chatRepository.find(query);
 
-        return chat ? chat.toObject() : null;
+        return chat ? (chat.toObject() as ChatResponseDto) : null;
     }
 
     public async findAll({
@@ -85,7 +82,7 @@ class ChatService implements Service {
 
         const chat = await this.chatRepository.create(chatEntity);
 
-        return chat.toObject();
+        return chat.toObject() as ChatResponseDto;
     }
 
     public update(

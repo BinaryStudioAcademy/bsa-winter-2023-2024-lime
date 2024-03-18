@@ -1,5 +1,7 @@
 export {
+    type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,
+    type ChatPreviewResponseDto,
     type ChatRequestDto,
     type ChatResponseDto,
     type ChatUsersResponseDto,

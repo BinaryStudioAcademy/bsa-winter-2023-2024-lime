@@ -1,12 +1,24 @@
 import { type MessageResponseDto } from '../../messages/messages.js';
 import { type ChatUsersResponseDto } from './chat-users-response-dto.type.js';
 
-type ChatResponseDto = {
+type ChatBasicResponseDto = {
     id: number;
     isAssistant: boolean;
-    messages: MessageResponseDto[] | undefined;
-    lastMessage: MessageResponseDto | undefined;
     users?: ChatUsersResponseDto[] | undefined;
 };
 
-export { type ChatResponseDto };
+type ChatPreviewResponseDto = ChatBasicResponseDto & {
+    lastMessage: MessageResponseDto;
+};
+
+type ChatFullResponseDto = ChatBasicResponseDto & {
+    messages: MessageResponseDto[];
+};
+
+type ChatResponseDto = ChatPreviewResponseDto | ChatFullResponseDto;
+
+export {
+    type ChatFullResponseDto,
+    type ChatPreviewResponseDto,
+    type ChatResponseDto,
+};
