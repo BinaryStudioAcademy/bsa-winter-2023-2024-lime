@@ -1,11 +1,11 @@
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
-type GoogleAdsProperties = {
+type Properties = {
     children?: React.ReactNode;
     className?: string;
 };
 
-const GoogleAds: React.FC<GoogleAdsProperties> = ({ children, className }) => {
+const GoogleAds: React.FC<Properties> = ({ children, className }) => {
     return (
         <div
             className={getValidClassNames([

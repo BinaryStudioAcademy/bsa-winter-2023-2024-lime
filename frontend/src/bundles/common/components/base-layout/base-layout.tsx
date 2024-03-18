@@ -1,10 +1,16 @@
+import {
+    GoogleAds,
+    RouterOutlet,
+} from '~/bundles/common/components/components.js';
 import { Header } from '~/bundles/common/components/header/header.js';
 import { Sidebar } from '~/bundles/common/components/sidebar/sidebar.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import {
+    useAppSelector,
+    useSidebarToggle,
+} from '~/bundles/common/hooks/hooks.js';
 import { type ReactNode } from '~/bundles/common/types/types.js';
 
-import { getValidClassNames } from '../../helpers/helpers.js';
-import { useAppSelector, useSidebarToggle } from '../../hooks/hooks.js';
-import { GoogleAds, RouterOutlet } from '../components.js';
 import { SuggestionForSubscribing } from './components/suggestion-for-subscribing.js';
 import styles from './styles.module.css';
 
