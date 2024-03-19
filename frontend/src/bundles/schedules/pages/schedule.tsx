@@ -84,13 +84,13 @@ const Schedule: React.FC = () => {
         return goals.map(({ activityType, id, frequency, frequencyType }) => ({
             value: id,
             label: `
-                 ${capitalizeFirstLetter(activityType)} ${frequency} time${frequency > 1 ? PLURAL : ''}
-                 ${
-                     frequencyType === FrequencyType.DAY
-                         ? DAY_PREPOSITION
-                         : WEEK_PREPOSITION
-                 }
-                 ${frequencyType}
+             ${capitalizeFirstLetter(activityType)} ${frequency} time${frequency > 1 ? PLURAL : ''}
+             ${
+                 frequencyType === FrequencyType.DAY
+                     ? DAY_PREPOSITION
+                     : WEEK_PREPOSITION
+             }
+             ${frequencyType}
             `,
         }));
     }, [goals]);
@@ -346,7 +346,7 @@ const Schedule: React.FC = () => {
                                 <div className="bg-primary w-full md:w-full xl:w-[48.8%]">
                                     <Button
                                         type="button"
-                                        label="Set the new shcedule"
+                                        label="Set new shcedule"
                                         variant={ButtonVariant.SECONDARY}
                                         size={ComponentSize.LARGE}
                                         leftIcon={<PlusIcon className="w-6" />}
