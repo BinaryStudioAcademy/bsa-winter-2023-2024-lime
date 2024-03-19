@@ -30,7 +30,8 @@ class NotificationsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json();
+        const responseData = await response.json();
+        return responseData.items;
     }
 
     public async createNotification(
