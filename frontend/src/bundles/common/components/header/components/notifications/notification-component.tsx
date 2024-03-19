@@ -1,3 +1,4 @@
+import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -7,45 +8,38 @@ import {
     useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-import {
-    deleteNotification,
-    dismissNotification,
-    fetchNotifications,
-} from '~/bundles/notifications/store/actions.js';
+import { fetchNotifications } from '~/bundles/notifications/store/actions.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
+import { ERROR_NOTIFICATION_API } from '../constants/error-notification-api.js';
 import { NotificationBell, NotificationList } from './components/components.js';
 
 const NotificationComponent = (): JSX.Element => {
     const dispatch = useAppDispatch();
+    const [showList, setShowList] = useState(false);
+    const notificationListReference = useRef(null);
     const {
-        notifications: { items }
+        notifications: { items },
+        dataStatus,
     } = useAppSelector(({ notifications }) => notifications);
 
     useEffect(() => {
         void dispatch(fetchNotifications());
     }, [dispatch]);
 
-    const [showList, setShowList] = useState(false);
+    const loading = dataStatus === DataStatus.PENDING;
 
     const handleIconClick = useCallback(() => {
         setShowList(!showList);
     }, [showList]);
 
-    const handleNotificationReadClick = useCallback(
-        (id: number) => {
-            void dispatch(dismissNotification(id));
-        },
-        [dispatch],
-    );
+    const hasError = dataStatus === DataStatus.REJECTED;
 
-    const handleNotificationDeleteClick = useCallback(
-        (id: number) => {
-            void dispatch(deleteNotification(id));
-        },
-        [dispatch],
-    );
-
-    const notificationListReference = useRef(null);
+    useEffect(() => {
+        if (hasError) {
+            notificationManager.error(ERROR_NOTIFICATION_API);
+        }
+    }, [hasError]);
 
     useHandleClickOutside({
         ref: notificationListReference,
@@ -60,14 +54,9 @@ const NotificationComponent = (): JSX.Element => {
                 count={countUnread}
                 onClick={handleIconClick}
                 showList={showList}
+                loading={loading}
             />
-            {showList && (
-                <NotificationList
-                    notifications={items}
-                    onNotificationReadClick={handleNotificationReadClick}
-                    onNotificationDeleteClick={handleNotificationDeleteClick}
-                />
-            )}
+            {showList && <NotificationList notifications={items} />}
         </div>
     );
 };
