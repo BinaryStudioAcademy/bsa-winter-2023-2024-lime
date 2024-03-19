@@ -6,7 +6,6 @@ import { Button } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
-import { Status } from '../../enums/status.enum.js';
 import { getChatCompanions } from '../../helpers/get-chat-companions.helper.js';
 import { formatChatName } from '../../helpers/helpers.js';
 
@@ -16,6 +15,7 @@ type Properties = {
     aiAssistantChat: ChatPreviewResponseDto | null;
     className?: string;
     currentChatId: string;
+    onLoadCurrentChat: () => void;
 };
 
 const ChatSidebar = ({
@@ -24,6 +24,7 @@ const ChatSidebar = ({
     aiAssistantChat,
     currentChatId,
     className,
+    onLoadCurrentChat,
 }: Properties): JSX.Element => {
     return (
         <div
@@ -40,8 +41,8 @@ const ChatSidebar = ({
                 <span className="text-secondary mb-1">AI</span>
                 <AiChatLink
                     aiAssistantChat={aiAssistantChat}
-                    currentChatId={currentChatId}
                     isActive={currentChatId === String(aiAssistantChat?.id)}
+                    onLoadCurrentChat={onLoadCurrentChat}
                 />
             </div>
             <span className="text-secondary mb-1">Friends</span>
@@ -51,7 +52,6 @@ const ChatSidebar = ({
                         <li key={id}>
                             <ChatLink
                                 id={id}
-                                status={Status.ONLINE}
                                 companions={formatChatName(
                                     getChatCompanions(users, user.id),
                                 )}
@@ -59,8 +59,8 @@ const ChatSidebar = ({
                                 lastMessageTime={
                                     lastMessage && lastMessage.createdAt
                                 }
-                                currentChatId={currentChatId}
                                 isActive={currentChatId === String(id)}
+                                onLoadCurrentChat={onLoadCurrentChat}
                             />
                         </li>
                     ))}

@@ -1,4 +1,3 @@
-export { type ChatLink } from './chat-link.type.js';
 export {
     type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,

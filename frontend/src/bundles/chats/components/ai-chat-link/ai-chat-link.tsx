@@ -1,42 +1,31 @@
-import { actions as chatsActions } from '~/bundles/chats/store/chats.js';
 import { Icon, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     configureString,
     getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
-import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks.js';
 
 import { formatChatDate } from '../../helpers/helpers.js';
 import { type ChatPreviewResponseDto } from '../../types/types.js';
 
 type Properties = {
     aiAssistantChat: ChatPreviewResponseDto | null;
-    currentChatId: string;
     isActive: boolean;
+    onLoadCurrentChat: () => void;
 };
 
 const AiChatLink = ({
     aiAssistantChat,
-    currentChatId,
     isActive,
+    onLoadCurrentChat,
 }: Properties): JSX.Element => {
-    const aiAssistantChatId = aiAssistantChat ? String(aiAssistantChat.id) : '';
-
-    const dispatch = useAppDispatch();
     const chatRouteById = configureString(AppRoute.CHATS_AI_ASSISTANT_$ID, {
-        id: aiAssistantChatId,
+        id: String(aiAssistantChat?.id),
     }) as typeof AppRoute.CHATS_AI_ASSISTANT_$ID;
-
-    const loadCurrentChat = useCallback(() => {
-        if (String(aiAssistantChat?.id) !== currentChatId) {
-            void dispatch(chatsActions.getChat({ chatId: aiAssistantChatId }));
-        }
-    }, [aiAssistantChatId, currentChatId, aiAssistantChat?.id, dispatch]);
 
     return (
         <Link to={chatRouteById}>
-            <button onClick={loadCurrentChat} className="w-full">
+            <button onClick={onLoadCurrentChat} className="w-full">
                 <div
                     className={getValidClassNames(
                         isActive &&

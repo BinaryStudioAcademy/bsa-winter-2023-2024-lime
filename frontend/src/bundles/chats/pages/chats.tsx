@@ -24,9 +24,19 @@ const Chats = (): JSX.Element => {
         void dispatch(chatsActions.getAllChats());
     }, [dispatch]);
 
+    const loadCurrentChat = useCallback(() => {
+        if (id && id !== String(currentChat?.id)) {
+            void dispatch(chatsActions.getChat({ chatId: String(id) }));
+        }
+    }, [id, currentChat?.id, dispatch]);
+
     useEffect(() => {
         loadAllChats();
     }, [loadAllChats]);
+
+    useEffect(() => {
+        loadCurrentChat();
+    }, [loadCurrentChat]);
 
     return (
         <div className="flex h-full flex-[1] flex-col">
@@ -37,6 +47,7 @@ const Chats = (): JSX.Element => {
                     aiAssistantChat={aiAssistantChat}
                     className={getValidClassNames(id && 'hidden lg:flex')}
                     currentChatId={String(currentChat?.id)}
+                    onLoadCurrentChat={loadCurrentChat}
                 />
                 <div
                     className={getValidClassNames(
