@@ -103,7 +103,7 @@ const PublicProfile: React.FC = () => {
                         <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                             Last Workout data
                         </h2>
-                        <div className="flex w-full max-w-[50rem] flex-wrap gap-8">
+                        <div className="flex w-full flex-wrap gap-8">
                             {workouts.length > ZERO_VALUE ? (
                                 <ProfileWorkoutItem
                                     workout={getLastWorkout(workouts)}
