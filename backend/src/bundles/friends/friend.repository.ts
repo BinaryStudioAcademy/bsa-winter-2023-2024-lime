@@ -1,4 +1,9 @@
 import { MAX_NUMBER_OF_USERS } from '~/bundles/friends/constants/constants.js';
+import {
+    ErrorMessage,
+    HttpCode,
+    HttpError,
+} from '~/bundles/friends/enums/enums.js';
 import { FriendEntity } from '~/bundles/friends/friend.entity.js';
 import { FriendModel } from '~/bundles/friends/friend.model.js';
 import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
@@ -133,7 +138,10 @@ class FriendRepository implements Repository {
 
         const user = await this.userModel.query(trx).findById(id);
         if (!user) {
-            throw new Error('User not found');
+            throw new HttpError({
+                message: ErrorMessage.FRIEND_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
         }
 
         await user
@@ -156,9 +164,14 @@ class FriendRepository implements Repository {
         const trx = await this.userModel.startTransaction();
 
         const user = await this.userModel.query(trx).findById(id);
+
         if (!user) {
-            throw new Error('User not found');
+            throw new HttpError({
+                message: ErrorMessage.FRIEND_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
         }
+
         await user
             .$relatedQuery('friends', trx)
             .delete()
