@@ -45,13 +45,12 @@ import {
     DOUGHNUT_DATASET,
     LABEL,
     PLURAL,
+    TIME_FORMAT,
     WEEK_PREPOSITION,
     ZERO_VALUE,
 } from '../constants/constants.js';
 import { isDateInRange } from '../helpers/helpers.js';
 import { type ScheduleRequestDto } from '../types/types.js';
-
-const timeFormat = 'dd/MM/yyyy HH:mm';
 
 const Schedule: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -96,9 +95,7 @@ const Schedule: React.FC = () => {
     const filteredSchedules = useMemo(() => {
         const START_TIME = 0;
         const END_TIME = 1;
-        const formattedDates = watchedDate.map((item) =>
-            formatDateToIso(item, 'yyyy/MM/dd'),
-        );
+        const formattedDates = watchedDate.map((item) => formatDateToIso(item));
 
         const range = [...new Set(formattedDates)];
 
@@ -163,7 +160,7 @@ const Schedule: React.FC = () => {
                 setBaseFormValue({
                     activity: schedule.activityType,
                     goalLabel: schedule.goalId ?? null,
-                    dateOfStart: format(date, timeFormat),
+                    dateOfStart: format(date, TIME_FORMAT),
                     id,
                 });
                 handleModalStatus();
@@ -182,7 +179,7 @@ const Schedule: React.FC = () => {
 
     const scheduleHandler = useCallback(
         ({ activity, goalLabel, dateOfStart, id }: CreateScheduleRequest) => {
-            const convertedDate = formatDateToIso(dateOfStart, timeFormat);
+            const convertedDate = formatDateToIso(dateOfStart, TIME_FORMAT);
 
             const preparedData: ScheduleRequestDto = {
                 activityType: activity,

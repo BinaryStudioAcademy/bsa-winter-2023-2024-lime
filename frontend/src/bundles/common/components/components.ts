@@ -7,7 +7,6 @@ export { CopyToClipboard } from './copy-to-clipboard/copy-to-clipboard.js';
 export { CreateScheduleForm } from './create-schedule-form/create-schedule-form.js';
 export { DateCalendar } from './date-calendar/date-calendar.js';
 export { DatePicker } from './date-picker/date-picker.js';
-export { DoughnutChart } from './doughnut-chart/doughnut-chart.js';
 export { DownloadBanner } from './download-banner/download-banner.jsx';
 export { ForgotPasswordForm } from './forgot-password-form/forgot-password-form.js';
 export { GoogleAds } from './google-ads/google-ads.js';

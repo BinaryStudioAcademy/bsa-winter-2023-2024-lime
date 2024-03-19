@@ -21,7 +21,7 @@ const ScheduleCard: React.FC<Properties> = ({
     weekDay,
     activityType,
     date,
-    className,
+    className = '',
     isExpanded,
     onUpdate,
     onDelete,
@@ -40,7 +40,7 @@ const ScheduleCard: React.FC<Properties> = ({
     }, [onDelete]);
 
     return (
-        <li className={`${className ?? ''}`}>
+        <li className={className}>
             <div className="schedule-card bg-primary w-full rounded-lg p-4">
                 <div className="text-md text-card mb-4 font-semibold leading-3">
                     {weekDay}
@@ -63,7 +63,7 @@ const ScheduleCard: React.FC<Properties> = ({
                             </div>
                         </div>
                     </div>
-                    {isExpanded ? (
+                    {isExpanded && (
                         <div className="text-lm-grey-200 flex cursor-pointer gap-3 ">
                             <PencilIcon
                                 onClick={handleUpdate}
@@ -74,7 +74,7 @@ const ScheduleCard: React.FC<Properties> = ({
                                 className="hover:text-lm-yellow-100 w-6 transition duration-300"
                             />
                         </div>
-                    ) : null}
+                    )}
                 </div>
             </div>
         </li>

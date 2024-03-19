@@ -1,6 +1,6 @@
 import { type ChartData } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
-import { DoughnutChart } from '~/bundles/common/components/components.js';
 import {
     capitalizeFirstLetter,
     convertMetersToKilometers,
@@ -48,7 +48,7 @@ const ScheduleWidget: React.FC<Properties> = ({
             </div>
             {doughnutData && (
                 <div className="relative">
-                    <DoughnutChart
+                    <Doughnut
                         className="h-[2.7rem] w-[11rem]"
                         data={doughnutData}
                         options={DOUGHNUT_OPTIONS}

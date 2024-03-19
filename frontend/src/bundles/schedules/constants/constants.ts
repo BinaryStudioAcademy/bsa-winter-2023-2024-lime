@@ -7,6 +7,7 @@ export {
     DAY_PREPOSITION,
     LABEL,
     PLURAL,
+    TIME_FORMAT,
     WEEK_PREPOSITION,
     ZERO_VALUE,
 } from './static-data.constant.js';

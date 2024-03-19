@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 
 import {
+    type EntityIdParameterDto,
     type ScheduleGetAllResponseDto,
     type ScheduleRequestDto,
     type ScheduleResponseDto,
@@ -31,7 +32,7 @@ const createSchedule = createAsyncThunk<
 
 const updateSchedule = createAsyncThunk<
     ScheduleResponseDto,
-    { id: string; payload: ScheduleRequestDto },
+    { payload: ScheduleRequestDto } & EntityIdParameterDto,
     AsyncThunkConfig
 >(`${name}/update-schedule`, async ({ payload, id }, { extra }) => {
     const { scheduleApi } = extra;
@@ -41,7 +42,7 @@ const updateSchedule = createAsyncThunk<
 
 const deleteSchedule = createAsyncThunk<
     number,
-    { id: string },
+    EntityIdParameterDto,
     AsyncThunkConfig
 >(`${name}/delete-schedule`, async ({ id }, { extra }) => {
     const { scheduleApi } = extra;

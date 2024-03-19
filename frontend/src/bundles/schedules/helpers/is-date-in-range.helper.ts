@@ -1,6 +1,7 @@
 import { getDate, getMonth, getYear, parseISO } from 'date-fns';
 
-const ZERO_VALUE = 0;
+import { ZERO_VALUE } from '../constants/constants.js';
+
 const baseComparison = (
     firstDifference: string,
     secondDifference: string,
