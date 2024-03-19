@@ -53,6 +53,18 @@ class ChatService implements Service {
             userId,
         });
 
+        if (aiAssistantChat.length === 0) {
+            const createdAiChat = await this.create({
+                isAssistant: true,
+                membersId: [userId],
+                creatorId: userId,
+            });
+            return {
+                aiAssistantChat: { ...createdAiChat, lastMessage: null },
+                userChats,
+            };
+        }
+
         return {
             aiAssistantChat: aiAssistantChat[0] ?? null,
             userChats,

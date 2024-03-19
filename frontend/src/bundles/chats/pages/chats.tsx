@@ -31,7 +31,7 @@ const Chats = (): JSX.Element => {
         if (id && id !== String(currentChat?.id)) {
             void dispatch(chatsActions.getChat({ chatId: String(id) }));
         }
-    }, [id, currentChat?.id, dispatch]);
+    }, [id, currentChat, dispatch]);
 
     useEffect(() => {
         loadAllChats();

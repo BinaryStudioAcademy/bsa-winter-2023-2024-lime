@@ -1,5 +1,6 @@
 import {
     applyMessage,
+    createChat,
     generateAiAssistantResponse,
     getAllChats,
     getChat,
@@ -13,6 +14,7 @@ const allActions = {
     ...actions,
     getAllChats,
     getChat,
+    createChat,
     joinRoom,
     leaveRoom,
     sendMessage,

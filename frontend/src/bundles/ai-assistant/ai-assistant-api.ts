@@ -3,9 +3,11 @@ import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
-import { type MessageResponseDto } from '../messages/types/types.js';
+import {
+    type MessageRequestDto,
+    type MessageResponseDto,
+} from '../messages/types/types.js';
 import { AiAssistantPath } from './enums/enums.js';
-import { type SendAiMessageRequestDto } from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -19,7 +21,7 @@ class AiAssistantApi extends BaseHttpApi {
     }
 
     public async generateResponse(
-        payload: SendAiMessageRequestDto,
+        payload: MessageRequestDto,
     ): Promise<MessageResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(AiAssistantPath.SEND_MESSAGE, {}),

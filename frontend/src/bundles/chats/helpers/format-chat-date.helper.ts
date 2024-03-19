@@ -10,10 +10,12 @@ const formatChatDate = (date: string | null, isMessage: boolean): string => {
         return format(formatedDate, 'HH:mm');
     } else if (isThisWeek(formatedDate)) {
         return isMessage
-            ? format(formatedDate, 'EEE')
-            : format(formatedDate, 'EEE | HH:mm');
+            ? format(formatedDate, 'EEE, HH:mm')
+            : format(formatedDate, 'EEE');
     } else if (isThisYear(formatedDate)) {
-        return format(formatedDate, 'MMM dd');
+        return isMessage
+            ? format(formatedDate, 'MMM dd, HH:mm')
+            : format(formatedDate, 'MMM dd');
     } else {
         return format(formatedDate, 'MMMM dd, yyyy');
     }

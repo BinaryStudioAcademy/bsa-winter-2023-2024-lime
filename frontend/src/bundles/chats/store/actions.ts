@@ -3,6 +3,8 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import {
     type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,
+    type ChatRequestDto,
+    type ChatResponseDto,
     type MessageRequestDto,
     type MessageResponseDto,
 } from '~/bundles/chats/types/types.js';
@@ -28,6 +30,14 @@ const getChat = createAsyncThunk<
     const { chatId } = payload;
 
     return await chatsApi.getChat(chatId);
+});
+
+const createChat = createAsyncThunk<
+    ChatResponseDto,
+    ChatRequestDto,
+    AsyncThunkConfig
+>(`${sliceName}/create-chat`, async (payload, { extra: { chatsApi } }) => {
+    return await chatsApi.createChat(payload);
 });
 
 const joinRoom = createAction<(userId: number) => Record<'payload', number>>(
@@ -81,15 +91,13 @@ const generateAiAssistantResponse = createAsyncThunk<
 >(
     `${sliceName}/send-ai-message`,
     async (payload, { extra: { aiAssistantApi } }) => {
-        return await aiAssistantApi.generateResponse({
-            ...payload,
-            contextMessagesCount: 2,
-        });
+        return await aiAssistantApi.generateResponse(payload);
     },
 );
 
 export {
     applyMessage,
+    createChat,
     generateAiAssistantResponse,
     getAllChats,
     getChat,

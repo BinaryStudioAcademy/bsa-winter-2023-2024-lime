@@ -50,8 +50,7 @@ const AiChatLink = ({
                         </div>
                         <p className="text-secondary text-xs">
                             {formatChatDate(
-                                aiAssistantChat &&
-                                    aiAssistantChat.lastMessage?.createdAt,
+                                aiAssistantChat?.lastMessage?.createdAt ?? null,
                                 false,
                             )}
                         </p>

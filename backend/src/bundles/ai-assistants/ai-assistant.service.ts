@@ -3,10 +3,13 @@ import { SenderType } from '~/common/services/open-ai/enums/enums.js';
 import { type OpenAIService } from '~/common/services/open-ai/open-ai.service.js';
 
 import { type MessageService } from '../messages/message.service.js';
-import { type MessageResponseDto } from '../messages/types/types.js';
+import {
+    type MessageRequestDto,
+    type MessageResponseDto,
+} from '../messages/types/types.js';
+import { MAX_CONTEXT_MESSAGE_LENGTH } from './constants/constants.js';
 import { ErrorMessage } from './enums/enums.js';
 import { getContextMessages } from './helpers/helpers.js';
-import { type SendAiMessageRequestDto } from './types/types.js';
 
 class AiAssistantService {
     private openAiService: OpenAIService;
@@ -22,9 +25,9 @@ class AiAssistantService {
     }
 
     public async sendMessage(
-        payload: SendAiMessageRequestDto,
+        payload: MessageRequestDto,
     ): Promise<MessageResponseDto> {
-        const { chatId, text, contextMessagesCount } = payload;
+        const { chatId, text } = payload;
         if (!chatId) {
             throw new HttpError({
                 message: ErrorMessage.AI_CHAT_NOT_FOUND,
@@ -38,7 +41,7 @@ class AiAssistantService {
 
         const contextMessages = getContextMessages(
             chatMessages.items,
-            contextMessagesCount,
+            MAX_CONTEXT_MESSAGE_LENGTH,
         );
 
         const responseMessage = await this.openAiService.sendRequest([

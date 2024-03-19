@@ -9,6 +9,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import {
     applyMessage,
+    createChat,
     generateAiAssistantResponse,
     getAllChats,
     getChat,
@@ -20,6 +21,7 @@ type State = {
     aiAssistantChat: ChatPreviewResponseDto | null;
     currentChat: ChatFullResponseDto | null;
     dataStatus: ValueOf<typeof DataStatus>;
+    createChatDataStatus: ValueOf<typeof DataStatus>;
 };
 
 const initialState: State = {
@@ -27,6 +29,7 @@ const initialState: State = {
     aiAssistantChat: null,
     currentChat: null,
     dataStatus: DataStatus.IDLE,
+    createChatDataStatus: DataStatus.IDLE,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -54,6 +57,26 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(getChat.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(createChat.fulfilled, (state, action) => {
+            const { isAssistant } = action.payload;
+
+            const newChat = {
+                ...action.payload,
+                lastMessage: null,
+            };
+
+            !state.aiAssistantChat && isAssistant
+                ? (state.aiAssistantChat = newChat)
+                : (state.chats = [...state.chats, newChat]);
+
+            state.createChatDataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(createChat.pending, (state) => {
+            state.createChatDataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(createChat.rejected, (state) => {
+            state.createChatDataStatus = DataStatus.REJECTED;
         });
         builder.addCase(generateAiAssistantResponse.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;

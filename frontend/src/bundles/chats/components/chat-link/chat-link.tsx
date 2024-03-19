@@ -8,9 +8,9 @@ import {
 
 type Properties = {
     id: number;
-    lastMessage: string;
-    companions: string;
+    lastMessage: string | null;
     lastMessageTime: string | null;
+    companions: string;
     isActive: boolean;
     onLoadCurrentChat: () => void;
 };
@@ -18,8 +18,8 @@ type Properties = {
 const ChatLink = ({
     id,
     lastMessage,
-    companions,
     lastMessageTime,
+    companions,
     isActive,
     onLoadCurrentChat,
 }: Properties): JSX.Element => {

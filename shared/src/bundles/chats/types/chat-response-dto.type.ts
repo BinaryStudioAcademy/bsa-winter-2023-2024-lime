@@ -8,7 +8,7 @@ type ChatBasicResponseDto = {
 };
 
 type ChatPreviewResponseDto = ChatBasicResponseDto & {
-    lastMessage: MessageResponseDto;
+    lastMessage: MessageResponseDto | null;
 };
 
 type ChatFullResponseDto = ChatBasicResponseDto & {
