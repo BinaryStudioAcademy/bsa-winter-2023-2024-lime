@@ -37,8 +37,8 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(getNotFollowed.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.users = action.payload.users;
-            state.totalCount = action.payload.query.totalCount ?? 0;
+            state.users = action.payload.items;
+            state.totalCount = action.payload.total ?? 0;
         });
         builder.addCase(getNotFollowed.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
@@ -49,8 +49,8 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(getFollowings.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
-            state.users = action.payload.users;
-            state.totalCount = action.payload.query.totalCount ?? 0;
+            state.users = action.payload.items;
+            state.totalCount = action.payload.total ?? 0;
         });
         builder.addCase(getFollowings.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
@@ -62,9 +62,7 @@ const { reducer, actions, name } = createSlice({
                     (following) =>
                         following.userId !== action.meta.arg.followingId,
                 ),
-                ...(Array.isArray(action.payload)
-                    ? action.payload
-                    : [action.payload]),
+                ...action.payload,
             ];
         });
         builder.addCase(removeFollowing.fulfilled, (state, action) => {
@@ -74,9 +72,7 @@ const { reducer, actions, name } = createSlice({
                     (following) =>
                         following.userId !== action.meta.arg.followingId,
                 ),
-                ...(Array.isArray(action.payload)
-                    ? action.payload
-                    : [action.payload]),
+                ...action.payload,
             ];
         });
 
@@ -85,8 +81,8 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(loadMoreFollowings.fulfilled, (state, action) => {
             state.loadMoreDataStatus = DataStatus.FULFILLED;
-            state.users = [...state.users, ...action.payload.users];
-            state.totalCount = action.payload.query.totalCount;
+            state.users = [...state.users, ...action.payload.items];
+            state.totalCount = action.payload.total;
         });
         builder.addCase(loadMoreFollowings.rejected, (state) => {
             state.loadMoreDataStatus = DataStatus.REJECTED;
@@ -97,8 +93,8 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(loadMoreNotFollowed.fulfilled, (state, action) => {
             state.loadMoreDataStatus = DataStatus.FULFILLED;
-            state.users = [...state.users, ...action.payload.users];
-            state.totalCount = action.payload.query.totalCount;
+            state.users = [...state.users, ...action.payload.items];
+            state.totalCount = action.payload.total;
         });
         builder.addCase(loadMoreNotFollowed.rejected, (state) => {
             state.loadMoreDataStatus = DataStatus.REJECTED;

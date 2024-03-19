@@ -4,13 +4,14 @@ import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
     type FriendRequestDto,
     type FriendResponseDto,
+    type Paged,
     type PaginationParameters,
 } from '~/bundles/friends/types/types.js';
 
 import { name as sliceName } from './slice.js';
 
 const getNotFollowed = createAsyncThunk<
-    { users: FriendResponseDto[]; query: PaginationParameters },
+    Paged<FriendResponseDto>,
     PaginationParameters,
     AsyncThunkConfig
 >(`${sliceName}/get-not-followed`, async (paginationPayload, { extra }) => {
@@ -19,7 +20,7 @@ const getNotFollowed = createAsyncThunk<
 });
 
 const getFollowings = createAsyncThunk<
-    { users: FriendResponseDto[]; query: PaginationParameters },
+    Paged<FriendResponseDto>,
     PaginationParameters,
     AsyncThunkConfig
 >(`${sliceName}/get-followings`, async (paginationPayload, { extra }) => {
@@ -28,7 +29,7 @@ const getFollowings = createAsyncThunk<
 });
 
 const addFollowing = createAsyncThunk<
-    FriendResponseDto,
+    FriendResponseDto[],
     FriendRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/add-following`, async (addFollowingPayload, { extra }) => {
@@ -37,7 +38,7 @@ const addFollowing = createAsyncThunk<
 });
 
 const removeFollowing = createAsyncThunk<
-    number,
+    FriendResponseDto[],
     FriendRequestDto,
     AsyncThunkConfig
 >(
@@ -49,7 +50,7 @@ const removeFollowing = createAsyncThunk<
 );
 
 const loadMoreFollowings = createAsyncThunk<
-    { users: FriendResponseDto[]; query: PaginationParameters },
+    Paged<FriendResponseDto>,
     PaginationParameters,
     AsyncThunkConfig
 >(`${sliceName}/load-more-followings`, async (paginationPayload, { extra }) => {
@@ -58,7 +59,7 @@ const loadMoreFollowings = createAsyncThunk<
 });
 
 const loadMoreNotFollowed = createAsyncThunk<
-    { users: FriendResponseDto[]; query: PaginationParameters },
+    Paged<FriendResponseDto>,
     PaginationParameters,
     AsyncThunkConfig
 >(

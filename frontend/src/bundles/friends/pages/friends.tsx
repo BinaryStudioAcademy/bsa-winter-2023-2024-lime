@@ -138,7 +138,7 @@ const Friends: React.FC = () => {
                 <Loader isOverflow />
             ) : (
                 <div
-                    className={`flex flex-wrap items-start justify-stretch gap-5 ${selectedCard?.userId ? 'md:w-[calc(100%-254px)] lg:w-[calc(100%-354px)]' : 'w-full'}`}
+                    className={`flex flex-wrap items-start justify-stretch gap-5 pb-8 ${selectedCard?.userId ? 'md:w-[calc(100%-254px)] lg:w-[calc(100%-354px)]' : 'w-full'}`}
                 >
                     {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
                         <TabContent

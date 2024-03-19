@@ -43,7 +43,7 @@ const TabContent = ({
                 ))}
 
             {(totalCount ?? 0) > users.length ? (
-                <div className="mt-6 flex w-full justify-center">
+                <div className="my-6 flex w-full justify-center">
                     <div className="w-[160px]">
                         <Button
                             onClick={loadMore}
