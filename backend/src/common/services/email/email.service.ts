@@ -16,8 +16,8 @@ class EmailService {
 
     public async sendRestorePassword(to: string, link: string): Promise<void> {
         const message = {
-            to: to,
-            from: this.from,
+            to,
+            subject: 'LIME Password Recovery',
             templateId: this.templateId,
             dynamicTemplateData: {
                 link: link,
