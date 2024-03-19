@@ -15,12 +15,14 @@ import {
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
+    loadMoreDataStatus: ValueOf<typeof DataStatus>;
     users: FriendResponseDto[];
     totalCount: number | undefined;
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
+    loadMoreDataStatus: DataStatus.IDLE,
     users: [],
     totalCount: 0,
 };
@@ -53,7 +55,6 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(getFollowings.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
-
         builder.addCase(addFollowing.fulfilled, (state, action) => {
             state.totalCount && (state.totalCount -= 1);
             state.users = [
@@ -66,7 +67,6 @@ const { reducer, actions, name } = createSlice({
                     : [action.payload]),
             ];
         });
-
         builder.addCase(removeFollowing.fulfilled, (state, action) => {
             state.totalCount && (state.totalCount -= 1);
             state.users = [
@@ -81,27 +81,27 @@ const { reducer, actions, name } = createSlice({
         });
 
         builder.addCase(loadMoreFollowings.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
+            state.loadMoreDataStatus = DataStatus.PENDING;
         });
         builder.addCase(loadMoreFollowings.fulfilled, (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
+            state.loadMoreDataStatus = DataStatus.FULFILLED;
             state.users = [...state.users, ...action.payload.users];
             state.totalCount = action.payload.query.totalCount;
         });
         builder.addCase(loadMoreFollowings.rejected, (state) => {
-            state.dataStatus = DataStatus.REJECTED;
+            state.loadMoreDataStatus = DataStatus.REJECTED;
         });
 
         builder.addCase(loadMoreNotFollowed.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
+            state.loadMoreDataStatus = DataStatus.PENDING;
         });
         builder.addCase(loadMoreNotFollowed.fulfilled, (state, action) => {
-            state.dataStatus = DataStatus.FULFILLED;
+            state.loadMoreDataStatus = DataStatus.FULFILLED;
             state.users = [...state.users, ...action.payload.users];
             state.totalCount = action.payload.query.totalCount;
         });
         builder.addCase(loadMoreNotFollowed.rejected, (state) => {
-            state.dataStatus = DataStatus.REJECTED;
+            state.loadMoreDataStatus = DataStatus.REJECTED;
         });
     },
 });

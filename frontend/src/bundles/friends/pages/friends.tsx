@@ -1,3 +1,4 @@
+import { Loader } from '~/bundles/common/components/components.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -35,6 +36,7 @@ const Friends: React.FC = () => {
     const {
         users,
         dataStatus: isLoading,
+        loadMoreDataStatus: isLoadingMore,
         totalCount,
     } = useAppSelector(({ friends }) => friends);
 
@@ -126,53 +128,57 @@ const Friends: React.FC = () => {
     }, [dispatch, activeTab]);
 
     return (
-        <section className="relative flex flex-col gap-5 whitespace-normal">
+        <section className="relative flex h-full flex-col gap-5 whitespace-normal">
             <Tabs
                 tabs={tabs}
                 handleTabClick={handleTabClick}
                 activeTab={activeTab}
             />
-            <div
-                className={`flex flex-wrap items-start justify-stretch gap-5 ${selectedCard?.userId ? 'md:w-[calc(100%-254px)] lg:w-[calc(100%-354px)]' : 'w-full'}`}
-            >
-                {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
-                    <TabContent
-                        users={users}
-                        isFollowed={false}
-                        selectedCardId={selectedCard?.userId}
-                        selectCard={handleSelectCard}
-                        onToggleFollow={handleAddFollowing}
-                        noUsersText={'No user found to follow.'}
-                        totalCount={totalCount ?? 0}
-                        loadMore={handleLoadMore}
-                        isLoading={isLoading === DataStatus.PENDING}
-                    />
-                )}
+            {isLoading === DataStatus.PENDING ? (
+                <Loader isOverflow />
+            ) : (
+                <div
+                    className={`flex flex-wrap items-start justify-stretch gap-5 ${selectedCard?.userId ? 'md:w-[calc(100%-254px)] lg:w-[calc(100%-354px)]' : 'w-full'}`}
+                >
+                    {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
+                        <TabContent
+                            users={users}
+                            isFollowed={false}
+                            selectedCardId={selectedCard?.userId}
+                            selectCard={handleSelectCard}
+                            onToggleFollow={handleAddFollowing}
+                            noUsersText={'No user found to follow.'}
+                            totalCount={totalCount ?? 0}
+                            loadMore={handleLoadMore}
+                            isLoadingMore={isLoadingMore === DataStatus.PENDING}
+                        />
+                    )}
 
-                {activeTab === TabsFollowers.MY_FOLLOWINGS && (
-                    <TabContent
-                        users={users}
-                        isFollowed={true}
-                        selectedCardId={selectedCard?.userId}
-                        selectCard={handleSelectCard}
-                        onToggleFollow={handleRemoveFollowing}
-                        noUsersText={'You do not follow anyone yet.'}
-                        totalCount={totalCount}
-                        loadMore={handleLoadMore}
-                        isLoading={isLoading === DataStatus.PENDING}
-                    />
-                )}
+                    {activeTab === TabsFollowers.MY_FOLLOWINGS && (
+                        <TabContent
+                            users={users}
+                            isFollowed={true}
+                            selectedCardId={selectedCard?.userId}
+                            selectCard={handleSelectCard}
+                            onToggleFollow={handleRemoveFollowing}
+                            noUsersText={'You do not follow anyone yet.'}
+                            totalCount={totalCount}
+                            loadMore={handleLoadMore}
+                            isLoadingMore={isLoadingMore === DataStatus.PENDING}
+                        />
+                    )}
 
-                {activeTab === TabsFollowers.MY_FOLLOWERS && (
-                    <div
-                        className={
-                            'text-primary flex h-[70vh] w-full items-center justify-center text-xl'
-                        }
-                    >
-                        No one is following you yet.
-                    </div>
-                )}
-            </div>
+                    {activeTab === TabsFollowers.MY_FOLLOWERS && (
+                        <div
+                            className={
+                                'text-primary flex h-[70vh] w-full items-center justify-center text-xl'
+                            }
+                        >
+                            No one is following you yet.
+                        </div>
+                    )}
+                </div>
+            )}
 
             <aside
                 className={getValidClassNames(
