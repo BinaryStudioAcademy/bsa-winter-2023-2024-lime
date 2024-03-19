@@ -21,6 +21,7 @@ class EmailService {
             templateId: this.templateId,
             dynamicTemplateData: {
                 link: link,
+                email: this.from,
             },
         };
 
