@@ -22,6 +22,7 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import {
     type CreateGoalRequest,
+    type UserAuthResponseDto,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
 import { GoalCard } from '~/bundles/goals/components/components.js';
@@ -48,6 +49,10 @@ const ZERO_VALUE = 0;
 const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
+    const { id } = useAppSelector(
+        ({ auth }) => auth.user,
+    ) as UserAuthResponseDto;
+
     const { dataStatus: dataStatusGoals, goals } = useAppSelector(
         ({ goals }) => goals,
     );
@@ -71,8 +76,8 @@ const Goals: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        void dispatch(achievementsActions.getAchievements());
-    }, [dispatch]);
+        void dispatch(achievementsActions.getAchievementsByUserId(id));
+    }, [dispatch, id]);
 
     const handleOpenModal = useCallback((): void => {
         void setIsModalOpen(true);

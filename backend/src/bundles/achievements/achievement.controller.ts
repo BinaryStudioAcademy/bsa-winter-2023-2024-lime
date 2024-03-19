@@ -1,5 +1,4 @@
 import { type AchievementService } from '~/bundles/achievements/achievement.service.js';
-import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
 import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
@@ -82,18 +81,6 @@ class AchievementController extends BaseController {
                 this.findUserParams(
                     options as ApiHandlerOptions<{
                         params: AchievementGetItemResponseDto;
-                    }>,
-                ),
-        });
-
-        this.addRoute({
-            path: AchievementsApiPath.CURRENT_USER,
-            method: 'GET',
-            isProtected: true,
-            handler: (options) =>
-                this.findCurrentUser(
-                    options as ApiHandlerOptions<{
-                        user: UserAuthResponseDto;
                     }>,
                 ),
         });
@@ -225,40 +212,6 @@ class AchievementController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { params } = options;
         return this.findByUserId(params.id);
-    }
-
-    /**
-     * @swagger
-     * /api/v1/achievements/current-user:
-     *    get:
-     *      tags:
-     *       - UserAchievements
-     *      description: Returns achievements for a specific user
-     *      security:
-     *        - bearerAuth: []
-     *      responses:
-     *        200:
-     *          description: Successful operation
-     *          content:
-     *            application/json:
-     *              schema:
-     *                 type: object
-     *                 $ref: '#/components/schemas/Achievements'
-     *
-     *        401:
-     *          description: Failed operation
-     *          content:
-     *              application/json:
-     *                  schema:
-     *                      type: object
-     *                      $ref: '#/components/schemas/Error'
-     */
-
-    private findCurrentUser(
-        options: ApiHandlerOptions<{ user: UserAuthResponseDto }>,
-    ): Promise<ApiHandlerResponse> {
-        const { id: userId } = options.user;
-        return this.findByUserId(userId);
     }
 }
 
