@@ -92,7 +92,7 @@ class ChatService implements Service {
 
         const chatEntity = ChatEntity.initializeNew({
             isAssistant,
-            membersId: membersId ? [creatorId, ...membersId] : [creatorId],
+            membersId: membersId as number[],
         });
 
         return await this.chatRepository.create(chatEntity);
