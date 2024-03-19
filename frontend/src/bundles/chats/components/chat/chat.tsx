@@ -40,10 +40,8 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
             }
 
             const { users, id, isAssistant } = currentChat;
-            const membersId =
-                users && users.length > 1
-                    ? users.map((users) => users.id)
-                    : [user.id];
+            const membersId = users.map((users) => users.id);
+
             const message = {
                 chatId: id,
                 text: payload.message,

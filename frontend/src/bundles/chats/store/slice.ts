@@ -2,7 +2,6 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import {
     type ChatPreviewResponseDto,
-    type ChatUserResponseDto,
     type CurrentChatDto,
 } from '~/bundles/chats/types/types.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
@@ -47,11 +46,7 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
-            const users = state.chats
-                .find((chat) => chat.id === action.payload.id)
-                ?.users.map((user) => user) as ChatUserResponseDto[];
-
-            state.currentChat = { ...action.payload, users };
+            state.currentChat = action.payload;
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(getChat.pending, (state) => {
