@@ -250,6 +250,7 @@ class UserController extends BaseController {
         }
 
         void scheduleService.deleteOutdatedSchedules(id);
+        void scheduleService.scheduleNotificationCheck(id);
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,

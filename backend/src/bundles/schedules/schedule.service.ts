@@ -1,6 +1,9 @@
+import schedule from 'node-schedule';
+
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Service } from '~/common/types/types.js';
 
+import { type NotificationService } from '../notifications/notification.service.js';
 import { ScheduleValidationMessage } from './enums/enums.js';
 import { ScheduleEntity } from './schedule.entity.js';
 import { type ScheduleRepository } from './schedule.repository.js';
@@ -12,9 +15,14 @@ import {
 
 class ScheduleService implements Service {
     private scheduleRepository: ScheduleRepository;
+    private notificationService: NotificationService;
 
-    public constructor(scheduleRepository: ScheduleRepository) {
+    public constructor(
+        scheduleRepository: ScheduleRepository,
+        notificationService: NotificationService,
+    ) {
         this.scheduleRepository = scheduleRepository;
+        this.notificationService = notificationService;
     }
 
     public async deleteOutdatedSchedules(userId: number): Promise<void> {
@@ -101,6 +109,41 @@ class ScheduleService implements Service {
         }
 
         return await this.scheduleRepository.delete(query);
+    }
+
+    public async createNotificationsForUpcomingSchedules(
+        userId: number,
+    ): Promise<void> {
+        const { items: schedules } = await this.findAll({ userId });
+        const ONE_HOUR_IN_MINUTES = 60;
+        const MILLISECONDS_PER_MINUTE = 60_000;
+
+        for (const schedule of schedules) {
+            const startAt = new Date(schedule.startAt).getTime();
+            const timeDifference = startAt - Date.now();
+
+            if (
+                timeDifference > 0 &&
+                timeDifference <= ONE_HOUR_IN_MINUTES * MILLISECONDS_PER_MINUTE
+            ) {
+                const timeDifferenceInMinutes = Math.round(
+                    timeDifference / MILLISECONDS_PER_MINUTE,
+                );
+                await this.notificationService.create({
+                    userId: userId,
+                    title: 'Upcoming Workout',
+                    message: `Reminder: Your scheduled event ${schedule.activityType} will start in ${timeDifferenceInMinutes} minutes.`,
+                    isRead: false,
+                    type: 'default',
+                });
+            }
+        }
+    }
+
+    public scheduleNotificationCheck(userId: number): void {
+        schedule.scheduleJob('0 0 * * * *', async () => {
+            await this.createNotificationsForUpcomingSchedules(userId);
+        });
     }
 }
 
