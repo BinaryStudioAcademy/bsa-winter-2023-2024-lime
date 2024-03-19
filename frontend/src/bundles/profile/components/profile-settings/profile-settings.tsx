@@ -139,7 +139,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
                     avatarUrl: data.avatarUrl || null,
-                    isPublic: getValues().isPublic,
+                    isPublic: data.isPublic,
                     location: data.location ? data.location.trim() : null,
                     weight: convertWeightToGrams(data.weight),
                     height: convertHeightToMillimeters(data.height),
@@ -153,19 +153,12 @@ const ProfileSettings: React.FC<Properties> = ({
                 onSubmit(payload);
             })(event_);
         },
-        [handleSubmit, onSubmit, getValues],
+        [handleSubmit, onSubmit],
     );
 
     const closeModal = useCallback((): void => {
         setIsOpen(false);
     }, []);
-
-    const handleCheckboxChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>): void => {
-            setValue('isPublic', event.target.checked);
-        },
-        [setValue],
-    );
 
     const handleReset = useCallback((): void => {
         void reset(DEFAULT_UPDATE_PROFILE_PAYLOAD);
@@ -338,7 +331,6 @@ const ProfileSettings: React.FC<Properties> = ({
                         ariaLabel="privacy-policy"
                         control={control}
                         errors={errors}
-                        onChange={handleCheckboxChange}
                     />
                 </div>
                 <ul className="mt-14 flex justify-end lg:mt-6">

@@ -16,7 +16,6 @@ type Properties<T extends FieldValues> = {
     ariaLabel: string;
     control: Control<T>;
     errors: FieldErrors<T>;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const classes = {
@@ -37,7 +36,6 @@ const Checkbox = <T extends FieldValues>({
     ariaLabel,
     control,
     errors,
-    onChange,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController<T>({ name, control });
     const error = errors[name]?.message;
@@ -58,7 +56,6 @@ const Checkbox = <T extends FieldValues>({
                             classes.Checkboxfocused,
                         )}
                         checked={field.value}
-                        onChange={onChange}
                     />
                     <CheckIcon
                         className={getValidClassNames(classes.checkIcon)}
