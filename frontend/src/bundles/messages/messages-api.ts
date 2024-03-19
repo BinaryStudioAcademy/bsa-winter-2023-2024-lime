@@ -32,6 +32,18 @@ class MessagesApi extends BaseHttpApi {
         );
         return await response.json<MessageResponseDto>();
     }
+
+    public async find(id: string): Promise<MessageResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(MessagePath.ID, { id }),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<MessageResponseDto>();
+    }
 }
 
 export { MessagesApi };
