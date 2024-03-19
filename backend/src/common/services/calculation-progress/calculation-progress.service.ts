@@ -1,19 +1,15 @@
 import { type AchievementService } from '~/bundles/achievements/achievement.service.js';
+import { type ValueOf, Metric } from '~/bundles/achievements/enums/enums.js';
 import { type UserAchievementService } from '~/bundles/achievements/user-achievement.service.js';
 import { type GoalService } from '~/bundles/goals/goal.service.js';
-import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type NotificationService } from '~/bundles/notifications/notification.service.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import { workoutService } from '~/bundles/workouts/workouts.js';
 import { COMPLETED_GOAL_VALUE } from '~/common/constants/constants.js';
-import { ActivityType, NotificationMessage } from '~/common/enums/enums.js';
+import { NotificationMessage } from '~/common/enums/enums.js';
 import {
     calculateGoalProgress,
-    checkCyclingAchievements,
-    checkRunningAchievements,
-    checkWalkingAchievements,
-    filterAchievementByActivityType,
-    filterWorkoutsByActivityType,
+    convertMetersToKilometers,
 } from '~/common/helpers/helpers.js';
 
 class CalculationProgressService {
@@ -39,28 +35,36 @@ class CalculationProgressService {
         this.notificationService = notificationService;
     }
 
-    public async calculateProgress(userId: number): Promise<void> {
-        const { items: goals } = await this.goalService.findAll({ userId });
-        const { items: workouts } = await workoutService.findAll({ userId });
-
-        const lastWorkout = workouts.at(-1) as WorkoutResponseDto;
-
-        await this.updateGoal(userId, goals, workouts);
-        await this.updateAchievement(userId, workouts, lastWorkout);
+    public async calculateProgress(
+        userId: number,
+        lastWorkout: WorkoutResponseDto,
+    ): Promise<void> {
+        await this.updateGoal(userId, lastWorkout);
+        await this.updateAchievement(userId, lastWorkout);
     }
 
     private async updateGoal(
         userId: number,
-        goals: GoalResponseDto[],
-        workouts: WorkoutResponseDto[],
+        lastWorkout: WorkoutResponseDto,
     ): Promise<void> {
         let hasCompletedGoal = false;
 
-        for (const goal of goals) {
-            const filteredWorkouts = workouts.filter(
-                (workout) => workout.activityType === goal.activityType,
-            );
+        const { items: goals } = await this.goalService.findAll({
+            userId,
+        });
+        const { items: workouts } = await workoutService.findAll({
+            userId,
+        });
 
+        const filteredGoals = goals.filter(
+            (goal) => goal.activityType === lastWorkout.activityType,
+        );
+
+        const filteredWorkouts = workouts.filter(
+            (workout) => workout.activityType === lastWorkout.activityType,
+        );
+
+        for (const goal of filteredGoals) {
             const updatedGoal = await this.goalService.update(
                 { id: goal.id },
                 {
@@ -97,9 +101,11 @@ class CalculationProgressService {
 
     private async updateAchievement(
         userId: number,
-        workouts: WorkoutResponseDto[],
         lastWorkout: WorkoutResponseDto,
     ): Promise<void> {
+        const { items: workouts } = await workoutService.findAll({
+            userId,
+        });
         const achievementsList = await this.achievementService.findAll();
         const userAchievementsList =
             await this.achievementService.findByUserId(userId);
@@ -107,88 +113,65 @@ class CalculationProgressService {
             (item) => item.toObject().id,
         );
 
-        const userAchievements = [];
+        const uncomlietedAchievements = achievementsList.filter(
+            (achievement) =>
+                !userAchievementsListById?.includes(achievement.toObject().id),
+        );
 
-        switch (lastWorkout.activityType) {
-            case ActivityType.CYCLING: {
-                const cyclingWorkouts = filterWorkoutsByActivityType(
-                    workouts,
-                    ActivityType.CYCLING,
-                );
-                const cyclingAchievements = filterAchievementByActivityType(
-                    achievementsList,
-                    ActivityType.CYCLING,
-                );
-                const userCyclingAchievements = cyclingAchievements
-                    .filter((achievement) =>
-                        checkCyclingAchievements({
-                            workouts: cyclingWorkouts,
-                            achievement,
-                            lastWorkout,
-                            userAchievementsListById,
-                        }),
-                    )
-                    .map((item) => item.toObject().id);
+        const filteredAchievementsByLastWorkoutType =
+            uncomlietedAchievements.filter(
+                (achievement) =>
+                    achievement.toObject().activityType ===
+                    lastWorkout.activityType,
+            );
 
-                userAchievements.push(...userCyclingAchievements);
-                break;
-            }
-            case ActivityType.RUNNING: {
-                const runningWorkouts = filterWorkoutsByActivityType(
-                    workouts,
-                    ActivityType.RUNNING,
-                );
-                const runningAchievements = filterAchievementByActivityType(
-                    achievementsList,
-                    ActivityType.RUNNING,
-                );
-                const userRunningAchievements = runningAchievements
-                    .filter((achievement) =>
-                        checkRunningAchievements({
-                            workouts: runningWorkouts,
-                            achievement,
-                            lastWorkout,
-                            userAchievementsListById,
-                        }),
-                    )
-                    .map((item) => item.toObject().id);
+        const filteredWorkoutsByLastWorkoutType = workouts.filter(
+            (workout) => workout.activityType === lastWorkout.activityType,
+        );
 
-                userAchievements.push(...userRunningAchievements);
-                break;
-            }
-            case ActivityType.WALKING: {
-                const walkingWorkouts = filterWorkoutsByActivityType(
-                    workouts,
-                    ActivityType.WALKING,
-                );
-                const walkingAchievements = filterAchievementByActivityType(
-                    achievementsList,
-                    ActivityType.WALKING,
-                );
-                const userWalkingAchievements = walkingAchievements
-                    .filter((achievement) =>
-                        checkWalkingAchievements({
-                            workouts: walkingWorkouts,
-                            achievement,
-                            lastWorkout,
-                            userAchievementsListById,
-                        }),
-                    )
-                    .map((item) => item.toObject().id);
+        const totalDistance = filteredWorkoutsByLastWorkoutType.reduce(
+            (accumulator, workout) => accumulator + workout.distance,
+            0,
+        );
+        const totalDuration = filteredWorkoutsByLastWorkoutType.reduce(
+            (accumulator, workout) => accumulator + workout.duration,
+            0,
+        );
+        const totalSteps = filteredWorkoutsByLastWorkoutType.reduce(
+            (accumulator, workout) => accumulator + (workout.steps as number),
+            0,
+        );
+        const totalKilocalories = filteredWorkoutsByLastWorkoutType.reduce(
+            (accumulator, workout) => accumulator + workout.kilocalories,
+            0,
+        );
 
-                userAchievements.push(...userWalkingAchievements);
-                break;
-            }
-        }
+        const requirementsByMetric: Record<ValueOf<typeof Metric>, number> = {
+            [Metric.KILOMETERS]: convertMetersToKilometers(totalDistance),
+            [Metric.MINUTES]: totalDuration,
+            [Metric.STEPS]: totalSteps,
+            [Metric.KILOCALORIES]: totalKilocalories,
+        };
+
+        const userAchievements = filteredAchievementsByLastWorkoutType.filter(
+            (achievement) =>
+                requirementsByMetric[
+                    achievement.toObject().requirementMetric as ValueOf<
+                        typeof Metric
+                    >
+                ] >= achievement.toObject().requirement,
+        );
 
         for (const achievement of userAchievements) {
             const newAchievemenet = await this.userAchievementsService.create({
                 userId,
-                achievementId: achievement,
+                achievementId: achievement.toObject().id,
             });
             if (newAchievemenet) {
                 const achievementDetails =
-                    await this.achievementService.findById(achievement);
+                    await this.achievementService.findById(
+                        achievement.toObject().id,
+                    );
 
                 if (achievementDetails) {
                     await this.notificationService.create({

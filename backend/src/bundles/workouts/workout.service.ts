@@ -54,7 +54,10 @@ class WorkoutService implements Service {
                 ...payload,
             }),
         );
-        await calculationProgressService.calculateProgress(payload.userId);
+        await calculationProgressService.calculateProgress(
+            payload.userId,
+            workout.toObject(),
+        );
         return workout.toObject() as WorkoutResponseDto;
     }
     public async update(

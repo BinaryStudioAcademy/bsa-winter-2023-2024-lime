@@ -1,14 +1,5 @@
 export { calculateGoalProgress } from './calculate-goal-progress-helper.js';
-export { calculateTotalDistance } from './calculate-total-distance-helper.js';
-export { calculateTotalDuration } from './calculate-total-duration-helper.js';
-export { checkAchievementUniqueness } from './check-achievement-uniqueness-helper.js';
-export { checkCyclingAchievements } from './check-cycling-achievements-helper.js';
-export { checkRunningAchievements } from './check-running-achievements-helper.js';
-export { checkWalkingAchievements } from './check-walking-achievement-helper.js';
+export { convertMetersToKilometers } from './convert-meters-to-kilometers-helper.js';
 export { createProtectedRoutes } from './create-protected-routes-helper.js';
 export { extractTokenFromHeaders } from './extract-token-helper.js';
-export { filterAchievementByActivityType } from './filter-achievement-by-activity-type-helper.js';
-export { filterMonthWorkouts } from './filter-month-workouts-helper.js';
-export { filterWeekendWorkouts } from './filter-weekend-workouts-helper.js';
-export { filterWorkoutsByActivityType } from './filter-workouts-by-activity-type-helper.js';
 export { formatToDateFromUnix } from './format-to-date-from-unix-helper.js';

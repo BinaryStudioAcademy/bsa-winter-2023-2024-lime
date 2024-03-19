@@ -140,7 +140,7 @@ const Goals: React.FC = () => {
                                 hasDistance={Boolean(lastGoal?.distance)}
                             />
                         </section>
-                        <section className="md:w-full lg:w-[37rem] xl:w-[49rem]">
+                        <section className="w-full ">
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                 Goals
                             </h2>
