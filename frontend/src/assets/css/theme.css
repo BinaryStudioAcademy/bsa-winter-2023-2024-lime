@@ -39,6 +39,9 @@
 
     /* CIRCLE PROGRESS BAR */
     --circle-primary: #b2ca0d; /* lm-yellow-200 */
+
+    /* MODAL */
+    --modal-overlay: rgb(49 49 52 / 60%);
 }
 
 .dark {
