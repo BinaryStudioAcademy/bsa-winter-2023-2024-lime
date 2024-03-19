@@ -1,14 +1,14 @@
 import { ActivityType } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
-    configureTimeString,
+    getTimeFromDate,
 } from '~/bundles/common/helpers/helpers.js';
 import { type CreateWorkoutPayload } from '~/bundles/workouts/types/types.js';
 
 const DEFAULT_CREATE_WORKOUT_PAYLOAD: CreateWorkoutPayload = {
     activityType: ActivityType.CYCLING,
     workoutDate: configureDateString(new Date().toISOString()),
-    workoutStartedAt: configureTimeString(new Date().toISOString()),
+    workoutStartedAt: getTimeFromDate(new Date(), 'HH:mm:ss'),
     workoutEndedAt: '',
     speed: '',
     distance: '',

@@ -102,7 +102,7 @@ const WorkoutStats: React.FC<Properties> = ({ workout }): JSX.Element => {
                             'absolute right-[-1rem] top-[-1.3rem]',
                         )}
                     >
-                        {getTimeFromDate(workoutEndedAt)}
+                        {getTimeFromDate(workoutEndedAt, 'HH:mm')}
                     </span>
                 </div>
             </div>

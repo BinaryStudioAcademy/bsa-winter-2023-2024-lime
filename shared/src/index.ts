@@ -127,11 +127,9 @@ export {
 export { SocketEvent, SocketNamespace } from './framework/socket/socket.js';
 export { type Storage } from './framework/storage/storage.js';
 export {
-    configureDate,
     configureDateString,
     configureISOString,
     configureString,
-    configureTimeString,
 } from './helpers/helpers.js';
 export {
     type EntityIdParameterDto,

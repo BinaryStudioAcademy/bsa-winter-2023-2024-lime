@@ -2,6 +2,7 @@ export { applyThemeClassname } from './apply-theme-classname/apply-theme-classna
 export { calculateAge } from './calculate-age/calculate-age.helper.js';
 export { calculateTotal } from './calculate-total/calculate-total.helper.js';
 export { capitalizeFirstLetter } from './capitalize-first-letter/capitalize-first-letter.helper.js';
+export { configureDate } from './configure-date/configure-date.js';
 export { convertHeightToCentimeters } from './convert-height/convert-height-to-cm.js';
 export { convertHeightToMillimeters } from './convert-height/convert-height-to-mm.js';
 export { convertKMPHtoMPS } from './convert-kmph-to-mps/convert-kmph-to-mps.helper.js';
@@ -22,9 +23,7 @@ export { getValidClassNames } from './get-valid-class-names/get-valid-class-name
 export { metersToKilometers } from './meters-to-kilometers/meters-to-kilometers.helper.js';
 export { validateImageUrl } from './validate-image-url/validate-image-url.helper.js';
 export {
-    configureDate,
     configureDateString,
     configureISOString,
     configureString,
-    configureTimeString,
 } from 'shared';

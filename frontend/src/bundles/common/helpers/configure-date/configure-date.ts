@@ -1,15 +1,19 @@
+import { parse } from 'date-fns';
+
 const configureDate = (
     dateString: string,
     timeString?: string,
 ): Date | null => {
-    const [day, month, year] = dateString.split('/');
-
     if (timeString) {
-        const dateObject = new Date(`${year}-${month}-${day}T${timeString}`);
+        const dateObject = parse(
+            `${dateString} ${timeString}`,
+            'dd/MM/yyyy HH:mm:ss',
+            new Date(),
+        );
         return Number.isNaN(dateObject.getDay()) ? null : dateObject;
     }
 
-    const dateObject = new Date(`${year}-${month}-${day}`);
+    const dateObject = parse(dateString, 'dd/MM/yyyy', new Date());
     return Number.isNaN(dateObject.getDay()) ? null : dateObject;
 };
 
