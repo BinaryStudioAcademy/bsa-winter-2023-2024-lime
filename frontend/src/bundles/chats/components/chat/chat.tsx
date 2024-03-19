@@ -10,7 +10,7 @@ import {
     getChatCompanions,
 } from '~/bundles/chats/helpers/helpers.js';
 import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
-import { type CurrentChatDto } from '~/bundles/chats/types/types.js';
+import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
@@ -27,7 +27,7 @@ import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
 type Properties = {
     user: UserAuthResponseDto;
-    currentChat: CurrentChatDto | null;
+    currentChat: ChatFullResponseDto | null;
 };
 
 const Chat = ({ user, currentChat }: Properties): JSX.Element => {
@@ -56,7 +56,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                 );
             }
         },
-        [currentChat, user.id, dispatch],
+        [currentChat, dispatch],
     );
 
     const [isOpen, setIsOpen] = useState(false);

@@ -1,8 +1,8 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import {
+    type ChatFullResponseDto,
     type ChatPreviewResponseDto,
-    type CurrentChatDto,
 } from '~/bundles/chats/types/types.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
@@ -18,7 +18,7 @@ import {
 type State = {
     chats: ChatPreviewResponseDto[];
     aiAssistantChat: ChatPreviewResponseDto | null;
-    currentChat: CurrentChatDto | null;
+    currentChat: ChatFullResponseDto | null;
     dataStatus: ValueOf<typeof DataStatus>;
 };
 
