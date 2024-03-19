@@ -20,6 +20,38 @@ import {
     scheduleValidationSchema,
 } from './validation-schemas/validation-schemas.js';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Schedule:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           format: integer
+ *           minimum: 1
+ *         activityType:
+ *           type: string
+ *           enum:
+ *             - cycling
+ *             - running
+ *             - walking
+ *         goalId:
+ *           type: number
+ *           format: integer
+ *           description: optional
+ *           nullable: true
+ *         startAt:
+ *           type: string
+ *           format: date-time
+ *           description: The start time of the schedule
+ *       required:
+ *         - id
+ *         - activityType
+ *         - startAt
+ */
+
 class ScheduleController extends BaseController {
     private scheduleService: ScheduleService;
     public constructor(logger: Logger, scheduleService: ScheduleService) {
@@ -84,6 +116,36 @@ class ScheduleController extends BaseController {
         });
     }
 
+    /**
+     * @swagger
+     * /api/v1/schedules/{id}:
+     *    get:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *      tags:
+     *       - Schedules
+     *      description: Returns schedule
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/Schedule'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+
     private async find(
         options: ApiHandlerOptions<{
             params: EntityIdParameterDto;
@@ -98,6 +160,36 @@ class ScheduleController extends BaseController {
         };
     }
 
+    /**
+     * @swagger
+     * /api/v1/schedules/:
+     *    get:
+     *      tags:
+     *       - Schedules
+     *      description: Returns an array of schedules
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 properties:
+     *                   items:
+     *                     type: array
+     *                     items:
+     *                       $ref: '#/components/schemas/Schedule'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+
     private async findAll(
         options: ApiHandlerOptions,
     ): Promise<ApiHandlerResponse> {
@@ -109,6 +201,57 @@ class ScheduleController extends BaseController {
             }),
         };
     }
+
+    /**
+     * @swagger
+     * /api/v1/schedules/:
+     *    post:
+     *      tags:
+     *       - Schedules
+     *      description: Creates schedule
+     *      security:
+     *        - bearerAuth: []
+     *      requestBody:
+     *        description: Data for schedule
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                  activityType:
+     *                      type: string
+     *                      enum:
+     *                          - cycling
+     *                          - running
+     *                          - walking
+     *                      example: walking
+     *                  goalId:
+     *                      type: number
+     *                      format: integer
+     *                      description: optional
+     *                      minimum: 0
+     *                      nullable: true
+     *                  startAt:
+     *                      type: string
+     *                      format: date-time
+     *                      description: The start time of the schedule
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/Schedule'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
 
     private async create(
         options: ApiHandlerOptions<{
@@ -124,6 +267,62 @@ class ScheduleController extends BaseController {
             }),
         };
     }
+
+    /**
+     * @swagger
+     * /api/v1/schedules/{id}:
+     *    put:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *      tags:
+     *       - Schedules
+     *      description: Updates schedule
+     *      security:
+     *        - bearerAuth: []
+     *      requestBody:
+     *        description: Data for schedule
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                  activityType:
+     *                       type: string
+     *                       enum:
+     *                          - cycling
+     *                          - running
+     *                          - walking
+     *                       example: walking
+     *                  goalId:
+     *                      type: number
+     *                      format: integer
+     *                      description: optional
+     *                      minimum: 0
+     *                      nullable: true
+     *                  startAt:
+     *                      type: string
+     *                      format: date-time
+     *                      description: The start time of the schedule
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: object
+     *                 $ref: '#/components/schemas/Schedule'
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
+
     private async update(
         options: ApiHandlerOptions<{
             body: ScheduleRequestDto;
@@ -144,6 +343,35 @@ class ScheduleController extends BaseController {
             ),
         };
     }
+
+    /**
+     * @swagger
+     * /api/v1/schedules/{id}:
+     *    delete:
+     *      parameters:
+     *      - in: path
+     *        name: id
+     *        required: true
+     *      tags:
+     *       - Schedules
+     *      description: Deletes schedule
+     *      security:
+     *        - bearerAuth: []
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                 type: number
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      $ref: '#/components/schemas/Error'
+     */
 
     private async delete(
         options: ApiHandlerOptions<{
