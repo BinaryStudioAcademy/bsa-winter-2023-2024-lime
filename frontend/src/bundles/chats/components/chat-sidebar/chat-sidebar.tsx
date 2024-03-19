@@ -3,10 +3,6 @@ import {
     ChatLink,
     ChatSearchBar,
 } from '~/bundles/chats/components/components.js';
-import {
-    formatChatName,
-    getChatCompanions,
-} from '~/bundles/chats/helpers/helpers.js';
 import { type ChatPreviewResponseDto } from '~/bundles/chats/types/types.js';
 import { Button } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
@@ -54,10 +50,9 @@ const ChatSidebar = ({
                     chats.map(({ id, users, lastMessage }) => (
                         <li key={id}>
                             <ChatLink
+                                user={user}
                                 id={id}
-                                companions={formatChatName(
-                                    getChatCompanions(users, user.id),
-                                )}
+                                users={users}
                                 lastMessage={lastMessage && lastMessage.text}
                                 lastMessageTime={
                                     lastMessage && lastMessage.createdAt

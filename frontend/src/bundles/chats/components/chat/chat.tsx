@@ -79,24 +79,31 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                         >
                             <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
                         </Link>
-                        <Avatar
-                            size="sm"
-                            email="email@gmail.com"
-                            avatarUrl={null}
-                        />
                         {currentChat && (
-                            <span className="text-primary font-bold">
-                                {!currentChat?.isAssistant &&
-                                    currentChat.users &&
-                                    formatChatName(
-                                        getChatCompanions(
-                                            currentChat.users,
-                                            user.id,
-                                        ),
-                                    )}
-                                {currentChat?.isAssistant &&
-                                    'Personal Assistant'}
-                            </span>
+                            <>
+                                <Avatar
+                                    size="sm"
+                                    email={
+                                        currentChat.users[0]?.email ??
+                                        'email@gmail.com'
+                                    }
+                                    avatarUrl={
+                                        currentChat.users[0]?.avatarUrl ?? null
+                                    }
+                                />
+                                <span className="text-primary font-bold">
+                                    {!currentChat.isAssistant &&
+                                        currentChat.users &&
+                                        formatChatName(
+                                            getChatCompanions(
+                                                currentChat.users,
+                                                user.id,
+                                            ),
+                                        )}
+                                    {currentChat.isAssistant &&
+                                        'Personal Assistant'}
+                                </span>
+                            </>
                         )}
                     </div>
                 </div>
