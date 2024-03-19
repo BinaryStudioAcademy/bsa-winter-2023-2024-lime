@@ -10,7 +10,6 @@ import {
     ButtonVariant,
     CreateScheduleForm,
     DateCalendar,
-    DoughnutChart,
     Loader,
     Modal,
     ScheduleCard,
@@ -23,7 +22,6 @@ import {
 } from '~/bundles/common/enums/enums.js';
 import {
     capitalizeFirstLetter,
-    convertMetersToKilometers,
     formatDateToIso,
 } from '~/bundles/common/helpers/helpers.js';
 import {
@@ -38,20 +36,20 @@ import {
 import { type CreateScheduleRequest } from '~/bundles/common/types/types.js';
 import { FrequencyType } from '~/bundles/goals/enums/enums.js';
 import { actions as goalActions } from '~/bundles/goals/store/goals.js';
+import { ScheduleWidget } from '~/bundles/schedules/components/components.js';
 import { actions as scheduleActions } from '~/bundles/schedules/store/schedules.js';
 
 import {
+    DAY_PREPOSITION,
     DEFAULT_CALENDAR_VALUE,
     DOUGHNUT_DATASET,
-    DOUGHNUT_OPTIONS,
+    LABEL,
+    PLURAL,
+    WEEK_PREPOSITION,
+    ZERO_VALUE,
 } from '../constants/constants.js';
 import { isDateInRange } from '../helpers/helpers.js';
 import { type ScheduleRequestDto } from '../types/types.js';
-
-const ZERO_VALUE = 0;
-const PLURAL = 's';
-const DAY_PREPOSITION = 'a';
-const WEEK_PREPOSITION = 'per';
 
 const timeFormat = 'dd/MM/yyyy HH:mm';
 
@@ -81,18 +79,18 @@ const Schedule: React.FC = () => {
     );
 
     const goalsList = useMemo(() => {
-        return goals.map(({ activityType, id, frequency, frequencyType }) => ({
-            value: id,
-            label: `
-             ${capitalizeFirstLetter(activityType)} ${frequency} time${frequency > 1 ? PLURAL : ''}
-             ${
-                 frequencyType === FrequencyType.DAY
-                     ? DAY_PREPOSITION
-                     : WEEK_PREPOSITION
-             }
-             ${frequencyType}
-            `,
-        }));
+        return goals.map(({ activityType, id, frequency, frequencyType }) => {
+            const capitalizedFirstLetter = `${capitalizeFirstLetter(activityType)} ${frequency} time${frequency > 1 ? PLURAL : ''}`;
+            const frequencyTitle = `${
+                frequencyType === FrequencyType.DAY
+                    ? DAY_PREPOSITION
+                    : WEEK_PREPOSITION
+            }`;
+            return {
+                value: id,
+                label: `${capitalizedFirstLetter}${frequencyTitle}${frequencyType}`,
+            };
+        });
     }, [goals]);
 
     const filteredSchedules = useMemo(() => {
@@ -192,14 +190,16 @@ const Schedule: React.FC = () => {
                 startAt: convertedDate,
             };
 
-            isUpdateMode && id
-                ? void dispatch(
-                      scheduleActions.updateSchedule({
-                          id: String(id),
-                          payload: preparedData,
-                      }),
-                  )
-                : void dispatch(scheduleActions.createSchedule(preparedData));
+            if (isUpdateMode && id) {
+                void dispatch(
+                    scheduleActions.updateSchedule({
+                        id: String(id),
+                        payload: preparedData,
+                    }),
+                );
+            } else {
+                void dispatch(scheduleActions.createSchedule(preparedData));
+            }
 
             handleModalStatus();
         },
@@ -219,134 +219,56 @@ const Schedule: React.FC = () => {
         DataStatus.PENDING,
     );
 
+    if (isLoading) {
+        return <Loader isOverflow />;
+    }
+
     return (
         <>
             <section className="relative flex h-full w-full flex-col gap-[1.2rem] lg:flex-row">
-                {isLoading ? (
-                    <Loader isOverflow />
-                ) : (
-                    <>
-                        <div>
-                            <div className="bg-secondary flex h-full flex-col gap-[1.75rem]">
-                                <h1 className="text-card text-xl font-bold">
-                                    My Schedule
-                                </h1>
-                                <DateCalendar
-                                    name="date"
-                                    control={control}
-                                    range={true}
-                                    minDate={new Date()}
-                                />
-                            </div>
-                        </div>
-                        <div className="bg-primary my-[-2rem] hidden h-[calc(100%+4rem)] w-1 lg:block"></div>
-                        <div className="w-full max-w-none lg:max-w-[23.5rem] xl:max-w-none">
-                            {filteredSchedules.length > 0 ? (
-                                <div className="mb-3 flex flex-col gap-[1.2rem] xl:flex-row">
-                                    <ul className="flex w-full flex-col gap-[0.7rem] lg:max-w-[25rem]">
-                                        {filteredSchedules.map(
-                                            ({ activityType, id, startAt }) => {
-                                                const date = new Date(startAt);
-                                                const weekDay = format(
-                                                    date,
-                                                    'EEEE',
-                                                );
-                                                const hours = format(
-                                                    date,
-                                                    'HH',
-                                                );
-                                                const minutes = format(
-                                                    date,
-                                                    'mm',
-                                                );
+                <div>
+                    <div className="bg-secondary flex h-full flex-col gap-[1.75rem]">
+                        <h1 className="text-card text-xl font-bold">
+                            My Schedule
+                        </h1>
+                        <DateCalendar
+                            name="date"
+                            control={control}
+                            range={true}
+                            minDate={new Date()}
+                        />
+                    </div>
+                </div>
+                <div className="bg-primary my-[-2rem] hidden h-[calc(100%+4rem)] w-1 lg:block"></div>
+                <div className="w-full max-w-none lg:max-w-[23.5rem] xl:max-w-none">
+                    {filteredSchedules.length > 0 ? (
+                        <div className="mb-3 flex flex-col gap-[1.2rem] xl:flex-row">
+                            <ul className="flex w-full flex-col gap-[0.7rem] lg:max-w-[25rem]">
+                                {filteredSchedules.map(
+                                    ({ activityType, id, startAt }) => {
+                                        const date = new Date(startAt);
+                                        const weekDay = format(date, 'EEEE');
+                                        const hours = format(date, 'HH');
+                                        const minutes = format(date, 'mm');
 
-                                                return (
-                                                    <ScheduleCard
-                                                        weekDay={weekDay ?? ''}
-                                                        activityType={
-                                                            activityType
-                                                        }
-                                                        id={id}
-                                                        isExpanded={true}
-                                                        date={`${hours}:${minutes}`}
-                                                        key={id}
-                                                        onUpdate={onUpdate}
-                                                        onDelete={onDelete}
-                                                    />
-                                                );
-                                            },
-                                        )}
-                                        <div className="bg-primary w-full">
-                                            <Button
-                                                type="button"
-                                                label="Set new shcedule"
-                                                variant={
-                                                    ButtonVariant.SECONDARY
-                                                }
-                                                size={ComponentSize.LARGE}
-                                                leftIcon={
-                                                    <PlusIcon className="w-6" />
-                                                }
-                                                className="h-[6.75rem] sm:text-sm md:text-xl"
-                                                onClick={handleModalStatus}
+                                        return (
+                                            <ScheduleCard
+                                                weekDay={weekDay ?? ''}
+                                                activityType={activityType}
+                                                id={id}
+                                                isExpanded={true}
+                                                date={`${hours}:${minutes}`}
+                                                key={id}
+                                                onUpdate={onUpdate}
+                                                onDelete={onDelete}
                                             />
-                                        </div>
-                                    </ul>
-                                    {randomGoal ? (
-                                        <div className="bg-scheduleWidget bg-primary text-card flex h-full max-h-[20rem] w-full flex-col items-center gap-[1.2rem] rounded-lg p-7 font-bold lg:max-w-[23.75rem]">
-                                            <div>
-                                                {capitalizeFirstLetter(
-                                                    randomGoal.activityType,
-                                                )}
-                                            </div>
-                                            <div>
-                                                <span>
-                                                    {randomGoal.frequency} time
-                                                    {randomGoal.frequency > 1 &&
-                                                        PLURAL}{' '}
-                                                </span>
-                                                :
-                                                <span>
-                                                    {randomGoal.distance
-                                                        ? `${convertMetersToKilometers(randomGoal.distance)} km`
-                                                        : `${randomGoal.duration} min`}
-                                                </span>
-                                                /
-                                                <span>
-                                                    {randomGoal.frequencyType}
-                                                </span>
-                                            </div>
-                                            {doughnutData && (
-                                                <div className="relative">
-                                                    <DoughnutChart
-                                                        className="h-[2.7rem] w-[11rem]"
-                                                        data={doughnutData}
-                                                        options={
-                                                            DOUGHNUT_OPTIONS
-                                                        }
-                                                    />
-                                                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-                                                        {randomGoal.progress} %
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ) : null}
-                                </div>
-                            ) : (
-                                <div className="font-base text-primary mb-[1.75rem] flex items-center text-xl">
-                                    <p className="mr-3">
-                                        At this date, you don&#39;t have any
-                                        schedules yet
-                                    </p>
-                                    <ScheduleIcon className="h-6 w-6" />
-                                </div>
-                            )}
-                            {filteredSchedules.length === 0 ? (
-                                <div className="bg-primary w-full md:w-full xl:w-[48.8%]">
+                                        );
+                                    },
+                                )}
+                                <div className="bg-primary w-full">
                                     <Button
                                         type="button"
-                                        label="Set new shcedule"
+                                        label={LABEL}
                                         variant={ButtonVariant.SECONDARY}
                                         size={ComponentSize.LARGE}
                                         leftIcon={<PlusIcon className="w-6" />}
@@ -354,16 +276,41 @@ const Schedule: React.FC = () => {
                                         onClick={handleModalStatus}
                                     />
                                 </div>
-                            ) : null}
+                            </ul>
+                            {randomGoal && doughnutData && (
+                                <ScheduleWidget
+                                    goal={randomGoal}
+                                    doughnutData={doughnutData}
+                                />
+                            )}
                         </div>
-                    </>
-                )}
+                    ) : (
+                        <div className="font-base text-primary mb-[1.75rem] flex items-center text-xl">
+                            <p className="mr-3">
+                                At this date, you don&#39;t have any schedules
+                                yet
+                            </p>
+                            <ScheduleIcon className="h-6 w-6" />
+                        </div>
+                    )}
+                    {filteredSchedules.length === ZERO_VALUE && (
+                        <div className="bg-primary w-full md:w-full xl:w-[48.8%]">
+                            <Button
+                                type="button"
+                                label={LABEL}
+                                variant={ButtonVariant.SECONDARY}
+                                size={ComponentSize.LARGE}
+                                leftIcon={<PlusIcon className="w-6" />}
+                                className="h-[6.75rem] sm:text-sm md:text-xl"
+                                onClick={handleModalStatus}
+                            />
+                        </div>
+                    )}
+                </div>
             </section>
             <Modal
                 isOpen={isModalOpen}
-                title={
-                    isUpdateMode ? 'Update schedule' : 'Set the new schedule'
-                }
+                title={isUpdateMode ? 'Update schedule' : LABEL}
                 onClose={handleModalStatus}
             >
                 <CreateScheduleForm

@@ -3,3 +3,10 @@ export {
     DOUGHNUT_DATASET,
     DOUGHNUT_OPTIONS,
 } from './doughnut-state.constant.js';
+export {
+    DAY_PREPOSITION,
+    LABEL,
+    PLURAL,
+    WEEK_PREPOSITION,
+    ZERO_VALUE,
+} from './static-data.constant.js';
