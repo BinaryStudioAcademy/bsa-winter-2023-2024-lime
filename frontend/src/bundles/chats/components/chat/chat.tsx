@@ -5,8 +5,12 @@ import {
     ChatMessageForm,
 } from '~/bundles/chats/components/components.js';
 import { type MESSAGE_DEFAULT_PAYLOAD } from '~/bundles/chats/constants/constants.js';
+import {
+    formatChatName,
+    getChatCompanions,
+} from '~/bundles/chats/helpers/helpers.js';
 import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
-import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
+import { type CurrentChatDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
@@ -23,7 +27,7 @@ import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
 type Properties = {
     user: UserAuthResponseDto;
-    currentChat: (ChatFullResponseDto & { membersId: number[] }) | null;
+    currentChat: CurrentChatDto | null;
 };
 
 const Chat = ({ user, currentChat }: Properties): JSX.Element => {
@@ -35,11 +39,15 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                 return;
             }
 
-            const { membersId, id, isAssistant } = currentChat;
+            const { users, id, isAssistant } = currentChat;
+            const membersId =
+                users && users.length > 1
+                    ? users.map((users) => users.id)
+                    : [user.id];
             const message = {
-                text: payload.message,
                 chatId: id,
-                membersId: membersId ?? [user.id],
+                text: payload.message,
+                membersId,
             };
 
             void dispatch(chatActionCreator.sendMessage(message));
@@ -78,7 +86,20 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                             email="email@gmail.com"
                             avatarUrl={null}
                         />
-                        <span className="text-primary font-bold">Username</span>
+                        {currentChat && (
+                            <span className="text-primary font-bold">
+                                {!currentChat?.isAssistant &&
+                                    currentChat.users &&
+                                    formatChatName(
+                                        getChatCompanions(
+                                            currentChat.users,
+                                            user.id,
+                                        ),
+                                    )}
+                                {currentChat?.isAssistant &&
+                                    'Personal Assistant'}
+                            </span>
+                        )}
                     </div>
                 </div>
                 <ul className="flex h-full flex-1 flex-col-reverse gap-4 overflow-y-auto px-4 pr-2">

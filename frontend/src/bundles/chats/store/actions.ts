@@ -22,7 +22,7 @@ const getAllChats = createAsyncThunk<
 
 const getChat = createAsyncThunk<
     ChatFullResponseDto,
-    { chatId: string },
+    Record<'chatId', string>,
     AsyncThunkConfig
 >(`${sliceName}/get-chat`, async (payload, { extra: { chatsApi } }) => {
     const { chatId } = payload;

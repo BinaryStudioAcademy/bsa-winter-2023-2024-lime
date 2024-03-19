@@ -1,3 +1,4 @@
+export { type CurrentChatDto } from './current-chat-dto.type.js';
 export {
     type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,

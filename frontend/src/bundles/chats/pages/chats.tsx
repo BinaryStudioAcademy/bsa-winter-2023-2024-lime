@@ -15,8 +15,8 @@ import {
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
 const Chats = (): JSX.Element => {
-    const dispatch = useAppDispatch();
     const { id } = useParams();
+    const dispatch = useAppDispatch();
 
     const { chats, aiAssistantChat, currentChat } = useAppSelector(
         ({ chats }) => chats,

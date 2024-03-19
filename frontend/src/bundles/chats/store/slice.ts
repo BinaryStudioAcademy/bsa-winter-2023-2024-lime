@@ -1,12 +1,13 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
+import {
+    type ChatPreviewResponseDto,
+    type ChatUserResponseDto,
+    type CurrentChatDto,
+} from '~/bundles/chats/types/types.js';
 import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-import {
-    type ChatFullResponseDto,
-    type ChatPreviewResponseDto,
-} from '../types/types.js';
 import {
     applyMessage,
     generateAiAssistantResponse,
@@ -18,7 +19,7 @@ import {
 type State = {
     chats: ChatPreviewResponseDto[];
     aiAssistantChat: ChatPreviewResponseDto | null;
-    currentChat: (ChatFullResponseDto & { membersId: number[] }) | null;
+    currentChat: CurrentChatDto | null;
     dataStatus: ValueOf<typeof DataStatus>;
 };
 
@@ -46,11 +47,11 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.REJECTED;
         });
         builder.addCase(getChat.fulfilled, (state, action) => {
-            const membersId = state.chats
+            const users = state.chats
                 .find((chat) => chat.id === action.payload.id)
-                ?.users.map((user) => user.id) as number[];
+                ?.users.map((user) => user) as ChatUserResponseDto[];
 
-            state.currentChat = { ...action.payload, membersId };
+            state.currentChat = { ...action.payload, users };
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(getChat.pending, (state) => {
