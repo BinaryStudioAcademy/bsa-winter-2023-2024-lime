@@ -17,7 +17,6 @@ import {
     PAGE,
     TabsFollowers,
 } from '~/bundles/friends/constants/constants.js';
-import { FriendsApiPath } from '~/bundles/friends/enums/enums.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
 import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
@@ -51,19 +50,17 @@ const Friends: React.FC = () => {
 
         activeTab === TabsFollowers.FIND_FOLLOWINGS &&
             void dispatch(
-                friendsActions.loadMore({
+                friendsActions.loadMoreNotFollowed({
                     page: String(page + 1),
                     limit: String(LIMIT),
-                    path: FriendsApiPath.ROOT,
                 }),
             );
 
         activeTab === TabsFollowers.MY_FOLLOWINGS &&
             void dispatch(
-                friendsActions.loadMore({
+                friendsActions.loadMoreFollowings({
                     page: String(page + 1),
                     limit: String(LIMIT),
-                    path: FriendsApiPath.FOLLOWINGS,
                 }),
             );
     }, [setPage, page, dispatch, activeTab]);

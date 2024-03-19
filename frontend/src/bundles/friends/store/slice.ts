@@ -8,7 +8,8 @@ import {
     addFollowing,
     getFollowings,
     getNotFollowed,
-    loadMore,
+    loadMoreFollowings,
+    loadMoreNotFollowed,
     removeFollowing,
 } from './actions.js';
 
@@ -79,15 +80,27 @@ const { reducer, actions, name } = createSlice({
             ];
         });
 
-        builder.addCase(loadMore.pending, (state) => {
+        builder.addCase(loadMoreFollowings.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;
         });
-        builder.addCase(loadMore.fulfilled, (state, action) => {
+        builder.addCase(loadMoreFollowings.fulfilled, (state, action) => {
             state.dataStatus = DataStatus.FULFILLED;
             state.users = [...state.users, ...action.payload.users];
             state.totalCount = action.payload.query.totalCount;
         });
-        builder.addCase(loadMore.rejected, (state) => {
+        builder.addCase(loadMoreFollowings.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+
+        builder.addCase(loadMoreNotFollowed.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(loadMoreNotFollowed.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.users = [...state.users, ...action.payload.users];
+            state.totalCount = action.payload.query.totalCount;
+        });
+        builder.addCase(loadMoreNotFollowed.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },

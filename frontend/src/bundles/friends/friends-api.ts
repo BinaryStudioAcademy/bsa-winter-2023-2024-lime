@@ -25,13 +25,14 @@ class FriendsApi extends BaseHttpApi {
         users: FriendResponseDto[];
         query: PaginationParameters;
     }> {
+        const { page, limit } = payload;
         const response = await this.load(
             this.getFullEndpoint(FriendsApiPath.ROOT, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
-                query: { page: payload.page, limit: payload.limit },
+                query: { page, limit },
             },
         );
 
@@ -45,13 +46,17 @@ class FriendsApi extends BaseHttpApi {
         users: FriendResponseDto[];
         query: PaginationParameters;
     }> {
+        const { page, limit } = payload;
         const response = await this.load(
             this.getFullEndpoint(FriendsApiPath.FOLLOWINGS, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
-                query: { page: payload.page, limit: payload.limit },
+                query: {
+                    page,
+                    limit,
+                },
             },
         );
 
@@ -87,26 +92,6 @@ class FriendsApi extends BaseHttpApi {
             },
         );
         return await response.json<number>();
-    }
-
-    public async loadMore(payload: PaginationParameters): Promise<{
-        users: FriendResponseDto[];
-        query: PaginationParameters;
-    }> {
-        const response = await this.load(
-            this.getFullEndpoint(String(payload.path), {}),
-            {
-                method: 'GET',
-                contentType: ContentType.JSON,
-                hasAuth: true,
-                query: { page: payload.page, limit: payload.limit },
-            },
-        );
-
-        return await response.json<{
-            users: FriendResponseDto[];
-            query: PaginationParameters;
-        }>();
     }
 }
 
