@@ -4,8 +4,8 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import {
-    type ChatFullResponseDto,
     type ChatPreviewResponseDto,
+    type CurrentChatDto,
 } from '../types/types.js';
 import {
     applyMessage,
@@ -18,7 +18,7 @@ import {
 type State = {
     chats: ChatPreviewResponseDto[];
     aiAssistantChat: ChatPreviewResponseDto | null;
-    currentChat: (ChatFullResponseDto & { membersId: number[] }) | null;
+    currentChat: CurrentChatDto | null;
     dataStatus: ValueOf<typeof DataStatus>;
 };
 

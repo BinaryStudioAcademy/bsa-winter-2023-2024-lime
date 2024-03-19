@@ -4,7 +4,7 @@ import { ChatMessage } from '~/bundles/chats/components/chat-message/chat-messag
 import { ChatMessageForm } from '~/bundles/chats/components/chat-message-form/chat-message-form.js';
 import { type MESSAGE_DEFAULT_PAYLOAD } from '~/bundles/chats/constants/constants.js';
 import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
-import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
+import { type CurrentChatDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
@@ -21,7 +21,7 @@ import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
 
 type Properties = {
     user: UserAuthResponseDto;
-    currentChat: (ChatFullResponseDto & { membersId: number[] }) | null;
+    currentChat: CurrentChatDto | null;
 };
 
 const Chat = ({ user, currentChat }: Properties): JSX.Element => {
