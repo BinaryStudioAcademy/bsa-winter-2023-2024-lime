@@ -25,9 +25,6 @@ const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
     const tabs = [TabsFollowers.FIND_FOLLOWINGS, TabsFollowers.MY_FOLLOWINGS];
     const [page, setPage] = useState<number>(PAGE);
-    const [detailsAsideStyle, setDetailsAsideStyle] = useState({
-        transform: 'translateX(110%)',
-    });
 
     const [selectedCard, setSelectedCard] = useState<FriendResponseDto | null>(
         null,
@@ -44,7 +41,8 @@ const Friends: React.FC = () => {
 
     const classes = {
         detailsAside:
-            'bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px]',
+            'bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px] transform translate-x-0',
+        hidden: 'translate-x-full',
         animation: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
     };
 
@@ -130,12 +128,6 @@ const Friends: React.FC = () => {
         void loadUsers();
     }, [dispatch, activeTab]);
 
-    useEffect(() => {
-        selectedCard
-            ? setDetailsAsideStyle({ transform: 'translateX(0)' })
-            : setDetailsAsideStyle({ transform: 'translateX(110%)' });
-    }, [selectedCard]);
-
     return (
         <section className="relative flex flex-col gap-5 whitespace-normal">
             <Tabs
@@ -189,8 +181,8 @@ const Friends: React.FC = () => {
                 className={getValidClassNames(
                     classes.detailsAside,
                     classes.animation,
+                    !selectedCard && classes.hidden,
                 )}
-                style={detailsAsideStyle}
             >
                 {selectedCard && (
                     <FriendDetails

@@ -26,14 +26,12 @@ class FriendsApi extends BaseHttpApi {
         query: PaginationParameters;
     }> {
         const response = await this.load(
-            this.getFullEndpoint(
-                `${FriendsApiPath.ROOT}?page=${payload.page}&limit=${payload.limit}`,
-                {},
-            ),
+            this.getFullEndpoint(FriendsApiPath.ROOT, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                query: { page: payload.page, limit: payload.limit },
             },
         );
 
@@ -48,14 +46,12 @@ class FriendsApi extends BaseHttpApi {
         query: PaginationParameters;
     }> {
         const response = await this.load(
-            this.getFullEndpoint(
-                `${FriendsApiPath.FOLLOWINGS}?page=${payload.page}&limit=${payload.limit}`,
-                {},
-            ),
+            this.getFullEndpoint(FriendsApiPath.FOLLOWINGS, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                query: { page: payload.page, limit: payload.limit },
             },
         );
 
@@ -98,14 +94,12 @@ class FriendsApi extends BaseHttpApi {
         query: PaginationParameters;
     }> {
         const response = await this.load(
-            this.getFullEndpoint(
-                `${payload.path}?page=${payload.page}&limit=${payload.limit}`,
-                {},
-            ),
+            this.getFullEndpoint(String(payload.path), {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                query: { page: payload.page, limit: payload.limit },
             },
         );
 
