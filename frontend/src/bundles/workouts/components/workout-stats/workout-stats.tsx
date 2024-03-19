@@ -23,7 +23,7 @@ const WorkoutStats: React.FC<Properties> = ({ workout }): JSX.Element => {
         workoutEndedAt,
     } = workout;
 
-    const workoutDistance = steps ?? metersToKilometers(distance);
+    const workoutDistance = steps && steps != 0 ? steps :  metersToKilometers(distance);
     const distanceUnit = steps
         ? capitalizeFirstLetter(WorkoutUnit.STEPS)
         : WorkoutUnit.KILOMETERS;
