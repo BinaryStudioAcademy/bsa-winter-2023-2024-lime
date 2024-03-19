@@ -32,13 +32,13 @@ const AiChatLink = ({ aiAssistantChat }: Properties): JSX.Element => {
                         Personal Assistant
                     </p>
                     <p className="text-secondary text-xs">
-                        {aiAssistantChat && aiAssistantChat.lastMessage.text}
+                        {aiAssistantChat && aiAssistantChat.lastMessage?.text}
                     </p>
                 </div>
                 <p className="text-secondary text-xs">
                     {formatChatDate(
                         aiAssistantChat &&
-                            aiAssistantChat.lastMessage.createdAt,
+                            aiAssistantChat.lastMessage?.createdAt,
                     )}
                 </p>
             </div>

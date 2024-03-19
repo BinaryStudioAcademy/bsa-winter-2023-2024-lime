@@ -1,8 +1,10 @@
 import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
-import { type ChatFullResponseDto, type UserAuthResponseDto } from 'shared';
 
 import { ChatMessage } from '~/bundles/chats/components/chat-message/chat-message.js';
 import { ChatMessageForm } from '~/bundles/chats/components/chat-message-form/chat-message-form.js';
+import { type MESSAGE_DEFAULT_PAYLOAD } from '~/bundles/chats/constants/constants.js';
+import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
+import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
@@ -11,16 +13,40 @@ import {
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { useCallback, useState } from '~/bundles/common/hooks/hooks.js';
+import {
+    useAppDispatch,
+    useCallback,
+    useState,
+} from '~/bundles/common/hooks/hooks.js';
+import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
 
 type Properties = {
     user: UserAuthResponseDto;
-    currentChat: ChatFullResponseDto | null;
+    currentChat: (ChatFullResponseDto & { membersId: number[] }) | null;
     isLoading: boolean;
 };
 
 const Chat = ({ user, currentChat, isLoading }: Properties): JSX.Element => {
-    const handleSubmit = useCallback((): void => {}, []);
+    const dispatch = useAppDispatch();
+
+    const handleSubmit = useCallback(
+        (payload: typeof MESSAGE_DEFAULT_PAYLOAD): void => {
+            if (!currentChat) {
+                return;
+            }
+
+            const { membersId, id } = currentChat;
+
+            const message = {
+                text: payload.message,
+                chatId: id,
+                membersId,
+            };
+
+            void dispatch(chatActionCreator.sendMessage(message));
+        },
+        [currentChat, dispatch],
+    );
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleSidebarProfile = useCallback((): void => {

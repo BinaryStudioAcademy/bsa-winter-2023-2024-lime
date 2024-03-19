@@ -1,5 +1,6 @@
 import { actions as appActions } from '~/app/store/app.js';
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
+import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
 import {
     Loader,
     RouterOutlet,
@@ -18,7 +19,7 @@ const App: React.FC = () => {
 
     const { redirectPath } = useAppSelector(({ app }) => app);
 
-    const { isRefreshing } = useAppSelector(({ auth }) => auth);
+    const { isRefreshing, user } = useAppSelector(({ auth }) => auth);
 
     useEffect(() => {
         if (redirectPath) {
@@ -38,6 +39,19 @@ const App: React.FC = () => {
 
         void refreshUser();
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!user) {
+            return;
+        }
+
+        const { id } = user;
+        dispatch(chatActionCreator.joinRoom(id));
+
+        return () => {
+            dispatch(chatActionCreator.leaveRoom(id));
+        };
+    }, [dispatch, user]);
 
     if (isRefreshing) {
         return <Loader isOverflow />;
