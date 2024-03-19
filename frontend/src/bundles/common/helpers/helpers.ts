@@ -14,6 +14,7 @@ export { formatDate } from './format-date/format-date.helper.js';
 export { formatDateString } from './format-date-string/format-date-string.helper.js';
 export { getLastWorkout } from './get-last-workout/get-last-workout.helper.js';
 export { getObjectKeys } from './get-object-keys/get-object-keys.js';
+export { getSelectOptions } from './get-select-options/get-select-options.helper.js';
 export { getTimeFromDate } from './get-time-from-date/get-time-from-date.helper.js';
 export { getUniqueValues } from './get-unique-values/get-unique-values.helper.js';
 export { getUserId } from './get-user-id/get-user-id.js';

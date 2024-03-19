@@ -5,11 +5,9 @@ import {
     Select,
 } from '~/bundles/common/components/components.js';
 import { DEFAULT_CREATE_GOAL_PAYLOAD } from '~/bundles/common/components/create-goal-form/constants/constants.js';
-import {
-    setGoalActivityOptions,
-    setGoalFrequencyOpitons,
-} from '~/bundles/common/components/create-goal-form/helpers/helpers.js';
+import { setGoalFrequencyOpitons } from '~/bundles/common/components/create-goal-form/helpers/helpers.js';
 import { goalValidationSchema } from '~/bundles/common/components/create-goal-form/validation-schemas/goal.validation-schema.js';
+import { ACTIVITY_TYPE_OPTIONS } from '~/bundles/common/constants/constants.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type CreateGoalRequest } from '~/bundles/common/types/types.js';
@@ -44,7 +42,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     name="activity"
                     control={control}
                     errors={errors}
-                    options={setGoalActivityOptions}
+                    options={ACTIVITY_TYPE_OPTIONS}
                     isDisabled={isLoading}
                     required
                 />

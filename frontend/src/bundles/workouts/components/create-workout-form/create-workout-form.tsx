@@ -6,6 +6,7 @@ import {
     Select,
     TimePicker,
 } from '~/bundles/common/components/components.js';
+import { ACTIVITY_TYPE_OPTIONS } from '~/bundles/common/constants/constants.js';
 import { ActivityType, ComponentSize } from '~/bundles/common/enums/enums.js';
 import {
     configureDate,
@@ -22,10 +23,7 @@ import {
     type WorkoutRequestDto,
 } from '~/bundles/workouts/types/types.js';
 
-import {
-    DEFAULT_CREATE_WORKOUT_PAYLOAD,
-    WORKOUT_ACTIVITY_OPTIONS,
-} from './constants/constants.js';
+import { DEFAULT_CREATE_WORKOUT_PAYLOAD } from './constants/constants.js';
 import { createWorkoutValidationSchema } from './validation-schemas/validation-schemas.js';
 
 type Properties = {
@@ -86,7 +84,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                         name="activityType"
                         control={control}
                         errors={errors}
-                        options={WORKOUT_ACTIVITY_OPTIONS}
+                        options={ACTIVITY_TYPE_OPTIONS}
                         isDisabled={isLoading}
                         required
                     />
