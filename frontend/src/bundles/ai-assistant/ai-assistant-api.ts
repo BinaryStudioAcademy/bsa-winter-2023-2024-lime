@@ -24,7 +24,7 @@ class AiAssistantApi extends BaseHttpApi {
         payload: MessageRequestDto,
     ): Promise<MessageResponseDto> {
         const response = await this.load(
-            this.getFullEndpoint(AiAssistantPath.SEND_MESSAGE, {}),
+            this.getFullEndpoint(AiAssistantPath.ROOT, {}),
             {
                 method: 'POST',
                 payload: JSON.stringify(payload),
