@@ -1,12 +1,11 @@
+import { formatChatDate } from '~/bundles/chats/helpers/helpers.js';
+import { type ChatPreviewResponseDto } from '~/bundles/chats/types/types.js';
 import { Icon, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
     configureString,
     getValidClassNames,
 } from '~/bundles/common/helpers/helpers.js';
-
-import { formatChatDate } from '../../helpers/helpers.js';
-import { type ChatPreviewResponseDto } from '../../types/types.js';
 
 type Properties = {
     aiAssistantChat: ChatPreviewResponseDto | null;

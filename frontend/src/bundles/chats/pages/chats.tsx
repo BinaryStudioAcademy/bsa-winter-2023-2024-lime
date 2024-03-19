@@ -1,3 +1,9 @@
+import {
+    Chat,
+    ChatSidebar,
+    EmptyChat,
+} from '~/bundles/chats/components/components.js';
+import { actions as chatsActions } from '~/bundles/chats/store/chats.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -7,9 +13,6 @@ import {
     useParams,
 } from '~/bundles/common/hooks/hooks.js';
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
-
-import { Chat, ChatSidebar, EmptyChat } from '../components/components.js';
-import { actions as chatsActions } from '../store/chats.js';
 
 const Chats = (): JSX.Element => {
     const dispatch = useAppDispatch();

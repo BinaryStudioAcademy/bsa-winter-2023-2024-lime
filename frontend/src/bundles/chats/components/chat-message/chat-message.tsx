@@ -1,4 +1,4 @@
-import { formatChatDate } from '~/bundles/chats/helpers/format-chat-date.helper.js';
+import { formatChatDate } from '~/bundles/chats/helpers/helpers.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {

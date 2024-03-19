@@ -1,7 +1,9 @@
 import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 
-import { ChatMessage } from '~/bundles/chats/components/chat-message/chat-message.js';
-import { ChatMessageForm } from '~/bundles/chats/components/chat-message-form/chat-message-form.js';
+import {
+    ChatMessage,
+    ChatMessageForm,
+} from '~/bundles/chats/components/components.js';
 import { type MESSAGE_DEFAULT_PAYLOAD } from '~/bundles/chats/constants/constants.js';
 import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
 import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
@@ -17,7 +19,7 @@ import {
     useCallback,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
-import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
+import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
 type Properties = {
     user: UserAuthResponseDto;
@@ -57,7 +59,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
     }, [setIsOpen, isOpen]);
 
     return (
-        <div className="relative flex h-full  overflow-hidden">
+        <div className="relative flex h-full overflow-hidden">
             <div className="flex max-h-full w-full flex-col justify-between overflow-hidden">
                 <div className="flex h-20 w-full items-center p-4">
                     <div

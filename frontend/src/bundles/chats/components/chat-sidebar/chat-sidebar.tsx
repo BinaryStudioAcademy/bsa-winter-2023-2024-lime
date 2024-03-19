@@ -1,13 +1,16 @@
-import { AiChatLink } from '~/bundles/chats/components/ai-chat-link/ai-chat-link.js';
-import { ChatLink } from '~/bundles/chats/components/chat-link/chat-link.js';
-import { ChatSearchBar } from '~/bundles/chats/components/chat-search-bar/chat-search-bar.js';
+import {
+    AiChatLink,
+    ChatLink,
+    ChatSearchBar,
+} from '~/bundles/chats/components/components.js';
+import {
+    formatChatName,
+    getChatCompanions,
+} from '~/bundles/chats/helpers/helpers.js';
 import { type ChatPreviewResponseDto } from '~/bundles/chats/types/types.js';
 import { Button } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
-
-import { getChatCompanions } from '../../helpers/get-chat-companions.helper.js';
-import { formatChatName } from '../../helpers/helpers.js';
 
 type Properties = {
     user: UserAuthResponseDto;
