@@ -1,0 +1,1 @@
+export { ChatsPath } from 'shared';

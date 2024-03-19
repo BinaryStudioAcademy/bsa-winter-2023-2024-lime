@@ -1,6 +1,6 @@
 import { format, isThisWeek, isThisYear, isToday } from 'date-fns';
 
-const formatChatDate = (date: string | null): string => {
+const formatChatDate = (date: string | null, isMessage: boolean): string => {
     if (!date) {
         return '';
     }
@@ -9,7 +9,9 @@ const formatChatDate = (date: string | null): string => {
     if (isToday(formatedDate)) {
         return format(formatedDate, 'HH:mm');
     } else if (isThisWeek(formatedDate)) {
-        return format(formatedDate, 'EEE');
+        return isMessage
+            ? format(formatedDate, 'EEE')
+            : format(formatedDate, 'EEE | HH:mm');
     } else if (isThisYear(formatedDate)) {
         return format(formatedDate, 'MMM dd');
     } else {

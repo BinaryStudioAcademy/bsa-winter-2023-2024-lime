@@ -59,7 +59,7 @@ const ChatLink = ({
                             </p>
                         </div>
                         <p className="text-secondary mr-1 text-xs">
-                            {formatChatDate(lastMessageTime)}
+                            {formatChatDate(lastMessageTime, false)}
                         </p>
                     </div>
                 </div>

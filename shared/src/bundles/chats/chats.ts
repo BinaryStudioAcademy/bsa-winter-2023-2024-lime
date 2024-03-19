@@ -1,3 +1,4 @@
+export { ChatsPath } from './enums/enums.js';
 export {
     type ChatFullResponseDto,
     type ChatGetAllItemsResponseDto,

@@ -20,6 +20,7 @@ export {
     type ChatRequestDto,
     type ChatResponseDto,
     type ChatUserResponseDto,
+    ChatsPath,
     chatValidationSchema,
 } from './bundles/chats/chats.js';
 export {

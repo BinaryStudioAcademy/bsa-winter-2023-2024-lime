@@ -35,7 +35,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
 
     const handleSubmit = useCallback(
         (payload: typeof MESSAGE_DEFAULT_PAYLOAD): void => {
-            if (!currentChat) {
+            if (!currentChat || payload.message.trim().length === 0) {
                 return;
             }
 

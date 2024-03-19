@@ -21,7 +21,7 @@ const ChatMessage = ({
         >
             <div className="flex flex-col">
                 <span className="text-secondary">
-                    {formatChatDate(sendDate)}
+                    {formatChatDate(sendDate, true)}
                 </span>
                 <div
                     className={getValidClassNames(

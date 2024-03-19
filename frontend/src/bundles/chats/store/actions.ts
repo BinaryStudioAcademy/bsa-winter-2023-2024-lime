@@ -49,7 +49,7 @@ const leaveRoom = createAction<(userId: number) => Record<'payload', number>>(
 );
 
 const sendMessage = createAsyncThunk<
-    MessageResponseDto,
+    MessageResponseDto | undefined,
     MessageRequestDto,
     AsyncThunkConfig
 >(`${sliceName}/send-message`, async (payload, { extra: { messageApi } }) => {

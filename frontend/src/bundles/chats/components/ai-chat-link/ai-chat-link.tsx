@@ -52,6 +52,7 @@ const AiChatLink = ({
                             {formatChatDate(
                                 aiAssistantChat &&
                                     aiAssistantChat.lastMessage?.createdAt,
+                                false,
                             )}
                         </p>
                     </div>

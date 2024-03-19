@@ -79,16 +79,17 @@ const { reducer, actions, name } = createSlice({
                         id: currentChatId,
                     } = currentChat;
 
-                    const chat =
-                        isAssistant && currentChatId === incomingMessage.chatId
-                            ? (aiAssistantChat as ChatPreviewResponseDto)
-                            : (chats.find(
-                                  (chat) => chat.id === incomingMessage.chatId,
-                              ) as ChatPreviewResponseDto);
+                    const isAssistantChatMessage =
+                        isAssistant && currentChatId === incomingMessage.chatId;
 
-                    chat.lastMessage = incomingMessage;
+                    const chat = isAssistantChatMessage
+                        ? aiAssistantChat
+                        : chats.find(({ id }) => id === incomingMessage.chatId);
 
-                    if (currentChatId === chat.id) {
+                    (chat as ChatPreviewResponseDto).lastMessage =
+                        incomingMessage;
+
+                    if (currentChatId === (chat as ChatPreviewResponseDto).id) {
                         currentChat.messages = [incomingMessage, ...messages];
                     }
                 }
