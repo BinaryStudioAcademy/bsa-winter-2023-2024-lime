@@ -11,7 +11,6 @@ type CreateWorkoutPayload = {
     steps: number | '';
     heartRate: number | '';
     kilocalories: number | '';
-    provider: null;
 };
 
 export { type CreateWorkoutPayload };

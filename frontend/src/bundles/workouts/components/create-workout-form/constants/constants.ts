@@ -16,7 +16,6 @@ const DEFAULT_CREATE_WORKOUT_PAYLOAD: CreateWorkoutPayload = {
     steps: '',
     heartRate: '',
     kilocalories: '',
-    provider: null,
 };
 
 const WORKOUT_ACTIVITY_OPTIONS = [
