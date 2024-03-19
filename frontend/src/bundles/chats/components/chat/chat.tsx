@@ -8,7 +8,6 @@ import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
     Link,
-    Loader,
     UserInfoCard,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -23,10 +22,9 @@ import { type UserAuthResponseDto } from '~/bundles/users/types/types.js';
 type Properties = {
     user: UserAuthResponseDto;
     currentChat: (ChatFullResponseDto & { membersId: number[] }) | null;
-    isLoading: boolean;
 };
 
-const Chat = ({ user, currentChat, isLoading }: Properties): JSX.Element => {
+const Chat = ({ user, currentChat }: Properties): JSX.Element => {
     const dispatch = useAppDispatch();
 
     const handleSubmit = useCallback(
@@ -35,31 +33,28 @@ const Chat = ({ user, currentChat, isLoading }: Properties): JSX.Element => {
                 return;
             }
 
-            const { membersId, id } = currentChat;
-
+            const { membersId, id, isAssistant } = currentChat;
             const message = {
                 text: payload.message,
                 chatId: id,
-                membersId,
+                membersId: membersId ?? [user.id],
             };
 
             void dispatch(chatActionCreator.sendMessage(message));
+
+            if (isAssistant) {
+                void dispatch(
+                    chatActionCreator.generateAiAssistantResponse(message),
+                );
+            }
         },
-        [currentChat, dispatch],
+        [currentChat, user.id, dispatch],
     );
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleSidebarProfile = useCallback((): void => {
         setIsOpen(!isOpen);
     }, [setIsOpen, isOpen]);
-
-    if (isLoading) {
-        return (
-            <div className="relative h-full">
-                <Loader isOverflow />
-            </div>
-        );
-    }
 
     return (
         <div className="relative flex h-full  overflow-hidden">

@@ -38,7 +38,11 @@ const ChatSidebar = ({
             </div>
             <div className="mb-4">
                 <span className="text-secondary mb-1">AI</span>
-                <AiChatLink aiAssistantChat={aiAssistantChat} />
+                <AiChatLink
+                    aiAssistantChat={aiAssistantChat}
+                    currentChatId={currentChatId}
+                    isActive={currentChatId === String(aiAssistantChat?.id)}
+                />
             </div>
             <span className="text-secondary mb-1">Friends</span>
             <ul className="mb-4 flex h-full flex-1 list-none flex-col gap-5 overflow-y-auto">
@@ -56,6 +60,7 @@ const ChatSidebar = ({
                                     lastMessage && lastMessage.createdAt
                                 }
                                 currentChatId={currentChatId}
+                                isActive={currentChatId === String(id)}
                             />
                         </li>
                     ))}

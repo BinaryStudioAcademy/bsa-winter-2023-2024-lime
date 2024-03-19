@@ -74,4 +74,26 @@ const applyMessage = createAsyncThunk<
     return payload;
 });
 
-export { applyMessage, getAllChats, getChat, joinRoom, leaveRoom, sendMessage };
+const generateAiAssistantResponse = createAsyncThunk<
+    MessageResponseDto,
+    MessageRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/send-ai-message`,
+    async (payload, { extra: { aiAssistantApi } }) => {
+        return await aiAssistantApi.generateResponse({
+            ...payload,
+            contextMessagesCount: 2,
+        });
+    },
+);
+
+export {
+    applyMessage,
+    generateAiAssistantResponse,
+    getAllChats,
+    getChat,
+    joinRoom,
+    leaveRoom,
+    sendMessage,
+};

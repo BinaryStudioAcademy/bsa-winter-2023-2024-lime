@@ -17,6 +17,7 @@ type Properties = {
     companions: string;
     lastMessageTime: string | null;
     currentChatId: string;
+    isActive: boolean;
 };
 
 const ChatLink = ({
@@ -26,8 +27,8 @@ const ChatLink = ({
     companions,
     lastMessageTime,
     currentChatId,
+    isActive,
 }: Properties): JSX.Element => {
-    const isActive = false;
     const dispatch = useAppDispatch();
 
     const chatRouteById = configureString(AppRoute.CHATS_$ID, {

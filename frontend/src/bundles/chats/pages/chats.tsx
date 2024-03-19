@@ -1,4 +1,3 @@
-import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -16,7 +15,7 @@ const Chats = (): JSX.Element => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
 
-    const { chats, aiAssistantChat, currentChat, dataStatus } = useAppSelector(
+    const { chats, aiAssistantChat, currentChat } = useAppSelector(
         ({ chats }) => chats,
     );
     const { user } = useAppSelector(({ auth }) => auth);
@@ -49,7 +48,6 @@ const Chats = (): JSX.Element => {
                         <Chat
                             user={user as UserAuthResponseDto}
                             currentChat={currentChat}
-                            isLoading={dataStatus === DataStatus.PENDING}
                         />
                     ) : (
                         <EmptyChat />

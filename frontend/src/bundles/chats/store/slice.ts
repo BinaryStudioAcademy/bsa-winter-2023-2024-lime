@@ -7,7 +7,13 @@ import {
     type ChatFullResponseDto,
     type ChatPreviewResponseDto,
 } from '../types/types.js';
-import { applyMessage, getAllChats, getChat, sendMessage } from './actions.js';
+import {
+    applyMessage,
+    generateAiAssistantResponse,
+    getAllChats,
+    getChat,
+    sendMessage,
+} from './actions.js';
 
 type State = {
     chats: ChatPreviewResponseDto[];
@@ -53,23 +59,41 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(getChat.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
+        builder.addCase(generateAiAssistantResponse.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(generateAiAssistantResponse.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
         builder.addMatcher(
-            isAnyOf(sendMessage.fulfilled, applyMessage.fulfilled),
+            isAnyOf(
+                sendMessage.fulfilled,
+                applyMessage.fulfilled,
+                generateAiAssistantResponse.fulfilled,
+            ),
             (state, action) => {
-                const message = action.payload;
+                const incomingMessage = action.payload;
 
-                if (state.currentChat && message) {
-                    const chat = state.chats.find(
-                        (chat) => chat.id === message.chatId,
-                    ) as ChatPreviewResponseDto;
+                const { currentChat, chats, aiAssistantChat } = state;
 
-                    chat.lastMessage = message;
+                if (currentChat && incomingMessage) {
+                    const {
+                        messages,
+                        isAssistant,
+                        id: currentChatId,
+                    } = currentChat;
 
-                    if (state.currentChat.id === chat.id) {
-                        state.currentChat.messages = [
-                            message,
-                            ...state.currentChat.messages,
-                        ];
+                    const chat =
+                        isAssistant && currentChatId === incomingMessage.chatId
+                            ? (aiAssistantChat as ChatPreviewResponseDto)
+                            : (chats.find(
+                                  (chat) => chat.id === incomingMessage.chatId,
+                              ) as ChatPreviewResponseDto);
+
+                    chat.lastMessage = incomingMessage;
+
+                    if (currentChatId === chat.id) {
+                        currentChat.messages = [incomingMessage, ...messages];
                     }
                 }
             },

@@ -26,6 +26,7 @@ class AiAssistantController extends BaseController {
         this.addRoute({
             path: AiAssistantPath.SEND_MESSAGE,
             method: 'POST',
+            isProtected: true,
             handler: (options) =>
                 this.sendMessage(
                     options as ApiHandlerOptions<{
@@ -45,10 +46,7 @@ class AiAssistantController extends BaseController {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.aiAssistantService.sendMessage(
-                options.user.id,
-                options.body,
-            ),
+            payload: await this.aiAssistantService.sendMessage(options.body),
         };
     }
 }

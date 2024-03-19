@@ -22,7 +22,6 @@ class AiAssistantService {
     }
 
     public async sendMessage(
-        userId: number,
         payload: SendAiMessageRequestDto,
     ): Promise<MessageResponseDto> {
         const { chatId, text, contextMessagesCount } = payload;
@@ -49,12 +48,6 @@ class AiAssistantService {
                 content: text,
             },
         ]);
-
-        await this.messageService.create({
-            chatId,
-            senderId: userId,
-            text: text,
-        });
 
         return await this.messageService.create({
             chatId,

@@ -1,4 +1,12 @@
-import { applyMessage,getAllChats, getChat, joinRoom, leaveRoom, sendMessage } from './actions.js';
+import {
+    applyMessage,
+    generateAiAssistantResponse,
+    getAllChats,
+    getChat,
+    joinRoom,
+    leaveRoom,
+    sendMessage,
+} from './actions.js';
 import { actions } from './slice.js';
 
 const allActions = {
@@ -8,8 +16,8 @@ const allActions = {
     joinRoom,
     leaveRoom,
     sendMessage,
-    applyMessage
-    
+    applyMessage,
+    generateAiAssistantResponse,
 };
 
 export { allActions as actions };
