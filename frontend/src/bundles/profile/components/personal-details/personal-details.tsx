@@ -90,7 +90,14 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                     </li>
                     <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
                         Gender
-                        <p className={baseClassNames}>{gender ?? '-'}</p>
+                        <p
+                            className={getValidClassNames(
+                                baseClassNames,
+                                'overflow-hidden text-ellipsis whitespace-nowrap sm:w-16 xl:w-36',
+                            )}
+                        >
+                            {gender ? capitalizeFirstLetter(gender) : '-'}
+                        </p>
                     </li>
                     <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
                         Location
