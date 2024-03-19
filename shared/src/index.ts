@@ -3,12 +3,16 @@ export {
     AchievementsApiPath,
     Metric,
 } from './bundles/achievements/achievements.js';
-export { type AuthResponseDto, AuthApiPath } from './bundles/auth/auth.js';
+export {
+    type AuthResponseDto,
+    type AuthSignUpRequestDto,
+    AuthApiPath,
+} from './bundles/auth/auth.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
 } from './bundles/connections/connections.js';
-export { FileValidationMessage } from './bundles/file/file.js';
+export { type File, FileValidationMessage } from './bundles/file/file.js';
 export {
     type GoalRequestDto,
     type GoalResponseDto,
@@ -16,6 +20,15 @@ export {
     GoalsApiPath,
     goalValidationSchema,
 } from './bundles/goals/goals.js';
+export {
+    type IdentityAuthorizeDto,
+    type IdentityAuthTokenDto,
+    type IdentityProviderParameterDto,
+    type IdentityResponseDto,
+    IdentityActionsPath,
+    IdentityProvider,
+    identityProviderValidationSchema,
+} from './bundles/identity/identity.js';
 export {
     type NotificationRequestDto,
     type NotificationResponseDto,
@@ -56,11 +69,20 @@ export {
     SubscriptionValidationMessage,
 } from './bundles/subscriptions/subscriptions.js';
 export {
-    type UserAuthRequestDto,
+    type UserBonusCreateRequestDto,
+    type UserBonusGetAllItemResponseDto,
+    type UserBonusGetAllResponseDto,
+    UserBonusActionType,
+    UserBonusTransactionType,
+} from './bundles/user-bonuses/user-bonuses.js';
+export {
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
     Gender,
     passwordForgotValidationSchema,
     passwordResetValidationSchema,
@@ -68,6 +90,7 @@ export {
     UsersApiPath,
     userSignUpValidationSchema,
     userUpdateProfileValidationSchema,
+    userUploadAvatarValidationSchema,
     UserValidationMessage,
 } from './bundles/users/users.js';
 export {
@@ -112,6 +135,7 @@ export {
     type EntityIdParameterDto,
     type Paged,
     type PaginationParameters,
+    type RedirectUrlResponseDto,
     type ServerCommonErrorResponse,
     type ServerErrorDetail,
     type ServerErrorResponse,

@@ -3,17 +3,21 @@ import { ChevronRightIcon } from '@heroicons/react/16/solid';
 import { type AchievementsGetAllResponseDto } from '~/bundles/achievements/types/types.js';
 import {
     AchievementCard,
+    Avatar,
     Button,
     ButtonVariant,
 } from '~/bundles/common/components/components.js';
 import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 
+import { getValidClassNames } from '../../helpers/helpers.js';
+
 type Properties = {
     name: string;
     image: string;
     isActive?: boolean;
     achievements?: AchievementsGetAllResponseDto[];
+    className?: string;
 };
 
 const UserInfoCard: React.FC<Properties> = ({
@@ -21,6 +25,7 @@ const UserInfoCard: React.FC<Properties> = ({
     image,
     isActive = true,
     achievements = [],
+    className = '',
 }) => {
     const navigate = useNavigate();
 
@@ -29,7 +34,12 @@ const UserInfoCard: React.FC<Properties> = ({
     }, [navigate]);
 
     return (
-        <div className="bg-primary flex h-screen w-[22.375rem] flex-col gap-11 p-5">
+        <div
+            className={getValidClassNames(
+                'bg-primary flex h-screen w-[22.375rem] flex-col gap-11 p-5',
+                className,
+            )}
+        >
             <div className="flex flex-col items-center justify-center gap-2">
                 <div className="flex items-center gap-1.5">
                     {isActive && (
@@ -39,11 +49,7 @@ const UserInfoCard: React.FC<Properties> = ({
                         {name}
                     </p>
                 </div>
-                <img
-                    src={image}
-                    alt={name}
-                    className="h-44 w-44 overflow-hidden rounded-full object-cover"
-                />
+                <Avatar size="xl" email={name} avatarUrl={image} />
             </div>
             <div className="relative flex flex-col gap-4">
                 <h2 className="text-secondary text-xl font-extrabold">

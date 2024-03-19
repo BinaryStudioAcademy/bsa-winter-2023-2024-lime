@@ -33,6 +33,8 @@ const App: React.FC = () => {
 
             if (token) {
                 await dispatch(authActions.refreshUser());
+            } else {
+                dispatch(authActions.stopRefreshing());
             }
         };
 

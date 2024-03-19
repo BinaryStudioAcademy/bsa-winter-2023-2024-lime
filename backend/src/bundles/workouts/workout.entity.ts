@@ -9,7 +9,7 @@ class WorkoutEntity implements Entity {
     private 'userId': number;
     private 'activityType': ValueOf<typeof ActivityType>;
     private 'steps': number | undefined;
-    private 'activityId': number | undefined;
+    private 'activityId': string | undefined;
     private 'heartRate': number | null;
     private 'workoutStartedAt': Date;
     private 'workoutEndedAt': Date;
@@ -36,7 +36,7 @@ class WorkoutEntity implements Entity {
         userId: number;
         activityType: ValueOf<typeof ActivityType>;
         steps?: number;
-        activityId?: number;
+        activityId?: string;
         heartRate: number | null;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -66,7 +66,7 @@ class WorkoutEntity implements Entity {
         userId: number;
         activityType: ValueOf<typeof ActivityType>;
         steps?: number;
-        activityId?: number;
+        activityId?: string;
         heartRate: number | null;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -87,7 +87,7 @@ class WorkoutEntity implements Entity {
         distance: number;
         kilocalories: number;
         speed: number;
-        activityId?: number;
+        activityId?: string;
         steps?: number;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -134,7 +134,7 @@ class WorkoutEntity implements Entity {
         userId: number;
         activityType: ValueOf<typeof ActivityType>;
         steps?: number;
-        activityId?: number;
+        activityId?: string;
         heartRate: number | null;
         workoutStartedAt: Date;
         workoutEndedAt: Date;
@@ -147,7 +147,7 @@ class WorkoutEntity implements Entity {
             userId: this.userId,
             activityType: this.activityType,
             steps: this.steps as number,
-            activityId: this.activityId as number,
+            activityId: this.activityId as string,
             heartRate: this.heartRate,
             workoutStartedAt: this.workoutStartedAt,
             workoutEndedAt: this.workoutEndedAt,

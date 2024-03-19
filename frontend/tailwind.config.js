@@ -17,9 +17,14 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
+            'lm-emerald': '#8cc751',
             'lm-cyan': '#05CFCF',
             'lm-light-blue': '#056ECF',
             'lm-light-yellow': '#f1ffca',
+            'lm-mint': {
+                100: '#90EE90',
+                200: '#50C878',
+            },
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -86,10 +91,13 @@ export default {
             'md': '768px',
             'lg': '1024px',
             'xl': '1280px',
+            '2xl': '1940px',
         },
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+
                 'fade-in': 'fade-in 500ms ease-in',
             },
             keyframes: {
@@ -102,6 +110,11 @@ export default {
                         transform: 'scale(1)',
                         opacity: '1',
                     },
+                },
+                pulse: {
+                    '0%': { transform: 'scale(1)', opacity: 1 },
+                    '50%': { transform: 'scale(1.05)', opacity: 0.5 },
+                    '100%': { transform: 'scale(1)', opacity: 1 },
                 },
             },
             fontFamily: {
@@ -117,6 +130,7 @@ export default {
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
                 'wave-grey': 'url("~/assets/img/wave-grey.svg")',
+                'wave-green': 'url("~/assets/img/wave-green.svg")',
                 'progress-line': 'url("~/assets/img/progress-line.svg")',
             },
             borderRadius: {
@@ -164,6 +178,7 @@ export default {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
                 tertiary: 'var(--background-tertiary)',
+                overlay: 'var(--modal-overlay)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,

@@ -1,15 +1,32 @@
+import crypto from 'node:crypto';
+
 import { UserEntity } from '~/bundles/users/user.entity.js';
 import { type UserRepository } from '~/bundles/users/user.repository.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
-import { cryptService, stripeService } from '~/common/services/services.js';
+import { type File } from '~/common/services/file/types/types.js';
+import {
+    cryptService,
+    fileService,
+    stripeService,
+} from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
+import {
+    type UserBonusCreateRequestDto,
+    type UserBonusGetAllItemResponseDto,
+    BonusAmount,
+    UserBonusActionType,
+    UserBonusEntity,
+    UserBonusTransactionType,
+} from '../user-bonuses/user-bonuses.js';
 import { UserValidationMessage } from './enums/enums.js';
 import {
-    type UserAuthRequestDto,
     type UserAuthResponseDto,
+    type UserAuthSignInRequestDto,
     type UserGetAllResponseDto,
+    type UserIdentityRequestDto,
     type UserUpdateProfileRequestDto,
+    type UserUploadAvatarResponseDto,
 } from './types/types.js';
 import { type UserDetailsModel } from './user-details.model.js';
 
@@ -26,6 +43,12 @@ class UserService implements Service {
         return await this.userRepository.find(query);
     }
 
+    public async findWithUserDetailsJoined(
+        query: Record<string, unknown>,
+    ): Promise<UserEntity | null> {
+        return await this.userRepository.findWithUserDetailsJoined(query);
+    }
+
     public async findAll(): Promise<UserGetAllResponseDto> {
         const items = await this.userRepository.findAll();
 
@@ -35,21 +58,74 @@ class UserService implements Service {
     }
 
     public async create(
-        payload: UserAuthRequestDto,
+        payload: UserAuthSignInRequestDto,
     ): Promise<UserAuthResponseDto> {
         const { email, password } = payload;
         const { hash } = cryptService.encryptSync(password);
         const { stripeCustomerId } = await stripeService.createCustomer(email);
+        const generatedReferralCode = crypto.randomUUID();
 
         const user = await this.userRepository.create(
             UserEntity.initializeNew({
                 email,
                 passwordHash: hash,
                 stripeCustomerId,
+                referralCode: generatedReferralCode,
             }),
         );
 
         return user.toObject() as UserAuthResponseDto;
+    }
+
+    public async findOrCreateIdentityUser(
+        payload: UserIdentityRequestDto,
+    ): Promise<UserAuthResponseDto> {
+        const { email, fullName, avatarUrl, referralCode } = payload;
+
+        const userByEmail = await this.userRepository.find({
+            email,
+        });
+
+        if (userByEmail) {
+            return userByEmail.toObject();
+        }
+
+        const inviterUser = await this.findWithUserDetailsJoined({
+            referralCode,
+        });
+
+        const { stripeCustomerId } = await stripeService.createCustomer(email);
+        const generatedReferralCode = crypto.randomUUID();
+        const user = await this.userRepository.create(
+            UserEntity.initializeNew({
+                email,
+                stripeCustomerId,
+                fullName,
+                referralCode: generatedReferralCode,
+                avatarUrl,
+            }),
+        );
+
+        const createdUser = user.toObject() as UserAuthResponseDto;
+
+        if (referralCode && inviterUser) {
+            const { id: inviterId } = inviterUser.toObject();
+            await this.createUserBonusTransaction({
+                userId: createdUser.id,
+                actionType: UserBonusActionType.REGISTERED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.REGISTERED],
+            });
+
+            await this.createUserBonusTransaction({
+                userId: inviterId,
+                actionType: UserBonusActionType.INVITED,
+                transactionType: UserBonusTransactionType.INCOME,
+                amount: BonusAmount[UserBonusActionType.INVITED],
+            });
+        }
+
+        return createdUser;
     }
 
     public async updateUserProfile(
@@ -57,7 +133,7 @@ class UserService implements Service {
         payload: UserUpdateProfileRequestDto,
     ): Promise<UserAuthResponseDto | null> {
         try {
-            const updatedUser = await this.userRepository.updateUserProfile(
+            const updatedUser = await this.userRepository.updateUserDetails(
                 userId,
                 payload as Partial<UserDetailsModel>,
             );
@@ -69,9 +145,73 @@ class UserService implements Service {
             }
             return updatedUser.toObject() as UserAuthResponseDto;
         } catch (error) {
-            throw new Error(`Error occured ${error}`);
+            throw new Error(`Error occurred ${error}`);
         }
     }
+
+    public async createUserBonusTransaction(
+        payload: UserBonusCreateRequestDto,
+    ): Promise<UserBonusGetAllItemResponseDto> {
+        const { userId, actionType, transactionType, amount } = payload;
+
+        const userToUpdate = await this.userRepository.find({ id: userId });
+        if (!userToUpdate) {
+            throw new HttpError({
+                message: UserValidationMessage.USER_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
+        }
+
+        const { bonusBalance } = userToUpdate.toObject();
+        const updatedBalance =
+            transactionType === UserBonusTransactionType.EXSPENSE
+                ? Number(bonusBalance) - amount
+                : Number(bonusBalance) + amount;
+
+        if (updatedBalance < 0) {
+            throw new HttpError({
+                message: UserValidationMessage.BONUS_OPERATION_LACK_OF_FUNDS,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        const userBonus = await this.userRepository.createUserBonusTransaction(
+            UserBonusEntity.initializeNew({
+                userId,
+                actionType,
+                transactionType,
+                amount,
+            }),
+        );
+
+        const updatedUser = await this.userRepository.updateUserDetails(
+            userId,
+            { bonusBalance: updatedBalance },
+        );
+
+        if (!userBonus || !updatedUser) {
+            throw new HttpError({
+                message: UserValidationMessage.BONUS_OPERATION_NOT_SUCCESSFUL,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        return userBonus;
+    }
+
+    public async uploadAvatar(
+        payload: File,
+    ): Promise<UserUploadAvatarResponseDto> {
+        try {
+            const { Location } = await fileService.uploadFile(payload);
+            return {
+                avatarUrl: Location,
+            };
+        } catch (error) {
+            throw new Error(`Error occurred ${error}`);
+        }
+    }
+
     public async update(
         query: Record<string, unknown>,
         payload: Record<string, unknown>,

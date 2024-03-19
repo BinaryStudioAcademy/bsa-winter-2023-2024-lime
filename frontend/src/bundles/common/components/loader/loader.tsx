@@ -15,7 +15,7 @@ const Loader: React.FC<Properties> = ({
     isOverflow,
     color = IconColor.PRIMARY,
     size = ComponentSize.LARGE,
-}: Properties): JSX.Element => {
+}): JSX.Element => {
     const spinner = (
         <>
             <span aria-hidden="true">
