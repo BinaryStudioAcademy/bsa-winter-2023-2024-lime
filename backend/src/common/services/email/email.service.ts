@@ -1,13 +1,13 @@
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 
-import { restorePasswordEmail } from '~/common/emails/emails.js';
-
 class EmailService {
     private from: string;
+    private templateId: string;
 
-    public constructor(apiKey: string, from: string) {
+    public constructor(apiKey: string, from: string, templateId: string) {
         sgMail.setApiKey(apiKey);
         this.from = from;
+        this.templateId = templateId;
     }
 
     private async send(email: Omit<MailDataRequired, 'from'>): Promise<void> {
@@ -15,9 +15,16 @@ class EmailService {
     }
 
     public async sendRestorePassword(to: string, link: string): Promise<void> {
-        const email = { ...restorePasswordEmail(link), to };
+        const message = {
+            to: to,
+            from: this.from,
+            templateId: this.templateId,
+            dynamicTemplateData: {
+                link: link,
+            },
+        };
 
-        await this.send(email);
+        await this.send(message);
     }
 }
 

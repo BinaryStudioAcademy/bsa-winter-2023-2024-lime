@@ -8,7 +8,7 @@ import { OpenAIService } from './open-ai/open-ai.service.js';
 import { SocketService } from './socket/socket.service.js';
 import { StripeService } from './stripe/stripe.service.js';
 
-const { API_KEY, FROM } = config.ENV.EMAIL;
+const { API_KEY, FROM, TEMPLATE_ID } = config.ENV.EMAIL;
 const { JWT_SECRET, OPEN_AI_API_KEY, OPEN_AI_MODEL, TOKEN_EXPIRATION_TIME } =
     config.ENV.APP;
 const { S3_REGION, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_NAME } =
@@ -16,7 +16,7 @@ const { S3_REGION, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_NAME } =
 
 const cryptService = new CryptService();
 const jwtService = new JwtService(JWT_SECRET, TOKEN_EXPIRATION_TIME);
-const emailService = new EmailService(API_KEY, FROM);
+const emailService = new EmailService(API_KEY, FROM, TEMPLATE_ID);
 const stripeService = new StripeService(
     config.ENV.STRIPE.SECRET_KEY,
     config.ENV.STRIPE.WEBHOOK_SECRET,
