@@ -24,6 +24,7 @@ import {
 import {
     capitalizeFirstLetter,
     convertMetersToKilometers,
+    formatDateToIso,
 } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -44,7 +45,7 @@ import {
     DOUGHNUT_DATASET,
     DOUGHNUT_OPTIONS,
 } from '../constants/constants.js';
-import { convertDateToIso, isDateInRange } from '../helpers/helpers.js';
+import { isDateInRange } from '../helpers/helpers.js';
 import { type ScheduleRequestDto } from '../types/types.js';
 
 const ZERO_VALUE = 0;
@@ -98,7 +99,7 @@ const Schedule: React.FC = () => {
         const START_TIME = 0;
         const END_TIME = 1;
         const formattedDates = watchedDate.map((item) =>
-            convertDateToIso(item, 'yyyy/MM/dd'),
+            formatDateToIso(item, 'yyyy/MM/dd'),
         );
 
         const range = [...new Set(formattedDates)];
@@ -107,11 +108,7 @@ const Schedule: React.FC = () => {
             const start = range[START_TIME] ?? String(ZERO_VALUE);
             const end = range[END_TIME];
 
-            return isDateInRange(
-                schedule.startAt as string,
-                start,
-                end,
-            );
+            return isDateInRange(schedule.startAt as string, start, end);
         });
     }, [watchedDate, schedules]);
 
@@ -187,10 +184,7 @@ const Schedule: React.FC = () => {
 
     const scheduleHandler = useCallback(
         ({ activity, goalLabel, dateOfStart, id }: CreateScheduleRequest) => {
-            const convertedDate = convertDateToIso(
-                dateOfStart,
-                timeFormat,
-            );
+            const convertedDate = formatDateToIso(dateOfStart, timeFormat);
 
             const preparedData: ScheduleRequestDto = {
                 activityType: activity,
