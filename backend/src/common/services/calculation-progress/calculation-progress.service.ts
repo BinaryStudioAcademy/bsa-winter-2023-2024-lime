@@ -60,11 +60,11 @@ class CalculationProgressService {
             (goal) => goal.activityType === lastWorkout.activityType,
         );
 
-        const filteredWorkouts = workouts.filter(
-            (workout) => workout.activityType === lastWorkout.activityType,
-        );
-
         for (const goal of filteredGoals) {
+            const filteredWorkouts = workouts.filter(
+                (workout) => workout.activityType === lastWorkout.activityType,
+            );
+
             const updatedGoal = await this.goalService.update(
                 { id: goal.id },
                 {

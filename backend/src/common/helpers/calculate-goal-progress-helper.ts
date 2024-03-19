@@ -13,24 +13,22 @@ function calculateProgress(
     goal: GoalResponseDto,
     workouts: WorkoutResponseDto[],
 ): number {
-    const workoutsByFrequency = workouts.slice(ZERO_VALUE, goal.frequency);
-
     if (goal.distance) {
         return Math.round(
-            (workoutsByFrequency.reduce(
+            (workouts.reduce(
                 (accumulator, workout) => accumulator + workout.distance,
                 ZERO_VALUE,
             ) /
-                goal.distance) *
+                (goal.frequency * goal.distance)) *
                 PERSENTAGE_MULTIPLIER,
         );
     } else if (goal.duration) {
         return Math.round(
-            (workoutsByFrequency.reduce(
+            (workouts.reduce(
                 (accumulator, workout) => accumulator + workout.duration,
                 ZERO_VALUE,
             ) /
-                goal.duration) *
+                (goal.frequency * goal.duration)) *
                 PERSENTAGE_MULTIPLIER,
         );
     }
@@ -49,7 +47,9 @@ function calculateGoalProgress(
             const todayWorkouts = workouts.filter(
                 (workout) =>
                     (workout.workoutEndedAt as Date) >= goalDate &&
-                    workout.workoutEndedAt?.getDate() === goalDate.getDate(),
+                    workout.workoutEndedAt?.getDate() === goalDate.getDate() &&
+                    (workout.distance >= (goal?.distance as number) ??
+                        workout.duration >= (goal?.duration as number)),
             );
 
             progress = calculateProgress(goal, todayWorkouts);
@@ -61,10 +61,13 @@ function calculateGoalProgress(
                 (workout) =>
                     (workout.workoutEndedAt as Date) >= goalDate &&
                     (workout.workoutEndedAt?.getDate() as number) <=
-                        goalDate.getDate() + WEEK_DAYS,
+                        goalDate.getDate() + WEEK_DAYS &&
+                    (workout.distance >= (goal?.distance as number) ??
+                        workout.duration >= (goal?.duration as number)),
             );
 
             progress = calculateProgress(goal, weekWorkout);
+
             break;
         }
     }
