@@ -11,10 +11,7 @@ import {
 } from './actions.js';
 
 const State: NotificationStateTypeSlice = {
-    notifications: {
-        items: [],
-        count: 0,
-    },
+    notifications: [],
     dataStatus: DataStatus.IDLE,
     isRefreshing: false,
 };
@@ -28,7 +25,7 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-            state.notifications.items = action.payload;
+            state.notifications = action.payload;
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(fetchNotifications.rejected, (state) => {
@@ -38,7 +35,7 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(createNotification.fulfilled, (state, action) => {
-            state.notifications.items.push(action.payload);
+            state.notifications.push(action.payload);
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(createNotification.rejected, (state) => {
@@ -48,17 +45,15 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(dismissNotification.fulfilled, (state, action) => {
-            state.notifications.items = state.notifications.items.map(
-                (notification) => {
-                    if (notification.id === action.payload) {
-                        return {
-                            ...notification,
-                            isRead: true,
-                        };
-                    }
-                    return notification;
-                },
-            );
+            state.notifications = state.notifications.map((notification) => {
+                if (notification.id === action.payload) {
+                    return {
+                        ...notification,
+                        isRead: true,
+                    };
+                }
+                return notification;
+            });
             state.dataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(dismissNotification.rejected, (state) => {
@@ -68,7 +63,7 @@ const { reducer, actions, name } = createSlice({
             state.dataStatus = DataStatus.PENDING;
         });
         builder.addCase(deleteNotification.fulfilled, (state, action) => {
-            state.notifications.items = state.notifications.items.filter(
+            state.notifications = state.notifications.filter(
                 (notification) => notification.id !== action.payload,
             );
             state.dataStatus = DataStatus.FULFILLED;
