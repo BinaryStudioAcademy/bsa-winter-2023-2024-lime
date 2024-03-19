@@ -39,40 +39,34 @@ class CalculationProgressService {
         userId: number,
         lastWorkout: WorkoutResponseDto,
     ): Promise<void> {
-        await this.updateGoal(userId, lastWorkout);
-        await this.updateAchievement(userId, lastWorkout);
+        await this.updateGoal(userId, lastWorkout.activityType);
+        await this.updateAchievement(userId, lastWorkout.activityType);
     }
 
     private async updateGoal(
         userId: number,
-        lastWorkout: WorkoutResponseDto,
+        activityType: string,
     ): Promise<void> {
         let hasCompletedGoal = false;
 
         const { items: goals } = await this.goalService.findAll({
             userId,
+            activityType,
         });
         const { items: workouts } = await workoutService.findAll({
             userId,
+            activityType,
         });
 
-        const filteredGoals = goals.filter(
-            (goal) => goal.activityType === lastWorkout.activityType,
-        );
-
-        for (const goal of filteredGoals) {
-            const filteredWorkouts = workouts.filter(
-                (workout) => workout.activityType === lastWorkout.activityType,
-            );
-
+        for (const goal of goals) {
             const updatedGoal = await this.goalService.update(
                 { id: goal.id },
                 {
                     ...goal,
                     userId,
-                    progress: calculateGoalProgress(goal, filteredWorkouts),
+                    progress: calculateGoalProgress(goal, workouts),
                     completedAt:
-                        calculateGoalProgress(goal, filteredWorkouts) ===
+                        calculateGoalProgress(goal, workouts) ===
                         COMPLETED_GOAL_VALUE
                             ? new Date().toISOString()
                             : null,
@@ -80,7 +74,7 @@ class CalculationProgressService {
             );
 
             if (
-                calculateGoalProgress(goal, filteredWorkouts) ===
+                calculateGoalProgress(goal, workouts) ===
                     COMPLETED_GOAL_VALUE &&
                 updatedGoal
             ) {
@@ -101,7 +95,7 @@ class CalculationProgressService {
 
     private async updateAchievement(
         userId: number,
-        lastWorkout: WorkoutResponseDto,
+        activityType: string,
     ): Promise<void> {
         const { items: workouts } = await workoutService.findAll({
             userId,
@@ -121,12 +115,11 @@ class CalculationProgressService {
         const filteredAchievementsByLastWorkoutType =
             uncomlietedAchievements.filter(
                 (achievement) =>
-                    achievement.toObject().activityType ===
-                    lastWorkout.activityType,
+                    achievement.toObject().activityType === activityType,
             );
 
         const filteredWorkoutsByLastWorkoutType = workouts.filter(
-            (workout) => workout.activityType === lastWorkout.activityType,
+            (workout) => workout.activityType === activityType,
         );
 
         const totalDistance = filteredWorkoutsByLastWorkoutType.reduce(
