@@ -3,11 +3,9 @@ import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';
 
+import { type MessageResponseDto } from '../messages/types/types.js';
 import { AiAssistantPath } from './enums/enums.js';
-import {
-    type SendAiMessageRequestDto,
-    type SendAiMessageResponseDto,
-} from './types/types.js';
+import { type SendAiMessageRequestDto } from './types/types.js';
 
 type Constructor = {
     baseUrl: string;
@@ -20,9 +18,9 @@ class AiAssistantApi extends BaseHttpApi {
         super({ path: ApiPath.AI_ASSISTANT, baseUrl, http, storage });
     }
 
-    public async getAiResponse(
+    public async generateResponse(
         payload: SendAiMessageRequestDto,
-    ): Promise<SendAiMessageResponseDto> {
+    ): Promise<MessageResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(AiAssistantPath.SEND_MESSAGE, {}),
             {
@@ -32,7 +30,7 @@ class AiAssistantApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<SendAiMessageResponseDto>();
+        return await response.json<MessageResponseDto>();
     }
 }
 

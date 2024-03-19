@@ -3,12 +3,10 @@ import { SenderType } from '~/common/services/open-ai/enums/enums.js';
 import { type OpenAIService } from '~/common/services/open-ai/open-ai.service.js';
 
 import { type MessageService } from '../messages/message.service.js';
+import { type MessageResponseDto } from '../messages/types/types.js';
 import { ErrorMessage } from './enums/enums.js';
 import { getContextMessages } from './helpers/helpers.js';
-import {
-    type SendAiMessageRequestDto,
-    type SendAiMessageResponseDto,
-} from './types/types.js';
+import { type SendAiMessageRequestDto } from './types/types.js';
 
 class AiAssistantService {
     private openAiService: OpenAIService;
@@ -26,7 +24,7 @@ class AiAssistantService {
     public async sendMessage(
         userId: number,
         payload: SendAiMessageRequestDto,
-    ): Promise<SendAiMessageResponseDto> {
+    ): Promise<MessageResponseDto> {
         const { chatId, text, contextMessagesCount } = payload;
         if (!chatId) {
             throw new HttpError({
@@ -58,17 +56,11 @@ class AiAssistantService {
             text: text,
         });
 
-        const aiResponse = await this.messageService.create({
+        return await this.messageService.create({
             chatId,
             senderId: null,
             text: responseMessage,
         });
-
-        return {
-            text: aiResponse.text,
-            createdAt: aiResponse.createdAt,
-            updatedAt: aiResponse.updatedAt,
-        };
     }
 }
 
