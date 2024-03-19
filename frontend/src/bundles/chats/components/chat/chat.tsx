@@ -64,6 +64,14 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
         setIsOpen(!isOpen);
     }, [setIsOpen, isOpen]);
 
+    if (!currentChat) {
+        return <div>Chat was not selected</div>;
+    }
+
+    const { users, isAssistant, messages } = currentChat;
+
+    const chatMember = users.find((member) => member.id !== user.id);
+
     return (
         <div className="relative flex h-full overflow-hidden">
             <div className="flex max-h-full w-full flex-col justify-between overflow-hidden">
@@ -83,47 +91,36 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                             <>
                                 <Avatar
                                     size="sm"
-                                    email={
-                                        currentChat.users[0]?.email ??
-                                        'email@gmail.com'
-                                    }
-                                    avatarUrl={
-                                        currentChat.users[0]?.avatarUrl ?? null
-                                    }
+                                    email={chatMember?.email ?? ''}
+                                    avatarUrl={chatMember?.avatarUrl ?? null}
                                 />
                                 <span className="text-primary font-bold">
-                                    {!currentChat.isAssistant &&
-                                        currentChat.users &&
+                                    {!isAssistant &&
+                                        users &&
                                         formatChatName(
-                                            getChatCompanions(
-                                                currentChat.users,
-                                                user.id,
-                                            ),
+                                            getChatCompanions(users, user.id),
                                         )}
-                                    {currentChat.isAssistant &&
-                                        'Personal Assistant'}
+                                    {isAssistant && 'Personal Assistant'}
                                 </span>
                             </>
                         )}
                     </div>
                 </div>
                 <ul className="flex h-full flex-1 flex-col-reverse gap-4 overflow-y-auto px-4 pr-2">
-                    {currentChat?.messages.map(
-                        ({ id, text, senderId, createdAt }) => (
-                            <ChatMessage
-                                key={id}
-                                isCurrentUserMessage={senderId === user.id}
-                                sendDate={createdAt}
-                                message={text}
-                            />
-                        ),
-                    )}
+                    {messages.map(({ id, text, senderId, createdAt }) => (
+                        <ChatMessage
+                            key={id}
+                            isCurrentUserMessage={senderId === user.id}
+                            sendDate={createdAt}
+                            message={text}
+                        />
+                    ))}
                 </ul>
                 <div className="grid w-full items-center p-5">
                     <ChatMessageForm onSubmit={handleSubmit} />
                 </div>
             </div>
-            {currentChat && !currentChat.isAssistant && (
+            {!isAssistant && (
                 <div
                     className={getValidClassNames(
                         isOpen ? 'translate-x-0' : 'translate-x-[100%]',
@@ -138,8 +135,10 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                             <XCircleIcon className="text-action w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
                         </button>
                         <UserInfoCard
-                            name={'User'}
-                            image={''}
+                            name={
+                                chatMember?.fullName || chatMember?.email || ''
+                            }
+                            image={chatMember?.avatarUrl ?? ''}
                             className="w-full px-8"
                         />
                     </div>

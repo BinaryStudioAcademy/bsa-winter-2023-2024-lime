@@ -35,7 +35,9 @@ const ChatLink = ({
         id: String(id),
     }) as typeof AppRoute.CHATS_$ID;
 
-    const { email, avatarUrl } = users[0] as ChatUserResponseDto;
+    const { email, avatarUrl } = users.find(
+        (member) => member.id !== user.id,
+    ) as ChatUserResponseDto;
 
     return (
         <Link to={chatRouteById}>
