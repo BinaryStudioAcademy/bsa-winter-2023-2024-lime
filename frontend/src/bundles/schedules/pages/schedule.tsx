@@ -52,6 +52,8 @@ const PLURAL = 's';
 const DAY_PREPOSITION = 'a';
 const WEEK_PREPOSITION = 'per';
 
+const timeFormat = 'dd/MM/yyyy HH:mm';
+
 const Schedule: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isUpdateMode, setIsUpdateMode] = useState<boolean>(false);
@@ -158,7 +160,7 @@ const Schedule: React.FC = () => {
         setIsModalOpen((previousState) => !previousState);
     }, [isModalOpen]);
 
-    const updateScheduleHandler = useCallback(
+    const onUpdate = useCallback(
         (id: number) => {
             const schedule = schedules.find((schedule) => schedule.id === id);
             if (schedule) {
@@ -166,7 +168,7 @@ const Schedule: React.FC = () => {
                 setBaseFormValue({
                     activity: schedule.activityType,
                     goalLabel: schedule.goalId ?? null,
-                    dateOfStart: format(date, 'dd/MM/yyyy HH:mm'),
+                    dateOfStart: format(date, timeFormat),
                     id,
                 });
                 handleModalStatus();
@@ -176,18 +178,18 @@ const Schedule: React.FC = () => {
         [dispatch, schedules, handleModalStatus],
     );
 
-    const deleteScheduleHandler = useCallback(
+    const onDelete = useCallback(
         (id: number) => {
             void dispatch(scheduleActions.deleteSchedule({ id: String(id) }));
         },
         [dispatch, handleModalStatus, schedules, isUpdateMode],
     );
 
-    const addScheduleHandler = useCallback(
+    const scheduleHandler = useCallback(
         ({ activity, goalLabel, dateOfStart, id }: CreateScheduleRequest) => {
             const convertedDate = convertDateToIso(
                 dateOfStart,
-                'dd/MM/yyyy HH:mm',
+                timeFormat,
             ) as unknown as Date;
 
             const preparedData: ScheduleRequestDto = {
@@ -274,12 +276,8 @@ const Schedule: React.FC = () => {
                                                         isExpanded={true}
                                                         date={`${hours}:${minutes}`}
                                                         key={id}
-                                                        onUpdate={
-                                                            updateScheduleHandler
-                                                        }
-                                                        onDelete={
-                                                            deleteScheduleHandler
-                                                        }
+                                                        onUpdate={onUpdate}
+                                                        onDelete={onDelete}
                                                     />
                                                 );
                                             },
@@ -375,7 +373,7 @@ const Schedule: React.FC = () => {
                 onClose={handleModalStatus}
             >
                 <CreateScheduleForm
-                    onSubmit={addScheduleHandler}
+                    onSubmit={scheduleHandler}
                     isLoading={isLoading}
                     value={baseFormValue}
                     goalsList={

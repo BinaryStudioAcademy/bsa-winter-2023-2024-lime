@@ -13,11 +13,7 @@ const DoughnutChart: React.FC<Properties> = ({
     data,
     className,
 }): JSX.Element => {
-    return (
-        <div>
-            <Doughnut className={className} data={data} options={options} />
-        </div>
-    );
+    return <Doughnut className={className} data={data} options={options} />;
 };
 
 export { DoughnutChart };
