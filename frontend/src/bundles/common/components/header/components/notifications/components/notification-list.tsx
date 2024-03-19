@@ -5,15 +5,9 @@ import { NotificationActions, NotificationDisplay } from './components.js';
 
 type Properties = {
     notifications: NotificationResponseDto[];
-    onNotificationReadClick: (index: number) => void;
-    onNotificationDeleteClick: (index: number) => void;
 };
 
-const NotificationList = ({
-    notifications,
-    onNotificationReadClick,
-    onNotificationDeleteClick,
-}: Properties): JSX.Element => {
+const NotificationList = ({ notifications }: Properties): JSX.Element => {
     const [isOpened, setIsOpened] = useState<number | null>(null);
     return (
         <div className="bg-secondary text-primary absolute right-0 flex w-52 flex-col shadow-lg">
@@ -22,8 +16,6 @@ const NotificationList = ({
                     <div key={notification.id}>
                         <NotificationActions
                             notification={notification}
-                            onRead={onNotificationReadClick}
-                            onDelete={onNotificationDeleteClick}
                             setIsOpened={setIsOpened}
                         >
                             <NotificationDisplay
