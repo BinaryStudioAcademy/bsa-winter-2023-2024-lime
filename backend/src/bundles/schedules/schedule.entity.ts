@@ -7,7 +7,7 @@ class ScheduleEntity implements Entity {
     private 'userId': number;
     private 'goalId': number | null | undefined;
     private 'activityType': ValueOf<typeof ActivityType>;
-    private 'startAt': Date;
+    private 'startAt': Date | string;
 
     private constructor({
         id,
@@ -20,7 +20,7 @@ class ScheduleEntity implements Entity {
         userId: number;
         goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date;
+        startAt: Date | string;
     }) {
         this.id = id;
         this.userId = userId;
@@ -34,7 +34,7 @@ class ScheduleEntity implements Entity {
         userId: number;
         goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date;
+        startAt: Date | string;
     }): ScheduleEntity {
         return new ScheduleEntity({ ...payload });
     }
@@ -43,7 +43,7 @@ class ScheduleEntity implements Entity {
         userId: number;
         goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date;
+        startAt: Date | string;
     }): ScheduleEntity {
         return new ScheduleEntity({
             id: null,
@@ -55,7 +55,7 @@ class ScheduleEntity implements Entity {
         id: number;
         goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date;
+        startAt: Date | string;
     } {
         return {
             id: this.id as number,
@@ -69,7 +69,7 @@ class ScheduleEntity implements Entity {
         userId: number;
         goalId?: number | null;
         activityType: ValueOf<typeof ActivityType>;
-        startAt: Date;
+        startAt: Date | string;
     } {
         return {
             userId: this.userId,

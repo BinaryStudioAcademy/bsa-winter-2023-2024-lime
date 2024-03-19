@@ -108,7 +108,7 @@ const Schedule: React.FC = () => {
             const end = range[END_TIME];
 
             return isDateInRange(
-                schedule.startAt as unknown as string,
+                schedule.startAt as string,
                 start,
                 end,
             );
@@ -164,7 +164,7 @@ const Schedule: React.FC = () => {
         (id: number) => {
             const schedule = schedules.find((schedule) => schedule.id === id);
             if (schedule) {
-                const date = parseISO(schedule.startAt as unknown as string);
+                const date = parseISO(schedule.startAt as string);
                 setBaseFormValue({
                     activity: schedule.activityType,
                     goalLabel: schedule.goalId ?? null,
@@ -190,7 +190,7 @@ const Schedule: React.FC = () => {
             const convertedDate = convertDateToIso(
                 dateOfStart,
                 timeFormat,
-            ) as unknown as Date;
+            );
 
             const preparedData: ScheduleRequestDto = {
                 activityType: activity,

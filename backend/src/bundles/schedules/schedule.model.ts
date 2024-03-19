@@ -17,7 +17,7 @@ class ScheduleModel extends AbstractModel {
     public 'userId': number;
     public 'goalId': number | null;
     public 'activityType': ValueOf<typeof ActivityType>;
-    public 'startAt': Date;
+    public 'startAt': Date | string;
 
     public static override get tableName(): string {
         return DatabaseTableName.SCHEDULES;
