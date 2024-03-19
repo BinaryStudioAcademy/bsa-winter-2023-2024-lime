@@ -133,7 +133,7 @@ class FriendRepository implements Repository {
         id: number,
         followingId: number,
         offset: string,
-    ): Promise<FriendResponseDto | null> {
+    ): Promise<FriendResponseDto[] | null> {
         const trx = await this.userModel.startTransaction();
 
         const user = await this.userModel.query(trx).findById(id);
@@ -153,14 +153,14 @@ class FriendRepository implements Repository {
         const result = await this.findAllPotentialFollowings(id, offset, '1');
 
         await trx.commit();
-        return result as unknown as FriendResponseDto;
+        return result;
     }
 
     public async removeFollowing(
         id: number,
         followingId: number,
         offset: string,
-    ): Promise<FriendResponseDto | null> {
+    ): Promise<FriendResponseDto[] | null> {
         const trx = await this.userModel.startTransaction();
 
         const user = await this.userModel.query(trx).findById(id);
@@ -180,7 +180,7 @@ class FriendRepository implements Repository {
         const result = await this.getFollowings(id, offset, '1');
 
         await trx.commit();
-        return result as unknown as FriendResponseDto;
+        return result;
     }
 
     public async update(

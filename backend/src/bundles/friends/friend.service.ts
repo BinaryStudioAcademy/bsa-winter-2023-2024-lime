@@ -46,7 +46,7 @@ class FriendService {
         id: number,
         followingId: number,
         offset: string,
-    ): Promise<FriendResponseDto | null> {
+    ): Promise<FriendResponseDto[] | null> {
         return await this.friendRepository.addFollowing(
             id,
             followingId,
@@ -58,7 +58,7 @@ class FriendService {
         id: number,
         followingId: number,
         offset: string,
-    ): Promise<FriendResponseDto | null> {
+    ): Promise<FriendResponseDto[] | null> {
         return await this.friendRepository.removeFollowing(
             id,
             followingId,
