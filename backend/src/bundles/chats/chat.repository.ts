@@ -1,8 +1,15 @@
+import { USER_DETAILS_RELATION } from '~/bundles/users/users.js';
 import { DatabaseTableName } from '~/common/database/database.js';
 import { type Repository } from '~/common/types/types.js';
 
 import { ChatEntity } from './chat.entity.js';
 import { type ChatModel } from './chat.model.js';
+import { LAST_MESSAGE_RELATION } from './constants/constants.js';
+import {
+    type ChatFullResponseDto,
+    type ChatPreviewResponseDto,
+    type ChatResponseDto,
+} from './types/types.js';
 
 class ChatRepository implements Repository {
     private chatModel: typeof ChatModel;
@@ -13,14 +20,15 @@ class ChatRepository implements Repository {
 
     public async find(
         query: Record<string, unknown>,
-    ): Promise<ChatEntity | null> {
-        const chat = await this.chatModel
+    ): Promise<ChatFullResponseDto | null> {
+        return await this.chatModel
             .query()
             .findOne(query)
-            .withGraphFetched(`[${DatabaseTableName.MESSAGES}]`)
+            .withGraphFetched(
+                `[${DatabaseTableName.USERS}(${USER_DETAILS_RELATION}), ${DatabaseTableName.MESSAGES}]`,
+            )
+            .castTo<ChatFullResponseDto>()
             .execute();
-
-        return chat ? ChatEntity.initialize(chat) : null;
     }
 
     public async findByUser(
@@ -47,7 +55,7 @@ class ChatRepository implements Repository {
     }: {
         query: Record<string, unknown>;
         userId: number;
-    }): Promise<ChatModel[]> {
+    }): Promise<ChatPreviewResponseDto[]> {
         return await this.chatModel
             .query()
             .where(query)
@@ -56,11 +64,14 @@ class ChatRepository implements Repository {
                     .relatedQuery(DatabaseTableName.USERS)
                     .where({ userId }),
             )
-            .withGraphFetched('[users(userDetails), lastMessage]')
+            .withGraphFetched(
+                `[${DatabaseTableName.USERS}(${USER_DETAILS_RELATION}), ${LAST_MESSAGE_RELATION}]`,
+            )
+            .castTo<ChatPreviewResponseDto[]>()
             .execute();
     }
 
-    public async create(payload: ChatEntity): Promise<ChatEntity> {
+    public async create(payload: ChatEntity): Promise<ChatResponseDto> {
         const { isAssistant, membersId } = payload.toNewObject();
 
         const trx = await this.chatModel.startTransaction();
@@ -70,7 +81,6 @@ class ChatRepository implements Repository {
                 .query(trx)
                 .insert({ isAssistant })
                 .returning('*')
-                .withGraphFetched(`[${DatabaseTableName.MESSAGES}]`)
                 .execute();
 
             for (const id of membersId) {
@@ -81,7 +91,15 @@ class ChatRepository implements Repository {
 
             await trx.commit();
 
-            return ChatEntity.initialize(chat);
+            return await this.chatModel
+                .query()
+                .findById(chat.id)
+                .returning('*')
+                .withGraphFetched(
+                    `[${DatabaseTableName.MESSAGES}, ${DatabaseTableName.USERS}]`,
+                )
+                .castTo<ChatResponseDto>()
+                .execute();
         } catch (error) {
             await trx.rollback();
             throw error;

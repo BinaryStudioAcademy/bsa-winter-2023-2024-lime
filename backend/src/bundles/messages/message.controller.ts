@@ -57,7 +57,7 @@ class MessageController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
         const payload = { ...body, senderId: user.id };
-        const membersId = body.membersId.map(String);
+        const membersId = body.membersId ? body.membersId.map(String) : [];
 
         const message = await this.messageService.create(payload);
 

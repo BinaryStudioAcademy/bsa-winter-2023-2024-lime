@@ -21,6 +21,7 @@ const userController = new UserController({
 
 export { UserAttributes } from './enums/enums.js';
 export { userController, userRepository, userService };
+export { USER_DETAILS_RELATION } from './constants/constants.js';
 export {
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,

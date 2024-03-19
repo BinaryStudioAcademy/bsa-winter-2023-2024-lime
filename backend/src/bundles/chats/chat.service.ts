@@ -3,10 +3,15 @@ import { HttpError } from '~/common/http/http.js';
 import { type Service } from '~/common/types/types.js';
 
 import { ChatEntity } from './chat.entity.js';
-import { type ChatModel } from './chat.model.js';
 import { type ChatRepository } from './chat.repository.js';
 import { ErrorMessage } from './enums/enums.js';
-import { type ChatCreateDto, type ChatResponseDto } from './types/types.js';
+import {
+    type ChatCreateDto,
+    type ChatFullResponseDto,
+    type ChatGetAllItemsResponseDto,
+    type ChatPreviewResponseDto,
+    type ChatResponseDto,
+} from './types/types.js';
 
 class ChatService implements Service {
     private chatRepository: ChatRepository;
@@ -17,17 +22,15 @@ class ChatService implements Service {
 
     public async find(
         query: Record<string, unknown>,
-    ): Promise<ChatResponseDto | null> {
-        const chat = await this.chatRepository.find(query);
-
-        return chat ? (chat.toObject() as unknown as ChatResponseDto) : null;
+    ): Promise<ChatFullResponseDto | null> {
+        return await this.chatRepository.find(query);
     }
 
     public async findAll({
         userId,
     }: {
         userId: number;
-    }): Promise<{ items: ChatModel[] }> {
+    }): Promise<{ items: ChatPreviewResponseDto[] }> {
         const chats = await this.chatRepository.findAll({ query: {}, userId });
 
         return {
@@ -39,7 +42,7 @@ class ChatService implements Service {
         userId,
     }: {
         userId: number;
-    }): Promise<unknown> {
+    }): Promise<ChatGetAllItemsResponseDto> {
         const aiAssistantChat = await this.chatRepository.findAll({
             query: { isAssistant: true },
             userId,
@@ -80,9 +83,7 @@ class ChatService implements Service {
             membersId: membersId ? [creatorId, ...membersId] : [creatorId],
         });
 
-        const chat = await this.chatRepository.create(chatEntity);
-
-        return chat.toObject() as unknown as ChatResponseDto;
+        return await this.chatRepository.create(chatEntity);
     }
 
     public update(
