@@ -1,5 +1,8 @@
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
-import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
+import {
+    convertMetersToKilometers,
+    getValidClassNames,
+} from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { DOUBLE_VALUE } from '~/bundles/overview/components/circle-progress/constants/constants.js';
 import {
@@ -10,12 +13,13 @@ import {
 import { CircleSizeToFontParameters } from '~/bundles/overview/components/circle-progress/helpers/helpers.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/enums.js';
 
-type CircularProgressProperties = {
+type Properties = {
     value: number;
     target: number;
     size?: CircleSizes;
     goalType?: ValueOf<typeof GoalTypes>;
     color?: ValueOf<typeof CircularProgressColors>;
+    hasDistance?: boolean;
 };
 
 const classes = {
@@ -26,13 +30,14 @@ const classes = {
         'inline-flex font-normal text-[1.5rem] font-accent font-light',
 };
 
-const CircleProgress = ({
+const CircleProgress: React.FC<Properties> = ({
     value,
     target,
     size = ComponentSize.MEDIUM,
     color = CircularProgressColors.primary,
     goalType = GoalTypes.STANDART,
-}: CircularProgressProperties): JSX.Element => {
+    hasDistance = false,
+}): JSX.Element => {
     const { radius, stroke } = CircularProgressSizes[size];
     const { fontSize, fontFamily, fontColor } =
         CircleSizeToFontParameters[size];
@@ -115,9 +120,13 @@ const CircleProgress = ({
                                 fontColor,
                             )}
                         >
-                            {value}
+                            {hasDistance
+                                ? convertMetersToKilometers(value)
+                                : value}
                         </p>
-                        <p className="inline-flex font-normal">km</p>
+                        <p className="inline-flex font-normal">
+                            {hasDistance ? 'km' : 'min'}
+                        </p>
                     </>
                 )}
             </div>

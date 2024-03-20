@@ -40,7 +40,6 @@ class AchievementsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-
         return await response.json<AchievementsGetAllResponseDto[]>();
     }
 }

@@ -62,6 +62,7 @@ class BaseController implements Controller {
         const {
             body,
             query,
+            file,
             params,
             user,
             headers: { origin },
@@ -69,6 +70,7 @@ class BaseController implements Controller {
 
         return {
             body,
+            file,
             query,
             params,
             user,

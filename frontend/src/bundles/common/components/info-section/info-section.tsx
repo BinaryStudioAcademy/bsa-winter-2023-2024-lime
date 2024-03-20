@@ -4,7 +4,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { ViewAllButton } from './components/components.js';
 
-type InfoSectionProperties = {
+type Properties = {
     children: React.ReactNode;
     viewAllLink?: ValueOf<typeof AppRoute>;
     buttonTitle?: string;
@@ -12,7 +12,7 @@ type InfoSectionProperties = {
     className?: string;
 };
 
-const InfoSection: React.FC<InfoSectionProperties> = ({
+const InfoSection: React.FC<Properties> = ({
     children,
     className,
     title,

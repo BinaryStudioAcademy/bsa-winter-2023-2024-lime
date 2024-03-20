@@ -17,9 +17,14 @@ export default {
             'white': '#ffffff',
             'lm-green': '#037768',
             'lm-red': '#F62D2D',
+            'lm-emerald': '#8cc751',
             'lm-cyan': '#05CFCF',
             'lm-light-blue': '#056ECF',
             'lm-light-yellow': '#f1ffca',
+            'lm-mint': {
+                100: '#90EE90',
+                200: '#50C878',
+            },
             'lm-purple': {
                 100: '#7E51FF',
                 200: '#7306FF',
@@ -49,6 +54,7 @@ export default {
                 300: '#313134',
                 400: '#000000',
             },
+            'strava-brand': '#FC4C02',
         },
         fontSize: {
             xs: '0.75rem',
@@ -60,6 +66,7 @@ export default {
             '2xl': '1.375rem',
             '3xl': '1.75rem',
             '4xl': '2.625rem',
+            '5xl': '5rem',
         },
         fontWeight: {
             light: '300',
@@ -85,10 +92,13 @@ export default {
             'md': '768px',
             'lg': '1024px',
             'xl': '1280px',
+            '2xl': '1940px',
         },
         extend: {
             animation: {
                 'load': 'spin 700ms infinite ease-in-out',
+                'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+
                 'fade-in': 'fade-in 500ms ease-in',
             },
             keyframes: {
@@ -102,10 +112,16 @@ export default {
                         opacity: '1',
                     },
                 },
+                pulse: {
+                    '0%': { transform: 'scale(1)', opacity: 1 },
+                    '50%': { transform: 'scale(1.05)', opacity: 0.5 },
+                    '100%': { transform: 'scale(1)', opacity: 1 },
+                },
             },
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
                 accent: ['Lato', ...defaultTheme.fontFamily.sans],
+                heading: ['Intro', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
@@ -116,6 +132,7 @@ export default {
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
                 'wave-grey': 'url("~/assets/img/wave-grey.svg")',
+                'wave-green': 'url("~/assets/img/wave-green.svg")',
                 'progress-line': 'url("~/assets/img/progress-line.svg")',
             },
             borderRadius: {
@@ -129,6 +146,7 @@ export default {
                 '115': '115px',
                 '120': '120px',
                 '150': '9.375rem',
+                '176': '11rem',
                 '874': '54.625',
             },
             height: {
@@ -136,10 +154,13 @@ export default {
                 '37': '2.3125rem',
                 '38': '2.375rem',
                 '54': '3.375rem;',
+                '176': '11rem',
+,
             },
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+                '44': '2.75rem',
                 '60': '3.75rem',
             },
             minHeight: {
@@ -163,6 +184,7 @@ export default {
                 primary: 'var(--background-primary)',
                 secondary: 'var(--background-secondary)',
                 tertiary: 'var(--background-tertiary)',
+                overlay: 'var(--modal-overlay)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
                 buttonTertiary: ButtonColors.TERTIARY,
@@ -170,6 +192,7 @@ export default {
             },
             borderColor: {
                 primary: 'var(--border-primary)',
+                secondary: 'var(--border-secondary)',
                 inactive: 'var(--border-inactive)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,

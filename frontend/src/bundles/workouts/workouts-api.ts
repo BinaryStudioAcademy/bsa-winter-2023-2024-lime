@@ -35,6 +35,20 @@ class WorkoutApi extends BaseHttpApi {
 
         return await response.json<WorkoutGetAllResponseDto>();
     }
+
+    public async getUserLastWorkouts(
+        userId: string,
+    ): Promise<WorkoutGetAllResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(WorkoutsApiPath.USER_ID, { userId }),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<WorkoutGetAllResponseDto>();
+    }
 }
 
 export { WorkoutApi };

@@ -28,6 +28,12 @@ class StravaOAuthStrategy implements OAuthStrategy {
         const redirectUri = new URL(
             `${this.config.ENV.APP.API_BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.STRAVA}${OAuthActionsPath.EXCHANGE_TOKEN}`,
         );
+        if (!userId) {
+            throw new HttpError({
+                message: ErrorMessage.INVALID_PARAMS,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
         redirectUri.searchParams.set('userId', userId.toString());
 
         const url = new URL(StravaPath.AUTHORIZE);

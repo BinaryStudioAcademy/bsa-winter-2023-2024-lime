@@ -19,4 +19,14 @@ const getWorkouts = createAsyncThunk<
     return await workoutApi.getAll(showLast);
 });
 
-export { getWorkouts };
+const getLastWorkoutsByUserId = createAsyncThunk<
+    WorkoutGetAllResponseDto,
+    number,
+    AsyncThunkConfig
+>(`${name}/get-last-by-user-id`, async (id, { extra }) => {
+    const { workoutApi } = extra;
+    const idString = String(id);
+    return workoutApi.getUserLastWorkouts(idString);
+});
+
+export { getLastWorkoutsByUserId, getWorkouts };

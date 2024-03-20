@@ -1,8 +1,8 @@
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
 
 import { Button } from '~/bundles/common/components/components.js';
-import { type IconName } from '~/bundles/common/components/icon/enums/enums.js';
 import { Icon } from '~/bundles/common/components/icon/icon.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -11,29 +11,20 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
-import { type OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
-
-import { actions } from '../store/connections.js';
-
-type Properties = {
-    title: string;
-    description: string;
-    iconName: ValueOf<typeof IconName>;
-    provider: ValueOf<typeof OAuthProvider>;
-};
+import { OAuthProvider } from '~/bundles/profile/pages/connections-page/enums/enums.js';
+import { actions } from '~/bundles/profile/pages/connections-page/store/connections.js';
+import { type ConnectionOption as TConnectionOption } from '~/bundles/profile/pages/connections-page/types/types.js';
 
 const ConnectionOption = ({
     title,
     description,
-    iconName,
+    logoIcon,
     provider,
-}: Properties): JSX.Element => {
+    buttonIcon,
+}: TConnectionOption): JSX.Element => {
     const dispatch = useAppDispatch();
 
-    const { connections } = useAppSelector(({ connections }) => ({
-        dataStatus: connections.dataStatus,
-        connections: connections.connections,
-    }));
+    const { connections } = useAppSelector(({ connections }) => connections);
 
     const [isConnected, setIsConnected] = useState(false);
 
@@ -55,6 +46,14 @@ const ConnectionOption = ({
             : void dispatch(actions.authorize(provider));
     }, [connections, dispatch, provider]);
 
+    const providerBrandToStyles: Record<
+        ValueOf<typeof OAuthProvider>,
+        string
+    > = {
+        [OAuthProvider.STRAVA]: 'bg-strava-brand hover:bg-strava-brand',
+        [OAuthProvider.GOOGLE_FIT]: '',
+    };
+
     return (
         <div className={'bg-primary flex flex-col gap-5 rounded-2xl p-6'}>
             <div
@@ -63,7 +62,7 @@ const ConnectionOption = ({
                 }
             >
                 <div className={'flex w-full gap-4'}>
-                    <Icon name={iconName} className={'w-10 sm:w-14 md:w-14'} />
+                    <Icon name={logoIcon} className={'w-10 sm:w-14 md:w-14'} />
                     <div className={'flex flex-col gap-1'}>
                         <div className={'flex items-center gap-2'}>
                             <h2
@@ -114,13 +113,32 @@ const ConnectionOption = ({
                         </p>
                     </div>
                 </div>
-                <Button
-                    variant={isConnected ? 'secondary' : 'primary'}
-                    size={'md'}
-                    label={isConnected ? 'Disconnect' : 'Connect'}
-                    className={'w-full max-w-full sm:h-10 xl:w-[15rem]'}
-                    onClick={handleClick}
-                />
+
+                <div className="flex w-full justify-end">
+                    {buttonIcon ? (
+                        <Button
+                            variant={'primary'}
+                            size={'md'}
+                            leftIcon={
+                                !isConnected && <Icon name={buttonIcon} />
+                            }
+                            label={isConnected ? 'Disconnect' : ''}
+                            className={getValidClassNames(
+                                'w-full max-w-full text-white sm:h-12 xl:w-[15rem]',
+                                providerBrandToStyles[provider],
+                            )}
+                            onClick={handleClick}
+                        />
+                    ) : (
+                        <Button
+                            variant={isConnected ? 'secondary' : 'primary'}
+                            size={'md'}
+                            label={isConnected ? 'Disconnect' : 'Connect'}
+                            className={'w-full max-w-full sm:h-12 xl:w-[15rem]'}
+                            onClick={handleClick}
+                        />
+                    )}
+                </div>
             </div>
             <p className="text-lm-grey-100 text-sm xl:text-base">
                 {description}

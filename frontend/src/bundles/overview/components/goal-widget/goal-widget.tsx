@@ -8,7 +8,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 import { CircleProgress } from '../components.js';
 import { GoalTypes } from './enums/goal-types.enums.js';
 
-type WidgetProperties = {
+type Properties = {
     value: number;
     target: number;
     goalType?: ValueOf<typeof GoalTypes>;
@@ -17,9 +17,10 @@ type WidgetProperties = {
     rightTitle?: string;
     className?: string;
     hasAchievement?: boolean;
+    hasDistance?: boolean;
 };
 
-const GoalWidget = ({
+const GoalWidget: React.FC<Properties> = ({
     value,
     target,
     goalType = GoalTypes.OVERVIEW,
@@ -28,7 +29,8 @@ const GoalWidget = ({
     hasAchievement = true,
     className = '',
     rightTitle,
-}: WidgetProperties): JSX.Element => {
+    hasDistance = false,
+}): JSX.Element => {
     if (!rightTitle) {
         rightTitle =
             goalType === GoalTypes.OVERVIEW
@@ -44,7 +46,12 @@ const GoalWidget = ({
             )}
         >
             <div>
-                <p className="font-heavybold text-lm-black-200 hidden text-[1.5rem] leading-7 md:block">
+                <p
+                    className={getValidClassNames(
+                        'font-heavybold text-lm-black-200 text-xl leading-7 md:text-[1.5rem]',
+                        hasAchievement ? 'hidden md:block' : '',
+                    )}
+                >
                     {title}
                 </p>
                 {subTitle && (
@@ -66,6 +73,7 @@ const GoalWidget = ({
                             value={value}
                             target={target}
                             goalType={goalType}
+                            hasDistance={hasDistance}
                         />
                     </div>
                 </div>

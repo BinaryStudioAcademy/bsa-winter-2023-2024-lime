@@ -7,7 +7,7 @@ type Properties = {
     workout: WorkoutResponseDto;
 };
 
-const WorkoutTitle = ({ workout }: Properties): JSX.Element => {
+const WorkoutTitle: React.FC<Properties> = ({ workout }): JSX.Element => {
     const { activityType } = workout;
 
     const baseClass = '!p-3 !bg-lm-grey-500';
@@ -20,7 +20,7 @@ const WorkoutTitle = ({ workout }: Properties): JSX.Element => {
                 className={baseClass}
             />
             <h1 className="flex flex-col">
-                <span className="text-lm-grey-200 text-xs">Details of</span>
+                <span className="text-lm-grey-200 text-s">Details of</span>
                 <span className="text-primary text-xl font-extrabold">
                     {capitalizeFirstLetter(activityType)} activity
                 </span>

@@ -3,6 +3,8 @@ const AppRoute = {
     HELP: '/help',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
+    IDENTITY: '/identity',
+    IDENTITY_$TOKEN: '/identity/:token',
     PASSWORD_RESET: '/reset-password/:resetToken',
     OVERVIEW: '/overview',
     GOALS: '/goals',
@@ -15,8 +17,14 @@ const AppRoute = {
     PROFILE_CONNECTIONS: '/profile/connections',
     PROFILE_SUBSCRIPTION: '/profile/subscriptions',
     PROFILE_SUBSCRIPTION_CHECKOUT: '/profile/subscriptions-checkout',
+    PROFILE_PUBLIC_$ID: '/profile/public/:id',
     NOT_FOUND: '*',
     PROFILE: '/profile/settings',
+    CHATS: '/chats',
+    CHATS_$ID: '/chats/:id',
+    CHATS_AI_ASSISTANT: '/chats/ai-assistant',
+    PROFILE_PUBLIC: '/profile/public',
+    FRIENDS: '/friends',
 } as const;
 
 export { AppRoute };

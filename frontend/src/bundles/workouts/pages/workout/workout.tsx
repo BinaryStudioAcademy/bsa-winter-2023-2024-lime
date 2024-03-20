@@ -1,7 +1,9 @@
 import {
+    Icon,
     Loader,
     SubNavigation,
 } from '~/bundles/common/components/components.js';
+import { IconName } from '~/bundles/common/components/icon/enums/icon-name.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import {
@@ -24,10 +26,7 @@ const Workout: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const { dataStatus, workouts } = useAppSelector(({ workouts }) => ({
-        dataStatus: workouts.dataStatus,
-        workouts: workouts.workouts,
-    }));
+    const { dataStatus, workouts } = useAppSelector(({ workouts }) => workouts);
 
     useEffect(() => {
         void dispatch(actions.getWorkouts());
@@ -58,27 +57,36 @@ const Workout: React.FC = () => {
     const isLoading = dataStatus === DataStatus.PENDING;
 
     return (
-        <section className="relative flex h-full">
+        <section className="relative flex h-full w-full max-w-[1136px]">
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
-                <div className="flex w-full">
-                    <SubNavigation
-                        title={subNavigationTitle}
-                        items={subNavigationItems}
-                    />
-                    <div className="border-lm-black-400 h-full border"></div>
-
-                    <div className="w-full max-w-[50rem] px-[1.5rem]">
+                <>
+                    <div className="flex w-full">
                         {workouts.length > 0 ? (
-                            <WorkoutItem />
+                            <>
+                                <div className="my-[-2rem] ml-[-2rem]">
+                                    <SubNavigation
+                                        title={subNavigationTitle}
+                                        items={subNavigationItems}
+                                    />
+                                </div>
+
+                                <div className="border-lm-black-400 my-[-2rem] h-[calc(100%+4rem)] border"></div>
+
+                                <div className="w-full px-[1.5rem]">
+                                    <WorkoutItem />
+                                </div>
+                            </>
                         ) : (
-                            <p className="text-md text-primary text-center">
-                                You don&#39;t have any workouts yet
-                            </p>
+                            <div className="font-base text-primary flex w-full flex-col items-center justify-center gap-2 px-[2rem] text-center text-xl md:px-0">
+                                <p>You don&#39;t have any workouts yet</p>
+                                <Icon name={IconName.workoutIcon} />
+                                <p>When you add some they will appear here</p>
+                            </div>
                         )}
                     </div>
-                </div>
+                </>
             )}
         </section>
     );

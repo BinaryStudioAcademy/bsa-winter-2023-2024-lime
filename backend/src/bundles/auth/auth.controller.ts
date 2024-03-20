@@ -1,4 +1,7 @@
-import { type UserAuthRequestDto } from '~/bundles/users/users.js';
+import {
+    type UserAuthSignInRequestDto,
+    type UserAuthSignUpRequestDto,
+} from '~/bundles/users/users.js';
 import { userAuthValidationSchema } from '~/bundles/users/users.js';
 import {
     type ApiHandlerOptions,
@@ -12,6 +15,7 @@ import { type Logger } from '~/common/logger/logger.js';
 
 import { type AuthService } from './auth.service.js';
 import { AuthApiPath } from './enums/enums.js';
+import { type IdentityAuthTokenDto } from './types/types.js';
 
 class AuthController extends BaseController {
     private authService: AuthService;
@@ -30,7 +34,7 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signUp(
                     options as ApiHandlerOptions<{
-                        body: UserAuthRequestDto;
+                        body: UserAuthSignUpRequestDto;
                     }>,
                 ),
         });
@@ -44,7 +48,18 @@ class AuthController extends BaseController {
             handler: (options) =>
                 this.signIn(
                     options as ApiHandlerOptions<{
-                        body: UserAuthRequestDto;
+                        body: UserAuthSignInRequestDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: AuthApiPath.IDENTITY,
+            method: 'POST',
+            handler: (options) =>
+                this.signInIdentity(
+                    options as ApiHandlerOptions<{
+                        body: IdentityAuthTokenDto;
                     }>,
                 ),
         });
@@ -94,7 +109,7 @@ class AuthController extends BaseController {
 
     private async signIn(
         options: ApiHandlerOptions<{
-            body: UserAuthRequestDto;
+            body: UserAuthSignInRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
@@ -111,6 +126,13 @@ class AuthController extends BaseController {
      *      tags:
      *         - Auth
      *      description: Sign up user into the application
+     *      parameters:
+     *        - in: query
+     *          name: referralCode
+     *          schema:
+     *            type: string
+     *          required: false
+     *          description: Optional referral code to invite other users
      *      requestBody:
      *        description: User auth data
      *        required: true
@@ -147,13 +169,63 @@ class AuthController extends BaseController {
      */
     private async signUp(
         options: ApiHandlerOptions<{
-            body: UserAuthRequestDto;
+            body: UserAuthSignUpRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.CREATED,
             payload: await this.authService.signUp(options.body),
+        };
+    }
+
+    /**
+     * @swagger
+     * /api/v1/auth/sign-in-identity:
+     *    post:
+     *      tags:
+     *         - Auth
+     *      description: Sign in user into the application using token
+     *      requestBody:
+     *        description: Token data
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                token:
+     *                  type: string
+     *      responses:
+     *        201:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  user:
+     *                    type: object
+     *                    $ref: '#/components/schemas/User'
+     *                  token:
+     *                    type: string
+     *        400:
+     *          description: Failed operation
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                    type: object
+     *                    $ref: '#/components/schemas/Error'
+     */
+    private async signInIdentity(
+        options: ApiHandlerOptions<{
+            body: IdentityAuthTokenDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: await this.authService.signInIdentity(options.body),
         };
     }
 }

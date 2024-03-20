@@ -3,7 +3,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 type ActivityIconSize = Exclude<
     ValueOf<typeof ComponentSize>,
-    typeof ComponentSize.EXTRA_LARGE
+    typeof ComponentSize.EXTRA_LARGE | typeof ComponentSize.HUGE
 >;
 
 export { type ActivityIconSize };

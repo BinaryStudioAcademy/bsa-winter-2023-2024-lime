@@ -5,6 +5,7 @@ import {
     ActivityWidget,
     ActivityWidgetColor,
     Card,
+    GoogleAds,
     Icon,
     InfoSection,
     Loader,
@@ -110,6 +111,10 @@ const calculateStatistics = (workouts: WorkoutResponseDto[]) => {
 };
 
 const Overview: React.FC = () => {
+    const { currentSubscription: isSubscribed } = useAppSelector(
+        ({ subscriptions }) => subscriptions,
+    );
+
     const dispatch = useAppDispatch();
 
     const { goals, dataStatus: goalsDataStatus } = useAppSelector(
@@ -145,7 +150,7 @@ const Overview: React.FC = () => {
     }
 
     return (
-        <div className="ml-auto mr-auto max-w-[1136px] xl:flex xl:gap-8">
+        <div className="w-full max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
             <div className="xl:basis-[68%]">
                 <GoalWidget
                     value={completedGoals.length}
@@ -186,6 +191,9 @@ const Overview: React.FC = () => {
                         />
                     </li>
                 </ul>
+                {!isSubscribed && (
+                    <GoogleAds className="mb-6 hidden h-44 xl:flex" />
+                )}
                 <ChartGoalProgress />
                 {incompletedGoals.length > 0 && (
                     <div className="mt-5">
@@ -215,7 +223,7 @@ const Overview: React.FC = () => {
                 <InfoSection
                     title="My Schedule"
                     viewAllLink={AppRoute.SCHEDULE}
-                    className="mb-14"
+                    className={isSubscribed ? 'mb-14' : 'mb-5'}
                 >
                     {scheduleData.length > 0 ? (
                         <ul>
@@ -232,6 +240,7 @@ const Overview: React.FC = () => {
                         <p>Empty schedule</p>
                     )}
                 </InfoSection>
+                {!isSubscribed && <GoogleAds className="mb-5 h-48" />}
                 <InfoSection
                     title="Completed goals"
                     viewAllLink={completedGoalsLink}

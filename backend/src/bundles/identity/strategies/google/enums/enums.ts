@@ -1,0 +1,1 @@
+export { ApiPath } from 'shared';

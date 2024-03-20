@@ -56,6 +56,23 @@ class WorkoutRepository implements Repository {
         });
     }
 
+    public async findAllByUserIdAndMonth(
+        userId: number,
+        currentMonth: number,
+    ): Promise<WorkoutEntity[]> {
+        const workouts = await this.workoutsModel
+            .query()
+            .where({ userId })
+            .andWhereRaw(
+                `EXTRACT(MONTH FROM workout_started_at) = ${currentMonth + 1}`,
+            )
+            .execute();
+
+        return workouts.map((workout) =>
+            WorkoutEntity.initialize({ ...workout }),
+        );
+    }
+
     public async findWithTimestamps(
         query: Record<string, unknown>,
         startDate: string,

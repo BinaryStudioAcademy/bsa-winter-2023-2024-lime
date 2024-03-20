@@ -18,11 +18,7 @@ import { type SubscribeRequestDto } from '../../types/types.js';
 
 const SubscriptionPage = (): JSX.Element => {
     const { dataStatus, subscriptionPlans, currentSubscription } =
-        useAppSelector(({ subscriptions }) => ({
-            subscriptionPlans: subscriptions.subscriptionPlans,
-            currentSubscription: subscriptions.currentSubscription,
-            dataStatus: subscriptions.dataStatus,
-        }));
+        useAppSelector(({ subscriptions }) => subscriptions);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
