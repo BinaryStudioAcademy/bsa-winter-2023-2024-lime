@@ -4,6 +4,7 @@ import {
     Loader,
     RouterOutlet,
 } from '~/bundles/common/components/components.js';
+import { DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -12,13 +13,17 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import { storage, StorageKey } from '~/framework/storage/storage.js';
 
+import { AuthApiPath } from './enums/enums.js';
+
 const App: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const { redirectPath } = useAppSelector(({ app }) => app);
 
-    const { isRefreshing } = useAppSelector(({ auth }) => auth);
+    const { isRefreshing, dataStatus: authDataStatus } = useAppSelector(
+        ({ auth }) => auth,
+    );
 
     useEffect(() => {
         if (redirectPath) {
@@ -40,6 +45,13 @@ const App: React.FC = () => {
 
         void refreshUser();
     }, [dispatch]);
+
+    useEffect(() => {
+        if (authDataStatus === DataStatus.REJECTED) {
+            void storage.drop(StorageKey.TOKEN);
+            navigate(AuthApiPath.SIGN_IN);
+        }
+    }, [authDataStatus, navigate]);
 
     if (isRefreshing) {
         return <Loader isOverflow />;
