@@ -1,7 +1,7 @@
 import 'chart.js/auto';
 
-import { optionsBarChart } from '../chart-goal-progress/config/config.js';
 import { Bar } from './components/components.js';
+import { optionsBarChart } from './config/config.js';
 import css from './styles/bar-chart.module.css';
 import { type BarChartData, type BarChartOptions } from './types/types.js';
 

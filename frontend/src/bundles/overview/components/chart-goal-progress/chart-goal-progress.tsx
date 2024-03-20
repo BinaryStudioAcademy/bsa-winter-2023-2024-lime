@@ -16,7 +16,7 @@ import {
 import { type WorkoutShowLastType } from '~/bundles/workouts/enums/enums.js';
 import { actions as workoutsActions } from '~/bundles/workouts/store/workouts.js';
 
-import { BarChart } from '../components.js';
+import { BarChart } from './components/components.js';
 import { generateChartStats } from './helpers/generate-chart-stats.helper.js';
 
 const selectData: SelectOption[] = [

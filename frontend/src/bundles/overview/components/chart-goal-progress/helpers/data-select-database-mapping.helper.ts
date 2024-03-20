@@ -1,4 +1,4 @@
-import { type BarChartData } from '../../charts/types/types.js';
+import { type BarChartData } from '../components/bar-chart/types/types.js';
 import {
     monthlyData,
     weeklyData,
