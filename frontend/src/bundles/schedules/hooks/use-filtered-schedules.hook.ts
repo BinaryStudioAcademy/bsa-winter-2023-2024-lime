@@ -1,8 +1,8 @@
 import { formatDateToIso } from '~/bundles/common/helpers/helpers.js';
 import { useMemo } from '~/bundles/common/hooks/hooks.js';
-import { ZERO_VALUE } from '~/bundles/schedules/constants/constants.js';
-import { isDateInRange } from '~/bundles/schedules/helpers/helpers.js';
 
+import { ZERO_VALUE } from '../constants/constants.js';
+import { isDateInRange } from '../helpers/helpers.js';
 import {
     type GoalResponseDto,
     type ScheduleResponseDto,
