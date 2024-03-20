@@ -128,7 +128,7 @@ const Friends: React.FC = () => {
     }, [dispatch, activeTab]);
 
     return (
-        <section className="relative flex h-full flex-col gap-5 whitespace-normal">
+        <section className="relative flex h-full w-full flex-col gap-5 whitespace-normal">
             <Tabs
                 tabs={tabs}
                 handleTabClick={handleTabClick}
