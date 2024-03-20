@@ -11,6 +11,7 @@ import {
     ChatModel,
     ChatUserAttributes,
 } from '~/bundles/chats/chats.js';
+import { FriendModel } from '~/bundles/friends/friends.js';
 import {
     OAuthInfoAttributes,
     OAuthModel,
@@ -62,6 +63,8 @@ class UserModel extends AbstractModel {
 
     public 'aiChat': ChatModel;
 
+    public 'friends': FriendModel;
+
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
     }
@@ -109,11 +112,19 @@ class UserModel extends AbstractModel {
                 },
             },
             userAchievements: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: UserAchievementModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_ACHIEVEMENTS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            friends: {
+                relation: Model.HasManyRelation,
+                modelClass: FriendModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.FRIENDS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
             workouts: {

@@ -15,6 +15,8 @@ import { chatsApi } from '~/bundles/chats/chats.js';
 import { reducer as chatsReducer } from '~/bundles/chats/store/chats.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
+import { friendsApi } from '~/bundles/friends/friends.js';
+import { reducer as friendsReducer } from '~/bundles/friends/store/friends.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
 import { messageApi } from '~/bundles/messages/messages.js';
@@ -53,6 +55,7 @@ type RootReducer = {
     notifications: ReturnType<typeof notificationsReducer>;
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
+    friends: ReturnType<typeof friendsReducer>;
     userBonuses: ReturnType<typeof userBonusesReducer>;
     chats: ReturnType<typeof chatsReducer>;
 };
@@ -71,6 +74,7 @@ type ExtraArguments = {
     chatsApi: typeof chatsApi;
     aiAssistantApi: typeof aiAssistantApi;
     messageApi: typeof messageApi;
+    friendsApi: typeof friendsApi;
 };
 
 class Store {
@@ -99,6 +103,7 @@ class Store {
                 workouts: workoutsReducer,
                 userBonuses: userBonusesReducer,
                 chats: chatsReducer,
+                friends: friendsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -126,6 +131,7 @@ class Store {
             chatsApi,
             aiAssistantApi,
             messageApi,
+            friendsApi,
         };
     }
 }

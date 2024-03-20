@@ -29,6 +29,11 @@ export {
 } from './bundles/connections/connections.js';
 export { type File, FileValidationMessage } from './bundles/file/file.js';
 export {
+    type FriendRequestDto,
+    type FriendResponseDto,
+    FriendsApiPath,
+} from './bundles/friends/friends.js';
+export {
     type GoalRequestDto,
     type GoalResponseDto,
     FrequencyType,
@@ -122,7 +127,10 @@ export {
     WorkoutValidationMessage,
     workoutValidationSchema,
 } from './bundles/workouts/workouts.js';
-export { MILLISECONDS_PER_SECOND } from './constants/constants.js';
+export {
+    MAX_NUMBER_OF_USERS,
+    MILLISECONDS_PER_SECOND,
+} from './constants/constants.js';
 export {
     ActivityType,
     ApiPath,

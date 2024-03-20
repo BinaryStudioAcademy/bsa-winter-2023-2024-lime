@@ -3,6 +3,7 @@ import { aiAssistantController } from '~/bundles/ai-assistants/ai-assistant.js';
 import { authController } from '~/bundles/auth/auth.js';
 import { chatController } from '~/bundles/chats/chats.js';
 import { connectionController } from '~/bundles/connections/connections.js';
+import { friendController } from '~/bundles/friends/friends.js';
 import { goalController } from '~/bundles/goals/goals.js';
 import { identityController } from '~/bundles/identity/identity.js';
 import { messageController } from '~/bundles/messages/messages.js';
@@ -40,6 +41,7 @@ const apiV1 = new BaseServerAppApi(
     ...messageController.routes,
     ...identityController.routes,
     ...aiAssistantController.routes,
+    ...friendController.routes,
 );
 const serverApp = new BaseServerApp({
     config,
