@@ -8,6 +8,7 @@ import {
 import { convertSecondsToMinutes } from '~/common/helpers/helpers.js';
 
 const WEEK_DAYS = 7;
+const MONTH_VALUE = 1;
 
 const checkGoal = (
     workout: WorkoutResponseDto,
@@ -22,8 +23,8 @@ const checkGoal = (
             workout.distance >= goal?.distance
         );
     }
-    if (goal.distance) {
-        return workout.distance >= goal?.distance;
+    if (goal.distance && !goal.duration) {
+        return workout.distance >= goal.distance;
     }
 };
 
@@ -62,6 +63,23 @@ function calculateGoalProgress(
 
             progress = Math.round(
                 (weekWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER,
+            );
+
+            break;
+        }
+        case FrequencyType.MONTH: {
+            const monthWorkouts = workouts.filter(
+                (workout) =>
+                    workout.workoutEndedAt &&
+                    workout.workoutEndedAt >= goalDate &&
+                    workout.workoutEndedAt?.setMonth(
+                        workout.workoutEndedAt.getMonth(),
+                    ) <= goalDate.setMonth(goalDate.getMonth() + MONTH_VALUE) &&
+                    checkGoal(workout, goal),
+            );
+
+            progress = Math.round(
+                (monthWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER,
             );
 
             break;
