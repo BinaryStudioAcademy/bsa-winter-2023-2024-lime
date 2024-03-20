@@ -2,6 +2,7 @@ import {
     ActivityWidget,
     ActivityWidgetColor,
     Card,
+    GoogleAds,
     Icon,
     InfoSection,
 } from '~/bundles/common/components/components.js';
@@ -10,6 +11,7 @@ import {
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
+import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
 import {
     ChartGoalProgress,
     GoalWidget,
@@ -58,8 +60,12 @@ const goalsData = [
 ];
 
 const Overview: React.FC = () => {
+    const { currentSubscription: isSubscribed } = useAppSelector(
+        ({ subscriptions }) => subscriptions,
+    );
+
     return (
-        <div className="ml-auto mr-auto max-w-[1136px] xl:flex xl:gap-8">
+        <div className="w-full max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
             <div className="xl:basis-[68%]">
                 <GoalWidget
                     value={4}
@@ -98,6 +104,9 @@ const Overview: React.FC = () => {
                         />
                     </li>
                 </ul>
+                {!isSubscribed && (
+                    <GoogleAds className="mb-6 hidden h-44 xl:flex" />
+                )}
                 <ChartGoalProgress />
                 <div className="mt-5">Achievements</div>
             </div>
@@ -105,7 +114,7 @@ const Overview: React.FC = () => {
                 <InfoSection
                     title="My Schedule"
                     viewAllLink={AppRoute.SCHEDULE}
-                    className="mb-14"
+                    className={isSubscribed ? 'mb-14' : 'mb-5'}
                 >
                     {scheduleData.length > 0 ? (
                         <ul>
@@ -122,11 +131,8 @@ const Overview: React.FC = () => {
                         <p>Empty schedule</p>
                     )}
                 </InfoSection>
-                <InfoSection
-                    title="Goals"
-                    viewAllLink={AppRoute.GOALS}
-                    className="mb-12"
-                >
+                {!isSubscribed && <GoogleAds className="mb-5 h-48" />}
+                <InfoSection title="Goals" viewAllLink={AppRoute.GOALS}>
                     {goalsData.length > 0 ? (
                         <ul>
                             {goalsData.map((goalItem) => (
@@ -141,9 +147,6 @@ const Overview: React.FC = () => {
                     ) : (
                         <p>Empty goals</p>
                     )}
-                </InfoSection>
-                <InfoSection title="Recommended for you">
-                    Recomendations
                 </InfoSection>
             </div>
         </div>

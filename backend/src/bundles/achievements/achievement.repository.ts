@@ -20,8 +20,11 @@ class AchievementRepository implements Repository {
         if (!achievement) {
             return null;
         }
-
         return AchievementEntity.initialize(achievement);
+    }
+
+    public create(): ReturnType<Repository['create']> {
+        return Promise.resolve(true);
     }
 
     public async findAll(): Promise<AchievementEntity[]> {
@@ -52,10 +55,6 @@ class AchievementRepository implements Repository {
         return achievements.map((achievement) =>
             AchievementEntity.initialize(achievement),
         );
-    }
-
-    public create(): ReturnType<Repository['create']> {
-        return Promise.resolve(true);
     }
 
     public async update(

@@ -14,6 +14,7 @@ const sizeToClass: Record<AvatarSize, string> = {
     [ComponentSize.MEDIUM]: 'h-20 w-20',
     [ComponentSize.LARGE]: 'h-30 w-30',
     [ComponentSize.EXTRA_LARGE]: 'h-44 w-44',
+    [ComponentSize.HUGE]: 'h-176 w-176',
 };
 
 const sizeMap: Record<AvatarSize, string> = {
@@ -21,6 +22,7 @@ const sizeMap: Record<AvatarSize, string> = {
     [ComponentSize.MEDIUM]: 'text-3xl',
     [ComponentSize.LARGE]: 'text-4xl',
     [ComponentSize.EXTRA_LARGE]: 'text-4xl',
+    [ComponentSize.HUGE]: 'text-5xl',
 };
 
 const Avatar: React.FC<Properties> = ({

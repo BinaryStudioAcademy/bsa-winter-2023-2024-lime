@@ -1,16 +1,2 @@
-import { Gender } from '~/bundles/common/enums/enums.js';
-import { type UserUpdateProfileRequestDto } from '~/bundles/users/users.js';
-
-const DEFAULT_UPDATE_PROFILE_PAYLOAD: UserUpdateProfileRequestDto = {
-    avatarUrl: '',
-    fullName: '',
-    username: '',
-    dateOfBirth: '',
-    weight: '',
-    height: '',
-    location: '',
-    gender: Gender.MALE,
-    isPublic: false,
-};
-
-export { DEFAULT_UPDATE_PROFILE_PAYLOAD };
+export { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './default-update-profile-payload.js';
+export { ERROR_WRONG_FILETYPE_IMG } from './error-wrong-filetype-img.js';

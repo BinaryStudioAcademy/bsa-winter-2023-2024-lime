@@ -26,6 +26,7 @@ const IconName = {
     starIcon: 'starIcon',
     aiAssistantIcon: 'aiAssistantIcon',
     aiPoweredIcon: 'aiPoweredIcon',
+    friendsIcon: 'friendsIcon',
     stavaButtonIcon: 'stavaButtonIcon',
 } as const;
 
