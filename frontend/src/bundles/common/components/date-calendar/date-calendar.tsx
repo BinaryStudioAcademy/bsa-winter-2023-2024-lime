@@ -36,7 +36,7 @@ const DateCalendar = <T extends FieldValues>({
 
             field.onChange(value);
         },
-        [field],
+        [field, range],
     );
 
     return (

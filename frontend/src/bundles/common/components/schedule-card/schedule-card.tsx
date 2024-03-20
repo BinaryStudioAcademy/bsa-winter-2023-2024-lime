@@ -33,11 +33,11 @@ const ScheduleCard: React.FC<Properties> = ({
 
     const handleUpdate = useCallback(() => {
         onUpdate ? onUpdate(id) : null;
-    }, [onUpdate]);
+    }, [onUpdate, id]);
 
     const handleDelete = useCallback(() => {
         onDelete ? onDelete(id) : null;
-    }, [onDelete]);
+    }, [onDelete, id]);
 
     return (
         <li className={className}>

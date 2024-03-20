@@ -54,7 +54,7 @@ const CreateScheduleForm: React.FC<Properties> = ({
                 value[key as keyof CreateScheduleRequest],
             );
         }
-    }, [value]);
+    }, [value, setValue]);
 
     return (
         <form

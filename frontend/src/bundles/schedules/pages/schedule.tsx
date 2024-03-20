@@ -49,7 +49,7 @@ import {
     WEEK_PREPOSITION,
     ZERO_VALUE,
 } from '../constants/constants.js';
-import { isDateInRange } from '../helpers/helpers.js';
+import { useFilteredSchedules } from '../hooks/hooks.js';
 import { type ScheduleRequestDto } from '../types/types.js';
 
 const Schedule: React.FC = () => {
@@ -67,15 +67,15 @@ const Schedule: React.FC = () => {
 
     const watchedDate = watch('date');
 
+    const { dataStatus: scheduleDataStatus, schedules } = useAppSelector(
+        ({ schedules }) => schedules,
+    );
+
     const { dataStatus: goalsDataStatus, goals } = useAppSelector(
         ({ goals }) => goals,
     );
 
     const { theme } = useAppSelector(({ theme }) => theme);
-
-    const { dataStatus: scheduleDataStatus, schedules } = useAppSelector(
-        ({ schedules }) => schedules,
-    );
 
     const goalsList = useMemo(() => {
         return goals.map(({ activityType, id, frequency, frequencyType }) => {
@@ -92,31 +92,11 @@ const Schedule: React.FC = () => {
         });
     }, [goals]);
 
-    const filteredSchedules = useMemo(() => {
-        const START_TIME = 0;
-        const END_TIME = 1;
-        const formattedDates = watchedDate.map((item) => formatDateToIso(item));
-
-        const range = [...new Set(formattedDates)];
-
-        return schedules.filter((schedule) => {
-            const start = range[START_TIME] ?? String(ZERO_VALUE);
-            const end = range[END_TIME];
-
-            return isDateInRange(schedule.startAt as string, start, end);
-        });
-    }, [watchedDate, schedules]);
-
-    const randomGoal = useMemo(() => {
-        const schedulesWithGoal = filteredSchedules.filter(
-            (schedule) => schedule.goalId,
-        );
-        const randomIndex = Math.floor(
-            Math.random() * schedulesWithGoal.length,
-        );
-        const schedule = schedulesWithGoal[randomIndex];
-        return goals.find((goal) => goal.id === schedule?.goalId);
-    }, [filteredSchedules]);
+    const { randomGoal, filteredSchedules } = useFilteredSchedules(
+        watchedDate,
+        schedules,
+        goals,
+    );
 
     const doughnutData = useMemo((): ChartData<'doughnut'> | null => {
         if (!randomGoal) {
@@ -150,7 +130,7 @@ const Schedule: React.FC = () => {
             setBaseFormValue(DEFAULT_SCHEDULE_FORM_VALUE);
         }
         setIsModalOpen((previousState) => !previousState);
-    }, [isModalOpen]);
+    }, [isModalOpen, isUpdateMode]);
 
     const onUpdate = useCallback(
         (id: number) => {
@@ -167,14 +147,14 @@ const Schedule: React.FC = () => {
                 setIsUpdateMode(true);
             }
         },
-        [dispatch, schedules, handleModalStatus],
+        [schedules, handleModalStatus],
     );
 
     const onDelete = useCallback(
         (id: number) => {
             void dispatch(scheduleActions.deleteSchedule({ id: String(id) }));
         },
-        [dispatch, handleModalStatus, schedules, isUpdateMode],
+        [dispatch],
     );
 
     const scheduleHandler = useCallback(
@@ -200,16 +180,12 @@ const Schedule: React.FC = () => {
 
             handleModalStatus();
         },
-        [dispatch, handleModalStatus, schedules, isUpdateMode],
+        [dispatch, handleModalStatus, isUpdateMode],
     );
 
     useEffect(() => {
-        if (scheduleDataStatus !== DataStatus.FULFILLED) {
-            void dispatch(scheduleActions.getSchedules());
-        }
-        if (goalsDataStatus !== DataStatus.FULFILLED) {
-            void dispatch(goalActions.getGoals());
-        }
+        void dispatch(goalActions.getGoals());
+        void dispatch(scheduleActions.getSchedules());
     }, [dispatch]);
 
     const isLoading = [scheduleDataStatus, goalsDataStatus].includes(
@@ -254,8 +230,8 @@ const Schedule: React.FC = () => {
                                                 activityType={activityType}
                                                 id={id}
                                                 isExpanded={true}
-                                                date={`${hours}:${minutes}`}
                                                 key={id}
+                                                date={`${hours}:${minutes}`}
                                                 onUpdate={onUpdate}
                                                 onDelete={onDelete}
                                             />
@@ -305,6 +281,7 @@ const Schedule: React.FC = () => {
                     )}
                 </div>
             </section>
+
             <Modal
                 isOpen={isModalOpen}
                 title={isUpdateMode ? 'Update schedule' : LABEL}

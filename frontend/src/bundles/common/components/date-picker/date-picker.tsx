@@ -51,7 +51,7 @@ const DatePicker = <T extends FieldValues>({
 
             return false;
         },
-        [field],
+        [field, format],
     );
     return (
         <div className={className}>
