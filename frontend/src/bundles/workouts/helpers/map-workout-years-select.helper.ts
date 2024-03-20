@@ -3,7 +3,7 @@ import { type WorkoutResponseDto } from 'shared';
 type SelectOption = { value: string; label: string };
 
 const mapWorkoutYearSelect = (data: WorkoutResponseDto[]): SelectOption[] => {
-    const dataYears = data.map((item) => new Date(item.workoutStartedAt).getFullYear());
+    const dataYears = data.map((item) => item.workoutStartedAt.getFullYear());
     const years = [...new Set(dataYears)];
     const sortedYears = years.sort((a, b) => b - a);
     const yearsOptions: SelectOption[] = sortedYears.map((year) => ({

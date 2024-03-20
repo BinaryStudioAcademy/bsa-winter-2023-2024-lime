@@ -13,6 +13,7 @@ import {
 
 import { filterSelectTypes } from '../enums/filter-select-types.enums.js';
 import {
+    formatWorkoutDataDate,
     mapWorkoutActivitySelect,
     mapWorkoutYearSelect,
     sortWorkoutsByDate,
@@ -20,6 +21,7 @@ import {
 import { type UseFilterWorkout } from '../types/types.js';
 
 const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
+    workouts = formatWorkoutDataDate(workouts);
     const sortedItems = sortWorkoutsByDate(workouts);
     const [filteredWorkouts, setFilteredWorkouts] =
         useState<WorkoutResponseDto[]>(sortedItems);
@@ -105,7 +107,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
             }
             return workouts.filter((item) => {
                 return (
-                    new Date(item.workoutStartedAt).getFullYear().toString() ===
+                    item.workoutStartedAt.getFullYear().toString() ===
                     newValue.value.toString()
                 );
             });
@@ -121,7 +123,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
                 if (hasSelectedYear) {
                     return workouts.filter(
                         (item) =>
-                            new Date(item.workoutStartedAt).getFullYear().toString() ===
+                            item.workoutStartedAt.getFullYear().toString() ===
                             options.year.selected.value.toString(),
                     );
                 }
@@ -130,7 +132,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
 
             const selectedYear = options.year.selected.value.toString();
             return workouts.filter((item) => {
-                const itemYear = new Date(item.workoutStartedAt).getFullYear().toString();
+                const itemYear = item.workoutStartedAt.getFullYear().toString();
                 if (hasSelectedYear) {
                     return (
                         item.activityType === newValue.value &&
