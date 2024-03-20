@@ -30,7 +30,7 @@ type State = {
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     user: null,
-    isRefreshing: false,
+    isRefreshing: true,
     updateProfile: {
         dataStatus: DataStatus.IDLE, // quick fix for the issue with blank layout while updating user profile
         avatarUrl: null,
@@ -41,6 +41,9 @@ const { reducer, actions, name } = createSlice({
     initialState,
     name: 'auth',
     reducers: {
+        stopRefreshing(state) {
+            state.isRefreshing = false;
+        },
         clearUpdateProfile(state) {
             state.updateProfile = initialState.updateProfile;
         },

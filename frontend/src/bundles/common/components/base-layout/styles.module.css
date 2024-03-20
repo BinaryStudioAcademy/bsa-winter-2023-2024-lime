@@ -7,7 +7,7 @@
 }
 
 .content-container {
-    @apply bg-secondary max-h-90 relative min-w-[320px] overflow-y-auto overflow-x-hidden p-8;
+    @apply bg-secondary max-h-90 relative flex min-w-[320px] justify-center gap-8 overflow-y-auto overflow-x-hidden p-8;
 
     grid-area: main;
 }
