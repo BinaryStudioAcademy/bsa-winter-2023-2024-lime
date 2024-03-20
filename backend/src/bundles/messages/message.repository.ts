@@ -2,6 +2,7 @@ import { type Repository } from '~/common/types/types.js';
 
 import { MessageEntity } from './message.entity.js';
 import { type MessageModel } from './message.model.js';
+import { MessageAttributes } from './messages.js';
 
 class MessageRepository implements Repository {
     private messageModel: typeof MessageModel;
@@ -21,13 +22,19 @@ class MessageRepository implements Repository {
         return message ? MessageEntity.initialize(message) : null;
     }
 
-    public async findMany(
-        query: Record<string, unknown>,
-    ): Promise<MessageEntity[]> {
+    public async findMany({
+        query,
+        limit,
+    }: {
+        query: Record<string, unknown>;
+        limit: number;
+    }): Promise<MessageEntity[]> {
         const messages = await this.messageModel
             .query()
             .select('*')
             .where(query)
+            .limit(limit)
+            .orderBy(MessageAttributes.CREATED_AT, 'DESC')
             .execute();
 
         return messages.map((message) => {

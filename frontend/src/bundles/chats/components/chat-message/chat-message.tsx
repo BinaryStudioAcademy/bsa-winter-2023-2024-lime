@@ -31,7 +31,9 @@ const ChatMessage = ({
                         'rounded-xl px-3 py-2',
                     )}
                 >
-                    <span className="text-primary whitespace-pre-line">{message}</span>
+                    <span className="text-primary whitespace-pre-line">
+                        {message}
+                    </span>
                 </div>
             </div>
         </li>

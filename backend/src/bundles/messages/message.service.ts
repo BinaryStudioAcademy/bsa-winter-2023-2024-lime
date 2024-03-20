@@ -22,10 +22,17 @@ class MessageService implements Service {
         return message ? message.toObject() : null;
     }
 
-    public async findAll(
-        query: Record<string, unknown>,
-    ): Promise<{ items: MessageResponseDto[] }> {
-        const messages = await this.messageRepository.findMany(query);
+    public async findAll({
+        query,
+        limit,
+    }: {
+        query: Record<string, unknown>;
+        limit: number;
+    }): Promise<{ items: MessageResponseDto[] }> {
+        const messages = await this.messageRepository.findMany({
+            query,
+            limit,
+        });
 
         return { items: messages.map((message) => message.toObject()) };
     }
