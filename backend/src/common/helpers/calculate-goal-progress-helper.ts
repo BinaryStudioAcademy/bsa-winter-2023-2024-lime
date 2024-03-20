@@ -16,6 +16,12 @@ const checkGoal = (
     if (!goal.distance && goal.duration) {
         return convertSecondsToMinutes(workout.duration) >= goal.duration;
     }
+    if (goal.distance && goal.duration) {
+        return (
+            convertSecondsToMinutes(workout.duration) >= goal.duration &&
+            workout.distance >= goal?.distance
+        );
+    }
     if (goal.distance) {
         return workout.distance >= goal?.distance;
     }
