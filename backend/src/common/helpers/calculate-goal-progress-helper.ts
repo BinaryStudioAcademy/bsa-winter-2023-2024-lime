@@ -7,33 +7,6 @@ import {
 } from '~/common/constants/constants.js';
 
 const WEEK_DAYS = 7;
-const ZERO_VALUE = 0;
-
-function calculateProgress(
-    goal: GoalResponseDto,
-    workouts: WorkoutResponseDto[],
-): number {
-    if (goal.distance) {
-        return Math.round(
-            (workouts.reduce(
-                (accumulator, workout) => accumulator + workout.distance,
-                ZERO_VALUE,
-            ) /
-                (goal.frequency * goal.distance)) *
-                PERSENTAGE_MULTIPLIER,
-        );
-    } else if (goal.duration) {
-        return Math.round(
-            (workouts.reduce(
-                (accumulator, workout) => accumulator + workout.duration,
-                ZERO_VALUE,
-            ) /
-                (goal.frequency * goal.duration)) *
-                PERSENTAGE_MULTIPLIER,
-        );
-    }
-    return goal.progress;
-}
 
 function calculateGoalProgress(
     goal: GoalResponseDto,
@@ -52,12 +25,13 @@ function calculateGoalProgress(
                         workout.duration >= (goal?.duration as number)),
             );
 
-            progress = calculateProgress(goal, todayWorkouts);
+            progress =
+                (todayWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER;
 
             break;
         }
         case FrequencyType.WEEK: {
-            const weekWorkout = workouts.filter(
+            const weekWorkouts = workouts.filter(
                 (workout) =>
                     (workout.workoutEndedAt as Date) >= goalDate &&
                     (workout.workoutEndedAt?.getDate() as number) <=
@@ -66,7 +40,8 @@ function calculateGoalProgress(
                         workout.duration >= (goal?.duration as number)),
             );
 
-            progress = calculateProgress(goal, weekWorkout);
+            progress =
+                (weekWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER;
 
             break;
         }

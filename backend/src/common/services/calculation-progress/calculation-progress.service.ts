@@ -1,7 +1,9 @@
+import { type AchievementEntity } from '~/bundles/achievements/achievement.entity.js';
 import { type AchievementService } from '~/bundles/achievements/achievement.service.js';
 import { type ValueOf, Metric } from '~/bundles/achievements/enums/enums.js';
 import { type UserAchievementService } from '~/bundles/achievements/user-achievement.service.js';
 import { type GoalService } from '~/bundles/goals/goal.service.js';
+import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type NotificationService } from '~/bundles/notifications/notification.service.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 import { workoutService } from '~/bundles/workouts/workouts.js';
@@ -39,24 +41,47 @@ class CalculationProgressService {
         userId: number,
         lastWorkout: WorkoutResponseDto,
     ): Promise<void> {
-        await this.updateGoal(userId, lastWorkout.activityType);
-        await this.updateAchievement(userId, lastWorkout.activityType);
-    }
-
-    private async updateGoal(
-        userId: number,
-        activityType: string,
-    ): Promise<void> {
-        let hasCompletedGoal = false;
+        const { items: workouts } = await workoutService.findAll({
+            userId,
+            activityType: lastWorkout.activityType,
+        });
 
         const { items: goals } = await this.goalService.findAll({
             userId,
-            activityType,
+            activityType: lastWorkout.activityType,
         });
-        const { items: workouts } = await workoutService.findAll({
+
+        const allAchievementsList = await this.achievementService.findAll();
+        const achievementsList = allAchievementsList.filter(
+            (achievement) =>
+                achievement.toObject().activityType ===
+                lastWorkout.activityType,
+        );
+
+        const userAchievementsList =
+            await this.achievementService.findByUserId(userId);
+        const userAchievementsListById = userAchievementsList?.map(
+            (item) => item.toObject().id,
+        );
+        const uncomlietedAchievements = achievementsList.filter(
+            (achievement) =>
+                !userAchievementsListById?.includes(achievement.toObject().id),
+        );
+
+        await this.updateGoalProgress(userId, workouts, goals);
+        await this.updateAchievementProgress(
             userId,
-            activityType,
-        });
+            workouts,
+            uncomlietedAchievements,
+        );
+    }
+
+    private async updateGoalProgress(
+        userId: number,
+        workouts: WorkoutResponseDto[],
+        goals: GoalResponseDto[],
+    ): Promise<void> {
+        let hasCompletedGoal = false;
 
         for (const goal of goals) {
             const updatedGoal = await this.goalService.update(
@@ -93,48 +118,24 @@ class CalculationProgressService {
         }
     }
 
-    private async updateAchievement(
+    private async updateAchievementProgress(
         userId: number,
-        activityType: string,
+        workouts: WorkoutResponseDto[],
+        achievements: AchievementEntity[],
     ): Promise<void> {
-        const { items: workouts } = await workoutService.findAll({
-            userId,
-        });
-        const achievementsList = await this.achievementService.findAll();
-        const userAchievementsList =
-            await this.achievementService.findByUserId(userId);
-        const userAchievementsListById = userAchievementsList?.map(
-            (item) => item.toObject().id,
-        );
-
-        const uncomlietedAchievements = achievementsList.filter(
-            (achievement) =>
-                !userAchievementsListById?.includes(achievement.toObject().id),
-        );
-
-        const filteredAchievementsByLastWorkoutType =
-            uncomlietedAchievements.filter(
-                (achievement) =>
-                    achievement.toObject().activityType === activityType,
-            );
-
-        const filteredWorkoutsByLastWorkoutType = workouts.filter(
-            (workout) => workout.activityType === activityType,
-        );
-
-        const totalDistance = filteredWorkoutsByLastWorkoutType.reduce(
+        const totalDistance = workouts.reduce(
             (accumulator, workout) => accumulator + workout.distance,
             0,
         );
-        const totalDuration = filteredWorkoutsByLastWorkoutType.reduce(
+        const totalDuration = workouts.reduce(
             (accumulator, workout) => accumulator + workout.duration,
             0,
         );
-        const totalSteps = filteredWorkoutsByLastWorkoutType.reduce(
+        const totalSteps = workouts.reduce(
             (accumulator, workout) => accumulator + (workout.steps as number),
             0,
         );
-        const totalKilocalories = filteredWorkoutsByLastWorkoutType.reduce(
+        const totalKilocalories = workouts.reduce(
             (accumulator, workout) => accumulator + workout.kilocalories,
             0,
         );
@@ -146,7 +147,7 @@ class CalculationProgressService {
             [Metric.KILOCALORIES]: totalKilocalories,
         };
 
-        const userAchievements = filteredAchievementsByLastWorkoutType.filter(
+        const userAchievements = achievements.filter(
             (achievement) =>
                 requirementsByMetric[
                     achievement.toObject().requirementMetric as ValueOf<
