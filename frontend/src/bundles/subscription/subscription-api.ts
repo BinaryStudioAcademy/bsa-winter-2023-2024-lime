@@ -84,6 +84,21 @@ class SubscriptionsApi extends BaseHttpApi {
 
         return await response.json<CancelSubscriptionResponseDto>();
     }
+
+    public async createTrialSubscription(
+        payload: SubscribeRequestDto,
+    ): Promise<SubscribeResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(SubscriptionsApiPath.SUBSCRIBE_TRIAL, {}),
+            {
+                method: 'POST',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(payload),
+            },
+        );
+        return await response.json<SubscribeResponseDto>();
+    }
 }
 
 export { SubscriptionPlansApi, SubscriptionsApi };

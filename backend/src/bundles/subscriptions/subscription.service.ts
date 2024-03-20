@@ -113,6 +113,51 @@ class SubscriptionService
         }
     }
 
+    public async createTrialSubscription(
+        { id: userId, stripeCustomerId }: UserAuthResponseDto,
+        { planId, stripePriceId }: SubscribeRequestDto,
+    ): Promise<SubscribeResponseDto> {
+        const currentSubscription = await this.find({ userId });
+
+        if (currentSubscription && currentSubscription.planId === planId) {
+            throw new HttpError({
+                message:
+                    SubscriptionValidationMessage.SUBSCRIPTION_ALREDY_IN_USE,
+                status: HttpCode.CONFLICT,
+            });
+        }
+
+        const { stripeSubscriptionId, status, clientSecret, expiresAt } =
+            await stripeService.createTrialSubscription({
+                stripeCustomerId,
+                stripePriceId,
+            });
+
+        try {
+            await this.subscriptionRepository.create(
+                SubscriptionEntity.initializeNew({
+                    userId,
+                    planId,
+                    status,
+                    stripeSubscriptionId,
+                    expiresAt,
+                    isCanceled: false,
+                }),
+            );
+
+            return { stripeSubscriptionId, clientSecret };
+        } catch (error) {
+            await stripeService.immediateCancelSubscription(
+                stripeSubscriptionId,
+            );
+
+            throw new HttpError({
+                message: (error as Error).message,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
+
     public async webHookListener(event: Stripe.Event): Promise<void> {
         if (!event || !event.type || !event.data.object) {
             return;

@@ -92,13 +92,30 @@ class StripeService {
         });
     }
 
-    public async updateToTrialSubscription({
-        stripeSubscriptionId,        
-    }: UpdateSubscriptionOptions): Promise<void> {
-        const trial_end = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
-        await this.stripeApi.subscriptions.update(stripeSubscriptionId, {
-            trial_end: trial_end,
+    public async createTrialSubscription({
+        stripeCustomerId,
+        stripePriceId,
+    }: CreateSubscriptionOptions): Promise<CreateSubscriptionResponse> {
+        const subscription = await this.stripeApi.subscriptions.create({
+            customer: stripeCustomerId,
+            items: [{ price: stripePriceId }],
+            trial_period_days: 30,
+            payment_behavior: 'default_incomplete',
+            payment_settings: {
+                save_default_payment_method: 'on_subscription',
+            },
+            expand: ['latest_invoice.payment_intent'],
         });
+
+        return {
+            stripeSubscriptionId: subscription.id,
+            clientSecret: (
+                (subscription.latest_invoice as Stripe.Invoice)
+                    .payment_intent as Stripe.PaymentIntent
+            )?.client_secret as string,
+            status: subscription.status as ValueOf<typeof SubscriptionStatus>,
+            expiresAt: formatToDateFromUnix(subscription.current_period_end),
+        };
     }
 
     public async immediateCancelSubscription(id: string): Promise<boolean> {

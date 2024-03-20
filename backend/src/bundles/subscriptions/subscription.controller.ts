@@ -124,6 +124,19 @@ class SubscriptionController extends BaseController {
                 );
             },
         });
+
+        this.addRoute({
+            path: SubscriptionsApiPath.SUBSCRIBE_TRIAL,
+            method: 'POST',
+            isProtected: true,
+            handler: (options) =>
+                this.createTrial(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        body: SubscribeRequestDto;
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -292,6 +305,71 @@ class SubscriptionController extends BaseController {
                 stripeSubscriptionId,
                 isCanceled,
             }),
+        };
+    }
+
+    /**
+     * @swagger
+     * /api/v1/subscriptions/subscribe-trial:
+     *   post:
+     *     tags:
+     *       - Subscription
+     *     summary: Subscribe to a trial plan
+     *     description: Subscribe a user to a trial subscription plan
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               planId:
+     *                 type: string
+     *                 description: The ID of the trial plan to subscribe to.
+     *               stripePriceId:
+     *                 type: string
+     *                 description: The Stripe price ID associated with the trial plan.
+     *     responses:
+     *       200:
+     *         description: Trial subscription successful
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 stripeSubscriptionId:
+     *                   type: string
+     *                   description: The ID of the trial subscription created in Stripe.
+     *                 clientSecret:
+     *                   type: string
+     *                   description: The client secret required for confirming the subscription on the client side.
+     *       500:
+     *         description: Internal Server Error - Error occurred during trial subscription process
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
+
+    private async createTrial(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            body: SubscribeRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { planId, stripePriceId } = options.body;
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.CREATED,
+            payload: await this.subscriptionService.createTrialSubscription(
+                options.user,
+                {
+                    planId,
+                    stripePriceId,
+                },
+            ),
         };
     }
 

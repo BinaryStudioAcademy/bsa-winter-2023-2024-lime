@@ -69,6 +69,17 @@ const updateCancelSubscription = createAsyncThunk<
     },
 );
 
+const createSubscriptionTrial = createAsyncThunk<
+    SubscribeResponseDto,
+    SubscribeRequestDto,
+    AsyncThunkConfig
+>(
+    'subscription/createSubscriptionTrial',
+    async (payload, { extra: { subscriptionApi } }) => {
+        return await subscriptionApi.createTrialSubscription(payload);
+    },
+);
+
 const confirmPayment = createAsyncThunk<
     unknown,
     ConfirmPaymentPayload,
@@ -95,6 +106,7 @@ const confirmPayment = createAsyncThunk<
 export {
     confirmPayment,
     createSubscription,
+    createSubscriptionTrial,
     loadAllSubscriptionPlans,
     loadCurrentSubscription,
     updateCancelSubscription,
