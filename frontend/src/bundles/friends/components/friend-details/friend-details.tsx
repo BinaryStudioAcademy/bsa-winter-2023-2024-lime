@@ -93,9 +93,12 @@ const FriendDetails = ({
             </div>
 
             <div className="mb-4 flex w-full items-center justify-between">
-                <h3 className="text-lm-grey-200 text-xl font-extrabold leading-6">
-                    Achievements
-                </h3>
+                {achievements?.length > 0 && (
+                    <h3 className="text-lm-grey-200 text-xl font-extrabold leading-6">
+                        Achievements
+                    </h3>
+                )}
+
                 <div
                     onClick={handleMoreInfoClick}
                     role="presentation"
@@ -108,7 +111,7 @@ const FriendDetails = ({
                 </div>
             </div>
 
-            {achievements.length > 0 && (
+            {achievements?.length > 0 && (
                 <div className={'flex w-full flex-col gap-4'}>
                     {achievements.map((achievement) => (
                         <Card
