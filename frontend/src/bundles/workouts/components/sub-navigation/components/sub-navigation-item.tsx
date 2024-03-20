@@ -7,7 +7,7 @@ import {
     capitalizeFirstLetter,
     configureString,
 } from '~/bundles/common/helpers/helpers.js';
-import { useLocation } from '~/bundles/common/hooks/hooks.js';
+import { useParams } from '~/bundles/common/hooks/hooks.js';
 
 type Properties = {
     item: WorkoutResponseDto;
@@ -15,8 +15,8 @@ type Properties = {
 
 const SubNavigationItemWorkout = ({ item }: Properties): JSX.Element => {
     const { activityType, id, workoutStartedAt, provider } = item;
-    const { pathname } = useLocation();
-    const isActive = id.toString() === pathname.split('/').pop();
+    const parameters = useParams();
+    const isActive = parameters['id'] === id.toString();
 
     const redirectPath = configureString(AppRoute.WORKOUT_$ID, {
         id: String(id),
@@ -40,7 +40,11 @@ const SubNavigationItemWorkout = ({ item }: Properties): JSX.Element => {
                                 {capitalizeFirstLetter(activityType)}
                             </h3>
                             <p className="text-secondary text-right text-[0.7rem] md:text-[0.6rem]">
-                                {workoutStartedAt.toISOString().split('T')[0]}
+                                {
+                                    new Date(workoutStartedAt)
+                                        .toISOString()
+                                        .split('T')[0]
+                                }
                             </p>
                         </div>
                         {provider && (

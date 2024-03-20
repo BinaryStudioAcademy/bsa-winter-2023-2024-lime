@@ -2,6 +2,7 @@ import { PlusIcon } from '@heroicons/react/20/solid';
 
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 
+import { getValidClassNames } from '../../helpers/helpers.js';
 import { Button, ButtonVariant } from '../components.js';
 import { SubNavItem } from './components/sub-nav-item.js';
 
@@ -29,13 +30,13 @@ const SubNavigation: React.FC<Properties> = ({
 
     return (
         <div
-            className={`bg-secondary items center mx-auto flex h-full w-full flex-col gap-[1.75rem] overflow-auto p-[2rem] sm:max-w-full md:w-[20rem] ${className}`}
+            className={getValidClassNames('bg-secondary items center mx-auto flex h-full w-full flex-col gap-[1.75rem] overflow-auto p-[2rem] sm:max-w-full md:w-[20rem]', className)}
         >
             {title && (
                 <h1 className="text-primary text-xl font-bold">{title}</h1>
             )}
             <div
-                className={`flex h-full w-full justify-start gap-[1.75rem] sm:items-center sm:overflow-x-scroll md:flex-col md:items-start md:overflow-x-auto ${className}`}
+                className={getValidClassNames('flex h-full w-full justify-start gap-[1.75rem] sm:items-center sm:overflow-x-scroll md:flex-col md:items-start md:overflow-x-auto', className)}
             >
                 {items.map((item, index) => (
                     <SubNavItem

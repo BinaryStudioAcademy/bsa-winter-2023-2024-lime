@@ -105,7 +105,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
             }
             return workouts.filter((item) => {
                 return (
-                    item.workoutStartedAt.getFullYear().toString() ===
+                    new Date(item.workoutStartedAt).getFullYear().toString() ===
                     newValue.value.toString()
                 );
             });
@@ -121,7 +121,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
                 if (hasSelectedYear) {
                     return workouts.filter(
                         (item) =>
-                            item.workoutStartedAt.getFullYear().toString() ===
+                            new Date(item.workoutStartedAt).getFullYear().toString() ===
                             options.year.selected.value.toString(),
                     );
                 }
@@ -130,7 +130,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
 
             const selectedYear = options.year.selected.value.toString();
             return workouts.filter((item) => {
-                const itemYear = item.workoutStartedAt.getFullYear().toString();
+                const itemYear = new Date(item.workoutStartedAt).getFullYear().toString();
                 if (hasSelectedYear) {
                     return (
                         item.activityType === newValue.value &&
