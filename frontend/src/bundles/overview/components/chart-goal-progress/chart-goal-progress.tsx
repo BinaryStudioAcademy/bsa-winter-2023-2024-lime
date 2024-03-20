@@ -13,7 +13,7 @@ import {
     type SingleValue,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
-import { type WorkoutShowLastType } from '~/bundles/overview/overview.js';
+import { type WorkoutShowLastType } from '~/bundles/workouts/enums/enums.js';
 import { actions as workoutsActions } from '~/bundles/workouts/store/workouts.js';
 
 import { BarChart } from '../components.js';

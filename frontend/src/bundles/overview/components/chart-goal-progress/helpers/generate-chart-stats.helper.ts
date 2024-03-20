@@ -1,12 +1,10 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { type ValueOf } from '~/bundles/common/types/types.js';
 import { colorsBarChartProgress as colors } from '~/bundles/overview/components/chart-goal-progress/enums/enums.js';
-import {
-    type ValueOf,
-    type WorkoutResponseDto,
-    WorkoutShowLastType,
-} from '~/bundles/overview/overview.js';
+import { WorkoutShowLastType } from '~/bundles/workouts/enums/enums.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 import { type BarChartData } from '../../charts/types/bar-chart-data.types.js';
 

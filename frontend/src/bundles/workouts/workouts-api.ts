@@ -1,10 +1,10 @@
 import { ApiPath, ContentType } from '~/bundles/common/enums/enums.js';
-import { WorkoutsApiPath } from '~/bundles/workouts/enums/enums.js';
-import { type WorkoutGetAllResponseDto } from '~/bundles/workouts/types/types.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 import {
-    type ValueOf,
     type WorkoutShowLastType,
-} from '~/bundles/workouts/workouts.js';
+    WorkoutsApiPath,
+} from '~/bundles/workouts/enums/enums.js';
+import { type WorkoutGetAllResponseDto } from '~/bundles/workouts/types/types.js';
 import { type Http } from '~/framework/http/http.js';
 import { BaseHttpApi } from '~/framework/http-api/http-api.js';
 import { type Storage } from '~/framework/storage/storage.js';

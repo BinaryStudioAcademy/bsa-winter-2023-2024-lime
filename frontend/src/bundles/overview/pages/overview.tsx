@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { type GoalResponseDto, type WorkoutResponseDto } from 'shared';
-
 import {
     ActivityWidget,
     ActivityWidgetColor,
@@ -25,15 +22,18 @@ import {
     useEffect,
     useMemo,
 } from '~/bundles/common/hooks/hooks.js';
+import { type ValueOf } from '~/bundles/common/types/types.js';
 import { GoalCard } from '~/bundles/goals/components/components.js';
 import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
+import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import {
     ChartGoalProgress,
     GoalWidget,
 } from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
-import { type ValueOf, CompletedGoalsStatus } from '../overview.js';
+import { CompletedGoalsStatus } from '../enums/enums.js';
 import styles from './styles.module.css';
 
 const scheduleData = [
@@ -60,7 +60,12 @@ const scheduleData = [
     },
 ];
 
-const classifyGoalsByCompletion = (goals: GoalResponseDto[]) => {
+const classifyGoalsByCompletion = (
+    goals: GoalResponseDto[],
+): {
+    completedGoals: GoalResponseDto[];
+    incompletedGoals: GoalResponseDto[];
+} => {
     const completedGoals = [];
     const incompletedGoals = [];
 
@@ -93,7 +98,13 @@ const defineCompletedGoalsStatus = (
     return status;
 };
 
-const calculateStatistics = (workouts: WorkoutResponseDto[]) => {
+const calculateStatistics = (
+    workouts: WorkoutResponseDto[],
+): {
+    workouts: number;
+    steps: number;
+    kilocalories: number;
+} => {
     const seccondsInHour = 3600;
     const result = {
         workouts: 0,
