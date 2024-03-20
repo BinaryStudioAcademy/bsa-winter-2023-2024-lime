@@ -20,7 +20,7 @@ class SubscriptionRepository
         const subscriptions = await this.subscriptionModel
             .query()
             .where({
-                [SubscriptionAttributes.USER_ID]: userId,              
+                [SubscriptionAttributes.USER_ID]: userId,
             })
             .whereIn(SubscriptionAttributes.STATUS, [
                 SubscriptionStatus.TRIALING,
