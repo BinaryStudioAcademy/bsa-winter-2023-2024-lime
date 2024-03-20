@@ -96,7 +96,7 @@ class ChatRepository implements Repository {
                 .findById(chat.id)
                 .returning('*')
                 .withGraphFetched(
-                    `[${DatabaseTableName.MESSAGES}, ${DatabaseTableName.USERS}]`,
+                    `[${DatabaseTableName.USERS}(${USER_DETAILS_RELATION}), ${DatabaseTableName.MESSAGES}]`,
                 )
                 .castTo<ChatResponseDto>()
                 .execute();
