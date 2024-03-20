@@ -24,7 +24,7 @@ class AiAssistantController extends BaseController {
         this.aiAssistantService = aiAssistantService;
 
         this.addRoute({
-            path: AiAssistantPath.SEND_MESSAGE,
+            path: AiAssistantPath.ROOT,
             method: 'POST',
             isProtected: true,
             handler: (options) =>

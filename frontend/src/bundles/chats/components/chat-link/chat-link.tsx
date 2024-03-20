@@ -52,26 +52,23 @@ const ChatLink = ({
                     <div className="relative">
                         <Avatar size="sm" email={email} avatarUrl={avatarUrl} />
                     </div>
-                    <div className="flex w-full items-center justify-between ">
-                        <div className="flex w-full flex-col items-start gap-1 overflow-hidden py-2 lg:max-w-[9rem] ">
-                            <p
-                                className={getValidClassNames(
-                                    isActive ? 'text-action' : 'text-primary',
-                                    'truncate whitespace-nowrap text-sm font-semibold',
-                                )}
-                            >
-                                {formatChatName(
-                                    getChatCompanions(users, user.id),
-                                )}
-                            </p>
-                            <p className="text-secondary truncate whitespace-nowrap text-xs">
-                                {lastMessage}
-                            </p>
-                        </div>
-                        <p className="text-secondary mr-1 text-xs">
-                            {formatChatDate(lastMessageTime, false)}
+
+                    <div className="flex flex-col items-start gap-1 overflow-hidden py-2 lg:max-w-[9rem] ">
+                        <p
+                            className={getValidClassNames(
+                                isActive ? 'text-action' : 'text-primary',
+                                'truncate text-sm font-semibold',
+                            )}
+                        >
+                            {formatChatName(getChatCompanions(users, user.id))}
+                        </p>
+                        <p className="text-secondary truncate text-xs">
+                            {lastMessage}
                         </p>
                     </div>
+                    <p className="text-secondary mr-1 text-xs">
+                        {formatChatDate(lastMessageTime, false)}
+                    </p>
                 </div>
             </button>
         </Link>

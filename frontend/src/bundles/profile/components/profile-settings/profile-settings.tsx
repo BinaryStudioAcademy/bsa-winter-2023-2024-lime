@@ -231,7 +231,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 textToDisplay={user?.referralCode ?? 'You dont have a code'}
             />
             <form onSubmit={handleFormSubmit}>
-                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 lg:grid-cols-4">
+                <div className="w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 gap-y-2 lg:grid-cols-4">
                     <Input
                         className="border-0 lg:col-start-1 lg:col-end-3"
                         type="text"
