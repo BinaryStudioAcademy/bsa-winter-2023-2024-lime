@@ -1,6 +1,6 @@
 import { type WorkoutResponseDto } from 'shared';
 
-import { SubNavigationItemWorkout } from './sub-navigation-item.js';
+import { SubNavigationItemWorkout } from './components.js';
 
 type Properties = {
     items: WorkoutResponseDto[];

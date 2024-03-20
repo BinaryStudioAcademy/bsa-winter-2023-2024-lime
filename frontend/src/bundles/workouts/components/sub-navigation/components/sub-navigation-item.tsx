@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { type WorkoutResponseDto } from 'shared';
 
 import { ActivityIcon } from '~/bundles/common/components/components.js';
 import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
@@ -8,6 +7,7 @@ import {
     configureString,
 } from '~/bundles/common/helpers/helpers.js';
 import { useParams } from '~/bundles/common/hooks/hooks.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 type Properties = {
     item: WorkoutResponseDto;

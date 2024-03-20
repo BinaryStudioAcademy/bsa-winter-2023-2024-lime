@@ -1,8 +1,10 @@
 import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
 
 import { useFilterWorkout } from '../../hooks/use-filter-workout.js';
-import { SubNavigationFilter } from './components/sub-navigation-filter.js';
-import { SubNavigationWorkoutsList } from './components/sub-navigation-list.js';
+import {
+    SubNavigationFilter,
+    SubNavigationWorkoutsList,
+} from './components/components.js';
 
 type Properties = {
     title?: string;
