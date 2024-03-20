@@ -158,7 +158,6 @@ const Goals: React.FC = () => {
                                             duration,
                                         }) => (
                                             <GoalCard
-                                                className="bg-secondary"
                                                 key={id}
                                                 activityType={activityType}
                                                 frequency={frequency}

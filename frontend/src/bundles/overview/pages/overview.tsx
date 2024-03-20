@@ -12,29 +12,28 @@ import {
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
-import {
-    capitalizeFirstLetter,
-    formatDateString,
-} from '~/bundles/common/helpers/helpers.js';
+import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
     useEffect,
     useMemo,
 } from '~/bundles/common/hooks/hooks.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
 import { GoalCard } from '~/bundles/goals/components/components.js';
 import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
-import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import {
     ChartGoalProgress,
     GoalWidget,
 } from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
-import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 import { CompletedGoalsStatus } from '../enums/enums.js';
-import styles from './styles.module.css';
+import {
+    calculateStats,
+    classifyGoalsByCompletion,
+    defineCompletedGoalsStatus,
+    getCompletedDate,
+} from '../helpers/helpers.js';
 
 const scheduleData = [
     {
@@ -60,67 +59,6 @@ const scheduleData = [
     },
 ];
 
-const classifyGoalsByCompletion = (
-    goals: GoalResponseDto[],
-): {
-    completedGoals: GoalResponseDto[];
-    incompletedGoals: GoalResponseDto[];
-} => {
-    const completedGoals = [];
-    const incompletedGoals = [];
-
-    for (const goal of goals) {
-        goal.completedAt === null
-            ? incompletedGoals.push(goal)
-            : completedGoals.push(goal);
-    }
-
-    return { completedGoals, incompletedGoals };
-};
-
-const defineGoalDate = (date: string | null): string => {
-    return date ? 'Completed at: ' + formatDateString(new Date(date)) : '';
-};
-
-const defineCompletedGoalsStatus = (
-    goals: GoalResponseDto[],
-    completedGoals: GoalResponseDto[],
-): string => {
-    let status: ValueOf<typeof CompletedGoalsStatus> =
-        CompletedGoalsStatus.NO_GOALS;
-
-    if (goals.length > 0 && completedGoals.length > 0) {
-        status = CompletedGoalsStatus.COMPLETED_GOALS;
-    } else if (goals.length > 0 && completedGoals.length === 0) {
-        status = CompletedGoalsStatus.NO_COMPLETED_GOALS;
-    }
-
-    return status;
-};
-
-const calculateStatistics = (
-    workouts: WorkoutResponseDto[],
-): {
-    workouts: number;
-    steps: number;
-    kilocalories: number;
-} => {
-    const seccondsInHour = 3600;
-    const result = {
-        workouts: 0,
-        steps: 0,
-        kilocalories: 0,
-    };
-
-    for (const workout of workouts) {
-        result.workouts += Math.floor(workout.duration / seccondsInHour);
-        result.steps += workout.steps ?? 0;
-        result.kilocalories += workout.kilocalories;
-    }
-
-    return result;
-};
-
 const Overview: React.FC = () => {
     const { currentSubscription: isSubscribed } = useAppSelector(
         ({ subscriptions }) => subscriptions,
@@ -139,22 +77,25 @@ const Overview: React.FC = () => {
         void dispatch(goalsActions.getGoals());
     }, [dispatch]);
 
+    const statistics = useMemo(() => calculateStats(workouts), [workouts]);
+
     const { completedGoals, incompletedGoals } = useMemo(
         () => classifyGoalsByCompletion(goals),
         [goals],
     );
 
-    const completedGoalsStatus = defineCompletedGoalsStatus(
-        goals,
-        completedGoals,
+    const completedGoalsStatus = useMemo(
+        () => defineCompletedGoalsStatus(goals, completedGoals),
+        [goals, completedGoals],
     );
 
-    const completedGoalsLink =
-        completedGoalsStatus === CompletedGoalsStatus.NO_COMPLETED_GOALS
-            ? AppRoute.WORKOUT
-            : AppRoute.GOALS;
-
-    const statistics = useMemo(() => calculateStatistics(workouts), [workouts]);
+    const completedGoalsLink = useMemo(
+        () =>
+            completedGoalsStatus === CompletedGoalsStatus.NO_COMPLETED_GOALS
+                ? AppRoute.WORKOUT
+                : AppRoute.GOALS,
+        [completedGoalsStatus],
+    );
 
     if (isLoading) {
         return <Loader isOverflow />;
@@ -217,11 +158,12 @@ const Overview: React.FC = () => {
                                 return (
                                     <li key={goal.id} className="flex-1">
                                         <GoalCard
-                                            className="bg-primary xl:w-auto"
                                             activityType={goal.activityType}
                                             frequency={goal.frequency}
                                             frequencyType={goal.frequencyType}
                                             progress={goal.progress}
+                                            distance={goal.distance}
+                                            duration={goal.duration}
                                         />
                                     </li>
                                 );
@@ -239,10 +181,7 @@ const Overview: React.FC = () => {
                     {scheduleData.length > 0 ? (
                         <ul>
                             {scheduleData.map((scheduleItem) => (
-                                <li
-                                    className={styles['schedule__item']}
-                                    key={scheduleItem.id}
-                                >
+                                <li className="mt-3" key={scheduleItem.id}>
                                     <Card {...scheduleItem} />
                                 </li>
                             ))}
@@ -268,15 +207,12 @@ const Overview: React.FC = () => {
                                     }
 
                                     return (
-                                        <li
-                                            key={id}
-                                            className={styles['goal__item']}
-                                        >
+                                        <li key={id} className="mt-4">
                                             <Card
                                                 name={capitalizeFirstLetter(
                                                     activityType,
                                                 )}
-                                                data={defineGoalDate(
+                                                data={getCompletedDate(
                                                     completedAt,
                                                 )}
                                             />

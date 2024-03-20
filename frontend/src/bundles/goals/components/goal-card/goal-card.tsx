@@ -18,7 +18,6 @@ type Properties = {
     frequencyType: ValueOf<typeof FrequencyType>;
     distance?: number | null;
     duration?: number | null;
-    className?: string;
 };
 
 const PLURAL = 's';
@@ -31,15 +30,13 @@ const GoalCard: React.FC<Properties> = ({
     frequency,
     progress,
     frequencyType,
-    className = '',
     distance = null,
     duration = null,
 }): JSX.Element => {
     return (
         <div
             className={getValidClassNames(
-                'flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:p-5 lg:pl-8 xl:w-96',
-                className,
+                'bg-primary flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:p-5 lg:pl-8 xl:w-96',
             )}
         >
             <div className="flex items-center gap-4">
