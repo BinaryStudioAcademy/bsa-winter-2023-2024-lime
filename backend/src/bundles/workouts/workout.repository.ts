@@ -73,7 +73,7 @@ class WorkoutRepository implements Repository {
         );
     }
 
-    public async findWithTimestamps(
+    public async findAllBetweenDates(
         query: Record<string, unknown>,
         startDate: string,
         endDate: string,
@@ -81,7 +81,7 @@ class WorkoutRepository implements Repository {
         const workouts = await this.workoutsModel
             .query()
             .where(query)
-            .whereBetween('createdAt', [startDate, endDate])
+            .whereBetween('workoutStartedAt', [startDate, endDate])
             .execute();
         return workouts.map((workout) => {
             return WorkoutEntity.initialize({

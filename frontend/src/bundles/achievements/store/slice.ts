@@ -9,13 +9,11 @@ import { getAchievements, getAchievementsByUserId } from './actions.js';
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
     achievements: AchievementsGetAllResponseDto[];
-    userAchievements: AchievementsGetAllResponseDto[];
 };
 
 const initialState: State = {
     dataStatus: DataStatus.IDLE,
     achievements: [],
-    userAchievements: [],
 };
 
 const { reducer, actions, name } = createSlice({

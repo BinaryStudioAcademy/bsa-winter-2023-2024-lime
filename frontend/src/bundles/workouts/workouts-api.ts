@@ -23,15 +23,15 @@ class WorkoutApi extends BaseHttpApi {
     public async getAll(
         showLast?: ValueOf<typeof WorkoutShowLastType>,
     ): Promise<WorkoutGetAllResponseDto> {
-        const url = showLast
-            ? `${WorkoutsApiPath.ROOT}?showLast=${showLast}`
-            : WorkoutsApiPath.ROOT;
-
-        const response = await this.load(this.getFullEndpoint(url, {}), {
-            method: 'GET',
-            contentType: ContentType.JSON,
-            hasAuth: true,
-        });
+        const response = await this.load(
+            this.getFullEndpoint(WorkoutsApiPath.ROOT, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                ...(showLast && { query: { showLast } }),
+            },
+        );
 
         return await response.json<WorkoutGetAllResponseDto>();
     }

@@ -75,7 +75,7 @@ class WorkoutService implements Service {
             }
         }
 
-        const items = await this.workoutRepository.findWithTimestamps(
+        const items = await this.workoutRepository.findAllBetweenDates(
             {
                 userId,
             },
