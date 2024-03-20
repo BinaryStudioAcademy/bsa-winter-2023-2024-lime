@@ -65,7 +65,7 @@ const Overview: React.FC = () => {
     );
 
     return (
-        <div className="max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
+        <div className="w-full max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
             <div className="xl:basis-[68%]">
                 <GoalWidget
                     value={4}

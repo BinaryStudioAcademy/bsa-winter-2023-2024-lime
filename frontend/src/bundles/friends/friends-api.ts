@@ -7,6 +7,7 @@ import { type Storage } from '~/framework/storage/storage.js';
 import {
     type FriendRequestDto,
     type FriendResponseDto,
+    type Paged,
     type PaginationParameters,
 } from './types/types.js';
 
@@ -21,53 +22,46 @@ class FriendsApi extends BaseHttpApi {
         super({ path: ApiPath.FRIENDS, baseUrl, http, storage });
     }
 
-    public async getNotFollowed(payload: PaginationParameters): Promise<{
-        users: FriendResponseDto[];
-        query: PaginationParameters;
-    }> {
+    public async getNotFollowed(
+        payload: PaginationParameters,
+    ): Promise<Paged<FriendResponseDto>> {
+        const { page, limit } = payload;
         const response = await this.load(
-            this.getFullEndpoint(
-                `${FriendsApiPath.ROOT}?page=${payload.page}&limit=${payload.limit}`,
-                {},
-            ),
+            this.getFullEndpoint(FriendsApiPath.ROOT, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                query: { page, limit },
             },
         );
 
-        return await response.json<{
-            users: FriendResponseDto[];
-            query: PaginationParameters;
-        }>();
+        return await response.json<Paged<FriendResponseDto>>();
     }
 
-    public async getFollowings(payload: PaginationParameters): Promise<{
-        users: FriendResponseDto[];
-        query: PaginationParameters;
-    }> {
+    public async getFollowings(
+        payload: PaginationParameters,
+    ): Promise<Paged<FriendResponseDto>> {
+        const { page, limit } = payload;
         const response = await this.load(
-            this.getFullEndpoint(
-                `${FriendsApiPath.FOLLOWINGS}?page=${payload.page}&limit=${payload.limit}`,
-                {},
-            ),
+            this.getFullEndpoint(FriendsApiPath.FOLLOWINGS, {}),
             {
                 method: 'GET',
                 contentType: ContentType.JSON,
                 hasAuth: true,
+                query: {
+                    page,
+                    limit,
+                },
             },
         );
 
-        return await response.json<{
-            users: FriendResponseDto[];
-            query: PaginationParameters;
-        }>();
+        return await response.json<Paged<FriendResponseDto>>();
     }
 
     public async addFollowing(
         payload: FriendRequestDto,
-    ): Promise<FriendResponseDto> {
+    ): Promise<FriendResponseDto[]> {
         const response = await this.load(
             this.getFullEndpoint(FriendsApiPath.FOLLOWINGS, {}),
             {
@@ -77,10 +71,12 @@ class FriendsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<FriendResponseDto>();
+        return await response.json<FriendResponseDto[]>();
     }
 
-    public async removeFollowing(payload: FriendRequestDto): Promise<number> {
+    public async removeFollowing(
+        payload: FriendRequestDto,
+    ): Promise<FriendResponseDto[]> {
         const response = await this.load(
             this.getFullEndpoint(FriendsApiPath.FOLLOWINGS, {}),
             {
@@ -90,29 +86,7 @@ class FriendsApi extends BaseHttpApi {
                 hasAuth: true,
             },
         );
-        return await response.json<number>();
-    }
-
-    public async loadMore(payload: PaginationParameters): Promise<{
-        users: FriendResponseDto[];
-        query: PaginationParameters;
-    }> {
-        const response = await this.load(
-            this.getFullEndpoint(
-                `${payload.path}?page=${payload.page}&limit=${payload.limit}`,
-                {},
-            ),
-            {
-                method: 'GET',
-                contentType: ContentType.JSON,
-                hasAuth: true,
-            },
-        );
-
-        return await response.json<{
-            users: FriendResponseDto[];
-            query: PaginationParameters;
-        }>();
+        return await response.json<FriendResponseDto[]>();
     }
 }
 

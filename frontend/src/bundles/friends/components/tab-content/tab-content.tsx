@@ -13,7 +13,7 @@ type Properties = {
     noUsersText: string;
     totalCount: number | undefined;
     loadMore: () => void;
-    isLoading: boolean;
+    isLoadingMore: boolean;
 };
 
 const TabContent = ({
@@ -25,7 +25,7 @@ const TabContent = ({
     noUsersText,
     totalCount,
     loadMore,
-    isLoading,
+    isLoadingMore,
 }: Properties): JSX.Element => {
     return (
         <>
@@ -43,19 +43,19 @@ const TabContent = ({
                 ))}
 
             {(totalCount ?? 0) > users.length ? (
-                <div className="mt-6 flex w-full justify-center">
+                <div className="my-6 flex w-full justify-center">
                     <div className="w-[160px]">
                         <Button
                             onClick={loadMore}
                             label={'Load more'}
                             size={ComponentSize.MEDIUM}
                             leftIcon={
-                                isLoading && (
+                                isLoadingMore && (
                                     <Loader color={IconColor.PRIMARY} />
                                 )
                             }
                             type="submit"
-                            isDisabled={isLoading}
+                            isDisabled={isLoadingMore}
                             variant={'secondary'}
                         />
                     </div>

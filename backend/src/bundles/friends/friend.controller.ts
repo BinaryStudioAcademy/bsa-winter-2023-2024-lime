@@ -225,12 +225,8 @@ class FriendController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: {
-                users: notFollowings,
-                query: {
-                    page: +page,
-                    limit: +limit,
-                    totalCount: totalCount?.length,
-                },
+                items: notFollowings,
+                total: totalCount?.length,
             },
         };
     }
@@ -314,12 +310,8 @@ class FriendController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: {
-                users: friends,
-                query: {
-                    page: +page,
-                    limit: +limit,
-                    totalCount: totalCount?.length,
-                },
+                items: friends,
+                total: totalCount?.length,
             },
         };
     }

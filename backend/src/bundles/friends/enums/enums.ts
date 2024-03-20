@@ -1,3 +1,9 @@
+export { ErrorMessage } from './error-message.enum.js';
 export { FriendAttributes } from './friend-attributes.enum.js';
-export { FriendsApiPath, Gender } from 'shared';
-export { type UserAuthResponseDto } from 'shared';
+export {
+    type UserAuthResponseDto,
+    FriendsApiPath,
+    Gender,
+    HttpCode,
+    HttpError,
+} from 'shared';

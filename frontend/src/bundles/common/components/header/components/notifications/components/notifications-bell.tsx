@@ -1,17 +1,20 @@
 import { BellIcon } from '@heroicons/react/24/solid';
 
+import { Loader } from '~/bundles/common/components/components.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {
     count: number;
     onClick: () => void;
     showList: boolean;
+    isLoading: boolean;
 };
 
 const NotificationBell = ({
     count,
     onClick,
     showList,
+    isLoading,
 }: Properties): JSX.Element => {
     const animate = count > 0 && !showList;
 
@@ -37,6 +40,15 @@ const NotificationBell = ({
                     )}
                 >
                     {count}
+                </span>
+            )}
+            {isLoading && (
+                <span
+                    className={getValidClassNames(
+                        'bg-lm-yellow-100 absolute -right-1 -top-2 flex h-full max-h-4 w-full max-w-4 items-center justify-center rounded-full text-xs font-extrabold transition-all',
+                    )}
+                >
+                    <Loader size="sm" />
                 </span>
             )}
         </button>

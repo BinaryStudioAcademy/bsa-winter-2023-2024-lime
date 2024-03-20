@@ -30,7 +30,8 @@ class NotificationsApi extends BaseHttpApi {
             },
         );
 
-        return await response.json();
+        const responseData = await response.json();
+        return responseData.items;
     }
 
     public async createNotification(
@@ -70,7 +71,6 @@ class NotificationsApi extends BaseHttpApi {
             }),
             {
                 method: 'DELETE',
-                contentType: ContentType.JSON,
                 hasAuth: true,
             },
         );

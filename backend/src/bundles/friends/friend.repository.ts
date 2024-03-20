@@ -1,6 +1,11 @@
 import { MAX_NUMBER_OF_USERS } from '~/bundles/friends/constants/constants.js';
+import {
+    ErrorMessage,
+    HttpCode,
+    HttpError,
+} from '~/bundles/friends/enums/enums.js';
 import { FriendEntity } from '~/bundles/friends/friend.entity.js';
-import { FriendModel } from '~/bundles/friends/friend.model.js';
+import { type FriendModel } from '~/bundles/friends/friend.model.js';
 import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { DatabaseTableName } from '~/common/database/database.js';
@@ -96,7 +101,8 @@ class FriendRepository implements Repository {
         offset: string,
         limit: string,
     ): Promise<FriendResponseDto[] | null> {
-        const followings = await FriendModel.query()
+        const followings = await this.friendModel
+            .query()
             .select(`${DatabaseTableName.USERS}.email`, 'followingId')
             .where(`${DatabaseTableName.FRIENDS}.userId`, userId)
             .withGraphFetched('userDetails')
@@ -128,12 +134,15 @@ class FriendRepository implements Repository {
         id: number,
         followingId: number,
         offset: string,
-    ): Promise<FriendResponseDto | null> {
+    ): Promise<FriendResponseDto[] | null> {
         const trx = await this.userModel.startTransaction();
 
         const user = await this.userModel.query(trx).findById(id);
         if (!user) {
-            throw new Error('User not found');
+            throw new HttpError({
+                message: ErrorMessage.FRIEND_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
         }
 
         await user
@@ -145,20 +154,25 @@ class FriendRepository implements Repository {
         const result = await this.findAllPotentialFollowings(id, offset, '1');
 
         await trx.commit();
-        return result as unknown as FriendResponseDto;
+        return result;
     }
 
     public async removeFollowing(
         id: number,
         followingId: number,
         offset: string,
-    ): Promise<FriendResponseDto | null> {
+    ): Promise<FriendResponseDto[] | null> {
         const trx = await this.userModel.startTransaction();
 
         const user = await this.userModel.query(trx).findById(id);
+
         if (!user) {
-            throw new Error('User not found');
+            throw new HttpError({
+                message: ErrorMessage.FRIEND_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
         }
+
         await user
             .$relatedQuery('friends', trx)
             .delete()
@@ -167,7 +181,7 @@ class FriendRepository implements Repository {
         const result = await this.getFollowings(id, offset, '1');
 
         await trx.commit();
-        return result as unknown as FriendResponseDto;
+        return result;
     }
 
     public async update(
