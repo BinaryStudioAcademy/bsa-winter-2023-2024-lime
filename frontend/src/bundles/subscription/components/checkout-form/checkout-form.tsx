@@ -5,17 +5,10 @@ import {
 } from '@stripe/react-stripe-js';
 
 import { Button } from '~/bundles/common/components/components.js';
-import {
-    useAppDispatch,
-    useAppSelector,
-    useCallback,
-    useState,
-} from '~/bundles/common/hooks/hooks.js';
+import { useAppDispatch, useCallback } from '~/bundles/common/hooks/hooks.js';
 import { actions as subscriptionActions } from '~/bundles/subscription/store/subscriptions.js';
 
 const CheckoutForm = (): JSX.Element => {
-    const [buyWithPoints] = useState(false);
-    const { user } = useAppSelector(({ auth }) => auth);
     const dispatch = useAppDispatch();
     const stripe = useStripe();
     const elements = useElements();
@@ -36,43 +29,17 @@ const CheckoutForm = (): JSX.Element => {
     );
 
     return (
-        <>
-            {!buyWithPoints && (
-                <form onSubmit={handleSubmitPayment}>
-                    <PaymentElement />
-                    <div>
-                        <Button
-                            type="submit"
-                            label="Pay now!"
-                            variant="primary"
-                            size="md"
-                        />
-                    </div>
-                </form>
-            )}
-            {buyWithPoints && (
-                <div className="mt-8">
-                    <h1>Current points</h1>
-                    <h2>{user?.bonusBalance}</h2>
-                    <Button
-                        type="submit"
-                        label="Pay now!"
-                        variant="primary"
-                        size="md"
-                      
-                    />
-                </div>
-            )}
-            <div className="mt-8">
+        <form onSubmit={handleSubmitPayment}>
+            <PaymentElement />
+            <div>
                 <Button
                     type="submit"
-                    label="Buy with points!"
+                    label="Pay now!"
                     variant="primary"
                     size="md"
-                    
                 />
             </div>
-        </>
+        </form>
     );
 };
 
