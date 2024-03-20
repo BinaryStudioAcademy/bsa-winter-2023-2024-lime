@@ -50,7 +50,7 @@ class MessageController extends BaseController {
         });
 
         this.addRoute({
-            path: MessagePath.ID,
+            path: MessagePath.DELETE_HISTORY,
             method: 'DELETE',
             isProtected: true,
             handler: (options) =>

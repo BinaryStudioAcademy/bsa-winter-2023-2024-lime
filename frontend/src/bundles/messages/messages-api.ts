@@ -50,9 +50,7 @@ class MessagesApi extends BaseHttpApi {
         payload: DeleteChatMessagesRequestDto,
     ): Promise<boolean> {
         const response = await this.load(
-            this.getFullEndpoint(MessagePath.ID, {
-                chatId: String(payload.chatId),
-            }),
+            this.getFullEndpoint(MessagePath.DELETE_HISTORY, {}),
             {
                 method: 'DELETE',
                 payload: JSON.stringify(payload),
