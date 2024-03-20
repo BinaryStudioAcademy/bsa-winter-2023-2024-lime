@@ -5,7 +5,7 @@ import {
     HttpError,
 } from '~/bundles/friends/enums/enums.js';
 import { FriendEntity } from '~/bundles/friends/friend.entity.js';
-import { FriendModel } from '~/bundles/friends/friend.model.js';
+import { type FriendModel } from '~/bundles/friends/friend.model.js';
 import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { DatabaseTableName } from '~/common/database/database.js';
@@ -101,7 +101,8 @@ class FriendRepository implements Repository {
         offset: string,
         limit: string,
     ): Promise<FriendResponseDto[] | null> {
-        const followings = await FriendModel.query()
+        const followings = await this.friendModel
+            .query()
             .select(`${DatabaseTableName.USERS}.email`, 'followingId')
             .where(`${DatabaseTableName.FRIENDS}.userId`, userId)
             .withGraphFetched('userDetails')
