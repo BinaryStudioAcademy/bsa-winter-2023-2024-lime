@@ -92,6 +92,15 @@ class StripeService {
         });
     }
 
+    public async updateToTrialSubscription({
+        stripeSubscriptionId,        
+    }: UpdateSubscriptionOptions): Promise<void> {
+        const trial_end = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
+        await this.stripeApi.subscriptions.update(stripeSubscriptionId, {
+            trial_end: trial_end,
+        });
+    }
+
     public async immediateCancelSubscription(id: string): Promise<boolean> {
         return Boolean(await this.stripeApi.subscriptions.cancel(id));
     }

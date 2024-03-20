@@ -20,6 +20,8 @@ const SubscriptionPage = (): JSX.Element => {
     const { dataStatus, subscriptionPlans, currentSubscription } =
         useAppSelector(({ subscriptions }) => subscriptions);
 
+    const { user } = useAppSelector(({ auth }) => auth);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -90,6 +92,7 @@ const SubscriptionPage = (): JSX.Element => {
                     <span className="font-base text-primary text-xl">
                         Looks like you dont have subscription yet. Choose from
                         below.
+                        {user?.bonusBalance}
                     </span>
                 )}
             </div>
