@@ -2,7 +2,10 @@ import { Icon, Loader } from '~/bundles/common/components/components.js';
 import { IconName } from '~/bundles/common/components/icon/enums/icon-name.enum.js';
 import { DataStatus } from '~/bundles/common/enums/data-status.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { configureString } from '~/bundles/common/helpers/helpers.js';
+import {
+    configureString,
+    getLastWorkout,
+} from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
@@ -28,7 +31,7 @@ const Workout: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        const firstWorkoutId = workouts[0]?.id;
+        const firstWorkoutId = getLastWorkout(workouts)?.id;
 
         if (!id && firstWorkoutId) {
             const redirectPath = configureString(AppRoute.WORKOUT_$ID, {
