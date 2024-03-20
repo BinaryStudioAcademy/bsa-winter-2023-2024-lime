@@ -5,8 +5,21 @@ import {
     COMPLETED_GOAL_VALUE,
     PERSENTAGE_MULTIPLIER,
 } from '~/common/constants/constants.js';
+import { convertSecondsToMinutes } from '~/common/helpers/helpers.js';
 
 const WEEK_DAYS = 7;
+
+const checkGoal = (
+    workout: WorkoutResponseDto,
+    goal: GoalResponseDto,
+): boolean | undefined => {
+    if (!goal.distance && goal.duration) {
+        return convertSecondsToMinutes(workout.duration) >= goal.duration;
+    }
+    if (goal.distance) {
+        return workout.distance >= goal?.distance;
+    }
+};
 
 function calculateGoalProgress(
     goal: GoalResponseDto,
@@ -22,8 +35,7 @@ function calculateGoalProgress(
                     workout.workoutEndedAt &&
                     workout.workoutEndedAt >= goalDate &&
                     workout.workoutEndedAt?.getDate() === goalDate.getDate() &&
-                    ((goal.distance && workout.distance >= goal?.distance) ||
-                        (goal.duration && workout.duration >= goal?.duration)),
+                    checkGoal(workout, goal),
             );
 
             progress = Math.round(
@@ -39,8 +51,7 @@ function calculateGoalProgress(
                     workout.workoutEndedAt >= goalDate &&
                     workout.workoutEndedAt?.getDate() <=
                         goalDate.getDate() + WEEK_DAYS &&
-                    ((goal.distance && workout.distance >= goal?.distance) ||
-                        (goal.duration && workout.duration >= goal?.duration)),
+                    checkGoal(workout, goal),
             );
 
             progress = Math.round(

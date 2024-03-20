@@ -12,6 +12,7 @@ import { NotificationMessage } from '~/common/enums/enums.js';
 import {
     calculateGoalProgress,
     convertMetersToKilometers,
+    convertSecondsToMinutes,
 } from '~/common/helpers/helpers.js';
 
 class CalculationProgressService {
@@ -138,7 +139,7 @@ class CalculationProgressService {
 
         const requirementsByMetric: Record<ValueOf<typeof Metric>, number> = {
             [Metric.KILOMETERS]: convertMetersToKilometers(totalDistance),
-            [Metric.MINUTES]: totalDuration,
+            [Metric.MINUTES]: convertSecondsToMinutes(totalDuration),
             [Metric.STEPS]: totalSteps,
             [Metric.KILOCALORIES]: totalKilocalories,
         };
