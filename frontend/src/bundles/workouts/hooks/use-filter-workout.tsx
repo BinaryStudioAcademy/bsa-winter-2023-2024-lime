@@ -102,7 +102,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
     const filterByYear = useCallback(
         (newValue: SingleValue<SelectOption>) => {
             manageOptions(newValue, filterSelectTypes.YEAR);
-            if (!newValue) {
+            if (!newValue || newValue.value === '') {
                 return sortedItems;
             }
             return workouts.filter((item) => {
@@ -112,7 +112,7 @@ const useFilterWorkout = (workouts: WorkoutResponseDto[]): UseFilterWorkout => {
                 );
             });
         },
-        [workouts, manageOptions, sortedItems],
+        [manageOptions, sortedItems, workouts],
     );
 
     const filterByActivity = useCallback(
