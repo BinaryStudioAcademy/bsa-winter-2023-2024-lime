@@ -14,18 +14,17 @@ const checkGoal = (
     workout: WorkoutResponseDto,
     goal: GoalResponseDto,
 ): boolean | undefined => {
-    if (!goal.distance && goal.duration) {
-        return convertSecondsToMinutes(workout.duration) >= goal.duration;
+    let isMatched = true;
+
+    if (goal.distance) {
+        isMatched = workout.distance >= goal.distance;
     }
-    if (goal.distance && goal.duration) {
-        return (
-            convertSecondsToMinutes(workout.duration) >= goal.duration &&
-            workout.distance >= goal?.distance
-        );
+
+    if (isMatched && goal.duration) {
+        isMatched = convertSecondsToMinutes(workout.duration) >= goal.duration;
     }
-    if (goal.distance && !goal.duration) {
-        return workout.distance >= goal.distance;
-    }
+
+    return isMatched;
 };
 
 function calculateGoalProgress(
