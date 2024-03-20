@@ -24,7 +24,6 @@ const NotificationComponent = (): JSX.Element => {
         ({ notifications }) => notifications,
     );
 
-    const isLoading = dataStatus === DataStatus.PENDING;
     const hasError = dataStatus === DataStatus.REJECTED;
 
     useEffect(() => {
@@ -74,7 +73,6 @@ const NotificationComponent = (): JSX.Element => {
                 count={count}
                 onClick={handleIconClick}
                 showList={showList}
-                isLoading={isLoading}
             />
             {showList && (
                 <NotificationList
