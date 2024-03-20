@@ -6,43 +6,65 @@ import {
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { validateImageUrl } from '~/bundles/common/helpers/helpers.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
+import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
-type FriendProperties = {
-    id: number;
-    name: string;
-    avatarUrl: string;
+type Properties = {
     isActive: boolean;
     isFollowed: boolean;
-    onToggleFollow: (id: number, isFollowed: boolean) => void;
-    message: (id: number) => void;
+    isCardSelected: boolean;
+    user: FriendResponseDto;
+    selectCard: (user: FriendResponseDto | null) => void;
+    onToggleFollow: (id: number) => void;
 };
 
 const FriendCard = ({
-    id,
-    name,
-    avatarUrl,
     isActive,
     isFollowed,
+    isCardSelected,
+    user,
+    selectCard,
     onToggleFollow,
-    message,
-}: FriendProperties): JSX.Element => {
-    const handleOnToggleFollow = useCallback(() => {
-        onToggleFollow(id, isFollowed);
-    }, [onToggleFollow, isFollowed, id]);
+}: Properties): JSX.Element => {
+    const { userId, fullName, email, avatarUrl } = user;
 
-    const handleSendMessage = useCallback(() => {
-        message(id);
-    }, [message, id]);
+    const classes = {
+        base: 'hover:border-buttonPrimary flex w-full min-w-[200px] flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-transparent',
+        selected:
+            'hover:border-buttonPrimary flex w-full min-w-[200px] flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-buttonPrimary ',
+        followed:
+            'text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10',
+        notFollowed:
+            'text-lm-grey-200 inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10',
+    };
+
+    const handleOnToggleFollow = useCallback(() => {
+        if (isCardSelected) {
+            selectCard(null);
+        }
+        onToggleFollow(userId);
+    }, [onToggleFollow, userId, isCardSelected, selectCard]);
+
+    const handleSelectCard = useCallback((): void => {
+        selectCard(user);
+    }, [selectCard, user]);
 
     return (
-        <div className="hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent sm:max-w-40 lg:max-w-64">
-            <div className="h-3/4 w-full">
-                {validateImageUrl(avatarUrl) ? (
+        <div
+            className={getValidClassNames(
+                isCardSelected ? classes.selected : classes.base,
+            )}
+        >
+            <div
+                className="cursor-pointer"
+                onClick={handleSelectCard}
+                role="presentation"
+            >
+                {avatarUrl ? (
                     <img
                         src={avatarUrl}
-                        alt={name}
+                        alt={fullName ?? 'avatar'}
                         className="aspect-square rounded-t-xl object-cover"
                     />
                 ) : (
@@ -53,14 +75,12 @@ const FriendCard = ({
             </div>
             <div className="bg-primary flex flex-col gap-2 rounded-b-xl p-4">
                 <div className="flex items-center gap-2">
-                    {isActive ? (
-                        <div className="bg-buttonPrimary h-2 w-2 rounded-[50%]" />
-                    ) : (
-                        <div className="bg-buttonTertiary h-2 w-2 rounded-[50%]" />
-                    )}
+                    <div
+                        className={`${isActive ? 'bg-buttonPrimary' : 'bg-buttonTertiary'} h-2 w-2 rounded-[50%]`}
+                    />
 
                     <h3 className="text-primary font-extrabold sm:text-xs lg:text-[1rem]">
-                        {name}
+                        {fullName ?? email}
                     </h3>
                 </div>
                 <div className="flex w-full items-center justify-between">
@@ -75,8 +95,9 @@ const FriendCard = ({
                     </div>
 
                     <button
-                        onClick={handleSendMessage}
-                        className={`${isFollowed ? 'text-action hover:border-buttonSecondary hover:text-buttonSecondary' : 'text-lm-grey-200'}  inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10`}
+                        className={getValidClassNames(
+                            isFollowed ? classes.followed : classes.notFollowed,
+                        )}
                         disabled={!isFollowed}
                         title={
                             isFollowed

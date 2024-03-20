@@ -12,8 +12,12 @@ import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
+import { friendsApi } from '~/bundles/friends/friends.js';
+import { reducer as friendsReducer } from '~/bundles/friends/store/friends.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
+import { notificationApi } from '~/bundles/notifications/notifications.js';
+import { reducer as notificationsReducer } from '~/bundles/notifications/store/slice.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
@@ -23,6 +27,7 @@ import {
     subscriptionApi,
     subscriptionPlansApi,
 } from '~/bundles/subscription/subscription.js';
+import { reducer as userBonusesReducer } from '~/bundles/user-bonuses/store/user-bonuses.js';
 import { reducer as usersReducer } from '~/bundles/users/store/users.js';
 import { userApi } from '~/bundles/users/users.js';
 import { reducer as workoutsReducer } from '~/bundles/workouts/store/workouts.js';
@@ -43,8 +48,11 @@ type RootReducer = {
     achievements: ReturnType<typeof achievementsReducer>;
     subscriptions: ReturnType<typeof subscriptionsReducer>;
     theme: ReturnType<typeof themeReducer>;
+    notifications: ReturnType<typeof notificationsReducer>;
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
+    friends: ReturnType<typeof friendsReducer>;
+    userBonuses: ReturnType<typeof userBonusesReducer>;
 };
 
 type ExtraArguments = {
@@ -55,8 +63,10 @@ type ExtraArguments = {
     subscriptionPlansApi: typeof subscriptionPlansApi;
     subscriptionApi: typeof subscriptionApi;
     passwordResetApi: typeof passwordResetApi;
+    notificationApi: typeof notificationApi;
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
+    friendsApi: typeof friendsApi;
 };
 
 class Store {
@@ -80,8 +90,11 @@ class Store {
                 achievements: achievementsReducer,
                 subscriptions: subscriptionsReducer,
                 theme: themeReducer,
+                notifications: notificationsReducer,
                 connections: connectionsReducer,
                 workouts: workoutsReducer,
+                userBonuses: userBonusesReducer,
+                friends: friendsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -103,8 +116,10 @@ class Store {
             subscriptionApi,
             subscriptionPlansApi,
             passwordResetApi,
+            notificationApi,
             connectionApi,
             workoutApi,
+            friendsApi,
         };
     }
 }

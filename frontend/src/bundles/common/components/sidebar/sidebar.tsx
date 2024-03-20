@@ -1,4 +1,7 @@
-import { CalendarDaysIcon as ScheduleIcon } from '@heroicons/react/16/solid';
+import {
+    CalendarDaysIcon as ScheduleIcon,
+    ChatBubbleOvalLeftEllipsisIcon as ChatsIcon,
+} from '@heroicons/react/16/solid';
 import {
     ArrowLeftStartOnRectangleIcon as LogoutIcon,
     QuestionMarkCircleIcon as HelpIcon,
@@ -32,7 +35,7 @@ const styles = {
     animationStyle: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
 };
 
-const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
+const Sidebar: React.FC<Properties> = ({ isOpen = true }): JSX.Element => {
     const { pathname } = useLocation();
 
     const [activeRoute, setActiveRoute] = useState(pathname);
@@ -89,6 +92,26 @@ const Sidebar = ({ isOpen = true }: Properties): JSX.Element => {
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
                     />
+                    <SidebarNav
+                        icon={<Icon name={IconName.friendsIcon} />}
+                        text="Friends"
+                        to={AppRoute.FRIENDS}
+                        isActive={activeRoute === AppRoute.FRIENDS}
+                    />
+                    <div className="relative">
+                        <SidebarNav
+                            icon={<ChatsIcon />}
+                            text="Chats"
+                            to={AppRoute.CHATS}
+                            isActive={
+                                activeRoute === AppRoute.CHATS ||
+                                activeRoute.includes(AppRoute.CHATS)
+                            }
+                        />
+                        <div className="absolute -right-2 -top-2">
+                            <Icon name="aiPoweredIcon" />
+                        </div>
+                    </div>
                 </div>
             </div>
 

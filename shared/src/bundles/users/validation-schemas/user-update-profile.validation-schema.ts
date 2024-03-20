@@ -5,6 +5,7 @@ import { UnicodePattern } from './constants/constants.js';
 
 const userUpdateProfile = z
     .object({
+        avatarUrl: z.string().nullable(),
         fullName: z.union([
             z
                 .string()
@@ -104,6 +105,22 @@ const userUpdateProfile = z
                         message: UserValidationMessage.HEIGHT_VALUE,
                     },
                 )
+                .nullable(),
+            z.literal(''),
+        ]),
+        location: z.union([
+            z
+                .string()
+                .trim()
+                .regex(UnicodePattern.LOCATION_PATTERN, {
+                    message: UserValidationMessage.LOCATION_WRONG,
+                })
+                .min(UserValidationRule.LOCATION.MIN_LENGTH, {
+                    message: UserValidationMessage.LOCATION_LENGTH,
+                })
+                .max(UserValidationRule.LOCATION.MAX_LENGTH, {
+                    message: UserValidationMessage.LOCATION_LENGTH,
+                })
                 .nullable(),
             z.literal(''),
         ]),

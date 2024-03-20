@@ -30,7 +30,21 @@ class WorkoutService implements Service {
             items: items.map((it) => it.toObject()),
         };
     }
+    public async findAllByUserIdAndCurrentMonth(
+        userId: number,
+    ): Promise<{ items: WorkoutResponseDto[] }> {
+        const date = new Date();
+        const currentMonth = date.getMonth();
 
+        const items = await this.workoutRepository.findAllByUserIdAndMonth(
+            userId,
+            currentMonth,
+        );
+
+        return {
+            items: items.map((it) => it.toObject()),
+        };
+    }
     public async create(
         payload: WorkoutRequestDto,
     ): Promise<WorkoutResponseDto> {

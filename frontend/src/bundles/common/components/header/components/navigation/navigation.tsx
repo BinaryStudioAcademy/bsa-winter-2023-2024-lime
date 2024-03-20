@@ -1,8 +1,9 @@
-import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon } from '@heroicons/react/24/solid';
 
 import { Avatar, Link } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 
+import { NotificationComponent } from '../notifications/notification-component.js';
 import styles from './styles.module.css';
 
 type Properties = {
@@ -10,14 +11,15 @@ type Properties = {
     avatarUrl?: string | null;
 };
 
-const Navigation = ({ email, avatarUrl }: Properties): JSX.Element => {
+const Navigation: React.FC<Properties> = ({
+    email,
+    avatarUrl,
+}): JSX.Element => {
     return (
         <nav className={styles['navigation']}>
             <ul className={styles['menu-list']}>
                 <li>
-                    <Link to={AppRoute.ROOT}>
-                        <BellIcon className={styles['icon']} />
-                    </Link>
+                    <NotificationComponent />
                 </li>
                 <li>
                     <Link to={AppRoute.PROFILE_INFORMATION}>

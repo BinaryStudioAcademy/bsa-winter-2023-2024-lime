@@ -1,12 +1,6 @@
 import { google } from 'googleapis';
 
 import {
-    GOOGLE_FIT_ACCESS_TYPE,
-    GOOGLE_FIT_API_URL,
-    READ_SCOPE,
-    WRITE_SCOPE,
-} from '~/bundles/google-fit/constants/constants.js';
-import {
     type OAuthExchangeAuthCodeDto,
     type OAuthStateEntity,
     type OAuthStrategy,
@@ -18,6 +12,14 @@ import {
 import { OAuthActionsPath, OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { type Config } from '~/common/config/config.js';
 
+import {
+    GOOGLE_FIT_ACCESS_TYPE,
+    GOOGLE_FIT_API_URL,
+    READ_ACTIVITY_SCOPE,
+    READ_HEART_RATE_SCOPE,
+    READ_LOCATION_SCOPE,
+    WRITE_ACTIVITY_SCOPE,
+} from './constants/constants.js';
 import { ApiPath } from './enums/enums.js';
 
 class GoogleFitOAuthStrategy implements OAuthStrategy {
@@ -27,8 +29,8 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
     public constructor(config: Config) {
         this.config = config;
         this.OAuth2 = new google.auth.OAuth2(
-            this.config.ENV.GOOGLE_FIT.CLIENT_ID,
-            this.config.ENV.GOOGLE_FIT.CLIENT_SECRET,
+            this.config.ENV.GOOGLE.CLIENT_ID,
+            this.config.ENV.GOOGLE.CLIENT_SECRET,
             `${this.config.ENV.APP.API_BASE_URL}${ApiPath.OAUTH}/${OAuthProvider.GOOGLE_FIT}${OAuthActionsPath.EXCHANGE_TOKEN}`,
         );
     }
@@ -38,8 +40,10 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
         const url = this.OAuth2.generateAuthUrl({
             access_type: GOOGLE_FIT_ACCESS_TYPE,
             scope: [
-                `${GOOGLE_FIT_API_URL}${READ_SCOPE}`,
-                `${GOOGLE_FIT_API_URL}${WRITE_SCOPE}`,
+                `${GOOGLE_FIT_API_URL}${READ_ACTIVITY_SCOPE}`,
+                `${GOOGLE_FIT_API_URL}${WRITE_ACTIVITY_SCOPE}`,
+                `${GOOGLE_FIT_API_URL}${READ_LOCATION_SCOPE}`,
+                `${GOOGLE_FIT_API_URL}${READ_HEART_RATE_SCOPE}`,
             ],
             state: JSON.stringify({ userId, uuid }),
         });
@@ -77,7 +81,12 @@ class GoogleFitOAuthStrategy implements OAuthStrategy {
         if (!scope) {
             return false;
         }
-        return scope.includes(WRITE_SCOPE && READ_SCOPE);
+        return scope.includes(
+            WRITE_ACTIVITY_SCOPE &&
+                READ_ACTIVITY_SCOPE &&
+                READ_HEART_RATE_SCOPE &&
+                READ_LOCATION_SCOPE,
+        );
     }
 
     public async exchangeRefreshToken(

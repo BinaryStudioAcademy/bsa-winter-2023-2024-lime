@@ -12,9 +12,7 @@ import { OAuthProvider } from '~/bundles/workouts/enums/enums.js';
 const WorkoutItem = (): JSX.Element => {
     const { id } = useParams();
 
-    const { workouts } = useAppSelector(({ workouts }) => ({
-        workouts: workouts.workouts,
-    }));
+    const { workouts } = useAppSelector(({ workouts }) => workouts);
 
     const currentWorkout = workouts.find(
         (workout) => workout.id === Number(id),
@@ -39,6 +37,7 @@ const WorkoutItem = (): JSX.Element => {
                 <NavLink
                     to={STRAVA_ATHLETE_TRAINING_URL}
                     className="text-strava-brand mt-[0.5rem] text-right"
+                    target="_blank"
                     reloadDocument
                 >
                     View on Strava

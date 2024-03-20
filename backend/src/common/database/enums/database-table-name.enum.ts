@@ -10,7 +10,9 @@ const DatabaseTableName = {
     OAUTH_STATE: 'oauth_state',
     ACHIEVEMENTS: 'achievements',
     USER_ACHIEVEMENTS: 'user_achievements',
+    USER_BONUSES: 'user_bonuses',
     WORKOUTS: 'workouts',
+    FRIENDS: 'friends',
 } as const;
 
 export { DatabaseTableName };

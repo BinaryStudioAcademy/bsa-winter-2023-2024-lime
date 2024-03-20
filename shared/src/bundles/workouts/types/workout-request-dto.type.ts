@@ -10,7 +10,7 @@ type WorkoutRequestDto = {
     distance: number;
     heartRate: number | null;
     steps?: number;
-    activityId?: number;
+    activityId?: string;
     kilocalories: number;
     provider: ValueOf<typeof OAuthProvider> | null;
 };

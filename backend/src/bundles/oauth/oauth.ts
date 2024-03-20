@@ -29,7 +29,7 @@ export {
     type OAuthExchangeAuthCodeDto,
     type OAuthStrategy,
 } from './types/types.js';
-export { oAuthController, oAuthService };
+export { oAuthController, oAuthService, oAuthStateRepository };
 export {
     ErrorMessage,
     HttpCode,
