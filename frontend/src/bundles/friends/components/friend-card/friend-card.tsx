@@ -65,7 +65,7 @@ const FriendCard = ({
                     <img
                         src={avatarUrl}
                         alt={fullName ?? 'avatar'}
-                        className="aspect-square rounded-t-xl object-cover"
+                        className="aspect-square h-full w-full rounded-t-xl object-cover"
                     />
                 ) : (
                     <div className="bg-lm-grey-100 flex aspect-square items-center justify-center rounded-t-xl">
