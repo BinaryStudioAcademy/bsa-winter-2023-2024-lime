@@ -11,6 +11,7 @@ import CommunityIcon from '~/assets/img/icons/community-icon.svg?react';
 import DurationIcon from '~/assets/img/icons/duration-icon.svg?react';
 import FacebookIcon from '~/assets/img/icons/facebook.svg?react';
 import FeedIcon from '~/assets/img/icons/feed-icon.svg?react';
+import FriendsIcon from '~/assets/img/icons/friends-icon.svg?react';
 import GoalIcon from '~/assets/img/icons/goal-icon.svg?react';
 import GoalsIcon from '~/assets/img/icons/goals-icon.svg?react';
 import GoogleFitIcon from '~/assets/img/icons/google-fit-icon.svg?react';
@@ -61,6 +62,7 @@ const IconComponent: Record<
     starIcon: StarIcon,
     aiAssistantIcon: AiAssistantIconfrom,
     aiPoweredIcon: AiPoweredIcon,
+    friendsIcon: FriendsIcon,
     stavaButtonIcon: StavaButtonIcon,
 } as const;
 

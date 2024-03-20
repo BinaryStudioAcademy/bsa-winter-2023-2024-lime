@@ -35,11 +35,15 @@ import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 import { constructReferralUrl } from '../../helpers/helpers.js';
 import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
 import { Cropper } from './components/components.js';
-import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
+import {
+    DEFAULT_UPDATE_PROFILE_PAYLOAD,
+    ERROR_WRONG_FILETYPE_IMG,
+} from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserUpdateProfileRequestDto) => void;
@@ -78,8 +82,13 @@ const ProfileSettings: React.FC<Properties> = ({
 
             const image = event.target.files;
             if (image) {
-                setImgToCrop(URL.createObjectURL(image[0] as File));
-                setIsOpen(true);
+                const file = image[0] as File;
+                if (file && file.type.startsWith('image/')) {
+                    setImgToCrop(URL.createObjectURL(file));
+                    setIsOpen(true);
+                } else {
+                    notificationManager.error(ERROR_WRONG_FILETYPE_IMG);
+                }
                 event.target.value = '';
             }
         },
@@ -185,6 +194,7 @@ const ProfileSettings: React.FC<Properties> = ({
                         type="file"
                         accept="image/jpeg, image/png"
                         name="update-file"
+                        aria-label="Upload avatar"
                         onChange={selectImage}
                         className="hidden"
                         ref={fileInputReference}

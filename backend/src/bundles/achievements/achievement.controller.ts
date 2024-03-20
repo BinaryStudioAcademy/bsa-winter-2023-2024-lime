@@ -18,7 +18,7 @@ import {
  * @swagger
  * components:
  *    schemas:
- *      Achievements:
+ *      Achievement:
  *        type: object
  *        properties:
  *          id:
@@ -89,28 +89,28 @@ class AchievementController extends BaseController {
     /**
      * @swagger
      * /api/v1/achievements/:
-     *    get:
-     *      tags:
+     *   get:
+     *     tags:
      *       - Achievements
-     *      description: Returns an array of achievements
-     *      security:
-     *        - bearerAuth: []
-     *      responses:
-     *        200:
-     *          description: Successful operation
-     *          content:
-     *            application/json:
-     *              schema:
-     *                 type: object
-     *                 $ref: '#/components/schemas/Achievements'
-     *
-     *        401:
-     *          description: Failed operation
-     *          content:
-     *              application/json:
-     *                  schema:
-     *                      type: object
-     *                      $ref: '#/components/schemas/Error'
+     *     summary: Retrieve achievements
+     *     description: Returns an array of achievements.
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       '200':
+     *         description: Successful operation. Returns an array of achievements.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 $ref: '#/components/schemas/Achievement'
+     *       '401':
+     *         description: Unauthorized. Authentication failure.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
      */
 
     private async findAll(): Promise<ApiHandlerResponse> {
@@ -124,27 +124,33 @@ class AchievementController extends BaseController {
     /**
      * @swagger
      * /api/v1/achievements/{id}:
-     *    get:
-     *      tags:
+     *   get:
+     *     tags:
      *       - Achievements
-     *      description: Returns an achievement by id
-     *      security:
-     *        - bearerAuth: []
-     *      responses:
-     *        200:
-     *          description: Successful operation
-     *          content:
-     *            application/json:
-     *              schema:
-     *                 type: object
-     *                 $ref: '#/components/schemas/Achievements'
-     *        401:
-     *          description: Failed operation
-     *          content:
-     *              application/json:
-     *                  schema:
-     *                      type: object
-     *                      $ref: '#/components/schemas/Error'
+     *     summary: Retrieve achievement by ID
+     *     description: Returns an achievement by its ID.
+     *     security:
+     *       - bearerAuth: []
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: The ID of the achievement to retrieve.
+     *     responses:
+     *       '200':
+     *         description: Successful operation. Returns the achievement.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Achievement'
+     *       '401':
+     *         description: Unauthorized. Authentication failure.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
      */
 
     private async findById(
@@ -165,36 +171,34 @@ class AchievementController extends BaseController {
     /**
      * @swagger
      * /api/v1/achievements/user/{id}:
-     *    get:
-     *      tags:
+     *   get:
+     *     tags:
      *       - UserAchievements
-     *      description: Returns achievements for a specific user
-     *      security:
-     *        - bearerAuth: []
-     *      parameters:
-     *        - name: id
-     *          in: path
-     *          description: ID of the user
-     *          required: true
-     *          schema:
-     *            type: number
-     *
-     *      responses:
-     *        200:
-     *          description: Successful operation
-     *          content:
-     *            application/json:
-     *              schema:
-     *                 type: object
-     *                 $ref: '#/components/schemas/Achievements'
-     *
-     *        401:
-     *          description: Failed operation
-     *          content:
-     *              application/json:
-     *                  schema:
-     *                      type: object
-     *                      $ref: '#/components/schemas/Error'
+     *     description: Returns achievements for a specific user based on parameters
+     *     security:
+     *       - bearerAuth: []
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         description: ID of the user
+     *         required: true
+     *         schema:
+     *           type: number
+     *     responses:
+     *       '200':
+     *         description: Successful operation
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               $ref: '#/components/schemas/Achievement'
+     *       '401':
+     *         description: Failed operation
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               $ref: '#/components/schemas/Error'
      */
 
     private async findByUserId(id: number): Promise<ApiHandlerResponse> {
