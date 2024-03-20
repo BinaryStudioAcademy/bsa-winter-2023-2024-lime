@@ -20,9 +20,12 @@ class SubscriptionRepository
         const subscriptions = await this.subscriptionModel
             .query()
             .where({
-                [SubscriptionAttributes.USER_ID]: userId,
-                [SubscriptionAttributes.STATUS]: SubscriptionStatus.ACTIVE,
+                [SubscriptionAttributes.USER_ID]: userId,              
             })
+            .whereIn(SubscriptionAttributes.STATUS, [
+                SubscriptionStatus.TRIALING,
+                SubscriptionStatus.ACTIVE,
+            ])
             .orderBy(SubscriptionAttributes.CREATED_AT, 'DESC')
             .withGraphFetched('[subscriptionPlan]')
             .execute();
@@ -49,7 +52,10 @@ class SubscriptionRepository
         const subscription = await this.subscriptionModel
             .query()
             .findOne(query)
-            .where(SubscriptionAttributes.STATUS, SubscriptionStatus.ACTIVE)
+            .whereIn(SubscriptionAttributes.STATUS, [
+                SubscriptionStatus.TRIALING,
+                SubscriptionStatus.ACTIVE,
+            ])
             .withGraphFetched('[subscriptionPlan]')
             .execute();
 
