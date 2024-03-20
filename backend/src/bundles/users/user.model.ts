@@ -16,6 +16,7 @@ import {
 } from '~/common/database/database.js';
 
 import { UserAchievementModel } from '../achievements/user-achievement.model.js';
+import { FriendModel } from '../friends/friend.model.js';
 import { SubscriptionModel } from '../subscriptions/subscription.model.js';
 import { SubscriptionAttributes } from '../subscriptions/subscriptions.js';
 import {
@@ -43,6 +44,8 @@ class UserModel extends AbstractModel {
     public 'userOAuthState': OAuthStateModel;
 
     public 'userBonus': UserBonusModel;
+
+    public 'friends': FriendModel;
 
     public 'schedules': ScheduleModel;
 
@@ -93,11 +96,19 @@ class UserModel extends AbstractModel {
                 },
             },
             userAchievements: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: UserAchievementModel,
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.USER_ACHIEVEMENTS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            friends: {
+                relation: Model.HasManyRelation,
+                modelClass: FriendModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.FRIENDS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },
             workouts: {

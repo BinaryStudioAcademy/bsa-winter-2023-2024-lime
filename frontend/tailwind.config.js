@@ -66,6 +66,7 @@ export default {
             '2xl': '1.375rem',
             '3xl': '1.75rem',
             '4xl': '2.625rem',
+            '5xl': '5rem',
         },
         fontWeight: {
             light: '300',
@@ -120,6 +121,7 @@ export default {
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
                 accent: ['Lato', ...defaultTheme.fontFamily.sans],
+                heading: ['Intro', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
@@ -145,6 +147,7 @@ export default {
                 '115': '115px',
                 '120': '120px',
                 '150': '9.375rem',
+                '176': '11rem',
                 '874': '54.625',
             },
             height: {
@@ -152,10 +155,13 @@ export default {
                 '37': '2.3125rem',
                 '38': '2.375rem',
                 '54': '3.375rem;',
+                '176': '11rem',
+
             },
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+                '44': '2.75rem',
                 '60': '3.75rem',
             },
             minHeight: {
@@ -187,6 +193,7 @@ export default {
             },
             borderColor: {
                 primary: 'var(--border-primary)',
+                secondary: 'var(--border-secondary)',
                 inactive: 'var(--border-inactive)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,

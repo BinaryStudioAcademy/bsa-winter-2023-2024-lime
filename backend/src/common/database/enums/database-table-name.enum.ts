@@ -12,6 +12,7 @@ const DatabaseTableName = {
     USER_ACHIEVEMENTS: 'user_achievements',
     USER_BONUSES: 'user_bonuses',
     WORKOUTS: 'workouts',
+    FRIENDS: 'friends',
     SCHEDULES: 'schedules',
 } as const;
 

@@ -15,6 +15,7 @@ import {
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { NotFound } from '~/bundles/common/pages/pages.js';
+import { Friends } from '~/bundles/friends/pages/friends.js';
 import { Goals as GoalsPage } from '~/bundles/goals/pages/goals.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
@@ -81,6 +82,10 @@ const routes = [
                     {
                         path: AppRoute.SCHEDULE,
                         element: <Schedule />,
+                    },
+                    {
+                        path: AppRoute.FRIENDS,
+                        element: <Friends />,
                     },
                     {
                         path: AppRoute.HELP,

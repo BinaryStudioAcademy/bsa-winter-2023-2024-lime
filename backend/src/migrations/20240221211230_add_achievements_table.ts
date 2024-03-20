@@ -1,6 +1,6 @@
 import { type Knex } from 'knex';
 
-import { DatabaseTableName } from '~/common/database/database.js';
+const TABLE_NAME = 'achievements';
 
 const ColumnName = {
     ID: 'id',
@@ -29,7 +29,7 @@ const Metric = {
 } as const;
 
 async function up(knex: Knex): Promise<void> {
-    await knex.schema.createTable(DatabaseTableName.ACHIEVEMENTS, (table) => {
+    await knex.schema.createTable(TABLE_NAME, (table) => {
         table.increments(ColumnName.ID).primary();
         table.string(ColumnName.NAME).notNullable();
         table
@@ -57,7 +57,7 @@ async function up(knex: Knex): Promise<void> {
 }
 
 async function down(knex: Knex): Promise<void> {
-    await knex.schema.dropTableIfExists(DatabaseTableName.ACHIEVEMENTS);
+    await knex.schema.dropTableIfExists(TABLE_NAME);
     await knex.schema.raw(`DROP TYPE IF EXISTS ${ACTIVITY_ENUM}`);
     await knex.schema.raw(`DROP TYPE IF EXISTS ${REQUIREMENT_METRIC_ENUM}`);
 }
