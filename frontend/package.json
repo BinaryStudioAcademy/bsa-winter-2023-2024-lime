@@ -12,10 +12,9 @@
         "lint:type": "npx tsc --noEmit",
         "lint": "npm run lint:type && npm run lint:js",
         "start:dev": "vite",
-        "build": "tsc -p tsconfig.build.json && vite build",
+        "build": "tsc -p tsconfig.build.json && vite build && npm run storybook:build",
         "preview": "vite preview",
-        "storybook": "storybook dev -p 6006",
-        "storybook:build": "storybook build -o build/storybook"
+        "storybook": "storybook dev -p 6006"
     },
     "devDependencies": {
         "@storybook/addon-essentials": "7.6.17",
