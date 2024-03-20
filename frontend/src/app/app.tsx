@@ -18,8 +18,9 @@ const App: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { redirectPath } = useAppSelector(({ app }) => ({
+    const { redirectPath, q } = useAppSelector(({ app, auth }) => ({
         redirectPath: app.redirectPath,
+        q: auth.isRefreshing,
     }));
 
     useEffect(() => {
@@ -41,7 +42,7 @@ const App: React.FC = () => {
         void refreshUser().finally(() => setIsRefreshing(false));
     }, [dispatch]);
 
-    if (isRefreshing) {
+    if (isRefreshing || q) {
         return <Loader isOverflow />;
     }
 

@@ -74,7 +74,9 @@ export {
     type WorkoutGetAllResponseDto,
     type WorkoutRequestDto,
     type WorkoutResponseDto,
+    type WorkoutShowLastQueryDto,
     WorkoutsApiPath,
+    WorkoutShowLastType,
     WorkoutValidationMessage,
     workoutValidationSchema,
 } from './bundles/workouts/workouts.js';

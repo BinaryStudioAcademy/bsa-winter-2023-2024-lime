@@ -1,6 +1,9 @@
 import { ActivityIcon } from '~/bundles/common/components/components.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
-import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
+import {
+    capitalizeFirstLetter,
+    getValidClassNames,
+} from '~/bundles/common/helpers/helpers.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 import { CircleProgress } from '~/bundles/overview/components/components.js';
@@ -12,6 +15,7 @@ type Properties = {
     frequency: number;
     progress: number;
     frequencyType: ValueOf<typeof FrequencyType>;
+    className?: string;
 };
 
 const PLURAL = 's';
@@ -22,9 +26,15 @@ const GoalCard: React.FC<Properties> = ({
     frequency,
     progress,
     frequencyType,
+    className = '',
 }): JSX.Element => {
     return (
-        <div className="bg-secondary flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:p-5 lg:pl-8 xl:w-96">
+        <div
+            className={getValidClassNames(
+                'flex h-[7.5rem] w-full items-center justify-between rounded-xl p-3 pl-5 lg:p-5 lg:pl-8 xl:w-96',
+                className,
+            )}
+        >
             <div className="flex items-center gap-4">
                 <ActivityIcon
                     activityType={activityType}

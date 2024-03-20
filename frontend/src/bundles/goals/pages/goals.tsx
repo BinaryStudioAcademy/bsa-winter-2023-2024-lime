@@ -156,6 +156,7 @@ const Goals: React.FC = () => {
                                             progress,
                                         }) => (
                                             <GoalCard
+                                                className="bg-secondary"
                                                 key={id}
                                                 activityType={activityType}
                                                 frequency={frequency}

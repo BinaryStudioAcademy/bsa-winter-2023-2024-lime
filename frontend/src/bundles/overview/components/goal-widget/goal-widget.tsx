@@ -14,6 +14,7 @@ type WidgetProperties = {
     goalType?: ValueOf<typeof GoalTypes>;
     title?: string;
     subTitle?: string;
+    rightTitle?: string;
     className?: string;
     hasAchievement?: boolean;
 };
@@ -26,11 +27,14 @@ const GoalWidget = ({
     subTitle = '',
     hasAchievement = true,
     className = '',
+    rightTitle,
 }: WidgetProperties): JSX.Element => {
-    const rightTitle =
-        goalType === GoalTypes.OVERVIEW
-            ? 'Exercises'
-            : capitalizeFirstLetter(goalType);
+    if (!rightTitle) {
+        rightTitle =
+            goalType === GoalTypes.OVERVIEW
+                ? 'Exercises'
+                : capitalizeFirstLetter(goalType);
+    }
 
     return (
         <div

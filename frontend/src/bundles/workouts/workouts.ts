@@ -10,4 +10,5 @@ const workoutApi = new WorkoutApi({
     http,
 });
 
+export { type ValueOf, WorkoutShowLastType } from 'shared';
 export { workoutApi };

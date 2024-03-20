@@ -9,6 +9,7 @@ const workoutRepository = new WorkoutRepository(WorkoutModel);
 const workoutService = new WorkoutService(workoutRepository);
 const workoutController = new WorkoutController(logger, workoutService);
 
+export { type WorkoutShowLastQueryDto, WorkoutShowLastType } from 'shared';
 export { workoutController, workoutService };
 export { WorkoutController } from './workout.controller.js';
 export { WorkoutEntity } from './workout.entity.js';

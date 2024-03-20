@@ -2,7 +2,7 @@ import {
     type ContentType,
     ServerErrorType,
 } from '~/bundles/common/enums/enums.js';
-import { configureString } from '~/bundles/common/helpers/helpers.js';
+// import { configureString } from '~/bundles/common/helpers/helpers.js';
 import {
     type ServerErrorResponse,
     type ValueOf,
@@ -10,6 +10,24 @@ import {
 import { type Http, type HttpCode } from '~/framework/http/http.js';
 import { HttpError, HttpHeader } from '~/framework/http/http.js';
 import { type Storage, StorageKey } from '~/framework/storage/storage.js';
+
+const configureString = <T extends Record<string, string>>(
+    ...parameters: [...string[], T]
+): string => {
+    const copiedArguments = [...parameters];
+
+    const options = copiedArguments.pop() as T;
+
+    let result = copiedArguments.join('');
+
+    for (const [key, value] of Object.entries(options)) {
+        result = result.replace(`:${key}`, value);
+    }
+
+    return result;
+};
+
+export { configureString };
 
 import {
     type HttpApi,

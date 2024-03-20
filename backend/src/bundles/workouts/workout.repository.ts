@@ -56,6 +56,23 @@ class WorkoutRepository implements Repository {
         });
     }
 
+    public async findWithTimestamps(
+        query: Record<string, unknown>,
+        startDate: string,
+        endDate: string,
+    ): Promise<WorkoutEntity[]> {
+        const workouts = await this.workoutsModel
+            .query()
+            .where(query)
+            .whereBetween('createdAt', [startDate, endDate])
+            .execute();
+        return workouts.map((workout) => {
+            return WorkoutEntity.initialize({
+                ...workout,
+            });
+        });
+    }
+
     public async update(
         query: Record<string, unknown>,
         entity: WorkoutEntity,

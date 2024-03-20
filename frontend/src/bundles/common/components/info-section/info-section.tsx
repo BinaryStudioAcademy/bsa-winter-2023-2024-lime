@@ -7,6 +7,7 @@ import { ViewAllButton } from './components/components.js';
 type InfoSectionProperties = {
     children: React.ReactNode;
     viewAllLink?: ValueOf<typeof AppRoute>;
+    buttonTitle?: string;
     title: string;
     className?: string;
 };
@@ -16,6 +17,7 @@ const InfoSection: React.FC<InfoSectionProperties> = ({
     className,
     title,
     viewAllLink,
+    buttonTitle,
 }) => {
     return (
         <div className={getValidClassNames('', className)}>
@@ -23,7 +25,9 @@ const InfoSection: React.FC<InfoSectionProperties> = ({
                 <h3 className="text-infoSection text-xl font-extrabold leading-6">
                     {title}
                 </h3>
-                {viewAllLink && <ViewAllButton to={viewAllLink} />}
+                {viewAllLink && (
+                    <ViewAllButton title={buttonTitle} to={viewAllLink} />
+                )}
             </div>
             {children}
         </div>

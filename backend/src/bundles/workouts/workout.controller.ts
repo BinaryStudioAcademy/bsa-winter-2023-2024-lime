@@ -20,6 +20,7 @@ import {
     workoutValidationSchema,
 } from './validation-schemas/validation-schemas.js';
 import { type WorkoutService } from './workout.service.js';
+import { type WorkoutShowLastQueryDto } from './workouts.js';
 
 /**
  * @swagger
@@ -110,7 +111,13 @@ class WorkoutController extends BaseController {
             path: WorkoutsApiPath.ROOT,
             method: 'GET',
             isProtected: true,
-            handler: (options) => this.findAll(options),
+            handler: (options) =>
+                this.findAll(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        query: WorkoutShowLastQueryDto;
+                    }>,
+                ),
         });
         this.addRoute({
             path: WorkoutsApiPath.ROOT,
@@ -197,13 +204,27 @@ class WorkoutController extends BaseController {
      */
 
     private async findAll(
-        options: ApiHandlerOptions,
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            query: WorkoutShowLastQueryDto;
+        }>,
     ): Promise<ApiHandlerResponse> {
+        if (!options.query.showLast) {
+            return {
+                type: ApiHandlerResponseType.DATA,
+                status: HttpCode.OK,
+                payload: await this.workoutService.findAll({
+                    userId: options.user.id,
+                }),
+            };
+        }
+
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.workoutService.findAll({
-                userId: (options.user as UserAuthResponseDto).id,
+            payload: await this.workoutService.getStats({
+                userId: options.user.id,
+                showLast: options.query.showLast,
             }),
         };
     }
