@@ -84,25 +84,21 @@ class CalculationProgressService {
         let hasCompletedGoal = false;
 
         for (const goal of goals) {
+            const progressValue = calculateGoalProgress(goal, workouts);
             const updatedGoal = await this.goalService.update(
                 { id: goal.id },
                 {
                     ...goal,
                     userId,
-                    progress: calculateGoalProgress(goal, workouts),
+                    progress: progressValue,
                     completedAt:
-                        calculateGoalProgress(goal, workouts) ===
-                        COMPLETED_GOAL_VALUE
+                        progressValue === COMPLETED_GOAL_VALUE
                             ? new Date().toISOString()
                             : null,
                 },
             );
 
-            if (
-                calculateGoalProgress(goal, workouts) ===
-                    COMPLETED_GOAL_VALUE &&
-                updatedGoal
-            ) {
+            if (progressValue === COMPLETED_GOAL_VALUE && updatedGoal) {
                 hasCompletedGoal = true;
             }
         }

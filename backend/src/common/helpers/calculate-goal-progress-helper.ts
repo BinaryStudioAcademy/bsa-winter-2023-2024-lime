@@ -19,29 +19,33 @@ function calculateGoalProgress(
         case FrequencyType.DAY: {
             const todayWorkouts = workouts.filter(
                 (workout) =>
-                    (workout.workoutEndedAt as Date) >= goalDate &&
+                    workout.workoutEndedAt &&
+                    workout.workoutEndedAt >= goalDate &&
                     workout.workoutEndedAt?.getDate() === goalDate.getDate() &&
-                    (workout.distance >= (goal?.distance as number) ??
-                        workout.duration >= (goal?.duration as number)),
+                    ((goal.distance && workout.distance >= goal?.distance) ||
+                        (goal.duration && workout.duration >= goal?.duration)),
             );
 
-            progress =
-                (todayWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER;
+            progress = Math.round(
+                (todayWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER,
+            );
 
             break;
         }
         case FrequencyType.WEEK: {
             const weekWorkouts = workouts.filter(
                 (workout) =>
-                    (workout.workoutEndedAt as Date) >= goalDate &&
-                    (workout.workoutEndedAt?.getDate() as number) <=
+                    workout.workoutEndedAt &&
+                    workout.workoutEndedAt >= goalDate &&
+                    workout.workoutEndedAt?.getDate() <=
                         goalDate.getDate() + WEEK_DAYS &&
-                    (workout.distance >= (goal?.distance as number) ??
-                        workout.duration >= (goal?.duration as number)),
+                    ((goal.distance && workout.distance >= goal?.distance) ||
+                        (goal.duration && workout.duration >= goal?.duration)),
             );
 
-            progress =
-                (weekWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER;
+            progress = Math.round(
+                (weekWorkouts.length / goal.frequency) * PERSENTAGE_MULTIPLIER,
+            );
 
             break;
         }
