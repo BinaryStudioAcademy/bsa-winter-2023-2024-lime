@@ -1,10 +1,13 @@
 import { USER_DETAILS_RELATION } from '~/bundles/users/users.js';
 import { DatabaseTableName } from '~/common/database/database.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Repository } from '~/common/types/types.js';
 
+import { type FriendModel } from '../friends/friend.model.js';
 import { ChatEntity } from './chat.entity.js';
 import { type ChatModel } from './chat.model.js';
 import { LAST_MESSAGE_RELATION } from './constants/constants.js';
+import { ErrorMessage } from './enums/enums.js';
 import {
     type ChatFullResponseDto,
     type ChatPreviewResponseDto,
@@ -14,8 +17,14 @@ import {
 class ChatRepository implements Repository {
     private chatModel: typeof ChatModel;
 
-    public constructor(chatModel: typeof ChatModel) {
+    private friendModel: typeof FriendModel;
+
+    public constructor(
+        chatModel: typeof ChatModel,
+        friendModel: typeof FriendModel,
+    ) {
         this.chatModel = chatModel;
+        this.friendModel = friendModel;
     }
 
     public async find(
@@ -71,10 +80,35 @@ class ChatRepository implements Repository {
             .execute();
     }
 
-    public async create(payload: ChatEntity): Promise<ChatResponseDto> {
-        const { isAssistant, membersId } = payload.toNewObject();
+    public async create({
+        chatEntity,
+        creatorId,
+    }: {
+        chatEntity: ChatEntity;
+        creatorId: number;
+    }): Promise<ChatResponseDto> {
+        const { isAssistant, membersId } = chatEntity.toNewObject();
 
         const trx = await this.chatModel.startTransaction();
+
+        const followings = await this.friendModel
+            .query()
+            .select('*')
+            .where({ userId: creatorId })
+            .execute();
+
+        const followersId = followings.map((follower) => follower.followingId);
+
+        const allAreFollowed = membersId.every((id) =>
+            [...followersId, creatorId].includes(id),
+        );
+
+        if (!allAreFollowed) {
+            throw new HttpError({
+                message: ErrorMessage.NOT_FOLLOWED,
+                status: HttpCode.FORBIDDEN,
+            });
+        }
 
         try {
             const chat = await this.chatModel

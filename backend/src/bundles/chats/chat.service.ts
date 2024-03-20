@@ -95,7 +95,7 @@ class ChatService implements Service {
             membersId: membersId as number[],
         });
 
-        return await this.chatRepository.create(chatEntity);
+        return await this.chatRepository.create({ chatEntity, creatorId });
     }
 
     public update(

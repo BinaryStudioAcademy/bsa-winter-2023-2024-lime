@@ -103,6 +103,7 @@ class ChatController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
+
         const membersId = body.membersId ?? [];
         const payload = {
             ...body,
