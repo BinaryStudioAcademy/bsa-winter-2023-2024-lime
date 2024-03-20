@@ -12,6 +12,7 @@ import { type SocketService } from '~/common/services/socket/socket.service.js';
 import { MessagePath } from './enums/enums.js';
 import { type MessageService } from './message.service.js';
 import {
+    type DeleteChatMessagesRequestDto,
     type MessageRequestDto,
     type MessageResponseDto,
 } from './types/types.js';
@@ -47,6 +48,18 @@ class MessageController extends BaseController {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: MessagePath.ID,
+            method: 'DELETE',
+            isProtected: true,
+            handler: (options) =>
+                this.delete(
+                    options as ApiHandlerOptions<{
+                        body: DeleteChatMessagesRequestDto;
+                    }>,
+                ),
+        });
     }
 
     private async create(
@@ -70,6 +83,18 @@ class MessageController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: message,
+        };
+    }
+
+    private async delete(
+        options: ApiHandlerOptions<{
+            body: DeleteChatMessagesRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: await this.messageService.delete(options.body),
         };
     }
 }

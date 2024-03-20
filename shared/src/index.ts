@@ -50,6 +50,7 @@ export {
     identityProviderValidationSchema,
 } from './bundles/identity/identity.js';
 export {
+    type DeleteChatMessagesRequestDto,
     type MessageRequestDto,
     type MessageResponseDto,
     MessagePath,

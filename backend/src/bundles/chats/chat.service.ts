@@ -105,8 +105,8 @@ class ChatService implements Service {
         return Promise.resolve({ query, payload });
     }
 
-    public delete(payload: unknown): Promise<boolean> {
-        return Promise.resolve(!!payload);
+    public delete({ chatId }: { chatId: string }): Promise<boolean> {
+        return this.chatRepository.delete({ id: chatId });
     }
 }
 
