@@ -136,7 +136,7 @@ const Schedule: React.FC = () => {
         (id: number) => {
             const schedule = schedules.find((schedule) => schedule.id === id);
             if (schedule) {
-                const date = parseISO(schedule.startAt as string);
+                const date = parseISO(schedule.startAt);
                 setBaseFormValue({
                     activity: schedule.activityType,
                     goalLabel: schedule.goalId ?? null,

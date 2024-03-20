@@ -4,7 +4,7 @@ import { type ValueOf } from '../../../types/types.js';
 type ScheduleRequestDto = {
     goalId?: number | null;
     activityType: ValueOf<typeof ActivityType>;
-    startAt: Date | string;
+    startAt: string;
 };
 
 export { type ScheduleRequestDto };

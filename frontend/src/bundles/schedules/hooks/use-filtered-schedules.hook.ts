@@ -24,7 +24,7 @@ const useFilteredSchedules = (
             const start = range[START_TIME] ?? String(ZERO_VALUE);
             const end = range[END_TIME];
 
-            return isDateInRange(schedule.startAt as string, start, end);
+            return isDateInRange(schedule.startAt, start, end);
         });
 
         const schedulesWithGoal = filtered.filter(

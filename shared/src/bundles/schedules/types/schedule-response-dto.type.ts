@@ -5,7 +5,7 @@ type ScheduleResponseDto = {
     id: number;
     goalId?: number | null;
     activityType: ValueOf<typeof ActivityType>;
-    startAt: Date | string;
+    startAt: string;
 };
 
 export { type ScheduleResponseDto };
