@@ -43,7 +43,7 @@ const Friends: React.FC = () => {
     const classes = {
         detailsAside:
             'bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px] transform translate-x-0',
-        hidden: 'translate-x-full',
+        hidden: 'translate-x-[110%]',
         animation: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
     };
 
@@ -128,7 +128,7 @@ const Friends: React.FC = () => {
     }, [dispatch, activeTab]);
 
     return (
-        <section className="relative flex h-full w-full flex-col gap-5 whitespace-normal">
+        <section className="h-full w-full max-w-[1136px] flex-1 flex-col xl:flex xl:gap-8 2xl:basis-[1136px] ">
             <Tabs
                 tabs={tabs}
                 handleTabClick={handleTabClick}

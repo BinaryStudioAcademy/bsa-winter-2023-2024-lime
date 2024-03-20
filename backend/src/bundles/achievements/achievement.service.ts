@@ -18,11 +18,11 @@ class AchievementService {
         return await this.achievementRepository.findAll();
     }
 
-    public async findById(id: number): Promise<AchievementEntity | null> {
+    public async findById(id: number): Promise<AchievementEntity | []> {
         const achievement = await this.achievementRepository.findById(id);
 
         if (!achievement) {
-            throw new Error('Achievement not found');
+            return [];
         }
 
         return achievement;
@@ -30,12 +30,12 @@ class AchievementService {
 
     public async findByUserId(
         userId: number,
-    ): Promise<AchievementEntity[] | null> {
+    ): Promise<AchievementEntity[] | []> {
         const userAchievements =
             await this.achievementRepository.findByUserId(userId);
 
         if (!userAchievements || userAchievements.length === 0) {
-            return null;
+            return [];
         }
 
         return userAchievements;
