@@ -34,28 +34,30 @@ const ChatLink = ({
                     className={getValidClassNames(
                         isActive &&
                             'bg-primary border-l-lm-yellow-100 rounded-br-xl rounded-tr-xl border-l-4 p-2',
-                        'flex items-center gap-5',
+                        'flex items-center justify-between',
                     )}
                 >
-                    <div className="relative">
-                        <Avatar
-                            size="sm"
-                            email="email@gmail.com"
-                            avatarUrl={null}
-                        />
-                    </div>
-                    <div className="flex flex-col items-start gap-1 overflow-hidden py-2 lg:max-w-[9rem]">
-                        <p
-                            className={getValidClassNames(
-                                isActive ? 'text-action' : 'text-primary',
-                                'truncate text-sm font-semibold',
-                            )}
-                        >
-                            {companions}
-                        </p>
-                        <p className="text-secondary truncate text-xs">
-                            {lastMessage}
-                        </p>
+                    <div className="flex items-center gap-5">
+                        <div className="relative">
+                            <Avatar
+                                size="sm"
+                                email="email@gmail.com"
+                                avatarUrl={null}
+                            />
+                        </div>
+                        <div className="flex flex-col items-start gap-1 overflow-hidden py-2 lg:max-w-[9rem]">
+                            <p
+                                className={getValidClassNames(
+                                    isActive ? 'text-action' : 'text-primary',
+                                    'truncate text-sm font-semibold',
+                                )}
+                            >
+                                {companions}
+                            </p>
+                            <p className="text-secondary truncate text-xs">
+                                {lastMessage}
+                            </p>
+                        </div>
                     </div>
                     <p className="text-secondary mr-1 text-xs">
                         {formatChatDate(lastMessageTime, false)}

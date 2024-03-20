@@ -9,6 +9,8 @@ import {
     type MessageResponseDto,
 } from '~/bundles/chats/types/types.js';
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
+import { type DeleteChatMessagesRequestDto } from '~/bundles/messages/types/types.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 import { name as sliceName } from './slice.js';
 
@@ -58,6 +60,22 @@ const leaveRoom = createAction<(userId: number) => Record<'payload', number>>(
     },
 );
 
+const deleteChatHistory = createAsyncThunk<
+    boolean,
+    DeleteChatMessagesRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/delete-chat-history`,
+    async (payload, { extra: { messageApi } }) => {
+        const result = await messageApi.delete(payload);
+        if (result) {
+            notificationManager.success('Your chat history is deleted');
+        }
+
+        return result;
+    },
+);
+
 const sendMessage = createAsyncThunk<
     MessageResponseDto | undefined,
     MessageRequestDto,
@@ -98,6 +116,7 @@ const generateAiAssistantResponse = createAsyncThunk<
 export {
     applyMessage,
     createChat,
+    deleteChatHistory,
     generateAiAssistantResponse,
     getAllChats,
     getChat,

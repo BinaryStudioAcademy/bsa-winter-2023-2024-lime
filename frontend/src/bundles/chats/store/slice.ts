@@ -10,6 +10,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 import {
     applyMessage,
     createChat,
+    deleteChatHistory,
     generateAiAssistantResponse,
     getAllChats,
     getChat,
@@ -22,6 +23,7 @@ type State = {
     currentChat: ChatFullResponseDto | null;
     dataStatus: ValueOf<typeof DataStatus>;
     createChatDataStatus: ValueOf<typeof DataStatus>;
+    deleteChatDataStatus: ValueOf<typeof DataStatus>;
 };
 
 const initialState: State = {
@@ -30,6 +32,7 @@ const initialState: State = {
     currentChat: null,
     dataStatus: DataStatus.IDLE,
     createChatDataStatus: DataStatus.IDLE,
+    deleteChatDataStatus: DataStatus.IDLE,
 };
 
 const { reducer, actions, name } = createSlice({
@@ -57,6 +60,21 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(getChat.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(deleteChatHistory.fulfilled, (state, action) => {
+            if (action.payload) {
+                (state.currentChat as ChatFullResponseDto).messages = [];
+
+                (state.aiAssistantChat as ChatPreviewResponseDto).lastMessage =
+                    null;
+            }
+            state.deleteChatDataStatus = DataStatus.FULFILLED;
+        });
+        builder.addCase(deleteChatHistory.pending, (state) => {
+            state.deleteChatDataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(deleteChatHistory.rejected, (state) => {
+            state.deleteChatDataStatus = DataStatus.REJECTED;
         });
         builder.addCase(createChat.fulfilled, (state, action) => {
             const { isAssistant } = action.payload;

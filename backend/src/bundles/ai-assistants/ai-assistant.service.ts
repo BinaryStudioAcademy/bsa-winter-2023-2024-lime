@@ -50,11 +50,13 @@ class AiAssistantService {
             limit: MAX_CONTEXT_MESSAGE_LENGTH,
         });
 
-        const userGoal = await this.goalService.findLast({ userId: user.id });
+        const userGoals = await this.goalService.findAll({ userId: user.id });
 
         const infoAboutUserContext = getInfoAboutUserContext({
             user,
-            userGoal,
+            userGoals: userGoals.items.filter(
+                ({ completedAt }) => !completedAt,
+            ),
         });
 
         const contextMessages = getContextMessages(chatMessages.items);

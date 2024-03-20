@@ -1,1 +1,5 @@
-export { type MessageRequestDto, type MessageResponseDto } from 'shared';
+export {
+    type DeleteChatMessagesRequestDto,
+    type MessageRequestDto,
+    type MessageResponseDto,
+} from 'shared';

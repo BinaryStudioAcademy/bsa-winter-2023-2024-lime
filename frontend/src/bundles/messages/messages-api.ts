@@ -5,6 +5,7 @@ import { type Storage } from '~/framework/storage/storage.js';
 
 import { MessagePath } from './enums/enums.js';
 import {
+    type DeleteChatMessagesRequestDto,
     type MessageRequestDto,
     type MessageResponseDto,
 } from './types/types.js';
@@ -43,6 +44,23 @@ class MessagesApi extends BaseHttpApi {
             },
         );
         return await response.json<MessageResponseDto>();
+    }
+
+    public async delete(
+        payload: DeleteChatMessagesRequestDto,
+    ): Promise<boolean> {
+        const response = await this.load(
+            this.getFullEndpoint(MessagePath.ID, {
+                chatId: String(payload.chatId),
+            }),
+            {
+                method: 'DELETE',
+                payload: JSON.stringify(payload),
+                contentType: ContentType.JSON,
+                hasAuth: true,
+            },
+        );
+        return await response.json<boolean>();
     }
 }
 

@@ -19,7 +19,7 @@ const checkMessageTimeDifference = (
 const getContextMessages = (
     items: MessageResponseDto[],
 ): ChatCompletionMessageParam[] => {
-    const MAX_CONTEXT_TIME_DIFFERENCE = 5;
+    const MAX_CONTEXT_TIME_DIFFERENCE = 3;
 
     if (
         checkMessageTimeDifference(

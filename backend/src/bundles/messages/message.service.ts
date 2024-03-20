@@ -3,6 +3,7 @@ import { type Service } from '~/common/types/types.js';
 import { MessageEntity } from './message.entity.js';
 import { type MessageRepository } from './message.repository.js';
 import {
+    type DeleteChatMessagesRequestDto,
     type MessageCreateDto,
     type MessageResponseDto,
 } from './types/types.js';
@@ -54,8 +55,10 @@ class MessageService implements Service {
         return Promise.resolve({ query, payload });
     }
 
-    public delete(payload: unknown): Promise<boolean> {
-        return Promise.resolve(Boolean(payload));
+    public async delete(
+        payload: DeleteChatMessagesRequestDto,
+    ): Promise<boolean> {
+        return this.messageRepository.delete(payload);
     }
 }
 

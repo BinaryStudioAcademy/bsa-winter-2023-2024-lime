@@ -1,4 +1,8 @@
-import { ArrowLeftCircleIcon, XCircleIcon } from '@heroicons/react/16/solid';
+import {
+    ArrowLeftCircleIcon,
+    TrashIcon,
+    XCircleIcon,
+} from '@heroicons/react/16/solid';
 
 import {
     ChatMessage,
@@ -13,6 +17,8 @@ import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
 import { type ChatFullResponseDto } from '~/bundles/chats/types/types.js';
 import {
     Avatar,
+    Button,
+    Icon,
     Link,
     UserInfoCard,
 } from '~/bundles/common/components/components.js';
@@ -59,6 +65,18 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
         [currentChat, dispatch],
     );
 
+    const handleDeleteChatHistory = useCallback((): void => {
+        if (
+            currentChat &&
+            currentChat.isAssistant &&
+            currentChat.messages.length > 0
+        ) {
+            void dispatch(
+                chatActionCreator.deleteChatHistory({ chatId: currentChat.id }),
+            );
+        }
+    }, [currentChat, dispatch]);
+
     const [isOpen, setIsOpen] = useState(false);
     const toggleSidebarProfile = useCallback((): void => {
         setIsOpen(!isOpen);
@@ -67,7 +85,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
     return (
         <div className="relative flex h-full overflow-hidden">
             <div className="flex max-h-full w-full flex-col justify-between overflow-hidden">
-                <div className="flex h-20 w-full items-center p-4">
+                <div className="flex h-20 w-full w-full items-center justify-between p-4">
                     <div
                         className="flex cursor-pointer items-center gap-2"
                         onClick={toggleSidebarProfile}
@@ -79,26 +97,46 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                         >
                             <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
                         </Link>
-                        <Avatar
-                            size="sm"
-                            email="email@gmail.com"
-                            avatarUrl={null}
-                        />
                         {currentChat && (
-                            <span className="text-primary font-bold">
-                                {!currentChat?.isAssistant &&
-                                    currentChat.users &&
-                                    formatChatName(
-                                        getChatCompanions(
-                                            currentChat.users,
-                                            user.id,
-                                        ),
-                                    )}
-                                {currentChat?.isAssistant &&
-                                    'Personal Assistant'}
-                            </span>
+                            <>
+                                {currentChat?.isAssistant ? (
+                                    <Icon
+                                        name="aiAssistantIcon"
+                                        className="mr-2 h-12 w-12"
+                                    />
+                                ) : (
+                                    <Avatar
+                                        size="sm"
+                                        email="email@gmail.com"
+                                        avatarUrl={null}
+                                    />
+                                )}
+                                <span className="text-primary font-bold">
+                                    {!currentChat?.isAssistant &&
+                                        currentChat.users &&
+                                        formatChatName(
+                                            getChatCompanions(
+                                                currentChat.users,
+                                                user.id,
+                                            ),
+                                        )}
+                                    {currentChat?.isAssistant &&
+                                        'Personal Assistant'}
+                                </span>
+                            </>
                         )}
                     </div>
+                    {currentChat?.isAssistant && (
+                        <div className="w-[4rem]">
+                            <Button
+                                onClick={handleDeleteChatHistory}
+                                size={'sm'}
+                                variant={'primary'}
+                                label={''}
+                                leftIcon={<TrashIcon className="w-5" />}
+                            />
+                        </div>
+                    )}
                 </div>
                 <ul className="flex h-full flex-1 flex-col-reverse gap-4 overflow-y-auto px-4 pr-2">
                     {currentChat?.messages.map(

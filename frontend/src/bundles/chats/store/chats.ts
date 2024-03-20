@@ -1,6 +1,7 @@
 import {
     applyMessage,
     createChat,
+    deleteChatHistory,
     generateAiAssistantResponse,
     getAllChats,
     getChat,
@@ -15,6 +16,7 @@ const allActions = {
     getAllChats,
     getChat,
     createChat,
+    deleteChatHistory,
     joinRoom,
     leaveRoom,
     sendMessage,
