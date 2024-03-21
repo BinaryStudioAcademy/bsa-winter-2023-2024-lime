@@ -115,7 +115,7 @@ const Goals: React.FC = () => {
         : GoalTypes.STANDART;
 
     return (
-        <main className="bg-secondary flex w-full max-w-[1136px] flex-col justify-center gap-8 xl:flex-row">
+        <main className="bg-secondary flex w-full max-w-[1136px] flex-col justify-start gap-8 xl:flex-row">
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
