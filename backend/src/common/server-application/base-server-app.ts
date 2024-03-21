@@ -92,6 +92,15 @@ class BaseServerApp implements ServerApp {
         );
 
         await this.app.register(fastifyStatic, {
+            root: join(
+                dirname(fileURLToPath(import.meta.url)),
+                '../../../../build/backend/public/storybook',
+            ),
+            prefix: '/storybook/',
+            decorateReply: false,
+        });
+
+        await this.app.register(fastifyStatic, {
             root: staticPath,
             prefix: '/',
         });

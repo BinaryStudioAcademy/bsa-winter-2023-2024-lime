@@ -145,6 +145,10 @@ erDiagram
 6. Run backend: **`npm run start:dev -w backend`**
 7. Run fronend: **`npm run start:dev -w frontend`**
 
+## ️ Storybook
+
+1. Run command: **`npm run storybook`**
+
 ### 🌑 Backend
 
 -   [Fastify](https://www.fastify.io/) — a backend framework.
@@ -156,6 +160,7 @@ erDiagram
 -   [Redux](https://redux.js.org/)
 -   [Redux Toolkit](https://redux-toolkit.js.org/) — a state manager.
 -   [Tailwind CSS](https://tailwindcss.com/) - a CSS framework
+-   [Storybook](https://storybook.js.org/) - a UI documentation
 
 ### 🥊 Code quality
 

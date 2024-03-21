@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 
 import reactPlugin from '@vitejs/plugin-react';
-import { type ConfigEnv, defineConfig, loadEnv } from 'vite';
+import { type ConfigEnv, type PluginOption, defineConfig, loadEnv } from 'vite';
 import { type VitePWAOptions, VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 
@@ -44,6 +44,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     workbox: {
         navigateFallbackDenylist: [
             new RegExp('/v1/documentation/static/index.html'),
+            new RegExp('/storybook/.*'),
             new RegExp('/v1/oauth/[^/]+/exchange-token\\?.*'),
             new RegExp('/v1/identity/[^/]+/exchange-token\\?.*'),
         ],
@@ -62,7 +63,11 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
         build: {
             outDir: 'build',
         },
-        plugins: [reactPlugin(), VitePWA(manifestForPlugin), svgr()],
+        plugins: [
+            reactPlugin(),
+            VitePWA(manifestForPlugin),
+            svgr(),
+        ] as PluginOption[],
         server: {
             port: Number(VITE_APP_DEVELOPMENT_PORT),
             proxy: {
