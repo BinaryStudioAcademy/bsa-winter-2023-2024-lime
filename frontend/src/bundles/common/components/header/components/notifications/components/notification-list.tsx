@@ -18,20 +18,19 @@ const NotificationList = ({
     return (
         <div className="bg-secondary text-primary absolute right-0 flex w-52 flex-col shadow-lg">
             {notifications.length > 0 ? (
-                notifications.map((notification) => (
-                    <>
-                        <NotificationActions
+                notifications.map((notification, index) => (
+                    <NotificationActions
+                        key={index}
+                        notification={notification}
+                        onRead={onNotificationReadClick}
+                        onDelete={onNotificationDeleteClick}
+                        setIsOpened={setIsOpened}
+                    >
+                        <NotificationDisplay
                             notification={notification}
-                            onRead={onNotificationReadClick}
-                            onDelete={onNotificationDeleteClick}
-                            setIsOpened={setIsOpened}
-                        >
-                            <NotificationDisplay
-                                notification={notification}
-                                isOpened={isOpened === notification.id}
-                            />
-                        </NotificationActions>
-                    </>
+                            isOpened={isOpened === notification.id}
+                        />
+                    </NotificationActions>
                 ))
             ) : (
                 <p className="bg-primary text-primary border-buttonTertiary rounded border p-2 text-center text-sm">

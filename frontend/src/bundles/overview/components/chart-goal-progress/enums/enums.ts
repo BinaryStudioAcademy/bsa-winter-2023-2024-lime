@@ -1,1 +1,2 @@
-export { colorsBarChartProgress } from './color-bar-chart-progress.js';
+export { ChartType } from './chart-type.js';
+export { ColorsBarChartProgress } from './color-bar-chart-progress.js';

@@ -1,68 +1,56 @@
 import { Select } from '~/bundles/common/components/components.js';
-import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
 import {
     useAppForm,
-    useCallback,
-    useState,
+    useFormWatch,
+    useMemo,
 } from '~/bundles/common/hooks/hooks.js';
-import { type SingleValue } from '~/bundles/common/types/types.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
-import { BarChart } from '../components.js';
-import { dataMappingSelectDatabase as dataMapping } from './helpers/data-select-database-mapping.helper.js';
-import { weeklyData } from './mock-database/mock-database-goal.js';
+import { BarChart } from './components/components.js';
+import { CHART_TYPE_OPTIONS } from './constants/constants.js';
+import { ChartType } from './enums/enums.js';
+import { generateChartStats } from './helpers/generate-chart-stats.helper.js';
 
-const selectData: SelectOption[] = [
-    {
-        value: 'weekly',
-        label: 'Weekly',
-    },
-    {
-        value: 'monthly',
-        label: 'Monthly',
-    },
-    {
-        value: 'yearly',
-        label: 'Yearly',
-    },
-];
+type Properties = {
+    workouts: WorkoutResponseDto[];
+};
 
-const ChartGoalProgress = (): JSX.Element => {
-    const [currentData, setCurrentData] = useState<SelectOption>(
-        selectData[0] as SelectOption,
-    );
-
+const ChartGoalProgress: React.FC<Properties> = ({ workouts }): JSX.Element => {
     const { control, errors } = useAppForm({
         defaultValues: {
-            select: currentData.value,
+            select: ChartType.WEEKLY,
         },
-        mode: 'onChange',
+        mode: 'onTouched',
     });
 
-    const handleChange = useCallback((newValue: SingleValue<SelectOption>) => {
-        if (newValue) {
-            setCurrentData(newValue);
-        }
-    }, []);
+    const chartType = useFormWatch({
+        name: 'select',
+        control,
+        defaultValue: ChartType.WEEKLY,
+    });
+
+    const chartData = useMemo(
+        () => generateChartStats(chartType, workouts),
+        [chartType, workouts],
+    );
 
     return (
-        <div className="bg-primary rounded-30 relative p-8">
+        <div className="bg-primary rounded-30 relative mb-5 p-8">
             <div className="mb-4 flex h-10 items-center justify-between">
-                <h1 className="text-secondary font-extrabold">Goal Progress</h1>
-                <div className="w-[100px]">
+                <h1 className="text-secondary font-extrabold">
+                    Workout Progress
+                </h1>
+                <div className="h-10 w-[100px]">
                     <Select
-                        className="bg-secondary border-buttonPrimary w-[100px] rounded-md  border text-xs"
+                        className="bg-secondary border-buttonPrimary w-[100px] rounded-md border text-xs"
                         control={control}
                         name="select"
-                        options={selectData}
+                        options={CHART_TYPE_OPTIONS}
                         errors={errors}
-                        value={currentData}
-                        onChange={handleChange}
                     />
                 </div>
             </div>
-            <BarChart
-                chartData={dataMapping[currentData.value] ?? weeklyData}
-            />
+            <BarChart chartData={chartData} />
         </div>
     );
 };

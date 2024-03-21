@@ -1,4 +1,4 @@
-import { colorsBarChartProgress as colors } from '~/bundles/overview/components/chart-goal-progress/enums/enums.js';
+import { ColorsBarChartProgress as colors } from '~/bundles/overview/components/chart-goal-progress/enums/enums.js';
 
 const weeklyData = {
     labels: [

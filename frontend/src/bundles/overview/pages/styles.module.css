@@ -1,7 +1,0 @@
-.schedule__item + .schedule__item {
-    @apply mt-3;
-}
-
-.goal__item + .goal__item {
-    @apply mt-4;
-}

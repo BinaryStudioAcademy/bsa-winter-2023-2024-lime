@@ -1,4 +1,4 @@
-const colorsBarChartProgress = {
+const ColorsBarChartProgress = {
     WORKOUT: {
         backgroundColor: 'rgba(224, 254, 16, 1)',
     },
@@ -10,4 +10,4 @@ const colorsBarChartProgress = {
     },
 } as const;
 
-export { colorsBarChartProgress };
+export { ColorsBarChartProgress };
