@@ -34,14 +34,16 @@ const WorkoutItem = (): JSX.Element => {
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
             {currentWorkout.provider === OAuthProvider.STRAVA && (
-                <NavLink
-                    to={STRAVA_ATHLETE_TRAINING_URL}
-                    className="text-strava-brand mt-[0.5rem] text-right"
-                    target="_blank"
-                    reloadDocument
-                >
-                    View on Strava
-                </NavLink>
+                <div className="text-strava-brand mt-[0.5rem] text-right">
+                    <NavLink
+                        to={STRAVA_ATHLETE_TRAINING_URL}
+                        className="text-strava-brand mt-[0.5rem] text-right"
+                        target="_blank"
+                        reloadDocument
+                    >
+                        View on Strava
+                    </NavLink>
+                </div>
             )}
         </div>
     );

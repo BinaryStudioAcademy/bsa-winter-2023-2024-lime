@@ -1,0 +1,3 @@
+const COMPLETED_GOAL_VALUE = 100;
+
+export { COMPLETED_GOAL_VALUE };

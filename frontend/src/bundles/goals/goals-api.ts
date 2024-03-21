@@ -55,6 +55,17 @@ class GoalsApi extends BaseHttpApi {
         );
         return await response.json<GoalResponseDto>();
     }
+
+    public async deleteGoal(id: string): Promise<boolean> {
+        const response = await this.load(
+            this.getFullEndpoint(GoalsApiPath.ID, { id }),
+            {
+                method: 'DELETE',
+                hasAuth: true,
+            },
+        );
+        return await response.json<boolean>();
+    }
 }
 
 export { GoalsApi };

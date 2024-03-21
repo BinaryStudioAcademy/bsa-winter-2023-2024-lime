@@ -1,2 +1,10 @@
-export { type ChatLink } from './chat-link.type.js';
-export { type MessageRequestDto } from './message-payload.type.js';
+export {
+    type ChatFullResponseDto,
+    type ChatGetAllItemsResponseDto,
+    type ChatPreviewResponseDto,
+    type ChatRequestDto,
+    type ChatResponseDto,
+    type ChatUserResponseDto,
+    type MessageRequestDto,
+    type MessageResponseDto,
+} from 'shared';
