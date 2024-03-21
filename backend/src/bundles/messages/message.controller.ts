@@ -7,7 +7,7 @@ import {
 } from '~/common/controller/controller.js';
 import { ApiPath, HttpCode } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
-import { type SocketService } from '~/common/services/socket/socket.service.js';
+import { socketService } from '~/common/services/services.js';
 
 import { MessagePath } from './enums/enums.js';
 import { type MessageService } from './message.service.js';
@@ -21,17 +21,10 @@ import { messageValidationSchema } from './validation-schemas/validation-schemas
 class MessageController extends BaseController {
     private messageService: MessageService;
 
-    private socketService: SocketService;
-
-    public constructor(
-        logger: Logger,
-        messageService: MessageService,
-        socketService: SocketService,
-    ) {
+    public constructor(logger: Logger, messageService: MessageService) {
         super(logger, ApiPath.MESSAGES);
 
         this.messageService = messageService;
-        this.socketService = socketService;
 
         this.addRoute({
             path: MessagePath.ROOT,
@@ -74,7 +67,7 @@ class MessageController extends BaseController {
 
         const message = await this.messageService.create(payload);
 
-        this.socketService.sendMessage<MessageResponseDto>({
+        socketService.sendMessage<MessageResponseDto>({
             membersId,
             payload: message,
         });

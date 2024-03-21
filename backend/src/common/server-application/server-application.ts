@@ -10,6 +10,7 @@ import { messageController } from '~/bundles/messages/messages.js';
 import { notificationController } from '~/bundles/notifications/notifications.js';
 import { oAuthController } from '~/bundles/oauth/oauth.js';
 import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
+import { scheduleController } from '~/bundles/schedules/schedules.js';
 import { stravaController } from '~/bundles/strava/strava.js';
 import { subscriptionPlanController } from '~/bundles/subscription-plans/subscription-plan.js';
 import { subscriptionController } from '~/bundles/subscriptions/subscriptions.js';
@@ -42,6 +43,7 @@ const apiV1 = new BaseServerAppApi(
     ...identityController.routes,
     ...aiAssistantController.routes,
     ...friendController.routes,
+    ...scheduleController.routes,
 );
 const serverApp = new BaseServerApp({
     config,

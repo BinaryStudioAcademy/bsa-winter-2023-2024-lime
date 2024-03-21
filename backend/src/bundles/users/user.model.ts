@@ -17,6 +17,8 @@ import {
     OAuthStateAttributes,
     OAuthStateModel,
 } from '~/bundles/oauth/oauth.js';
+import { ScheduleAttributes } from '~/bundles/schedules/enums/enums.js';
+import { ScheduleModel } from '~/bundles/schedules/schedules.js';
 import {
     SubscriptionAttributes,
     SubscriptionModel,
@@ -61,6 +63,8 @@ class UserModel extends AbstractModel {
     public 'chats': ChatModel[];
 
     public 'aiChat': ChatModel;
+
+    public 'schedules': ScheduleModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.USERS;
@@ -122,6 +126,14 @@ class UserModel extends AbstractModel {
                 join: {
                     from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
                     to: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
+                },
+            },
+            schedules: {
+                relation: Model.HasManyRelation,
+                modelClass: ScheduleModel,
+                join: {
+                    from: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
+                    to: `${DatabaseTableName.SCHEDULES}.${ScheduleAttributes.USER_ID}`,
                 },
             },
             chats: {

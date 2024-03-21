@@ -1,7 +1,8 @@
 import { type SubscribeRequestDto } from 'shared';
 
 import { googleFitService } from '~/bundles/google-fit/google-fit.js';
-import { type OAuthRepository,OAuthProvider } from '~/bundles/oauth/oauth.js';
+import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
+import { scheduleService } from '~/bundles/schedules/schedules.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -261,6 +262,8 @@ class UserController extends BaseController {
         if (oAuthEntity) {
             void googleFitService.handleData(oAuthEntity);
         }
+
+        void scheduleService.deleteOutdatedSchedules(id);
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
