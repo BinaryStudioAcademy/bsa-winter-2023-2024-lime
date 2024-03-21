@@ -71,7 +71,7 @@ const SubNavigationFilter = ({ options, handles }: Properties): JSX.Element => {
             />
             <button
                 onClick={handleReset}
-                className="text-primary ml-2 underline"
+                className="text-primary ml-2 mt-4 underline"
             >
                 Reset
             </button>

@@ -4,10 +4,8 @@ import {
     type FieldPath,
     type FieldValues,
 } from 'react-hook-form';
-import ReactDatePicker, {
-    type DateObject,
-    type Plugin,
-} from 'react-multi-date-picker';
+import ReactDatePicker, { type DateObject } from 'react-multi-date-picker';
+import ReactTimePicker from 'react-multi-date-picker/plugins/time_picker';
 
 import { useCallback, useFormController } from '../../hooks/hooks.js';
 import { Input } from '../components.js';
@@ -18,54 +16,42 @@ type Properties<T extends FieldValues> = {
     name: FieldPath<T>;
     control: Control<T, null>;
     errors: FieldErrors<T>;
-    format: string;
-    plugins?: Plugin[];
     className?: string;
     label?: string;
-    minDate?: Date;
-    maxDate?: Date;
     placeholder?: string;
-    required?: boolean;
 };
 
-const DatePicker = <T extends FieldValues>({
+const TimePicker = <T extends FieldValues>({
     name,
     control,
     errors,
-    format,
-    plugins,
-    minDate,
-    maxDate,
     className,
     label = '',
     placeholder = '',
-    required = false,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
-    const handleDaySelect = useCallback(
+    const handleTimeSelect = useCallback(
         (date: DateObjectProperties): false | undefined => {
             if ((date as DateObject).isValid) {
-                const formattedDate = (date as DateObject).format(format);
+                const formattedDate = (date as DateObject).format('HH:mm:ss');
                 field.onChange(formattedDate);
                 return;
             }
 
             return false;
         },
-        [field, format],
+        [field],
     );
+
     return (
         <div className={className}>
             <ReactDatePicker
-                minDate={minDate ?? ''}
-                maxDate={maxDate ?? ''}
+                disableDayPicker
                 containerClassName={'custom-date-picker'}
-                onChange={handleDaySelect}
-                offsetY={label ? -10 : -30}
-                format={format}
-                value={field.value}
-                plugins={plugins ?? []}
+                onChange={handleTimeSelect}
+                format={'HH:mm:ss'}
+                plugins={[<ReactTimePicker key="time-picker" />]}
                 render={
                     <Input
                         type="text"
@@ -74,7 +60,6 @@ const DatePicker = <T extends FieldValues>({
                         name={name}
                         control={control}
                         errors={errors}
-                        required={required}
                     />
                 }
             />
@@ -82,4 +67,4 @@ const DatePicker = <T extends FieldValues>({
     );
 };
 
-export { DatePicker };
+export { TimePicker };

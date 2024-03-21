@@ -2,8 +2,10 @@ export { applyThemeClassname } from './apply-theme-classname/apply-theme-classna
 export { calculateAge } from './calculate-age/calculate-age.helper.js';
 export { calculateTotal } from './calculate-total/calculate-total.helper.js';
 export { capitalizeFirstLetter } from './capitalize-first-letter/capitalize-first-letter.helper.js';
+export { configureDate } from './configure-date/configure-date.js';
 export { convertHeightToCentimeters } from './convert-height/convert-height-to-cm.js';
 export { convertHeightToMillimeters } from './convert-height/convert-height-to-mm.js';
+export { convertKMPHtoMPS } from './convert-kmph-to-mps/convert-kmph-to-mps.helper.js';
 export { convertSecondsToHMS } from './convert-seconds-to-hms/convert-seconds-to-hms.helper.js';
 export { convertToMeters } from './convert-to-meters/convert-to-meters.helper.js';
 export { convertWeightToGrams } from './convert-weight/convert-weight-to-grams.js';

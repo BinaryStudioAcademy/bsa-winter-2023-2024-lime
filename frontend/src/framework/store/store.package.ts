@@ -1,7 +1,7 @@
 import {
     type ThunkMiddleware,
-    type Tuple,
     type UnknownAction,
+    Tuple,
 } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -111,13 +111,15 @@ class Store {
                 schedules: schedulesReducer,
             },
             middleware: (getDefaultMiddleware) =>
-                getDefaultMiddleware({
-                    thunk: {
-                        extraArgument: this.extraArguments,
-                    },
-                })
-                    .prepend(errorMiddleware)
-                    .concat(chatSocketMiddleware), // eslint-disable-line unicorn/prefer-spread
+                new Tuple(
+                    ...getDefaultMiddleware({
+                        thunk: {
+                            extraArgument: this.extraArguments,
+                        },
+                    }),
+                    errorMiddleware,
+                    chatSocketMiddleware,
+                ),
         });
     }
 
