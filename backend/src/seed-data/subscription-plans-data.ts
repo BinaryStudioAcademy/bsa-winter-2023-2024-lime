@@ -3,6 +3,7 @@ import { stripeService } from '~/common/services/services.js';
 const subscriptionBasic = {
     name: 'Basic',
     price: 9.99,
+    bonusPointsPrice: 500,
     description:
         'Designed for those who are just starting their fitness journey or prefer a more self-guided approach. With this plan, you get: Access to our library of workout plans and exercises, Ad-Free Experience, Exclusive Offers, and Community Access.',
 };
@@ -10,6 +11,7 @@ const subscriptionBasic = {
 const subscriptionPro = {
     name: 'Pro',
     price: 29.99,
+    bonusPointsPrice: 1000,
     description:
         'Designed for those who want a more personalized and data-driven approach to fitness. With this plan, you get all the benefits of the Basic Subscription, plus: AI-Powered Workouts, Adaptive Training, Priority Support, and Advanced Analytics.',
 };

@@ -29,7 +29,6 @@ class SubscriptionPlanRepository implements Repository {
 
     public async findAll(): Promise<SubscriptionPlanEntity[]> {
         const plans = await this.subscriptionPlanModel.query().execute();
-
         return plans.map((plan) => {
             return SubscriptionPlanEntity.initialize({ ...plan });
         });
@@ -38,14 +37,21 @@ class SubscriptionPlanRepository implements Repository {
     public async create(
         entity: SubscriptionPlanEntity,
     ): Promise<SubscriptionPlanEntity> {
-        const { name, price, description, stripeProductId, stripePriceId } =
-            entity.toNewObject();
+        const {
+            name,
+            price,
+            bonusPointsPrice,
+            description,
+            stripeProductId,
+            stripePriceId,
+        } = entity.toNewObject();
 
         const plan = await this.subscriptionPlanModel
             .query()
             .insert({
                 name,
                 price,
+                bonusPointsPrice,
                 description,
                 stripeProductId,
                 stripePriceId,

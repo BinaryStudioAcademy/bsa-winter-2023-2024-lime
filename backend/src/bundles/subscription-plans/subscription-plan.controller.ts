@@ -1,8 +1,8 @@
 import {
     type ApiHandlerResponse,
     ApiHandlerResponseType,
+    BaseController,
 } from '~/common/controller/controller.js';
-import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode } from '~/common/http/enums/enums.js';
 import { type Logger } from '~/common/logger/types/types.js';
@@ -25,6 +25,9 @@ import { type SubscriptionPlanService } from './subscription-plan.service.js';
  *         price:
  *           type: number
  *           format: double
+ *         bonusPointsPrice:
+ *           type: number
+ *           format: integer
  *         description:
  *           type: string
  *           nullable: true

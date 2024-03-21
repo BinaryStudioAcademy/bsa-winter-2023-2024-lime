@@ -8,6 +8,7 @@ type Properties = {
     name: string;
     description: string;
     price: number;
+    bonusPrice: number;
     stripePriceId: string;
     onSubscribe: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
     onBuyWithPoints: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
@@ -18,6 +19,7 @@ const SubscriptionPlan: React.FC<Properties> = ({
     name,
     description,
     price,
+    bonusPrice,
     stripePriceId,
     onSubscribe,
     onBuyWithPoints,
@@ -39,8 +41,12 @@ const SubscriptionPlan: React.FC<Properties> = ({
                 <div className=" text-primary flex flex-col">
                     <p className="text-action text-3xl">{name.toUpperCase()}</p>
                     <p className="text-primary">
-                        <span className="text-action text-xl">${price}</span>/
-                        month
+                        <span className="text-action text-xl">${price}</span>
+                        <span> or </span>
+                        <span className="text-action text-xl">
+                            {bonusPrice || ''}
+                        </span>{' '}
+                        points / month
                     </p>
                     <div className="mt-2.5">
                         <p className="text-lm-grey-100 text-xs sm:text-sm md:text-base">

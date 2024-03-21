@@ -7,6 +7,8 @@ class SubscriptionPlanEntity implements Entity {
 
     private 'price': number;
 
+    private 'bonusPointsPrice': number;
+
     private 'description': string | null;
 
     private 'stripeProductId': string;
@@ -17,6 +19,7 @@ class SubscriptionPlanEntity implements Entity {
         id,
         name,
         price,
+        bonusPointsPrice,
         description,
         stripeProductId,
         stripePriceId,
@@ -24,6 +27,7 @@ class SubscriptionPlanEntity implements Entity {
         id: number | null;
         name: string;
         price: number;
+        bonusPointsPrice: number;
         description: string | null;
         stripeProductId: string;
         stripePriceId: string;
@@ -31,6 +35,7 @@ class SubscriptionPlanEntity implements Entity {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.bonusPointsPrice = bonusPointsPrice;
         this.description = description;
         this.stripeProductId = stripeProductId;
         this.stripePriceId = stripePriceId;
@@ -40,6 +45,7 @@ class SubscriptionPlanEntity implements Entity {
         id,
         name,
         price,
+        bonusPointsPrice,
         description,
         stripeProductId,
         stripePriceId,
@@ -47,6 +53,7 @@ class SubscriptionPlanEntity implements Entity {
         id: number | null;
         name: string;
         price: number;
+        bonusPointsPrice: number;
         description: string | null;
         stripeProductId: string;
         stripePriceId: string;
@@ -55,6 +62,7 @@ class SubscriptionPlanEntity implements Entity {
             id,
             name,
             price,
+            bonusPointsPrice,
             description,
             stripeProductId,
             stripePriceId,
@@ -64,11 +72,13 @@ class SubscriptionPlanEntity implements Entity {
     public static initializeNew({
         name,
         price,
+        bonusPointsPrice,
         stripeProductId,
         stripePriceId,
     }: {
         name: string;
         price: number;
+        bonusPointsPrice: number;
         stripeProductId: string;
         stripePriceId: string;
     }): SubscriptionPlanEntity {
@@ -76,6 +86,7 @@ class SubscriptionPlanEntity implements Entity {
             id: null,
             name,
             price,
+            bonusPointsPrice,
             description: null,
             stripeProductId,
             stripePriceId,
@@ -86,6 +97,7 @@ class SubscriptionPlanEntity implements Entity {
         id: number;
         name: string;
         price: number;
+        bonusPointsPrice: number;
         description: string;
         stripeProductId: string;
         stripePriceId: string;
@@ -94,6 +106,7 @@ class SubscriptionPlanEntity implements Entity {
             id: this.id as number,
             name: this.name,
             price: this.price,
+            bonusPointsPrice: this.bonusPointsPrice,
             description: this.description as string,
             stripeProductId: this.stripeProductId,
             stripePriceId: this.stripePriceId,
@@ -103,6 +116,7 @@ class SubscriptionPlanEntity implements Entity {
     public toNewObject(): {
         name: string;
         price: number;
+        bonusPointsPrice: number;
         description: string;
         stripeProductId: string;
         stripePriceId: string;
@@ -110,6 +124,7 @@ class SubscriptionPlanEntity implements Entity {
         return {
             name: this.name,
             price: this.price,
+            bonusPointsPrice: this.bonusPointsPrice,
             description: this.description as string,
             stripeProductId: this.stripeProductId,
             stripePriceId: this.stripePriceId,

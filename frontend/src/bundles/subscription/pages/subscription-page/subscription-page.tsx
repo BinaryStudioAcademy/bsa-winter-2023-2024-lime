@@ -126,6 +126,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     id={plan.id}
                                     name={plan.name}
                                     price={plan.price}
+                                    bonusPrice={plan.bonusPointsPrice}
                                     description={plan.description ?? ''}
                                     stripePriceId={plan.stripePriceId}
                                     onSubscribe={handleCreateSubscription}
@@ -141,6 +142,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     id={plan.id}
                                     name={plan.name}
                                     price={plan.price}
+                                    bonusPrice={plan.bonusPointsPrice}
                                     description={plan.description ?? ''}
                                     stripePriceId={plan.stripePriceId}
                                     onSubscribe={handleCreateSubscription}

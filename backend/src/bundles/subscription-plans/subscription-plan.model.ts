@@ -13,6 +13,8 @@ class SubscriptionPlanModel extends AbstractModel {
 
     public 'price': number;
 
+    public 'bonusPointsPrice': number;
+
     public 'description': string | null;
 
     public 'stripeProductId': string;
