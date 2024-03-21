@@ -46,7 +46,6 @@ class WorkoutService implements Service {
             items: items.map((it) => it.toObject()),
         };
     }
-
     public async create(
         payload: WorkoutRequestDto,
     ): Promise<WorkoutResponseDto> {

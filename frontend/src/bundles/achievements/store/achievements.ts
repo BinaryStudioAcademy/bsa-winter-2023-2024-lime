@@ -3,8 +3,8 @@ import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
-    getAchievementsByUserId,
     getAchievements,
+    getAchievementsByUserId,
 };
 
 export { allActions as actions };
