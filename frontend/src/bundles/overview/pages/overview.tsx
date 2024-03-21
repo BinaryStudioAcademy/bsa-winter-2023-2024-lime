@@ -163,6 +163,9 @@ const Overview: React.FC = () => {
                     title="My Schedule"
                     viewAllLink={AppRoute.SCHEDULE}
                     className={isSubscribed ? 'mb-14' : 'mb-5'}
+                    buttonTitle={
+                        schedules.length > 0 ? 'View all' : 'Create schedule'
+                    }
                 >
                     {schedules.length > 0 ? (
                         <ul>
@@ -185,7 +188,9 @@ const Overview: React.FC = () => {
                             )}
                         </ul>
                     ) : (
-                        <p>Empty schedule</p>
+                        <div className="border-lm-yellow-100 text-infoSection flex h-44 items-center justify-center rounded-md border-2">
+                            Empty schedule
+                        </div>
                     )}
                 </InfoSection>
                 {!isSubscribed && <GoogleAds className="mb-5 h-48" />}
