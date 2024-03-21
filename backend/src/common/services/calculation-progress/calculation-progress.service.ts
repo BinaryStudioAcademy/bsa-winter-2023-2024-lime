@@ -168,7 +168,7 @@ class CalculationProgressService {
                     await this.notificationService.create({
                         userId,
                         title: 'New Achievement',
-                        message: `${NotificationMessage.NEW_ACHIEVEMENT} ${achievementDetails.toObject().name}.`,
+                        message: `${NotificationMessage.NEW_ACHIEVEMENT} ${(achievementDetails as AchievementEntity).toObject().name}.`,
                         isRead: false,
                         type: 'default',
                     });

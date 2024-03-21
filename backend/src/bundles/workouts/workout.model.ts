@@ -1,7 +1,3 @@
-import { type RelationMappings, Model } from 'objection';
-
-import { UserAttributes } from '~/bundles/users/enums/enums.js';
-import { UserModel } from '~/bundles/users/users.js';
 import {
     AbstractModel,
     DatabaseTableName,
@@ -9,7 +5,7 @@ import {
 import { type ActivityType } from '~/common/enums/enums.js';
 import { type ValueOf } from '~/common/types/types.js';
 
-import { type OAuthProvider, WorkoutAttributes } from './enums/enums.js';
+import { type OAuthProvider } from './enums/enums.js';
 
 class WorkoutModel extends AbstractModel {
     public 'userId': number;
@@ -26,19 +22,6 @@ class WorkoutModel extends AbstractModel {
 
     public static override get tableName(): string {
         return DatabaseTableName.WORKOUTS;
-    }
-
-    public static override get relationMappings(): RelationMappings {
-        return {
-            user: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: UserModel,
-                join: {
-                    from: `${DatabaseTableName.WORKOUTS}.${WorkoutAttributes.USER_ID}`,
-                    to: `${DatabaseTableName.USERS}.${UserAttributes.ID}`,
-                },
-            },
-        };
     }
 }
 

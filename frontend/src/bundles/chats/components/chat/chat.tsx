@@ -78,12 +78,15 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
         }
     }, [currentChat, dispatch]);
 
+    const handleCloseChat = useCallback((): void => {
+        void dispatch(chatActionCreator.clearCurrentChat());
+    }, [dispatch]);
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleSidebarProfile = useCallback((): void => {
         setIsOpen(!isOpen);
-        void dispatch(chatActionCreator.clearCurrentChat());
-    }, [isOpen, dispatch]);
+    }, [isOpen]);
 
     if (!currentChat) {
         return (
@@ -100,7 +103,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
     return (
         <div className="relative flex h-full overflow-hidden">
             <div className="flex max-h-full w-full flex-col justify-between overflow-hidden">
-                <div className="flex h-20 w-full w-full items-center justify-between p-4">
+                <div className="flex h-20 w-full items-center justify-between p-4">
                     <div
                         className="flex cursor-pointer items-center gap-2"
                         onClick={toggleSidebarProfile}
@@ -110,7 +113,9 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                             to={AppRoute.CHATS}
                             className="mr-2 flex lg:hidden"
                         >
-                            <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
+                            <button onClick={handleCloseChat}>
+                                <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
+                            </button>
                         </Link>
                         {currentChat && (
                             <>
@@ -122,8 +127,14 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                                 ) : (
                                     <Avatar
                                         size="sm"
-                                        email="email@gmail.com"
-                                        avatarUrl={null}
+                                        email={
+                                            (chatMember?.fullName ||
+                                                chatMember?.email) ??
+                                            ''
+                                        }
+                                        avatarUrl={
+                                            chatMember?.avatarUrl ?? null
+                                        }
                                     />
                                 )}
                                 <span className="text-primary font-bold">
@@ -182,7 +193,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                                 chatMember?.fullName || chatMember?.email || ''
                             }
                             image={chatMember?.avatarUrl ?? ''}
-                            className="w-full px-8"
+                            className="w-full px-16"
                         />
                     </div>
                 </div>
