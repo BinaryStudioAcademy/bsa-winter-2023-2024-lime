@@ -73,7 +73,7 @@ const FriendDetails = ({
                     )}
                 />
 
-                <h3 className="text-primary font-heading font-semibold sm:text-xs lg:text-[1rem]">
+                <h3 className="text-primary font-semibold sm:text-xs lg:text-[1rem]">
                     {name}
                 </h3>
             </div>
