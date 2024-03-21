@@ -24,10 +24,7 @@ import {
 class ChatController extends BaseController {
     private chatService: ChatService;
 
-    public constructor(
-        logger: Logger,
-        chatService: ChatService,
-    ) {
+    public constructor(logger: Logger, chatService: ChatService) {
         super(logger, ApiPath.CHATS);
 
         this.chatService = chatService;

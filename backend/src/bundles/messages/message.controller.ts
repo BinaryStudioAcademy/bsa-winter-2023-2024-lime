@@ -21,10 +21,7 @@ import { messageValidationSchema } from './validation-schemas/validation-schemas
 class MessageController extends BaseController {
     private messageService: MessageService;
 
-    public constructor(
-        logger: Logger,
-        messageService: MessageService,
-    ) {
+    public constructor(logger: Logger, messageService: MessageService) {
         super(logger, ApiPath.MESSAGES);
 
         this.messageService = messageService;
