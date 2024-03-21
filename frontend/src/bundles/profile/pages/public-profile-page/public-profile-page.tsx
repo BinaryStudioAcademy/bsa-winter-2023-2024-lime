@@ -25,6 +25,7 @@ import {
     useParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
 import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
 import {
     PersonalDetails,
@@ -73,9 +74,25 @@ const PublicProfile: React.FC = () => {
     const totalCalories = calculateTotal(workouts, 'kilocalories');
     const [hours, minutes, seconds] = convertSecondsToHMS(totalDuration);
 
-    const handleToggleFollow = useCallback(() => {
-        setIsFollowed((previousIsFollowed) => !previousIsFollowed);
-    }, []);
+    const handleToggleFollow = useCallback(
+        (id: number) => {
+            if (isFollowed) {
+                void dispatch(
+                    friendsActions.removeFollowing({
+                        followingId: id,
+                    }),
+                );
+            } else {
+                void dispatch(
+                    friendsActions.addFollowing({
+                        followingId: id,
+                    }),
+                );
+            }
+            setIsFollowed((previousIsFollowed) => !previousIsFollowed);
+        },
+        [dispatch, isFollowed],
+    );
 
     const handleMessageFriend = useCallback(() => {
         //navigate to chat page with specific user
