@@ -1,20 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/async-thunk-config.type.js';
-import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type WorkoutGetAllResponseDto } from '~/bundles/workouts/types/types.js';
 
-import { type WorkoutShowLastType } from '../enums/enums.js';
 import { name } from './slice.js';
 
 const getWorkouts = createAsyncThunk<
     WorkoutGetAllResponseDto,
-    ValueOf<typeof WorkoutShowLastType> | undefined,
+    undefined,
     AsyncThunkConfig
->(`${name}/get-workouts`, async (showLast, { extra }) => {
+>(`${name}/get-workouts`, async (_, { extra }) => {
     const { workoutApi } = extra;
 
-    return await workoutApi.getAll(showLast);
+    return await workoutApi.getAll();
 });
 
 const getLastWorkoutsByUserId = createAsyncThunk<

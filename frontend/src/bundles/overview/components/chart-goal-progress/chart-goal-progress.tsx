@@ -1,76 +1,33 @@
 import { Select } from '~/bundles/common/components/components.js';
-import { type SelectOption } from '~/bundles/common/components/select/types/types.js';
 import {
-    useAppDispatch,
     useAppForm,
-    useAppSelector,
-    useCallback,
-    useEffect,
+    useFormWatch,
     useMemo,
-    useState,
 } from '~/bundles/common/hooks/hooks.js';
-import {
-    type SingleValue,
-    type ValueOf,
-} from '~/bundles/common/types/types.js';
-import { type WorkoutShowLastType } from '~/bundles/workouts/enums/enums.js';
-import { actions as workoutsActions } from '~/bundles/workouts/store/workouts.js';
+import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 import { BarChart } from './components/components.js';
+import { CHART_TYPE_OPTIONS } from './constants/constants.js';
+import { ChartType } from './enums/enums.js';
 import { generateChartStats } from './helpers/generate-chart-stats.helper.js';
 
-const selectData: SelectOption[] = [
-    {
-        value: 'week',
-        label: 'Weekly',
-    },
-    {
-        value: 'month',
-        label: 'Monthly',
-    },
-    {
-        value: 'year',
-        label: 'Yearly',
-    },
-];
+type Properties = {
+    workouts: WorkoutResponseDto[];
+};
 
-const ChartGoalProgress = (): JSX.Element => {
-    const dispatch = useAppDispatch();
-
-    const [currentData, setCurrentData] = useState<SelectOption>(
-        selectData[0] as SelectOption,
-    );
-
+const ChartGoalProgress: React.FC<Properties> = ({ workouts }): JSX.Element => {
     const { control, errors } = useAppForm({
         defaultValues: {
-            select: currentData.value,
+            select: ChartType.WEEKLY,
         },
         mode: 'onChange',
     });
 
-    const { workouts } = useAppSelector(({ workouts }) => workouts);
-
-    useEffect(() => {
-        void dispatch(
-            workoutsActions.getWorkouts(
-                currentData.value as ValueOf<typeof WorkoutShowLastType>,
-            ),
-        );
-    }, [currentData, dispatch]);
-
-    const handleChange = useCallback((newValue: SingleValue<SelectOption>) => {
-        if (newValue) {
-            setCurrentData(newValue);
-        }
-    }, []);
+    const chartType = useFormWatch({ control, name: 'select' });
 
     const chartData = useMemo(
-        () =>
-            generateChartStats(
-                currentData.value as ValueOf<typeof WorkoutShowLastType>,
-                workouts,
-            ),
-        [currentData.value, workouts],
+        () => generateChartStats(chartType, workouts),
+        [chartType, workouts],
     );
 
     return (
@@ -82,10 +39,8 @@ const ChartGoalProgress = (): JSX.Element => {
                         className="bg-secondary border-buttonPrimary w-[100px] rounded-md  border text-xs"
                         control={control}
                         name="select"
-                        options={selectData}
+                        options={CHART_TYPE_OPTIONS}
                         errors={errors}
-                        value={currentData}
-                        onChange={handleChange}
                     />
                 </div>
             </div>

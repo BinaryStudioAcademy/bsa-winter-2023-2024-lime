@@ -8,7 +8,6 @@ import {
 } from './types/types.js';
 import { WorkoutEntity } from './workout.entity.js';
 import { type WorkoutRepository } from './workout.repository.js';
-import { WorkoutShowLastType } from './workouts.js';
 
 class WorkoutService implements Service {
     private workoutRepository: WorkoutRepository;
@@ -40,47 +39,6 @@ class WorkoutService implements Service {
         const items = await this.workoutRepository.findAllByUserIdAndMonth(
             userId,
             currentMonth,
-        );
-
-        return {
-            items: items.map((it) => it.toObject()),
-        };
-    }
-    public async getStats({
-        userId,
-        showLast,
-    }: {
-        userId: number;
-        showLast: string;
-    }): Promise<unknown> {
-        const startDate = new Date();
-        const endDate = new Date();
-
-        startDate.setHours(0, 0, 0, 0);
-
-        switch (showLast) {
-            case WorkoutShowLastType.WEEK: {
-                startDate.setDate(endDate.getDate() - endDate.getDay() + 1);
-                break;
-            }
-            case WorkoutShowLastType.MONTH: {
-                startDate.setDate(1);
-                break;
-            }
-
-            case WorkoutShowLastType.YEAR: {
-                startDate.setMonth(0);
-                startDate.setDate(1);
-                break;
-            }
-        }
-
-        const items = await this.workoutRepository.findAllBetweenDates(
-            {
-                userId,
-            },
-            startDate.toISOString(),
-            endDate.toISOString(),
         );
 
         return {

@@ -1,2 +1,2 @@
 export { WorkoutUnit } from './workout-unit.enum.js';
-export { OAuthProvider, WorkoutsApiPath, WorkoutShowLastType } from 'shared';
+export { OAuthProvider, WorkoutsApiPath } from 'shared';

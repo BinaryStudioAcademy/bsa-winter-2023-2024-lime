@@ -1,16 +1,16 @@
 import { type ValueOf } from '~/bundles/common/types/types.js';
-import { colorsBarChartProgress as colors } from '~/bundles/overview/components/chart-goal-progress/enums/enums.js';
-import { WorkoutShowLastType } from '~/bundles/workouts/enums/enums.js';
+import { ColorsBarChartProgress as colors } from '~/bundles/overview/components/chart-goal-progress/enums/enums.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
 import { type BarChartData } from '../components/bar-chart/types/bar-chart-data.types.js';
+import { ChartType } from '../enums/enums.js';
 import { convertStatsToPercentage } from './convert-stats-to-percentage.helper.js';
 import { generateMonthlyDatasets } from './generate-monthly-datasets.helper.js';
 import { generateWeeklyDatasets } from './generate-weekly-datasets.helper.js';
 import { generateYearlyDatasets } from './generate-yearly-datasets.helper.js';
 
 const generateChartStats = (
-    type: ValueOf<typeof WorkoutShowLastType>,
+    type: ValueOf<typeof ChartType>,
     workouts: WorkoutResponseDto[],
 ): BarChartData => {
     const chartData: BarChartData = {
@@ -41,20 +41,20 @@ const generateChartStats = (
     const datasets = [];
 
     switch (type) {
-        case WorkoutShowLastType.WEEK: {
+        case ChartType.WEEKLY: {
             const result = generateWeeklyDatasets(today, workouts);
             chartData.labels = result.labels;
             datasets.push(...result.datasets);
             break;
         }
-        case WorkoutShowLastType.MONTH: {
+        case ChartType.MONTHLY: {
             const result = generateMonthlyDatasets(today, workouts);
             chartData.labels = result.labels;
             datasets.push(...result.datasets);
 
             break;
         }
-        case WorkoutShowLastType.YEAR: {
+        case ChartType.YEARLY: {
             const result = generateYearlyDatasets(today, workouts);
             chartData.labels = result.labels;
             datasets.push(...result.datasets);

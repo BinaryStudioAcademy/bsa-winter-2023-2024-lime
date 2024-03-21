@@ -26,10 +26,11 @@ import {
     GoalWidget,
 } from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
+import { actions as workoutsActions } from '~/bundles/workouts/store/workouts.js';
 
 import { CompletedGoalsStatus } from '../enums/enums.js';
 import {
-    calculateStats,
+    calculateTodayStats,
     classifyGoalsByCompletion,
     defineCompletedGoalsStatus,
     getCompletedDate,
@@ -75,9 +76,10 @@ const Overview: React.FC = () => {
     const isLoading = goalsDataStatus === DataStatus.PENDING;
     useEffect(() => {
         void dispatch(goalsActions.getGoals());
+        void dispatch(workoutsActions.getWorkouts());
     }, [dispatch]);
 
-    const statistics = useMemo(() => calculateStats(workouts), [workouts]);
+    const statistics = useMemo(() => calculateTodayStats(workouts), [workouts]);
 
     const { completedGoals, incompletedGoals } = useMemo(
         () => classifyGoalsByCompletion(goals),
@@ -136,8 +138,8 @@ const Overview: React.FC = () => {
                     </li>
                     <li className="flex-1">
                         <ActivityWidget
-                            label="Steps"
-                            value={`${statistics.steps} steps`}
+                            label="Distance"
+                            value={`${statistics.distance} km`}
                             color={ActivityWidgetColor.PURPLE}
                             icon={<Icon name={IconName.stepsIcon} />}
                         />
@@ -146,7 +148,7 @@ const Overview: React.FC = () => {
                 {!isSubscribed && (
                     <GoogleAds className="mb-6 hidden h-44 xl:flex" />
                 )}
-                <ChartGoalProgress />
+                <ChartGoalProgress workouts={workouts} />
                 {incompletedGoals.length > 0 && (
                     <div className="mt-5">
                         <ul className="flex gap-4">
