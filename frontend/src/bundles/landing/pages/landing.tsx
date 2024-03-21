@@ -436,9 +436,6 @@ const Landing = (): JSX.Element => {
                                 <li>
                                     <u>Powered</u> by <b>AI</b>
                                 </li>
-                                <Link to={AppRoute.ROOT}>
-                                    See all resources
-                                </Link>
                             </ul>
                         </div>
                         <div>
