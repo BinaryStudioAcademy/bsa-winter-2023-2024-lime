@@ -128,8 +128,8 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                                     <Avatar
                                         size="sm"
                                         email={
-                                            (chatMember?.fullName ||
-                                                chatMember?.email) ??
+                                            chatMember?.fullName ??
+                                            chatMember?.email ??
                                             ''
                                         }
                                         avatarUrl={
@@ -190,7 +190,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                         </button>
                         <UserInfoCard
                             name={
-                                chatMember?.fullName || chatMember?.email || ''
+                                chatMember?.fullName ?? chatMember?.email ?? ''
                             }
                             image={chatMember?.avatarUrl ?? ''}
                             className="w-full px-16"
