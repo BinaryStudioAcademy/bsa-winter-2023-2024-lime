@@ -1,9 +1,9 @@
-import { formatChatDate } from '~/bundles/chats/helpers/format-chat-date.helper.js';
+import { formatChatDate } from '~/bundles/chats/helpers/helpers.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 
 type Properties = {
     isCurrentUserMessage: boolean;
-    sendDate: Date;
+    sendDate: string;
     message: string;
 };
 
@@ -16,12 +16,12 @@ const ChatMessage = ({
         <li
             className={getValidClassNames(
                 isCurrentUserMessage ? 'self-end text-end' : 'self-start',
-                'w-full max-w-[85%]',
+                'w-fit max-w-[85%]',
             )}
         >
             <div className="flex flex-col">
                 <span className="text-secondary">
-                    {formatChatDate(sendDate)}
+                    {formatChatDate(sendDate, true)}
                 </span>
                 <div
                     className={getValidClassNames(
@@ -31,7 +31,9 @@ const ChatMessage = ({
                         'rounded-xl px-3 py-2',
                     )}
                 >
-                    <span className="text-primary">{message}</span>
+                    <span className="text-primary whitespace-pre-line">
+                        {message}
+                    </span>
                 </div>
             </div>
         </li>

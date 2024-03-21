@@ -10,7 +10,12 @@ type Properties = {
 };
 
 const ProfileLayout: React.FC<Properties> = ({ className }): JSX.Element => (
-    <div className={getValidClassNames(className, 'mx-auto my-0 flex w-full')}>
+    <div
+        className={getValidClassNames(
+            className,
+            'mx-auto my-0 flex w-full flex-col md:flex-row',
+        )}
+    >
         <ProfileNavigation />
         <RouterOutlet />
     </div>

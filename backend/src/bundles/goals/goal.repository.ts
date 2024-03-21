@@ -2,6 +2,8 @@ import { GoalEntity } from '~/bundles/goals/goal.entity.js';
 import { type GoalModel } from '~/bundles/goals/goal.model.js';
 import { type Repository } from '~/common/types/repository.type.js';
 
+import { GoalAttributes } from './enums/enums.js';
+
 class GoalRepository implements Repository {
     private goalModel: typeof GoalModel;
 
@@ -13,6 +15,22 @@ class GoalRepository implements Repository {
         query: Record<string, unknown>,
     ): Promise<GoalEntity | null> {
         const goal = await this.goalModel.query().findOne(query).execute();
+
+        if (!goal) {
+            return null;
+        }
+
+        return GoalEntity.initialize(goal);
+    }
+
+    public async findLast(
+        query: Record<string, unknown>,
+    ): Promise<GoalEntity | null> {
+        const goal = await this.goalModel
+            .query()
+            .where(query)
+            .orderBy(GoalAttributes.CREATED_AT, 'DESC')
+            .first();
 
         if (!goal) {
             return null;

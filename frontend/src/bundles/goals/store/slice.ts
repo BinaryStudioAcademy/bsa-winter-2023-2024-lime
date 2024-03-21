@@ -4,7 +4,12 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type GoalResponseDto } from '../types/types.js';
-import { createGoal, getGoals, getGoalsByUserId } from './actions.js';
+import {
+    createGoal,
+    deleteGoal,
+    getGoals,
+    getGoalsByUserId,
+} from './actions.js';
 
 type State = {
     dataStatus: ValueOf<typeof DataStatus>;
@@ -49,6 +54,18 @@ const { reducer, actions, name } = createSlice({
             state.goals.push(action.payload);
         });
         builder.addCase(createGoal.rejected, (state) => {
+            state.dataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(deleteGoal.pending, (state) => {
+            state.dataStatus = DataStatus.PENDING;
+        });
+        builder.addCase(deleteGoal.fulfilled, (state, action) => {
+            state.dataStatus = DataStatus.FULFILLED;
+            state.goals = state.goals.filter(
+                (goal) => goal.id !== action.meta.arg,
+            );
+        });
+        builder.addCase(deleteGoal.rejected, (state) => {
             state.dataStatus = DataStatus.REJECTED;
         });
     },
