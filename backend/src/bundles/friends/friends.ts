@@ -15,7 +15,7 @@ const friendRepository = new FriendRepository(FriendModel, UserModel);
 const friendService = new FriendService(friendRepository);
 const friendController = new FriendController(logger, friendService);
 
-export { friendController, friendService };
+export { friendController, friendRepository, friendService };
 export { UserDetailsModel } from '../users/user-details.model.js';
 export { FriendController } from './friend.controller.js';
 export { FriendEntity } from './friend.entity.js';

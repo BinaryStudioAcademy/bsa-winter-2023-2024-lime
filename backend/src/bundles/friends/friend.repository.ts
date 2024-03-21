@@ -145,9 +145,9 @@ class FriendRepository implements Repository {
             });
         }
 
-        await user
-            .$relatedQuery('friends', trx)
-            .insert({ followingId })
+        await this.friendModel
+            .query(trx)
+            .insert({ userId: user.id, followingId })
             .returning('*')
             .first();
 
@@ -173,10 +173,10 @@ class FriendRepository implements Repository {
             });
         }
 
-        await user
-            .$relatedQuery('friends', trx)
-            .delete()
-            .where('following_id', followingId);
+        await this.friendModel
+            .query(trx)
+            .where({ userId: user.id, followingId })
+            .delete();
 
         const result = await this.getFollowings(id, offset, '1');
 

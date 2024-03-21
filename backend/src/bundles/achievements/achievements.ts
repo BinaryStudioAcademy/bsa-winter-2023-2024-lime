@@ -17,3 +17,4 @@ export { achievementController, achievementRepository, achievementService };
 export { AchievementEntity } from './achievement.entity.js';
 export { AchievementModel } from './achievement.model.js';
 export { AchievementService } from './achievement.service.js';
+export { UserAchievementModel } from './user-achievement.model.js';
