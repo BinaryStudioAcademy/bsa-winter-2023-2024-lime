@@ -164,7 +164,7 @@ class UserService implements Service {
 
         const { bonusBalance } = userToUpdate.toObject();
         const updatedBalance =
-            transactionType === UserBonusTransactionType.EXPENSE
+            transactionType === UserBonusTransactionType.EXSPENSE
                 ? Number(bonusBalance) - amount
                 : Number(bonusBalance) + amount;
 

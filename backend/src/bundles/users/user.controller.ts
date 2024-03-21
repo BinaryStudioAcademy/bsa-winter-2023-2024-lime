@@ -1,7 +1,7 @@
 import { type SubscribeRequestDto } from 'shared';
 
 import { googleFitService } from '~/bundles/google-fit/google-fit.js';
-import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
+import { type OAuthRepository,OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -11,8 +11,8 @@ import {
     type ApiHandlerOptions,
     type ApiHandlerResponse,
     ApiHandlerResponseType,
+    BaseController,
 } from '~/common/controller/controller.js';
-import { BaseController } from '~/common/controller/controller.js';
 import { ApiPath } from '~/common/enums/enums.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { upload } from '~/common/middlewares/middlewares.js';
@@ -480,7 +480,7 @@ class UserController extends BaseController {
             await this.userService.createUserBonusTransaction({
                 userId,
                 actionType: UserBonusActionType.INVITED,
-                transactionType: UserBonusTransactionType.EXPENSE,
+                transactionType: UserBonusTransactionType.EXSPENSE,
                 amount: 100,
             });
 
