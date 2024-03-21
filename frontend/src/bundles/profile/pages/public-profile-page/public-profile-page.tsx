@@ -78,7 +78,7 @@ const PublicProfile: React.FC = () => {
             .catch(() => {
                 setIsFollowed(false);
             });
-    }, [dispatch]);
+    }, [dispatch, NumericId]);
 
     const { dataStatus: dataStatusUser, user } = useAppSelector(
         ({ users }) => users,
