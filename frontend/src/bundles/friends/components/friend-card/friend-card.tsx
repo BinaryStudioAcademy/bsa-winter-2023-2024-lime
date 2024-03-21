@@ -51,9 +51,9 @@ const FriendCard = ({
     const { userId, fullName, email, avatarUrl } = user;
 
     const classes = {
-        base: 'hover:border-buttonPrimary flex w-full min-w-[200px] flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-transparent',
+        base: 'hover:border-buttonPrimary flex w-full flex-col rounded-xl border border-transparent max-w-[300px]',
         selected:
-            'hover:border-buttonPrimary flex w-full min-w-[200px] flex-col rounded-xl border sm:max-w-40 lg:max-w-64 border-buttonPrimary ',
+            'hover:border-buttonPrimary flex w-full flex-col rounded-xl border  border-buttonPrimary max-w-[300px]',
         followed:
             'text-action hover:border-buttonSecondary hover:text-buttonSecondary inline-flex items-center justify-center rounded-full border sm:h-7 sm:w-7 lg:h-10 lg:w-10',
         notFollowed:
@@ -111,7 +111,7 @@ const FriendCard = ({
                     <img
                         src={avatarUrl}
                         alt={fullName ?? 'avatar'}
-                        className="aspect-square rounded-t-xl object-cover"
+                        className="aspect-square w-full rounded-t-xl object-cover"
                     />
                 ) : (
                     <div className="bg-lm-grey-100 flex aspect-square items-center justify-center rounded-t-xl">

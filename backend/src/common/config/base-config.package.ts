@@ -173,6 +173,12 @@ class BaseConfig implements Config {
                     env: 'EMAIL_FROM',
                     default: null,
                 },
+                TEMPLATE_ID: {
+                    doc: 'Sendgrid template id to send mails to customers',
+                    format: String,
+                    env: 'TEMPLATE_ID',
+                    default: null,
+                },
             },
             STRIPE: {
                 SECRET_KEY: {

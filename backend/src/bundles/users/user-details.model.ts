@@ -25,6 +25,8 @@ class UserDetailsModel extends AbstractModel {
 
     public 'gender': ValueOf<typeof Gender> | null;
 
+    public 'isPublic': boolean;
+
     public 'referralCode': string | null;
 
     public 'bonusBalance': number | null;

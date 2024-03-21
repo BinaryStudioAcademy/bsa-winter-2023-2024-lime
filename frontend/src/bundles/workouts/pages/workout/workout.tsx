@@ -37,7 +37,7 @@ const Workout: React.FC = () => {
             const redirectPath = configureString(AppRoute.WORKOUT_$ID, {
                 id: String(firstWorkoutId),
             });
-            navigate(redirectPath);
+            navigate(redirectPath, { replace: true });
         }
     }, [id, navigate, workouts]);
 
