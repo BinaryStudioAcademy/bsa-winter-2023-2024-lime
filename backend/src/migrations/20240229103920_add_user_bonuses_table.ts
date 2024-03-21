@@ -18,21 +18,22 @@ const ACTION_TYPE_ENUM = `${ColumnName.ACTION_TYPE}_enum`;
 const ActionType = {
     INVITED: 'invited',
     REGISTERED: 'registered',
+    SUBSCRIPTION: 'subscription',
 };
 
 const TRANSACTION_TYPE_ENUM = `${ColumnName.TRANSACTION_TYPE}_enum`;
 
 const TransactionType = {
     INCOME: 'income',
-    EXSPENSE: 'expense',
+    EXPENSE: 'expense',
 };
 
 async function up(knex: Knex): Promise<void> {
     await knex.schema.raw(
-        `CREATE TYPE ${ACTION_TYPE_ENUM} AS ENUM ('${ActionType.INVITED}', '${ActionType.REGISTERED}');`,
+        `CREATE TYPE ${ACTION_TYPE_ENUM} AS ENUM ('${ActionType.INVITED}', '${ActionType.REGISTERED}', '${ActionType.SUBSCRIPTION}');`,
     );
     await knex.schema.raw(
-        `CREATE TYPE ${TRANSACTION_TYPE_ENUM} AS ENUM ('${TransactionType.INCOME}', '${TransactionType.EXSPENSE}');`,
+        `CREATE TYPE ${TRANSACTION_TYPE_ENUM} AS ENUM ('${TransactionType.INCOME}', '${TransactionType.EXPENSE}');`,
     );
 
     await knex.schema.createTable(TABLE_NAME, (table) => {

@@ -8,6 +8,7 @@ const UserBonusTransactionMessage: Record<
 > = {
     [UserBonusActionType.REGISTERED]: 'Registration bonus',
     [UserBonusActionType.INVITED]: 'Friend invitation bonus',
+    [UserBonusActionType.SUBSCRIPTION]: 'Subscription buy with bonus points',
 } as const;
 
 export { UserBonusTransactionMessage };

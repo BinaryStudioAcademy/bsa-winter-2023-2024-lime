@@ -1,6 +1,7 @@
 const UserBonusTransactionType = {
     INCOME: 'income',
-    EXSPENSE: 'expense',
+    EXPENSE: 'expense',
 } as const;
 
 export { UserBonusTransactionType };
+

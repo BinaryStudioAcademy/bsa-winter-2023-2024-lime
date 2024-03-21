@@ -1,4 +1,5 @@
 export {
+    type SubscribeRequestDto,
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,
