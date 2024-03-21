@@ -114,7 +114,7 @@ const Workout: React.FC = () => {
                                 />
                             </div>
 
-                            <div className="border-lm-black-400 border sm:my-[1rem] sm:h-0 md:my-[-2rem] md:h-[calc(100%+4rem)]"></div>
+                            <div className="border-buttonTertiary border sm:my-[1rem] sm:h-0 md:mx-2 md:my-[-2rem] md:h-[calc(100%+4rem)] md:opacity-0"></div>
 
                             <div className="w-full px-[1.5rem]">
                                 <WorkoutItem />
