@@ -36,6 +36,9 @@ const basicUserAuth = z.object<UserAuthRequestValidationDto>({
         })
         .max(UserValidationRule.PASSWORD.MAX_LENGTH, {
             message: UserValidationMessage.INVALID_PASSWORD,
+        })
+        .regex(new RegExp(UserValidationRule.PASSWORD.REG_EXP), {
+            message: UserValidationMessage.WEEK_PASSWORD,
         }),
 
     referralCode: z.string().nullish(),
