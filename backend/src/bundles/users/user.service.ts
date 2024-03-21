@@ -225,4 +225,3 @@ class UserService implements Service {
 }
 
 export { UserService };
-

@@ -4,4 +4,3 @@ const UserBonusTransactionType = {
 } as const;
 
 export { UserBonusTransactionType };
-

@@ -58,7 +58,9 @@ const SubscriptionUserPanel: React.FC<Properties> = ({
                         </p>
                         <p className="text-primary text-lg">Status</p>
                         <p className="text-action text-3xl">
-                            {status.toUpperCase() === 'TRIALING' ? 'Active (Purchased by Points)' : status.toUpperCase()}
+                            {status.toUpperCase() === 'TRIALING'
+                                ? 'Active (Purchased by Points)'
+                                : status.toUpperCase()}
                         </p>
                         <div>
                             {isCanceled ? (
