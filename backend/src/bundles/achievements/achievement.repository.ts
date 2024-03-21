@@ -50,7 +50,8 @@ class AchievementRepository implements Repository {
             .query()
             .joinRelated('userAchievements')
             .where('userAchievements.user_id', userId)
-            .select('achievements.*', 'userAchievements.created_at');
+            .select('achievements.*', 'userAchievements.created_at')
+            .orderBy('userAchievements.created_at', 'desc');
 
         return achievements.map((achievement) =>
             AchievementEntity.initialize(achievement),

@@ -10,6 +10,7 @@ const workoutService = new WorkoutService(workoutRepository);
 const workoutController = new WorkoutController(logger, workoutService);
 
 export { workoutController, workoutService };
+export { WorkoutAttributes } from './enums/enums.js';
 export { WorkoutController } from './workout.controller.js';
 export { WorkoutEntity } from './workout.entity.js';
 export { WorkoutModel } from './workout.model.js';

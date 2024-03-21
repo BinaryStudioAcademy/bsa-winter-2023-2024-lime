@@ -1,6 +1,13 @@
+import {
+    achievementService,
+    userAchievementService,
+} from '~/bundles/achievements/achievements.js';
+import { goalService } from '~/bundles/goals/goals.js';
+import { notificationService } from '~/bundles/notifications/notifications.js';
 import { config } from '~/common/config/config.js';
 import { JwtService } from '~/common/services/jwt/jwt.service.js';
 
+import { CalculationProgressService } from './calculation-progress/calculation-progress.service.js';
 import { CryptService } from './crypt/crypt.service.js';
 import { EmailService } from './email/email.service.js';
 import { FileService } from './file/file.service.js';
@@ -21,6 +28,12 @@ const stripeService = new StripeService(
     config.ENV.STRIPE.SECRET_KEY,
     config.ENV.STRIPE.WEBHOOK_SECRET,
 );
+const calculationProgressService = new CalculationProgressService({
+    goalService,
+    achievementService,
+    userAchievementService,
+    notificationService,
+});
 
 const openAIService = new OpenAIService(OPEN_AI_API_KEY, OPEN_AI_MODEL);
 const fileService = new FileService({
@@ -32,6 +45,7 @@ const fileService = new FileService({
 const socketService = new SocketService();
 
 export {
+    calculationProgressService,
     cryptService,
     emailService,
     fileService,

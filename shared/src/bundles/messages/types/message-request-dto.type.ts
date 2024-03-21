@@ -1,5 +1,7 @@
 type MessageRequestDto = {
-    message: string;
+    chatId: number;
+    text: string;
+    membersId?: number[];
 };
 
 export { type MessageRequestDto };

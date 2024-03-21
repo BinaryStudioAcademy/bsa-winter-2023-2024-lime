@@ -22,6 +22,8 @@ class GoalEntity implements Entity {
 
     private 'completedAt': string | null;
 
+    private 'createdAt': string | null;
+
     private constructor({
         id,
         userId,
@@ -32,6 +34,7 @@ class GoalEntity implements Entity {
         duration,
         progress,
         completedAt,
+        createdAt,
     }: {
         id: number | null;
         userId: number;
@@ -42,6 +45,7 @@ class GoalEntity implements Entity {
         duration: number | null;
         progress: number;
         completedAt: string | null;
+        createdAt: string | null;
     }) {
         this.id = id;
         this.userId = userId;
@@ -52,6 +56,7 @@ class GoalEntity implements Entity {
         this.duration = duration;
         this.progress = progress;
         this.completedAt = completedAt;
+        this.createdAt = createdAt;
     }
 
     public static initialize({
@@ -64,6 +69,7 @@ class GoalEntity implements Entity {
         duration,
         progress,
         completedAt,
+        createdAt,
     }: {
         id: number;
         userId: number;
@@ -74,6 +80,7 @@ class GoalEntity implements Entity {
         duration: number | null;
         progress: number;
         completedAt: string | null;
+        createdAt: string | null;
     }): GoalEntity {
         return new GoalEntity({
             id,
@@ -85,6 +92,7 @@ class GoalEntity implements Entity {
             duration,
             progress,
             completedAt,
+            createdAt,
         });
     }
 
@@ -117,6 +125,7 @@ class GoalEntity implements Entity {
             duration,
             progress: progress ?? 0,
             completedAt: completedAt ?? null,
+            createdAt: null,
         });
     }
 
@@ -129,6 +138,7 @@ class GoalEntity implements Entity {
         duration: number | null;
         progress: number;
         completedAt: string | null;
+        createdAt: string | null;
     } {
         return {
             id: this.id as number,
@@ -139,6 +149,7 @@ class GoalEntity implements Entity {
             duration: this.duration,
             progress: this.progress,
             completedAt: this.completedAt,
+            createdAt: this.createdAt,
         };
     }
 
