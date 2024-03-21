@@ -31,7 +31,7 @@ interface PersonalDetailsProperties {
 
 const ACTIVITY_TYPE_KEY = 'activityType';
 const ZERO_VALUE = 0;
-const baseClassNames = 'text-primary mt-2 xl:text-md sm:text-sm';
+const baseClassNames = 'text-primary mt-2 xl:text-md sm:text-sm text-center';
 
 const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     id,
@@ -51,6 +51,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         height,
         gender,
         location,
+        isPublic,
     } = user;
 
     const handleToggleFriend = useCallback(() => {
@@ -70,25 +71,34 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
             {username && <p className="text-primary mb-4">@{username}</p>}
             <div className="bg-secondary w-full rounded-lg p-4 shadow-xl">
                 <ul className="flex w-full flex-wrap justify-evenly">
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Weight
-                        <p className={baseClassNames}>
-                            {convertWeightToKilograms(weight) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Height
-                        <p className={baseClassNames}>
-                            {convertHeightToCentimeters(height) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center justify-end sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Age
-                        <p className={baseClassNames}>
-                            {calculateAge(dateOfBirth) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
+                    {isPublic && (
+                        <>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Weight
+                                <p className={baseClassNames}>
+                                    {convertWeightToKilograms(weight) ?? '-'}
+                                </p>
+                            </li>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Height
+                                <p className={baseClassNames}>
+                                    {convertHeightToCentimeters(height) ?? '-'}
+                                </p>
+                            </li>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center justify-end sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Age
+                                <p className={baseClassNames}>
+                                    {calculateAge(dateOfBirth) ?? '-'}
+                                </p>
+                            </li>
+                        </>
+                    )}
+                    <li
+                        className={getValidClassNames(
+                            isPublic ? 'mt-4 sm:w-1/2' : 'sm:w-full',
+                            'text-lm-grey-200 flex flex-col items-center min-[1400px]:w-1/2',
+                        )}
+                    >
                         Gender
                         <p
                             className={getValidClassNames(
@@ -99,7 +109,12 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
                             {gender ? capitalizeFirstLetter(gender) : '-'}
                         </p>
                     </li>
-                    <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
+                    <li
+                        className={getValidClassNames(
+                            isPublic ? 'mt-4 sm:w-1/2' : 'sm:w-full',
+                            'text-lm-grey-200 flex flex-col items-center min-[1400px]:w-1/2',
+                        )}
+                    >
                         Location
                         <p className={baseClassNames}>{location ?? '-'}</p>
                     </li>
