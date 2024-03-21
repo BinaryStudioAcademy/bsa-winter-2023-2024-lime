@@ -27,7 +27,7 @@ import StravaIcon from '~/assets/img/icons/strava-icon.svg?react';
 import WorkoutIcon from '~/assets/img/icons/workout-icon.svg?react';
 import LogoHeader from '~/assets/img/logo-header.svg?react';
 import LogoHeaderLight from '~/assets/img/logo-header-light.svg?react';
-import OpenAiIcon from '~/assets/img/open-AI-Logo.svg?react';
+import OpenAiIcon from '~/assets/img/open-ai-logo.svg?react';
 import PoweredByStravaIcon from '~/assets/img/powered-by-strava.svg?react';
 import StravaLogoIcon from '~/assets/img/strava-logo.svg?react';
 import { type ValueOf } from '~/bundles/common/types/types.js';
