@@ -15,7 +15,6 @@ import { getValidClassNames } from '../../helpers/helpers.js';
 type Properties = {
     name: string;
     image: string;
-    isActive?: boolean;
     achievements?: AchievementsGetAllResponseDto[];
     className?: string;
 };
@@ -23,7 +22,6 @@ type Properties = {
 const UserInfoCard: React.FC<Properties> = ({
     name,
     image,
-    isActive = true,
     achievements = [],
     className = '',
 }) => {
@@ -42,14 +40,11 @@ const UserInfoCard: React.FC<Properties> = ({
         >
             <div className="flex flex-col items-center justify-center gap-2">
                 <div className="flex items-center gap-1.5">
-                    {isActive && (
-                        <span className="bg-lm-yellow-100 h-2 w-2 rounded-full"></span>
-                    )}
                     <p className="text-primary text-base font-semibold">
                         {name}
                     </p>
                 </div>
-                <Avatar size="xl" email={name} avatarUrl={image} />
+                <Avatar size="xxl" email={name} avatarUrl={image} />
             </div>
             <div className="relative flex flex-col gap-4">
                 <h2 className="text-secondary text-xl font-extrabold">

@@ -1,0 +1,1 @@
+export { messageValidationSchema } from 'shared';

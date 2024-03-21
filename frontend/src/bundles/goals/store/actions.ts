@@ -36,4 +36,13 @@ const createGoal = createAsyncThunk<
     return await goalsApi.createGoal(createGoalPayload);
 });
 
-export { createGoal, getGoals, getGoalsByUserId };
+const deleteGoal = createAsyncThunk<boolean, number, AsyncThunkConfig>(
+    `${sliceName}/delete-goal`,
+    async (id, { extra }) => {
+        const { goalsApi } = extra;
+        const idString = String(id);
+        return await goalsApi.deleteGoal(idString);
+    },
+);
+
+export { createGoal, deleteGoal, getGoals, getGoalsByUserId };

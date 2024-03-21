@@ -22,6 +22,13 @@ class GoalService implements Service {
         return item ? item.toObject() : null;
     }
 
+    public async findLast(
+        query: Record<string, unknown>,
+    ): Promise<GoalResponseDto | null> {
+        const item = await this.goalRepository.findLast(query);
+        return item ? item.toObject() : null;
+    }
+
     public async findAll(
         query: Record<string, unknown>,
     ): Promise<{ items: GoalResponseDto[] }> {

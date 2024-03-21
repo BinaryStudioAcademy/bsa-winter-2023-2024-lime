@@ -63,7 +63,10 @@ const SignInForm: React.FC<Properties> = ({
                     or Sign in with Email
                 </p>
 
-                <form onSubmit={handleFormSubmit}>
+                <form
+                    onSubmit={handleFormSubmit}
+                    className="flex flex-col gap-5"
+                >
                     <Input
                         type="email"
                         label="Email"

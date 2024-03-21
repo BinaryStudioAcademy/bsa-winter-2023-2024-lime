@@ -5,6 +5,7 @@ import {
     useCallback,
     useEffect,
     useHandleClickOutside,
+    useLocation,
     useRef,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
@@ -19,13 +20,17 @@ import { NotificationBell, NotificationList } from './components/components.js';
 import { NOTIFICATION_ERROR_MESSAGE } from './constants/notification-error-message.js';
 
 const NotificationComponent = (): JSX.Element => {
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const { notifications, dataStatus } = useAppSelector(
         ({ notifications }) => notifications,
     );
 
-    const isLoading = dataStatus === DataStatus.PENDING;
     const hasError = dataStatus === DataStatus.REJECTED;
+
+    useEffect(() => {
+        setShowList(false);
+    }, [location.pathname]);
 
     useEffect(() => {
         void dispatch(fetchNotifications());
@@ -74,7 +79,6 @@ const NotificationComponent = (): JSX.Element => {
                 count={count}
                 onClick={handleIconClick}
                 showList={showList}
-                isLoading={isLoading}
             />
             {showList && (
                 <NotificationList

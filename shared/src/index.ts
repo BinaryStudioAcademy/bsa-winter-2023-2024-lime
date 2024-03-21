@@ -4,10 +4,25 @@ export {
     Metric,
 } from './bundles/achievements/achievements.js';
 export {
+    type SendAiMessageRequestDto,
+    type SendAiMessageResponseDto,
+    AiAssistantPath,
+} from './bundles/ai-assistant/ai-assistant.js';
+export {
     type AuthResponseDto,
     type AuthSignUpRequestDto,
     AuthApiPath,
 } from './bundles/auth/auth.js';
+export {
+    type ChatFullResponseDto,
+    type ChatGetAllItemsResponseDto,
+    type ChatPreviewResponseDto,
+    type ChatRequestDto,
+    type ChatResponseDto,
+    type ChatUserResponseDto,
+    ChatsPath,
+    chatValidationSchema,
+} from './bundles/chats/chats.js';
 export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
@@ -35,6 +50,13 @@ export {
     identityProviderValidationSchema,
 } from './bundles/identity/identity.js';
 export {
+    type DeleteChatMessagesRequestDto,
+    type MessageRequestDto,
+    type MessageResponseDto,
+    MessagePath,
+    messageValidationSchema,
+} from './bundles/messages/messages.js';
+export {
     type NotificationRequestDto,
     type NotificationResponseDto,
     NotificationsApiPath,
@@ -58,6 +80,15 @@ export {
     PasswordResetApiPath,
     PasswordResetValidationMessage,
 } from './bundles/password-reset/password-reset.js';
+export {
+    type ScheduleGetAllResponseDto,
+    type ScheduleRequestDto,
+    type ScheduleResponseDto,
+    ScheduleApiPath,
+    ScheduleValidationMessage,
+    scheduleValidationSchema,
+    UnicodePattern,
+} from './bundles/schedules/schedules.js';
 export {
     type SubscriptionPlansGetAllItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,

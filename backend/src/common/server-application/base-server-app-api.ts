@@ -50,7 +50,7 @@ class BaseServerAppApi implements ServerAppApi {
                         bearerAuth: {
                             bearerFormat: 'JWT',
                             scheme: 'bearer',
-                            type: 'https',
+                            type: 'http',
                         },
                     },
                     schemas: {
