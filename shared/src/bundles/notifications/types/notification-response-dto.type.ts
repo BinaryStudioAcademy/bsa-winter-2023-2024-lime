@@ -7,6 +7,7 @@ type NotificationResponseDto = {
     message: string;
     isRead: boolean;
     type: ValueOf<typeof NotificationType>;
+    createdAt: string | null;
 };
 
 export { type NotificationResponseDto };

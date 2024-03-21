@@ -23,6 +23,7 @@ type Properties<T extends FieldValues> = {
     className?: string;
     label?: string;
     minDate?: Date;
+    maxDate?: Date;
     placeholder?: string;
     required?: boolean;
 };
@@ -34,6 +35,7 @@ const DatePicker = <T extends FieldValues>({
     format,
     plugins,
     minDate,
+    maxDate,
     className,
     label = '',
     placeholder = '',
@@ -57,6 +59,7 @@ const DatePicker = <T extends FieldValues>({
         <div className={className}>
             <ReactDatePicker
                 minDate={minDate ?? ''}
+                maxDate={maxDate ?? ''}
                 containerClassName={'custom-date-picker'}
                 onChange={handleDaySelect}
                 offsetY={label ? -10 : -30}

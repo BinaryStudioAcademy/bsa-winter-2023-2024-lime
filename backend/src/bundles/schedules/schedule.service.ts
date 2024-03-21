@@ -1,6 +1,7 @@
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Service } from '~/common/types/types.js';
 
+import { type NotificationService } from '../notifications/notification.service.js';
 import { ScheduleValidationMessage } from './enums/enums.js';
 import { ScheduleEntity } from './schedule.entity.js';
 import { type ScheduleRepository } from './schedule.repository.js';
@@ -12,9 +13,15 @@ import {
 
 class ScheduleService implements Service {
     private scheduleRepository: ScheduleRepository;
+    private notificationService: NotificationService;
+    private scheduledIds: Set<number> = new Set();
 
-    public constructor(scheduleRepository: ScheduleRepository) {
+    public constructor(
+        scheduleRepository: ScheduleRepository,
+        notificationService: NotificationService,
+    ) {
         this.scheduleRepository = scheduleRepository;
+        this.notificationService = notificationService;
     }
 
     public async deleteOutdatedSchedules(userId: number): Promise<void> {
@@ -101,6 +108,39 @@ class ScheduleService implements Service {
         }
 
         return await this.scheduleRepository.delete(query);
+    }
+
+    public async createNotificationsForUpcomingSchedules(
+        userId: number,
+    ): Promise<void> {
+        const { items: schedules } = await this.findAll({ userId });
+        const ONE_HOUR_IN_MINUTES = 60;
+        const CLOSE_TO_HOUR_IN_MINUTES = 59;
+        const MILLISECONDS_PER_MINUTE = 60_000;
+
+        for (const schedule of schedules) {
+            if (this.scheduledIds.has(schedule.id)) {
+                continue;
+            }
+            const startAt = new Date(schedule.startAt).getTime();
+            const timeDifference = startAt - Date.now();
+            if (
+                timeDifference > 0 &&
+                timeDifference <=
+                    ONE_HOUR_IN_MINUTES * MILLISECONDS_PER_MINUTE &&
+                timeDifference >=
+                    CLOSE_TO_HOUR_IN_MINUTES * MILLISECONDS_PER_MINUTE
+            ) {
+                await this.notificationService.create({
+                    userId: userId,
+                    title: 'Upcoming Workout',
+                    message: `Reminder: Your scheduled ${schedule.activityType} event will start in one hour. Don't miss it!`,
+                    isRead: false,
+                    type: 'default',
+                });
+                this.scheduledIds.add(schedule.id);
+            }
+        }
     }
 }
 

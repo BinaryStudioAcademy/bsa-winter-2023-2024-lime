@@ -9,6 +9,8 @@ import {
 import { STRAVA_ATHLETE_TRAINING_URL } from '~/bundles/workouts/constants/constants.js';
 import { OAuthProvider } from '~/bundles/workouts/enums/enums.js';
 
+import { DeleteWorkoutButton } from './components/components.js';
+
 const WorkoutItem = (): JSX.Element => {
     const { id } = useParams();
 
@@ -44,6 +46,9 @@ const WorkoutItem = (): JSX.Element => {
                         View on Strava
                     </NavLink>
                 </div>
+            )}
+            {currentWorkout.provider === null && (
+                <DeleteWorkoutButton id={currentWorkout.id} />
             )}
         </div>
     );

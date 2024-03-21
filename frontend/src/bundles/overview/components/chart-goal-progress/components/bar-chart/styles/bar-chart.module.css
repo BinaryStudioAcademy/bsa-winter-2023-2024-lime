@@ -1,0 +1,15 @@
+.chart-overflow-container::-webkit-scrollbar-thumb {
+    @apply rounded-md;
+}
+
+.chart-overflow-container::-webkit-scrollbar {
+    @apply h-2 w-0;
+}
+
+.chart-overflow-container::-webkit-scrollbar-track {
+    @apply bg-secondary;
+}
+
+.chart-overflow-container {
+    @apply overflow-auto pb-2;
+}

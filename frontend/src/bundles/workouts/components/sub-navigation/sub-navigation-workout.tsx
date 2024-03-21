@@ -8,9 +8,10 @@ import {
 
 type Properties = {
     title?: string;
+    button?: React.ReactNode;
 };
 
-const SubNavigationWorkout = ({ title }: Properties): JSX.Element => {
+const SubNavigationWorkout = ({ title, button }: Properties): JSX.Element => {
     const workouts = useAppSelector(({ workouts }) => workouts.workouts);
     const { handles, options, filteredWorkouts } = useFilterWorkout(workouts);
 
@@ -27,6 +28,9 @@ const SubNavigationWorkout = ({ title }: Properties): JSX.Element => {
             )}
             <SubNavigationFilter options={options} handles={handles} />
             <SubNavigationWorkoutsList items={filteredWorkouts} />
+            {button && (
+                <div className="inline-flex justify-center">{button}</div>
+            )}
         </div>
     );
 };

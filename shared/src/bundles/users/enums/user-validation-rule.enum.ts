@@ -12,6 +12,7 @@ const UserValidationRule = {
     PASSWORD: {
         MIN_LENGTH: 6,
         MAX_LENGTH: 12,
+        REG_EXP: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])',
     },
     FULLNAME: {
         MIN_LENGTH: 2,

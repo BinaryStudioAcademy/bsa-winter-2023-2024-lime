@@ -5,79 +5,104 @@ import {
     GoogleAds,
     Icon,
     InfoSection,
+    Loader,
 } from '~/bundles/common/components/components.js';
 import {
     IconColor,
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
-import { useAppSelector } from '~/bundles/common/hooks/hooks.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
+import { capitalizeFirstLetter } from '~/bundles/common/helpers/helpers.js';
+import {
+    useAppDispatch,
+    useAppSelector,
+    useEffect,
+    useMemo,
+} from '~/bundles/common/hooks/hooks.js';
+import { GoalCard } from '~/bundles/goals/components/components.js';
+import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
 import {
     ChartGoalProgress,
     GoalWidget,
 } from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
+import { actions as schedulesActions } from '~/bundles/schedules/store/schedules.js';
+import { actions as workoutsActions } from '~/bundles/workouts/store/workouts.js';
 
-import styles from './styles.module.css';
-
-const scheduleData = [
-    {
-        id: 1,
-        title: 'Monday',
-        name: 'Stretch',
-        data: 'At 08:00',
-        chip: '20 Pieces',
-    },
-    {
-        id: 2,
-        title: 'Wednesday',
-        name: 'Yoga',
-        data: 'At 08:00',
-        chip: '10 min',
-    },
-    {
-        id: 3,
-        title: 'Tuesday',
-        name: 'Back Stretch',
-        data: 'At 08:00',
-        chip: '10 Round',
-    },
-];
-
-const goalsData = [
-    {
-        id: 1,
-        name: 'Running on Track',
-        data: 'Saturday, April 14 | 08:00 AM',
-        chip: '04 Rounds',
-    },
-    {
-        id: 2,
-        name: 'Push Up',
-        data: 'Sunday, April 15 | 08:00 AM',
-        chip: '50 Pieces',
-    },
-];
+import { CompletedGoalsStatus } from '../enums/enums.js';
+import {
+    calculateTodayStats,
+    classifyGoalsByCompletion,
+    defineCompletedGoalsStatus,
+    formatScheduleDay,
+    formatScheduleTime,
+    getCompletedDate,
+    sortGoalsByDate,
+    sortSchedulesByDate,
+} from '../helpers/helpers.js';
 
 const Overview: React.FC = () => {
     const { currentSubscription: isSubscribed } = useAppSelector(
         ({ subscriptions }) => subscriptions,
     );
 
+    const dispatch = useAppDispatch();
+
+    const { goals, dataStatus: goalsDataStatus } = useAppSelector(
+        ({ goals }) => goals,
+    );
+
+    const { workouts } = useAppSelector(({ workouts }) => workouts);
+
+    const { schedules } = useAppSelector(({ schedules }) => schedules);
+
+    const isLoading = goalsDataStatus === DataStatus.PENDING;
+    useEffect(() => {
+        void dispatch(goalsActions.getGoals());
+        void dispatch(workoutsActions.getWorkouts());
+        void dispatch(schedulesActions.getSchedules());
+    }, [dispatch]);
+
+    const statistics = useMemo(() => calculateTodayStats(workouts), [workouts]);
+
+    const { completedGoals, incompletedGoals } = useMemo(
+        () => classifyGoalsByCompletion(goals),
+        [goals],
+    );
+
+    const completedGoalsStatus = useMemo(
+        () => defineCompletedGoalsStatus(goals, completedGoals),
+        [goals, completedGoals],
+    );
+
+    const completedGoalsLink = useMemo(
+        () =>
+            completedGoalsStatus === CompletedGoalsStatus.NO_COMPLETED_GOALS
+                ? AppRoute.WORKOUT
+                : AppRoute.GOALS,
+        [completedGoalsStatus],
+    );
+
+    if (isLoading) {
+        return <Loader isOverflow />;
+    }
+
     return (
         <div className="w-full max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
-            <div className="xl:basis-[68%]">
+            <div className="mb-5 xl:basis-[68%]">
                 <GoalWidget
-                    value={4}
-                    target={10}
+                    value={completedGoals.length}
+                    target={goals.length}
                     goalType={GoalTypes.OVERVIEW}
+                    rightTitle="Completed Goals"
                     className="mb-6"
+                    hasAchievement={goals.length > 0}
                 />
                 <ul className="mb-6 flex flex-col gap-4 min-[600px]:flex-row md:flex-col min-[840px]:flex-row">
                     <li className="flex-1">
                         <ActivityWidget
                             label="Workout"
-                            value="4 hrs"
+                            value={`${statistics.workouts} hrs`}
                             color={ActivityWidgetColor.YELLOW}
                             icon={
                                 <Icon
@@ -90,15 +115,15 @@ const Overview: React.FC = () => {
                     <li className="flex-1">
                         <ActivityWidget
                             label="Calories"
-                            value="1800 kcl"
+                            value={`${statistics.kilocalories} kcl`}
                             color={ActivityWidgetColor.MAGENTA}
                             icon={<Icon name={IconName.caloriesIcon} />}
                         />
                     </li>
                     <li className="flex-1">
                         <ActivityWidget
-                            label="Steps"
-                            value="2200 steps"
+                            label="Distance"
+                            value={`${statistics.distance} km`}
                             color={ActivityWidgetColor.PURPLE}
                             icon={<Icon name={IconName.stepsIcon} />}
                         />
@@ -107,45 +132,109 @@ const Overview: React.FC = () => {
                 {!isSubscribed && (
                     <GoogleAds className="mb-6 hidden h-48 xl:flex" />
                 )}
-                <ChartGoalProgress />
-                <div className="mt-5">Achievements</div>
+                <ChartGoalProgress workouts={workouts} />
+                {incompletedGoals.length > 0 && (
+                    <div className="mt-5 xl:pb-8">
+                        <ul className="flex flex-col gap-4 md:flex-row">
+                            {incompletedGoals.map((goal, index) => {
+                                if (index > 1) {
+                                    return;
+                                }
+
+                                return (
+                                    <GoalCard
+                                        key={goal.id}
+                                        id={goal.id}
+                                        activityType={goal.activityType}
+                                        frequency={goal.frequency}
+                                        frequencyType={goal.frequencyType}
+                                        progress={goal.progress}
+                                        distance={goal.distance}
+                                        duration={goal.duration}
+                                    />
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
             </div>
             <div className="xl:basis-[32%]">
                 <InfoSection
                     title="My Schedule"
                     viewAllLink={AppRoute.SCHEDULE}
                     className={isSubscribed ? 'mb-14' : 'mb-5'}
+                    buttonTitle={
+                        schedules.length > 0 ? 'View all' : 'Create schedule'
+                    }
                 >
-                    {scheduleData.length > 0 ? (
+                    {schedules.length > 0 ? (
                         <ul>
-                            {scheduleData.map((scheduleItem) => (
-                                <li
-                                    className={styles['schedule__item']}
-                                    key={scheduleItem.id}
-                                >
-                                    <Card {...scheduleItem} />
-                                </li>
-                            ))}
+                            {sortSchedulesByDate(schedules).map(
+                                (scheduleItem) => (
+                                    <li className="mt-3" key={scheduleItem.id}>
+                                        <Card
+                                            title={formatScheduleDay(
+                                                new Date(scheduleItem.startAt),
+                                            )}
+                                            data={formatScheduleTime(
+                                                new Date(scheduleItem.startAt),
+                                            )}
+                                            name={capitalizeFirstLetter(
+                                                scheduleItem.activityType,
+                                            )}
+                                        />
+                                    </li>
+                                ),
+                            )}
                         </ul>
                     ) : (
-                        <p>Empty schedule</p>
+                        <div className="border-lm-yellow-100 text-infoSection flex h-44 items-center justify-center rounded-md border-2">
+                            Empty schedule
+                        </div>
                     )}
                 </InfoSection>
                 {!isSubscribed && <GoogleAds className="mb-5 h-48" />}
-                <InfoSection title="Goals" viewAllLink={AppRoute.GOALS}>
-                    {goalsData.length > 0 ? (
+                <InfoSection
+                    title="Completed goals"
+                    viewAllLink={completedGoalsLink}
+                    className="mb-12 pb-8 xl:pb-0"
+                    buttonTitle={completedGoalsStatus}
+                >
+                    {completedGoalsStatus ===
+                        CompletedGoalsStatus.COMPLETED_GOALS && (
                         <ul>
-                            {goalsData.map((goalItem) => (
-                                <li
-                                    className={styles['goal__item']}
-                                    key={goalItem.id}
-                                >
-                                    <Card {...goalItem} />
-                                </li>
-                            ))}
+                            {sortGoalsByDate(completedGoals).map(
+                                ({ id, activityType, completedAt }, index) => {
+                                    if (index > 4) {
+                                        return;
+                                    }
+
+                                    return (
+                                        <li key={id} className="mt-4">
+                                            <Card
+                                                name={capitalizeFirstLetter(
+                                                    activityType,
+                                                )}
+                                                data={getCompletedDate(
+                                                    completedAt,
+                                                )}
+                                            />
+                                        </li>
+                                    );
+                                },
+                            )}
                         </ul>
-                    ) : (
-                        <p>Empty goals</p>
+                    )}
+                    {completedGoalsStatus ===
+                        CompletedGoalsStatus.NO_COMPLETED_GOALS && (
+                        <div className="border-lm-yellow-100 text-infoSection flex h-44 items-center justify-center rounded-md border-2">
+                            You have not completed any goals yet
+                        </div>
+                    )}
+                    {completedGoalsStatus === CompletedGoalsStatus.NO_GOALS && (
+                        <div className="border-lm-yellow-100 text-infoSection flex h-44 items-center justify-center rounded-md border-2">
+                            You have not created any goals yet
+                        </div>
                     )}
                 </InfoSection>
             </div>

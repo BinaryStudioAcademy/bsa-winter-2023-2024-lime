@@ -121,7 +121,6 @@ export default {
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
                 accent: ['Lato', ...defaultTheme.fontFamily.sans],
-                heading: ['Intro', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
@@ -156,7 +155,6 @@ export default {
                 '38': '2.375rem',
                 '54': '3.375rem;',
                 '176': '11rem',
-
             },
             spacing: {
                 '13': '3.25',

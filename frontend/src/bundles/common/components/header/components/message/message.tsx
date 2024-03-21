@@ -1,6 +1,6 @@
 const Message = (): JSX.Element => {
     return (
-        <div className="flex flex-col justify-center gap-0.5">
+        <div className="hidden flex-col justify-center gap-0.5 sm:flex">
             <p className="text-lm-grey-300 text-[0.5rem] font-normal md:text-[0.625rem]">
                 Good Morning
             </p>
