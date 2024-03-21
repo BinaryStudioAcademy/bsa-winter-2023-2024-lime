@@ -59,7 +59,7 @@ const PublicProfile: React.FC = () => {
             (friend) => friend.userId === NumericId,
         );
         setIsFollowed(isUserFollowed);
-    }, []);
+    }, [NumericId, friends]);
 
     useEffect(() => {
         void dispatch(userActions.getById(NumericId));
