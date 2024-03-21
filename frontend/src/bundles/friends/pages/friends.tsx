@@ -43,7 +43,7 @@ const Friends: React.FC = () => {
     const classes = {
         detailsAside:
             'bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px] transform translate-x-0',
-        hidden: 'translate-x-[110%]',
+        hidden: 'translate-x-[200%]',
         animation: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
     };
 
@@ -128,7 +128,7 @@ const Friends: React.FC = () => {
     }, [dispatch, activeTab]);
 
     return (
-        <section className="h-full w-full max-w-[1136px] flex-1 flex-col xl:flex xl:gap-8 2xl:basis-[1136px] ">
+        <section className="flex h-full w-full max-w-[1136px] flex-1 flex-col gap-8 2xl:basis-[1136px]">
             <Tabs
                 tabs={tabs}
                 handleTabClick={handleTabClick}
@@ -137,9 +137,7 @@ const Friends: React.FC = () => {
             {isLoading === DataStatus.PENDING ? (
                 <Loader isOverflow />
             ) : (
-                <div
-                    className={`flex flex-wrap items-start justify-stretch gap-5 pb-8 ${selectedCard?.userId ? 'md:w-[calc(100%-254px)] lg:w-[calc(100%-354px)]' : 'w-full'}`}
-                >
+                <div className="relative grid grid-cols-[repeat(auto-fit,minmax(215px,1fr))] gap-5 pb-8">
                     {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
                         <TabContent
                             users={users}
