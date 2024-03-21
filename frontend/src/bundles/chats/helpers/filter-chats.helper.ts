@@ -12,6 +12,7 @@ const filterChats = (
                         .toLowerCase()
                         .includes(search.trim().toLowerCase())) ||
                 (email &&
+                    !fullName &&
                     email.toLowerCase().includes(search.trim().toLowerCase())),
         ),
     );
