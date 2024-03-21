@@ -70,10 +70,14 @@ const ProfileSettings: React.FC<Properties> = ({
     );
 
     const getDefaultValues = useCallback((): UserUpdateProfileRequestDto => {
-        const result: { [key: string]: string | number | null | undefined } = {
+        const result: {
+            [key: string]: string | number | null | undefined | boolean;
+        } = {
             ...DEFAULT_UPDATE_PROFILE_PAYLOAD,
         };
-        const data: { [key: string]: string | number | null | undefined } = {
+        const data: {
+            [key: string]: string | number | null | undefined | boolean;
+        } = {
             ...user,
         };
 
@@ -150,29 +154,40 @@ const ProfileSettings: React.FC<Properties> = ({
         }
     }, [updateProfile, setValue, dispatch]);
 
+    const generateFormPayload = useCallback(
+        (data: UserUpdateProfileRequestDto) => {
+            return {
+                ...data,
+                avatarUrl: data.avatarUrl || null,
+                isPublic: data.isPublic,
+                location: data.location ? data.location.trim() : null,
+                weight: convertWeightToGrams(data.weight),
+                height: convertHeightToMillimeters(data.height),
+                dateOfBirth: data.dateOfBirth
+                    ? configureISOString(data.dateOfBirth || '')
+                    : null,
+                fullName: (data.fullName || '').trim(),
+                username: data.username ? data.username.trim() : null,
+            };
+        },
+        [],
+    );
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit((data) => {
-                const payload: UserUpdateProfileRequestDto = {
-                    ...data,
-                    avatarUrl: data.avatarUrl || null,
-                    isPublic: data.isPublic,
-                    location: data.location ? data.location.trim() : null,
-                    weight: convertWeightToGrams(data.weight),
-                    height: convertHeightToMillimeters(data.height),
-                    dateOfBirth: data.dateOfBirth
-                        ? configureISOString(data.dateOfBirth || '')
-                        : null,
-                    fullName: (data.fullName || '').trim(),
-                    username: data.username ? data.username.trim() : null,
-                };
-
-                onSubmit(payload);
+                onSubmit(generateFormPayload(data));
                 reset({}, { keepValues: true });
             })(event_);
         },
-        [handleSubmit, onSubmit, reset],
+        [handleSubmit, onSubmit, reset, generateFormPayload],
     );
+
+    const handleSubmitLeaving = useCallback((): Promise<unknown> => {
+        return handleSubmit((data) => {
+            onSubmit(generateFormPayload(data));
+        })();
+    }, [handleSubmit, onSubmit, generateFormPayload]);
 
     const closeModal = useCallback((): void => {
         setIsOpen(false);
@@ -377,7 +392,10 @@ const ProfileSettings: React.FC<Properties> = ({
                     </li>
                 </ul>
 
-                <ReactRouterPrompt when={isDirty}>
+                <ReactRouterPrompt
+                    when={isDirty}
+                    beforeConfirm={handleSubmitLeaving}
+                >
                     {({ isActive, onConfirm, onCancel }) => (
                         <Modal
                             isOpen={isActive}
@@ -396,7 +414,7 @@ const ProfileSettings: React.FC<Properties> = ({
                                             />
                                         )
                                     }
-                                    type="submit"
+                                    onClick={onConfirm}
                                     variant={ButtonVariant.PRIMARY}
                                     size={ComponentSize.MEDIUM}
                                 />
