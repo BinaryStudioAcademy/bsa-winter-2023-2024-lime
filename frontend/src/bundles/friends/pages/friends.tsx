@@ -43,6 +43,8 @@ const Friends: React.FC = () => {
     const classes = {
         detailsAside:
             'bg-secondary border-secondary fixed right-[6px] top-[88px] ml-4 flex h-full w-full flex-col border-l-2 pb-4 pl-4 pr-4 pt-8 transition duration-500 md:max-w-[254px] lg:max-w-[354px] transform translate-x-0',
+        table: 'relative grid grid-cols-[repeat(auto-fit,minmax(215px,1fr))] gap-5 pb-8',
+        row: 'relative gap-5 pb-8 flex',
         hidden: 'translate-x-[200%]',
         animation: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
     };
@@ -137,7 +139,11 @@ const Friends: React.FC = () => {
             {isLoading === DataStatus.PENDING ? (
                 <Loader isOverflow />
             ) : (
-                <div className="relative grid grid-cols-[repeat(auto-fit,minmax(215px,1fr))] gap-5 pb-8">
+                <div
+                    className={getValidClassNames(
+                        `${users.length >= 3 ? classes.table : classes.row}`,
+                    )}
+                >
                     {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
                         <TabContent
                             users={users}
