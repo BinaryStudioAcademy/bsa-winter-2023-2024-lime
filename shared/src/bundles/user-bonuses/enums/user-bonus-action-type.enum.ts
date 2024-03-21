@@ -1,6 +1,6 @@
 const UserBonusActionType = {
     INVITED: 'invited',
-    REGISTERED: 'registered',    
+    REGISTERED: 'registered',
     SUBSCRIBE: 'subscribe',
 } as const;
 
