@@ -1,5 +1,5 @@
 .navigation {
-    @apply flex  items-center justify-center;
+    @apply ml-auto  flex items-center justify-center sm:ml-0;
 }
 
 .menu-list {

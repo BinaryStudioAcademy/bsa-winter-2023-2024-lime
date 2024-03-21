@@ -1,3 +1,4 @@
+export { ActivityLabels } from './activity-labels.enum.js';
 export { ComponentSize } from './component-size.enum.js';
 export { DataStatus } from './data-status.enum.js';
 export { DateFormat } from './date-format.enum.js';

@@ -1,7 +1,7 @@
 import {
     type ThunkMiddleware,
-    type Tuple,
     type UnknownAction,
+    Tuple,
 } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -26,6 +26,8 @@ import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
 import { reducer as passwordResetReducer } from '~/bundles/password-reset/store/password-reset.js';
 import { connectionApi } from '~/bundles/profile/pages/connections-page/connections.js';
 import { reducer as connectionsReducer } from '~/bundles/profile/pages/connections-page/store/connections.js';
+import { scheduleApi } from '~/bundles/schedules/schedules.js';
+import { reducer as schedulesReducer } from '~/bundles/schedules/store/schedules.js';
 import { reducer as subscriptionsReducer } from '~/bundles/subscription/store/slice.js';
 import {
     subscriptionApi,
@@ -58,6 +60,7 @@ type RootReducer = {
     friends: ReturnType<typeof friendsReducer>;
     userBonuses: ReturnType<typeof userBonusesReducer>;
     chats: ReturnType<typeof chatsReducer>;
+    schedules: ReturnType<typeof schedulesReducer>;
 };
 
 type ExtraArguments = {
@@ -75,6 +78,7 @@ type ExtraArguments = {
     aiAssistantApi: typeof aiAssistantApi;
     messageApi: typeof messageApi;
     friendsApi: typeof friendsApi;
+    scheduleApi: typeof scheduleApi;
 };
 
 class Store {
@@ -104,15 +108,18 @@ class Store {
                 userBonuses: userBonusesReducer,
                 chats: chatsReducer,
                 friends: friendsReducer,
+                schedules: schedulesReducer,
             },
             middleware: (getDefaultMiddleware) =>
-                getDefaultMiddleware({
-                    thunk: {
-                        extraArgument: this.extraArguments,
-                    },
-                })
-                    .prepend(errorMiddleware)
-                    .concat(chatSocketMiddleware), // eslint-disable-line unicorn/prefer-spread
+                new Tuple(
+                    ...getDefaultMiddleware({
+                        thunk: {
+                            extraArgument: this.extraArguments,
+                        },
+                    }),
+                    errorMiddleware,
+                    chatSocketMiddleware,
+                ),
         });
     }
 
@@ -132,6 +139,7 @@ class Store {
             aiAssistantApi,
             messageApi,
             friendsApi,
+            scheduleApi,
         };
     }
 }

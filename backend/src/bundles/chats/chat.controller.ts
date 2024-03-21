@@ -7,7 +7,7 @@ import {
 } from '~/common/controller/controller.js';
 import { ApiPath, HttpCode } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
-import { type SocketService } from '~/common/services/socket/socket.service.js';
+import { socketService } from '~/common/services/services.js';
 
 import { type ChatService } from './chat.service.js';
 import { ChatsPath } from './enums/enums.js';
@@ -24,17 +24,10 @@ import {
 class ChatController extends BaseController {
     private chatService: ChatService;
 
-    private socketService: SocketService;
-
-    public constructor(
-        logger: Logger,
-        chatService: ChatService,
-        socketService: SocketService,
-    ) {
+    public constructor(logger: Logger, chatService: ChatService) {
         super(logger, ApiPath.CHATS);
 
         this.chatService = chatService;
-        this.socketService = socketService;
 
         this.addRoute({
             path: ChatsPath.ROOT,
@@ -123,7 +116,7 @@ class ChatController extends BaseController {
 
         const chat = await this.chatService.create(payload);
 
-        this.socketService.createChat<ChatResponseDto>({
+        socketService.createChat<ChatResponseDto>({
             membersId: membersId.map(String),
             payload: chat,
         });

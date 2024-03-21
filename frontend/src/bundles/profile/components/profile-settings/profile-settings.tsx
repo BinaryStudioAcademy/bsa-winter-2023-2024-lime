@@ -1,3 +1,5 @@
+import ReactRouterPrompt from 'react-router-prompt';
+
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
 import { Checkbox } from '~/bundles/common/components/checkbox/checkbox.js';
 import {
@@ -8,10 +10,10 @@ import {
     DatePicker,
     Input,
     Loader,
+    Modal,
     Radio,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
-import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
@@ -20,7 +22,6 @@ import {
     convertHeightToMillimeters,
     convertWeightToGrams,
     convertWeightToKilograms,
-    getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -63,19 +64,67 @@ const ProfileSettings: React.FC<Properties> = ({
 
     const dispatch = useAppDispatch();
 
-    const [valuesDefault, setValuesDefault] = useState(false);
     const { user, updateProfile } = useAppSelector(({ auth }) => auth);
     const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
         ({ userBonuses }) => userBonuses,
     );
 
-    const { control, errors, reset, setValue, handleSubmit, getValues } =
-        useAppForm<UserUpdateProfileRequestDto>({
-            defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
-            validationSchema: userUpdateProfileValidationSchema,
-            mode: 'onTouched',
-            shouldUnregister: false,
-        });
+    const getDefaultValues = useCallback((): UserUpdateProfileRequestDto => {
+        const result: {
+            [key: string]: string | number | null | undefined | boolean;
+        } = {
+            ...DEFAULT_UPDATE_PROFILE_PAYLOAD,
+        };
+        const data: {
+            [key: string]: string | number | null | undefined | boolean;
+        } = {
+            ...user,
+        };
+
+        for (const key of Object.keys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
+            switch (key) {
+                case 'dateOfBirth': {
+                    if (data['dateOfBirth']) {
+                        result[key] = configureDateString(
+                            data['dateOfBirth'] as string,
+                        );
+                    }
+                    break;
+                }
+                case 'weight': {
+                    result[key] = convertWeightToKilograms(data[key] as number);
+                    break;
+                }
+                case 'height': {
+                    result[key] = convertHeightToCentimeters(
+                        data[key] as number,
+                    );
+                    break;
+                }
+                default: {
+                    if (data[key]) {
+                        result[key] = data[key];
+                    }
+                }
+            }
+        }
+        return result as UserUpdateProfileRequestDto;
+    }, [user]);
+
+    const {
+        control,
+        errors,
+        reset,
+        setValue,
+        handleSubmit,
+        getValues,
+        isDirty,
+    } = useAppForm<UserUpdateProfileRequestDto>({
+        defaultValues: getDefaultValues(),
+        validationSchema: userUpdateProfileValidationSchema,
+        mode: 'onTouched',
+        shouldUnregister: false,
+    });
 
     const selectImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,73 +146,48 @@ const ProfileSettings: React.FC<Properties> = ({
     );
 
     useEffect(() => {
-        if (!valuesDefault && user) {
-            for (const key of getObjectKeys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
-                switch (key) {
-                    case 'dateOfBirth': {
-                        setValue(
-                            key,
-                            user.dateOfBirth
-                                ? configureDateString(user.dateOfBirth)
-                                : '',
-                        );
-                        break;
-                    }
-                    case 'weight': {
-                        setValue(
-                            key,
-                            convertWeightToKilograms(user[key]) || '',
-                        );
-                        break;
-                    }
-                    case 'height': {
-                        setValue(
-                            key,
-                            convertHeightToCentimeters(user[key]) || '',
-                        );
-                        break;
-                    }
-                    default: {
-                        setValue(
-                            key,
-                            user[key] || DEFAULT_UPDATE_PROFILE_PAYLOAD[key],
-                        );
-                    }
-                }
-            }
-            setValuesDefault(true);
-        }
-    }, [user, setValue, valuesDefault]);
-
-    useEffect(() => {
         if (updateProfile.avatarUrl) {
-            setValue('avatarUrl', updateProfile.avatarUrl);
+            setValue('avatarUrl', updateProfile.avatarUrl, {
+                shouldDirty: true,
+            });
             dispatch(authActions.clearUpdateProfile());
         }
     }, [updateProfile, setValue, dispatch]);
 
+    const generateFormPayload = useCallback(
+        (data: UserUpdateProfileRequestDto) => {
+            return {
+                ...data,
+                avatarUrl: data.avatarUrl || null,
+                isPublic: data.isPublic,
+                location: data.location ? data.location.trim() : null,
+                weight: convertWeightToGrams(data.weight),
+                height: convertHeightToMillimeters(data.height),
+                dateOfBirth: data.dateOfBirth
+                    ? configureISOString(data.dateOfBirth || '')
+                    : null,
+                fullName: (data.fullName || '').trim(),
+                username: data.username ? data.username.trim() : null,
+            };
+        },
+        [],
+    );
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit((data) => {
-                const payload: UserUpdateProfileRequestDto = {
-                    ...data,
-                    avatarUrl: data.avatarUrl || null,
-                    isPublic: data.isPublic,
-                    location: data.location ? data.location.trim() : null,
-                    weight: convertWeightToGrams(data.weight),
-                    height: convertHeightToMillimeters(data.height),
-                    dateOfBirth: data.dateOfBirth
-                        ? configureISOString(data.dateOfBirth || '')
-                        : null,
-                    fullName: (data.fullName || '').trim(),
-                    username: data.username ? data.username.trim() : null,
-                };
-
-                onSubmit(payload);
+                onSubmit(generateFormPayload(data));
+                reset({}, { keepValues: true });
             })(event_);
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, reset, generateFormPayload],
     );
+
+    const handleSubmitLeaving = useCallback((): Promise<unknown> => {
+        return handleSubmit((data) => {
+            onSubmit(generateFormPayload(data));
+        })();
+    }, [handleSubmit, onSubmit, generateFormPayload]);
 
     const closeModal = useCallback((): void => {
         setIsOpen(false);
@@ -268,6 +292,7 @@ const ProfileSettings: React.FC<Properties> = ({
                     />
                     <DatePicker
                         name="dateOfBirth"
+                        format="DD/MM/YYYY"
                         control={control}
                         errors={errors}
                         label="Date of birth"
@@ -367,6 +392,43 @@ const ProfileSettings: React.FC<Properties> = ({
                         />
                     </li>
                 </ul>
+
+                <ReactRouterPrompt
+                    when={isDirty}
+                    beforeConfirm={handleSubmitLeaving}
+                >
+                    {({ isActive, onConfirm, onCancel }) => (
+                        <Modal
+                            isOpen={isActive}
+                            title={
+                                'Do you want to save changes before leaving?'
+                            }
+                            onClose={onCancel}
+                        >
+                            <div className={'flex gap-4'}>
+                                <Button
+                                    label={isLoading ? '' : 'Save'}
+                                    leftIcon={
+                                        isLoading && (
+                                            <Loader
+                                                color={IconColor.SECONDARY}
+                                            />
+                                        )
+                                    }
+                                    onClick={onConfirm}
+                                    variant={ButtonVariant.PRIMARY}
+                                    size={ComponentSize.MEDIUM}
+                                />
+                                <Button
+                                    label="Discard changes"
+                                    variant={ButtonVariant.SECONDARY}
+                                    size={ComponentSize.MEDIUM}
+                                    onClick={onConfirm}
+                                />
+                            </div>
+                        </Modal>
+                    )}
+                </ReactRouterPrompt>
             </form>
         </div>
     );

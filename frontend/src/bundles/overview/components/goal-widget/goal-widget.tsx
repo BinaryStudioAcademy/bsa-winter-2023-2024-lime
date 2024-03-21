@@ -14,6 +14,7 @@ type Properties = {
     goalType?: ValueOf<typeof GoalTypes>;
     title?: string;
     subTitle?: string;
+    rightTitle?: string;
     className?: string;
     hasAchievement?: boolean;
     hasDistance?: boolean;
@@ -27,17 +28,20 @@ const GoalWidget: React.FC<Properties> = ({
     subTitle = '',
     hasAchievement = true,
     className = '',
+    rightTitle,
     hasDistance = false,
 }): JSX.Element => {
-    const rightTitle =
-        goalType === GoalTypes.OVERVIEW
-            ? 'Exercises'
-            : capitalizeFirstLetter(goalType);
+    if (!rightTitle) {
+        rightTitle =
+            goalType === GoalTypes.OVERVIEW
+                ? 'Exercises'
+                : capitalizeFirstLetter(goalType);
+    }
 
     return (
         <div
             className={getValidClassNames(
-                'bg-goalWidget flex h-40 w-full items-center justify-between rounded-xl px-6',
+                'bg-goalWidget flex w-full items-center justify-center rounded-xl px-6 py-2 sm:h-40 sm:justify-between sm:py-0',
                 className,
             )}
         >
@@ -57,7 +61,7 @@ const GoalWidget: React.FC<Properties> = ({
                 )}
             </div>
             {hasAchievement && (
-                <div className="flex items-center gap-3.5">
+                <div className="flex flex-col-reverse items-center gap-3.5 sm:flex-row">
                     <div className="flex items-center gap-2 text-white">
                         {goalType === GoalTypes.OVERVIEW && (
                             <Icon name="workoutIcon" size="lg" />

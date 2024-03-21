@@ -201,7 +201,7 @@ const PublicProfile: React.FC = () => {
                                 <ActivityWidget
                                     label="Total distance"
                                     value={`${metersToKilometers(totalDistance)} km`}
-                                    color={ActivityWidgetColor.MAGENTA}
+                                    color={ActivityWidgetColor.PURPLE}
                                     icon={<Icon name={IconName.stepsIcon} />}
                                 />
                             </li>
@@ -217,7 +217,7 @@ const PublicProfile: React.FC = () => {
                                 <ActivityWidget
                                     label="Total calories"
                                     value={`${totalCalories} kcl`}
-                                    color={ActivityWidgetColor.PURPLE}
+                                    color={ActivityWidgetColor.MAGENTA}
                                     icon={<Icon name={IconName.caloriesIcon} />}
                                 />
                             </li>

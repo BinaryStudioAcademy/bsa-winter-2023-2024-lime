@@ -121,13 +121,13 @@ export default {
             fontFamily: {
                 sans: ['Manrope', ...defaultTheme.fontFamily.sans],
                 accent: ['Lato', ...defaultTheme.fontFamily.sans],
-                heading: ['Intro', ...defaultTheme.fontFamily.sans],
             },
             backgroundImage: {
                 'auth': 'linear-gradient(to right, #E0FE10 20%, transparent 130%), linear-gradient(to right, #2A2F37 20%, transparent 100%), url("~/assets/img/auth-bg.png")',
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
                 'goalWidget': 'var(--gradient-goal-widget)',
+                'scheduleWidget': 'var(--gradient-schedule-widget)',
                 'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
@@ -155,7 +155,6 @@ export default {
                 '38': '2.375rem',
                 '54': '3.375rem;',
                 '176': '11rem',
-
             },
             spacing: {
                 '13': '3.25',

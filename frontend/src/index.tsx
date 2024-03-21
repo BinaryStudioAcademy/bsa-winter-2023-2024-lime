@@ -19,6 +19,7 @@ import { Friends } from '~/bundles/friends/pages/friends.js';
 import { Goals as GoalsPage } from '~/bundles/goals/pages/goals.js';
 import { PasswordReset } from '~/bundles/password-reset/pages/password-reset.js';
 import { Profile } from '~/bundles/profile/pages/profile.js';
+import { Schedule } from '~/bundles/schedules/pages/pages.js';
 import { Workout, WorkoutItem } from '~/bundles/workouts/pages/pages.js';
 import { store } from '~/framework/store/store.js';
 
@@ -80,7 +81,7 @@ const routes = [
                     },
                     {
                         path: AppRoute.SCHEDULE,
-                        element: <div>SCHEDULE PAGE</div>,
+                        element: <Schedule />,
                     },
                     {
                         path: AppRoute.FRIENDS,

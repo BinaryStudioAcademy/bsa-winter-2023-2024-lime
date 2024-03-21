@@ -21,7 +21,7 @@ type Properties = {
     frequencyType: ValueOf<typeof FrequencyType>;
     distance?: number | null;
     duration?: number | null;
-    onDelete: (id: number) => void;
+    onDelete?: (id: number) => void;
 };
 
 const PLURAL = 's';
@@ -39,10 +39,10 @@ const GoalCard: React.FC<Properties> = ({
     frequencyType,
     distance = null,
     duration = null,
-    onDelete,
+    onDelete = null,
 }): JSX.Element => {
     const handleDelete = useCallback(() => {
-        onDelete(id);
+        onDelete && onDelete(id);
     }, [id, onDelete]);
 
     return (
@@ -78,10 +78,12 @@ const GoalCard: React.FC<Properties> = ({
                     size={ComponentSize.SMALL}
                 />
             </div>
-            <TrashIcon
-                className="hover:text-action text-lm-grey-200 absolute right-0 top-0 m-2 w-4 cursor-pointer transition duration-300"
-                onClick={handleDelete}
-            />
+            {onDelete && (
+                <TrashIcon
+                    className="hover:text-action text-lm-grey-200 absolute right-0 top-0 m-2 w-4 cursor-pointer transition duration-300"
+                    onClick={handleDelete}
+                />
+            )}
         </div>
     );
 };

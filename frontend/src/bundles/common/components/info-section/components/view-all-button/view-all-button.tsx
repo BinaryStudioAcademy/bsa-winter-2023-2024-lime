@@ -6,13 +6,14 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 
 type Properties = {
     to: ValueOf<typeof AppRoute>;
+    title?: string | undefined;
 };
 
-const ViewAllButton: React.FC<Properties> = ({ to }) => {
+const ViewAllButton: React.FC<Properties> = ({ to, title }) => {
     return (
         <Link to={to} className="flex items-center gap-1">
             <span className="text-action text-sm font-semibold leading-4">
-                View All
+                {title ?? 'View All'}
             </span>
             <ChevronRightIcon className="text-action h-3 w-3" />
         </Link>

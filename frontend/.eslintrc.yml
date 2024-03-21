@@ -28,8 +28,12 @@ overrides:
           - vite.config.ts
           - tailwind.config.js
           - postcss.config.js
+          - '*.stories.ts'
+          - '*.stories.tsx'
       rules:
           import/no-default-export:
+              - off
+          react/jsx-no-bind:
               - off
     - files:
           - vite-env.d.ts
