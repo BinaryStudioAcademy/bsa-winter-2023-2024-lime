@@ -14,8 +14,8 @@ import {
     Navigate,
 } from '~/bundles/common/components/components.js';
 import {
-    type IconName,
     IconColor,
+    IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -409,7 +409,7 @@ const Landing = (): JSX.Element => {
                             />
                         )}
                     </div>
-                    <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:p-10 md:p-0">
                         <div>
                             <h5 className="mb-4 font-semibold uppercase">
                                 Company
@@ -424,22 +424,6 @@ const Landing = (): JSX.Element => {
                         </div>
                         <div>
                             <h5 className="mb-4 font-semibold uppercase">
-                                Resources
-                            </h5>
-                            <ul className="flex flex-col gap-2 text-sm font-normal leading-4 opacity-60">
-                                <li>
-                                    <u>Powered</u> by <b>Strava</b>
-                                </li>
-                                <li>
-                                    <u>Powered</u> by <b>Google fit</b>
-                                </li>
-                                <li>
-                                    <u>Powered</u> by <b>AI</b>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h5 className="mb-4 font-semibold uppercase">
                                 About
                             </h5>
                             <ul className="flex flex-col gap-2 text-sm font-normal leading-4 opacity-60">
@@ -447,6 +431,32 @@ const Landing = (): JSX.Element => {
                                     Terms & Conditions
                                 </Link>
                                 <Link to={AppRoute.ROOT}>Privacy Policy</Link>
+                            </ul>
+                        </div>
+                        <div className="sm:w-11">
+                            <ul className="flex items-start justify-start gap-2 text-sm font-normal leading-4 opacity-60 sm:flex-col md:flex-row">
+                                <li>
+                                    <Icon
+                                        name={IconName.openAiIcon}
+                                        color="text-action"
+                                        size="lg"
+                                        className="text-primary h-10 w-10"
+                                    />
+                                </li>
+                                <li>
+                                    <Icon
+                                        name={IconName.stravaLogoIcon}
+                                        size="lg"
+                                        className="text-primary"
+                                    />
+                                </li>
+
+                                <li>
+                                    <Icon
+                                        name={IconName.googleIconSimple}
+                                        className="text-primary relative bottom-1 h-9 w-9"
+                                    />
+                                </li>
                             </ul>
                         </div>
                     </div>

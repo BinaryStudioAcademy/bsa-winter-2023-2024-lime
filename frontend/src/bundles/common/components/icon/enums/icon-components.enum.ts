@@ -1,4 +1,5 @@
 import StavaButtonIcon from '~/assets/img/button-strava.svg?react';
+import GoogleIconSimple from '~/assets/img/google-fit-icon-simple.svg?react';
 import CyclingIcon from '~/assets/img/icons/activities/cycling.svg?react';
 import RunningIcon from '~/assets/img/icons/activities/running.svg?react';
 import WalkingIcon from '~/assets/img/icons/activities/walking.svg?react';
@@ -26,7 +27,9 @@ import StravaIcon from '~/assets/img/icons/strava-icon.svg?react';
 import WorkoutIcon from '~/assets/img/icons/workout-icon.svg?react';
 import LogoHeader from '~/assets/img/logo-header.svg?react';
 import LogoHeaderLight from '~/assets/img/logo-header-light.svg?react';
+import OpenAiIcon from '~/assets/img/open-AI-Logo.svg?react';
 import PoweredByStravaIcon from '~/assets/img/powered-by-strava.svg?react';
+import StravaLogoIcon from '~/assets/img/strava-logo.svg?react';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import { type IconName } from './enums.js';
@@ -64,6 +67,9 @@ const IconComponent: Record<
     aiPoweredIcon: AiPoweredIcon,
     friendsIcon: FriendsIcon,
     stavaButtonIcon: StavaButtonIcon,
+    openAiIcon: OpenAiIcon,
+    stravaLogoIcon: StravaLogoIcon,
+    googleIconSimple: GoogleIconSimple,
 } as const;
 
 export { IconComponent };
