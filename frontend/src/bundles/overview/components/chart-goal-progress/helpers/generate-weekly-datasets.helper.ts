@@ -1,6 +1,8 @@
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
+import { DAYS_PER_WEEK } from '../constants/days-per-week.constant.js';
 import { type ChartGoalDataset } from '../types/chart-goal-dataset.type.js';
+import { addDays, isSameDay, subWeeks } from './helpers.js';
 
 const generateWeeklyDatasets = (
     today: Date,
@@ -11,30 +13,27 @@ const generateWeeklyDatasets = (
 } => {
     const datasets: ChartGoalDataset[] = [];
     const labels: string[] = [];
-    for (let index = today.getDay(); index > 0; index--) {
-        const workoutDate = new Date(
-            new Date().setDate(today.getDate() - index + 1),
-        );
+
+    const weekAgo = subWeeks(today, 1);
+
+    for (let day = 1; day <= DAYS_PER_WEEK; day++) {
+        const dayOfWeek = addDays(weekAgo, day);
 
         const result = {
             workouts: 0,
-            steps: 0,
+            distance: 0,
             kilocalories: 0,
         };
 
         for (const workout of workouts) {
-            if (
-                new Date(workout.workoutStartedAt)
-                    .toISOString()
-                    .split('T')[0] === workoutDate.toISOString().split('T')[0]
-            ) {
+            if (isSameDay(new Date(workout.workoutStartedAt), dayOfWeek)) {
                 result.workouts += workout.duration;
-                result.steps += workout.steps ?? 0;
+                result.distance += workout.distance;
                 result.kilocalories += workout.kilocalories;
             }
         }
 
-        labels.push(workoutDate.toLocaleString('en-US', { weekday: 'long' }));
+        labels.push(dayOfWeek.toLocaleString('en-US', { weekday: 'short' }));
         datasets.push(result);
     }
     return {

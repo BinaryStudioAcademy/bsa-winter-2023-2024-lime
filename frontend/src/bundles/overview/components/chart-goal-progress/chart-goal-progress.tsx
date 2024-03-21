@@ -20,10 +20,14 @@ const ChartGoalProgress: React.FC<Properties> = ({ workouts }): JSX.Element => {
         defaultValues: {
             select: ChartType.WEEKLY,
         },
-        mode: 'onChange',
+        mode: 'onTouched',
     });
 
-    const chartType = useFormWatch({ control, name: 'select' });
+    const chartType = useFormWatch({
+        name: 'select',
+        control,
+        defaultValue: ChartType.WEEKLY,
+    });
 
     const chartData = useMemo(
         () => generateChartStats(chartType, workouts),
@@ -33,7 +37,9 @@ const ChartGoalProgress: React.FC<Properties> = ({ workouts }): JSX.Element => {
     return (
         <div className="bg-primary rounded-30 relative p-8">
             <div className="mb-4 flex h-10 items-center justify-between">
-                <h1 className="text-secondary font-extrabold">Goal Progress</h1>
+                <h1 className="text-secondary font-extrabold">
+                    Workout Progress
+                </h1>
                 <div className="w-[100px]">
                     <Select
                         className="bg-secondary border-buttonPrimary w-[100px] rounded-md  border text-xs"

@@ -29,14 +29,13 @@ const generateChartStats = (
                 borderColor: 'transparent',
             },
             {
-                label: 'Steps',
+                label: 'Distance',
                 data: [],
                 backgroundColor: colors.STEPS.backgroundColor,
                 borderColor: 'transparent',
             },
         ],
     };
-
     const today = new Date();
     const datasets = [];
 
@@ -63,12 +62,16 @@ const generateChartStats = (
         }
     }
 
+    if (datasets.every((dataset) => dataset.workouts === 0)) {
+        return chartData;
+    }
+
     const datasetsInPercentage = convertStatsToPercentage(datasets);
 
     for (const data of datasetsInPercentage) {
         chartData.datasets[0]?.data.push(data.workouts);
         chartData.datasets[1]?.data.push(data.kilocalories);
-        chartData.datasets[2]?.data.push(data.steps);
+        chartData.datasets[2]?.data.push(data.distance);
     }
 
     return chartData;

@@ -1,6 +1,8 @@
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
+import { WEEKS_PER_MONTH } from '../constants/constants.js';
 import { type ChartGoalDataset } from '../types/chart-goal-dataset.type.js';
+import { addWeeks, isSameWeek, startOfMonth, startOfWeek } from './helpers.js';
 
 const generateMonthlyDatasets = (
     today: Date,
@@ -12,37 +14,29 @@ const generateMonthlyDatasets = (
     const datasets: ChartGoalDataset[] = [];
     const labels: string[] = [];
 
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const startOfCurrent = startOfMonth(today);
+    let firstDayOfWeek = startOfWeek(startOfCurrent);
 
-    const daysInFirstWeek = 7 - (firstDayOfMonth.getDay() || 7);
-    const totalWeeks = Math.ceil((today.getDate() - daysInFirstWeek) / 7) + 1;
-
-    for (let week = 1; week <= totalWeeks; week++) {
+    for (let week = 1; week <= WEEKS_PER_MONTH; week++) {
         const result = {
             workouts: 0,
-            steps: 0,
+            distance: 0,
             kilocalories: 0,
         };
 
-        const startOfWeek = new Date(firstDayOfMonth);
-        startOfWeek.setDate(startOfWeek.getDate() + (week - 1) * 7);
-
-        const endOfWeek = new Date(startOfWeek);
-        endOfWeek.setDate(startOfWeek.getDate() + 6);
-
         for (const workout of workouts) {
             const workoutDate = new Date(workout.workoutStartedAt);
-            if (workoutDate >= startOfWeek && workoutDate <= endOfWeek) {
+            if (isSameWeek(workoutDate, firstDayOfWeek)) {
                 result.workouts += workout.duration;
-                result.steps += workout.steps ?? 0;
+                result.distance += workout.distance;
                 result.kilocalories += workout.kilocalories;
             }
         }
-
         labels.push(`Week ${week}`);
         datasets.push(result);
-    }
 
+        firstDayOfWeek = addWeeks(firstDayOfWeek, 1);
+    }
     return {
         datasets,
         labels,

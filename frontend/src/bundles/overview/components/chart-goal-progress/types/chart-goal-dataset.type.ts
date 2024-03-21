@@ -1,6 +1,6 @@
 type ChartGoalDataset = {
     workouts: number;
-    steps: number;
+    distance: number;
     kilocalories: number;
 };
 

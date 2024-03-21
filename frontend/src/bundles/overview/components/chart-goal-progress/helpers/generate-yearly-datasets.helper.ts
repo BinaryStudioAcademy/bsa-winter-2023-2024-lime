@@ -1,6 +1,10 @@
+import { subMonths } from 'date-fns';
+
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
 
+import { MONTHS_PER_YEAR } from '../constants/constants.js';
 import { type ChartGoalDataset } from '../types/chart-goal-dataset.type.js';
+import { addMonths, isSameMonth, startOfMonth } from './helpers.js';
 
 const generateYearlyDatasets = (
     today: Date,
@@ -12,30 +16,31 @@ const generateYearlyDatasets = (
     const datasets: ChartGoalDataset[] = [];
     const labels: string[] = [];
 
-    const totalMonths = today.getMonth();
+    const oneYearAgo = subMonths(today, MONTHS_PER_YEAR - 1);
+    let firstDayOfMonth = startOfMonth(oneYearAgo);
 
-    for (let month = 0; month <= totalMonths; month++) {
+    for (let month = 1; month <= MONTHS_PER_YEAR; month++) {
         const result = {
             workouts: 0,
-            steps: 0,
+            distance: 0,
             kilocalories: 0,
         };
-
-        const startOfMonth = new Date(today.getFullYear(), month, 1);
-        const endOfMonth = new Date(today.getFullYear(), month + 1, 0);
 
         for (const workout of workouts) {
             const workoutDate = new Date(workout.workoutStartedAt);
 
-            if (workoutDate >= startOfMonth && workoutDate <= endOfMonth) {
+            if (isSameMonth(workoutDate, firstDayOfMonth)) {
                 result.workouts += workout.duration;
-                result.steps += workout.steps ?? 0;
+                result.distance += workout.distance;
                 result.kilocalories += workout.kilocalories;
             }
         }
-
-        labels.push(startOfMonth.toLocaleString('en-US', { month: 'long' }));
+        labels.push(
+            firstDayOfMonth.toLocaleString('en-US', { month: 'short' }),
+        );
         datasets.push(result);
+
+        firstDayOfMonth = addMonths(firstDayOfMonth, 1);
     }
 
     return {

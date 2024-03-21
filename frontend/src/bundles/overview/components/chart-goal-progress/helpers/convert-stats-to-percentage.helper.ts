@@ -6,7 +6,7 @@ const convertStatsToPercentage = (
     datasets: ChartGoalDataset[],
 ): ChartGoalDataset[] => {
     let biggestWorkout = defaultValue;
-    let biggestSteps = defaultValue;
+    let biggestDistance = defaultValue;
     let biggestKilocalories = defaultValue;
 
     for (const data of datasets) {
@@ -14,8 +14,8 @@ const convertStatsToPercentage = (
             biggestWorkout = data.workouts;
         }
 
-        if (data.steps > biggestSteps) {
-            biggestSteps = data.steps;
+        if (data.distance > biggestDistance) {
+            biggestDistance = data.distance;
         }
 
         if (data.kilocalories > biggestKilocalories) {
@@ -25,7 +25,7 @@ const convertStatsToPercentage = (
 
     return datasets.map((data) => ({
         workouts: (data.workouts / biggestWorkout) * 100,
-        steps: (data.steps / biggestSteps) * 100,
+        distance: (data.distance / biggestDistance) * 100,
         kilocalories: (data.kilocalories / biggestKilocalories) * 100,
     }));
 };

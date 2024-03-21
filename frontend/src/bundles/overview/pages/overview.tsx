@@ -26,6 +26,7 @@ import {
     GoalWidget,
 } from '~/bundles/overview/components/components.js';
 import { GoalTypes } from '~/bundles/overview/components/goal-widget/enums/goal-types.enums.js';
+import { actions as schedulesActions } from '~/bundles/schedules/store/schedules.js';
 import { actions as workoutsActions } from '~/bundles/workouts/store/workouts.js';
 
 import { CompletedGoalsStatus } from '../enums/enums.js';
@@ -33,32 +34,12 @@ import {
     calculateTodayStats,
     classifyGoalsByCompletion,
     defineCompletedGoalsStatus,
+    formatScheduleDay,
+    formatScheduleTime,
     getCompletedDate,
+    sortGoalsByDate,
+    sortSchedulesByDate,
 } from '../helpers/helpers.js';
-
-const scheduleData = [
-    {
-        id: 1,
-        title: 'Monday',
-        name: 'Stretch',
-        data: 'At 08:00',
-        chip: '20 Pieces',
-    },
-    {
-        id: 2,
-        title: 'Wednesday',
-        name: 'Yoga',
-        data: 'At 08:00',
-        chip: '10 min',
-    },
-    {
-        id: 3,
-        title: 'Tuesday',
-        name: 'Back Stretch',
-        data: 'At 08:00',
-        chip: '10 Round',
-    },
-];
 
 const Overview: React.FC = () => {
     const { currentSubscription: isSubscribed } = useAppSelector(
@@ -73,10 +54,13 @@ const Overview: React.FC = () => {
 
     const { workouts } = useAppSelector(({ workouts }) => workouts);
 
+    const { schedules } = useAppSelector(({ schedules }) => schedules);
+
     const isLoading = goalsDataStatus === DataStatus.PENDING;
     useEffect(() => {
         void dispatch(goalsActions.getGoals());
         void dispatch(workoutsActions.getWorkouts());
+        void dispatch(schedulesActions.getSchedules());
     }, [dispatch]);
 
     const statistics = useMemo(() => calculateTodayStats(workouts), [workouts]);
@@ -158,17 +142,16 @@ const Overview: React.FC = () => {
                                 }
 
                                 return (
-                                    <li key={goal.id} className="flex-1">
-                                        <GoalCard
-                                            id={goal.id}
-                                            activityType={goal.activityType}
-                                            frequency={goal.frequency}
-                                            frequencyType={goal.frequencyType}
-                                            progress={goal.progress}
-                                            distance={goal.distance}
-                                            duration={goal.duration}
-                                        />
-                                    </li>
+                                    <GoalCard
+                                        key={goal.id}
+                                        id={goal.id}
+                                        activityType={goal.activityType}
+                                        frequency={goal.frequency}
+                                        frequencyType={goal.frequencyType}
+                                        progress={goal.progress}
+                                        distance={goal.distance}
+                                        duration={goal.duration}
+                                    />
                                 );
                             })}
                         </ul>
@@ -181,13 +164,25 @@ const Overview: React.FC = () => {
                     viewAllLink={AppRoute.SCHEDULE}
                     className={isSubscribed ? 'mb-14' : 'mb-5'}
                 >
-                    {scheduleData.length > 0 ? (
+                    {schedules.length > 0 ? (
                         <ul>
-                            {scheduleData.map((scheduleItem) => (
-                                <li className="mt-3" key={scheduleItem.id}>
-                                    <Card {...scheduleItem} />
-                                </li>
-                            ))}
+                            {sortSchedulesByDate(schedules).map(
+                                (scheduleItem) => (
+                                    <li className="mt-3" key={scheduleItem.id}>
+                                        <Card
+                                            title={formatScheduleDay(
+                                                new Date(scheduleItem.startAt),
+                                            )}
+                                            data={formatScheduleTime(
+                                                new Date(scheduleItem.startAt),
+                                            )}
+                                            name={capitalizeFirstLetter(
+                                                scheduleItem.activityType,
+                                            )}
+                                        />
+                                    </li>
+                                ),
+                            )}
                         </ul>
                     ) : (
                         <p>Empty schedule</p>
@@ -203,7 +198,7 @@ const Overview: React.FC = () => {
                     {completedGoalsStatus ===
                         CompletedGoalsStatus.COMPLETED_GOALS && (
                         <ul>
-                            {completedGoals.map(
+                            {sortGoalsByDate(completedGoals).map(
                                 ({ id, activityType, completedAt }, index) => {
                                     if (index > 4) {
                                         return;
