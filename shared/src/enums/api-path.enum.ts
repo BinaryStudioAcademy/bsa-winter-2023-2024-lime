@@ -16,6 +16,7 @@ const ApiPath = {
     IDENTITY: '/identity',
     AI_ASSISTANT: '/ai-assistant',
     FRIENDS: '/friends',
+    SCHEDULES: '/schedules',
 } as const;
 
 export { ApiPath };

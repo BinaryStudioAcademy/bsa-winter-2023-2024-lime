@@ -292,6 +292,7 @@ const ProfileSettings: React.FC<Properties> = ({
                     />
                     <DatePicker
                         name="dateOfBirth"
+                        format="DD/MM/YYYY"
                         control={control}
                         errors={errors}
                         label="Date of birth"

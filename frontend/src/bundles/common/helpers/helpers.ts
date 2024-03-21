@@ -11,6 +11,8 @@ export { convertWeightToKilograms } from './convert-weight/convert-weight-to-kil
 export { convertMetersToKilometers } from './covert-meters-to-kilometers/covert-meters-to-kilometers.helper.js';
 export { formatDate } from './format-date/format-date.helper.js';
 export { formatDateString } from './format-date-string/format-date-string.helper.js';
+export { formatDateToIso } from './format-date-to-iso/format-date-to-iso.helper.js';
+export { getActivityOptions } from './get-activity-options/get-activity-options.helper.js';
 export { getLastWorkout } from './get-last-workout/get-last-workout.helper.js';
 export { getObjectKeys } from './get-object-keys/get-object-keys.js';
 export { getTimeFromDate } from './get-time-from-date/get-time-from-date.helper.js';
