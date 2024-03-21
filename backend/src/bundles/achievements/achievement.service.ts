@@ -1,5 +1,8 @@
 import { type AchievementEntity } from '~/bundles/achievements/achievement.entity.js';
 import { type AchievementRepository } from '~/bundles/achievements/achievement.repository.js';
+import { HttpCode, HttpError } from '~/common/http/http.js';
+
+import { ErrorMessage } from './achievements.js';
 
 class AchievementService {
     private achievementRepository: AchievementRepository;
@@ -18,11 +21,14 @@ class AchievementService {
         return await this.achievementRepository.findAll();
     }
 
-    public async findById(id: number): Promise<AchievementEntity | null> {
+    public async findById(id: number): Promise<AchievementEntity> {
         const achievement = await this.achievementRepository.findById(id);
 
         if (!achievement) {
-            throw new Error('Achievement not found');
+            throw new HttpError({
+                message: ErrorMessage.ACHIEVEMENT_NOT_FOUND,
+                status: HttpCode.NOT_FOUND,
+            });
         }
 
         return achievement;
