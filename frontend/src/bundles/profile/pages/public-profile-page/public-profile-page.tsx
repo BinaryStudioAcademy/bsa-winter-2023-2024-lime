@@ -52,14 +52,9 @@ const PublicProfile: React.FC = () => {
         user: UserAuthResponseDto;
     };
     const { chats } = useAppSelector(({ chats }) => chats);
-    const [isFollowed, setIsFollowed] = useState(false);
-
-    useEffect(() => {
-        const isUserFollowed = friends.some(
-            (friend) => friend.userId === NumericId,
-        );
-        setIsFollowed(isUserFollowed);
-    }, [NumericId, friends]);
+    const [isFollowed, setIsFollowed] = useState(
+        friends.some((friends) => friends.userId === NumericId),
+    );
 
     useEffect(() => {
         void dispatch(userActions.getById(NumericId));
@@ -70,6 +65,19 @@ const PublicProfile: React.FC = () => {
 
     useEffect(() => {
         void dispatch(friendsActions.getFollowings({}));
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(friendsActions.getFollowings({}))
+            .unwrap()
+            .then((friends) => {
+                setIsFollowed(
+                    friends.items.some((friend) => friend.userId === NumericId),
+                );
+            })
+            .catch(() => {
+                setIsFollowed(false);
+            });
     }, [dispatch]);
 
     const { dataStatus: dataStatusUser, user } = useAppSelector(
