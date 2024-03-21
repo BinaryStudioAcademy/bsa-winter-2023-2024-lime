@@ -83,7 +83,7 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(confirmPayment.rejected, (state) => {
             state.confirmPaymentStatus = DataStatus.REJECTED;
-        });      
+        });
 
         builder.addMatcher(
             isAnyOf(
