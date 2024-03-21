@@ -71,10 +71,21 @@ const Workout: React.FC = () => {
 
     const handleCreateWorkout = useCallback(
         (payload: WorkoutRequestDto): void => {
-            void dispatch(actions.createWorkout(payload));
-            void setIsModalOpen(false);
+            dispatch(actions.createWorkout(payload))
+                .unwrap()
+                .then((result) => {
+                    setIsModalOpen(false);
+                    navigate(
+                        configureString(AppRoute.WORKOUT_$ID, {
+                            id: String(result.id),
+                        }),
+                    );
+                })
+                .catch(() => {
+                    void setIsModalOpen(false);
+                });
         },
-        [dispatch],
+        [dispatch, navigate],
     );
 
     return (
@@ -88,6 +99,18 @@ const Workout: React.FC = () => {
                             <div className="my-[-2rem] ml-[-1rem]">
                                 <SubNavigationWorkout
                                     title={subNavigationTitle}
+                                    button={
+                                        <Button
+                                            label="Add workout"
+                                            onClick={handleOpenModal}
+                                            size={ComponentSize.SMALL}
+                                            leftIcon={
+                                                <PlusIcon className="h-5 w-5" />
+                                            }
+                                            variant={ButtonVariant.SECONDARY}
+                                            className="max-w-56"
+                                        />
+                                    }
                                 />
                             </div>
 

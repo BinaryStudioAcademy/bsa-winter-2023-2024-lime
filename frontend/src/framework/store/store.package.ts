@@ -116,7 +116,7 @@ class Store {
                         extraArgument: this.extraArguments,
                     },
                 })
-                    .prepend(errorMiddleware)
+                    .concat(errorMiddleware) // eslint-disable-line unicorn/prefer-spread
                     .concat(chatSocketMiddleware), // eslint-disable-line unicorn/prefer-spread
         });
     }

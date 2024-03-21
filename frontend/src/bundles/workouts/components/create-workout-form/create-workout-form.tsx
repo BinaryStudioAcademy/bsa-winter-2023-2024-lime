@@ -96,7 +96,8 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                     name="workoutDate"
                     label="Date"
                     placeholder="Enter date"
-                    format="dd/MM/yyyy"
+                    format="DD/MM/YYYY"
+                    maxDate={new Date()}
                 />
                 <TimePicker
                     className="md:col-span-2"

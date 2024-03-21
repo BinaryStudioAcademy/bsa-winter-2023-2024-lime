@@ -1,3 +1,4 @@
+import { isToday } from 'date-fns';
 import { z } from 'zod';
 
 import { ActivityType } from '~/bundles/common/enums/enums.js';
@@ -151,28 +152,6 @@ const createWorkout = z
             .regex(
                 UnicodePattern.TIME_PATTERN,
                 CreateWorkoutValidationMessage.TIME_FORMAT,
-            )
-            .refine(
-                (value) => {
-                    if (!value) {
-                        return true;
-                    }
-                    const [hours, minutes, seconds] = value.split(':');
-                    const currentDate = new Date();
-                    const enteredDate = new Date(
-                        currentDate.getFullYear(),
-                        currentDate.getMonth(),
-                        currentDate.getDate(),
-                        Number(hours),
-                        Number(minutes),
-                        Number(seconds),
-                    );
-                    return enteredDate <= currentDate;
-                },
-                {
-                    message:
-                        CreateWorkoutValidationMessage.WORKOUT_TIME_IN_FUTURE,
-                },
             ),
         workoutEndedAt: z
             .string()
@@ -182,6 +161,36 @@ const createWorkout = z
                 CreateWorkoutValidationMessage.TIME_FORMAT,
             ),
     })
+    .refine(
+        (schema) => {
+            const { workoutDate, workoutStartedAt } = schema;
+            if (!workoutDate || !workoutStartedAt) {
+                return true;
+            }
+            const [day, month, year] = workoutDate.split('/');
+            const enteredDate = new Date(`${year}-${month}-${day}`);
+            const currentDate = new Date();
+
+            if (!isToday(enteredDate)) {
+                return true;
+            }
+
+            const [hours, minutes, seconds] = workoutStartedAt.split(':');
+            const enteredDateWithTime = new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth(),
+                currentDate.getDate(),
+                Number(hours),
+                Number(minutes),
+                Number(seconds),
+            );
+            return enteredDateWithTime <= currentDate;
+        },
+        {
+            message: CreateWorkoutValidationMessage.WORKOUT_TIME_IN_FUTURE,
+            path: ['workoutStartedAt'],
+        },
+    )
     .refine(
         (schema) => {
             const { workoutDate, workoutStartedAt, workoutEndedAt } = schema;
