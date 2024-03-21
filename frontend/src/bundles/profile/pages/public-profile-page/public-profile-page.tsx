@@ -44,7 +44,7 @@ const PublicProfile: React.FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const NumericId = Number(id);
-    const { users, dataStatus: dataStatusFriends } = useAppSelector(
+    const { users: friends, dataStatus: dataStatusFriends } = useAppSelector(
         ({ friends }) => friends,
     );
 
@@ -55,21 +55,22 @@ const PublicProfile: React.FC = () => {
     const [isFollowed, setIsFollowed] = useState(false);
 
     useEffect(() => {
+        const isUserFollowed = friends.some(
+            (friend) => friend.userId === NumericId,
+        );
+        setIsFollowed(isUserFollowed);
+    }, []);
+
+    useEffect(() => {
         void dispatch(userActions.getById(NumericId));
         void dispatch(achievementsActions.getAchievementsByUserId(NumericId));
         void dispatch(workoutsActions.getLastWorkoutsByUserId(NumericId));
         void dispatch(goalsActions.getGoalsByUserId(NumericId));
-        void dispatch(friendsActions.getFollowings({}));
     }, [dispatch, NumericId]);
 
     useEffect(() => {
-        if (dataStatusFriends === DataStatus.FULFILLED) {
-            const isFollowedInitially = users.some(
-                (user) => user.userId === NumericId,
-            );
-            setIsFollowed(isFollowedInitially);
-        }
-    }, [users, dataStatusFriends, NumericId]);
+        void dispatch(friendsActions.getFollowings({}));
+    }, [dispatch]);
 
     const { dataStatus: dataStatusUser, user } = useAppSelector(
         ({ users }) => users,
