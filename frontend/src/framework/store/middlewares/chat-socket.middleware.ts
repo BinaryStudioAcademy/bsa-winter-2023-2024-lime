@@ -1,7 +1,10 @@
 import { type Middleware } from '@reduxjs/toolkit';
 
 import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
-import { type MessageResponseDto } from '~/bundles/chats/types/types.js';
+import {
+    type ChatResponseDto,
+    type MessageResponseDto,
+} from '~/bundles/chats/types/types.js';
 import {
     SocketEvent,
     SocketNamespace,
@@ -21,6 +24,10 @@ const chatSocketMiddleware: Middleware<unknown, unknown, AppDispatch> = ({
             void dispatch(chatActionCreator.applyMessage(message));
         },
     );
+
+    chatSocketInstance.on(SocketEvent.CHAT_CREATE, (chat: ChatResponseDto) => {
+        void dispatch(chatActionCreator.applyChat(chat));
+    });
 
     return (next) => (action) => {
         // eslint-disable-next-line unicorn/prefer-regexp-test

@@ -42,6 +42,24 @@ const createChat = createAsyncThunk<
     return await chatsApi.createChat(payload);
 });
 
+const applyChat = createAsyncThunk<
+    ChatResponseDto | null,
+    ChatResponseDto,
+    AsyncThunkConfig
+>(`${sliceName}/apply-chat`, (payload, { getState }) => {
+    const { creatorId } = payload;
+
+    const {
+        auth: { user },
+    } = getState();
+
+    if (user && user.id === creatorId) {
+        return null;
+    }
+
+    return payload;
+});
+
 const joinRoom = createAction<(userId: number) => Record<'payload', number>>(
     `${sliceName}/join-room`,
     (userId) => {
@@ -114,6 +132,7 @@ const generateAiAssistantResponse = createAsyncThunk<
 );
 
 export {
+    applyChat,
     applyMessage,
     createChat,
     deleteChatHistory,

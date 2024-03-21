@@ -1,14 +1,26 @@
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 
+import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
 import { Button, Icon } from '~/bundles/common/components/components.js';
 import {
     IconColor,
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
-import { ComponentSize } from '~/bundles/common/enums/enums.js';
-import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
-import { useCallback } from '~/bundles/common/hooks/hooks.js';
-import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
+import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
+import {
+    configureString,
+    getValidClassNames,
+} from '~/bundles/common/helpers/helpers.js';
+import {
+    useAppDispatch,
+    useAppSelector,
+    useCallback,
+    useNavigate,
+} from '~/bundles/common/hooks/hooks.js';
+import {
+    type FriendResponseDto,
+    type UserAuthResponseDto,
+} from '~/bundles/friends/types/types.js';
 
 type Properties = {
     isActive: boolean;
@@ -27,6 +39,15 @@ const FriendCard = ({
     selectCard,
     onToggleFollow,
 }: Properties): JSX.Element => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const { user: authorizedUser } = useAppSelector(({ auth }) => auth) as {
+        user: UserAuthResponseDto;
+    };
+
+    const { chats } = useAppSelector(({ chats }) => chats);
+
     const { userId, fullName, email, avatarUrl } = user;
 
     const classes = {
@@ -49,6 +70,31 @@ const FriendCard = ({
     const handleSelectCard = useCallback((): void => {
         selectCard(user);
     }, [selectCard, user]);
+
+    const handleSendMessage = useCallback(() => {
+        const membersId = new Set([authorizedUser.id, userId]);
+
+        const chatPayload = {
+            membersId: [userId],
+            isAssistant: false,
+        };
+
+        const existingChat = chats.find(({ users }) =>
+            users.map(({ id }) => id).every((id) => membersId.has(id)),
+        );
+
+        if (existingChat) {
+            const redirectPath = configureString(AppRoute.CHATS_$ID, {
+                id: String(existingChat?.id),
+            });
+
+            return void navigate(redirectPath);
+        }
+
+        void dispatch(chatActionCreator.createChat(chatPayload));
+
+        void navigate(AppRoute.CHATS);
+    }, [authorizedUser, chats, dispatch, navigate, userId]);
 
     return (
         <div
@@ -104,6 +150,7 @@ const FriendCard = ({
                                 ? 'Send message'
                                 : 'Follow to send message'
                         }
+                        onClick={handleSendMessage}
                     >
                         <Icon
                             name={IconName.messageIcon}

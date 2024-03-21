@@ -7,11 +7,13 @@ import {
 } from '~/common/controller/controller.js';
 import { ApiPath, HttpCode } from '~/common/enums/enums.js';
 import { type Logger } from '~/common/logger/logger.js';
+import { type SocketService } from '~/common/services/socket/socket.service.js';
 
 import { type ChatService } from './chat.service.js';
 import { ChatsPath } from './enums/enums.js';
 import {
     type ChatRequestDto,
+    type ChatResponseDto,
     type EntityIdParameterDto,
 } from './types/types.js';
 import {
@@ -22,10 +24,17 @@ import {
 class ChatController extends BaseController {
     private chatService: ChatService;
 
-    public constructor(logger: Logger, chatService: ChatService) {
+    private socketService: SocketService;
+
+    public constructor(
+        logger: Logger,
+        chatService: ChatService,
+        socketService: SocketService,
+    ) {
         super(logger, ApiPath.CHATS);
 
         this.chatService = chatService;
+        this.socketService = socketService;
 
         this.addRoute({
             path: ChatsPath.ROOT,
@@ -104,17 +113,25 @@ class ChatController extends BaseController {
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
 
-        const membersId = body.membersId ?? [];
+        const membersId = [...(body.membersId ?? []), user.id];
+
         const payload = {
             ...body,
-            membersId: [...membersId, user.id],
+            membersId,
             creatorId: user.id,
         };
+
+        const chat = await this.chatService.create(payload);
+
+        this.socketService.createChat<ChatResponseDto>({
+            membersId: membersId.map(String),
+            payload: chat,
+        });
 
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
-            payload: await this.chatService.create(payload),
+            payload: chat,
         };
     }
 }

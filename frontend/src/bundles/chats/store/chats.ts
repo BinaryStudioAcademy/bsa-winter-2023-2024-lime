@@ -1,4 +1,5 @@
 import {
+    applyChat,
     applyMessage,
     createChat,
     deleteChatHistory,
@@ -13,6 +14,7 @@ import { actions } from './slice.js';
 
 const allActions = {
     ...actions,
+    applyChat,
     getAllChats,
     getChat,
     createChat,

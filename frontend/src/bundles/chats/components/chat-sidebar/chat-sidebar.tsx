@@ -4,7 +4,8 @@ import {
     ChatSearchBar,
 } from '~/bundles/chats/components/components.js';
 import { type ChatPreviewResponseDto } from '~/bundles/chats/types/types.js';
-import { Button } from '~/bundles/common/components/components.js';
+import { Button, Link } from '~/bundles/common/components/components.js';
+import { AppRoute } from '~/bundles/common/enums/enums.js';
 import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 
@@ -34,7 +35,9 @@ const ChatSidebar = ({
         >
             <div className="mb-4">
                 <ChatSearchBar />
-                <Button label="Add new chat" size="sm" variant="primary" />
+                <Link to={AppRoute.FRIENDS}>
+                    <Button label="Add new chat" size="sm" variant="primary" />
+                </Link>
             </div>
             <div className="mb-4">
                 <span className="text-secondary mb-1">AI</span>

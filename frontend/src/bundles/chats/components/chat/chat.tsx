@@ -20,6 +20,7 @@ import {
     Button,
     Icon,
     Link,
+    Loader,
     UserInfoCard,
 } from '~/bundles/common/components/components.js';
 import { AppRoute } from '~/bundles/common/enums/enums.js';
@@ -78,12 +79,18 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
     }, [currentChat, dispatch]);
 
     const [isOpen, setIsOpen] = useState(false);
+
     const toggleSidebarProfile = useCallback((): void => {
         setIsOpen(!isOpen);
-    }, [setIsOpen, isOpen]);
+        void dispatch(chatActionCreator.clearCurrentChat());
+    }, [isOpen, dispatch]);
 
     if (!currentChat) {
-        return <div>Chat was not selected</div>;
+        return (
+            <div className="relative h-full">
+                <Loader isOverflow />
+            </div>
+        );
     }
 
     const { users, isAssistant, messages } = currentChat;

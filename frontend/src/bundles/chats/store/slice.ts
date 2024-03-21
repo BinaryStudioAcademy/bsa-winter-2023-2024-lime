@@ -8,6 +8,7 @@ import { DataStatus } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
 import {
+    applyChat,
     applyMessage,
     createChat,
     deleteChatHistory,
@@ -38,7 +39,11 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'chats',
-    reducers: {},
+    reducers: {
+        clearCurrentChat(state) {
+            state.currentChat = null;
+        },
+    },
     extraReducers(builder) {
         builder.addCase(getAllChats.fulfilled, (state, action) => {
             state.chats = action.payload.userChats;
@@ -88,6 +93,10 @@ const { reducer, actions, name } = createSlice({
                 ? (state.aiAssistantChat = newChat)
                 : (state.chats = [...state.chats, newChat]);
 
+            if (!isAssistant) {
+                state.currentChat = { ...newChat, messages: [] };
+            }
+
             state.createChatDataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(createChat.pending, (state) => {
@@ -95,6 +104,16 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(createChat.rejected, (state) => {
             state.createChatDataStatus = DataStatus.REJECTED;
+        });
+        builder.addCase(applyChat.fulfilled, (state, action) => {
+            if (action.payload) {
+                const newChat = {
+                    ...action.payload,
+                    lastMessage: null,
+                };
+
+                state.chats = [...state.chats, newChat];
+            }
         });
         builder.addCase(generateAiAssistantResponse.pending, (state) => {
             state.dataStatus = DataStatus.PENDING;
@@ -133,6 +152,15 @@ const { reducer, actions, name } = createSlice({
                     if (currentChatId === (chat as ChatPreviewResponseDto).id) {
                         currentChat.messages = [incomingMessage, ...messages];
                     }
+                }
+
+                if (!currentChat && incomingMessage) {
+                    const chat = chats.find(
+                        ({ id }) => id === incomingMessage.chatId,
+                    );
+
+                    (chat as ChatPreviewResponseDto).lastMessage =
+                        incomingMessage;
                 }
             },
         );

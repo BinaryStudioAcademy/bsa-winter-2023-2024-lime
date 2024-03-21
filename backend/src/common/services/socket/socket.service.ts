@@ -3,11 +3,7 @@ import { type Server } from 'node:http';
 import { type Socket as TSocket, Server as SocketServer } from 'socket.io';
 
 import { SocketEvent, SocketNamespace } from './enums/enums.js';
-
-type MessageProperties<T> = {
-    membersId: string[];
-    payload: T;
-};
+import { type EventProperties } from './types/types.js';
 
 class SocketService {
     private _io!: SocketServer;
@@ -33,11 +29,18 @@ class SocketService {
         });
     }
 
-    public sendMessage<T>({ membersId, payload }: MessageProperties<T>): void {
+    public sendMessage<T>({ membersId, payload }: EventProperties<T>): void {
         this._io
             .of(SocketNamespace.CHAT)
             .to(membersId)
             .emit(SocketEvent.CHAT_SEND_MESSAGE, payload);
+    }
+
+    public createChat<T>({ membersId, payload }: EventProperties<T>): void {
+        this._io
+            .of(SocketNamespace.CHAT)
+            .to(membersId)
+            .emit(SocketEvent.CHAT_CREATE, payload);
     }
 }
 

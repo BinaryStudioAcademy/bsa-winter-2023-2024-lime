@@ -23,14 +23,14 @@ import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
 const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
-    const tabs = [TabsFollowers.FIND_FOLLOWINGS, TabsFollowers.MY_FOLLOWINGS];
+    const tabs = [TabsFollowers.MY_FOLLOWINGS, TabsFollowers.FIND_FOLLOWINGS];
     const [page, setPage] = useState<number>(PAGE);
 
     const [selectedCard, setSelectedCard] = useState<FriendResponseDto | null>(
         null,
     );
     const [activeTab, setActiveTab] = useState<string>(
-        TabsFollowers.FIND_FOLLOWINGS,
+        TabsFollowers.MY_FOLLOWINGS,
     );
 
     const {

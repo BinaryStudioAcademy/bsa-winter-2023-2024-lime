@@ -5,6 +5,7 @@ type ChatBasicResponseDto = {
     id: number;
     isAssistant: boolean;
     users: ChatUserResponseDto[];
+    creatorId?: number;
 };
 
 type ChatPreviewResponseDto = ChatBasicResponseDto & {
