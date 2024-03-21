@@ -40,9 +40,9 @@ const ChartGoalProgress: React.FC<Properties> = ({ workouts }): JSX.Element => {
                 <h1 className="text-secondary font-extrabold">
                     Workout Progress
                 </h1>
-                <div className="w-[100px]">
+                <div className="h-10 w-[100px]">
                     <Select
-                        className="bg-secondary border-buttonPrimary w-[100px] rounded-md  border text-xs"
+                        className="bg-secondary border-buttonPrimary w-[100px] rounded-md border text-xs"
                         control={control}
                         name="select"
                         options={CHART_TYPE_OPTIONS}

@@ -134,8 +134,8 @@ const Overview: React.FC = () => {
                 )}
                 <ChartGoalProgress workouts={workouts} />
                 {incompletedGoals.length > 0 && (
-                    <div className="mt-5">
-                        <ul className="flex gap-4">
+                    <div className="mt-5 xl:pb-8">
+                        <ul className="flex flex-col gap-4 md:flex-row">
                             {incompletedGoals.map((goal, index) => {
                                 if (index > 1) {
                                     return;
@@ -197,7 +197,7 @@ const Overview: React.FC = () => {
                 <InfoSection
                     title="Completed goals"
                     viewAllLink={completedGoalsLink}
-                    className="mb-12"
+                    className="mb-12 pb-8 xl:pb-0"
                     buttonTitle={completedGoalsStatus}
                 >
                     {completedGoalsStatus ===
