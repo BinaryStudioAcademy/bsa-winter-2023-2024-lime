@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type SubscribeRequestDto } from 'shared';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
@@ -27,4 +28,19 @@ const getById = createAsyncThunk<UserAuthResponseDto, number, AsyncThunkConfig>(
     },
 );
 
-export { getById, loadAll };
+const buyWithBonus = createAsyncThunk<
+    UserAuthResponseDto,
+    SubscribeRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/buy-with-bonus`,
+    async ({ planId, stripePriceId }, { extra }) => {
+        const { userApi } = extra;
+        return await userApi.buySubscriptionWithBonus({
+            planId,
+            stripePriceId,
+        });
+    },
+);
+
+export { buyWithBonus, getById, loadAll };

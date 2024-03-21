@@ -8,6 +8,7 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { actions as userActions } from '~/bundles/users/store/users.js';
 
 import {
     SubscriptionPlan,
@@ -59,6 +60,21 @@ const SubscriptionPage = (): JSX.Element => {
             navigate(AppRoute.PROFILE_SUBSCRIPTION_CHECKOUT);
         },
         [dispatch, navigate],
+    );
+
+    const handleBuyWithPoints = useCallback(
+        ({ planId, stripePriceId }: SubscribeRequestDto): void => {
+            if (!user) {
+                return;
+            }
+            void dispatch(
+                userActions.buyWithBonus({
+                    planId,
+                    stripePriceId,
+                }),
+            );
+        },
+        [dispatch, user],
     );
 
     if (dataStatus === DataStatus.PENDING) {
@@ -113,6 +129,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     description={plan.description ?? ''}
                                     stripePriceId={plan.stripePriceId}
                                     onSubscribe={handleCreateSubscription}
+                                    onBuyWithPoints={handleBuyWithPoints}
                                 />
                             );
                         }
@@ -127,6 +144,7 @@ const SubscriptionPage = (): JSX.Element => {
                                     description={plan.description ?? ''}
                                     stripePriceId={plan.stripePriceId}
                                     onSubscribe={handleCreateSubscription}
+                                    onBuyWithPoints={handleBuyWithPoints}
                                 />
                             );
                         }

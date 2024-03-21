@@ -1,3 +1,5 @@
+import { type SubscribeRequestDto } from 'shared';
+
 import { googleFitService } from '~/bundles/google-fit/google-fit.js';
 import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
 import { type UserService } from '~/bundles/users/user.service.js';
@@ -16,7 +18,12 @@ import { HttpCode, HttpError } from '~/common/http/http.js';
 import { upload } from '~/common/middlewares/middlewares.js';
 import { type File } from '~/common/services/file/types/types.js';
 
-import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
+import { subscriptionService } from '../subscriptions/subscriptions.js';
+import {
+    type UserBonusService,
+    UserBonusActionType,
+    UserBonusTransactionType,
+} from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath } from './enums/enums.js';
 import { type UserControllerProperties } from './types/types.js';
 import {
@@ -120,6 +127,19 @@ class UserController extends BaseController {
                 this.getCurrentUser(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
+            path: UsersApiPath.BUY_WITH_BONUSES,
+            method: 'POST',
+            isProtected: true,
+            handler: (options) =>
+                this.buySubscriptionWithBonuses(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        body: SubscribeRequestDto;
                     }>,
                 ),
         });
@@ -422,6 +442,63 @@ class UserController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: await this.userBonusService.findMany({ userId }),
+        };
+    }
+    /**
+     * @swagger
+     * /api/v1/users/buy-with-bonuses:
+     *   post:
+     *     tags:
+     *       - Users
+     *     description: This endpoint buys a subscription with bonuses
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       201:
+     *         description: Successful operation
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 subscriptionId:
+     *                   type: number
+     *                   format: number
+     *                   minimum: 1
+     *       400:
+     *         description: Conflict
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
+
+    private async buySubscriptionWithBonuses(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            body: SubscribeRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user, body } = options;
+
+        const { id: userId } = user;
+        const { id: subscriptionId } =
+            await this.userService.createUserBonusTransaction({
+                userId,
+                actionType: UserBonusActionType.INVITED,
+                transactionType: UserBonusTransactionType.EXPENSE,
+                amount: 100,
+            });
+
+        await subscriptionService.createTrialSubscription(user, {
+            planId: body.planId,
+            stripePriceId: body.stripePriceId,
+        });
+
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.CREATED,
+            payload: { subscriptionId },
         };
     }
 

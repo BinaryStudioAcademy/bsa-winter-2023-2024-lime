@@ -10,6 +10,7 @@ type Properties = {
     price: number;
     stripePriceId: string;
     onSubscribe: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
+    onBuyWithPoints: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
 };
 
 const SubscriptionPlan: React.FC<Properties> = ({
@@ -19,10 +20,18 @@ const SubscriptionPlan: React.FC<Properties> = ({
     price,
     stripePriceId,
     onSubscribe,
+    onBuyWithPoints,
 }): JSX.Element => {
     const handleSubscribeButtonClick = useCallback(() => {
         onSubscribe({ planId: id, stripePriceId });
     }, [id, stripePriceId, onSubscribe]);
+
+    const handleBuyWithPoints = useCallback(() => {
+        onBuyWithPoints({
+            planId: id,
+            stripePriceId,
+        });
+    }, [id, stripePriceId, onBuyWithPoints]);
 
     return (
         <div className="bg-primary flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">
@@ -40,13 +49,22 @@ const SubscriptionPlan: React.FC<Properties> = ({
                     </div>
                 </div>
             </div>
-            <Button
-                type="button"
-                label="Subscribe"
-                variant="primary"
-                size="md"
-                onClick={handleSubscribeButtonClick}
-            />
+            <div className="flex gap-5">
+                <Button
+                    type="button"
+                    label="Subscribe"
+                    variant="primary"
+                    size="md"
+                    onClick={handleSubscribeButtonClick}
+                />
+                <Button
+                    type="button"
+                    label="Buy with points"
+                    variant="secondary"
+                    size="md"
+                    onClick={handleBuyWithPoints}
+                />
+            </div>
         </div>
     );
 };
