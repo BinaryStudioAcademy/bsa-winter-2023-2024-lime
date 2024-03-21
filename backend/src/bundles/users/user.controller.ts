@@ -20,10 +20,7 @@ import { type File } from '~/common/services/file/types/types.js';
 import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath } from './enums/enums.js';
 import { type UserControllerProperties } from './types/types.js';
-import {
-    userUpdateProfileValidationSchema,
-    userUploadAvatarValidationSchema,
-} from './validation-schemas/validation-schemas.js';
+import { userUploadAvatarValidationSchema } from './validation-schemas/validation-schemas.js';
 
 /**
  * @swagger
@@ -141,9 +138,6 @@ class UserController extends BaseController {
             path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
-            validation: {
-                body: userUpdateProfileValidationSchema,
-            },
             handler: (options) =>
                 this.updateUser(
                     options as ApiHandlerOptions<{

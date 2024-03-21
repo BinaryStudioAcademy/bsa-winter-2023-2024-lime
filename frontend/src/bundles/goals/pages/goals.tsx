@@ -106,6 +106,13 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
+    const handleDeleteGoal = useCallback(
+        (id: number) => {
+            void dispatch(goalsActions.deleteGoal(id));
+        },
+        [dispatch],
+    );
+
     const unfulfilledGoals = goals.filter((goal) => !goal.completedAt);
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
     const lastGoalMetrics = (lastGoal?.distance ||
@@ -165,12 +172,14 @@ const Goals: React.FC = () => {
                                         }) => (
                                             <GoalCard
                                                 key={id}
+                                                id={id}
                                                 activityType={activityType}
                                                 frequency={frequency}
                                                 frequencyType={frequencyType}
                                                 progress={progress}
                                                 distance={distance}
                                                 duration={duration}
+                                                onDelete={handleDeleteGoal}
                                             />
                                         ),
                                     )}
