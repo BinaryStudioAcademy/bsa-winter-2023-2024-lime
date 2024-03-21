@@ -15,7 +15,10 @@ import {
     SubscriptionUserPanel,
 } from '../../components/components.js';
 import { actions as subscriptionActions } from '../../store/subscriptions.js';
-import { type SubscribeRequestDto } from '../../types/types.js';
+import {
+    type SubscribeBonusRequestDto,
+    type SubscribeRequestDto,
+} from '../../types/types.js';
 
 const SubscriptionPage = (): JSX.Element => {
     const { dataStatus, subscriptionPlans, currentSubscription } =
@@ -63,7 +66,11 @@ const SubscriptionPage = (): JSX.Element => {
     );
 
     const handleBuyWithPoints = useCallback(
-        ({ planId, stripePriceId }: SubscribeRequestDto): void => {
+        ({
+            planId,
+            stripePriceId,
+            bonusPrice,
+        }: SubscribeBonusRequestDto): void => {
             if (!user) {
                 return;
             }
@@ -71,6 +78,7 @@ const SubscriptionPage = (): JSX.Element => {
                 userActions.buyWithBonus({
                     planId,
                     stripePriceId,
+                    bonusPrice,
                 }),
             );
         },

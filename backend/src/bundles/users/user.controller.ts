@@ -1,4 +1,4 @@
-import { type SubscribeRequestDto } from 'shared';
+import { type SubscribeBonusRequestDto } from 'shared';
 
 import { googleFitService } from '~/bundles/google-fit/google-fit.js';
 import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
@@ -137,7 +137,7 @@ class UserController extends BaseController {
                 this.buySubscriptionWithBonuses(
                     options as ApiHandlerOptions<{
                         user: UserAuthResponseDto;
-                        body: SubscribeRequestDto;
+                        body: SubscribeBonusRequestDto;
                     }>,
                 ),
         });
@@ -473,7 +473,7 @@ class UserController extends BaseController {
     private async buySubscriptionWithBonuses(
         options: ApiHandlerOptions<{
             user: UserAuthResponseDto;
-            body: SubscribeRequestDto;
+            body: SubscribeBonusRequestDto;
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, body } = options;
@@ -484,7 +484,7 @@ class UserController extends BaseController {
                 userId,
                 actionType: UserBonusActionType.SUBSCRIBE,
                 transactionType: UserBonusTransactionType.EXSPENSE,
-                amount: 100,
+                amount: body.bonusPrice,
             });
 
         await subscriptionService.createTrialSubscription(user, {

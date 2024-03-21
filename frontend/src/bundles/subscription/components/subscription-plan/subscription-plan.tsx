@@ -1,7 +1,10 @@
 import { Button } from '~/bundles/common/components/components.js';
 import { useCallback } from '~/bundles/common/hooks/hooks.js';
 
-import { type SubscribeRequestDto } from '../../types/types.js';
+import {
+    type SubscribeBonusRequestDto,
+    type SubscribeRequestDto,
+} from '../../types/types.js';
 
 type Properties = {
     id: number;
@@ -11,7 +14,11 @@ type Properties = {
     bonusPrice: number;
     stripePriceId: string;
     onSubscribe: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
-    onBuyWithPoints: ({ planId, stripePriceId }: SubscribeRequestDto) => void;
+    onBuyWithPoints: ({
+        planId,
+        stripePriceId,
+        bonusPrice,
+    }: SubscribeBonusRequestDto) => void;
 };
 
 const SubscriptionPlan: React.FC<Properties> = ({
@@ -32,8 +39,9 @@ const SubscriptionPlan: React.FC<Properties> = ({
         onBuyWithPoints({
             planId: id,
             stripePriceId,
+            bonusPrice,
         });
-    }, [id, stripePriceId, onBuyWithPoints]);
+    }, [id, stripePriceId, onBuyWithPoints, bonusPrice]);
 
     return (
         <div className="bg-primary flex w-full max-w-[30rem] flex-col rounded-2xl p-4 md:max-w-full md:p-6">

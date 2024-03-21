@@ -1,4 +1,5 @@
 export {
+    type SubscribeBonusRequestDto,
     type SubscribeRequestDto,
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
@@ -8,5 +9,4 @@ export {
     type UserGetAllItemResponseDto,
     type UserGetAllResponseDto,
     type UserUpdateProfileRequestDto,
-    type UserUploadAvatarResponseDto,
-} from 'shared';
+    type UserUploadAvatarResponseDto } from 'shared';

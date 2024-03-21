@@ -97,6 +97,7 @@ export {
 export {
     type CancelSubscriptionRequestDto,
     type CancelSubscriptionResponseDto,
+    type SubscribeBonusRequestDto,
     type SubscribeRequestDto,
     type SubscribeResponseDto,
     type SubscriptionGetItemResponseDto,

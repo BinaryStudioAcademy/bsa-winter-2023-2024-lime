@@ -5,7 +5,7 @@ import { type Storage } from '~/framework/storage/storage.js';
 
 import { UsersApiPath } from './enums/enums.js';
 import {
-    type SubscribeRequestDto,
+    type SubscribeBonusRequestDto,
     type UserAuthResponseDto,
     type UserBonusGetAllResponseDto,
     type UserGetAllResponseDto,
@@ -94,13 +94,14 @@ class UserApi extends BaseHttpApi {
     public async buySubscriptionWithBonus({
         planId,
         stripePriceId,
-    }: SubscribeRequestDto): Promise<UserAuthResponseDto> {
+        bonusPrice,
+    }: SubscribeBonusRequestDto): Promise<UserAuthResponseDto> {
         const response = await this.load(
             this.getFullEndpoint(UsersApiPath.BUY_WITH_BONUSES, {}),
             {
                 method: 'POST',
                 contentType: ContentType.JSON,
-                payload: JSON.stringify({ planId, stripePriceId }),
+                payload: JSON.stringify({ planId, stripePriceId, bonusPrice }),
                 hasAuth: true,
             },
         );
