@@ -17,6 +17,8 @@ class NotificationEntity implements Entity {
 
     private 'type': ValueOf<typeof NotificationType>;
 
+    private 'createdAt': string | null;
+
     private constructor({
         id,
         userId,
@@ -24,6 +26,7 @@ class NotificationEntity implements Entity {
         message,
         isRead,
         type,
+        createdAt,
     }: {
         id: number | null;
         userId: number;
@@ -31,6 +34,7 @@ class NotificationEntity implements Entity {
         message: string;
         isRead: boolean;
         type: ValueOf<typeof NotificationType>;
+        createdAt: string | null;
     }) {
         this.id = id;
         this.userId = userId;
@@ -38,6 +42,7 @@ class NotificationEntity implements Entity {
         this.message = message;
         this.isRead = isRead;
         this.type = type;
+        this.createdAt = createdAt;
     }
 
     public static initialize({
@@ -47,6 +52,7 @@ class NotificationEntity implements Entity {
         message,
         isRead,
         type,
+        createdAt,
     }: {
         id: number;
         userId: number;
@@ -54,6 +60,7 @@ class NotificationEntity implements Entity {
         message: string;
         isRead: boolean;
         type: ValueOf<typeof NotificationType>;
+        createdAt: string | null;
     }): NotificationEntity {
         return new NotificationEntity({
             id,
@@ -62,6 +69,7 @@ class NotificationEntity implements Entity {
             message,
             isRead,
             type,
+            createdAt,
         });
     }
 
@@ -71,12 +79,14 @@ class NotificationEntity implements Entity {
         message,
         isRead,
         type,
+        createdAt,
     }: {
         userId: number;
         title: string | null;
         message: string;
         isRead: boolean | null;
         type: ValueOf<typeof NotificationType> | null;
+        createdAt?: string | null;
     }): NotificationEntity {
         return new NotificationEntity({
             id: null,
@@ -85,6 +95,7 @@ class NotificationEntity implements Entity {
             message,
             isRead: isRead ?? false,
             type: type ?? NotificationType.DEFAULT,
+            createdAt: createdAt ?? null,
         });
     }
 
@@ -94,6 +105,7 @@ class NotificationEntity implements Entity {
         message: string;
         isRead: boolean;
         type: ValueOf<typeof NotificationType>;
+        createdAt: string | null;
     } {
         return {
             id: this.id as number,
@@ -101,6 +113,7 @@ class NotificationEntity implements Entity {
             message: this.message,
             isRead: this.isRead,
             type: this.type,
+            createdAt: this.createdAt,
         };
     }
 
