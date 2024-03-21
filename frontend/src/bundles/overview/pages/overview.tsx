@@ -105,7 +105,7 @@ const Overview: React.FC = () => {
                     </li>
                 </ul>
                 {!isSubscribed && (
-                    <GoogleAds className="mb-6 hidden h-44 xl:flex" />
+                    <GoogleAds className="mb-6 hidden h-48 xl:flex" />
                 )}
                 <ChartGoalProgress />
                 <div className="mt-5">Achievements</div>
