@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 
 import { actions as appActions } from '~/app/store/app.js';
-import AppPreview from '~/assets/img/landing/app-preview.svg?react';
-import AuthPreview from '~/assets/img/landing/auth-preview.svg?react';
 import FeatureBg from '~/assets/img/landing/feature-bg.svg?react';
+import OverviewDarkImage from '~/assets/img/landing/overviewDark.png';
+import OverviewLightImage from '~/assets/img/landing/overviewLight.png';
+import SignInDark from '~/assets/img/landing/signInDark.png';
+import SignInLight from '~/assets/img/landing/signInLight.png';
 import {
     Button,
     ButtonVariant,
@@ -150,7 +152,19 @@ const Landing = (): JSX.Element => {
                                 x={75}
                             />
                         </div>
-                        <AppPreview className="w-[22rem] md:w-[30rem]" />
+                        {theme === Theme.DARK ? (
+                            <img
+                                src={OverviewDarkImage}
+                                alt="overviewDark"
+                                className="w-[22rem] md:w-[30rem]"
+                            />
+                        ) : (
+                            <img
+                                src={OverviewLightImage}
+                                alt="overviewLight"
+                                className="w-[22rem] md:w-[30rem]"
+                            />
+                        )}
                         <div className="absolute bottom-0 left-0 z-[-1] -translate-x-1/2 translate-y-1/2">
                             <Fade
                                 className="bg-buttonPrimary size-[18.5rem] rounded-full"
@@ -247,12 +261,19 @@ const Landing = (): JSX.Element => {
                 </div>
                 <div className="flex w-full min-w-[40rem] flex-col items-center justify-between gap-y-12 lg:flex-row">
                     <Fade x={-30}>
-                        <AuthPreview
-                            className={getValidClassNames(
-                                'relative flex w-[22rem] md:w-[35.375rem]',
-                                styles.thirdSection.gradient,
-                            )}
-                        />
+                        {theme === Theme.DARK ? (
+                            <img
+                                src={SignInDark}
+                                alt="signInDark"
+                                className="w-[22rem] md:w-[35.375rem]"
+                            />
+                        ) : (
+                            <img
+                                src={SignInLight}
+                                alt="signInLight"
+                                className="w-[22rem] md:w-[35.375rem]"
+                            />
+                        )}
                     </Fade>
                     <div className="flex h-full w-full flex-1 flex-col gap-16">
                         <IntroCard
@@ -406,9 +427,18 @@ const Landing = (): JSX.Element => {
                                 Resources
                             </h5>
                             <ul className="flex flex-col gap-2 text-sm font-normal leading-4 opacity-60">
-                                <li>Blog post name goes here</li>
-                                <li>Blog post name goes here</li>
-                                <li>Blog post name goes here</li>
+                                <li>
+                                    Boost Your Productivity: The Power of
+                                    Morning Walks
+                                </li>
+                                <li>
+                                    Cycling Your Way to Enhanced Work
+                                    Performance
+                                </li>
+                                <li>
+                                    The Health Benefits of a Consistent Fitness
+                                    Routine
+                                </li>
                                 <Link to={AppRoute.ROOT}>
                                     See all resources
                                 </Link>
