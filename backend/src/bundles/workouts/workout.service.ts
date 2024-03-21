@@ -1,5 +1,5 @@
+import { calculationProgressService } from '~/bundles/calculation-progress/calculation-progress.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
-import { calculationProgressService } from '~/common/services/services.js';
 import { type Service } from '~/common/types/types.js';
 
 import { WorkoutValidationMessage } from './enums/enums.js';

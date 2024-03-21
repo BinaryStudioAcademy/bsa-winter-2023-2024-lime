@@ -35,7 +35,7 @@ const ChatLink = ({
         id: String(id),
     }) as typeof AppRoute.CHATS_$ID;
 
-    const { email, avatarUrl } = users.find(
+    const { email, fullName, avatarUrl } = users.find(
         (member) => member.id !== user.id,
     ) as ChatUserResponseDto;
 
@@ -53,7 +53,7 @@ const ChatLink = ({
                         <div className="relative">
                             <Avatar
                                 size="sm"
-                                email={email}
+                                email={fullName ?? email}
                                 avatarUrl={avatarUrl}
                             />
                         </div>

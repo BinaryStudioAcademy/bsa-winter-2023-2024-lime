@@ -35,12 +35,12 @@ class AchievementRepository implements Repository {
         });
     }
 
-    public async findById(id: number): Promise<AchievementEntity | []> {
+    public async findById(id: number): Promise<AchievementEntity | null> {
         const achievement = await this.achievementModel
             .query()
             .findById(id)
             .execute();
-        return achievement ? AchievementEntity.initialize(achievement) : [];
+        return achievement ? AchievementEntity.initialize(achievement) : null;
     }
 
     public async findByUserId(
