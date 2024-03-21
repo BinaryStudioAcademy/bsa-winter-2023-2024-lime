@@ -1,1 +1,0 @@
-export { AuthApiPath } from 'shared';
