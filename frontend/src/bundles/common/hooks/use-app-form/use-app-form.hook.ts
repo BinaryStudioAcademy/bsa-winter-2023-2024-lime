@@ -5,6 +5,7 @@ import {
     type FieldErrors,
     type FieldValues,
     type Path,
+    type UseFormClearErrors,
     type UseFormHandleSubmit,
     type UseFormProps,
     type UseFormWatch,
@@ -38,6 +39,7 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
         value: unknown,
         options?: { shouldValidate?: boolean },
     ) => void;
+    clearErrors: UseFormClearErrors<T>;
     watch: UseFormWatch<T>;
 };
 
@@ -67,6 +69,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         reset,
         getValues,
         setValue: setValueFromForm,
+        clearErrors,
         watch,
     } = useForm<T>(parameters);
 
@@ -90,6 +93,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         reset,
         getValues,
         setValue,
+        clearErrors,
         watch,
     };
 };

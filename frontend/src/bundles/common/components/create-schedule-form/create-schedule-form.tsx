@@ -69,7 +69,7 @@ const CreateScheduleForm: React.FC<Properties> = ({
                     errors={errors}
                     options={getActivityOptions}
                     isDisabled={isLoading}
-                    required
+                    isRequired
                 />
 
                 <DatePicker

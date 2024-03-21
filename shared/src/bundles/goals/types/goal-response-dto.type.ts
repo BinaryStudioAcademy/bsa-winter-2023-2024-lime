@@ -11,6 +11,7 @@ type GoalResponseDto = {
     duration: number | null;
     progress: number;
     completedAt: string | null;
+    createdAt: string | null;
 };
 
 export { type GoalResponseDto };

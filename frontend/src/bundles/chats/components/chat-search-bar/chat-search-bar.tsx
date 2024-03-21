@@ -1,11 +1,12 @@
 import { type FormEvent } from 'react';
 
+import { SEARCH_DEFAULT_PAYLOAD } from '~/bundles/chats/constants/constants.js';
 import { Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
 const ChatSearchBar = (): JSX.Element => {
     const { control, errors, handleSubmit } = useAppForm({
-        defaultValues: { search: '' },
+        defaultValues: SEARCH_DEFAULT_PAYLOAD,
         mode: 'onChange',
     });
 

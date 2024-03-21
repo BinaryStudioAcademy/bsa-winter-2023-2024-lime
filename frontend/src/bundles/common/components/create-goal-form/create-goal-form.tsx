@@ -9,7 +9,11 @@ import { setGoalFrequencyOpitons } from '~/bundles/common/components/create-goal
 import { goalValidationSchema } from '~/bundles/common/components/create-goal-form/validation-schemas/goal.validation-schema.js';
 import { ComponentSize } from '~/bundles/common/enums/enums.js';
 import { getActivityOptions } from '~/bundles/common/helpers/helpers.js';
-import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
+import {
+    useAppForm,
+    useCallback,
+    useEffect,
+} from '~/bundles/common/hooks/hooks.js';
 import { type CreateGoalRequest } from '~/bundles/common/types/types.js';
 
 type Properties = {
@@ -18,11 +22,12 @@ type Properties = {
 };
 
 const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
-    const { control, errors, handleSubmit } = useAppForm<CreateGoalRequest>({
-        defaultValues: DEFAULT_CREATE_GOAL_PAYLOAD,
-        validationSchema: goalValidationSchema,
-        mode: 'onTouched',
-    });
+    const { control, errors, handleSubmit, watch, clearErrors } =
+        useAppForm<CreateGoalRequest>({
+            defaultValues: DEFAULT_CREATE_GOAL_PAYLOAD,
+            validationSchema: goalValidationSchema,
+            mode: 'onTouched',
+        });
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
@@ -30,6 +35,18 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
         },
         [handleSubmit, onSubmit],
     );
+
+    const distanceValue = watch('distance');
+    const durationValue = watch('duration');
+
+    useEffect(() => {
+        if (distanceValue) {
+            clearErrors('duration');
+        }
+        if (durationValue) {
+            clearErrors('distance');
+        }
+    }, [clearErrors, distanceValue, durationValue]);
 
     return (
         <form
@@ -44,7 +61,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     errors={errors}
                     options={getActivityOptions}
                     isDisabled={isLoading}
-                    required
+                    isRequired
                 />
 
                 <Select
@@ -54,7 +71,7 @@ const CreateGoalForm: React.FC<Properties> = ({ onSubmit, isLoading }) => {
                     errors={errors}
                     options={setGoalFrequencyOpitons}
                     isDisabled={isLoading}
-                    required
+                    isRequired
                 />
 
                 <Input

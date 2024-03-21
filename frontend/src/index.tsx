@@ -100,6 +100,10 @@ const routes = [
                         element: <Chats />,
                     },
                     {
+                        path: AppRoute.CHATS_AI_ASSISTANT_$ID,
+                        element: <Chats />,
+                    },
+                    {
                         element: <ProfileLayout />,
                         children: [
                             {

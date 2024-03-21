@@ -8,6 +8,7 @@ const GoalAttributes = {
     DURATION: 'duration',
     PROGRESS: 'progress',
     COMPLETED_AT: 'completed_at',
+    CREATED_AT: 'createdAt',
 } as const;
 
 export { GoalAttributes };

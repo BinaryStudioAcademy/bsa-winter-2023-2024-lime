@@ -23,6 +23,8 @@ const PLURAL = 's';
 const DAY_PREPOSITION = 'a';
 const WEEK_PREPOSITION = 'per';
 const MAXIMUM_PROGRESS = 100;
+const DISTANCE_DIMENSION = 'km';
+const TIME_DIMENSION = 'min';
 
 const GoalCard: React.FC<Properties> = ({
     activityType,
@@ -43,8 +45,11 @@ const GoalCard: React.FC<Properties> = ({
                     <p className="text-primary text-sm font-extrabold leading-5 md:text-base">
                         {capitalizeFirstLetter(activityType)}{' '}
                         {distance
-                            ? `${convertMetersToKilometers(distance)} km`
-                            : `${duration} min`}
+                            ? `${convertMetersToKilometers(distance)} ${DISTANCE_DIMENSION}`
+                            : `${duration} ${TIME_DIMENSION}`}{' '}
+                        {distance && duration
+                            ? `for ${duration} ${TIME_DIMENSION}`
+                            : ''}
                     </p>
                     <p className="text-lm-grey-200 text-xs font-normal leading-3">
                         {frequency} time{frequency > 1 && PLURAL}{' '}

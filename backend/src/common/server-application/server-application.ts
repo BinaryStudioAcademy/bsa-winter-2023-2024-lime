@@ -1,9 +1,12 @@
 import { achievementController } from '~/bundles/achievements/achievements.js';
+import { aiAssistantController } from '~/bundles/ai-assistants/ai-assistant.js';
 import { authController } from '~/bundles/auth/auth.js';
+import { chatController } from '~/bundles/chats/chats.js';
 import { connectionController } from '~/bundles/connections/connections.js';
 import { friendController } from '~/bundles/friends/friends.js';
 import { goalController } from '~/bundles/goals/goals.js';
 import { identityController } from '~/bundles/identity/identity.js';
+import { messageController } from '~/bundles/messages/messages.js';
 import { notificationController } from '~/bundles/notifications/notifications.js';
 import { oAuthController } from '~/bundles/oauth/oauth.js';
 import { passwordResetController } from '~/bundles/password-reset/password-reset.js';
@@ -35,7 +38,10 @@ const apiV1 = new BaseServerAppApi(
     ...passwordResetController.routes,
     ...achievementController.routes,
     ...stravaController.routes,
+    ...chatController.routes,
+    ...messageController.routes,
     ...identityController.routes,
+    ...aiAssistantController.routes,
     ...friendController.routes,
     ...scheduleController.routes,
 );
