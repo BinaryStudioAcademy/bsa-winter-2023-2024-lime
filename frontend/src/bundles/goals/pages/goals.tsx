@@ -152,8 +152,7 @@ const Goals: React.FC = () => {
                                 Goals
                             </h2>
                             <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:flex-wrap">
-                                {(goals.length === ZERO_VALUE &&
-                                    unfulfilledGoals.length === ZERO_VALUE) || (
+                                {unfulfilledGoals.length === ZERO_VALUE && (
                                     <p className="text-primary mb-5 w-full text-xl font-extrabold">
                                         No goals yet
                                     </p>
