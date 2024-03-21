@@ -16,6 +16,18 @@
     @apply border-lm-yellow-100 text-primary mt-1.5 hover:border-white;
 }
 
+.custom-date-picker .rmdp-shadow {
+    @apply bg-primary;
+}
+
+.custom-date-picker .rmdp-border-bottom {
+    @apply border-b-0;
+}
+
+.custom-date-picker .rmdp-time-picker div input {
+    @apply bg-transparent;
+}
+
 .custom-date-picker .rmdp-header {
     @apply mb-2;
 }
@@ -64,14 +76,6 @@
     @apply bg-secondary;
 }
 
-.custom-date-picker .rmdp-time-picker {
-    @apply bg-primary;
-}
-
-.custom-date-picker .rmdp-time-picker input {
-    @apply bg-secondary w-8 rounded-md;
-}
-
-.custom-date-picker .rmdp-wrapper {
-    @apply bg-secondary;
+.custom-date-picker .rmdp-range {
+    @apply bg-lm-yellow-200 shadow-none;
 }

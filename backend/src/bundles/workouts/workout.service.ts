@@ -1,3 +1,4 @@
+import { calculationProgressService } from '~/bundles/calculation-progress/calculation-progress.js';
 import { HttpCode, HttpError } from '~/common/http/http.js';
 import { type Service } from '~/common/types/types.js';
 
@@ -52,6 +53,10 @@ class WorkoutService implements Service {
             WorkoutEntity.initializeNew({
                 ...payload,
             }),
+        );
+        await calculationProgressService.calculateProgress(
+            payload.userId,
+            workout.toObject(),
         );
         return workout.toObject() as WorkoutResponseDto;
     }

@@ -13,7 +13,7 @@ const ButtonVariant = {
 
 type ButtonSize = Exclude<
     ValueOf<typeof ComponentSize>,
-    typeof ComponentSize.EXTRA_LARGE
+    typeof ComponentSize.EXTRA_LARGE | typeof ComponentSize.HUGE
 >;
 
 type ButtonType = 'button' | 'submit';

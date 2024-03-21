@@ -65,7 +65,7 @@ const Overview: React.FC = () => {
     );
 
     return (
-        <div className="max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
+        <div className="w-full max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
             <div className="xl:basis-[68%]">
                 <GoalWidget
                     value={4}
@@ -105,7 +105,7 @@ const Overview: React.FC = () => {
                     </li>
                 </ul>
                 {!isSubscribed && (
-                    <GoogleAds className="mb-6 hidden h-44 xl:flex" />
+                    <GoogleAds className="mb-6 hidden h-48 xl:flex" />
                 )}
                 <ChartGoalProgress />
                 <div className="mt-5">Achievements</div>

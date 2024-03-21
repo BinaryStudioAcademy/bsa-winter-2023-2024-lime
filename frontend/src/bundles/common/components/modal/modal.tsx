@@ -8,7 +8,9 @@ import { getValidClassNames } from '../../helpers/helpers.js';
 
 type ModalSize = Exclude<
     ValueOf<typeof ComponentSize>,
-    typeof ComponentSize.SMALL | typeof ComponentSize.EXTRA_LARGE
+    | typeof ComponentSize.SMALL
+    | typeof ComponentSize.EXTRA_LARGE
+    | typeof ComponentSize.HUGE
 >;
 
 type Properties = {
@@ -45,7 +47,7 @@ const Modal: React.FC<Properties> = ({
         closeIconClass:
             'stroke-lm-grey-500 fill-lm-grey-500 hover:stroke-lm-yellow-100 hover:fill-lm-yellow-100 absolute right-8 top-8 h-3 w-3 cursor-pointer transition-all ',
         titleClass:
-            'mb-10 text-left text-md md:text-[1.875rem] font-bold text-primary',
+            'mb-10 text-left text-md md:text-[1.875rem] font-bold text-card',
     };
 
     const modalSizesToClasses: Record<ModalSize, string> = {

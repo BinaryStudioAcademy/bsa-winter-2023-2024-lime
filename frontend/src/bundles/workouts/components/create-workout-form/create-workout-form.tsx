@@ -96,6 +96,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                     name="workoutDate"
                     label="Date"
                     placeholder="Enter date"
+                    format="dd/MM/yyyy"
                 />
                 <TimePicker
                     className="md:col-span-2"

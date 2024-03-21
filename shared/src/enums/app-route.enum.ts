@@ -22,7 +22,10 @@ const AppRoute = {
     PROFILE: '/profile/settings',
     CHATS: '/chats',
     CHATS_$ID: '/chats/:id',
+    CHATS_AI_ASSISTANT_$ID: '/chats/ai-assistant/:id',
     CHATS_AI_ASSISTANT: '/chats/ai-assistant',
+    PROFILE_PUBLIC: '/profile/public',
+    FRIENDS: '/friends',
 } as const;
 
 export { AppRoute };

@@ -1,7 +1,10 @@
 import { ComponentSize } from '~/bundles/common/enums/component-size.enum.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-type CircleSizes = ValueOf<typeof ComponentSize>;
+type CircleSizes = Exclude<
+    ValueOf<typeof ComponentSize>,
+    typeof ComponentSize.HUGE
+>;
 
 type CircleProperties = {
     radius: number;
