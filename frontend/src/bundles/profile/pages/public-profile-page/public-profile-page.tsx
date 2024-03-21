@@ -44,7 +44,7 @@ const PublicProfile: React.FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const NumericId = Number(id);
-    const { users, dataStatus: friendsDataStatus } = useAppSelector(
+    const { users, dataStatus: dataStatusFriends } = useAppSelector(
         ({ friends }) => friends,
     );
 
@@ -63,13 +63,13 @@ const PublicProfile: React.FC = () => {
     }, [dispatch, NumericId]);
 
     useEffect(() => {
-        if (friendsDataStatus === DataStatus.FULFILLED) {
+        if (dataStatusFriends === DataStatus.FULFILLED) {
             const isFollowedInitially = users.some(
                 (user) => user.userId === NumericId,
             );
             setIsFollowed(isFollowedInitially);
         }
-    }, [users, friendsDataStatus, NumericId]);
+    }, [users, dataStatusFriends, NumericId]);
 
     const { dataStatus: dataStatusUser, user } = useAppSelector(
         ({ users }) => users,
@@ -89,6 +89,7 @@ const PublicProfile: React.FC = () => {
         dataStatusAchievements,
         dataStatusWorkouts,
         dataStatusGoals,
+        dataStatusFriends,
     ].includes(DataStatus.PENDING);
 
     const totalDuration = calculateTotal(workouts, 'duration');
