@@ -76,10 +76,10 @@ const FriendCard = ({
             <div className="bg-primary flex flex-col gap-2 rounded-b-xl p-4">
                 <div className="flex items-center gap-2">
                     <div
-                        className={`${isActive ? 'bg-buttonPrimary' : 'bg-buttonTertiary'} h-2 w-2 rounded-[50%]`}
+                        className={`${isActive ? 'bg-buttonPrimary' : 'bg-buttonTertiary'} h-2 w-full max-w-2 rounded-[50%]`}
                     />
 
-                    <h3 className="text-primary font-extrabold sm:text-xs lg:text-[1rem]">
+                    <h3 className="text-primary truncate font-extrabold sm:text-xs lg:text-[1rem]">
                         {fullName ?? email}
                     </h3>
                 </div>
