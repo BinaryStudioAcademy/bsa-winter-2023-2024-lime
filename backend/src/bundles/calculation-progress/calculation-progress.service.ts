@@ -2,7 +2,7 @@ import { type AchievementEntity } from '~/bundles/achievements/achievement.entit
 import { type AchievementService } from '~/bundles/achievements/achievement.service.js';
 import { type ValueOf, Metric } from '~/bundles/achievements/enums/enums.js';
 import { type UserAchievementService } from '~/bundles/achievements/user-achievement.service.js';
-import { type GoalService } from '~/bundles/goals/goal.service.js';
+import { goalService } from '~/bundles/goals/goals.js';
 import { type GoalResponseDto } from '~/bundles/goals/types/types.js';
 import { type NotificationService } from '~/bundles/notifications/notification.service.js';
 import { type WorkoutResponseDto } from '~/bundles/workouts/types/types.js';
@@ -17,23 +17,19 @@ import {
 
 class CalculationProgressService {
     private achievementService: AchievementService;
-    private goalService: GoalService;
     private userAchievementsService: UserAchievementService;
     private notificationService: NotificationService;
 
     public constructor({
-        goalService,
         achievementService,
         userAchievementService,
         notificationService,
     }: {
-        goalService: GoalService;
         achievementService: AchievementService;
         userAchievementService: UserAchievementService;
         notificationService: NotificationService;
     }) {
         this.achievementService = achievementService;
-        this.goalService = goalService;
         this.userAchievementsService = userAchievementService;
         this.notificationService = notificationService;
     }
@@ -47,7 +43,7 @@ class CalculationProgressService {
             activityType: lastWorkout.activityType,
         });
 
-        const { items: goals } = await this.goalService.findAll({
+        const { items: goals } = await goalService.findAll({
             userId,
             activityType: lastWorkout.activityType,
         });
@@ -86,7 +82,7 @@ class CalculationProgressService {
 
         for (const goal of goals) {
             const progressValue = calculateGoalProgress(goal, workouts);
-            const updatedGoal = await this.goalService.update(
+            const updatedGoal = await goalService.update(
                 { id: goal.id },
                 {
                     ...goal,
