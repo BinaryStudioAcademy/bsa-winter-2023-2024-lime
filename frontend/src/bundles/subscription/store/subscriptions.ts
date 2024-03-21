@@ -1,7 +1,6 @@
 import {
     confirmPayment,
     createSubscription,
-    createSubscriptionTrial,
     loadAllSubscriptionPlans,
     loadCurrentSubscription,
     updateCancelSubscription,
@@ -15,7 +14,6 @@ const allActions = {
     createSubscription,
     updateCancelSubscription,
     confirmPayment,
-    createSubscriptionTrial,
 };
 
 export { allActions as actions };

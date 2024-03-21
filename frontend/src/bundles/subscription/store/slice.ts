@@ -10,7 +10,6 @@ import {
 import {
     confirmPayment,
     createSubscription,
-    createSubscriptionTrial,
     loadAllSubscriptionPlans,
     loadCurrentSubscription,
     updateCancelSubscription,
@@ -84,18 +83,7 @@ const { reducer, actions, name } = createSlice({
         });
         builder.addCase(confirmPayment.rejected, (state) => {
             state.confirmPaymentStatus = DataStatus.REJECTED;
-        });
-        builder.addCase(createSubscriptionTrial.pending, (state) => {
-            state.dataStatus = DataStatus.PENDING;
-        });
-        builder.addCase(createSubscriptionTrial.fulfilled, (state, action) => {
-            state.clientSecret = action.payload.clientSecret;
-            state.dataStatus = DataStatus.FULFILLED;
-        });
-        builder.addCase(createSubscriptionTrial.rejected, (state) => {
-            state.clientSecret = null;
-            state.dataStatus = DataStatus.REJECTED;
-        });
+        });      
 
         builder.addMatcher(
             isAnyOf(
