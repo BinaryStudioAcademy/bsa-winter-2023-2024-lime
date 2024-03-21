@@ -428,15 +428,13 @@ const Landing = (): JSX.Element => {
                             </h5>
                             <ul className="flex flex-col gap-2 text-sm font-normal leading-4 opacity-60">
                                 <li>
-                                    Powered by Strava
+                                    <u>Powered</u> by <b>Strava</b>
                                 </li>
                                 <li>
-                                    Cycling Your Way to Enhanced Work
-                                    Performance
+                                    <u>Powered</u> by <b>Google fit</b>
                                 </li>
                                 <li>
-                                    The Health Benefits of a Consistent Fitness
-                                    Routine
+                                    <u>Powered</u> by <b>AI</b>
                                 </li>
                                 <Link to={AppRoute.ROOT}>
                                     See all resources
