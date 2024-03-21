@@ -1,6 +1,6 @@
 type FriendRequestDto = {
     followingId: number;
-    offset?: string;
+    offset: string;
 };
 
 export { type FriendRequestDto };

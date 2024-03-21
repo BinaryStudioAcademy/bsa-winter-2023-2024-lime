@@ -1,4 +1,5 @@
 import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
+import { actions as chatActionCreator } from '~/bundles/chats/store/chats.js';
 import {
     AchievementCard,
     ActivityWidget,
@@ -10,9 +11,10 @@ import {
     IconColor,
     IconName,
 } from '~/bundles/common/components/icon/enums/enums.js';
-import { DataStatus } from '~/bundles/common/enums/enums.js';
+import { AppRoute, DataStatus } from '~/bundles/common/enums/enums.js';
 import {
     calculateTotal,
+    configureString,
     convertSecondsToHMS,
     getLastWorkout,
     metersToKilometers,
@@ -22,10 +24,12 @@ import {
     useAppSelector,
     useCallback,
     useEffect,
+    useNavigate,
     useParams,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
+import { type UserAuthResponseDto } from '~/bundles/friends/types/types.js';
 import { actions as goalsActions } from '~/bundles/goals/store/goals.js';
 import {
     PersonalDetails,
@@ -36,18 +40,36 @@ import { actions as workoutsActions } from '~/bundles/workouts/store/workouts.js
 
 const ZERO_VALUE = 0;
 const PublicProfile: React.FC = () => {
-    const { id } = useParams();
-
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [isFollowed, setIsFollowed] = useState(false);
+    const { id } = useParams();
     const NumericId = Number(id);
+    const { users, dataStatus: friendsDataStatus } = useAppSelector(
+        ({ friends }) => friends,
+    );
+
+    const { user: authorizedUser } = useAppSelector(({ auth }) => auth) as {
+        user: UserAuthResponseDto;
+    };
+    const { chats } = useAppSelector(({ chats }) => chats);
+    const [isFollowed, setIsFollowed] = useState(false);
 
     useEffect(() => {
         void dispatch(userActions.getById(NumericId));
         void dispatch(achievementsActions.getAchievementsByUserId(NumericId));
         void dispatch(workoutsActions.getLastWorkoutsByUserId(NumericId));
         void dispatch(goalsActions.getGoalsByUserId(NumericId));
+        void dispatch(friendsActions.getFollowings({}));
     }, [dispatch, NumericId]);
+
+    useEffect(() => {
+        if (friendsDataStatus === DataStatus.FULFILLED) {
+            const isFollowedInitially = users.some(
+                (user) => user.userId === NumericId,
+            );
+            setIsFollowed(isFollowedInitially);
+        }
+    }, [users, friendsDataStatus, NumericId]);
 
     const { dataStatus: dataStatusUser, user } = useAppSelector(
         ({ users }) => users,
@@ -80,12 +102,14 @@ const PublicProfile: React.FC = () => {
                 void dispatch(
                     friendsActions.removeFollowing({
                         followingId: id,
+                        offset: '',
                     }),
                 );
             } else {
                 void dispatch(
                     friendsActions.addFollowing({
                         followingId: id,
+                        offset: '',
                     }),
                 );
             }
@@ -94,9 +118,30 @@ const PublicProfile: React.FC = () => {
         [dispatch, isFollowed],
     );
 
-    const handleMessageFriend = useCallback(() => {
-        //navigate to chat page with specific user
-    }, []);
+    const handleSendMessage = useCallback(() => {
+        const membersId = new Set([authorizedUser.id, id]);
+
+        const chatPayload = {
+            membersId: [NumericId],
+            isAssistant: false,
+        };
+
+        const existingChat = chats.find(({ users }) =>
+            users.map(({ id }) => id).every((id) => membersId.has(id)),
+        );
+
+        if (existingChat) {
+            const redirectPath = configureString(AppRoute.CHATS_$ID, {
+                id: String(existingChat?.id),
+            });
+
+            return void navigate(redirectPath);
+        }
+
+        void dispatch(chatActionCreator.createChat(chatPayload));
+
+        void navigate(AppRoute.CHATS);
+    }, [authorizedUser, chats, dispatch, navigate, id, NumericId]);
 
     if (isLoading) {
         return <Loader />;
@@ -112,7 +157,7 @@ const PublicProfile: React.FC = () => {
                         goals={goals}
                         isFollowed={isFollowed}
                         onFollowToggle={handleToggleFollow}
-                        message={handleMessageFriend}
+                        message={handleSendMessage}
                     />
                 </div>
                 <div className="w-full">
