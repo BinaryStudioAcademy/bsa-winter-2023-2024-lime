@@ -154,19 +154,19 @@ const Achievements = [
         requirementMetric: Metric.KILOMETERS,
     },
     {
-        name: 'Calories Milestone: 1000 kcal burned',
+        name: 'Walking Milestone: 1000 kcal burned',
         activityType: ActivityType.WALKING,
         requirement: 1000,
         requirementMetric: Metric.KILOCALORIES,
     },
     {
-        name: 'Calories Milestone: 3000 kcal burned',
+        name: 'Walking Milestone: 3000 kcal burned',
         activityType: ActivityType.WALKING,
         requirement: 3000,
         requirementMetric: Metric.KILOCALORIES,
     },
     {
-        name: 'Calories Milestone: 5000 kcal burned',
+        name: 'Walking Milestone: 5000 kcal burned',
         activityType: ActivityType.WALKING,
         requirement: 5000,
         requirementMetric: Metric.KILOCALORIES,
