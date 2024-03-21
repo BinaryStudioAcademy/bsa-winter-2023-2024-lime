@@ -37,7 +37,7 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
     setValue: (
         name: Path<T>,
         value: unknown,
-        options?: { shouldValidate?: boolean },
+        options?: { shouldValidate?: boolean; shouldDirty?: boolean },
     ) => void;
     clearErrors: UseFormClearErrors<T>;
     watch: UseFormWatch<T>;
@@ -77,7 +77,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         (
             name: Path<T>,
             value: unknown,
-            options?: { shouldValidate?: boolean },
+            options?: { shouldValidate?: boolean; shouldDirty?: boolean },
         ): void => {
             setValueFromForm(name, value as T[keyof T], options);
         },
