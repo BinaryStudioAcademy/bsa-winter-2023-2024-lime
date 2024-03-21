@@ -147,8 +147,7 @@ erDiagram
 
 ## ️ Storybook
 
-1. Install packages(if you didn't do this): **`npm run install:all`**
-2. Run command: **`npm run storybook`**
+1. Run command: **`npm run storybook`**
 
 ### 🌑 Backend
 
