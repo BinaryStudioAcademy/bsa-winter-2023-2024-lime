@@ -1,7 +1,7 @@
 const UserBonusActionType = {
     INVITED: 'invited',
-    REGISTERED: 'registered',
-    SUBSCRIPTION: 'subscription',
+    REGISTERED: 'registered',    
+    SUBSCRIBE: 'subscribe',
 } as const;
 
 export { UserBonusActionType };

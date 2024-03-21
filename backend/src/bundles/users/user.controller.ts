@@ -482,7 +482,7 @@ class UserController extends BaseController {
         const { id: subscriptionId } =
             await this.userService.createUserBonusTransaction({
                 userId,
-                actionType: UserBonusActionType.INVITED,
+                actionType: UserBonusActionType.SUBSCRIBE,
                 transactionType: UserBonusTransactionType.EXSPENSE,
                 amount: 100,
             });
