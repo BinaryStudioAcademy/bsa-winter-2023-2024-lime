@@ -2,10 +2,10 @@ import { motion } from 'framer-motion';
 
 import { actions as appActions } from '~/app/store/app.js';
 import FeatureBg from '~/assets/img/landing/feature-bg.svg?react';
-import OverviewDarkImage from '~/assets/img/landing/overviewDark.png';
-import OverviewLightImage from '~/assets/img/landing/overviewLight.png';
-import SignInDark from '~/assets/img/landing/signInDark.png';
-import SignInLight from '~/assets/img/landing/signInLight.png';
+import OverviewDarkImage from '~/assets/img/landing/overview-dark.png';
+import OverviewLightImage from '~/assets/img/landing/overview-light.png';
+import SignInDark from '~/assets/img/landing/sign-in-dark.png';
+import SignInLight from '~/assets/img/landing/sign-in-light.png';
 import {
     Button,
     ButtonVariant,
@@ -428,8 +428,7 @@ const Landing = (): JSX.Element => {
                             </h5>
                             <ul className="flex flex-col gap-2 text-sm font-normal leading-4 opacity-60">
                                 <li>
-                                    Boost Your Productivity: The Power of
-                                    Morning Walks
+                                    Powered by Strava
                                 </li>
                                 <li>
                                     Cycling Your Way to Enhanced Work
