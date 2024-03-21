@@ -89,7 +89,7 @@ const Overview: React.FC = () => {
 
     return (
         <div className="w-full max-w-[1136px] flex-1 xl:flex xl:gap-8 2xl:basis-[1136px]">
-            <div className="xl:basis-[68%]">
+            <div className="mb-5 xl:basis-[68%]">
                 <GoalWidget
                     value={completedGoals.length}
                     target={goals.length}

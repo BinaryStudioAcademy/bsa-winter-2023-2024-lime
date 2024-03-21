@@ -35,7 +35,7 @@ const ChartGoalProgress: React.FC<Properties> = ({ workouts }): JSX.Element => {
     );
 
     return (
-        <div className="bg-primary rounded-30 relative p-8">
+        <div className="bg-primary rounded-30 relative mb-5 p-8">
             <div className="mb-4 flex h-10 items-center justify-between">
                 <h1 className="text-secondary font-extrabold">
                     Workout Progress
