@@ -160,9 +160,9 @@ class CalculationProgressService {
             });
             if (newAchievemenet) {
                 const achievementDetails =
-                    await this.achievementService.findById(
+                    (await this.achievementService.findById(
                         achievement.toObject().id,
-                    );
+                    )) as AchievementEntity;
 
                 if (achievementDetails) {
                     await this.notificationService.create({
