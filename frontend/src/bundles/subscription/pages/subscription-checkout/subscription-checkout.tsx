@@ -43,7 +43,7 @@ const SubscriptionCheckout = (): JSX.Element => {
     };
 
     return (
-        <section className="bg-secondary m-auto w-full max-w-[80rem] rounded-xl p-6">
+        <section className="bg-secondary w-full max-w-[80rem] rounded-xl p-6">
             {Boolean(clientSecret) && (
                 <Elements options={options} stripe={stripe}>
                     <CheckoutForm />
