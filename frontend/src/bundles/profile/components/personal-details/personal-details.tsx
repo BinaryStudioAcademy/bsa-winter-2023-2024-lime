@@ -31,6 +31,7 @@ interface PersonalDetailsProperties {
 
 const ACTIVITY_TYPE_KEY = 'activityType';
 const ZERO_VALUE = 0;
+const baseClassNames = 'text-primary mt-2 xl:text-md sm:text-sm text-center';
 
 const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
     id,
@@ -50,6 +51,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         height,
         gender,
         location,
+        isPublic,
     } = user;
 
     const handleToggleFriend = useCallback(() => {
@@ -60,7 +62,7 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
         message(id);
     }, [message, id]);
     return (
-        <div className="bg-primary flex h-full min-h-[50rem] w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full md:min-h-[55rem]  xl:w-[25rem]">
+        <div className="bg-primary flex h-[100%+4rem] w-[20rem] flex-col items-center rounded-lg px-6 py-8 shadow-xl sm:w-full xl:w-[25rem]">
             <div className="lg:min-h-[7rem]">
                 <Avatar size="lg" email={email} avatarUrl={avatarUrl} />
             </div>
@@ -69,41 +71,58 @@ const PersonalDetails: React.FC<PersonalDetailsProperties> = ({
             {username && <p className="text-primary mb-4">@{username}</p>}
             <div className="bg-secondary w-full rounded-lg p-4 shadow-xl">
                 <ul className="flex w-full flex-wrap justify-evenly">
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Weight
-                        <p className="text-bold text-primary mt-2 text-xl">
-                            {convertWeightToKilograms(weight) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Height
-                        <p className="text-primary text-bold mt-2 text-xl">
-                            {convertHeightToCentimeters(height) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 flex w-20 flex-col items-center justify-end sm:w-1/3 md:w-1/2 lg:w-1/3">
-                        Age
-                        <p className="text-bold text-primary mt-2 text-xl">
-                            {calculateAge(dateOfBirth) ?? '-'}
-                        </p>
-                    </li>
-                    <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
+                    {isPublic && (
+                        <>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Weight
+                                <p className={baseClassNames}>
+                                    {convertWeightToKilograms(weight) ?? '-'}
+                                </p>
+                            </li>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Height
+                                <p className={baseClassNames}>
+                                    {convertHeightToCentimeters(height) ?? '-'}
+                                </p>
+                            </li>
+                            <li className="text-lm-grey-200 flex w-20 flex-col items-center justify-end sm:w-1/3 md:w-1/2 lg:w-1/3">
+                                Age
+                                <p className={baseClassNames}>
+                                    {calculateAge(dateOfBirth) ?? '-'}
+                                </p>
+                            </li>
+                        </>
+                    )}
+                    <li
+                        className={getValidClassNames(
+                            isPublic ? 'mt-4 sm:w-1/2' : 'sm:w-full',
+                            'text-lm-grey-200 flex flex-col items-center min-[1400px]:w-1/2',
+                        )}
+                    >
                         Gender
-                        <p className="text-bold text-primary mt-2 text-xl">
-                            {gender ?? '-'}
+                        <p
+                            className={getValidClassNames(
+                                baseClassNames,
+                                'overflow-hidden text-ellipsis whitespace-nowrap sm:w-16 xl:w-36',
+                            )}
+                        >
+                            {gender ? capitalizeFirstLetter(gender) : '-'}
                         </p>
                     </li>
-                    <li className="text-lm-grey-200 mt-4 flex flex-col items-center sm:w-1/2 lg:w-20 min-[1400px]:w-1/2">
+                    <li
+                        className={getValidClassNames(
+                            isPublic ? 'mt-4 sm:w-1/2' : 'sm:w-full',
+                            'text-lm-grey-200 flex flex-col items-center min-[1400px]:w-1/2',
+                        )}
+                    >
                         Location
-                        <p className="text-bold text-primary mt-2 text-center text-xl">
-                            {location ?? '-'}
-                        </p>
+                        <p className={baseClassNames}>{location ?? '-'}</p>
                     </li>
                 </ul>
             </div>
             <div className="my-6 w-full overflow-auto">
                 <h2 className="text-primary">Preferences</h2>
-                <ul className="mt-2 grid w-full gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+                <ul className="mt-2 grid min-h-14 w-full gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                     {goals && goals.length > ZERO_VALUE ? (
                         getUniqueValues(goals, ACTIVITY_TYPE_KEY).map(
                             (goal) => (

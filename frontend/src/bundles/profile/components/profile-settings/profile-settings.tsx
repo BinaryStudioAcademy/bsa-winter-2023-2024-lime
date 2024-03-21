@@ -1,6 +1,7 @@
 import ReactRouterPrompt from 'react-router-prompt';
 
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
+import { Checkbox } from '~/bundles/common/components/checkbox/checkbox.js';
 import {
     Avatar,
     Button,
@@ -36,11 +37,15 @@ import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 import { constructReferralUrl } from '../../helpers/helpers.js';
 import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
 import { Cropper } from './components/components.js';
-import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
+import {
+    DEFAULT_UPDATE_PROFILE_PAYLOAD,
+    ERROR_WRONG_FILETYPE_IMG,
+} from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserUpdateProfileRequestDto) => void;
@@ -123,8 +128,13 @@ const ProfileSettings: React.FC<Properties> = ({
 
             const image = event.target.files;
             if (image) {
-                setImgToCrop(URL.createObjectURL(image[0] as File));
-                setIsOpen(true);
+                const file = image[0] as File;
+                if (file && file.type.startsWith('image/')) {
+                    setImgToCrop(URL.createObjectURL(file));
+                    setIsOpen(true);
+                } else {
+                    notificationManager.error(ERROR_WRONG_FILETYPE_IMG);
+                }
                 event.target.value = '';
             }
         },
@@ -146,6 +156,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 const payload: UserUpdateProfileRequestDto = {
                     ...data,
                     avatarUrl: data.avatarUrl || null,
+                    isPublic: data.isPublic,
                     location: data.location ? data.location.trim() : null,
                     weight: convertWeightToGrams(data.weight),
                     height: convertHeightToMillimeters(data.height),
@@ -155,6 +166,7 @@ const ProfileSettings: React.FC<Properties> = ({
                     fullName: (data.fullName || '').trim(),
                     username: data.username ? data.username.trim() : null,
                 };
+
                 onSubmit(payload);
                 reset({}, { keepValues: true });
             })(event_);
@@ -194,6 +206,7 @@ const ProfileSettings: React.FC<Properties> = ({
                         type="file"
                         accept="image/jpeg, image/png"
                         name="update-file"
+                        aria-label="Upload avatar"
                         onChange={selectImage}
                         className="hidden"
                         ref={fileInputReference}
@@ -240,7 +253,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 textToDisplay={user?.referralCode ?? 'You dont have a code'}
             />
             <form onSubmit={handleFormSubmit}>
-                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 lg:grid-cols-4">
+                <div className="w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 gap-y-2 lg:grid-cols-4">
                     <Input
                         className="border-0 lg:col-start-1 lg:col-end-3"
                         type="text"
@@ -328,6 +341,15 @@ const ProfileSettings: React.FC<Properties> = ({
                         control={control}
                         type="card"
                         className="lg:w-50 rounded-r-lg"
+                    />
+                </div>
+                <div className="mt-4">
+                    <Checkbox
+                        name="isPublic"
+                        label="I agree to share my private information publicly on this platform."
+                        ariaLabel="privacy-policy"
+                        control={control}
+                        errors={errors}
                     />
                 </div>
                 <ul className="mt-14 flex justify-end lg:mt-6">

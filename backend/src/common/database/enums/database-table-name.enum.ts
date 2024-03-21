@@ -12,6 +12,10 @@ const DatabaseTableName = {
     USER_ACHIEVEMENTS: 'user_achievements',
     USER_BONUSES: 'user_bonuses',
     WORKOUTS: 'workouts',
+    CHATS: 'chats',
+    CHATS_USERS: 'chats_users',
+    MESSAGES: 'messages',
+    FRIENDS: 'friends',
 } as const;
 
 export { DatabaseTableName };

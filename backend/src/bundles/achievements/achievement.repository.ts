@@ -20,8 +20,11 @@ class AchievementRepository implements Repository {
         if (!achievement) {
             return null;
         }
-
         return AchievementEntity.initialize(achievement);
+    }
+
+    public create(): ReturnType<Repository['create']> {
+        return Promise.resolve(true);
     }
 
     public async findAll(): Promise<AchievementEntity[]> {
@@ -32,30 +35,27 @@ class AchievementRepository implements Repository {
         });
     }
 
-    public async findById(id: number): Promise<AchievementEntity | null> {
+    public async findById(id: number): Promise<AchievementEntity | []> {
         const achievement = await this.achievementModel
             .query()
             .findById(id)
             .execute();
-        return achievement ? AchievementEntity.initialize(achievement) : null;
+        return achievement ? AchievementEntity.initialize(achievement) : [];
     }
 
     public async findByUserId(
         userId: number,
-    ): Promise<AchievementEntity[] | null> {
+    ): Promise<AchievementEntity[] | []> {
         const achievements = await this.achievementModel
             .query()
             .joinRelated('userAchievements')
             .where('userAchievements.user_id', userId)
-            .select('achievements.*', 'userAchievements.created_at');
+            .select('achievements.*', 'userAchievements.created_at')
+            .orderBy('userAchievements.created_at', 'desc');
 
         return achievements.map((achievement) =>
             AchievementEntity.initialize(achievement),
         );
-    }
-
-    public create(): ReturnType<Repository['create']> {
-        return Promise.resolve(true);
     }
 
     public async update(

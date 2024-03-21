@@ -4,7 +4,6 @@ import {
 } from '@heroicons/react/16/solid';
 import {
     ArrowLeftStartOnRectangleIcon as LogoutIcon,
-    QuestionMarkCircleIcon as HelpIcon,
     Squares2X2Icon as OverviewIcon,
 } from '@heroicons/react/24/outline';
 
@@ -92,6 +91,12 @@ const Sidebar: React.FC<Properties> = ({ isOpen = true }): JSX.Element => {
                         to={AppRoute.SCHEDULE}
                         isActive={activeRoute === AppRoute.SCHEDULE}
                     />
+                    <SidebarNav
+                        icon={<Icon name={IconName.friendsIcon} />}
+                        text="Friends"
+                        to={AppRoute.FRIENDS}
+                        isActive={activeRoute === AppRoute.FRIENDS}
+                    />
                     <div className="relative">
                         <SidebarNav
                             icon={<ChatsIcon />}
@@ -111,13 +116,6 @@ const Sidebar: React.FC<Properties> = ({ isOpen = true }): JSX.Element => {
 
             <div className="flex h-1/4 w-full">
                 <div className="flex w-full flex-col justify-end gap-3">
-                    <SidebarNav
-                        icon={<HelpIcon />}
-                        text="Help"
-                        to={AppRoute.HELP}
-                        isActive={activeRoute === AppRoute.HELP}
-                    />
-
                     <div className="text-lm-grey-200 flex items-center justify-center">
                         <Button
                             type="button"

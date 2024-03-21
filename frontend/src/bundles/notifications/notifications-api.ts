@@ -71,7 +71,6 @@ class NotificationsApi extends BaseHttpApi {
             }),
             {
                 method: 'DELETE',
-                contentType: ContentType.JSON,
                 hasAuth: true,
             },
         );

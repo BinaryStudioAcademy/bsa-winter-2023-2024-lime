@@ -125,6 +125,7 @@ const userUpdateProfile = z
             z.literal(''),
         ]),
         gender: z.enum(['male', 'female', 'prefer not to say']),
+        isPublic: z.boolean(),
     })
     .required();
 

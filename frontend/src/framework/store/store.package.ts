@@ -8,12 +8,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import { reducer as appReducer } from '~/app/store/app.js';
 import { achievementsApi } from '~/bundles/achievements/achievements.js';
 import { reducer as achievementsReducer } from '~/bundles/achievements/store/achievements.js';
+import { aiAssistantApi } from '~/bundles/ai-assistant/ai-assistant.js';
 import { authApi } from '~/bundles/auth/auth.js';
 import { reducer as authReducer } from '~/bundles/auth/store/auth.js';
+import { chatsApi } from '~/bundles/chats/chats.js';
+import { reducer as chatsReducer } from '~/bundles/chats/store/chats.js';
 import { AppEnvironment } from '~/bundles/common/enums/enums.js';
 import { reducer as themeReducer } from '~/bundles/common/store/slice.js';
+import { friendsApi } from '~/bundles/friends/friends.js';
+import { reducer as friendsReducer } from '~/bundles/friends/store/friends.js';
 import { goalsApi } from '~/bundles/goals/goals.js';
 import { reducer as goalsReducer } from '~/bundles/goals/store/goals.js';
+import { messageApi } from '~/bundles/messages/messages.js';
 import { notificationApi } from '~/bundles/notifications/notifications.js';
 import { reducer as notificationsReducer } from '~/bundles/notifications/store/slice.js';
 import { passwordResetApi } from '~/bundles/password-reset/password-reset.js';
@@ -49,7 +55,9 @@ type RootReducer = {
     notifications: ReturnType<typeof notificationsReducer>;
     connections: ReturnType<typeof connectionsReducer>;
     workouts: ReturnType<typeof workoutsReducer>;
+    friends: ReturnType<typeof friendsReducer>;
     userBonuses: ReturnType<typeof userBonusesReducer>;
+    chats: ReturnType<typeof chatsReducer>;
 };
 
 type ExtraArguments = {
@@ -63,6 +71,10 @@ type ExtraArguments = {
     notificationApi: typeof notificationApi;
     connectionApi: typeof connectionApi;
     workoutApi: typeof workoutApi;
+    chatsApi: typeof chatsApi;
+    aiAssistantApi: typeof aiAssistantApi;
+    messageApi: typeof messageApi;
+    friendsApi: typeof friendsApi;
 };
 
 class Store {
@@ -90,6 +102,8 @@ class Store {
                 connections: connectionsReducer,
                 workouts: workoutsReducer,
                 userBonuses: userBonusesReducer,
+                chats: chatsReducer,
+                friends: friendsReducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({
@@ -114,6 +128,10 @@ class Store {
             notificationApi,
             connectionApi,
             workoutApi,
+            chatsApi,
+            aiAssistantApi,
+            messageApi,
+            friendsApi,
         };
     }
 }

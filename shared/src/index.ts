@@ -4,15 +4,35 @@ export {
     Metric,
 } from './bundles/achievements/achievements.js';
 export {
+    type SendAiMessageRequestDto,
+    type SendAiMessageResponseDto,
+    AiAssistantPath,
+} from './bundles/ai-assistant/ai-assistant.js';
+export {
     type AuthResponseDto,
     type AuthSignUpRequestDto,
     AuthApiPath,
 } from './bundles/auth/auth.js';
 export {
+    type ChatFullResponseDto,
+    type ChatGetAllItemsResponseDto,
+    type ChatPreviewResponseDto,
+    type ChatRequestDto,
+    type ChatResponseDto,
+    type ChatUserResponseDto,
+    ChatsPath,
+    chatValidationSchema,
+} from './bundles/chats/chats.js';
+export {
     type ConnectionGetAllItemResponseDto,
     ConnectionsPath,
 } from './bundles/connections/connections.js';
 export { type File, FileValidationMessage } from './bundles/file/file.js';
+export {
+    type FriendRequestDto,
+    type FriendResponseDto,
+    FriendsApiPath,
+} from './bundles/friends/friends.js';
 export {
     type GoalRequestDto,
     type GoalResponseDto,
@@ -29,6 +49,13 @@ export {
     IdentityProvider,
     identityProviderValidationSchema,
 } from './bundles/identity/identity.js';
+export {
+    type DeleteChatMessagesRequestDto,
+    type MessageRequestDto,
+    type MessageResponseDto,
+    MessagePath,
+    messageValidationSchema,
+} from './bundles/messages/messages.js';
 export {
     type NotificationRequestDto,
     type NotificationResponseDto,
@@ -101,7 +128,10 @@ export {
     WorkoutValidationMessage,
     workoutValidationSchema,
 } from './bundles/workouts/workouts.js';
-export { MILLISECONDS_PER_SECOND } from './constants/constants.js';
+export {
+    MAX_NUMBER_OF_USERS,
+    MILLISECONDS_PER_SECOND,
+} from './constants/constants.js';
 export {
     ActivityType,
     ApiPath,

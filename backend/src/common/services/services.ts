@@ -1,6 +1,13 @@
+import {
+    achievementService,
+    userAchievementService,
+} from '~/bundles/achievements/achievements.js';
+import { goalService } from '~/bundles/goals/goals.js';
+import { notificationService } from '~/bundles/notifications/notifications.js';
 import { config } from '~/common/config/config.js';
 import { JwtService } from '~/common/services/jwt/jwt.service.js';
 
+import { CalculationProgressService } from './calculation-progress/calculation-progress.service.js';
 import { CryptService } from './crypt/crypt.service.js';
 import { EmailService } from './email/email.service.js';
 import { FileService } from './file/file.service.js';
@@ -8,7 +15,7 @@ import { OpenAIService } from './open-ai/open-ai.service.js';
 import { SocketService } from './socket/socket.service.js';
 import { StripeService } from './stripe/stripe.service.js';
 
-const { API_KEY, FROM } = config.ENV.EMAIL;
+const { API_KEY, FROM, TEMPLATE_ID } = config.ENV.EMAIL;
 const { JWT_SECRET, OPEN_AI_API_KEY, OPEN_AI_MODEL, TOKEN_EXPIRATION_TIME } =
     config.ENV.APP;
 const { S3_REGION, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_NAME } =
@@ -16,11 +23,17 @@ const { S3_REGION, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_NAME } =
 
 const cryptService = new CryptService();
 const jwtService = new JwtService(JWT_SECRET, TOKEN_EXPIRATION_TIME);
-const emailService = new EmailService(API_KEY, FROM);
+const emailService = new EmailService(API_KEY, FROM, TEMPLATE_ID);
 const stripeService = new StripeService(
     config.ENV.STRIPE.SECRET_KEY,
     config.ENV.STRIPE.WEBHOOK_SECRET,
 );
+const calculationProgressService = new CalculationProgressService({
+    goalService,
+    achievementService,
+    userAchievementService,
+    notificationService,
+});
 
 const openAIService = new OpenAIService(OPEN_AI_API_KEY, OPEN_AI_MODEL);
 const fileService = new FileService({
@@ -32,6 +45,7 @@ const fileService = new FileService({
 const socketService = new SocketService();
 
 export {
+    calculationProgressService,
     cryptService,
     emailService,
     fileService,
