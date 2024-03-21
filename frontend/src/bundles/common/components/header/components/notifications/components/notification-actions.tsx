@@ -46,7 +46,7 @@ const NotificationActions = ({
         <button
             onClick={handleReadClick}
             className={getValidClassNames(
-                'border-buttonTertiary bg-primary relative w-full rounded border  p-4 transition-all',
+                'border-buttonTertiary bg-primary relative w-full rounded  border p-4 transition-all',
                 notification.isRead ? 'bg-secondary' : '',
             )}
         >
@@ -56,9 +56,9 @@ const NotificationActions = ({
                     data-index={notification.id}
                     onClick={handleDeleteClick}
                     type="button"
-                    className=" hover:bg-lm-black-200 hover:rounded-s-34 font-heavybold absolute right-1 top-1 h-4 w-4 text-xs transition-all"
+                    className="hover:rounded-s-34 font-heavybold absolute right-1 top-1 h-4 w-4 text-xs transition-all"
                 >
-                    <XMarkIcon />
+                    <XMarkIcon className="hover:text-action" />
                 </button>
             )}
         </button>

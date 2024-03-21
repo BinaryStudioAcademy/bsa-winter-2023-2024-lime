@@ -93,9 +93,12 @@ const FriendDetails = ({
             </div>
 
             <div className="mb-4 flex w-full items-center justify-between">
-                <h3 className="text-lm-grey-200 text-xl font-extrabold leading-6">
-                    Achievements
-                </h3>
+                {achievements.length > 0 && (
+                    <h3 className="text-lm-grey-200 text-xl font-extrabold leading-6">
+                        Achievements
+                    </h3>
+                )}
+
                 <div
                     onClick={handleMoreInfoClick}
                     role="presentation"

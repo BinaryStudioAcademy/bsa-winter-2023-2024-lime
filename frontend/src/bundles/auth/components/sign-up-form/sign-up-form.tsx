@@ -57,7 +57,10 @@ const SignUpForm: React.FC<Properties> = ({
                 <p className="text-secondary mb-6 mt-10 text-center text-xs">
                     or Sign up with Email
                 </p>
-                <form onSubmit={handleFormSubmit}>
+                <form
+                    onSubmit={handleFormSubmit}
+                    className="flex flex-col gap-5"
+                >
                     <Input
                         type={'text'}
                         label="Email"

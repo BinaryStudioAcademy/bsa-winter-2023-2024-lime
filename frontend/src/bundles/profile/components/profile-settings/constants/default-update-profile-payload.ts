@@ -9,6 +9,7 @@ const DEFAULT_UPDATE_PROFILE_PAYLOAD: UserUpdateProfileRequestDto = {
     weight: '',
     height: '',
     location: '',
+    isPublic: false,
     gender: Gender.MALE,
 };
 

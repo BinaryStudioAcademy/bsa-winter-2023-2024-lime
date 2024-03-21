@@ -32,6 +32,7 @@ type EnvironmentSchema = {
     EMAIL: {
         API_KEY: string;
         FROM: string;
+        TEMPLATE_ID: string;
     };
     STRIPE: {
         SECRET_KEY: string;
