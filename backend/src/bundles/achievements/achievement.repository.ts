@@ -35,17 +35,17 @@ class AchievementRepository implements Repository {
         });
     }
 
-    public async findById(id: number): Promise<AchievementEntity | null> {
+    public async findById(id: number): Promise<AchievementEntity | []> {
         const achievement = await this.achievementModel
             .query()
             .findById(id)
             .execute();
-        return achievement ? AchievementEntity.initialize(achievement) : null;
+        return achievement ? AchievementEntity.initialize(achievement) : [];
     }
 
     public async findByUserId(
         userId: number,
-    ): Promise<AchievementEntity[] | null> {
+    ): Promise<AchievementEntity[] | []> {
         const achievements = await this.achievementModel
             .query()
             .joinRelated('userAchievements')

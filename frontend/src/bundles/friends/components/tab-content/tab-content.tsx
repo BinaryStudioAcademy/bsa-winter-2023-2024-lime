@@ -43,22 +43,20 @@ const TabContent = ({
                 ))}
 
             {(totalCount ?? 0) > users.length ? (
-                <div className="my-6 flex w-full justify-center">
-                    <div className="w-[160px]">
-                        <Button
-                            onClick={loadMore}
-                            label={'Load more'}
-                            size={ComponentSize.MEDIUM}
-                            leftIcon={
-                                isLoadingMore && (
-                                    <Loader color={IconColor.PRIMARY} />
-                                )
-                            }
-                            type="submit"
-                            isDisabled={isLoadingMore}
-                            variant={'secondary'}
-                        />
-                    </div>
+                <div className="absolute bottom-[-120px] left-1/2 w-[160px] -translate-x-1/2 transform pb-8">
+                    <Button
+                        onClick={loadMore}
+                        label={'Load more'}
+                        size={ComponentSize.MEDIUM}
+                        leftIcon={
+                            isLoadingMore && (
+                                <Loader color={IconColor.PRIMARY} />
+                            )
+                        }
+                        type="submit"
+                        isDisabled={isLoadingMore}
+                        variant={'secondary'}
+                    />
                 </div>
             ) : (
                 users?.length <= 0 && (
