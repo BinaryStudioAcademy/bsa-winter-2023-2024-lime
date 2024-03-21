@@ -1,1 +1,1 @@
-export { Status } from './status.enum.js';
+export { ChatsPath } from 'shared';

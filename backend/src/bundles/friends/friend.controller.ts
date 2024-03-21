@@ -207,7 +207,7 @@ class FriendController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, query } = options;
-        const { page = '1', limit = '10' } = query;
+        const { page = '1', limit = '12' } = query;
         const offset = ((+page - 1) * +limit).toString();
 
         const totalCount = await this.friendService.findAllPotentialFollowings(
@@ -292,7 +292,7 @@ class FriendController extends BaseController {
         }>,
     ): Promise<ApiHandlerResponse> {
         const { user, query } = options;
-        const { page = '1', limit = '10' } = query;
+        const { page = '1', limit = '12' } = query;
         const offset = ((+page - 1) * +limit).toString();
 
         const totalCount = await this.friendService.getFollowings(

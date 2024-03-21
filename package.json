@@ -24,7 +24,7 @@
         "lint:format": "prettier --check \"**/*.{ts,tsx,json,md,css,html,yml}\"",
         "lint": "npm run lint:editor && npm run lint:fs && npm run lint:format && npm run lint:type && npm run lint:js && npm run lint:css",
         "format": "prettier --write \"**/*.{ts,tsx,json,md,css,html,yml}\"",
-        "prestart": "npm i && npm run build",
+        "prestart": "npm install --include=dev && npm run build",
         "start": "cd ./build/backend && npm run start"
     },
     "devDependencies": {

@@ -146,7 +146,7 @@ const Overview: React.FC = () => {
                     </li>
                 </ul>
                 {!isSubscribed && (
-                    <GoogleAds className="mb-6 hidden h-44 xl:flex" />
+                    <GoogleAds className="mb-6 hidden h-48 xl:flex" />
                 )}
                 <ChartGoalProgress workouts={workouts} />
                 {incompletedGoals.length > 0 && (
@@ -160,6 +160,7 @@ const Overview: React.FC = () => {
                                 return (
                                     <li key={goal.id} className="flex-1">
                                         <GoalCard
+                                            id={goal.id}
                                             activityType={goal.activityType}
                                             frequency={goal.frequency}
                                             frequencyType={goal.frequencyType}

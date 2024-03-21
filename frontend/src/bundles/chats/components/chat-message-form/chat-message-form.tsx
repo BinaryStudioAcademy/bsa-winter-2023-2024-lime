@@ -1,16 +1,16 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
-import { type MessageRequestDto } from '~/bundles/chats/types/types.js';
+import { MESSAGE_DEFAULT_PAYLOAD } from '~/bundles/chats/constants/constants.js';
 import { Button, Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
 type Properties = {
-    onSubmit: (payload: MessageRequestDto) => void;
+    onSubmit: (payload: typeof MESSAGE_DEFAULT_PAYLOAD) => void;
 };
 
 const ChatMessageForm = ({ onSubmit }: Properties): JSX.Element => {
     const { control, errors, handleSubmit, reset } = useAppForm({
-        defaultValues: { message: '' },
+        defaultValues: MESSAGE_DEFAULT_PAYLOAD,
     });
 
     const handleFormSubmit = useCallback(
