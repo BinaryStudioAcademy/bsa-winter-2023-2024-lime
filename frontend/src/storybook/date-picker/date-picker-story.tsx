@@ -19,6 +19,7 @@ const DatePickerStory = ({
             control={control}
             errors={errors}
             name="date"
+            format="DD/MM/YYYY"
             label={label}
             placeholder={placeholder}
             className={className}
