@@ -24,7 +24,7 @@
         "lint:format": "prettier --check \"**/*.{ts,tsx,json,md,css,html,yml}\"",
         "lint": "npm run lint:editor && npm run lint:fs && npm run lint:format && npm run lint:type && npm run lint:js && npm run lint:css",
         "format": "prettier --write \"**/*.{ts,tsx,json,md,css,html,yml}\"",
-        "prestart": "npm i && npm run build",
+        "prestart": "npm install -g typescript && npm i && npm run build",
         "start": "cd ./build/backend && npm run start"
     },
     "devDependencies": {
@@ -45,7 +45,6 @@
         "stylelint": "16.2.1",
         "stylelint-config-standard": "36.0.0",
         "stylelint-order": "6.0.4",
-        "tsc-alias": "1.8.2",
         "typescript": "5.3.3"
     },
     "simple-git-hooks": {
@@ -53,6 +52,7 @@
         "commit-msg": "npx commitlint --edit $1"
     },
     "dependencies": {
-        "rollup": "4.12.0"
+        "rollup": "4.12.0",
+        "tsc-alias": "1.8.2"
     }
 }
