@@ -14,7 +14,8 @@
         "start:dev": "vite",
         "build": "tsc -p tsconfig.build.json && vite build && npm run storybook:build",
         "preview": "vite preview",
-        "storybook": "storybook dev -p 6006"
+        "storybook": "storybook dev -p 6006",
+        "storybook:build": "storybook build -o build/storybook"
     },
     "devDependencies": {
         "@storybook/addon-essentials": "7.6.17",
