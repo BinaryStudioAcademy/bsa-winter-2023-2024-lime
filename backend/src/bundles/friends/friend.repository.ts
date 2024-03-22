@@ -1,4 +1,8 @@
-import { MAX_NUMBER_OF_USERS } from '~/bundles/friends/constants/constants.js';
+import {
+    FOLLOWER_DETAILS_GRAPH,
+    MAX_NUMBER_OF_USERS,
+    USER_DETAILS_GRAPH,
+} from '~/bundles/friends/constants/constants.js';
 import {
     ErrorMessage,
     HttpCode,
@@ -10,9 +14,6 @@ import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 import { type UserModel } from '~/bundles/users/user.model.js';
 import { DatabaseTableName } from '~/common/database/database.js';
 import { type Repository } from '~/common/types/types.js';
-
-const USER_DETAILS_GRAPH = '[userDetails]';
-const FOLLOWERS_DETAILS = '[followersDetails]';
 
 class FriendRepository implements Repository {
     private friendModel: typeof FriendModel;
@@ -194,7 +195,7 @@ class FriendRepository implements Repository {
             .query()
             .select(`${DatabaseTableName.USERS}.email`, 'userId')
             .where(`${DatabaseTableName.FRIENDS}.followingId`, userId)
-            .withGraphFetched(FOLLOWERS_DETAILS)
+            .withGraphFetched(FOLLOWER_DETAILS_GRAPH)
             .join(
                 DatabaseTableName.USERS,
                 `${DatabaseTableName.USERS}.id`,
