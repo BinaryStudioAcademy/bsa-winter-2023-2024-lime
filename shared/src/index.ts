@@ -101,6 +101,7 @@ export {
     type SubscribeRequestDto,
     type SubscribeResponseDto,
     type SubscriptionGetItemResponseDto,
+    type UpgradeTrialSubscriptionRequestDto,
     SubscriptionsApiPath,
     SubscriptionStatus,
     SubscriptionValidationMessage,

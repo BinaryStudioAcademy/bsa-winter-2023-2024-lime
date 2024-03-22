@@ -1,6 +1,8 @@
 export {
     type SubscribeBonusRequestDto,
     type SubscribeRequestDto,
+    type SubscribeResponseDto,
+    type UpgradeTrialSubscriptionRequestDto,
     type UserAuthResponseDto,
     type UserAuthSignInRequestDto,
     type UserAuthSignUpRequestDto,

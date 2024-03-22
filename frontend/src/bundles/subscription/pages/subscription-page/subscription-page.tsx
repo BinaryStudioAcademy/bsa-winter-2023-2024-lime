@@ -8,6 +8,8 @@ import {
     useNavigate,
     useState,
 } from '~/bundles/common/hooks/hooks.js';
+import { UserBonusBalance } from '~/bundles/profile/components/user-balance/user-bonus-balance.js';
+import { actions as userBonusesActions } from '~/bundles/user-bonuses/store/user-bonuses.js';
 import { actions as userActions } from '~/bundles/users/store/users.js';
 
 import {
@@ -24,6 +26,9 @@ const SubscriptionPage = (): JSX.Element => {
     const { dataStatus, subscriptionPlans, currentSubscription } =
         useAppSelector(({ subscriptions }) => subscriptions);
 
+    const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
+        ({ userBonuses }) => userBonuses,
+    );
     const { user } = useAppSelector(({ auth }) => auth);
 
     const dispatch = useAppDispatch();
@@ -81,9 +86,14 @@ const SubscriptionPage = (): JSX.Element => {
                     bonusPrice,
                 }),
             );
+            handleLoadCurrentSubscription();
         },
-        [dispatch, user],
+        [dispatch, user, handleLoadCurrentSubscription],
     );
+
+    const handleShowTransactions = useCallback((): void => {
+        void dispatch(userBonusesActions.loadAllUserBonusesTransactions());
+    }, [dispatch]);
 
     if (dataStatus === DataStatus.PENDING) {
         return (
@@ -95,11 +105,24 @@ const SubscriptionPage = (): JSX.Element => {
 
     return (
         <div className="flex w-full max-w-[50rem] flex-col justify-start gap-10">
+            <UserBonusBalance
+                userBonusesTransactions={userBonusesTransactions}
+                userBonusesStatus={userBonusesStatus}
+                className="mx-auto w-[50%]"
+                bonusBalance={user?.bonusBalance ?? 0}
+                onShowTransactions={handleShowTransactions}
+            />
             <div className="flex flex-col items-center justify-center gap-2">
                 {currentSubscription ? (
                     <SubscriptionUserPanel
                         subscriptionPlanName={
                             currentSubscription.subscriptionPlanName as string
+                        }
+                        subscriptionPlanBonusPrice={
+                            subscriptionPlans?.find(
+                                (plan) =>
+                                    plan.id === currentSubscription.planId,
+                            )?.bonusPointsPrice as number
                         }
                         subscriptionPlanPrice={
                             currentSubscription.subscriptionPlanPrice as number

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type SubscribeResponseDto } from 'shared';
 
 import { type AsyncThunkConfig } from '~/bundles/common/types/types.js';
 import {
@@ -44,4 +45,13 @@ const buyWithBonus = createAsyncThunk<
     },
 );
 
-export { buyWithBonus, getById, loadAll };
+const updateTrialSubscription = createAsyncThunk<
+    SubscribeResponseDto,
+    { bonusPrice: number; stripeSubscriptionId: string },
+    AsyncThunkConfig
+>(`${sliceName}/update-trial`, async (payload, { extra }) => {
+    const { userApi } = extra;
+    return userApi.updateTrialSubscription(payload);
+});
+
+export { buyWithBonus, getById, loadAll, updateTrialSubscription };

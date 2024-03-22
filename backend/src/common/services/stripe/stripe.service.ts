@@ -8,6 +8,7 @@ import {
     type CreateSubscriptionPlanResponse,
     type CreateSubscriptionResponse,
     type UpdateSubscriptionOptions,
+    type UpgradeTrialSubscriptionRequestDto,
     type ValueOf,
 } from '~/common/types/types.js';
 
@@ -116,6 +117,15 @@ class StripeService {
             status: subscription.status as ValueOf<typeof SubscriptionStatus>,
             expiresAt: formatToDateFromUnix(subscription.current_period_end),
         };
+    }
+
+    public async updateTrialSubscription({
+        stripeSubscriptionId,
+    }: UpgradeTrialSubscriptionRequestDto): Promise<void> {
+        const monthFormated = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60;
+        await this.stripeApi.subscriptions.update(stripeSubscriptionId, {
+            trial_end: monthFormated,
+        });
     }
 
     public async immediateCancelSubscription(id: string): Promise<boolean> {

@@ -8,4 +8,5 @@ export {
     type SubscriptionGetItemResponseDto,
     type SubscriptionPlansGetAllItemResponseDto,
     type SubscriptionPlansGetAllResponseDto,
+    type UpgradeTrialSubscriptionRequestDto,
 } from 'shared';

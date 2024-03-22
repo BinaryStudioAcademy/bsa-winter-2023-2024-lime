@@ -143,6 +143,19 @@ class UserController extends BaseController {
         });
 
         this.addRoute({
+            path: UsersApiPath.UPDATE_TRIAL,
+            method: 'PATCH',
+            isProtected: true,
+            handler: (options) =>
+                this.updateTrialBonus(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        body: SubscribeBonusRequestDto;
+                    }>,
+                ),
+        });
+
+        this.addRoute({
             path: UsersApiPath.GET_BY_ID,
             method: 'GET',
             isProtected: true,
@@ -442,6 +455,88 @@ class UserController extends BaseController {
             payload: await this.userBonusService.findMany({ userId }),
         };
     }
+
+    /**
+     * @swagger
+     * /api/v1/users/update-trial:
+     *   patch:
+     *     tags:
+     *       - Users
+     *     description: This endpoint updates a trial subscription
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *                planId:
+     *                  type: number
+     *                  format: number
+     *                  minimum: 1
+     *                stripePriceId:
+     *                  type: string
+     *                  nullable: false
+     *                bonusPrice:
+     *                  type: number
+     *                  format: number
+     *                  minimum: 1
+     *     responses:
+     *       200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/User'
+     *       400:
+     *         description: Bad Request
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     *       404:
+     *         description: Not found a user
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Error'
+     */
+
+    private async updateTrialBonus(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            body: SubscribeBonusRequestDto;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user, body } = options;
+        const { id: userId } = user;
+        if (!body.stripeSubscriptionId) {
+            throw new HttpError({
+                message: 'Stripe subscription id is required',
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+        const { id: subscriptionId } =
+            await this.userService.createUserBonusTransaction({
+                userId,
+                actionType: UserBonusActionType.SUBSCRIBE,
+                transactionType: UserBonusTransactionType.EXSPENSE,
+                amount: body.bonusPrice,
+            });
+
+        await subscriptionService.updateTrialSubscription({
+            stripeSubscriptionId: body.stripeSubscriptionId,
+        });
+
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: { subscriptionId },
+        };
+    }
+
     /**
      * @swagger
      * /api/v1/users/buy-with-bonuses:

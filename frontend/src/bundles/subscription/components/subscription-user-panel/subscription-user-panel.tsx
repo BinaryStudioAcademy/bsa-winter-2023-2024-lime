@@ -5,6 +5,7 @@ import {
     useState,
 } from '~/bundles/common/hooks/hooks.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
+import { actions as userActions } from '~/bundles/users/store/users.js';
 
 import { type SubscriptionStatus } from '../../enums/enums.js';
 import { dateConverter } from '../../helpers/helpers.js';
@@ -13,6 +14,7 @@ import { actions as subscriptionActions } from '../../store/subscriptions.js';
 type Properties = {
     subscriptionPlanName: string;
     subscriptionPlanPrice: number;
+    subscriptionPlanBonusPrice: number;
     status: ValueOf<typeof SubscriptionStatus>;
     isCanceled: boolean;
     expiresAt: Date;
@@ -23,6 +25,7 @@ type Properties = {
 const SubscriptionUserPanel: React.FC<Properties> = ({
     subscriptionPlanName,
     subscriptionPlanPrice,
+    subscriptionPlanBonusPrice,
     status,
     isCanceled,
     expiresAt,
@@ -45,6 +48,14 @@ const SubscriptionUserPanel: React.FC<Properties> = ({
         setCurrentCancelAtPeriodEnd(!currentCancelAtPeriodEnd);
     }, [dispatch, stripeSubscriptionId, currentCancelAtPeriodEnd]);
 
+    const handleUpdateTrialSubscription = useCallback((): void => {
+        void dispatch(
+            userActions.updateTrialSubscription({
+                stripeSubscriptionId,
+                bonusPrice: subscriptionPlanBonusPrice,
+            }),
+        );
+    }, [dispatch, stripeSubscriptionId, subscriptionPlanBonusPrice]);
     return (
         <div className="bg-secondary w-full max-w-[30rem] rounded-2xl p-4 md:max-w-full md:p-6">
             <div className="flex flex-col gap-3">
@@ -75,10 +86,14 @@ const SubscriptionUserPanel: React.FC<Properties> = ({
                         <div>
                             <p className="text-primary text-lg">Payment</p>
                             <p className="text-primary">
-                                <span className="text-action text-2xl">
+                                <span className="text-action text-xl">
                                     ${subscriptionPlanPrice}
+                                </span>
+                                <span> or </span>
+                                <span className="text-action text-xl">
+                                    {subscriptionPlanBonusPrice || ''}
                                 </span>{' '}
-                                / month
+                                points / month
                             </p>
                         </div>
                     </div>
@@ -101,6 +116,13 @@ const SubscriptionUserPanel: React.FC<Properties> = ({
                         variant="primary"
                         label="Change subscription plan"
                         onClick={onChangeSubscription}
+                    />
+                    <Button
+                        type="button"
+                        size="md"
+                        variant="secondary"
+                        label="Pay next with bonus"
+                        onClick={handleUpdateTrialSubscription}
                     />
                 </div>
             </div>

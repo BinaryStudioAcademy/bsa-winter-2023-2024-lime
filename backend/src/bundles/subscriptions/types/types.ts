@@ -5,5 +5,6 @@ export {
     type SubscribeRequestDto,
     type SubscribeResponseDto,
     type SubscriptionGetItemResponseDto,
+    type UpgradeTrialSubscriptionRequestDto,
 } from 'shared';
 export { type Stripe } from 'stripe';

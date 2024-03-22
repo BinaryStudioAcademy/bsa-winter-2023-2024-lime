@@ -10,4 +10,5 @@ export {
     type SubscribeRequestDto,
     type SubscribeResponseDto,
     type SubscriptionGetItemResponseDto,
+    type UpgradeTrialSubscriptionRequestDto,
 } from './types/types.js';

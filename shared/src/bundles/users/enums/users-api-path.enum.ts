@@ -5,6 +5,7 @@ const UsersApiPath = {
     GET_BY_ID: '/:id',
     CURRENT_BONUSES: '/current-bonuses',
     BUY_WITH_BONUSES: '/buy-with-bonuses',
+    UPDATE_TRIAL: '/update-trial',
     UPLOAD_AVATAR: '/upload',
 } as const;
 

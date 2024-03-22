@@ -6,6 +6,7 @@ import { type Storage } from '~/framework/storage/storage.js';
 import { UsersApiPath } from './enums/enums.js';
 import {
     type SubscribeBonusRequestDto,
+    type SubscribeResponseDto,
     type UserAuthResponseDto,
     type UserBonusGetAllResponseDto,
     type UserGetAllResponseDto,
@@ -106,6 +107,23 @@ class UserApi extends BaseHttpApi {
             },
         );
         return await response.json<UserAuthResponseDto>();
+    }
+
+    public async updateTrialSubscription(payload: {
+        bonusPrice: number;
+        stripeSubscriptionId: string;
+    }): Promise<SubscribeResponseDto> {
+        const response = await this.load(
+            this.getFullEndpoint(UsersApiPath.UPDATE_TRIAL, {}),
+            {
+                method: 'PATCH',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                payload: JSON.stringify(payload),
+            },
+        );
+
+        return await response.json<SubscribeResponseDto>();
     }
 
     public async uploadAvatar(

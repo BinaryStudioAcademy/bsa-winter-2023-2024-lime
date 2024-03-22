@@ -17,6 +17,7 @@ import {
     type SubscribeRequestDto,
     type SubscribeResponseDto,
     type SubscriptionGetItemResponseDto,
+    type UpgradeTrialSubscriptionRequestDto,
 } from './types/types.js';
 
 class SubscriptionService
@@ -151,6 +152,31 @@ class SubscriptionService
                 stripeSubscriptionId,
             );
 
+            throw new HttpError({
+                message: (error as Error).message,
+                status: HttpCode.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
+
+    public async updateTrialSubscription({
+        stripeSubscriptionId,
+    }: UpgradeTrialSubscriptionRequestDto): Promise<UpgradeTrialSubscriptionRequestDto> {
+        if (!stripeSubscriptionId) {
+            throw new HttpError({
+                message:
+                    SubscriptionValidationMessage.SUBSCRIPTION_INVALID_REQUEST,
+                status: HttpCode.BAD_REQUEST,
+            });
+        }
+
+        try {
+            await stripeService.updateTrialSubscription({
+                stripeSubscriptionId,
+            });
+
+            return { stripeSubscriptionId };
+        } catch (error) {
             throw new HttpError({
                 message: (error as Error).message,
                 status: HttpCode.INTERNAL_SERVER_ERROR,
