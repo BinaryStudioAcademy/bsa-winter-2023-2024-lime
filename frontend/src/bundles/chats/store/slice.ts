@@ -89,10 +89,6 @@ const { reducer, actions, name } = createSlice({
                 ? (state.aiAssistantChat = newChat)
                 : (state.chats = [...state.chats, newChat]);
 
-            // if (!isAssistant) {
-            //     state.currentChat = { ...newChat, messages: [] };
-            // }
-
             state.createChatDataStatus = DataStatus.FULFILLED;
         });
         builder.addCase(createChat.pending, (state) => {
