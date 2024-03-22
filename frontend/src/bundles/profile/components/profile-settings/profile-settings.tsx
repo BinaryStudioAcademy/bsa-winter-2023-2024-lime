@@ -45,6 +45,7 @@ import { Cropper } from './components/components.js';
 import {
     DEFAULT_UPDATE_PROFILE_PAYLOAD,
     ERROR_WRONG_FILETYPE_IMG,
+    MEGABYTE_PER_BYTE,
 } from './constants/constants.js';
 
 type Properties = {
@@ -134,6 +135,10 @@ const ProfileSettings: React.FC<Properties> = ({
             if (image) {
                 const file = image[0] as File;
                 if (file && file.type.startsWith('image/')) {
+                    if (file.size > 20 * MEGABYTE_PER_BYTE) {
+                        notificationManager.error('File is too big. Max 20MB.');
+                        return;
+                    }
                     setImgToCrop(URL.createObjectURL(file));
                     setIsOpen(true);
                 } else {
