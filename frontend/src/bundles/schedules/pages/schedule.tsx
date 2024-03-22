@@ -87,7 +87,7 @@ const Schedule: React.FC = () => {
             }`;
             return {
                 value: id,
-                label: `${capitalizedFirstLetter}${frequencyTitle}${frequencyType}`,
+                label: `${capitalizedFirstLetter} ${frequencyTitle} ${frequencyType}`,
             };
         });
     }, [goals]);
