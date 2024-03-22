@@ -88,8 +88,8 @@ const SubscriptionPage = (): JSX.Element => {
                     />
                 ) : (
                     <span className="font-base text-primary text-xl">
-                        Looks like you dont have subscription yet. Choose from
-                        below.
+                        Looks like you don&apos;t have subscription yet. Choose
+                        from below.
                     </span>
                 )}
             </div>
