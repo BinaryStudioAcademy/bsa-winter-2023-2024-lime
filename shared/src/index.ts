@@ -139,6 +139,7 @@ export {
 } from './bundles/workouts/workouts.js';
 export {
     MAX_NUMBER_OF_USERS,
+    MEGABYTE_PER_BYTE,
     MILLISECONDS_PER_SECOND,
 } from './constants/constants.js';
 export {

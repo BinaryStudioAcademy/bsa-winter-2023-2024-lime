@@ -54,12 +54,6 @@ const Chats = (): JSX.Element => {
         loadCurrentChat();
     }, [loadCurrentChat]);
 
-    useEffect(() => {
-        if (id && !currentChat) {
-            navigate(AppRoute.CHATS);
-        }
-    }, [currentChat, id, navigate]);
-
     return (
         <div className="flex h-full flex-[1] flex-col">
             <div className="border-buttonTertiary grid flex-[1] grid-cols-[auto] overflow-hidden rounded-xl border lg:grid-cols-[300px_auto]">

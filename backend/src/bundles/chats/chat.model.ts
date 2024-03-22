@@ -54,9 +54,7 @@ class ChatModel extends AbstractModel {
                 relation: Model.HasOneRelation,
                 modelClass: MessageModel,
                 filter: (builder: QueryBuilder<MessageModel>): void => {
-                    void builder
-                        .orderBy(ChatAttributes.CREATED_AT, 'desc')
-                        .limit(1);
+                    void builder.orderBy(ChatAttributes.CREATED_AT, 'DESC');
                 },
                 join: {
                     from: `${DatabaseTableName.CHATS}.${ChatAttributes.ID}`,
