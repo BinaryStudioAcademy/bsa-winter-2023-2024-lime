@@ -134,20 +134,14 @@ const { reducer, actions, name } = createSlice({
         builder.addCase(addFollowingFollower.fulfilled, (state, action) => {
             state.followers = state.followers.map((follower) => {
                 return follower.userId === action.meta.arg.followingId
-                    ? {
-                          ...follower,
-                          isFollowing: true,
-                      }
+                    ? { ...follower, isFollowing: true }
                     : follower;
             });
         });
         builder.addCase(removeFollowingFollower.fulfilled, (state, action) => {
             state.followers = state.followers.map((follower) => {
                 return follower.userId === action.meta.arg.followingId
-                    ? {
-                          ...follower,
-                          isFollowing: false,
-                      }
+                    ? { ...follower, isFollowing: false }
                     : follower;
             });
         });
