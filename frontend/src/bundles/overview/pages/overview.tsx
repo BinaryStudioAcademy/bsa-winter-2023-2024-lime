@@ -107,7 +107,7 @@ const Overview: React.FC = () => {
                             icon={
                                 <Icon
                                     name={IconName.workoutIcon}
-                                    color={IconColor.SECONDARY}
+                                    color={IconColor.WHITE}
                                 />
                             }
                         />
