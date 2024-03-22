@@ -19,10 +19,10 @@ const SubscriptionCheckout = (): JSX.Element => {
 
     const customRules = theme === Theme.LIGHT && {
         '.Input': {
-            backgroundColor: 'white',
+            backgroundColor: '#f3f3f3',
         },
         '.Select': {
-            backgroundColor: 'white',
+            backgroundColor: '#f3f3f3',
         },
         '.Tab': {
             boxShadow:

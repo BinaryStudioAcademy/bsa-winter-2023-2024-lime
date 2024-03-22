@@ -35,9 +35,7 @@ const ChatLink = ({
         id: String(id),
     }) as typeof AppRoute.CHATS_$ID;
 
-    const { email, fullName, avatarUrl } = users.find(
-        (member) => member.id !== user.id,
-    ) as ChatUserResponseDto;
+    const chatMember = users.find((member) => member.id !== user.id);
 
     return (
         <Link to={chatRouteById}>
@@ -51,11 +49,15 @@ const ChatLink = ({
                 >
                     <div className="flex items-center gap-5">
                         <div className="relative">
-                            <Avatar
-                                size="sm"
-                                email={fullName ?? email}
-                                avatarUrl={avatarUrl}
-                            />
+                            {chatMember && (
+                                <Avatar
+                                    size="sm"
+                                    email={
+                                        chatMember.fullName ?? chatMember.email
+                                    }
+                                    avatarUrl={chatMember.avatarUrl}
+                                />
+                            )}
                         </div>
                         <div className="flex flex-col items-start gap-1 overflow-hidden py-2 lg:max-w-[9rem]">
                             <p

@@ -45,6 +45,7 @@ import { Cropper } from './components/components.js';
 import {
     DEFAULT_UPDATE_PROFILE_PAYLOAD,
     ERROR_WRONG_FILETYPE_IMG,
+    MEGABYTE_PER_BYTE,
 } from './constants/constants.js';
 
 type Properties = {
@@ -134,6 +135,10 @@ const ProfileSettings: React.FC<Properties> = ({
             if (image) {
                 const file = image[0] as File;
                 if (file && file.type.startsWith('image/')) {
+                    if (file.size > 20 * MEGABYTE_PER_BYTE) {
+                        notificationManager.error('File is too big. Max 20MB.');
+                        return;
+                    }
                     setImgToCrop(URL.createObjectURL(file));
                     setIsOpen(true);
                 } else {
@@ -166,7 +171,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 dateOfBirth: data.dateOfBirth
                     ? configureISOString(data.dateOfBirth || '')
                     : null,
-                fullName: (data.fullName || '').trim(),
+                fullName: data.fullName ? data.fullName.trim() : null,
                 username: data.username ? data.username.trim() : null,
             };
         },
@@ -208,7 +213,7 @@ const ProfileSettings: React.FC<Properties> = ({
     }, [fileInputReference]);
 
     return (
-        <div className="bg-secondary pl-13 pr-18 h-full px-12 pb-9 pt-3 lg:w-[874px]">
+        <div className="bg-secondary pl-13 pr-18 h-full px-12 pb-9 pt-3 sm:p-0 lg:w-[874px] ">
             <div className="flex flex-col items-start justify-between gap-5 pb-12 xl:flex-row xl:items-center">
                 <div className="flex items-center">
                     <Avatar

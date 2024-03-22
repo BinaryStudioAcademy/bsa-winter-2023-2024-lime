@@ -39,7 +39,7 @@ const CopyToClipboard: React.FC<Properties> = ({
     return (
         <div className={className}>
             <p className="text-primary mb-2 text-sm">{label}</p>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 sm:flex-wrap">
                 <div className="bg-primary text-secondary flex h-9 items-center whitespace-nowrap rounded-lg p-4 text-sm">
                     <span>{textToDisplay ?? textToCopy}</span>
                 </div>
