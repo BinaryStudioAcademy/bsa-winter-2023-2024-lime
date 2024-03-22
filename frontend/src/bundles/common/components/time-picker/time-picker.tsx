@@ -19,6 +19,7 @@ type Properties<T extends FieldValues> = {
     className?: string;
     label?: string;
     placeholder?: string;
+    required?: boolean;
 };
 
 const TimePicker = <T extends FieldValues>({
@@ -28,6 +29,7 @@ const TimePicker = <T extends FieldValues>({
     className,
     label = '',
     placeholder = '',
+    required = false,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
 
@@ -60,6 +62,7 @@ const TimePicker = <T extends FieldValues>({
                         name={name}
                         control={control}
                         errors={errors}
+                        required={required}
                     />
                 }
             />

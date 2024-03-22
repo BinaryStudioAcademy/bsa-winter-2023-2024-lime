@@ -137,9 +137,8 @@ const SubscriptionPage = (): JSX.Element => {
                     />
                 ) : (
                     <span className="font-base text-primary text-xl">
-                        Looks like you dont have subscription yet. Choose from
-                        below.
-                        {user?.bonusBalance}
+                        Looks like you don&apos;t have subscription yet. Choose
+                        from below.
                     </span>
                 )}
             </div>

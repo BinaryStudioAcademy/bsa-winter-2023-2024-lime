@@ -87,7 +87,7 @@ const Schedule: React.FC = () => {
             }`;
             return {
                 value: id,
-                label: `${capitalizedFirstLetter}${frequencyTitle}${frequencyType}`,
+                label: `${capitalizedFirstLetter} ${frequencyTitle} ${frequencyType}`,
             };
         });
     }, [goals]);
@@ -267,7 +267,7 @@ const Schedule: React.FC = () => {
                         </div>
                     )}
                     {filteredSchedules.length === ZERO_VALUE && (
-                        <div className="bg-primary w-full md:w-full xl:w-[48.8%]">
+                        <div className="w-full md:w-full xl:w-[48.8%]">
                             <Button
                                 type="button"
                                 label={LABEL}
