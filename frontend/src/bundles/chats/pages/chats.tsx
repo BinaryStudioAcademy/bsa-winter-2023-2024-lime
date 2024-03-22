@@ -42,7 +42,7 @@ const Chats = (): JSX.Element => {
                 id: String(currentChat.id),
             });
 
-            return void navigate(redirectPath);
+            return void navigate(redirectPath, { replace: true });
         }
     }, [id, currentChat, dispatch, navigate]);
 
