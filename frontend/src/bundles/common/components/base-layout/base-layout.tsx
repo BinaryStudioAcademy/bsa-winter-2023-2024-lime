@@ -33,7 +33,7 @@ const BaseLayout: React.FC<Properties> = () => {
             )}
         >
             <Header toggleSidebar={toggleSidebar} />
-            <Sidebar isOpen={isOpen} />
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
 
             <div className={styles['content-container']}>
                 {!isSubscribed && (

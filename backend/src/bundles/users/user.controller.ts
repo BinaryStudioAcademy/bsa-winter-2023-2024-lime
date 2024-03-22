@@ -1,5 +1,6 @@
 import { googleFitService } from '~/bundles/google-fit/google-fit.js';
 import { type OAuthRepository, OAuthProvider } from '~/bundles/oauth/oauth.js';
+import { scheduleService } from '~/bundles/schedules/schedules.js';
 import { type UserService } from '~/bundles/users/user.service.js';
 import {
     type UserAuthResponseDto,
@@ -19,10 +20,7 @@ import { type File } from '~/common/services/file/types/types.js';
 import { type UserBonusService } from '../user-bonuses/user-bonuses.js';
 import { UsersApiPath } from './enums/enums.js';
 import { type UserControllerProperties } from './types/types.js';
-import {
-    userUpdateProfileValidationSchema,
-    userUploadAvatarValidationSchema,
-} from './validation-schemas/validation-schemas.js';
+import { userUploadAvatarValidationSchema } from './validation-schemas/validation-schemas.js';
 
 /**
  * @swagger
@@ -140,9 +138,6 @@ class UserController extends BaseController {
             path: UsersApiPath.UPDATE_USER,
             method: 'PATCH',
             isProtected: true,
-            validation: {
-                body: userUpdateProfileValidationSchema,
-            },
             handler: (options) =>
                 this.updateUser(
                     options as ApiHandlerOptions<{
@@ -247,6 +242,9 @@ class UserController extends BaseController {
         if (oAuthEntity) {
             void googleFitService.handleData(oAuthEntity);
         }
+
+        void scheduleService.deleteOutdatedSchedules(id);
+        void scheduleService.createNotificationsForUpcomingSchedules(id);
         return {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,

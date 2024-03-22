@@ -22,6 +22,7 @@ import {
 } from '~/bundles/common/hooks/hooks.js';
 import {
     type CreateGoalRequest,
+    type UserAuthResponseDto,
     type ValueOf,
 } from '~/bundles/common/types/types.js';
 import { GoalCard } from '~/bundles/goals/components/components.js';
@@ -48,6 +49,10 @@ const ZERO_VALUE = 0;
 const Goals: React.FC = () => {
     const dispatch = useAppDispatch();
 
+    const { id } = useAppSelector(
+        ({ auth }) => auth.user,
+    ) as UserAuthResponseDto;
+
     const { dataStatus: dataStatusGoals, goals } = useAppSelector(
         ({ goals }) => goals,
     );
@@ -71,8 +76,8 @@ const Goals: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        void dispatch(achievementsActions.getAchievements());
-    }, [dispatch]);
+        void dispatch(achievementsActions.getAchievementsByUserId(id));
+    }, [dispatch, id]);
 
     const handleOpenModal = useCallback((): void => {
         void setIsModalOpen(true);
@@ -101,6 +106,13 @@ const Goals: React.FC = () => {
         [dispatch],
     );
 
+    const handleDeleteGoal = useCallback(
+        (id: number) => {
+            void dispatch(goalsActions.deleteGoal(id));
+        },
+        [dispatch],
+    );
+
     const unfulfilledGoals = goals.filter((goal) => !goal.completedAt);
     const lastGoal = goals.filter((goal) => goal.completedAt !== null).at(-1);
     const lastGoalMetrics = (lastGoal?.distance ||
@@ -110,7 +122,7 @@ const Goals: React.FC = () => {
         : GoalTypes.STANDART;
 
     return (
-        <main className="bg-secondary flex w-full max-w-[1136px] flex-col justify-center gap-8 xl:flex-row">
+        <main className="bg-secondary flex w-full max-w-[1136px] flex-col justify-start gap-8 xl:flex-row">
             {isLoading ? (
                 <Loader isOverflow />
             ) : (
@@ -135,12 +147,12 @@ const Goals: React.FC = () => {
                                 hasDistance={Boolean(lastGoal?.distance)}
                             />
                         </section>
-                        <section>
+                        <section className="w-full ">
                             <h2 className="text-lm-grey-200 mb-5 text-xl font-extrabold">
                                 Goals
                             </h2>
                             <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:flex-wrap">
-                                {goals.length === ZERO_VALUE && (
+                                {unfulfilledGoals.length === ZERO_VALUE && (
                                     <p className="text-primary mb-5 w-full text-xl font-extrabold">
                                         No goals yet
                                     </p>
@@ -159,17 +171,19 @@ const Goals: React.FC = () => {
                                         }) => (
                                             <GoalCard
                                                 key={id}
+                                                id={id}
                                                 activityType={activityType}
                                                 frequency={frequency}
                                                 frequencyType={frequencyType}
                                                 progress={progress}
                                                 distance={distance}
                                                 duration={duration}
+                                                onDelete={handleDeleteGoal}
                                             />
                                         ),
                                     )}
                             </div>
-                            <div className="md:w-full lg:w-[48.8%]">
+                            <div className="w-full lg:w-[48.5%]">
                                 <Button
                                     type="button"
                                     label="Set the new goal"
@@ -191,9 +205,9 @@ const Goals: React.FC = () => {
 
                         <div className="flex w-full flex-col gap-4 lg:flex-row lg:flex-wrap xl:flex-col">
                             {achievements?.length > ZERO_VALUE &&
-                                achievements.map((achievement) => (
+                                achievements.map((achievement, index) => (
                                     <AchievementCard
-                                        key={achievement.id}
+                                        key={index}
                                         achievement={achievement}
                                     />
                                 ))}

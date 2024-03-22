@@ -1,4 +1,7 @@
+import ReactRouterPrompt from 'react-router-prompt';
+
 import { actions as authActions } from '~/bundles/auth/store/auth.js';
+import { Checkbox } from '~/bundles/common/components/checkbox/checkbox.js';
 import {
     Avatar,
     Button,
@@ -7,10 +10,10 @@ import {
     DatePicker,
     Input,
     Loader,
+    Modal,
     Radio,
 } from '~/bundles/common/components/components.js';
 import { IconColor } from '~/bundles/common/components/icon/enums/enums.js';
-import { Modal } from '~/bundles/common/components/modal/modal.js';
 import { ComponentSize, Gender } from '~/bundles/common/enums/enums.js';
 import {
     configureDateString,
@@ -19,7 +22,6 @@ import {
     convertHeightToMillimeters,
     convertWeightToGrams,
     convertWeightToKilograms,
-    getObjectKeys,
 } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
@@ -35,11 +37,16 @@ import {
     type UserUpdateProfileRequestDto,
     userUpdateProfileValidationSchema,
 } from '~/bundles/users/users.js';
+import { notificationManager } from '~/framework/notification/notification.js';
 
 import { constructReferralUrl } from '../../helpers/helpers.js';
 import { UserBonusBalance } from '../user-balance/user-bonus-balance.js';
 import { Cropper } from './components/components.js';
-import { DEFAULT_UPDATE_PROFILE_PAYLOAD } from './constants/constants.js';
+import {
+    DEFAULT_UPDATE_PROFILE_PAYLOAD,
+    ERROR_WRONG_FILETYPE_IMG,
+    MEGABYTE_PER_BYTE,
+} from './constants/constants.js';
 
 type Properties = {
     onSubmit: (payload: UserUpdateProfileRequestDto) => void;
@@ -58,19 +65,67 @@ const ProfileSettings: React.FC<Properties> = ({
 
     const dispatch = useAppDispatch();
 
-    const [valuesDefault, setValuesDefault] = useState(false);
     const { user, updateProfile } = useAppSelector(({ auth }) => auth);
     const { userBonusesStatus, userBonusesTransactions } = useAppSelector(
         ({ userBonuses }) => userBonuses,
     );
 
-    const { control, errors, reset, setValue, handleSubmit, getValues } =
-        useAppForm<UserUpdateProfileRequestDto>({
-            defaultValues: DEFAULT_UPDATE_PROFILE_PAYLOAD,
-            validationSchema: userUpdateProfileValidationSchema,
-            mode: 'onTouched',
-            shouldUnregister: false,
-        });
+    const getDefaultValues = useCallback((): UserUpdateProfileRequestDto => {
+        const result: {
+            [key: string]: string | number | null | undefined | boolean;
+        } = {
+            ...DEFAULT_UPDATE_PROFILE_PAYLOAD,
+        };
+        const data: {
+            [key: string]: string | number | null | undefined | boolean;
+        } = {
+            ...user,
+        };
+
+        for (const key of Object.keys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
+            switch (key) {
+                case 'dateOfBirth': {
+                    if (data['dateOfBirth']) {
+                        result[key] = configureDateString(
+                            data['dateOfBirth'] as string,
+                        );
+                    }
+                    break;
+                }
+                case 'weight': {
+                    result[key] = convertWeightToKilograms(data[key] as number);
+                    break;
+                }
+                case 'height': {
+                    result[key] = convertHeightToCentimeters(
+                        data[key] as number,
+                    );
+                    break;
+                }
+                default: {
+                    if (data[key]) {
+                        result[key] = data[key];
+                    }
+                }
+            }
+        }
+        return result as UserUpdateProfileRequestDto;
+    }, [user]);
+
+    const {
+        control,
+        errors,
+        reset,
+        setValue,
+        handleSubmit,
+        getValues,
+        isDirty,
+    } = useAppForm<UserUpdateProfileRequestDto>({
+        defaultValues: getDefaultValues(),
+        validationSchema: userUpdateProfileValidationSchema,
+        mode: 'onTouched',
+        shouldUnregister: false,
+    });
 
     const selectImage = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,8 +133,17 @@ const ProfileSettings: React.FC<Properties> = ({
 
             const image = event.target.files;
             if (image) {
-                setImgToCrop(URL.createObjectURL(image[0] as File));
-                setIsOpen(true);
+                const file = image[0] as File;
+                if (file && file.type.startsWith('image/')) {
+                    if (file.size > 20 * MEGABYTE_PER_BYTE) {
+                        notificationManager.error('File is too big. Max 20MB.');
+                        return;
+                    }
+                    setImgToCrop(URL.createObjectURL(file));
+                    setIsOpen(true);
+                } else {
+                    notificationManager.error(ERROR_WRONG_FILETYPE_IMG);
+                }
                 event.target.value = '';
             }
         },
@@ -87,71 +151,48 @@ const ProfileSettings: React.FC<Properties> = ({
     );
 
     useEffect(() => {
-        if (!valuesDefault && user) {
-            for (const key of getObjectKeys(DEFAULT_UPDATE_PROFILE_PAYLOAD)) {
-                switch (key) {
-                    case 'dateOfBirth': {
-                        setValue(
-                            key,
-                            user.dateOfBirth
-                                ? configureDateString(user.dateOfBirth)
-                                : '',
-                        );
-                        break;
-                    }
-                    case 'weight': {
-                        setValue(
-                            key,
-                            convertWeightToKilograms(user[key]) || '',
-                        );
-                        break;
-                    }
-                    case 'height': {
-                        setValue(
-                            key,
-                            convertHeightToCentimeters(user[key]) || '',
-                        );
-                        break;
-                    }
-                    default: {
-                        setValue(
-                            key,
-                            user[key] || DEFAULT_UPDATE_PROFILE_PAYLOAD[key],
-                        );
-                    }
-                }
-            }
-            setValuesDefault(true);
-        }
-    }, [user, setValue, valuesDefault]);
-
-    useEffect(() => {
         if (updateProfile.avatarUrl) {
-            setValue('avatarUrl', updateProfile.avatarUrl);
+            setValue('avatarUrl', updateProfile.avatarUrl, {
+                shouldDirty: true,
+            });
             dispatch(authActions.clearUpdateProfile());
         }
     }, [updateProfile, setValue, dispatch]);
 
+    const generateFormPayload = useCallback(
+        (data: UserUpdateProfileRequestDto) => {
+            return {
+                ...data,
+                avatarUrl: data.avatarUrl || null,
+                isPublic: data.isPublic,
+                location: data.location ? data.location.trim() : null,
+                weight: convertWeightToGrams(data.weight),
+                height: convertHeightToMillimeters(data.height),
+                dateOfBirth: data.dateOfBirth
+                    ? configureISOString(data.dateOfBirth || '')
+                    : null,
+                fullName: data.fullName ? data.fullName.trim() : null,
+                username: data.username ? data.username.trim() : null,
+            };
+        },
+        [],
+    );
+
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit((data) => {
-                const payload: UserUpdateProfileRequestDto = {
-                    ...data,
-                    avatarUrl: data.avatarUrl || null,
-                    location: data.location ? data.location.trim() : null,
-                    weight: convertWeightToGrams(data.weight),
-                    height: convertHeightToMillimeters(data.height),
-                    dateOfBirth: data.dateOfBirth
-                        ? configureISOString(data.dateOfBirth || '')
-                        : null,
-                    fullName: (data.fullName || '').trim(),
-                    username: data.username ? data.username.trim() : null,
-                };
-                onSubmit(payload);
+                onSubmit(generateFormPayload(data));
+                reset({}, { keepValues: true });
             })(event_);
         },
-        [handleSubmit, onSubmit],
+        [handleSubmit, onSubmit, reset, generateFormPayload],
     );
+
+    const handleSubmitLeaving = useCallback((): Promise<unknown> => {
+        return handleSubmit((data) => {
+            onSubmit(generateFormPayload(data));
+        })();
+    }, [handleSubmit, onSubmit, generateFormPayload]);
 
     const closeModal = useCallback((): void => {
         setIsOpen(false);
@@ -172,7 +213,7 @@ const ProfileSettings: React.FC<Properties> = ({
     }, [fileInputReference]);
 
     return (
-        <div className="bg-secondary pl-13 pr-18 h-full px-12 pb-9 pt-3 lg:w-[874px]">
+        <div className="bg-secondary pl-13 pr-18 h-full px-12 pb-9 pt-3 sm:p-0 lg:w-[874px] ">
             <div className="flex flex-col items-start justify-between gap-5 pb-12 xl:flex-row xl:items-center">
                 <div className="flex items-center">
                     <Avatar
@@ -185,6 +226,7 @@ const ProfileSettings: React.FC<Properties> = ({
                         type="file"
                         accept="image/jpeg, image/png"
                         name="update-file"
+                        aria-label="Upload avatar"
                         onChange={selectImage}
                         className="hidden"
                         ref={fileInputReference}
@@ -231,7 +273,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 textToDisplay={user?.referralCode ?? 'You dont have a code'}
             />
             <form onSubmit={handleFormSubmit}>
-                <div className=" w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 lg:grid-cols-4">
+                <div className="w-100 h-100 grid-cols-gap-28 grid grid-rows-3 gap-x-6 gap-y-2 lg:grid-cols-4">
                     <Input
                         className="border-0 lg:col-start-1 lg:col-end-3"
                         type="text"
@@ -255,6 +297,7 @@ const ProfileSettings: React.FC<Properties> = ({
                     />
                     <DatePicker
                         name="dateOfBirth"
+                        format="DD/MM/YYYY"
                         control={control}
                         errors={errors}
                         label="Date of birth"
@@ -321,6 +364,15 @@ const ProfileSettings: React.FC<Properties> = ({
                         className="lg:w-50 rounded-r-lg"
                     />
                 </div>
+                <div className="mt-4">
+                    <Checkbox
+                        name="isPublic"
+                        label="I agree to share my private information publicly on this platform."
+                        ariaLabel="privacy-policy"
+                        control={control}
+                        errors={errors}
+                    />
+                </div>
                 <ul className="mt-14 flex justify-end lg:mt-6">
                     <li className="mr-6 w-[150px]">
                         <Button
@@ -345,6 +397,43 @@ const ProfileSettings: React.FC<Properties> = ({
                         />
                     </li>
                 </ul>
+
+                <ReactRouterPrompt
+                    when={isDirty}
+                    beforeConfirm={handleSubmitLeaving}
+                >
+                    {({ isActive, onConfirm, onCancel }) => (
+                        <Modal
+                            isOpen={isActive}
+                            title={
+                                'Do you want to save changes before leaving?'
+                            }
+                            onClose={onCancel}
+                        >
+                            <div className={'flex gap-4'}>
+                                <Button
+                                    label={isLoading ? '' : 'Save'}
+                                    leftIcon={
+                                        isLoading && (
+                                            <Loader
+                                                color={IconColor.SECONDARY}
+                                            />
+                                        )
+                                    }
+                                    onClick={onConfirm}
+                                    variant={ButtonVariant.PRIMARY}
+                                    size={ComponentSize.MEDIUM}
+                                />
+                                <Button
+                                    label="Discard changes"
+                                    variant={ButtonVariant.SECONDARY}
+                                    size={ComponentSize.MEDIUM}
+                                    onClick={onConfirm}
+                                />
+                            </div>
+                        </Modal>
+                    )}
+                </ReactRouterPrompt>
             </form>
         </div>
     );

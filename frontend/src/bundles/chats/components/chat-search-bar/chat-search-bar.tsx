@@ -1,21 +1,24 @@
 import { type FormEvent } from 'react';
 
+import { SEARCH_DEFAULT_PAYLOAD } from '~/bundles/chats/constants/constants.js';
 import { Input } from '~/bundles/common/components/components.js';
 import { useAppForm, useCallback } from '~/bundles/common/hooks/hooks.js';
 
-const ChatSearchBar = (): JSX.Element => {
+type Properties = {
+    onSearchChats: (payload: typeof SEARCH_DEFAULT_PAYLOAD) => void;
+};
+
+const ChatSearchBar = ({ onSearchChats }: Properties): JSX.Element => {
     const { control, errors, handleSubmit } = useAppForm({
-        defaultValues: { search: '' },
+        defaultValues: SEARCH_DEFAULT_PAYLOAD,
         mode: 'onChange',
     });
 
-    const handleSearchChats = useCallback((): void => {}, []);
-
     const handleFormChange = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
-            void handleSubmit(handleSearchChats)(event_);
+            void handleSubmit(onSearchChats)(event_);
         },
-        [handleSearchChats, handleSubmit],
+        [onSearchChats, handleSubmit],
     );
 
     const handleFormSubmit = useCallback(

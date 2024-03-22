@@ -1,3 +1,4 @@
+export { MAX_NUMBER_OF_USERS } from './max-number-of-users.js';
 export {
     KILOBYTE_PER_BYTE,
     MEGABYTE_PER_BYTE,

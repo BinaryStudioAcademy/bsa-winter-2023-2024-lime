@@ -5,12 +5,15 @@ import {
     type FieldErrors,
     type FieldValues,
     type Path,
+    type UseFormClearErrors,
     type UseFormHandleSubmit,
     type UseFormProps,
+    type UseFormWatch,
     type ValidationMode,
 } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import { useCallback } from '~/bundles/common/hooks/hooks.js';
 import { type ValidationSchema } from '~/bundles/common/types/types.js';
 
 type Parameters<T extends FieldValues = FieldValues> = {
@@ -34,8 +37,10 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
     setValue: (
         name: Path<T>,
         value: unknown,
-        options?: { shouldValidate?: boolean },
+        options?: { shouldValidate?: boolean; shouldDirty?: boolean },
     ) => void;
+    clearErrors: UseFormClearErrors<T>;
+    watch: UseFormWatch<T>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -64,15 +69,20 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         reset,
         getValues,
         setValue: setValueFromForm,
+        clearErrors,
+        watch,
     } = useForm<T>(parameters);
 
-    const setValue = (
-        name: Path<T>,
-        value: unknown,
-        options?: { shouldValidate?: boolean },
-    ): void => {
-        setValueFromForm(name, value as T[keyof T], options);
-    };
+    const setValue = useCallback(
+        (
+            name: Path<T>,
+            value: unknown,
+            options?: { shouldValidate?: boolean; shouldDirty?: boolean },
+        ): void => {
+            setValueFromForm(name, value as T[keyof T], options);
+        },
+        [setValueFromForm],
+    );
 
     return {
         control,
@@ -83,6 +93,8 @@ const useAppForm = <T extends FieldValues = FieldValues>({
         reset,
         getValues,
         setValue,
+        clearErrors,
+        watch,
     };
 };
 

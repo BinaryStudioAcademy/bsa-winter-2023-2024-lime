@@ -22,7 +22,7 @@ const NotificationActions = ({
     children,
 }: Properties): JSX.Element => {
     const handleReadClick = useCallback(
-        (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event: React.MouseEvent<HTMLElement>) => {
             event.stopPropagation();
             if (!notification.isRead) {
                 onRead(notification.id);
@@ -42,13 +42,25 @@ const NotificationActions = ({
         [onDelete, notification.id],
     );
 
+    const handleKeyDown = useCallback(
+        (event: React.KeyboardEvent | React.MouseEvent<HTMLElement>) => {
+            if ((event as React.KeyboardEvent).key === 'Enter') {
+                handleReadClick(event as React.MouseEvent<HTMLElement>);
+            }
+        },
+        [handleReadClick],
+    );
+
     return (
-        <button
+        <div
             onClick={handleReadClick}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
             className={getValidClassNames(
-                'border-buttonTertiary bg-primary relative w-full rounded border  p-4 transition-all',
+                'border-buttonTertiary bg-primary relative w-full rounded  border p-4 transition-all',
                 notification.isRead ? 'bg-secondary' : '',
             )}
+            role="button"
         >
             {children}
             {notification.isRead && (
@@ -56,12 +68,12 @@ const NotificationActions = ({
                     data-index={notification.id}
                     onClick={handleDeleteClick}
                     type="button"
-                    className=" hover:bg-lm-black-200 hover:rounded-s-34 font-heavybold absolute right-1 top-1 h-4 w-4 text-xs transition-all"
+                    className="hover:rounded-s-34 font-heavybold absolute right-1 top-1 h-4 w-4 text-xs transition-all"
                 >
-                    <XMarkIcon />
+                    <XMarkIcon className="hover:text-action" />
                 </button>
             )}
-        </button>
+        </div>
     );
 };
 

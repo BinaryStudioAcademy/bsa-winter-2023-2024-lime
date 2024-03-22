@@ -26,7 +26,11 @@ const IconName = {
     starIcon: 'starIcon',
     aiAssistantIcon: 'aiAssistantIcon',
     aiPoweredIcon: 'aiPoweredIcon',
+    openAiIcon: 'openAiIcon',
+    friendsIcon: 'friendsIcon',
     stavaButtonIcon: 'stavaButtonIcon',
+    stravaLogoIcon: 'stravaLogoIcon',
+    googleIconSimple: 'googleIconSimple',
 } as const;
 
 export { IconName };

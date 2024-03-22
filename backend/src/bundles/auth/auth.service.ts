@@ -7,6 +7,7 @@ import {
 } from '~/bundles/users/users.js';
 import { cryptService, jwtService } from '~/common/services/services.js';
 
+import { notificationService } from '../notifications/notifications.js';
 import {
     BonusAmount,
     UserBonusActionType,
@@ -127,6 +128,14 @@ class AuthService {
                 token,
             };
         }
+
+        await notificationService.create({
+            isRead: false,
+            type: 'default',
+            title: 'New achievement! 💪',
+            message: 'Joining Lime 🏆',
+            userId: user.id,
+        });
 
         return { user, token };
     }

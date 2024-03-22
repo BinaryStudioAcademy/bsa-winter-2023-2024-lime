@@ -20,12 +20,13 @@
     --background-schedule: rgb(241 255 202); /* lm-grey-500 */
 
     /* BORDER */
-    --border-primary: rgb(28 34 39); /* lm-black-200 */
-    --border-inactive: rgb(255 255 255); /* lm-blue-500 */
+    --border-primary: rgb(178 192 211); /* #B2C0D3 */
+    --border-secondary: rgb(255 255 255); /* White */
+    --border-inactive: rgb(255 255 255); /* White */
 
     /* RING */
-    --ring-primary: rgb(28 34 39); /* lm-black-200 */
-    --ring-inactive: rgb(255 255 255); /* #B2C0D3 */
+    --ring-primary: rgb(178 192 211); /* #B2C0D3 */
+    --ring-inactive: rgb(255 255 255); /* White */
 
     /* GRADIENTS */
     --gradient-goal-widget: linear-gradient(
@@ -66,6 +67,7 @@
 
     /* BORDER */
     --border-primary: rgb(255 255 255); /* White */
+    --border-secondary: rgb(0 0 0); /* Black */
     --border-inactive: rgb(30 30 44); /* lm-blue-500 */
 
     /* RING */
@@ -77,6 +79,11 @@
         89.83deg,
         rgb(224 254 16) 36.42%,
         rgb(224 254 16 / 0%) 125.23%
+    );
+    --gradient-schedule-widget: linear-gradient(
+        234.96deg,
+        #e0fe10 -19.3%,
+        rgba(224 254 16 / 0%) 100%
     );
 
     /* STROKE */

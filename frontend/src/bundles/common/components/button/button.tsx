@@ -13,7 +13,7 @@ const ButtonVariant = {
 
 type ButtonSize = Exclude<
     ValueOf<typeof ComponentSize>,
-    typeof ComponentSize.EXTRA_LARGE
+    typeof ComponentSize.EXTRA_LARGE | typeof ComponentSize.HUGE
 >;
 
 type ButtonType = 'button' | 'submit';
@@ -49,7 +49,7 @@ const buttonVariantToClasses: Record<ValueOf<typeof ButtonVariant>, string> = {
     [ButtonVariant.DANGER]:
         'rounded-lg justify-center bg-lm-red text-primary hover:opacity-80',
     [ButtonVariant.CREATE_GOAL]:
-        'border justify-center border-buttonPrimary rounded-lg bg-primary text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary disabled:border-buttonTertiary',
+        'border justify-center border-buttonPrimary rounded-lg text-buttonPrimary hover:text-buttonSecondary hover:border-buttonSecondary disabled:text-buttonTertiary disabled:border-buttonTertiary',
 };
 
 const buttonSizesToClasses: Record<ButtonSize, string> = {

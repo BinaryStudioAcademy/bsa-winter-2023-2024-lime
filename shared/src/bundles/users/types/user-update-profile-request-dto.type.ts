@@ -10,6 +10,7 @@ type UserUpdateProfileRequestDto = {
     height: number | null | '';
     location: string | null;
     gender: ValueOf<typeof Gender>;
+    isPublic: boolean;
 };
 
 export { type UserUpdateProfileRequestDto };

@@ -3,7 +3,7 @@
         "header header"
         "aside main";
 
-    @apply grid grid-cols-[256px,auto] grid-rows-[88px,auto] overflow-hidden transition-all duration-[0.5s] ease-[ease-in-out] lg:grid-cols-[288px,auto];
+    @apply grid grid-cols-[16rem,auto] grid-rows-[5.5rem,auto] overflow-hidden transition-all duration-[0.5s] ease-[ease-in-out] sm:grid-cols-[0,auto] lg:grid-cols-[18rem,auto];
 }
 
 .content-container {
@@ -24,6 +24,7 @@
 
 ::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {

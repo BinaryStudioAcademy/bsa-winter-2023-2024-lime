@@ -9,6 +9,8 @@ import {
 import { STRAVA_ATHLETE_TRAINING_URL } from '~/bundles/workouts/constants/constants.js';
 import { OAuthProvider } from '~/bundles/workouts/enums/enums.js';
 
+import { DeleteWorkoutButton } from './components/components.js';
+
 const WorkoutItem = (): JSX.Element => {
     const { id } = useParams();
 
@@ -34,14 +36,19 @@ const WorkoutItem = (): JSX.Element => {
             <WorkoutRoute workout={currentWorkout} />
             <WorkoutStats workout={currentWorkout} />
             {currentWorkout.provider === OAuthProvider.STRAVA && (
-                <NavLink
-                    to={STRAVA_ATHLETE_TRAINING_URL}
-                    className="text-strava-brand mt-[0.5rem] text-right"
-                    target="_blank"
-                    reloadDocument
-                >
-                    View on Strava
-                </NavLink>
+                <div className="text-strava-brand mt-[0.5rem] text-right">
+                    <NavLink
+                        to={STRAVA_ATHLETE_TRAINING_URL}
+                        className="text-strava-brand mt-[0.5rem] text-right"
+                        target="_blank"
+                        reloadDocument
+                    >
+                        View on Strava
+                    </NavLink>
+                </div>
+            )}
+            {currentWorkout.provider === null && (
+                <DeleteWorkoutButton id={currentWorkout.id} />
             )}
         </div>
     );

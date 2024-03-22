@@ -66,6 +66,7 @@ export default {
             '2xl': '1.375rem',
             '3xl': '1.75rem',
             '4xl': '2.625rem',
+            '5xl': '5rem',
         },
         fontWeight: {
             light: '300',
@@ -126,6 +127,7 @@ export default {
                 'rectangle':
                     'linear-gradient(89.83deg, #E0FE10 36.42%, rgba(224, 254, 16, 0) 125.23%)',
                 'goalWidget': 'var(--gradient-goal-widget)',
+                'scheduleWidget': 'var(--gradient-schedule-widget)',
                 'wave-yellow': 'url("~/assets/img/wave-yellow.svg")',
                 'wave-magenta': 'url("~/assets/img/wave-magenta.svg")',
                 'wave-purple': 'url("~/assets/img/wave-purple.svg")',
@@ -144,6 +146,7 @@ export default {
                 '115': '115px',
                 '120': '120px',
                 '150': '9.375rem',
+                '176': '11rem',
                 '874': '54.625',
             },
             height: {
@@ -151,10 +154,12 @@ export default {
                 '37': '2.3125rem',
                 '38': '2.375rem',
                 '54': '3.375rem;',
+                '176': '11rem',
             },
             spacing: {
                 '13': '3.25',
                 '18': '4.875',
+                '44': '2.75rem',
                 '60': '3.75rem',
             },
             minHeight: {
@@ -186,6 +191,7 @@ export default {
             },
             borderColor: {
                 primary: 'var(--border-primary)',
+                secondary: 'var(--border-secondary)',
                 inactive: 'var(--border-inactive)',
                 buttonPrimary: ButtonColors.PRIMARY,
                 buttonSecondary: ButtonColors.SECONDARY,
