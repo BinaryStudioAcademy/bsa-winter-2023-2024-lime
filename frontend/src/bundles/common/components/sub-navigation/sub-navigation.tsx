@@ -30,7 +30,7 @@ const SubNavigation: React.FC<Properties> = ({
     return (
         <div
             className={getValidClassNames(
-                'bg-secondary items center mx-auto flex h-full w-full flex-col gap-[1.75rem] overflow-auto p-[2rem] sm:max-w-full md:w-[20rem]',
+                'bg-secondary items center mx-auto flex h-full w-full flex-col gap-[1.75rem] overflow-auto p-[2rem] sm:max-w-full md:w-[15rem] xl:w-[20rem]',
                 className,
             )}
         >

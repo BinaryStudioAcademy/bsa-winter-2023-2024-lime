@@ -206,7 +206,7 @@ const PublicProfile: React.FC = () => {
                                     icon={
                                         <Icon
                                             name={IconName.workoutIcon}
-                                            color={IconColor.SECONDARY}
+                                            color={IconColor.WHITE}
                                         />
                                     }
                                 />
@@ -216,7 +216,12 @@ const PublicProfile: React.FC = () => {
                                     label="Total distance"
                                     value={`${metersToKilometers(totalDistance)} km`}
                                     color={ActivityWidgetColor.PURPLE}
-                                    icon={<Icon name={IconName.stepsIcon} />}
+                                    icon={
+                                        <Icon
+                                            name={IconName.stepsIcon}
+                                            color={IconColor.WHITE}
+                                        />
+                                    }
                                 />
                             </li>
                             <li className="flex-1">
@@ -224,7 +229,12 @@ const PublicProfile: React.FC = () => {
                                     label="Total duration"
                                     value={`${hours} hrs ${minutes} min ${seconds}`}
                                     color={ActivityWidgetColor.GREEN}
-                                    icon={<Icon name={IconName.durationIcon} />}
+                                    icon={
+                                        <Icon
+                                            name={IconName.durationIcon}
+                                            color={IconColor.WHITE}
+                                        />
+                                    }
                                 />
                             </li>
                             <li className="flex-1">
@@ -232,7 +242,12 @@ const PublicProfile: React.FC = () => {
                                     label="Total calories"
                                     value={`${totalCalories} kcl`}
                                     color={ActivityWidgetColor.MAGENTA}
-                                    icon={<Icon name={IconName.caloriesIcon} />}
+                                    icon={
+                                        <Icon
+                                            name={IconName.caloriesIcon}
+                                            color={IconColor.WHITE}
+                                        />
+                                    }
                                 />
                             </li>
                         </ul>

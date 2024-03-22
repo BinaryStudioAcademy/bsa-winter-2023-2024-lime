@@ -28,7 +28,7 @@ type Properties = {
     isCardSelected: boolean;
     user: FriendResponseDto;
     selectCard: (user: FriendResponseDto | null) => void;
-    onToggleFollow: (id: number) => void;
+    onToggleFollow: (id: number, idAdding?: boolean) => void;
 };
 
 const FriendCard = ({
@@ -64,8 +64,8 @@ const FriendCard = ({
         if (isCardSelected) {
             selectCard(null);
         }
-        onToggleFollow(userId);
-    }, [onToggleFollow, userId, isCardSelected, selectCard]);
+        onToggleFollow(userId, !isFollowed);
+    }, [onToggleFollow, userId, isCardSelected, selectCard, isFollowed]);
 
     const handleSelectCard = useCallback((): void => {
         selectCard(user);

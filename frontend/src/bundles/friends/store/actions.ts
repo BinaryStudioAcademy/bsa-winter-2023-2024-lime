@@ -28,6 +28,15 @@ const getFollowings = createAsyncThunk<
     return await friendsApi.getFollowings(paginationPayload);
 });
 
+const getFollowers = createAsyncThunk<
+    Paged<FriendResponseDto>,
+    PaginationParameters,
+    AsyncThunkConfig
+>(`${sliceName}/get-followers`, async (paginationPayload, { extra }) => {
+    const { friendsApi } = extra;
+    return await friendsApi.getFollowers(paginationPayload);
+});
+
 const addFollowing = createAsyncThunk<
     FriendResponseDto[],
     FriendRequestDto,
@@ -70,11 +79,48 @@ const loadMoreNotFollowed = createAsyncThunk<
     },
 );
 
+const loadMoreFollowers = createAsyncThunk<
+    Paged<FriendResponseDto>,
+    PaginationParameters,
+    AsyncThunkConfig
+>(`${sliceName}/load-more-followers`, async (paginationPayload, { extra }) => {
+    const { friendsApi } = extra;
+    return await friendsApi.getFollowers(paginationPayload);
+});
+
+const addFollowingFollower = createAsyncThunk<
+    FriendResponseDto[],
+    FriendRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/add-following-follower`,
+    async (addFollowingPayload, { extra }) => {
+        const { friendsApi } = extra;
+        return await friendsApi.addFollowing(addFollowingPayload);
+    },
+);
+
+const removeFollowingFollower = createAsyncThunk<
+    FriendResponseDto[],
+    FriendRequestDto,
+    AsyncThunkConfig
+>(
+    `${sliceName}/remove-following-follower`,
+    async (removeFollowingPayload, { extra }) => {
+        const { friendsApi } = extra;
+        return await friendsApi.removeFollowing(removeFollowingPayload);
+    },
+);
+
 export {
     addFollowing,
+    addFollowingFollower,
+    getFollowers,
     getFollowings,
     getNotFollowed,
+    loadMoreFollowers,
     loadMoreFollowings,
     loadMoreNotFollowed,
     removeFollowing,
+    removeFollowingFollower,
 };

@@ -13,6 +13,7 @@ type FriendResponseDto = {
     height: number | null;
     location: string | null;
     gender: ValueOf<typeof Gender> | null;
+    isFollowing?: boolean;
 };
 
 export { type FriendResponseDto };

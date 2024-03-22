@@ -144,6 +144,19 @@ class FriendController extends BaseController {
                     }>,
                 ),
         });
+
+        this.addRoute({
+            path: FriendsApiPath.FOLLOWERS,
+            method: 'GET',
+            isProtected: true,
+            handler: (options) =>
+                this.getFollowers(
+                    options as ApiHandlerOptions<{
+                        user: UserAuthResponseDto;
+                        query: PaginationParameters;
+                    }>,
+                ),
+        });
     }
 
     /**
@@ -420,6 +433,91 @@ class FriendController extends BaseController {
             type: ApiHandlerResponseType.DATA,
             status: HttpCode.OK,
             payload: data,
+        };
+    }
+
+    /**
+     * @swagger
+     * /api/v1/friends/followers:
+     *    get:
+     *      tags:
+     *       - Friends
+     *      summary: Get all users who followed to user
+     *      description: Retrieves a list of users who follow the user.
+     *      security:
+     *        - bearerAuth: []
+     *      parameters:
+     *        - in: query
+     *          name: page
+     *          schema:
+     *            type: integer
+     *            minimum: 1
+     *          description: The page number for pagination.
+     *        - in: query
+     *          name: limit
+     *          schema:
+     *            type: integer
+     *            minimum: 1
+     *          description: The maximum number of users per page.
+     *      responses:
+     *        200:
+     *          description: Successful operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: object
+     *                properties:
+     *                  users:
+     *                    type: array
+     *                    items:
+     *                      $ref: '#/components/schemas/Friend'
+     *                  query:
+     *                    type: object
+     *                    properties:
+     *                      page:
+     *                        type: integer
+     *                        minimum: 1
+     *                      limit:
+     *                        type: integer
+     *                        minimum: 1
+     *                      totalCount:
+     *                        type: integer
+     *        401:
+     *          description: Failed operation
+     *          content:
+     *            application/json:
+     *              schema:
+     *                $ref: '#/components/schemas/Error'
+     */
+
+    private async getFollowers(
+        options: ApiHandlerOptions<{
+            user: UserAuthResponseDto;
+            query: PaginationParameters;
+        }>,
+    ): Promise<ApiHandlerResponse> {
+        const { user, query } = options;
+        const { page = '1', limit = '12' } = query;
+        const offset = ((+page - 1) * +limit).toString();
+
+        const totalCount = await this.friendService.getFollowers(
+            user.id,
+            '0',
+            MAX_NUMBER_OF_USERS,
+        );
+        const friends = await this.friendService.getFollowers(
+            user.id,
+            offset,
+            limit,
+        );
+
+        return {
+            type: ApiHandlerResponseType.DATA,
+            status: HttpCode.OK,
+            payload: {
+                items: friends,
+                total: totalCount?.length,
+            },
         };
     }
 }

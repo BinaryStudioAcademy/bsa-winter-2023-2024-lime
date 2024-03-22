@@ -83,6 +83,10 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
         setIsOpen(!isOpen);
     }, [isOpen]);
 
+    const handleUserLeaveChat = useCallback((): void => {
+        void dispatch(chatActionCreator.clearCurrentChat());
+    }, [dispatch]);
+
     if (!currentChat) {
         return (
             <div className="relative h-full">
@@ -108,7 +112,9 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                             to={AppRoute.CHATS}
                             className="mr-2 flex lg:hidden"
                         >
-                            <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
+                            <button onClick={handleUserLeaveChat}>
+                                <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
+                            </button>
                         </Link>
                         {currentChat && (
                             <>
