@@ -90,6 +90,14 @@ class FriendService {
             offset,
         );
     }
+
+    public async getFollowers(
+        userId: number,
+        offset: string,
+        limit: string,
+    ): Promise<FriendResponseDto[] | null> {
+        return await this.friendRepository.getFollowers(userId, offset, limit);
+    }
 }
 
 export { FriendService };

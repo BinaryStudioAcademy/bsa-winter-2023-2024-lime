@@ -23,7 +23,11 @@ import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 
 const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
-    const tabs = [TabsFollowers.MY_FOLLOWINGS, TabsFollowers.FIND_FOLLOWINGS];
+    const tabs = [
+        TabsFollowers.MY_FOLLOWINGS,
+        TabsFollowers.FIND_FOLLOWINGS,
+        TabsFollowers.MY_FOLLOWERS,
+    ];
     const [page, setPage] = useState<number>(PAGE);
 
     const [selectedCard, setSelectedCard] = useState<FriendResponseDto | null>(
@@ -38,6 +42,7 @@ const Friends: React.FC = () => {
         dataStatus: isLoading,
         loadMoreDataStatus: isLoadingMore,
         totalCount,
+        followers,
     } = useAppSelector(({ friends }) => friends);
 
     const classes = {
@@ -48,6 +53,10 @@ const Friends: React.FC = () => {
         hidden: 'translate-x-[200%]',
         animation: 'transition-transform duration-[0.5s] ease-[ease-in-out]',
     };
+
+    useEffect(() => {
+        void dispatch(friendsActions.getFollowings({}));
+    }, [dispatch]);
 
     const handleLoadMore = useCallback((): void => {
         setPage(page + 1);
@@ -63,6 +72,14 @@ const Friends: React.FC = () => {
         activeTab === TabsFollowers.MY_FOLLOWINGS &&
             void dispatch(
                 friendsActions.loadMoreFollowings({
+                    page: String(page + 1),
+                    limit: String(LIMIT),
+                }),
+            );
+
+        activeTab === TabsFollowers.MY_FOLLOWERS &&
+            void dispatch(
+                friendsActions.loadMoreFollowers({
                     page: String(page + 1),
                     limit: String(LIMIT),
                 }),
@@ -109,6 +126,27 @@ const Friends: React.FC = () => {
         [dispatch, page],
     );
 
+    const handleAddRemoverFollowing = useCallback(
+        (id: number, idAdding: boolean | undefined): void => {
+            if (idAdding) {
+                void dispatch(
+                    friendsActions.addFollowingFollower({
+                        followingId: id,
+                        offset: String(page * LIMIT),
+                    }),
+                );
+            } else {
+                void dispatch(
+                    friendsActions.removeFollowingFollower({
+                        followingId: id,
+                        offset: String(page * LIMIT),
+                    }),
+                );
+            }
+        },
+        [dispatch, page],
+    );
+
     useEffect(() => {
         const loadUsers = async (): Promise<void> => {
             activeTab === TabsFollowers.FIND_FOLLOWINGS &&
@@ -121,6 +159,13 @@ const Friends: React.FC = () => {
             activeTab === TabsFollowers.MY_FOLLOWINGS &&
                 (await dispatch(
                     friendsActions.getFollowings({
+                        page: PAGE.toString(),
+                        limit: LIMIT.toString(),
+                    }),
+                ));
+            activeTab === TabsFollowers.MY_FOLLOWERS &&
+                (await dispatch(
+                    friendsActions.getFollowers({
                         page: PAGE.toString(),
                         limit: LIMIT.toString(),
                     }),
@@ -173,13 +218,17 @@ const Friends: React.FC = () => {
                     )}
 
                     {activeTab === TabsFollowers.MY_FOLLOWERS && (
-                        <div
-                            className={
-                                'text-primary flex h-[70vh] w-full items-center justify-center text-xl'
-                            }
-                        >
-                            No one is following you yet.
-                        </div>
+                        <TabContent
+                            users={followers}
+                            isFollowed={false}
+                            selectedCardId={selectedCard?.userId}
+                            selectCard={handleSelectCard}
+                            onToggleFollow={handleAddRemoverFollowing}
+                            noUsersText={'No one is following you yet..'}
+                            totalCount={totalCount ?? 0}
+                            loadMore={handleLoadMore}
+                            isLoadingMore={isLoadingMore === DataStatus.PENDING}
+                        />
                     )}
                 </div>
             )}

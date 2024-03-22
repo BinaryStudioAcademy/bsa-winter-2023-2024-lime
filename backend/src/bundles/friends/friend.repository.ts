@@ -12,6 +12,7 @@ import { DatabaseTableName } from '~/common/database/database.js';
 import { type Repository } from '~/common/types/types.js';
 
 const USER_DETAILS_GRAPH = '[userDetails]';
+const FOLLOWERS_DETAILS = '[followersDetails]';
 
 class FriendRepository implements Repository {
     private friendModel: typeof FriendModel;
@@ -105,7 +106,7 @@ class FriendRepository implements Repository {
             .query()
             .select(`${DatabaseTableName.USERS}.email`, 'followingId')
             .where(`${DatabaseTableName.FRIENDS}.userId`, userId)
-            .withGraphFetched('userDetails')
+            .withGraphFetched(USER_DETAILS_GRAPH)
             .join(
                 DatabaseTableName.USERS,
                 `${DatabaseTableName.USERS}.id`,
@@ -182,6 +183,54 @@ class FriendRepository implements Repository {
 
         await trx.commit();
         return result;
+    }
+
+    public async getFollowers(
+        userId: number,
+        offset: string,
+        limit: string,
+    ): Promise<FriendResponseDto[] | null> {
+        const followers = await this.friendModel
+            .query()
+            .select(`${DatabaseTableName.USERS}.email`, 'userId')
+            .where(`${DatabaseTableName.FRIENDS}.followingId`, userId)
+            .withGraphFetched(FOLLOWERS_DETAILS)
+            .join(
+                DatabaseTableName.USERS,
+                `${DatabaseTableName.USERS}.id`,
+                `${DatabaseTableName.FRIENDS}.userId`,
+            )
+            .orderBy(`${DatabaseTableName.FRIENDS}.id`)
+            .offset(Number(offset))
+            .limit(Number(limit));
+
+        const friends = await this.getFollowings(
+            userId,
+            '0',
+            MAX_NUMBER_OF_USERS,
+        );
+        const followingIds = friends?.map((friend) => friend.userId) || [];
+
+        const followingMap: { [key: number]: boolean } = {};
+
+        for (const id of followingIds) {
+            followingMap[id] = true;
+        }
+
+        return followers.map(({ followersDetails, email, userId }) => ({
+            id: userId,
+            userId: userId,
+            email,
+            avatarUrl: followersDetails.avatarUrl,
+            username: followersDetails.username,
+            fullName: followersDetails.fullName,
+            dateOfBirth: followersDetails.dateOfBirth,
+            weight: followersDetails.weight,
+            height: followersDetails.height,
+            location: followersDetails.location,
+            gender: followersDetails.gender,
+            isFollowing: followingMap[userId] ? true : false,
+        })) as FriendResponseDto[];
     }
 
     public async update(

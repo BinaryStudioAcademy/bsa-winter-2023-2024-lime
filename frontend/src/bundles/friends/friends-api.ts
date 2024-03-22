@@ -59,6 +59,26 @@ class FriendsApi extends BaseHttpApi {
         return await response.json<Paged<FriendResponseDto>>();
     }
 
+    public async getFollowers(
+        payload: PaginationParameters,
+    ): Promise<Paged<FriendResponseDto>> {
+        const { page, limit } = payload;
+        const response = await this.load(
+            this.getFullEndpoint(FriendsApiPath.FOLLOWERS, {}),
+            {
+                method: 'GET',
+                contentType: ContentType.JSON,
+                hasAuth: true,
+                query: {
+                    page,
+                    limit,
+                },
+            },
+        );
+
+        return await response.json<Paged<FriendResponseDto>>();
+    }
+
     public async addFollowing(
         payload: FriendRequestDto,
     ): Promise<FriendResponseDto[]> {
