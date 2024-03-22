@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from '@heroicons/react/16/solid';
 
-import { actions as achievementsAction } from '~/bundles/achievements/store/achievements.js';
+import { actions as achievementsActions } from '~/bundles/achievements/store/achievements.js';
 import {
     AchievementCard,
     Avatar,
@@ -57,7 +57,7 @@ const UserInfoCard: React.FC<Properties> = ({
 
     useEffect(() => {
         if (userId) {
-            void dispatch(achievementsAction.getAchievementsByUserId(userId));
+            void dispatch(achievementsActions.getAchievementsByUserId(userId));
         }
     }, [userId, dispatch]);
 
