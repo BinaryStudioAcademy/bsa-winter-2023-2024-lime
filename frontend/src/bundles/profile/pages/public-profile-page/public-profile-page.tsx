@@ -129,7 +129,7 @@ const PublicProfile: React.FC = () => {
     );
 
     const handleSendMessage = useCallback(() => {
-        const membersId = new Set([authorizedUser.id, id]);
+        const membersId = new Set([authorizedUser.id, NumericId]);
 
         const chatPayload = {
             membersId: [NumericId],
@@ -148,10 +148,16 @@ const PublicProfile: React.FC = () => {
             return void navigate(redirectPath);
         }
 
-        void dispatch(chatActionCreator.createChat(chatPayload));
-
-        void navigate(AppRoute.CHATS);
-    }, [authorizedUser, chats, dispatch, navigate, id, NumericId]);
+        void dispatch(chatActionCreator.createChat(chatPayload))
+            .unwrap()
+            .then((result) => {
+                navigate(
+                    configureString(AppRoute.CHATS_$ID, {
+                        id: String(result.id),
+                    }),
+                );
+            });
+    }, [authorizedUser, chats, dispatch, navigate, NumericId]);
 
     if (isLoading) {
         return <Loader />;
