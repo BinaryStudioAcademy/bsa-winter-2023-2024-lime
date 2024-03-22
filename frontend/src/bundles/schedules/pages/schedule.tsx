@@ -218,8 +218,13 @@ const Schedule: React.FC = () => {
                     {filteredSchedules.length > 0 ? (
                         <div className="mb-3 flex flex-col gap-[1.2rem] xl:flex-row">
                             <ul className="flex w-full flex-col gap-[0.7rem] lg:max-w-[25rem]">
-                                {filteredSchedules.map(
-                                    ({ activityType, id, startAt }) => {
+                                {filteredSchedules
+                                    .toSorted(
+                                        (a, b) =>
+                                            new Date(a.startAt).getTime() -
+                                            new Date(b.startAt).getTime(),
+                                    )
+                                    .map(({ activityType, id, startAt }) => {
                                         const date = new Date(startAt);
                                         const scheduleDay =
                                             formatScheduleDay(date);
@@ -238,8 +243,7 @@ const Schedule: React.FC = () => {
                                                 onDelete={onDelete}
                                             />
                                         );
-                                    },
-                                )}
+                                    })}
                                 <div className="bg-primary w-full">
                                     <Button
                                         type="button"
