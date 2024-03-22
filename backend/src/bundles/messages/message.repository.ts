@@ -33,8 +33,8 @@ class MessageRepository implements Repository {
             .query()
             .select('*')
             .where(query)
-            .limit(limit)
             .orderBy(MessageAttributes.CREATED_AT, 'DESC')
+            .limit(limit)
             .execute();
 
         return messages.map((message) => {
