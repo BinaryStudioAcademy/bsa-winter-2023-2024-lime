@@ -86,7 +86,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                         errors={errors}
                         options={ACTIVITY_TYPE_OPTIONS}
                         isDisabled={isLoading}
-                        required
+                        isRequired
                     />
                 </div>
                 <DatePicker
@@ -98,6 +98,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                     placeholder="Enter date"
                     format="DD/MM/YYYY"
                     maxDate={new Date()}
+                    required
                 />
                 <TimePicker
                     className="md:col-span-2"
@@ -106,6 +107,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                     name="workoutStartedAt"
                     label="Start"
                     placeholder="Enter start time"
+                    required
                 />
                 <TimePicker
                     className="md:col-span-2"
@@ -114,6 +116,7 @@ const CreateWorkoutForm: React.FC<Properties> = ({
                     name="workoutEndedAt"
                     label="End"
                     placeholder="Enter end time"
+                    required
                 />
                 <Input
                     className="md:col-span-2"

@@ -20,13 +20,13 @@
     --background-schedule: rgb(241 255 202); /* lm-grey-500 */
 
     /* BORDER */
-    --border-primary: rgb(28 34 39); /* lm-black-200 */
+    --border-primary: rgb(178 192 211); /* #B2C0D3 */
     --border-secondary: rgb(255 255 255); /* White */
-    --border-inactive: rgb(255 255 255); /* lm-blue-500 */
+    --border-inactive: rgb(255 255 255); /* White */
 
     /* RING */
-    --ring-primary: rgb(28 34 39); /* lm-black-200 */
-    --ring-inactive: rgb(255 255 255); /* #B2C0D3 */
+    --ring-primary: rgb(178 192 211); /* #B2C0D3 */
+    --ring-inactive: rgb(255 255 255); /* White */
 
     /* GRADIENTS */
     --gradient-goal-widget: linear-gradient(
