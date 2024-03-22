@@ -67,10 +67,11 @@ class FriendService {
                 id: id,
             });
             if (followingUser) {
+                const newFollower = followingUser.toObject();
                 await this.notificationService.create({
                     userId: followingId,
                     title: 'New Follower',
-                    message: `@${followingUser.toObject().username ?? followingUser.toObject().email} started following you.`,
+                    message: `${newFollower.username ?? newFollower.fullName ?? newFollower.email} started following you.`,
                     isRead: false,
                     type: 'default',
                 });
