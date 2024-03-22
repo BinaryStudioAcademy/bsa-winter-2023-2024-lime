@@ -10,9 +10,10 @@ import {
 import { AppRoute, ComponentSize } from '~/bundles/common/enums/enums.js';
 import { useCallback, useNavigate } from '~/bundles/common/hooks/hooks.js';
 
-import { getValidClassNames } from '../../helpers/helpers.js';
+import { configureString, getValidClassNames } from '../../helpers/helpers.js';
 
 type Properties = {
+    userId: string;
     name: string;
     image: string;
     achievements?: AchievementsGetAllResponseDto[];
@@ -20,6 +21,7 @@ type Properties = {
 };
 
 const UserInfoCard: React.FC<Properties> = ({
+    userId,
     name,
     image,
     achievements = [],
@@ -28,8 +30,12 @@ const UserInfoCard: React.FC<Properties> = ({
     const navigate = useNavigate();
 
     const handleViewAllClick = useCallback((): void => {
-        void navigate(AppRoute.GOALS);
-    }, [navigate]);
+        void navigate(
+            configureString(AppRoute.PROFILE_PUBLIC_$ID, {
+                id: userId,
+            }),
+        );
+    }, [navigate, userId]);
 
     return (
         <div

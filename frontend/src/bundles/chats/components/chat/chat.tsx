@@ -189,6 +189,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                             <XCircleIcon className="text-action w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
                         </button>
                         <UserInfoCard
+                            userId={String(chatMember?.id) ?? ''}
                             name={
                                 chatMember?.fullName ?? chatMember?.email ?? ''
                             }
