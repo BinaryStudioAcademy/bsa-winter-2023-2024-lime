@@ -46,7 +46,7 @@ const SubscriptionUserPanel: React.FC<Properties> = ({
     }, [dispatch, stripeSubscriptionId, currentCancelAtPeriodEnd]);
 
     return (
-        <div className="bg-secondary w-full max-w-[30rem] rounded-2xl p-4 md:max-w-full md:p-6">
+        <div className="bg-primary w-full max-w-[30rem]  rounded-2xl p-4 md:max-w-full md:p-6">
             <div className="flex flex-col gap-3">
                 <div>
                     <div className="border-lm-grey-200 rounded-md border-2 p-5">

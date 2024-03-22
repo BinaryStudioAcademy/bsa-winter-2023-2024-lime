@@ -29,7 +29,10 @@ const CheckoutForm = (): JSX.Element => {
     );
 
     return (
-        <form onSubmit={handleSubmitPayment}>
+        <form
+            onSubmit={handleSubmitPayment}
+            className="bg-primary rounded-xl p-6"
+        >
             <PaymentElement />
             <div>
                 <Button
