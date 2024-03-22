@@ -166,7 +166,7 @@ const ProfileSettings: React.FC<Properties> = ({
                 dateOfBirth: data.dateOfBirth
                     ? configureISOString(data.dateOfBirth || '')
                     : null,
-                fullName: (data.fullName || '').trim(),
+                fullName: data.fullName ? data.fullName.trim() : null,
                 username: data.username ? data.username.trim() : null,
             };
         },
