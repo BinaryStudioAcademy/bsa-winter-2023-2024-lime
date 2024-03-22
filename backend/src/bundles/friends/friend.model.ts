@@ -14,6 +14,7 @@ class FriendModel extends AbstractModel {
     public 'followingId': number;
     public 'email': string;
     public 'userDetails': UserDetailsModel;
+    public 'followersDetails': UserDetailsModel;
 
     public static override get tableName(): string {
         return DatabaseTableName.FRIENDS;
@@ -26,6 +27,14 @@ class FriendModel extends AbstractModel {
                 modelClass: UserDetailsModel,
                 join: {
                     from: `${DatabaseTableName.FRIENDS}.${FriendAttributes.FOLLOWING_ID}`,
+                    to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
+                },
+            },
+            followersDetails: {
+                relation: Model.HasOneRelation,
+                modelClass: UserDetailsModel,
+                join: {
+                    from: `${DatabaseTableName.FRIENDS}.${FriendAttributes.USER_ID}`,
                     to: `${DatabaseTableName.USER_DETAILS}.${UserDetailsAttributes.USER_ID}`,
                 },
             },

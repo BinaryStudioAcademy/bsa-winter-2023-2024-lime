@@ -9,7 +9,7 @@ type Properties = {
     isFollowed: boolean;
     selectedCardId: number | undefined;
     selectCard: (user: FriendResponseDto | null) => void;
-    onToggleFollow: (id: number) => void;
+    onToggleFollow: (id: number, isAdding?: boolean) => void;
     noUsersText: string;
     totalCount: number | undefined;
     loadMore: () => void;
@@ -34,7 +34,7 @@ const TabContent = ({
                     <FriendCard
                         key={user.userId}
                         user={user}
-                        isFollowed={isFollowed}
+                        isFollowed={isFollowed || !!user.isFollowing}
                         isActive={true}
                         isCardSelected={selectedCardId === user.userId}
                         selectCard={selectCard}
