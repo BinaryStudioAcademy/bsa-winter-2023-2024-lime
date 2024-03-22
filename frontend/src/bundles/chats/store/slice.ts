@@ -39,7 +39,11 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'chats',
-    reducers: {},
+    reducers: {
+        clearCurrentChat(state) {
+            state.currentChat = null;
+        },
+    },
     extraReducers(builder) {
         builder.addCase(getAllChats.fulfilled, (state, action) => {
             state.chats = action.payload.userChats;
