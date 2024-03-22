@@ -20,10 +20,9 @@ const SubNavigation: React.FC<Properties> = ({
     className = '',
 }): JSX.Element => {
     const bgColors = [
-        'bg-lm-yellow-100',
+        'bg-lm-mint-200',
         'bg-lm-magenta-100',
         'bg-lm-purple-100',
-        'bg-lm-green',
         'bg-lm-blue-400',
         'bg-lm-blue-500',
     ];
