@@ -91,9 +91,15 @@ const FriendCard = ({
             return void navigate(redirectPath);
         }
 
-        void dispatch(chatActionCreator.createChat(chatPayload));
-
-        void navigate(AppRoute.CHATS);
+        void dispatch(chatActionCreator.createChat(chatPayload))
+            .unwrap()
+            .then((result) => {
+                navigate(
+                    configureString(AppRoute.CHATS_$ID, {
+                        id: String(result.id),
+                    }),
+                );
+            });
     }, [authorizedUser, chats, dispatch, navigate, userId]);
 
     return (
