@@ -25,9 +25,9 @@ import { type FriendResponseDto } from '~/bundles/friends/types/types.js';
 const Friends: React.FC = () => {
     const dispatch = useAppDispatch();
     const tabs = [
-        TabsFollowers.MY_FOLLOWINGS,
+        TabsFollowers.FOLLOWINGS,
         TabsFollowers.FIND_FOLLOWINGS,
-        TabsFollowers.MY_FOLLOWERS,
+        TabsFollowers.FOLLOWERS,
     ];
     const [page, setPage] = useState<number>(PAGE);
 
@@ -35,7 +35,7 @@ const Friends: React.FC = () => {
         null,
     );
     const [activeTab, setActiveTab] = useState<string>(
-        TabsFollowers.MY_FOLLOWINGS,
+        TabsFollowers.FOLLOWINGS,
     );
 
     const {
@@ -70,7 +70,7 @@ const Friends: React.FC = () => {
                 }),
             );
 
-        activeTab === TabsFollowers.MY_FOLLOWINGS &&
+        activeTab === TabsFollowers.FOLLOWINGS &&
             void dispatch(
                 friendsActions.loadMoreFollowings({
                     page: String(page + 1),
@@ -78,7 +78,7 @@ const Friends: React.FC = () => {
                 }),
             );
 
-        activeTab === TabsFollowers.MY_FOLLOWERS &&
+        activeTab === TabsFollowers.FOLLOWERS &&
             void dispatch(
                 friendsActions.loadMoreFollowers({
                     page: String(page + 1),
@@ -157,14 +157,14 @@ const Friends: React.FC = () => {
                         limit: LIMIT.toString(),
                     }),
                 ));
-            activeTab === TabsFollowers.MY_FOLLOWINGS &&
+            activeTab === TabsFollowers.FOLLOWINGS &&
                 (await dispatch(
                     friendsActions.getFollowings({
                         page: PAGE.toString(),
                         limit: LIMIT.toString(),
                     }),
                 ));
-            activeTab === TabsFollowers.MY_FOLLOWERS &&
+            activeTab === TabsFollowers.FOLLOWERS &&
                 (await dispatch(
                     friendsActions.getFollowers({
                         page: PAGE.toString(),
@@ -187,8 +187,8 @@ const Friends: React.FC = () => {
             ) : (
                 <div
                     className={getValidClassNames(
-                        `${activeTab === TabsFollowers.MY_FOLLOWERS && followers.length >= ROW_LENGTH ? classes.table : classes.row}`,
-                        `${activeTab !== TabsFollowers.MY_FOLLOWERS && users.length >= ROW_LENGTH ? classes.table : classes.row}`,
+                        `${activeTab === TabsFollowers.FOLLOWERS && followers.length >= ROW_LENGTH ? classes.table : classes.row}`,
+                        `${activeTab !== TabsFollowers.FOLLOWERS && users.length >= ROW_LENGTH ? classes.table : classes.row}`,
                     )}
                 >
                     {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
@@ -205,7 +205,7 @@ const Friends: React.FC = () => {
                         />
                     )}
 
-                    {activeTab === TabsFollowers.MY_FOLLOWINGS && (
+                    {activeTab === TabsFollowers.FOLLOWINGS && (
                         <TabContent
                             users={users}
                             isFollowed={true}
@@ -219,7 +219,7 @@ const Friends: React.FC = () => {
                         />
                     )}
 
-                    {activeTab === TabsFollowers.MY_FOLLOWERS && (
+                    {activeTab === TabsFollowers.FOLLOWERS && (
                         <TabContent
                             users={followers}
                             isFollowed={false}
