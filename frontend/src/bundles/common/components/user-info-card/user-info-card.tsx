@@ -97,7 +97,7 @@ const UserInfoCard: React.FC<Properties> = ({
                     <div>
                         <Loader isOverflow />
                     </div>
-                ) : (
+                ) : (achievements && achievements.length > 0 ? (
                     achievements.map((achievement, index) => {
                         if (index > 3) {
                             return;
@@ -109,7 +109,11 @@ const UserInfoCard: React.FC<Properties> = ({
                             />
                         );
                     })
-                )}
+                ) : (
+                    <p className="text-primary mx-auto text-sm">
+                        User doesn&#39;t have achievements yet
+                    </p>
+                ))}
             </div>
         </div>
     );
