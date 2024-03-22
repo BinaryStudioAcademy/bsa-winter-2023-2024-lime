@@ -16,6 +16,7 @@ const useSidebarToggle = (): { isOpen: boolean; toggleSidebar: () => void } => {
         if (width < RESPONSIVE_WIDTH) {
             setIsOpen(false);
         }
+        width > RESPONSIVE_WIDTH && setIsOpen(true);
     }, [parameters, width, setIsOpen]);
     const toggleSidebar = useCallback(() => {
         setIsOpen(!isOpen);
