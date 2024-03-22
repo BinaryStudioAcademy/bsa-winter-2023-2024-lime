@@ -186,7 +186,8 @@ const Friends: React.FC = () => {
             ) : (
                 <div
                     className={getValidClassNames(
-                        `${users.length >= 3 ? classes.table : classes.row}`,
+                        `${activeTab === TabsFollowers.MY_FOLLOWERS && followers.length >= 3 ? classes.table : classes.row}`,
+                        `${activeTab !== TabsFollowers.MY_FOLLOWERS && users.length >= 3 ? classes.table : classes.row}`,
                     )}
                 >
                     {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
