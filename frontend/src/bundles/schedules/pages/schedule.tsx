@@ -36,6 +36,7 @@ import {
 import { type CreateScheduleRequest } from '~/bundles/common/types/types.js';
 import { FrequencyType } from '~/bundles/goals/enums/enums.js';
 import { actions as goalActions } from '~/bundles/goals/store/goals.js';
+import { formatScheduleDay } from '~/bundles/overview/helpers/helpers.js';
 import { ScheduleWidget } from '~/bundles/schedules/components/components.js';
 import { actions as scheduleActions } from '~/bundles/schedules/store/schedules.js';
 
@@ -220,13 +221,14 @@ const Schedule: React.FC = () => {
                                 {filteredSchedules.map(
                                     ({ activityType, id, startAt }) => {
                                         const date = new Date(startAt);
-                                        const weekDay = format(date, 'EEEE');
+                                        const scheduleDay =
+                                            formatScheduleDay(date);
                                         const hours = format(date, 'HH');
                                         const minutes = format(date, 'mm');
 
                                         return (
                                             <ScheduleCard
-                                                weekDay={weekDay ?? ''}
+                                                scheduleDay={scheduleDay ?? ''}
                                                 activityType={activityType}
                                                 id={id}
                                                 isExpanded={true}
