@@ -4,17 +4,12 @@ import {
     EmptyChat,
 } from '~/bundles/chats/components/components.js';
 import { actions as chatsActions } from '~/bundles/chats/store/chats.js';
-import { AppRoute } from '~/bundles/common/enums/enums.js';
-import {
-    configureString,
-    getValidClassNames,
-} from '~/bundles/common/helpers/helpers.js';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers.js';
 import {
     useAppDispatch,
     useAppSelector,
     useCallback,
     useEffect,
-    useNavigate,
     useParams,
 } from '~/bundles/common/hooks/hooks.js';
 import { type UserAuthResponseDto } from '~/bundles/users/users.js';
@@ -22,7 +17,6 @@ import { type UserAuthResponseDto } from '~/bundles/users/users.js';
 const Chats = (): JSX.Element => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     const { chats, aiAssistantChat, currentChat } = useAppSelector(
         ({ chats }) => chats,
@@ -37,14 +31,7 @@ const Chats = (): JSX.Element => {
         if (id && id !== String(currentChat?.id)) {
             return void dispatch(chatsActions.getChat({ chatId: String(id) }));
         }
-        if (!id && currentChat) {
-            const redirectPath = configureString(AppRoute.CHATS_$ID, {
-                id: String(currentChat.id),
-            });
-
-            return void navigate(redirectPath);
-        }
-    }, [id, currentChat, dispatch, navigate]);
+    }, [id, currentChat, dispatch]);
 
     useEffect(() => {
         loadAllChats();
@@ -53,12 +40,6 @@ const Chats = (): JSX.Element => {
     useEffect(() => {
         loadCurrentChat();
     }, [loadCurrentChat]);
-
-    useEffect(() => {
-        if (id && !currentChat) {
-            navigate(AppRoute.CHATS);
-        }
-    }, [currentChat, id, navigate]);
 
     return (
         <div className="flex h-full flex-[1] flex-col">

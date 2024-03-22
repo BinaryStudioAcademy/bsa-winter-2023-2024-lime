@@ -78,12 +78,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
         }
     }, [currentChat, dispatch]);
 
-    const handleCloseChat = useCallback((): void => {
-        void dispatch(chatActionCreator.clearCurrentChat());
-    }, [dispatch]);
-
     const [isOpen, setIsOpen] = useState(false);
-
     const toggleSidebarProfile = useCallback((): void => {
         setIsOpen(!isOpen);
     }, [isOpen]);
@@ -113,9 +108,7 @@ const Chat = ({ user, currentChat }: Properties): JSX.Element => {
                             to={AppRoute.CHATS}
                             className="mr-2 flex lg:hidden"
                         >
-                            <button onClick={handleCloseChat}>
-                                <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
-                            </button>
+                            <ArrowLeftCircleIcon className="text-lm-yellow-100 w-6 duration-[0.5s] ease-[ease-in-out] hover:opacity-80" />
                         </Link>
                         {currentChat && (
                             <>

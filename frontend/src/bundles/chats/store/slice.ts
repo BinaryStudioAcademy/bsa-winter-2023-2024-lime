@@ -39,11 +39,7 @@ const initialState: State = {
 const { reducer, actions, name } = createSlice({
     initialState,
     name: 'chats',
-    reducers: {
-        clearCurrentChat(state) {
-            state.currentChat = null;
-        },
-    },
+    reducers: {},
     extraReducers(builder) {
         builder.addCase(getAllChats.fulfilled, (state, action) => {
             state.chats = action.payload.userChats;
@@ -93,9 +89,9 @@ const { reducer, actions, name } = createSlice({
                 ? (state.aiAssistantChat = newChat)
                 : (state.chats = [...state.chats, newChat]);
 
-            if (!isAssistant) {
-                state.currentChat = { ...newChat, messages: [] };
-            }
+            // if (!isAssistant) {
+            //     state.currentChat = { ...newChat, messages: [] };
+            // }
 
             state.createChatDataStatus = DataStatus.FULFILLED;
         });
