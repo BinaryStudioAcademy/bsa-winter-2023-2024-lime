@@ -16,6 +16,7 @@ import {
 import {
     LIMIT,
     PAGE,
+    ROW_LENGTH,
     TabsFollowers,
 } from '~/bundles/friends/constants/constants.js';
 import { actions as friendsActions } from '~/bundles/friends/store/friends.js';
@@ -186,8 +187,8 @@ const Friends: React.FC = () => {
             ) : (
                 <div
                     className={getValidClassNames(
-                        `${activeTab === TabsFollowers.MY_FOLLOWERS && followers.length >= 3 ? classes.table : classes.row}`,
-                        `${activeTab !== TabsFollowers.MY_FOLLOWERS && users.length >= 3 ? classes.table : classes.row}`,
+                        `${activeTab === TabsFollowers.MY_FOLLOWERS && followers.length >= ROW_LENGTH ? classes.table : classes.row}`,
+                        `${activeTab !== TabsFollowers.MY_FOLLOWERS && users.length >= ROW_LENGTH ? classes.table : classes.row}`,
                     )}
                 >
                     {activeTab === TabsFollowers.FIND_FOLLOWINGS && (
