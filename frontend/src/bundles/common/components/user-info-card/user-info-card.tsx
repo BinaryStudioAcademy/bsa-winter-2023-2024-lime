@@ -93,23 +93,27 @@ const UserInfoCard: React.FC<Properties> = ({
                         />
                     </div>
                 </div>
-                {isLoading ? (
+                {isLoading && (
                     <div>
                         <Loader isOverflow />
                     </div>
-                ) : (
-                    achievements.map((achievement, index) => {
-                        if (index > 3) {
-                            return;
-                        }
-                        return (
-                            <AchievementCard
-                                key={achievement.id}
-                                achievement={achievement}
-                            />
-                        );
-                    })
                 )}
+
+                {!isLoading &&
+                    (achievements?.length > 0 ? (
+                        achievements
+                            .slice(0, 4)
+                            .map((achievement) => (
+                                <AchievementCard
+                                    key={achievement.id}
+                                    achievement={achievement}
+                                />
+                            ))
+                    ) : (
+                        <p className="text-primary mx-auto text-sm">
+                            User doesn&#39;t have achievements yet
+                        </p>
+                    ))}
             </div>
         </div>
     );

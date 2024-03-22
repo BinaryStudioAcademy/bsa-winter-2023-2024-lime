@@ -8,7 +8,7 @@ import { type ValueOf } from '~/bundles/common/types/types.js';
 import { type ActivityType } from '~/bundles/goals/enums/enums.js';
 
 type Properties = {
-    weekDay: string;
+    scheduleDay: string;
     activityType: ValueOf<typeof ActivityType>;
     date: string;
     isExpanded: boolean;
@@ -18,7 +18,7 @@ type Properties = {
     onDelete?: (id: number) => void;
 };
 const ScheduleCard: React.FC<Properties> = ({
-    weekDay,
+    scheduleDay,
     activityType,
     date,
     className = '',
@@ -43,7 +43,7 @@ const ScheduleCard: React.FC<Properties> = ({
         <li className={className}>
             <div className="schedule-card bg-primary w-full rounded-lg p-4">
                 <div className="text-md text-card mb-4 font-semibold leading-3">
-                    {weekDay}
+                    {scheduleDay}
                 </div>
 
                 <div className="flex w-full items-center justify-between">
